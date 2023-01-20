@@ -102,28 +102,28 @@ stripe.api_key = conf['stripe_payment']['sk_key']
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
-def home():
-    session = stripe.checkout.Session.create(
-        payment_method_types=['card'],
-        line_items=[{
-            'price': 'price_1MO2KSAh3t85mIMGoprvVse6',
-            'quantity': 1
-        }],
-        mode='payment',
-        success_url=url_for('home', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url=url_for('home', _external=True)
-    )
-    return render_template('index.html', checkout_session_id=session['id'], checkout_public_key=conf['stripe_payment']['pb_key'], TITLE="Yzoken", **globals())
 # def home():
-#     def main():
-#         main = f"""Main"""
-#         return main
+#     session = stripe.checkout.Session.create(
+#         payment_method_types=['card'],
+#         line_items=[{
+#             'price': 'price_1MO2KSAh3t85mIMGoprvVse6',
+#             'quantity': 1
+#         }],
+#         mode='payment',
+#         success_url=url_for('home', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
+#         cancel_url=url_for('home', _external=True)
+#     )
+#     return render_template('index.html', checkout_session_id=session['id'], checkout_public_key=conf['stripe_payment']['pb_key'], TITLE="Yzoken", **globals())
+def home():
+    def main():
+        main = f"""Main"""
+        return main
 
-#     if request.method == "GET":
-#         return render_template("index.html", TITLE="Yzoken", **globals(), MAIN=main())
+    if request.method == "GET":
+        return render_template("index.html")
 
-#     elif request.method == "POST":
-#         return make_response(json.dumps({"response": "OK"}), 200)
+    elif request.method == "POST":
+        return make_response(json.dumps({"response": "OK"}), 200)
 
 
 #################################################### Sign Up
@@ -136,6 +136,11 @@ def signUp():
 @app.route("/logIn", methods=["POST"])
 def logIn():
     pass
+    # if request.method == "GET":
+    #     return render_template("index.html")
+    #
+    # elif request.method == "POST":
+    #     return make_response(json.dumps({"response": "OK"}), 200)
 
 
 #################################################### Log Out
