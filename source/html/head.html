@@ -1,0 +1,25 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="color-schema" content="dark light">
+  <meta name="theme-color" content="#273d48">
+
+  <meta name="description" content="{{TITLE}}">
+
+  <title>{{TITLE}}</title>
+
+  <link rel="apple-touch-icon"        sizes="180x180"   href="images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png"   sizes="32x32"     href="images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png"   sizes="16x16"     href="images/favicon/favicon-16x16.png">
+  <link rel="manifest"                                  href="/site.webmanifest">
+
+  <link rel="preload" href="{{url_for('static', filename='css/master.css')}}" as="style">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/master.css')}}">
+
+  <link rel="preload" href="{{url_for('static', filename='css/styles.css')}}" as="style">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/styles.css')}}">
+
+  <script type="module" src="{{url_for('static', filename='js/main.js')}}"></script>
+
+</head>

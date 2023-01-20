@@ -1,0 +1,175 @@
+:root, html, body, *, *::before, *::after{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  text-decoration: none;
+  /* user-select: none; /* Disable copy */
+  /* pointer-events: none; */
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Mobile link click effect disabling */
+  /* -webkit-tap-highlight-color: transparent; */
+}
+
+/* Removing Default Scroll Bar START */
+*{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar{
+  display:none;
+}
+/* Removing Default Scroll Bar END */
+
+:root{
+  /* Layers START */
+  --z-minus: -1;
+  --z-body: 1;
+  --z-footer: 2;
+  --z-main: 3;
+  --z-boxes: 4;
+  --z-header: 5;
+  --z-cover: 6;
+  --z-menu-cart: 7;
+  --z-notification: 8;
+  --z-loading: 9;
+  --z-urgent: 10;
+  /* Layers END */
+
+  /* Transition START */
+  --transition-velocity: 200ms;
+  /* Transition END */
+
+
+  --header-height: 40px;
+
+  --padding: 5px;
+  --gap: 20px;
+
+  /* Screen Sizes START */
+  --phone-screen-size: 600px;
+  --tablet-screen-size: 768px;
+  --desktop-screen-size: 992px;
+  --tv-screen-size: 1200px;
+  /* Screen Sizes END */
+
+  /***************** Color Science START *****************/
+  --color-success: rgba(0, 128, 0, 1);
+  --color-info: rgba(0, 123, 255, 1);
+  --color-warning: rgba(245, 189, 0, 1);
+  --color-error: rgba(235, 57, 65, 1);
+
+  --color-cover: rgba(0, 0, 0, 0.6);
+
+  /* ColorScheme START */
+  --color-main-hue: 230deg;
+  --color-main-saturation: 13%; /*30 22*/
+  --color-main-lightness: 9%;
+
+  --color-main: hsla(
+    var(--color-main-hue),
+    calc(var(--color-main-saturation) / 1.5),
+    var(--color-main-lightness), 1);
+
+  /* Alias --color-brand -> --color-main */
+  --color-brand: var(--color-main);
+
+  color-scheme: dark light;
+  accent-color: var(--color-main);
+  /* background -> middleground -> foreground */
+  /* ColorScheme END */
+  /***************** Color Science END *****************/
+
+  /* Shadows START */
+  --shadow-light: 0px 10px 10px -5px hsla(var(--color-shadow) / var(--shadow-opacity));
+  /* Shadows END */
+}
+
+@media(prefers-color-scheme: light){
+  :root{
+    color-scheme: light;
+
+    --color-main: hsla(
+      var(--color-main-hue),
+      calc(var(--color-main-saturation) / 2),
+      calc(var(--color-main-lightness) / 1.2),
+      1);
+
+    --color-text-primary: hsla(var(--color-main-hue), var(--color-main-saturation), 10%, 1);
+    --color-text-secondary: hsla(var(--color-main-hue), 30%, 30%, 1);
+    --color-text-accent: hsla(var(--color-main-hue), 15%, 95%, 1);
+
+    --color-surface-1: hsla(var(--color-main-hue), 20%, 100%, 1);
+    --color-surface-2: hsla(var(--color-main-hue), 20%, 92%, 1);
+    --color-surface-3: hsla(var(--color-main-hue), 25%, 90%, 1);
+    --color-surface-4: hsla(var(--color-main-hue), 20%, 85%, 1);
+
+    --color-shadow: var(--color-main-hue) 10% 20%;
+    --shadow-opacity: 0.2;
+  }
+}
+
+@media(prefers-color-scheme: dark){
+  :root{
+    color-scheme: dark;
+
+    --color-main: hsla(
+      var(--color-main-hue),
+      calc(var(--color-main-saturation) / 2),
+      calc(var(--color-main-lightness) / 2), 1);
+
+    --color-text-primary: hsla(var(--color-main-hue), 15%, 95%, 1);
+    --color-text-secondary: hsla(var(--color-main-hue), 5%, 75%, 1);
+    --color-text-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1);
+
+    --color-surface-1: hsla(var(--color-main-hue), 10%, 10%, 1);
+    --color-surface-2: hsla(var(--color-main-hue), 5%, 15%, 1);
+    --color-surface-3: hsla(var(--color-main-hue), 5%, 20%, 1);
+    --color-surface-4: hsla(var(--color-main-hue), 5%, 25%, 1);
+
+    --color-shadow: var(--color-main-hue) 50% 3%;
+    --shadow-opacity: 0.3;
+  }
+}
+
+body {
+  background-color: var(--color-surface-1);
+  color: var(--color-text-primary);
+  font-family: monospace;
+  font-size: 10px;
+
+}
+
+body > header {
+  background-color: var(--color-main);
+  color: white;
+
+  width: 100%;
+  height: var(--header-height);
+  padding: var(--padding);
+
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: var(--z-header);
+
+  display: grid;
+  place-items: center;
+
+}
+
+body > main {
+  width: 100vw;
+  height: 90vh;
+
+}
+
+
+body > footer {
+  background-color: var(--color-surface-4);
+  color: var(--color-text-secondary);
+
+  width: 100%;
+  padding: var(--padding);
+  
+}

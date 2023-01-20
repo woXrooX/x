@@ -1,0 +1,49 @@
+######### Flask
+root_path: null
+template_folder: "html/"
+static_folder: "/"
+
+
+######### URL
+URL:
+  prefix: "https"
+  sub_domain: "www"
+  domain_name: "localhost"
+  domain_extension: "com"
+  port: "8088"
+
+
+######### Database
+database:
+  name: "template"
+  user: "template"
+  password: "password_template"
+  host: "127.0.0.1"
+  port: "33060"
+  charset: "utf8mb4"
+  collate: "utf8mb4_0900_ai_ci"
+
+
+######### Site
+currency: "USD"
+
+
+######### HTML
+HTML:
+  charset: "utf-8"
+
+
+######### Page
+TITLE: "eBazar"
+site_language: "en"
+
+
+######### Features
+signUpLogInLogOut: false
+paymentMethod: false
+
+
+######## Stripe payment
+stripe_payment:
+  pb_key: 'pk_test_51Kr4zpAh3t85mIMGcpGTyCesktRL3wdpQZATQp0q8dTJXBjdOggQADHZaEgM2D2XcbKbFCTELj9wjtEuW5nEwPHe00lh4kxZbP'
+  sk_key: 'sk_test_51Kr4zpAh3t85mIMGmqUjybBN5j2JbnC0XmGAoN5Bxj59RekRsKTPGyqz9wgQ5iXSzbIVECaDEfXvUsPeLDkB5uYI00CAqaY2cC'
