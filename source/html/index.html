@@ -9,7 +9,9 @@
 
     <toasts></toasts>
 
-    <menu></menu>
+    {% if conf["features"]["menu"] == True  %}
+      {% include 'menu.html' %}
+    {% endif %}
 
     {% include 'svg.html' %}
 
