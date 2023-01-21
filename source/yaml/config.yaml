@@ -39,10 +39,15 @@ site_language: "en"
 
 
 ######### Features
+# False = Disabled
+# True = Enabled
 features:
+  menu: false
+
   signUp: false
-  logIn: false
+  logIn: true
   logOut: false
+
   paymentMethod: false
 
 
