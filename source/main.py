@@ -59,8 +59,8 @@ MySQL.setUp(
 langCode = conf["site_language"]
 
 ### language Dictionary
-# with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") as file:
-#     langDict = json.load(file)
+with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") as file:
+    langDict = json.load(file)
 
 
 #################################################### GLOBAL currencies
@@ -120,7 +120,7 @@ def home():
         return main
 
     if request.method == "GET":
-        return render_template("index.html")
+        return render_template("index.html", **globals())
 
     elif request.method == "POST":
         return make_response(json.dumps({"response": "OK"}), 200)
@@ -133,33 +133,33 @@ def signUp():
         return redirect(url_for('home'))
 
     if request.method == "GET":
-        return render_template("index.html")
+        return render_template("index.html", **globals())
 
     elif request.method == "POST":
         return make_response(json.dumps({"response": "OK"}), 200)
 
 
 #################################################### Log In
-@app.route("/logIn", methods=["POST"])
+@app.route("/logIn", methods=["GET", "POST"])
 def logIn():
     if conf["features"]["logIn"] == False:
         return redirect(url_for('home'))
 
     if request.method == "GET":
-        return render_template("index.html")
+        return render_template("index.html", **globals())
 
     elif request.method == "POST":
         return make_response(json.dumps({"response": "OK"}), 200)
 
 
 #################################################### Log Out
-@app.route("/logOut", methods=["POST"])
+@app.route("/logOut", methods=["GET", "POST"])
 def logOut():
     if conf["features"]["logOut"] == False:
         return redirect(url_for('home'))
 
     if request.method == "GET":
-        return render_template("index.html")
+        return render_template("index.html", **globals())
 
     elif request.method == "POST":
         return make_response(json.dumps({"response": "OK"}), 200)
