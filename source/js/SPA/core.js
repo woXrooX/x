@@ -59,8 +59,6 @@ export default class Core{
       // window.dispatchEvent(new Event('load'));
       // console.log("onLoad");
 
-      Title.set();
-
       Router.handle();
 
       // Hyperlink.collect();
