@@ -6,7 +6,7 @@ static_folder: "/"
 
 ######### URL
 URL:
-  prefix: "https"
+  prefix: "http"
   sub_domain: "www"
   domain_name: "localhost"
   domain_extension: "com"
@@ -39,8 +39,11 @@ site_language: "en"
 
 
 ######### Features
-signUpLogInLogOut: false
-paymentMethod: false
+features:
+  signUp: false
+  logIn: false
+  logOut: false
+  paymentMethod: false
 
 
 ######## Stripe payment
