@@ -98,7 +98,7 @@ currencyCode = conf["currency"]
 
 #################################################### HOME | Index | Landing
 
-stripe.api_key = conf['stripe_payment']['sk_key']
+# stripe.api_key = conf['stripe_payment']['sk_key']
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
@@ -127,26 +127,42 @@ def home():
 
 
 #################################################### Sign Up
-@app.route("/signUp", methods=["POST"])
+@app.route("/signUp", methods=["GET", "POST"])
 def signUp():
-    pass
+    if conf["features"]["signUp"] == False:
+        return redirect(url_for('home'))
+
+    if request.method == "GET":
+        return render_template("index.html")
+
+    elif request.method == "POST":
+        return make_response(json.dumps({"response": "OK"}), 200)
 
 
 #################################################### Log In
 @app.route("/logIn", methods=["POST"])
 def logIn():
-    pass
-    # if request.method == "GET":
-    #     return render_template("index.html")
-    #
-    # elif request.method == "POST":
-    #     return make_response(json.dumps({"response": "OK"}), 200)
+    if conf["features"]["logIn"] == False:
+        return redirect(url_for('home'))
+
+    if request.method == "GET":
+        return render_template("index.html")
+
+    elif request.method == "POST":
+        return make_response(json.dumps({"response": "OK"}), 200)
 
 
 #################################################### Log Out
 @app.route("/logOut", methods=["POST"])
 def logOut():
-    pass
+    if conf["features"]["logOut"] == False:
+        return redirect(url_for('home'))
+
+    if request.method == "GET":
+        return render_template("index.html")
+
+    elif request.method == "POST":
+        return make_response(json.dumps({"response": "OK"}), 200)
 
 
 #################################################### Me | MyPage
@@ -162,6 +178,12 @@ def me():
 @app.route("/plansAndPricing", methods=["POST"])
 def plansAndPricing():
     pass
+
+
+#################################################### none/404
+@app.errorhandler(404)
+def page_not_found(error):
+    return redirect(url_for('home'))
 
 
 #################################################### RUN
