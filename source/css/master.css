@@ -138,7 +138,7 @@
 body {
   background-color: var(--color-surface-1);
   color: var(--color-text-primary);
-  font-family: monospace;
+  font-family: Quicksand;
   font-size: 10px;
 
 }
