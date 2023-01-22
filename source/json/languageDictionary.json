@@ -1,0 +1,647 @@
+{
+  "account":{
+    "en":"Account",
+    "ru":"Аккаунт",
+    "uz":"Akkaunt"
+  },
+  "accountType":{
+    "en":"Account type",
+    "ru":"Тип аккаунта",
+    "uz":"Foydalanuvchi turi"
+  },
+  "addOption":{
+    "en":"Add option",
+    "ru":"Добавить вариант",
+    "uz":"Variantni qo'shish"
+  },
+  "addProduct":{
+    "en":"Add a product",
+    "ru":"Добавить товар",
+    "uz":"Mahsulot qo'shish"
+  },
+  "allChangesWillTakeEffectAtNextLogIn":{
+    "en":"All changes will take effect at next log in",
+    "ru":"Все изменения вступят в силу при следующем входе в систему",
+    "uz":"Barcha o'zgarishlar keyingi kirishda kuchga kiradi"
+  },
+  "byClckingSignUpYouAgree":{
+    "en":"By clicking Sign up, you agree to our <a href='/termsOfUse'>Terms of use</a> and that you have read our <a href='/privacyPolicy'>Privacy Policy</a> , Including our <a href='/cookieTerms'>Cookie Use</a>",
+    "ru":"Нажимая «Зарегистрироваться», вы соглашаетесь с нашими <a href='/termsOfUse'>Условиями использования</a> и с нашей <a href='/privacyPolicy'>Политикой конфиденциальности</a>, включая <a href = '/cookieTerms'>Использование файлов cookie</a>",
+    "uz":"Ro'yxatdan o'tishni bosish orqali siz <a href='/termsOfUse'>Foydalanish shartlari</a>, <a href='/privacyPolicy'>Maxfiylik siyosati</a> va <a href='/cookieTerms'>Cookie-fayllardan foydalanish</a> shartlarmizni o'qiganligingizni va rozi bo'lganingizni bildirasiz"
+  },
+  "ceo":{
+    "en":"CEO",
+    "ru":"Генеральный директор",
+    "uz":"Bosh ijrochi direktor"
+  },
+  "change":{
+    "en":"Change",
+    "ru":"Изменить",
+    "uz":"O`zgartirish"
+  },
+  "chooseLang":{
+    "en":"Choose language",
+    "ru":"Выберите язык",
+    "uz":"Tilni tanlang"
+  },
+  "chooseCurrency":{
+    "en":"Choose currency",
+    "ru":"Выберите валюту",
+    "uz":"Valyutani tanlang"
+  },
+  "chooseSiteLang":{
+    "en":"Choose site language",
+    "ru":"Выберите язык сайта",
+    "uz":"Sayt tilini tanlang"
+  },
+  "chooseUsername":{
+    "en":"Choose a username",
+    "ru":"Выберите имя пользователя",
+    "uz":"Foydalanuvchi ismini tanlang"
+  },
+  "color":{
+    "en":"Color",
+    "ru":"Цвет",
+    "uz":"Rang"
+  },
+  "contact":{
+    "en":"Contact",
+    "ru":"Связаться с нами",
+    "uz":"Aloqa"
+  },
+  "contactInfo":{
+    "en":"Contact info",
+    "ru":"Контактная информация",
+    "uz":"Aloqa ma'lumotlari"
+  },
+  "companyInfo":{
+    "en":"Company info",
+    "ru":"Информация о компании",
+    "uz":"Kompaniya haqida ma'lumot"
+  },
+  "createStore":{
+    "en":"Create a store",
+    "ru":"Создать магазин",
+    "uz":"Do'kon yaratish"
+  },
+  "currency":{
+    "en":"Currency",
+    "ru":"Валюта",
+    "uz":"Valyuta"
+  },
+  "customer":{
+    "en":"Customer",
+    "ru":"Клиент",
+    "uz":"Mijoz"
+  },
+  "databaseError":{
+    "en":"Database error",
+    "ru":"Ошибка базы данных",
+    "uz":"Ma'lumotlar bazasida xatolik"
+  },
+  "default":{
+    "en":"Default",
+    "ru":"По умолчанию",
+    "uz":"Odatiy"
+  },
+  "deliveryAddress":{
+    "en":"Delivery address",
+    "ru":"Адресс доставки",
+    "uz":"Jo'natma manzili"
+  },
+  "description":{
+    "en":"Description",
+    "ru":"Описание",
+    "uz":"Tavsif"
+  },
+  "details":{
+    "en":"Details",
+    "ru":"Описание",
+    "uz":"Tavsif"
+  },
+  "differentOptionsForSameProduct":{
+    "en":"You can have different options for the same product like different colors, sizes, prices, etc.",
+    "ru":"У вас могут быть разные варианты одного продукта например разные цвета, размеры, цены, так далее.",
+    "uz":"Sizda bir xil mahsulot turli xil variantlar bo'lishi mumkin. Misol uchun turli xil ranglar, o'lchamlar, narxlar va boshqalar kabi."
+  },
+  "dontHaveAccountGoToSignUp":{
+    "en":"Don't have an account ? Go to sign up",
+    "ru":"Нет учетной записи? Перейти к подписке",
+    "uz":"Ro'yxatdan o'tmaganmisiz? Ro'yxatdan o'tish bu yerda"
+  },
+  "eMailInvalid":{
+    "en":"Invalid E-mail address",
+    "ru":"Неверный адрес электронной почты",
+    "uz":"Elektron pochta manzili noto‘g‘ri"
+  },
+  "eMailInUse":{
+    "en":"This E-mail is already in use",
+    "ru":"Этот электронный адрес уже используется",
+    "uz":"Ushbu elektron pochta manzili band"
+  },
+  "eMailEmpty":{
+    "en":"E-mail address is empty",
+    "ru":"Адрес электронной почты пуст",
+    "uz":"Elektron pochta manzili bo'sh bo'lmasligi kerak"
+  },
+  "eMailOk":{
+    "en":"E-mail address is OK",
+    "ru":"Адрес электронной почты в порядке",
+    "uz":"Elektron pochta manzili yaxshi"
+  },
+  "eMailFieldCheck":{
+    "en":"Check E-Mail field",
+    "ru":"Проверить поле электронной почты",
+    "uz":"Elektron pochta maydonini tekshiring"
+  },
+  "eMail":{
+    "en":"E-mail",
+    "ru":"Эл. почта",
+    "uz":"Elektron pochta"
+  },
+  "en":{
+    "en":"English",
+    "ru":"Английский",
+    "uz":"Ingliz tili"
+  },
+  "enterUsername":{
+    "en":"Enter username",
+    "ru":"Введите имя пользователя",
+    "uz":"Foydalanuvchi ismini kiriting"
+  },
+  "enterPassword":{
+    "en":"Enter password",
+    "ru":"Введите пароль",
+    "uz":"Parolni kiriting"
+  },
+  "error":{
+    "en":"Error",
+    "ru":"Ошибка",
+    "uz":"Xato"
+  },
+  "evenJupiterHere":{
+    "en":"Even Jupiter can be found here!",
+    "ru":"Здесь можно найти даже Юпитер!",
+    "uz":"Hatto Yupiterni ham bu erda topish mumkin!"
+  },
+  "faq":{
+    "en":"Faq",
+    "ru":"Вопросы-Ответы",
+    "uz":"Tss"
+  },
+  "female":{
+    "en":"Female",
+    "ru":"Женщина",
+    "uz":"Ayol"
+  },
+  "financialSettings":{
+    "en":"Financial settings",
+    "ru":"Финансовые параметры",
+    "uz":"Moliyaviy sozlamalar"
+  },
+  "firstname":{
+    "en":"First name",
+    "ru":"Имя",
+    "uz":"Ism"
+  },
+  "gender":{
+    "en":"Gender",
+    "ru":"Пол",
+    "uz":"Jins"
+  },
+  "general":{
+    "en":"General",
+    "ru":"Общее",
+    "uz":"Umumiy"
+  },
+  "generalPrice":{
+    "en":"General price",
+    "ru":"Общая цена",
+    "uz":"Umumiy narx"
+  },
+  "haveAccountGoToLogIn":{
+    "en":"Have an account ? Go to log in",
+    "ru":"",
+    "uz":"Ro'yxatdan o'tganmisiz? Kirish bu yerda"
+  },
+  "home":{
+    "en":"Home",
+    "ru":"Главная",
+    "uz":"Bosh sahifa"
+  },
+  "info":{
+    "en":"Info",
+    "ru":"Информация",
+    "uz":"Ma'lumot"
+  },
+  "information":{
+    "en":"Information",
+    "ru":"Информация",
+    "uz":"Ma'lumot"
+  },
+  "inOrderToUseEnableJavaScript":{
+    "en":"In order to use our service please enable JavaScript",
+    "ru":"Чтобы использовать наш сервис, включите JavaScript",
+    "uz":"Bizning xizmatimizdan foydalanish uchun JavaScript-ni yoqing"
+  },
+  "invalidDataSelected":{
+    "en":"Invalid data selected",
+    "ru":"Выбраны неверные данные",
+    "uz":"Noto'g'ri ma'lumotlar tanlandi"
+  },
+  "invalidPrice":{
+    "en":"Invalid price",
+    "ru":"Неверная цена",
+    "uz":"Noto'g'ri narx"
+  },
+  "javaScriptDisabled":{
+    "en":"JavaScript is disabled",
+    "ru":"JavaScript отключен",
+    "uz":"JavaScript o'chirilgan"
+  },
+  "lastname":{
+    "en":"Last name",
+    "ru":"Фамилия",
+    "uz":"Familiya"
+  },
+  "logIn":{
+    "en":"Log in",
+    "ru":"Вход",
+    "uz":"Kirish"
+  },
+  "logOut":{
+    "en":"Log out",
+    "ru":"Выйти",
+    "uz":"Chiqish"
+  },
+  "makeProductInvisibleFromSearchesTillReady":{
+    "en":"You can prepare products for later launches and hide them from searches till they are ready",
+    "ru":"Вы можете подготовить продукты для последующих запусков и скрыть их от поиска, пока они не будут готовы",
+    "uz":"Siz mahsulotlarni keyinchalik ishga tushirish uchun tayyorlashingiz va ularni tayyor bo'lguncha qidiruvlardan yashirishingiz mumkin"
+  },
+  "male":{
+    "en":"Male",
+    "ru":"Мужчина",
+    "uz":"Erkak"
+  },
+  "manufacturer":{
+    "en":"Manufacturer",
+    "ru":"Производитель",
+    "uz":"Ishlab chiqaruvchi"
+  },
+  "material":{
+    "en":"Material",
+    "ru":"Материал",
+    "uz":"Material"
+  },
+  "me":{
+    "en":"My page",
+    "ru":"Моя страница",
+    "uz":"Mening sahifam"
+  },
+  "merchant":{
+    "en":"Merchant",
+    "ru":"Торговец",
+    "uz":"Savdogar"
+  },
+  "myStores":{
+    "en":"My stores",
+    "ru":"Мои магазины",
+    "uz":"Mening do'konlarim"
+  },
+  "myPage":{
+    "en":"My page",
+    "ru":"Моя страница",
+    "uz":"Mening sahifam"
+  },
+  "myProducts":{
+    "en":"My products",
+    "ru":"Мои товары",
+    "uz":"Mening mahsulotlarim"
+  },
+  "newProduct":{
+    "en":"New product",
+    "ru":"Новый товар",
+    "uz":"Yangi mahsulot"
+  },
+  "notSpecified":{
+    "en":"Not specified",
+    "ru":"Не указан",
+    "uz":"Ko'rsatilmagan"
+  },
+  "optional":{
+    "en":"Optional",
+    "ru":"По желанию",
+    "uz":"Ixtiyoriy"
+  },
+  "options":{
+    "en":"Options",
+    "ru":"Опции",
+    "uz":"Tanlovlar"
+  },
+  "overview":{
+    "en":"Overview",
+    "ru":"Обзор",
+    "uz":"Qisqacha"
+  },
+  "paymentSettings":{
+    "en":"Payment settings",
+    "ru":"Настройки оплаты",
+    "uz":"To'lov sozlamalari"
+  },
+  "password":{
+    "en":"Password",
+    "ru":"Пароль",
+    "uz":"Parol"
+  },
+  "passwordFieldCheck":{
+    "en":"Check password field",
+    "ru":"Проверить поле пароля",
+    "uz":"Parol maydonini tekshiring"
+  },
+  "passwordInUse":{
+    "en":"Password is in use",
+    "ru":"Пароль уже используется",
+    "uz":"Parol band"
+  },
+  "passwordEmpty":{
+    "en":"Password is empty",
+    "ru":"Пароль пуст",
+    "uz":"Parol bo'sh bo'lmasligi kerak"
+  },
+  "passwordMinLength":{
+    "en":"Password must be at least 6 characters long",
+    "ru":"Пароль должен содержать минимум 6 символов",
+    "uz":"Parol kamida 6 ta ( harf, raqam, belgi) lardan iborat bo'lishi kerak"
+  },
+  "passwordAllowedChars":{
+    "en":"Password must include at least one letter, one number and one of this allowed characters ( ! @ # $ % ^ & * - _ + )",
+    "ru":"Пароль должен включать как минимум одну букву, одну цифру и один из разрешенных символов (! @ # $% ^ & * - _ +)",
+    "uz":"Parolda kamida bitta harif, bitta raqam va ushbu ruxsat berilgan belgilardan biri bo'lishi kerak (! @ # $% ^ & * - _ +)"
+  },
+  "passwordOk":{
+    "en":"Password is OK",
+    "ru":"Пароль в порядке",
+    "uz":"Parol yaxshi"
+  },
+  "plzW8":{
+    "en":"Please wait",
+    "ru":"Пожалуйста, подождите",
+    "uz":"Iltimos kuting"
+  },
+  "price":{
+    "en":"Price",
+    "ru":"Цена",
+    "uz":"Narx"
+  },
+  "privacyPolicy":{
+    "en":"Privacy policy",
+    "ru":"Политика конфиденциальности",
+    "uz":"Maxfiylik siyosati"
+  },
+  "productManufacturerEmpty":{
+    "en":"Manufacturer must be specified",
+    "ru":"Необходимо указать производителя",
+    "uz":"Ishlab chiqaruvchi ko'rsatilishi kerak"
+  },
+  "productPrice":{
+    "en":"Product price",
+    "ru":"Цена продукта",
+    "uz":"Mahsulot narxi"
+  },
+  "products":{
+    "en":"Products",
+    "ru":"Товары",
+    "uz":"Mahsulotlar"
+  },
+  "productTitle":{
+    "en":"Product title",
+    "ru":"Название товара",
+    "uz":"Mahsulot nomi"
+  },
+  "productTitleEmpty":{
+    "en":"Product title must be filled",
+    "ru":"Название продукта должно быть заполнено",
+    "uz":"Mahsulot nomi to'ldirilishi kerak"
+  },
+  "quantity":{
+    "en":"Quantity",
+    "ru":"Количество",
+    "uz":"Miqdor"
+  },
+  "remove":{
+    "en":"Remove",
+    "ru":"Удалить",
+    "uz":"O'chirish"
+  },
+  "required":{
+    "en":"Required",
+    "ru":"Необходимые",
+    "uz":"Majburiy"
+  },
+  "retailer":{
+    "en":"Retailer",
+    "ru":"Розничный продавец",
+    "uz":"Chakana sotuvchi"
+  },
+  "save":{
+    "en":"Save",
+    "ru":"Сохранить",
+    "uz":"Saqlash"
+  },
+  "saved":{
+    "en":"Saved",
+    "ru":"Сохранено",
+    "uz":"Saqlandi"
+  },
+  "searchable":{
+    "en":"Searchable",
+    "ru":"Доступный для поиска",
+    "uz":"Qidirish mumkin"
+  },
+  "selectProductDetail":{
+    "en":"Select product detail",
+    "ru":"Выберите деталь продукта",
+    "uz":"Mahsulot detalini tanlang"
+  },
+  "signUp":{
+    "en":"Sign up",
+    "ru":"Регистрироваться",
+    "uz":"Ro'yxatdan o'tish"
+  },
+  "sitePreferences":{
+    "en":"Site preferences",
+    "ru":"Настройки сайта",
+    "uz":"Sayt parametrlari"
+  },
+  "siteLanguage":{
+    "en":"Site language",
+    "ru":"Язык сайта",
+    "uz":"Sayt tili"
+  },
+  "size":{
+    "en":"Size",
+    "ru":"Размер",
+    "uz":"Oʻlcham"
+  },
+  "security":{
+    "en":"Security",
+    "ru":"Безопасность",
+    "uz":"Xavfsizlik"
+  },
+  "support":{
+    "en":"Support",
+    "ru":"Поддержка",
+    "uz":"Muvaffaqiyat"
+  },
+  "success":{
+    "en":"Success",
+    "ru":"Успех",
+    "uz":"Muvaffaqiyat"
+  },
+  "somethingWentWrong":{
+    "en":"Something went wrong",
+    "ru":"Что-то пошло не так",
+    "uz":"Nimadir noto'g'ri bajarildi"
+  },
+  "storeName":{
+    "en":"Store name",
+    "ru":"Название магазина",
+    "uz":"Do'kon nomi"
+  },
+  "storePhoneNumber":{
+    "en":"Store phone number",
+    "ru":"Телефонный номер магазина",
+    "uz":"Do'kon telefon raqami"
+  },
+  "storeCategory":{
+    "en":"Store category",
+    "ru":"Категория магазина",
+    "uz":"Do'kon toifasi"
+  },
+  "style":{
+    "en":"Style",
+    "ru":"Стиль",
+    "uz":"Uslub"
+  },
+  "termsOfUse":{
+    "en":"Terms of use",
+    "ru":"Условия эксплуатации",
+    "uz":"Foydalanish shartlari"
+  },
+  "tel":{
+    "en":"Tel:",
+    "ru":"Тел:",
+    "uz":"Tel:"
+  },
+  "titleEmpty":{
+    "en":"Title must be filled",
+    "ru":"Название должно быть заполнено",
+    "uz":"Sarlavha to'ldirilishi kerak"
+  },
+  "trader":{
+    "en":"Trader",
+    "ru":"Торговец",
+    "uz":"Savdogar"
+  },
+  "type":{
+    "en":"Type",
+    "ru":"Тип",
+    "uz":"Tur"
+  },
+  "undefined":{
+    "en":"Undefined",
+    "ru":"Неопределенный",
+    "uz":"Aniqlanmagan"
+  },
+  "unknown":{
+    "en":"Unknown",
+    "ru":"Неизвестный",
+    "uz":"Noma'lum"
+  },
+  "unknownError":{
+    "en":"Unknown error",
+    "ru":"Неизвестная ошибка",
+    "uz":"Noma'lum xato"
+  },
+  "update":{
+    "en":"Update",
+    "ru":"Обновить",
+    "uz":"Yangilash"
+  },
+  "updated":{
+    "en":"Updated",
+    "ru":"Обновлено",
+    "uz":"Yangilandi"
+  },
+  "updates":{
+    "en":"Updates",
+    "ru":"Обновления",
+    "uz":"Yangilanishlar"
+  },
+  "usernameOrPasswordWrong":{
+    "en":"Username or password wrong",
+    "ru":"Неверное имя пользователя или пароль",
+    "uz":"Foydalanuvchi nomi yoki parol hato kiritildi"
+  },
+  "username":{
+    "en":"Username",
+    "ru":"Имя пользовател",
+    "uz":"Foydalanuvchi nomi"
+  },
+  "usernameFieldCheck":{
+    "en":"Check username field",
+    "ru":"Проверить имя пользователя",
+    "uz":"Foydalanuvchi nomini tekshiring"
+  },
+  "usernameEmpty":{
+    "en":"Username field must be filled",
+    "ru":"Поле имени пользователя должно быть заполнено",
+    "uz":"Foydalanuvchi ismi kiritilmadi"
+  },
+  "usernameAllowedChars":{
+    "en":"List of allowed characters for username ( a-z A-Z 0-9 - _ ' )",
+    "ru":"Список разрешенных символов для имени пользователя ( a-z A-Z 0-9 - _ ' )",
+    "uz":"Foydalanuvchi nomi uchun ruxsat berilgan belgilar ro'yxati ( a-z A-Z 0-9 - _ ' )"
+  },
+  "usernameInUse":{
+    "en":"Username is in use",
+    "ru":"Имя пользователя уже используется",
+    "uz":"Foydalanuvchi nomi band"
+  },
+  "usernameMinLength":{
+    "en":"Username minimum length must be 6 characters long",
+    "ru":"Минимальная длина имени пользователя должна быть 6 символов.",
+    "uz":"Foydalanuvchi nomi kamida 6 ta belgidan iborat bo'lishi kerak"
+  },
+  "usernameOk":{
+    "en":"Username is OK",
+    "ru":"Имя пользователя в порядке",
+    "uz":"Foydalanuvchi nomi yaxshi"
+  },
+  "variants":{
+    "en":"Variants",
+    "ru":"Варианты",
+    "uz":"Variantlar"
+  },
+  "warning":{
+    "en":"Warning",
+    "ru":"Предупреждение",
+    "uz":"Ogohlantirish"
+  },
+  "weight":{
+    "en":"Weight",
+    "ru":"Вес",
+    "uz":"Vazn"
+  },
+  "whatCurrencyForThisProduct":{
+    "en":"What currency would You like to use for this product?",
+    "ru":"Какую валюту вы хотите использовать для этого продукта?",
+    "uz":"Ushbu mahsulot uchun qaysi valyutadan foydalanmoqchisiz?"
+  },
+  "wrongLanguageSelected":{
+    "en":"Wrong language selected",
+    "ru":"Выбран неправильный язык",
+    "uz":"Noto'g'ri til tanlandi"
+  }
+}
