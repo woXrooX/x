@@ -2,9 +2,9 @@
 
 # Git Flow
 1. git clone https://github.com/woXrooX/x-webapp
-2. git branch -r
-3. git pull
-4. git checkout feature/menu
+2. git branch -r (Shows remote branches) And git fetch --all (Pulls all remote branches)
+3. git checkout feature/menu
+4. git pull
 5. git merge main
 6. Solve Conflicts If Exists (Always Choose "main")
 7. git commit -m "Message"
