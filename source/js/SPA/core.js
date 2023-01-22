@@ -20,7 +20,7 @@ import Router from "./router.js";
 
 // import Form from "./form.js";
 // import Hyperlink from "./hyperlink.js";
-// import Loading from "./loading.js";
+import Loading from "./loading.js";
 // import Menu from "./menu.js";
 // import Nav from "./nav.js";
 
@@ -67,8 +67,9 @@ export default class Core{
       //
       // Menu.setActive();
       // Nav.setActive();
-      //
-      // Loading.done();
+
+      Loading.done();
+
     });
   }
 
@@ -82,6 +83,7 @@ export default class Core{
       // Title.update();
       //
       // Menu.setActive();
+
     });
   }
 
@@ -91,6 +93,7 @@ export default class Core{
       // console.log("onHashChange");
 
       // Nav.setActive();
+
     });
   }
 
@@ -103,6 +106,7 @@ export default class Core{
       // Form.collect();
       //
       // Nav.setActive();
+      
     });
   }
 
