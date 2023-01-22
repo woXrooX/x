@@ -1,7 +1,23 @@
 <menu>
-  <a href="{{url_for('home')}}">{{langDict["home"][langCode]}}</a>
+  <header>
 
-  <a href="{{url_for('signUp')}}">{{langDict["signUp"][langCode]}}</a>
-  <a href="{{url_for('logIn')}}">{{langDict["logIn"][langCode]}}</a>
-  <a href="{{url_for('logOut')}}">{{langDict["logOut"][langCode]}}</a>
+  </header>
+
+  <main>
+    <a href="{{url_for('home')}}"><svg><use href="#home"></use></svg>{{langDict["home"][langCode]}}</a>
+
+    <a href="{{url_for('signUp')}}"><svg><use href="#home"></use></svg>{{langDict["signUp"][langCode]}}</a>
+    <a href="{{url_for('logIn')}}"><svg><use href="#home"></use></svg>{{langDict["logIn"][langCode]}}</a>
+    <a href="{{url_for('logOut')}}"><svg><use href="#home"></use></svg>{{langDict["logOut"][langCode]}}</a>
+
+  </main>
+
+  <footer>
+
+
+  </footer>
+
+
+
+
 </menu>

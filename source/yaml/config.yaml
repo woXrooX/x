@@ -42,7 +42,7 @@ site_language: "en"
 # False = Disabled
 # True = Enabled
 features:
-  menu: false
+  menu: true
 
   signUp: false
   logIn: true

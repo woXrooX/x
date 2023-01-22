@@ -21,7 +21,7 @@ import Router from "./router.js";
 // import Form from "./form.js";
 // import Hyperlink from "./hyperlink.js";
 import Loading from "./loading.js";
-// import Menu from "./menu.js";
+import Menu from "./menu.js";
 // import Nav from "./nav.js";
 
 
@@ -65,7 +65,7 @@ export default class Core{
       // Hyperlink.collect();
       // Form.collect();
       //
-      // Menu.setActive();
+      Menu.setActive();
       // Nav.setActive();
 
       Loading.done();
@@ -81,8 +81,8 @@ export default class Core{
       Router.handle();
 
       // Title.update();
-      //
-      // Menu.setActive();
+      
+      Menu.setActive();
 
     });
   }
@@ -106,7 +106,7 @@ export default class Core{
       // Form.collect();
       //
       // Nav.setActive();
-      
+
     });
   }
 
