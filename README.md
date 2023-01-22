@@ -13,3 +13,7 @@
 10. LIVE: Code Review
 11. Merge To "dev" branch
 12. Merge to "main" branch
+
+# Git Publish To Remote New Branches
+1. git checkout -b feature/newBranchName
+2. git push -u origin feature/newBranchName
