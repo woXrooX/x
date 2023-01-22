@@ -129,7 +129,11 @@ def home():
 #################################################### Sign Up
 @app.route("/signUp", methods=["POST"])
 def signUp():
-    pass
+    if request.method == "GET":
+        return render_template("index.html", TITLE="Yzoken", **globals(), MAIN=main())
+
+    elif request.method == "POST":
+        return make_response(json.dumps({"response": "OK"}), 200)
 
 
 #################################################### Log In
