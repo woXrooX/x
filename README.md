@@ -5,7 +5,7 @@
 2. git branch -r (Shows remote branches) And git fetch --all (Pulls all remote branches)
 3. git checkout feature/menu
 4. git pull
-5. git merge main
+5. git merge "dev"
 6. Solve Conflicts If Exists (Always Choose "main")
 7. git commit -m "Message"
 8. git push. -> Now your branch is up to date and ready to use
