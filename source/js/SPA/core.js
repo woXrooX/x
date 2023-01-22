@@ -16,6 +16,7 @@
 import Html from "./html.js";
 import Title from "./title.js";
 import Router from "./router.js";
+// import Cover from "./cover.js";
 
 // import Form from "./form.js";
 // import Hyperlink from "./hyperlink.js";

@@ -43,6 +43,7 @@ site_language: "en"
 # True = Enabled
 features:
   menu: false
+  cover: false
 
   signUp: false
   logIn: true

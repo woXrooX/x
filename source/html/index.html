@@ -15,7 +15,9 @@
 
     {% include 'svg.html' %}
 
-    <cover></cover>
+    {% if conf["features"]["cover"] == True  %}
+      <cover></cover>
+    {% endif %}
 
     {% include 'header.html' %}
 
