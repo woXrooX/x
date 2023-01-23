@@ -18,6 +18,13 @@
 
 export default class Dom{
 
+  static render(dom){
+    document.querySelector("body > main").innerHTML = dom;
+
+    window.dispatchEvent(new CustomEvent('domChange'));
+
+  }
+
   static jsonToDom(object){
     // Handle Invalid Types
     if(object == null) return;

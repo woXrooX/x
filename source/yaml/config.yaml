@@ -44,9 +44,9 @@ site_language: "en"
 features:
   menu: true
 
-  signUp: false
+  signUp: true
   logIn: true
-  logOut: false
+  logOut: true
 
   paymentMethod: false
 

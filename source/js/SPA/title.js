@@ -2,7 +2,7 @@
 
 export default class Title{
   static set(newTitle = ""){
-    if(newTitle == "" || newTitle == null) document.title = "XSite";
-    else document.title = "XSite | "+newTitle;
+    if(newTitle == "" || newTitle == null || newTitle == undefined) document.title = "XSite";
+    else document.title = newTitle + " | XSite";
   }
 }

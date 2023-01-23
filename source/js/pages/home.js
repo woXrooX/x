@@ -3,6 +3,9 @@
 export const TITLE = "Home";
 export default function home(){
 
-  return "Home";
+  const dom = `Home`;
+
+
+  return dom;
 
 }
