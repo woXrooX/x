@@ -165,6 +165,36 @@ def logOut():
         return make_response(json.dumps({"response": "OK"}), 200)
 
 
+#################################################### Privacy Policy
+@app.route("/privacyPolicy", methods=["GET", "POST"])
+def privacyPolicy():
+    if request.method == "GET":
+        return render_template("index.html", **globals())
+
+    elif request.method == "POST":
+        return make_response(json.dumps({"response": "OK"}), 200)
+
+
+#################################################### Contact Us
+@app.route("/contactUs", methods=["GET", "POST"])
+def contactUs():
+    if request.method == "GET":
+        return render_template("index.html", **globals())
+
+    elif request.method == "POST":
+        return make_response(json.dumps({"response": "OK"}), 200)
+
+
+#################################################### Terms Of Use
+@app.route("/termsOfUse", methods=["GET", "POST"])
+def termsOfUse():
+    if request.method == "GET":
+        return render_template("index.html", **globals())
+
+    elif request.method == "POST":
+        return make_response(json.dumps({"response": "OK"}), 200)
+
+
 #################################################### Me | MyPage
 @app.route("/me", methods=["POST"])
 @app.route("/myPage", methods=["POST"])
