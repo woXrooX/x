@@ -1,5 +1,6 @@
 "use strict";
 
+import {elementExists} from "../modules/tools.js"
 import Cover from "./cover.js"
 
 export default class Menu{
@@ -11,6 +12,8 @@ export default class Menu{
 
   // Class Static Initialization Block
   static {
+    Menu.#elementMenu = document.querySelector(Menu.selector);
+
     Menu.#onClickMenuButtonShow();
     Menu.#onClickCoverHide();
     Menu.#onClickHyperlinksHide();
@@ -47,19 +50,13 @@ export default class Menu{
   }
 
 
-  static #exists(){
-    Menu.#elementMenu = document.querySelector(Menu.selector);
-    return !!Menu.#elementMenu;
-
-  }
-
   /////////////////// Show
   static #show(){
     // Check If Already Shown
     if(Menu.#shown) return;
 
     // Check if body > menu exists
-    if(Menu.#exists() === false) return;
+    if(!!Menu.#elementMenu === false) return;
 
     Menu.#elementMenu.style.transform = "translate(0px, 0px)";
     Cover.show();
@@ -74,7 +71,7 @@ export default class Menu{
     if(!Menu.#shown) return;
 
     // Check if body > menu exists
-    if(Menu.#exists() === false) return;
+    if(!!Menu.#elementMenu === false) return;
 
     Menu.#elementMenu.removeAttribute("style");
     Cover.hide();

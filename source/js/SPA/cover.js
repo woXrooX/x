@@ -4,15 +4,14 @@ export default class Cover{
   static selector = "body > cover";
   static #elementCover = null;
 
-  static #exists(){
+  static{
     Cover.#elementCover = document.querySelector(Cover.selector);
-    return !!Cover.#elementCover;
 
   }
 
   static show(){
     // Check if body > cover exists
-    if(Cover.#exists() === false) return;
+    if(!!Cover.#elementCover === false) return;
 
     Cover.#elementCover.style.opacity = 1;
     Cover.#elementCover.style.zIndex = getComputedStyle(document.body).getPropertyValue('--z-cover');
@@ -24,7 +23,7 @@ export default class Cover{
 
   static hide(){
     // Check if body > cover exists
-    if(Cover.#exists() === false) return;
+    if(!!Cover.#elementCover === false) return;
 
     Cover.#elementCover.style.opacity = 0;
     setTimeout(()=>{

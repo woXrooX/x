@@ -1,6 +1,6 @@
 # X-WebApp
 
-# Git Flow
+# Git Flow (Working With Existence Branches)
 1. git clone https://github.com/woXrooX/x-webapp
 2. git branch -r (Shows remote branches) And git fetch --all (Pulls all remote branches)
 3. git checkout feature/menu
@@ -14,6 +14,6 @@
 11. Merge To "dev" branch
 12. Merge to "main" branch
 
-# Git Publish To Remote New Branches
+# Git Publish New Branches To Remote (Working With New Branches)
 1. git checkout -b feature/newBranchName
 2. git push -u origin feature/newBranchName
