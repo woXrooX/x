@@ -13,13 +13,13 @@
 // import CSS from "./css.js";
 // document.head.innerHTML += `<style>${CSS}</style>`;
 
-import Html from "./html.js";
+import Dom from "./dom.js";
 import Title from "./title.js";
 import Router from "./router.js";
 // import Cover from "./cover.js";
 
 // import Form from "./form.js";
-// import Hyperlink from "./hyperlink.js";
+import Hyperlink from "./hyperlink.js";
 import Loading from "./loading.js";
 import Menu from "./menu.js";
 // import Nav from "./nav.js";
@@ -47,7 +47,7 @@ export default class Core{
     Core.#onLoad();
     Core.#onUrlChange();
     Core.#onHashChange();
-    Core.#onHtmlUpdate();
+    Core.#onDomChange();
   }
 
   /////// Event Handlers
@@ -62,11 +62,7 @@ export default class Core{
 
       Router.handle();
 
-      // Hyperlink.collect();
-      // Form.collect();
-      //
       Menu.setActive();
-      // Nav.setActive();
 
       Loading.done();
 
@@ -80,8 +76,6 @@ export default class Core{
 
       Router.handle();
 
-      // Title.update();
-      
       Menu.setActive();
 
     });
@@ -97,15 +91,13 @@ export default class Core{
     });
   }
 
-  static #onHtmlUpdate(){
-    window.addEventListener('htmlUpdated', ()=>{
-      // window.dispatchEvent(new CustomEvent('htmlUpdated'));
-      // console.log("onHtmlUpdate");
+  static #onDomChange(){
+    window.addEventListener('domChange', ()=>{
+      // window.dispatchEvent(new CustomEvent('domChange'));
+      // console.log("onDomChange");
 
-      // Hyperlink.collect();
+      Hyperlink.collect();
       // Form.collect();
-      //
-      // Nav.setActive();
 
     });
   }
