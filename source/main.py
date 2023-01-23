@@ -30,7 +30,7 @@ app = Flask(
     static_folder = conf["static_folder"]
 )
 
-# app.secret_key = b'asZ8#Q!@97_+asQ]s/s\]/'
+app.secret_key = b'asZ8#Q!@97_+asQ]s/s\]/'
 
 
 #################################################### GLOBAL MySQL
