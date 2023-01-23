@@ -23,7 +23,7 @@ export default class Router{
       // Set Title
       Title.set(response.TITLE);
 
-      console.log(content);
+      // console.log(content);
 
       return;
     }
@@ -42,22 +42,32 @@ export default class Router{
       // Set Title
       Title.set(response.TITLE);
 
-      console.log(content);
+      // console.log(content);
 
     }catch(error){
-      // Load The Page 404
-      response = await import(`../pages/404.js`);
+      // Error: 404
+      if(error instanceof TypeError){
+        // Change URL To /404
+        window.history.pushState("", "", URL+"404");
 
-      // Get The Content
-      content = await response.default();
+        // Load The Page 404
+        response = await import(`../pages/404.js`);
 
-      // Render The Conten
-      Dom.render(content);
+        // Get The Content
+        content = await response.default();
 
-      // Set Title
-      Title.set(response.TITLE);
+        // Render The Conten
+        Dom.render(content);
 
-      console.log(content);
+        // Set Title
+        Title.set(response.TITLE);
+
+      }else if(error instanceof ReferenceError){
+        console.log(error);
+
+      }
+
+      // console.log(content);
 
     }
   }
