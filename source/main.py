@@ -165,19 +165,24 @@ def logOut():
         return make_response(json.dumps({"response": "OK"}), 200)
 
 
+#################################################### Me | MyPage
+@app.route("/me", methods=["POST"])
+@app.route("/myPage", methods=["POST"])
+def me():
+    pass
+
+
+#################################################### Plans & Pricing
+@app.route("/plans", methods=["POST"])
+@app.route("/pricing", methods=["POST"])
+@app.route("/plansAndPricing", methods=["POST"])
+def plansAndPricing():
+    pass
+
+
 #################################################### Privacy Policy
 @app.route("/privacyPolicy", methods=["GET", "POST"])
 def privacyPolicy():
-    if request.method == "GET":
-        return render_template("index.html", **globals())
-
-    elif request.method == "POST":
-        return make_response(json.dumps({"response": "OK"}), 200)
-
-
-#################################################### Contact Us
-@app.route("/contactUs", methods=["GET", "POST"])
-def contactUs():
     if request.method == "GET":
         return render_template("index.html", **globals())
 
@@ -195,19 +200,14 @@ def termsOfUse():
         return make_response(json.dumps({"response": "OK"}), 200)
 
 
-#################################################### Me | MyPage
-@app.route("/me", methods=["POST"])
-@app.route("/myPage", methods=["POST"])
-def me():
-    pass
+#################################################### Contact
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+    if request.method == "GET":
+        return render_template("index.html", **globals())
 
-
-#################################################### Plans & Pricing
-@app.route("/plans", methods=["POST"])
-@app.route("/pricing", methods=["POST"])
-@app.route("/plansAndPricing", methods=["POST"])
-def plansAndPricing():
-    pass
+    elif request.method == "POST":
+        return make_response(json.dumps({"response": "OK"}), 200)
 
 
 #################################################### none/404

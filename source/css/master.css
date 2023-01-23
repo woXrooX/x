@@ -180,8 +180,8 @@ body > loading::after{
 }
 
 body > menu{
-  --menu-color: hsla(var(--color-main-hue), 5%, 20%, 1);
-  background-color: var(--menu-color);
+  --menu-background-color: hsla(var(--color-main-hue), 5%, 20%, 1);
+  background-color: var(--menu-background-color);
   height: 100vh;
   width: auto;
   padding: calc(var(--padding) * 4 );
@@ -202,8 +202,16 @@ body > menu{
   transition-property: all;
 
 }
+body > menu > *{
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) / 2);
+
+}
 body > menu > * > a{
-  color: var(--color-text-accent);
+  filter: brightness(70%);
+
+  color: white;
   font-size: 2rem;
 
   display: flex;
@@ -211,12 +219,17 @@ body > menu > * > a{
   align-items: center;
   gap: var(--gap);
 
+  transition: var(--transition-velocity) ease-in-out;
+  transition-property: filter;
+
 }
-body > menu > * > a[active]{
-  color: red;
+body > menu > * > a:where([active], :hover){
+  filter: brightness(130%);
 
 }
 body > menu > * > a > svg{
+
+
   height: 40px;
   width: 40px;
 
