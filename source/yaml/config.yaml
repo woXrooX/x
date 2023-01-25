@@ -51,6 +51,26 @@ features:
   paymentMethod: false
 
 
+######### Username
+username_min_length: 6
+username_max_length: 50
+usernameRegEx: "^[a-zA-Z0-9'_-]+$"
+
+
+######### Password
+password_min_length: 6
+password_max_length: 50
+passwordRegEx: "^(?=.*[a-z])(?=.*[0-9])(?=.*[-!@#$%^&*_+])[-!@#$%^&*_+A-Za-z0-9]{6,}$"
+
+
+######### Phone Number
+phoneNumberRegEx: "^[+]{1,1}[0-9]{11,11}$"
+
+
+######### eMail
+eMailRegEx: "^[a-zA-Z0-9][a-zA-Z0-9._-]{0,20}[a-zA-Z0-9]@[a-z][a-zA-Z0-9-_]{1,20}.[a-z]{2,3}$"
+
+
 ######## Stripe payment
 stripe_payment:
   pb_key: 'pk_test_51Kr4zpAh3t85mIMGcpGTyCesktRL3wdpQZATQp0q8dTJXBjdOggQADHZaEgM2D2XcbKbFCTELj9wjtEuW5nEwPHe00lh4kxZbP'
