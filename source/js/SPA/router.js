@@ -14,11 +14,8 @@ export default class Router{
       // Load The Page
       response = await import(`../pages/home.js`);
 
-      // Get The Content
-      content = await response.default();
-
       // Render The Content
-      Dom.render(content);
+      Dom.render(response.default());
 
       // Set Title
       Title.set(response.TITLE);
@@ -33,11 +30,8 @@ export default class Router{
       // Load The Page
       response = await import(`../pages${link}.js`);
 
-      // Get The Content
-      content = await response.default();
-
       // Render The Content
-      Dom.render(content);
+      Dom.render(response.default());
 
       // Set Title
       Title.set(response.TITLE);
@@ -46,23 +40,22 @@ export default class Router{
 
     }catch(error){
       // Error: 404
-      if(error instanceof TypeError){
+      if(error.message.search("Failed to fetch dynamically imported module:") !== -1){
         // Change URL To /404
         window.history.pushState("", "", URL+"404");
 
         // Load The Page 404
         response = await import(`../pages/404.js`);
 
-        // Get The Content
-        content = await response.default();
-
-        // Render The Conten
-        Dom.render(content);
+        // Render The Content
+        Dom.render(response.default());
 
         // Set Title
         Title.set(response.TITLE);
 
-      }else if(error instanceof ReferenceError){
+      }else{
+        Dom.render(error);
+
         console.log(error);
 
       }
