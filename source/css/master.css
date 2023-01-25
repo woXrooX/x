@@ -283,7 +283,7 @@ body > header > svg[for=menu]{
 
 body > main {
   width: 100vw;
-  height: calc(100vh - var(--header-height) - var(--footer-height));
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
 
 }
 
