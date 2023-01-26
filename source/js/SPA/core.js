@@ -1,24 +1,20 @@
-// class static initialization block
-// class Clazz{
-//   static #shown = true;
-//   static{
-//     this.#shown = false;
-//     Clazz.#shown = false; same as above
-//   }
-
 //////////////// SPA - Single Page Application
-
 "use strict";
+
+//// Custom Elements
+import El from "./elements/el.js";
+// import Form from "./elements/form.js";
+// import Toast from "./elements/toast.js";
 
 // import CSS from "./css.js";
 // document.head.innerHTML += `<style>${CSS}</style>`;
 
+//// Core Classes
 import Dom from "./dom.js";
-import Title from "./title.js";
+// import Title from "./title.js";
 import Router from "./router.js";
+import Form from "./form.js";
 // import Cover from "./cover.js";
-
-// import Form from "./form.js";
 import Hyperlink from "./hyperlink.js";
 import Loading from "./loading.js";
 import Menu from "./menu.js";
@@ -26,7 +22,6 @@ import Menu from "./menu.js";
 
 
 // import Former from "./elements/former.js";
-// import Toast from "./elements/toast.js";
 
 // document.querySelector("body > main > main > section").innerHTML =
 // // element:{attributes:value, ..}
@@ -48,6 +43,7 @@ export default class Core{
     Core.#onUrlChange();
     Core.#onHashChange();
     Core.#onDomChange();
+
   }
 
   /////// Event Handlers
@@ -97,7 +93,7 @@ export default class Core{
       // console.log("onDomChange");
 
       Hyperlink.collect();
-      // Form.collect();
+      Form.collect();
 
     });
   }
