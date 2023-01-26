@@ -56,7 +56,7 @@ MySQL.setUp(
 #     languages = db.fetchall()
 
 ### language Default Code
-langCode = conf["site_language"]
+langCode = conf["default"]["language"]
 
 ### language Dictionary
 with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") as file:
@@ -70,7 +70,7 @@ with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") a
 #     currencies = db.fetchall()
 
 ### currency Default Code
-currencyCode = conf["currency"]
+currencyCode = conf["default"]["currency"]
 
 
 #################################################### Decorations
@@ -149,7 +149,7 @@ def logIn():
         return render_template("index.html", **globals())
 
     elif request.method == "POST":
-        return make_response(json.dumps({"response": "OK"}), 200)
+        return make_response(request.get_json(), 200)
 
 
 #################################################### Log Out
@@ -214,6 +214,53 @@ def contact():
 @app.errorhandler(404)
 def page_not_found(error):
     return redirect(url_for('home'))
+
+
+#################################################### Bridge
+@app.route("/bridge", methods=["POST"])
+def bridge():
+    # globalData
+    if request.get_json()["for"] == "globalData":
+        return make_response(
+            {
+                "response":"ok",
+                "conf": {
+                    "default": conf["default"],
+                    "username": conf["username"],
+                    "password": conf["password"],
+                    "phoneNumber": conf["phoneNumber"],
+                    "eMail": conf["eMail"]
+                },
+                # "session":session["user"] if "user" in session else None,
+                "langDict": langDict,
+                "langCode": langCode,
+                # "languages":languages,
+                # "currencies":currencies
+            }, 200)
+
+    # languages
+    # if request.get_json()["for"] == "languages":
+    #     return make_response(
+    #         {
+    #             "response":"ok",
+    #             "languages":languages
+    #         }, 200)
+
+    # langCode
+    if request.get_json()["for"] == "langCode":
+        return make_response(
+            {
+                "response":"ok",
+                "langCode":langCode
+            }, 200)
+
+    # langDict
+    if request.get_json()["for"] == "langDict":
+        return make_response(
+            {
+                "response":"ok",
+                "langDict":langDict
+            }, 200)
 
 
 #################################################### RUN
