@@ -1,15 +1,6 @@
 /****************************** Form START ******************************/
 
-/************ Form element ************/
-/*
-padding: 10
-border-radius: 5px;
-gap: 10px
-height 40px
-width 100%;
-font-size: 20px;
-border 1px solid var(--color-text-secondary)
-*/
+/************ Form START ************/
 form{
   --f-padding: 10px;
   --f-radius: 5px;
@@ -25,6 +16,7 @@ form{
   grid-gap: var(--f-gap);
 
 }
+/************ Form END ************/
 
 form :not(input:where([type=radio], [type=checkbox])),
 form select{
@@ -34,7 +26,7 @@ form select{
 
 }
 
-/************ fieldset ************/
+/************ fieldset START ************/
 form > fieldset{
   padding: var(--f-padding);
   border-radius: var(--f-radius);
@@ -45,8 +37,9 @@ form > fieldset{
   gap: var(--f-gap);
 
 }
+/************ fieldset END ************/
 
-/************ fieldset > legend ************/
+/************ fieldset > legend START ************/
 form > fieldset > legend{
   background-color: var(--color-text-primary);
   color: var(--color-text-accent);
@@ -54,10 +47,12 @@ form > fieldset > legend{
   padding: 2px 5px;
 
 }
+/************ fieldset > legend END ************/
 
-/************ imput[type=text] & imput[type=password] & imput[type=eMail] ************/
-form > label > input:where([type=text], [type=eMail], [type=password]),
-form > fieldset > label > input:where([type=text], [type=eMail], [type=password]){
+/************ select, textarea, imput -> type = [text, password, eMail, number, color] START ************/
+form select,
+form textarea,
+form input:where([type=text], [type=eMail], [type=password], [type=number], [type=color]){
   background-color: transparent;
   width: var(--f-width);
   height: var(--f-height);
@@ -66,15 +61,85 @@ form > fieldset > label > input:where([type=text], [type=eMail], [type=password]
   border-radius: var(--f-radius);
   border: var(--f-border);
 
-  /* transition: 1s;
-  transition-property: border; */
+}
+/************ select, textarea, imput -> type = [text, password, eMail, number, color] END ************/
+
+/************ :focus -> inputs & textarea & select START ************/
+form select:focus,
+form textarea:focus,
+form input[type=number]:focus,
+form input:focus{
+  background-color: var(--color-surface-2);
+  transition: var(--transition-velocity) ease-in-out;
+  transition-property: background-color;
+
+}
+/************ :focus -> inputs & textarea & select END ************/
+
+/************ Textarea START ************/
+form textarea{
+  height: unset;
+  min-height: 50px;
+  resize: vertical;
+  padding: 5px;
+
+}
+/************ Textarea END ************/
+
+/************ input[type=color] START ************/
+/* form input[type=color]{-webkit-appearance: none;} */
+
+/* Chrome X */
+form input[type=color]::-webkit-color-swatch-wrapper{
+  padding: 5px;
+  width: var(--f-width);
+
 }
 
-/************ input[type=submit] & button ************/
-form > button,
-form > input[type=submit],
-form > label > button,
-form > label > input[type=submit]{
+/* Chrome Y */
+form input[type=color]::-webkit-color-swatch{
+  border: none;
+  border-radius: var(--f-radius);
+  height: 100%;
+
+}
+
+/* Firefox X */
+form input[type=color]::-moz-color-swatch-wrapper {
+  padding: 5px;
+  width: var(--f-width);
+
+}
+
+/* Firefox Y */
+form input[type=color]::-moz-color-swatch{
+  border: none;
+  border-radius: var(--f-radius);
+  height: 100%;
+
+}
+/************ input[type=color] END ************/
+
+/************ input[type=number] Hide Arrow START ************/
+/* Firefox */
+form input[type=number]{-moz-appearance: textfield;}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{-webkit-appearance: none;}
+/************ input[type=number] END ************/
+
+/************ input[type=radio] & input[type=checkbox] START ************/
+form input:where([type=radio], [type=checkbox]){
+  width: 20px;
+  height: auto;
+
+}
+/************ input[type=radio] & input[type=checkbox] END ************/
+
+/************ input[type=submit] & button START ************/
+form button,
+form input[type=submit]{
   background-color: var(--color-main);
   color: white;
   overflow: hidden;
@@ -87,119 +152,15 @@ form > label > input[type=submit]{
 
   cursor: pointer;
 
+  filter: brightness(120%);
   transition: var(--transition-velocity) filter;
-}
-
-form > button:where(:active, :focus, :hover),
-form > input[type=submit]:where(:active, :focus, :hover),
-form > label > button:where(:active, :focus, :hover),
-form > label > input[type=submit]:where(:active, :focus, :hover){
-  filter: brightness(90%);
-}
-
-/************ input[type=radio] & input[type=checkbox] ************/
-form > fieldset > label > input:where([type=radio], [type=checkbox]),
-form > label > input:where([type=radio], [type=checkbox]){
-  width: 20px;
-  height: auto;
-}
-
-/************ textarea ************/
-form > label > textarea{
-  background-color: transparent;
-  width: var(--f-width);
-  min-height: 50px;
-  font-size: var(--f-font-size);
-  resize: vertical;
-
-  padding: 5px;
-  border-radius: var(--f-radius);
-  border: var(--f-border);
-
-  transition: var(--transition-velocity);
-  transition-property: border;
-}
-
-/************ input[type=color] ************/
-form > fieldset > label > input[type=color],
-form > label > input[type=color]{
-  background-color: transparent;
-  width: var(--f-width);
-  height: var(--f-height);
-  font-size: var(--f-font-size);
-  padding: 0 var(--f-padding);
-  border-radius: var(--f-radius);
-  border: var(--f-border);
-  transition: var(--transition-velocity);
-  transition-property: border;
-}
-
-/* check this webkit appearance already mentioned in the begining */
-form > fieldset > label > input[type=color]{
-  -webkit-appearance: none;
-  padding: 0px;
-  border: var(--f-border);
 
 }
 
-/* X */
-form > fieldset > label > input[type=color]::-webkit-color-swatch-wrapper {
-  padding: 5px;
-  width: var(--f-width);
+form button:where(:active, :focus, :hover),
+form input[type=submit]:where(:active, :focus, :hover){
+  filter: brightness(80%);
 }
-
-/* Y */
-form > fieldset > label > input[type=color]::-webkit-color-swatch {
-  border: none;
-  border-radius: var(--f-radius);
-  height: 100%;
-}
-
-/************ select  ************/
-form > label > select,
-form > fieldset > label > select{
-  background-color: transparent;
-  width: var(--f-width);
-  height: var(--f-height);
-  font-size: var(--f-font-size);
-  padding: 0 var(--f-padding);
-  border-radius: var(--f-radius);
-  border: var(--f-border);
-
-  transition: var(--transition-velocity);
-  transition-property: border;
-}
-
-/************ input[type=number] ************/
-form > fieldset > label > input[type=number],
-form > label > input[type=number]{
-  background-color: transparent;
-  width: var(--f-width);
-  height: var(--f-height);
-  font-size: var(--f-font-size);
-  padding: 0 var(--f-padding);
-  border-radius: var(--f-radius);
-  border: var(--f-border);
-  transition: var(--transition-velocity);
-  transition-property: border;
-
-  -moz-appearance: textfield;
-}
-
-/* hide arrow */
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-
-/************ :focus -> inputs & textarea & select ************/
-form select:focus,
-form textarea:focus,
-form input:focus{
-  background-color: var(--color-surface-4);
-  filter: brightness(95%);
-  transition: var(--transition-velocity) ease-in-out background-color;
-}
+/************ input[type=submit] & button END ************/
 
 /****************************** Form END ******************************/
