@@ -164,3 +164,64 @@ form input[type=submit]:where(:active, :focus, :hover){
 /************ input[type=submit] & button END ************/
 
 /****************************** Form END ******************************/
+
+/****************************** hr START ******************************/
+hr{
+  border:none;
+  border-top:1px solid var(--color-text-secondary);
+}
+/****************************** hr END ******************************/
+
+/****************************** a START ******************************/
+a{
+  color:var(--color-text-secondary);
+}
+a:where(:active, :focus, :hover){
+  color:var(--color-text-primary);
+}
+/****************************** a END ******************************/
+
+/****************************** Info, Success, Warning, Error START ******************************/
+
+info{
+  color:var(--color-info);
+}
+info::before{
+  content:"\2139";
+}
+
+success{
+  color:var(--color-success);
+}
+success::before{
+  content:"\2713";
+}
+
+warning{
+  color:var(--color-warning);
+}
+warning::before{
+  content:"\26A0";
+}
+
+error{
+  color:var(--color-error);
+}
+error::before{
+  content: "\2715";
+}
+
+info::before,
+success::before,
+warning::before,
+error::before{
+  margin-right:5px;
+}
+
+success:empty,
+warning:empty,
+error:empty{
+  display:none;
+}
+
+/****************************** Info, Success, Warning, Error END ******************************/
