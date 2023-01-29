@@ -3,7 +3,7 @@
 import bridge from "../modules/bridge.js"
 
 import Hyperlink from "./hyperlink.js";
-// import Toast from "./elements/toast.js";
+import Toast from "./elements/toast.js";
 
 export default class Form{
 
@@ -34,7 +34,7 @@ export default class Form{
         data["fields"][event.target.name] = event.target.value;
 
         let response = await bridge(`${form.getAttribute("for")}`, data);
-        if("field" in response) Form.#response(response["field"], response["response"], response["title"]);
+        if("field" in response) Form.#response(response["field"], response["type"], response["message"]);
       };
     });
   }
@@ -59,16 +59,13 @@ export default class Form{
       console.log(response);
 
       // Above Input Field
-      if("field" in response) Form.#response(response["field"], response["response"], null, true);
+      if("field" in response) Form.#response(response["field"], response["type"], response["message"], true, true);
 
       // Above Submit Field
-      Form.#response(form.getAttribute("for"), response["response"], response["title"], false, true);
+      Form.#response(form.getAttribute("for"), response["type"], response["message"], false, true);
 
-      // Check If Response Includes Action
-      if("action" in response === false){
-        // console.log("No Action Specified");
-        return;
-      }
+      ///// Check If Response Includes Action
+      if("action" in response === false) return;
 
       // // Update body > main
       // if(response["action"] == "updateMain"){
@@ -76,7 +73,7 @@ export default class Form{
       // }
 
       // Redirect
-      if(response["action"] == "redirect") Hyperlink.locate(response["redirectUrl"]);
+      if(response["action"] == "redirect") Hyperlink.locate(response["url"]);
 
       // Reload
       if(response["action"] == "reload") window.location.reload();
@@ -106,6 +103,7 @@ export default class Form{
     }
 
     // Enable Toast
-    // if(toast === true) Toast.new(type, message);
+    if(toast === true) Toast.new(type, message);
+
   }
 }

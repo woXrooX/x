@@ -139,7 +139,7 @@ body {
   background-color: var(--color-surface-1);
   color: var(--color-text-primary);
   font-family: Quicksand;
-  font-size: 10px;
+  font-size: 15px;
 
 }
 
@@ -176,6 +176,28 @@ body > loading::after{
 @keyframes loading{
   0%{transform: translate(-50%, -50%) rotate(0deg);}
   100%{transform: translate(-50%, -50%) rotate(720deg);}
+
+}
+
+body > toasts{
+  /* background-color: rgba(0, 0, 0, 0.2); */
+  height: auto;
+  max-height: 100vh;
+  width: 400px;
+  /* padding: var(--padding); */
+  padding: 5px 5px 20px 5px;
+  overflow-y: scroll;
+
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--gap);
+
+  /* pointer-events: none; */
+
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  z-index: var(--z-toasts);
 
 }
 
