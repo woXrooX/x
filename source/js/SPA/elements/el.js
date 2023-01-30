@@ -4,7 +4,13 @@ export default class El extends HTMLElement{
   constructor(){
     super();
 
+    // Closed
     this.shadow = this.attachShadow({mode: 'closed'});
+
+    // Open
+    // this.attachShadow({mode: 'open'});
+    // this.shadowRoot.appendChild(Node);
+    // this.shadowRoot.querySelector("toast>main>icon").innerHTML = "HTML";
 
     DOM: {
       // const content = JSON.parse(this.textContent);
