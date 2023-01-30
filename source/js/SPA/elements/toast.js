@@ -8,11 +8,14 @@
 //   Toast.new("success", "chooseSiteLang");
 // }, 1000);
 
+// Raw HTML
+// <x-toast type="typeName">Content</x-toast>
+
 import Language from "../language.js";
 
 export default class Toast extends HTMLElement{
   static #selector = "body>toasts";
-  static #autoDismissTimer = 15000;
+  static #autoDismissTimer = 15000; // 5000
   static #template = document.createElement("template");
 
   static {
@@ -32,7 +35,8 @@ export default class Toast extends HTMLElement{
   constructor(){
     super();
 
-    this.attachShadow({mode: 'open'});
+    // this.attachShadow({mode: 'open'});
+    this.shadow = this.attachShadow({mode: 'closed'});
 
     Type: {
       this.typeName = "warning";
@@ -55,9 +59,9 @@ export default class Toast extends HTMLElement{
           overflow: hidden;
 
           background-color: var(--color-surface-1);
-          padding: 5px;
+          padding: var(--padding);
           margin: 0px;
-          border-radius: 5px;
+          border-radius: var(--radius);
 
           box-shadow: var(--shadow-light);
 
@@ -77,7 +81,7 @@ export default class Toast extends HTMLElement{
           background-color: var(--color-${this.typeName});
           height: 100%;
           width: 5px;
-          border-radius: 5px;
+          border-radius: var(--radius);
         }
 
         toast > main{
@@ -93,8 +97,9 @@ export default class Toast extends HTMLElement{
           font-size: 30px;
           padding-right: 5px;
           color: var(--color-${this.typeName});
-          grid-area:icon;
+          grid-area: icon;
         }
+
         toast > main > type{
           font-size: 20px;
           color: var(--color-text-primary);
@@ -116,7 +121,7 @@ export default class Toast extends HTMLElement{
           width: 40px;
           height: 40px;
 
-          border-radius: 5px;
+          border-radius: var(--radius);
 
           display: grid;
           place-items: center;
@@ -130,18 +135,29 @@ export default class Toast extends HTMLElement{
           background-color: var(--color-surface-4);
         }
         `;
-        this.shadowRoot.appendChild(style);
+
+        this.shadow.appendChild(style);
+
     }
 
-    this.shadowRoot.appendChild(Toast.#template.content.cloneNode(true));
-    this.shadowRoot.querySelector("toast>main>icon").innerHTML = !!ICONS[this.typeName] ? ICONS[this.typeName] : ICONS["warning"];
-    this.shadowRoot.querySelector("toast>main>type").innerHTML = Language.translate(this.typeName);
-    this.shadowRoot.querySelector("toast>main>content").innerHTML = Language.translate(this.textContent);
-    this.shadowRoot.querySelector("toast>dismiss").innerHTML = ICONS["close"];
+    // Clone And Append Template
+    this.shadow.appendChild(Toast.#template.content.cloneNode(true));
+
+    // If typeName === TRUE Append Type Specific Icon Else Append "warning" Icon
+    this.shadow.querySelector("toast>main>icon").innerHTML = !!ICONS[this.typeName] ? ICONS[this.typeName] : ICONS["warning"];
+
+    // InnerHTML "typeName"
+    this.shadow.querySelector("toast>main>type").innerHTML = Language.translate(this.typeName);
+
+    // InnerHTML "textContent"
+    this.shadow.querySelector("toast>main>content").innerHTML = Language.translate(this.textContent);
+
+    // InnerHTML Close Button Icon
+    this.shadow.querySelector("toast>dismiss").innerHTML = ICONS["close"];
 
     // Remove Toast On Click Dismiss
     // dismiss.onclick = ()=> this.remove(); // Bug w/ N sec removal
-    this.shadowRoot.querySelector("toast>dismiss").onclick = ()=> this.style.display = "none";
+    this.shadow.querySelector("toast>dismiss").onclick = ()=> this.style.display = "none";
   }
 
   static new(type = "warning", content = ""){
@@ -149,6 +165,7 @@ export default class Toast extends HTMLElement{
 
     // Auto Remove After N Seconds
     setTimeout(()=>{document.querySelector(Toast.#selector).firstChild?.remove();}, Toast.#autoDismissTimer);
+
   }
 }
 customElements.define('x-toast', Toast);
