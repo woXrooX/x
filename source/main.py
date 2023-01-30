@@ -150,23 +150,23 @@ def logIn():
 
     elif request.method == "POST":
         return make_response(json.dumps({
-        "type": "success",
-        "message": "databaseError"
+            "type": "success",
+            "message": "databaseError"
         }), 200)
 
         # return make_response(json.dumps({
-        # "type": "success",
-        # "type": "info",
-        # "type": "warning",
-        # "type": "error",
-        #
-        # "message": "someSuccessMessage", # From Lang Dict
-        # "field": "username" # From Front-End Form Name OR ID Or For
-        #
-        # "action": "redirect",
-        # "url": "/me"
-        #
-        # "action": "reload"
+            # "type": "success",
+            # "type": "info",
+            # "type": "warning",
+            # "type": "error",
+            #
+            # "message": "someSuccessMessage", # From Lang Dict
+            # "field": "username" # From Front-End Form Name OR ID Or For
+            #
+            # "action": "redirect",
+            # "url": "/me"
+            #
+            # "action": "reload"
         #
         # }), 200)
 
