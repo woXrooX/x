@@ -15,7 +15,7 @@ import Language from "../language.js";
 
 export default class Toast extends HTMLElement{
   static #selector = "body>toasts";
-  static #autoDismissTimer = 15000; // 5000
+  static #autoDismissTimer = 5000;
   static #template = document.createElement("template");
 
   static {
