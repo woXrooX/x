@@ -42,6 +42,7 @@ export default class Core{
     Core.#onLoad();
     Core.#onUrlChange();
     Core.#onHashChange();
+    Core.#onHistoryButtonClicked();
     Core.#onDomChange();
 
   }
@@ -83,6 +84,16 @@ export default class Core{
       // console.log("onHashChange");
 
       // Nav.setActive();
+
+    });
+  }
+
+  static #onHistoryButtonClicked(){
+    window.addEventListener('popstate', ()=>{
+      // window.dispatchEvent(new Event('popstate'));
+      // console.log("onHistoryButtonClicked");
+
+      Router.handle();
 
     });
   }
