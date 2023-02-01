@@ -67,11 +67,14 @@ export default function content(){
     </label>
 
     <label>
-        <p for='logIn'></p>
+        <p for='submit'></p>
         <input type='submit' name='submit' value='Submit'>
     </label>
 
-    <button type='submit' name='button'>Button</button>
+    <label>
+        <p for='button'></p>
+        <button type='submit' name='button'>Button</button>
+    </label>
 
   </form>
 
