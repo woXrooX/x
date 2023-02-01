@@ -18,16 +18,8 @@ form{
 }
 /************ Form END ************/
 
-form :not(input:where([type=radio], [type=checkbox])),
-form select{
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-}
-
 /************ fieldset START ************/
-form > fieldset{
+form fieldset{
   padding: var(--f-padding);
   border-radius: var(--f-radius);
   border: var(--f-border);
@@ -40,7 +32,7 @@ form > fieldset{
 /************ fieldset END ************/
 
 /************ fieldset > legend START ************/
-form > fieldset > legend{
+form fieldset legend{
   background-color: var(--color-text-primary);
   color: var(--color-text-accent);
   border-radius: var(--f-radius);
@@ -48,6 +40,11 @@ form > fieldset > legend{
 
 }
 /************ fieldset > legend END ************/
+
+/************ label START ************/
+form label{
+}
+/************ label START ************/
 
 /************ select, textarea, imput -> type = [text, password, eMail, number, color] START ************/
 form select,
@@ -69,7 +66,7 @@ form select:focus,
 form textarea:focus,
 form input[type=number]:focus,
 form input:focus{
-  background-color: var(--color-surface-2);
+  background-color: var(--color-surface-3);
   transition: var(--transition-velocity) ease-in-out;
   transition-property: background-color;
 
@@ -136,6 +133,16 @@ form input:where([type=radio], [type=checkbox]){
 
 }
 /************ input[type=radio] & input[type=checkbox] END ************/
+
+/************ select hide arrow START ************/
+/* form :not(input:where([type=radio], [type=checkbox])), */
+form select{
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+}
+/************ select hide arrow END ************/
 
 /************ input[type=submit] & button START ************/
 form button,
