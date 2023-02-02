@@ -8,9 +8,9 @@ v1.0.0
   7. Simplest UI System
 
 v2.0.0
-  1. Sign Up (Through Google Or Other Social Platforms)
-  2. Log In Two (Two Factor Authentication)
-  3. Mix Of Stripe And Home Made System
+  1. Sign Up (Through Social Platforms)
+  2. Log In (Two Factor Authentication)
+  3. Mix Of Stripe And Home Made System Payment System
   4. Browser Extensions
   5. Site Language
   6. Menu (Sub Menus)
