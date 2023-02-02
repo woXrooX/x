@@ -1,0 +1,14 @@
+v1.0.0
+  1. Sign Up (With Email Or Phone Number Verifications)
+  2. Log In
+  3. Log Out
+  4. Menu
+  5. Layout System
+  6. Payment System (Stripe)
+  7. Simplest UI System
+
+v2.0.0
+  1. Sign Up (Through Google Or Other Social Platforms)
+  2. Log In Two (Two Factor Authentication)
+  3. Mix Of Stripe And Home Made System
+  4. ...
