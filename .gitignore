@@ -3,19 +3,19 @@ __pycache__/
 
 
 # User Made Pages
-source/js/pages/*.js
+# source/js/pages/*.js
 
 # Allow Default Pages
-!source/js/pages/home.js
+# !source/js/pages/home.js
 
-!source/js/pages/404.js
+# !source/js/pages/404.js
 
-!source/js/pages/signUp.js
-!source/js/pages/logIn.js
-!source/js/pages/logOut.js
+# !source/js/pages/signUp.js
+# !source/js/pages/logIn.js
+# !source/js/pages/logOut.js
 
-!source/js/pages/contact.js
-!source/js/pages/privacyPolicy.js
-!source/js/pages/termsOfUse.js
-!source/js/pages/updates.js
-!source/js/pages/faq.js
+# !source/js/pages/contact.js
+# !source/js/pages/privacyPolicy.js
+# !source/js/pages/termsOfUse.js
+# !source/js/pages/updates.js
+# !source/js/pages/faq.js
