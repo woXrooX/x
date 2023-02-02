@@ -117,7 +117,7 @@ column.w-100{width: 100%;}
 
 /* Boxes START */
 .box{
-  background-color: var(--color-surface-2);
+  background-color: var(--color-surface-3);
   box-shadow: var(--shadow-light);
   border-radius: var(--radius);
 
