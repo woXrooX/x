@@ -295,6 +295,8 @@ body > header{
 
 }
 body > header > svg[for=menu]{
+  cursor: pointer;
+
   display: flex;
   justify-content: flex-start;
 
