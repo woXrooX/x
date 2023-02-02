@@ -17,3 +17,22 @@
 # Git Publish New Branches To Remote (Working With New Branches)
 1. git checkout -b feature/newBranchName
 2. git push -u origin feature/newBranchName
+
+# Default Branches To Use
+- main
+- dev
+
+- feature/loading
+- feature/logIn
+- feature/logOut
+- feature/menu
+- feature/paymentSystem
+- feature/signUp
+
+- tool/layoutSystem
+- tools
+
+- assets
+- database
+
+- tmp/[name]
