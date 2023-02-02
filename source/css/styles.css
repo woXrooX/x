@@ -50,7 +50,7 @@ form label{
 form select,
 form textarea,
 form input:where([type=text], [type=eMail], [type=password], [type=number], [type=color]){
-  background-color: transparent;
+  background-color: var(--color-surface-1);
   width: var(--f-width);
   height: var(--f-height);
   font-size: var(--f-font-size);
@@ -62,13 +62,14 @@ form input:where([type=text], [type=eMail], [type=password], [type=number], [typ
 /************ select, textarea, imput -> type = [text, password, eMail, number, color] END ************/
 
 /************ :focus -> inputs & textarea & select START ************/
-form select:focus,
-form textarea:focus,
-form input[type=number]:focus,
-form input:focus{
-  background-color: var(--color-surface-3);
+form select:where(:hover, :focus),
+form textarea:where(:hover, :focus),
+form input[type=number]:where(:hover, :focus),
+form input:where(:hover, :focus){
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-text-primary);
   transition: var(--transition-velocity) ease-in-out;
-  transition-property: background-color;
+  transition-property: background-color, border;
 
 }
 /************ :focus -> inputs & textarea & select END ************/
