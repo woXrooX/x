@@ -14,9 +14,13 @@ export default class Menu{
   static {
     Menu.#elementMenu = document.querySelector(Menu.selector);
 
-    Menu.#onClickMenuButtonShow();
-    Menu.#onClickCoverHide();
-    Menu.#onClickHyperlinksHide();
+    // Check If Menu Exists Then Listen To The Events
+    if(!!Menu.#elementMenu !== false){
+      Menu.#onClickMenuButtonShow();
+      Menu.#onClickCoverHide();
+      Menu.#onClickHyperlinksHide();
+
+    }
 
   }
 
