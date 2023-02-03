@@ -104,9 +104,15 @@
     --color-text-accent: hsla(var(--color-main-hue), 15%, 95%, 1);
 
     --color-surface-1: hsla(var(--color-main-hue), 20%, 100%, 1);
-    --color-surface-2: hsla(var(--color-main-hue), 20%, 92%, 1);
-    --color-surface-3: hsla(var(--color-main-hue), 25%, 90%, 1);
+    --color-surface-2: hsla(var(--color-main-hue), 20%, 95%, 1);
+    --color-surface-3: hsla(var(--color-main-hue), 20%, 90%, 1);
     --color-surface-4: hsla(var(--color-main-hue), 20%, 85%, 1);
+    --color-surface-5: hsla(var(--color-main-hue), 20%, 80%, 1);
+    --color-surface-6: hsla(var(--color-main-hue), 20%, 75%, 1);
+    --color-surface-7: hsla(var(--color-main-hue), 20%, 60%, 1);
+    --color-surface-8: hsla(var(--color-main-hue), 20%, 45%, 1);
+    --color-surface-9: hsla(var(--color-main-hue), 20%, 30%, 1);
+    --color-surface-10: hsla(var(--color-main-hue), 20%, 15%, 1);
 
     --color-shadow: var(--color-main-hue) 10% 20%;
     --shadow-opacity: 0.2;
@@ -127,9 +133,15 @@
     --color-text-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1);
 
     --color-surface-1: hsla(var(--color-main-hue), 10%, 10%, 1);
-    --color-surface-2: hsla(var(--color-main-hue), 5%, 15%, 1);
-    --color-surface-3: hsla(var(--color-main-hue), 5%, 20%, 1);
-    --color-surface-4: hsla(var(--color-main-hue), 5%, 25%, 1);
+    --color-surface-2: hsla(var(--color-main-hue), 10%, 15%, 1);
+    --color-surface-3: hsla(var(--color-main-hue), 10%, 20%, 1);
+    --color-surface-4: hsla(var(--color-main-hue), 10%, 25%, 1);
+    --color-surface-5: hsla(var(--color-main-hue), 10%, 30%, 1);
+    --color-surface-6: hsla(var(--color-main-hue), 10%, 35%, 1);
+    --color-surface-7: hsla(var(--color-main-hue), 10%, 50%, 1);
+    --color-surface-8: hsla(var(--color-main-hue), 10%, 65%, 1);
+    --color-surface-9: hsla(var(--color-main-hue), 10%, 80%, 1);
+    --color-surface-10: hsla(var(--color-main-hue), 10%, 95%, 1);
 
     --color-shadow: var(--color-main-hue) 50% 3%;
     --shadow-opacity: 0.3;
@@ -207,13 +219,13 @@ body > menu{
   background-color: var(--menu-background-color);
   height: 100vh;
   width: auto;
-  padding: calc(var(--padding) * 4 );
 
   overflow-y: scroll;
 
   display: grid;
-  justify-items: start;
   grid-template-rows: auto 2fr auto;
+  justify-items: start;
+  gap: var(--gap);
 
   position: fixed;
   z-index: var(--z-menu);
@@ -226,6 +238,9 @@ body > menu{
 
 }
 body > menu > *{
+  width: 100%;
+  padding: calc(var(--padding) * 4 );
+
   display: flex;
   flex-direction: column;
   gap: calc(var(--gap) / 2);
