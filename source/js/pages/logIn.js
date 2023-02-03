@@ -9,7 +9,7 @@ export default function logIn(){
   let dom = `
 <container>
   <row>
-    <column class="w-50 box p-5">
+    <column class="w-50 bc-2 p-5 bs radius">
 
       <row>
         <h1>${langDict["logIn"][langCode]}</h1>
