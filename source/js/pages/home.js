@@ -5,16 +5,7 @@ export default function home(){
 
 
 
-  let data = `
-<section class="w-half h-full">
-  <form for="home">
-    <input type="text" name="username" placeholder="Username">
-    <input type="password" name="password" placeholder="Password">
-    <input type="submit" name="logIn" value="Log In">
-  </form>
-</section>
-
-  `;
+  let data = `<container>Home</container>`;
 
   let data2 = `
 <container>
@@ -30,6 +21,6 @@ export default function home(){
   `;
 
 
-  return data2;
+  return data;
 
 }
