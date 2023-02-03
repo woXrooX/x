@@ -242,7 +242,7 @@ def bridge():
     if request.get_json()["for"] == "globalData":
         return make_response(
             {
-                "response":"ok",
+                "type": "success",
                 "conf": {
                     "default": conf["default"],
                     "username": conf["username"],
