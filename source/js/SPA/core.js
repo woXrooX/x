@@ -20,23 +20,6 @@ import Loading from "./loading.js";
 import Menu from "./menu.js";
 // import Nav from "./nav.js";
 
-
-// import Former from "./elements/former.js";
-
-// document.querySelector("body > main > main > section").innerHTML =
-// // element:{attributes:value, ..}
-// `<wxx-form>{
-//   "form":{"method": "POST"},
-//   "elements":[
-//     {"section":{"class": "clazz"}},
-//     {"input":{"type": "text", "name": "username", "placeholder": "Username"}},
-//     {"input":{"type":"submit", "name": "logIn", "placeholder": "Log In"}}
-//   ]
-// }</wxx-form>
-// `;
-
-
-
 export default class Core{
   static {
     Core.#onLoad();
