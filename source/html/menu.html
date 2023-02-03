@@ -1,42 +1,7 @@
 <menu>
   <header>M-Header</header>
 
-  <main>
-
-{% for menu in conf["features"]["menus"] %}
-
-  {% if menu["name"] == "logOut" and 'user' in session %}
-
-    <a href="{{url_for(menu['name'])}}">
-      <svg>
-        <use href="{{menu['svg']}}"></use>
-      </svg>
-      {{langDict[menu["name"]][langCode]}}
-    </a>
-
-  {% elif (menu["name"] == "signUp" or menu["name"] == "logIn") and 'user' not in session %}
-
-    <a href="{{url_for(menu['name'])}}">
-      <svg>
-        <use href="{{menu['svg']}}"></use>
-      </svg>
-      {{langDict[menu["name"]][langCode]}}
-    </a>
-
-  {% elif menu["name"] != "signUp" and menu["name"] != "logIn" and menu["name"] != "logOut" %}
-
-    <a href="{{url_for(menu['name'])}}">
-      <svg>
-        <use href="{{menu['svg']}}"></use>
-      </svg>
-      {{langDict[menu["name"]][langCode]}}
-    </a>
-
-  {% endif %}
-
-{% endfor %}
-
-  </main>
+  <main>{{generateMenus()|safe}}</main>
 
   <footer>M-Footer</footer>
 

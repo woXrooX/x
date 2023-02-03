@@ -5,10 +5,6 @@ import json, yaml, re, html, pathlib
 import stripe
 
 
-#################################################### GLOBAL tools
-# import python.tools as tools
-
-
 #################################################### GLOBAL appRunningFrom
 APP_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
 
@@ -16,6 +12,35 @@ APP_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
 #################################################### GLOBAL config
 with open(f"{APP_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
     conf = yaml.safe_load(file)
+
+
+#################################################### GLOBAL tools
+# import python.tools as tools
+
+## Generates Menu Links Dynamically
+def generateMenus():
+    html = ''
+    for menu in conf["features"]["menus"]:
+        if (
+            # If User Logged In Then Do Not Show Link For "logIn"
+            (menu["name"] == "logOut" and 'user' in session) or
+
+            # If User Is Not Logged In Then Show "logIn" And "signUp" Links
+            ((menu["name"] == "signUp" or menu["name"] == "logIn") and 'user' not in session) or
+
+            # If Current Menu Is Not Followings Then Just Show The Links
+            (menu["name"] != "signUp" and menu["name"] != "logIn" and menu["name"] != "logOut")
+        ):
+            html += f"""
+<a href="{url_for(menu['name'])}">
+  <svg>
+    <use href="{menu['svg']}"></use>
+  </svg>
+  {langDict[menu["name"]][langCode]}
+</a>
+            """
+
+    return html
 
 
 #################################################### URL
