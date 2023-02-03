@@ -281,6 +281,12 @@ def bridge():
                 "langDict":langDict
             }, 200)
 
+#################################################### Demo
+@app.route("/demo", methods=["GET"])
+def demo():
+    if request.method == "GET":
+        return render_template("index.html", **globals())
+
 
 #################################################### RUN
 ### Flask server
