@@ -41,6 +41,31 @@ HTML:
 # True = Enabled
 features:
   menu: true
+  menus:
+    - name: "home"
+      svg: "#home"
+
+    - name: "signUp"
+      svg: "#signUp"
+
+    - name: "logIn"
+      svg: "#logIn"
+
+    - name: "logOut"
+      svg: "#logOut"
+
+    - name: "demo"
+      svg: "#contact"
+
+    - name: "privacyPolicy"
+      svg: "#privacyPolicy"
+
+    - name: "termsOfUse"
+      svg: "#termsOfUse"
+
+    - name: "contact"
+      svg: "#contact"
+
 
   signUp: true
   logIn: true
