@@ -328,7 +328,7 @@ body > main {
 }
 
 body > footer {
-  background-color: var(--color-surface-4);
+  background-color: var(--color-surface-2);
   color: var(--color-text-secondary);
 
   width: 100%;
