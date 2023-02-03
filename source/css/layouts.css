@@ -45,7 +45,6 @@ column{
 
 /* Column Sizes START */
 column.w-10{width: 10%;}
-column.w-20{width: 20%;}
 column.w-25{width: 25%;}
 column.w-50{width: 50%;}
 column.w-75{width: 75%;}
@@ -115,13 +114,25 @@ column.w-100{width: 100%;}
 }
 /* Placing END */
 
-/* Boxes START */
-.box{
-  background-color: var(--color-surface-3);
-  box-shadow: var(--shadow-light);
-  border-radius: var(--radius);
+/* Radiuses START */
+.radius{border-radius: var(--radius);}
+/* Radiuses END */
 
-}
-/* Boxes END */
+/* Background Shadow START */
+.bs{box-shadow: var(--shadow-light);}
+/* Background Shadow END */
+
+/* Background Colors START */
+.bc-1{background-color: var(--color-surface-1);}
+.bc-2{background-color: var(--color-surface-2);}
+.bc-3{background-color: var(--color-surface-3);}
+.bc-4{background-color: var(--color-surface-4);}
+.bc-5{background-color: var(--color-surface-5);}
+.bc-6{background-color: var(--color-surface-6);}
+.bc-7{background-color: var(--color-surface-7);}
+.bc-8{background-color: var(--color-surface-8);}
+.bc-9{background-color: var(--color-surface-9);}
+.bc-10{background-color: var(--color-surface-10);}
+/* Background Colors END */
 
 /*********************** Layout System END ***********************/
