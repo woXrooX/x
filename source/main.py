@@ -34,7 +34,7 @@ def generateMenus():
             html += f"""
 <a href="{url_for(menu['name'])}">
   <svg>
-    <use href="{menu['svg']}"></use>
+    <use href="#{menu['svg']}"></use>
   </svg>
   {langDict[menu["name"]][langCode]}
 </a>

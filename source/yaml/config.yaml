@@ -43,28 +43,28 @@ features:
   menu: true
   menus:
     - name: "home"
-      svg: "#home"
+      svg: "home"
 
     - name: "signUp"
-      svg: "#signUp"
+      svg: "signUp"
 
     - name: "logIn"
-      svg: "#logIn"
+      svg: "logIn"
 
     - name: "logOut"
-      svg: "#logOut"
+      svg: "logOut"
 
     - name: "demo"
-      svg: "#contact"
+      svg: "contact"
 
     - name: "privacyPolicy"
-      svg: "#privacyPolicy"
+      svg: "privacyPolicy"
 
     - name: "termsOfUse"
-      svg: "#termsOfUse"
+      svg: "termsOfUse"
 
     - name: "contact"
-      svg: "#contact"
+      svg: "contact"
 
 
   signUp: true
