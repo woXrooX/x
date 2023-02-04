@@ -374,6 +374,11 @@
     "ru":"Пароль пуст",
     "uz":"Parol bo'sh bo'lmasligi kerak"
   },
+  "passwordMaxLength":{
+    "en":"passwordMaxLength",
+    "ru":"passwordMaxLength",
+    "uz":"passwordMaxLength"
+  },
   "passwordMinLength":{
     "en":"Password must be at least 6 characters long",
     "ru":"Пароль должен содержать минимум 6 символов",
@@ -613,6 +618,11 @@
     "en":"Username is in use",
     "ru":"Имя пользователя уже используется",
     "uz":"Foydalanuvchi nomi band"
+  },
+  "usernameMaxLength":{
+    "en":"usernameMaxLength",
+    "ru":"usernameMaxLength",
+    "uz":"usernameMaxLength"
   },
   "usernameMinLength":{
     "en":"Username minimum length must be 6 characters long",

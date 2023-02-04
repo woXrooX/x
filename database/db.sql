@@ -118,7 +118,7 @@ INSERT INTO user_states (name)
 --
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT NOT NULL UNIQUE auto_increment,
-  `username` VARCHAR(100) NOT NULL UNIQUE,
+  `username` VARCHAR(100) NULL UNIQUE,
   -- `password` VARCHAR(100) NOT NULL UNIQUE COLLATE utf8_bin, -> adds case sensitiveity
   `password` VARCHAR(100) NOT NULL UNIQUE,
   `password_salt` VARCHAR(100),

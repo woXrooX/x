@@ -156,13 +156,117 @@ def home():
 def signUp():
     if conf["features"]["signUp"] == False:
         return redirect(url_for('home'))
-
+ 
     if request.method == "GET":
         return render_template("index.html", **globals())
 
-    elif request.method == "POST":
-        return make_response(json.dumps({"response": "OK"}), 200)
+    if request.method == "POST":
 
+        # unknownError
+        if request.get_json()['for'] != 'signUp':
+            return make_response(json.dumps({
+                "type": "warning",
+                "message": "unknownError"
+            }), 200)
+
+        #### eMail
+        # eMailEmpty
+        if 'eMail' not in request.get_json()['fields'] or not request.get_json()['fields']['eMail']:
+            return make_response(json.dumps({
+                "type": "error",
+                "message": "eMailEmpty",
+                "field": "eMail"
+            }), 200)
+
+        # eMailInvalid
+        if not re.match(conf['eMail']['regEx'], request.get_json()['fields']['eMail']):
+            return make_response(json.dumps({
+                "type": "error",
+                "message": "eMailInvalid",
+                "field": "eMail"
+            }), 200)
+
+        #### password
+        # passwordEmpty
+        if 'password' not in request.get_json()['fields'] or not request.get_json()['fields']['password']:
+            return make_response(json.dumps({
+                "type": "error",
+                "message": "passwordEmpty",
+                "field": "password"
+            }), 200)
+
+        # passwordMinLength
+        if len(request.get_json()['fields']['password']) < conf['password']['min_length']:
+            return make_response(json.dumps({
+                "type": "error",
+                "message": "passwordMinLength",
+                "field": "password"
+            }), 200)
+        
+        # passwordMaxLength
+        if len(request.get_json()['fields']['password']) > conf['password']['max_length']:
+            return make_response(json.dumps({
+                "type": "error",
+                "message": "passwordMaxLength",
+                "field": "password"
+            }), 200)
+
+        # passwordAllowedChars
+        if not re.match(conf['password']['regEx'], request.get_json()['fields']['password']):
+            return make_response(json.dumps({
+                "type": "error",
+                "message": "passwordAllowedChars",
+                "field": "password"
+            }), 200)
+        
+        #### eMail and Password DB
+        # eMailInUse
+        with MySQL(False) as db:
+            db.execute("SELECT eMail from users WHERE eMail=%s", request.get_json()['fields']['eMail'])
+            fetchedData  = db.fetchone()
+            if fetchedData:
+                return make_response(json.dumps({
+                    "type": "error",
+                    "message": "eMailInUse",
+                    "field": "eMail"
+                }))
+
+        # passwordInUse
+        with MySQL(False) as db:
+            db.execute("SELECT password from users WHERE password=%s", request.get_json()['fields']['password'])
+            fetchedData  = db.fetchone()
+            if fetchedData:
+                return make_response(json.dumps({
+                    "type": "error",
+                    "message": "passwordInUse",
+                    "field": "password"
+                }))
+               
+        #### success
+        with MySQL(False) as db:
+            db.execute(
+                ("INSERT INTO users (eMail, password) VALUES (%s, %s)"),
+                (
+                    request.get_json()['fields']['eMail'],
+                    request.get_json()['fields']['password']
+                )
+            )
+            db.commit()
+            if db.hasError:
+                return make_response(json.dumps({
+                    "type": "error",
+                    "message": "databaseError",
+                }), 200)
+
+            session['user'] = request.get_json()['fields']['eMail']
+
+            #success
+            return make_response(json.dumps({
+                "type": "success",
+                "message": "success",
+                "action": "redirect",
+                "url": "/"
+            }), 200)
 
 #################################################### Log In
 @app.route("/logIn", methods=["GET", "POST"])
