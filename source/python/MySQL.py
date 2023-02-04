@@ -44,9 +44,9 @@ if __name__ != "__main__":
             except:
                 self.hasError = True
 
-        def fetchone(self):
+        def fetchOne(self):
             return self.cursor.fetchone()
-        def fetchall(self):
+        def fetchAll(self):
             return self.cursor.fetchall()
         def fetchmany(self):
             return self.cursor.fetchmany()
