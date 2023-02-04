@@ -1,0 +1,138 @@
+/*********************** Layout System START ***********************/
+container{
+  /* border: 1px green solid; */
+
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+
+  padding: 5px;
+  margin: 0px auto;
+
+}
+
+row, column{
+  display: flex;
+  gap: var(--gap);
+  padding: var(--padding);
+
+}
+
+row{
+  /* border: 1px red solid; */
+
+  /* background-color: var(--color-surface-3); */
+  width: 100%;
+
+  flex-direction: row;
+  justify-content: center;
+  /* align-items: center; */
+
+}
+
+column{
+  /* border: 1px pink solid; */
+
+  /* background-color: var(--color-surface-4); */
+  width: auto;
+
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+
+}
+
+/* Column Sizes START */
+column.w-10{width: 10%;}
+column.w-25{width: 25%;}
+column.w-50{width: 50%;}
+column.w-75{width: 75%;}
+column.w-100{width: 100%;}
+/* Column Sizes END */
+
+/* Paddings START */
+.p-1{padding: var(--padding);}
+.p-2{padding: calc(var(--padding) * 2);}
+.p-3{padding: calc(var(--padding) * 3);}
+.p-4{padding: calc(var(--padding) * 4);}
+.p-5{padding: calc(var(--padding) * 5);}
+
+/* Top */
+.p-t-1{padding-top: var(--padding);}
+.p-t-2{padding-top: calc(var(--padding) * 2);}
+.p-t-3{padding-top: calc(var(--padding) * 3);}
+.p-t-4{padding-top: calc(var(--padding) * 4);}
+.p-t-5{padding-top: calc(var(--padding) * 5);}
+
+/* Right */
+.p-r-1{padding-right: var(--padding);}
+.p-r-2{padding-right: calc(var(--padding) * 2);}
+.p-r-3{padding-right: calc(var(--padding) * 3);}
+.p-r-4{padding-right: calc(var(--padding) * 4);}
+.p-r-5{padding-right: calc(var(--padding) * 5);}
+
+/* Bottom */
+.p-b-1{padding-bottom: var(--padding);}
+.p-b-2{padding-bottom: calc(var(--padding) * 2);}
+.p-b-3{padding-bottom: calc(var(--padding) * 3);}
+.p-b-4{padding-bottom: calc(var(--padding) * 4);}
+.p-b-5{padding-bottom: calc(var(--padding) * 5);}
+
+/* Left */
+.p-l-1{padding-left: var(--padding);}
+.p-l-2{padding-left: calc(var(--padding) * 2);}
+.p-l-3{padding-left: calc(var(--padding) * 3);}
+.p-l-4{padding-left: calc(var(--padding) * 4);}
+.p-l-5{padding-left: calc(var(--padding) * 5);}
+
+/* Paddings END */
+
+/* Placing START */
+.right{
+  text-align: right;
+  align-items: flex-end;
+  place-items: right;
+  justify-content: flex-end;
+
+}
+
+.center{
+  text-align: center;
+  align-items: center;
+  place-items: center;
+  justify-content: center;
+
+}
+
+.left{
+  text-align: left;
+  align-items: flex-start;
+  place-items: left;
+  justify-content: flex-start;
+
+}
+/* Placing END */
+
+/* Radiuses START */
+.radius{border-radius: var(--radius);}
+/* Radiuses END */
+
+/* Background Shadow START */
+.bs{box-shadow: var(--shadow-light);}
+/* Background Shadow END */
+
+/* Background Colors START */
+.bc-1{background-color: var(--color-surface-1);}
+.bc-2{background-color: var(--color-surface-2);}
+.bc-3{background-color: var(--color-surface-3);}
+.bc-4{background-color: var(--color-surface-4);}
+.bc-5{background-color: var(--color-surface-5);}
+.bc-6{background-color: var(--color-surface-6);}
+.bc-7{background-color: var(--color-surface-7);}
+.bc-8{background-color: var(--color-surface-8);}
+.bc-9{background-color: var(--color-surface-9);}
+.bc-10{background-color: var(--color-surface-10);}
+/* Background Colors END */
+
+/*********************** Layout System END ***********************/

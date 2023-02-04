@@ -1,53 +1,33 @@
-// class static initialization block
-// class Clazz{
-//   static #shown = true;
-//   static{
-//     this.#shown = false;
-//     Clazz.#shown = false; same as above
-//   }
-
 //////////////// SPA - Single Page Application
-
 "use strict";
+
+//// Custom Elements
+import El from "./elements/el.js";
+// import Form from "./elements/form.js";
+// import Toast from "./elements/toast.js";
 
 // import CSS from "./css.js";
 // document.head.innerHTML += `<style>${CSS}</style>`;
 
-import Html from "./html.js";
-import Title from "./title.js";
+//// Core Classes
+import Dom from "./dom.js";
+// import Title from "./title.js";
 import Router from "./router.js";
+import Form from "./form.js";
 // import Cover from "./cover.js";
-
-// import Form from "./form.js";
-// import Hyperlink from "./hyperlink.js";
-// import Loading from "./loading.js";
-// import Menu from "./menu.js";
+import Hyperlink from "./hyperlink.js";
+import Loading from "./loading.js";
+import Menu from "./menu.js";
 // import Nav from "./nav.js";
-
-
-// import Former from "./elements/former.js";
-// import Toast from "./elements/toast.js";
-
-// document.querySelector("body > main > main > section").innerHTML =
-// // element:{attributes:value, ..}
-// `<wxx-form>{
-//   "form":{"method": "POST"},
-//   "elements":[
-//     {"section":{"class": "clazz"}},
-//     {"input":{"type": "text", "name": "username", "placeholder": "Username"}},
-//     {"input":{"type":"submit", "name": "logIn", "placeholder": "Log In"}}
-//   ]
-// }</wxx-form>
-// `;
-
-
 
 export default class Core{
   static {
     Core.#onLoad();
     Core.#onUrlChange();
     Core.#onHashChange();
-    Core.#onHtmlUpdate();
+    Core.#onHistoryButtonClicked();
+    Core.#onDomChange();
+
   }
 
   /////// Event Handlers
@@ -62,13 +42,10 @@ export default class Core{
 
       Router.handle();
 
-      // Hyperlink.collect();
-      // Form.collect();
-      //
-      // Menu.setActive();
-      // Nav.setActive();
-      //
-      // Loading.done();
+      Menu.setActive();
+
+      Loading.done();
+
     });
   }
 
@@ -79,9 +56,8 @@ export default class Core{
 
       Router.handle();
 
-      // Title.update();
-      //
-      // Menu.setActive();
+      Menu.setActive();
+
     });
   }
 
@@ -91,18 +67,28 @@ export default class Core{
       // console.log("onHashChange");
 
       // Nav.setActive();
+
     });
   }
 
-  static #onHtmlUpdate(){
-    window.addEventListener('htmlUpdated', ()=>{
-      // window.dispatchEvent(new CustomEvent('htmlUpdated'));
-      // console.log("onHtmlUpdate");
+  static #onHistoryButtonClicked(){
+    window.addEventListener('popstate', ()=>{
+      // window.dispatchEvent(new Event('popstate'));
+      // console.log("onHistoryButtonClicked");
 
-      // Hyperlink.collect();
-      // Form.collect();
-      //
-      // Nav.setActive();
+      Router.handle();
+
+    });
+  }
+
+  static #onDomChange(){
+    window.addEventListener('domChange', ()=>{
+      // window.dispatchEvent(new CustomEvent('domChange'));
+      // console.log("onDomChange");
+
+      Hyperlink.collect();
+      Form.collect();
+
     });
   }
 

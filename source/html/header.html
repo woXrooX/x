@@ -1,1 +1,11 @@
-<header>Header</header>
+<header>
+
+{% if conf["features"]["menu"] == True  %}
+  <svg for="menu"><use href="#menu"></use></svg>
+{% else %}
+  <span></span>
+{% endif %}
+
+  <span>Header</span>
+
+</header>

@@ -1,6 +1,6 @@
 "use strict";
 
-import Html from "./html.js";
+import Dom from "./dom.js";
 import Title from "./title.js";
 
 
@@ -11,38 +11,56 @@ export default class Router{
 
     // On "/"
     if(link == "/"){
+      // Load The Page
       response = await import(`../pages/home.js`);
-      content = await response.default();
-      Html.render(content);
 
-      // If TITLE Exists Then Set
-      if(!!response.TITLE) Title.set(response.TITLE);
+      // Render The Content
+      Dom.render(response.default());
 
-      console.log(content);
+      // Set Title
+      Title.set(response.TITLE);
+
+      // console.log(content);
 
       return;
     }
 
-    // Try To Load Page
+    // Try To Load The Page
     try{
+      // Load The Page
       response = await import(`../pages${link}.js`);
-      content = await response.default();
-      Html.render(content);
 
-      // If TITLE Exists Then Set
-      if(!!response.TITLE) Title.set(response.TITLE);
+      // Render The Content
+      Dom.render(response.default());
 
-      console.log(content);
+      // Set Title
+      Title.set(response.TITLE);
+
+      // console.log(content);
 
     }catch(error){
-      response = await import(`../pages/404.js`);
-      content = await response.default();
-      Html.render(content);
+      // Error: 404
+      if(error.message.search("Failed to fetch dynamically imported module:") !== -1){
+        // Change URL To /404
+        window.history.pushState("", "", URL+"404");
 
-      // If TITLE Exists Then Set
-      if(!!response.TITLE) Title.set(response.TITLE);
+        // Load The Page 404
+        response = await import(`../pages/404.js`);
 
-      console.log(content);
+        // Render The Content
+        Dom.render(response.default());
+
+        // Set Title
+        Title.set(response.TITLE);
+
+      }else{
+        Dom.render(error);
+
+        console.log(error);
+
+      }
+
+      // console.log(content);
 
     }
   }

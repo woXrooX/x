@@ -1,7 +1,8 @@
 <menu>
-  <a href="{{url_for('home')}}">{{langDict["home"][langCode]}}</a>
+  <header>M-Header</header>
 
-  <a href="{{url_for('signUp')}}">{{langDict["signUp"][langCode]}}</a>
-  <a href="{{url_for('logIn')}}">{{langDict["logIn"][langCode]}}</a>
-  <a href="{{url_for('logOut')}}">{{langDict["logOut"][langCode]}}</a>
+  <main>{{generateMenus()|safe}}</main>
+
+  <footer>M-Footer</footer>
+
 </menu>

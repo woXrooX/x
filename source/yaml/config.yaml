@@ -25,7 +25,10 @@ database:
 
 
 ######### Site
-currency: "USD"
+default:
+  currency: "USD"
+  title: "XSite"
+  language: "en"
 
 
 ######### HTML
@@ -33,23 +36,66 @@ HTML:
   charset: "utf-8"
 
 
-######### Page
-TITLE: "eBazar"
-site_language: "en"
-
-
 ######### Features
 # False = Disabled
 # True = Enabled
 features:
-  menu: false
-  cover: false
+  menu: true
+  menus:
+    - name: "home"
+      svg: "home"
 
-  signUp: false
+    - name: "signUp"
+      svg: "signUp"
+
+    - name: "logIn"
+      svg: "logIn"
+
+    - name: "logOut"
+      svg: "logOut"
+
+    - name: "demo"
+      svg: "contact"
+
+    - name: "privacyPolicy"
+      svg: "privacyPolicy"
+
+    - name: "termsOfUse"
+      svg: "termsOfUse"
+
+    - name: "contact"
+      svg: "contact"
+
+
+  signUp: true
   logIn: true
-  logOut: false
+  logOut: true
 
   paymentMethod: false
+
+
+######### Username
+username:
+  min_length: 6
+  max_length: 50
+  regEx: "^[a-zA-Z0-9'_-]+$"
+
+
+######### Password
+password:
+  min_length: 6
+  max_length: 50
+  regEx: "^(?=.*[a-z])(?=.*[0-9])(?=.*[-!@#$%^&*_+])[-!@#$%^&*_+A-Za-z0-9]{6,}$"
+
+
+######### Phone Number
+phoneNumber:
+  regEx: "^[+]{1,1}[0-9]{11,11}$"
+
+
+######### eMail
+eMail:
+  regEx: "^[a-zA-Z0-9][a-zA-Z0-9._-]{0,20}[a-zA-Z0-9]@[a-z][a-zA-Z0-9-_]{1,20}.[a-z]{2,3}$"
 
 
 ######## Stripe payment

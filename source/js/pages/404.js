@@ -3,6 +3,11 @@
 export const TITLE = "Page Not Found";
 export default function content(){
 
-  return "404";
+  const dom = `
+<h1>404</h1>
+<p>Page Not Found!</p>
+  `;
+
+  return dom;
 
 }

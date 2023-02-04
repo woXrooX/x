@@ -109,6 +109,11 @@
     "ru":"Адресс доставки",
     "uz":"Jo'natma manzili"
   },
+  "demo":{
+    "en":"Demo",
+    "ru":"Демо",
+    "uz":"Namoyish"
+  },
   "description":{
     "en":"Description",
     "ru":"Описание",

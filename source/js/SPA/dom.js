@@ -17,6 +17,18 @@
 // console.log(done);
 
 export default class Dom{
+  static #elementMain = document.querySelector("body > main");
+
+  static render(dom){
+    // If Passed Object Like: createElement("x-form")
+    if(typeof dom === "object") Dom.#elementMain.replaceChildren(dom);
+
+    // If Passed String Like: "<x-form></x-from>"
+    else if(typeof dom === "string") Dom.#elementMain.innerHTML = dom;
+
+    window.dispatchEvent(new CustomEvent('domChange'));
+
+  }
 
   static jsonToDom(object){
     // Handle Invalid Types
@@ -42,7 +54,7 @@ export default class Dom{
     // Creating Child Nodes If Exists
     if("childNodes" in object[tagName])
       for(const childNode of object[tagName]["childNodes"])
-        element.appendChild(Dom.generate(childNode));
+        element.appendChild(Dom.jsonToDom(childNode));
 
     return element;
 

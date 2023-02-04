@@ -46,6 +46,7 @@
 
   --padding: 5px;
   --gap: 20px;
+  --radius: 5px;
 
   --blur: 10px;
 
@@ -103,9 +104,15 @@
     --color-text-accent: hsla(var(--color-main-hue), 15%, 95%, 1);
 
     --color-surface-1: hsla(var(--color-main-hue), 20%, 100%, 1);
-    --color-surface-2: hsla(var(--color-main-hue), 20%, 92%, 1);
-    --color-surface-3: hsla(var(--color-main-hue), 25%, 90%, 1);
+    --color-surface-2: hsla(var(--color-main-hue), 20%, 95%, 1);
+    --color-surface-3: hsla(var(--color-main-hue), 20%, 90%, 1);
     --color-surface-4: hsla(var(--color-main-hue), 20%, 85%, 1);
+    --color-surface-5: hsla(var(--color-main-hue), 20%, 80%, 1);
+    --color-surface-6: hsla(var(--color-main-hue), 20%, 75%, 1);
+    --color-surface-7: hsla(var(--color-main-hue), 20%, 60%, 1);
+    --color-surface-8: hsla(var(--color-main-hue), 20%, 45%, 1);
+    --color-surface-9: hsla(var(--color-main-hue), 20%, 30%, 1);
+    --color-surface-10: hsla(var(--color-main-hue), 20%, 15%, 1);
 
     --color-shadow: var(--color-main-hue) 10% 20%;
     --shadow-opacity: 0.2;
@@ -126,9 +133,15 @@
     --color-text-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1);
 
     --color-surface-1: hsla(var(--color-main-hue), 10%, 10%, 1);
-    --color-surface-2: hsla(var(--color-main-hue), 5%, 15%, 1);
-    --color-surface-3: hsla(var(--color-main-hue), 5%, 20%, 1);
-    --color-surface-4: hsla(var(--color-main-hue), 5%, 25%, 1);
+    --color-surface-2: hsla(var(--color-main-hue), 10%, 15%, 1);
+    --color-surface-3: hsla(var(--color-main-hue), 10%, 20%, 1);
+    --color-surface-4: hsla(var(--color-main-hue), 10%, 25%, 1);
+    --color-surface-5: hsla(var(--color-main-hue), 10%, 30%, 1);
+    --color-surface-6: hsla(var(--color-main-hue), 10%, 35%, 1);
+    --color-surface-7: hsla(var(--color-main-hue), 10%, 50%, 1);
+    --color-surface-8: hsla(var(--color-main-hue), 10%, 65%, 1);
+    --color-surface-9: hsla(var(--color-main-hue), 10%, 80%, 1);
+    --color-surface-10: hsla(var(--color-main-hue), 10%, 95%, 1);
 
     --color-shadow: var(--color-main-hue) 50% 3%;
     --shadow-opacity: 0.3;
@@ -138,10 +151,128 @@
 body {
   background-color: var(--color-surface-1);
   color: var(--color-text-primary);
-  font-family: monospace;
-  font-size: 10px;
+  font-family: Quicksand;
+  font-size: 15px;
 
 }
+
+body > loading{
+  background-color: var(--color-surface-1);
+
+  width: 100vw;
+  height: 100vh;
+
+  position: fixed;
+  z-index: var(--z-loading);
+
+  transition: var(--transition-velocity) opacity ease-in-out;
+
+}
+body > loading::after{
+  content: '';
+  background-color: transparent;
+  height: 20vh;
+  width: 20vh;
+  border-radius: 100%;
+  border: 0px solid transparent;
+  border-right: 2px solid var(--color-text-primary);
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+
+  animation: loading 500ms infinite ease-in-out;
+
+}
+@keyframes loading{
+  0%{transform: translate(-50%, -50%) rotate(0deg);}
+  100%{transform: translate(-50%, -50%) rotate(720deg);}
+
+}
+
+body > toasts{
+  /* background-color: rgba(0, 0, 0, 0.2); */
+  height: auto;
+  max-height: 100vh;
+  width: 400px;
+  /* padding: var(--padding); */
+  padding: 5px 5px 20px 5px;
+  overflow-y: scroll;
+
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--gap);
+
+  /* pointer-events: none; */
+
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  z-index: var(--z-toasts);
+
+}
+
+body > menu{
+  --menu-background-color: hsla(var(--color-main-hue), 5%, 20%, 1);
+  background-color: var(--menu-background-color);
+  height: 100vh;
+  width: auto;
+
+  overflow-y: scroll;
+
+  display: grid;
+  grid-template-rows: auto 2fr auto;
+  justify-items: start;
+  gap: var(--gap);
+
+  position: fixed;
+  z-index: var(--z-menu);
+  top: 0;
+  left: 0;
+  transform: translate(-100%, 0);
+  transition-duration: var(--transition-velocity);
+  transition-timing-function: ease;
+  transition-property: all;
+
+}
+body > menu > *{
+  width: 100%;
+  padding: calc(var(--padding) * 4 );
+
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) / 2);
+
+}
+body > menu > * > a{
+  filter: brightness(70%);
+
+  color: white;
+  font-size: 2rem;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: var(--gap);
+
+  transition: var(--transition-velocity) ease-in-out;
+  transition-property: filter;
+
+}
+body > menu > * > a:where([active], :hover){
+  filter: brightness(130%);
+
+}
+body > menu > * > a > svg{
+
+
+  height: 40px;
+  width: 40px;
+
+}
+
 
 body > cover{
   pointer-events:auto;
@@ -155,11 +286,11 @@ body > cover{
   position: fixed;
   z-index: var(--z-minus);
 
-  transition:var(--transition-velocity) opacity;
+  transition: var(--transition-velocity) opacity;
 
 }
 
-body > header {
+body > header{
   background-color: var(--color-main);
   color: white;
 
@@ -173,18 +304,31 @@ body > header {
   z-index: var(--z-header);
 
   display: grid;
+  grid-template-columns: auto 3fr;
+
   place-items: center;
 
 }
+body > header > svg[for=menu]{
+  cursor: pointer;
+
+  display: flex;
+  justify-content: flex-start;
+
+  height: calc(var(--header-height) - var(--padding) * 2);
+  width: calc(var(--header-height) - var(--padding) * 2);
+
+}
+
 
 body > main {
   width: 100vw;
-  height: calc(100vh - var(--header-height) - var(--footer-height));
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
 
 }
 
 body > footer {
-  background-color: var(--color-surface-4);
+  background-color: var(--color-surface-2);
   color: var(--color-text-secondary);
 
   width: 100%;

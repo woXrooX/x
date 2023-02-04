@@ -5,10 +5,6 @@ import json, yaml, re, html, pathlib
 import stripe
 
 
-#################################################### GLOBAL tools
-# import python.tools as tools
-
-
 #################################################### GLOBAL appRunningFrom
 APP_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
 
@@ -16,6 +12,35 @@ APP_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
 #################################################### GLOBAL config
 with open(f"{APP_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
     conf = yaml.safe_load(file)
+
+
+#################################################### GLOBAL tools
+# import python.tools as tools
+
+## Generates Menu Links Dynamically
+def generateMenus():
+    html = ''
+    for menu in conf["features"]["menus"]:
+        if (
+            # If User Logged In Then Do Not Show Link For "logIn"
+            (menu["name"] == "logOut" and 'user' in session) or
+
+            # If User Is Not Logged In Then Show "logIn" And "signUp" Links
+            ((menu["name"] == "signUp" or menu["name"] == "logIn") and 'user' not in session) or
+
+            # If Current Menu Is Not Followings Then Just Show The Links
+            (menu["name"] != "signUp" and menu["name"] != "logIn" and menu["name"] != "logOut")
+        ):
+            html += f"""
+<a href="{url_for(menu['name'])}">
+  <svg>
+    <use href="#{menu['svg']}"></use>
+  </svg>
+  {langDict[menu["name"]][langCode]}
+</a>
+            """
+
+    return html
 
 
 #################################################### URL
@@ -30,7 +55,7 @@ app = Flask(
     static_folder = conf["static_folder"]
 )
 
-# app.secret_key = b'asZ8#Q!@97_+asQ]s/s\]/'
+app.secret_key = b'asZ8#Q!@97_+asQ]s/s\]/'
 
 
 #################################################### GLOBAL MySQL
@@ -56,7 +81,7 @@ MySQL.setUp(
 #     languages = db.fetchall()
 
 ### language Default Code
-langCode = conf["site_language"]
+langCode = conf["default"]["language"]
 
 ### language Dictionary
 with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") as file:
@@ -70,7 +95,7 @@ with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") a
 #     currencies = db.fetchall()
 
 ### currency Default Code
-currencyCode = conf["currency"]
+currencyCode = conf["default"]["currency"]
 
 
 #################################################### Decorations
@@ -149,7 +174,26 @@ def logIn():
         return render_template("index.html", **globals())
 
     elif request.method == "POST":
-        return make_response(json.dumps({"response": "OK"}), 200)
+        return make_response(json.dumps({
+            "type": "success",
+            "message": "databaseError"
+        }), 200)
+
+        # return make_response(json.dumps({
+            # "type": "success",
+            # "type": "info",
+            # "type": "warning",
+            # "type": "error",
+            #
+            # "message": "someSuccessMessage", # From Lang Dict
+            # "field": "username" # From Front-End Form Name OR ID Or For
+            #
+            # "action": "redirect",
+            # "url": "/me"
+            #
+            # "action": "reload"
+        #
+        # }), 200)
 
 
 #################################################### Log Out
@@ -180,10 +224,93 @@ def plansAndPricing():
     pass
 
 
+#################################################### Privacy Policy
+@app.route("/privacyPolicy", methods=["GET", "POST"])
+def privacyPolicy():
+    if request.method == "GET":
+        return render_template("index.html", **globals())
+
+    elif request.method == "POST":
+        return make_response(json.dumps({"response": "OK"}), 200)
+
+
+#################################################### Terms Of Use
+@app.route("/termsOfUse", methods=["GET", "POST"])
+def termsOfUse():
+    if request.method == "GET":
+        return render_template("index.html", **globals())
+
+    elif request.method == "POST":
+        return make_response(json.dumps({"response": "OK"}), 200)
+
+
+#################################################### Contact
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+    if request.method == "GET":
+        return render_template("index.html", **globals())
+
+    elif request.method == "POST":
+        return make_response(json.dumps({"response": "OK"}), 200)
+
+
 #################################################### none/404
 @app.errorhandler(404)
 def page_not_found(error):
     return redirect(url_for('home'))
+
+
+#################################################### Bridge
+@app.route("/bridge", methods=["POST"])
+def bridge():
+    # globalData
+    if request.get_json()["for"] == "globalData":
+        return make_response(
+            {
+                "type": "success",
+                "conf": {
+                    "default": conf["default"],
+                    "username": conf["username"],
+                    "password": conf["password"],
+                    "phoneNumber": conf["phoneNumber"],
+                    "eMail": conf["eMail"]
+                },
+                # "session":session["user"] if "user" in session else None,
+                "langDict": langDict,
+                "langCode": langCode,
+                # "languages":languages,
+                # "currencies":currencies
+            }, 200)
+
+    # languages
+    # if request.get_json()["for"] == "languages":
+    #     return make_response(
+    #         {
+    #             "response":"ok",
+    #             "languages":languages
+    #         }, 200)
+
+    # langCode
+    if request.get_json()["for"] == "langCode":
+        return make_response(
+            {
+                "response":"ok",
+                "langCode":langCode
+            }, 200)
+
+    # langDict
+    if request.get_json()["for"] == "langDict":
+        return make_response(
+            {
+                "response":"ok",
+                "langDict":langDict
+            }, 200)
+
+#################################################### Demo
+@app.route("/demo", methods=["GET"])
+def demo():
+    if request.method == "GET":
+        return render_template("index.html", **globals())
 
 
 #################################################### RUN

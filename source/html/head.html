@@ -14,11 +14,28 @@
   <link rel="icon" type="image/png"   sizes="16x16"     href="images/favicon/favicon-16x16.png">
   <link rel="manifest"                                  href="images/favicon/site.webmanifest">
 
+  <link rel="preload" href="{{url_for('static', filename='css/common.css')}}" as="style">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+
   <link rel="preload" href="{{url_for('static', filename='css/master.css')}}" as="style">
   <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/master.css')}}">
 
   <link rel="preload" href="{{url_for('static', filename='css/styles.css')}}" as="style">
   <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/styles.css')}}">
+
+  <link rel="preload" href="{{url_for('static', filename='css/layouts.css')}}" as="style">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/layouts.css')}}">
+
+  <script>
+    const URL = '{{URL|safe}}';
+    const ICONS = {
+      "success": "&#10003;",
+      "info": "&#8505;",
+      "warning": "&#9888;",
+      "error": "&#10005;",
+      "close": "&#10005;"
+    }
+  </script>
 
   <script type="module" src="{{url_for('static', filename='js/main.js')}}"></script>
 
