@@ -99,6 +99,3 @@ eMail:
 
 
 ######## Stripe payment
-stripe_payment:
-  pb_key: 'pk_test_51Kr4zpAh3t85mIMGcpGTyCesktRL3wdpQZATQp0q8dTJXBjdOggQADHZaEgM2D2XcbKbFCTELj9wjtEuW5nEwPHe00lh4kxZbP'
-  sk_key: 'sk_test_51Kr4zpAh3t85mIMGmqUjybBN5j2JbnC0XmGAoN5Bxj59RekRsKTPGyqz9wgQ5iXSzbIVECaDEfXvUsPeLDkB5uYI00CAqaY2cC'
