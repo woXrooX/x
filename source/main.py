@@ -1,8 +1,8 @@
 #################################################### IMPORTS
-from python.MySQL import MySQL
 from flask import Flask, render_template, request, session, redirect, url_for, make_response
 import json, yaml, re, html, pathlib
-import stripe
+import os # For Creating Folders
+# import stripe
 
 
 #################################################### GLOBAL appRunningFrom
@@ -15,6 +15,7 @@ with open(f"{APP_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
 
 
 #################################################### GLOBAL tools
+from python.MySQL import MySQL
 # import python.tools as tools
 
 ## Generates Menu Links Dynamically
@@ -68,17 +69,12 @@ MySQL.setUp(
     conf["database"]["collate"]
 )
 
-# with MySQL(False) as db:
-#     db.execute(f"SELECT * FROM users")
-#     users = db.fetchall()
-#     print(users)
-
 
 #################################################### GLOBAL language
 ### languages
 # with MySQL(False) as db:
 #     db.execute(f"SELECT * FROM languages")
-#     languages = db.fetchall()
+#     languages = db.fetchAll()
 
 ### language Default Code
 langCode = conf["default"]["language"]
@@ -92,7 +88,19 @@ with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") a
 ### currencies
 # with MySQL(False) as db:
 #     db.execute("SELECT * FROM currencies")
-#     currencies = db.fetchall()
+#     currencies = db.fetchAll()
+
+# with MySQL() as db:
+#     db.execute(
+#         ("SELECT * FROM users WHERE eMail=%s AND password=%s"),
+#         (
+#             "aa@gmail.com",
+#             "asdasdA_2"
+#         )
+#     )
+#     dataFetched = db.fetchOne()
+#     print(dataFetched)
+
 
 ### currency Default Code
 currencyCode = conf["default"]["currency"]
@@ -122,9 +130,6 @@ currencyCode = conf["default"]["currency"]
 
 
 #################################################### HOME | Index | Landing
-
-# stripe.api_key = conf['stripe_payment']['sk_key']
-
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
 def home():
@@ -138,8 +143,13 @@ def home():
 #################################################### Sign Up
 @app.route("/signUp", methods=["GET", "POST"])
 def signUp():
+
+    # Check If Feature Is Enabled
     if conf["features"]["signUp"] == False:
         return redirect(url_for('home'))
+
+    # Check If User Already Logged In
+    if 'user' in session: return redirect(url_for('home'))
 
     if request.method == "GET":
         return render_template("index.html", **globals())
@@ -147,15 +157,22 @@ def signUp():
     if request.method == "POST":
 
         # unknownError
-        if request.get_json()['for'] != 'signUp':
+        if "for" not in request.get_json() or request.get_json()["for"] != "signUp":
             return make_response(json.dumps({
                 "type": "warning",
                 "message": "unknownError"
             }), 200)
 
-        #### eMail
+        # unknownError
+        if "field" not in request.get_json() or request.get_json()["field"] != "all":
+            return make_response(json.dumps({
+                "type": "warning",
+                "message": "unknownError"
+            }), 200)
+
+        ######## eMail
         # eMailEmpty
-        if 'eMail' not in request.get_json()['fields'] or not request.get_json()['fields']['eMail']:
+        if "eMail" not in request.get_json()["fields"] or not request.get_json()["fields"]["eMail"]:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "eMailEmpty",
@@ -163,16 +180,16 @@ def signUp():
             }), 200)
 
         # eMailInvalid
-        if not re.match(conf['eMail']['regEx'], request.get_json()['fields']['eMail']):
+        if not re.match(conf["eMail"]["regEx"], request.get_json()["fields"]["eMail"]):
             return make_response(json.dumps({
                 "type": "error",
                 "message": "eMailInvalid",
                 "field": "eMail"
             }), 200)
 
-        #### password
+        ######## password
         # passwordEmpty
-        if 'password' not in request.get_json()['fields'] or not request.get_json()['fields']['password']:
+        if "password" not in request.get_json()["fields"] or not request.get_json()["fields"]["password"]:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "passwordEmpty",
@@ -180,7 +197,7 @@ def signUp():
             }), 200)
 
         # passwordMinLength
-        if len(request.get_json()['fields']['password']) < conf['password']['min_length']:
+        if len(request.get_json()["fields"]["password"]) < conf["password"]["min_length"]:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "passwordMinLength",
@@ -188,7 +205,7 @@ def signUp():
             }), 200)
 
         # passwordMaxLength
-        if len(request.get_json()['fields']['password']) > conf['password']['max_length']:
+        if len(request.get_json()["fields"]["password"]) > conf["password"]["max_length"]:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "passwordMaxLength",
@@ -196,18 +213,18 @@ def signUp():
             }), 200)
 
         # passwordAllowedChars
-        if not re.match(conf['password']['regEx'], request.get_json()['fields']['password']):
+        if not re.match(conf["password"]["regEx"], request.get_json()["fields"]["password"]):
             return make_response(json.dumps({
                 "type": "error",
                 "message": "passwordAllowedChars",
                 "field": "password"
             }), 200)
 
-        #### eMail and Password In Use
+        ######## eMail and Password In Use
         # eMailInUse
         with MySQL(False) as db:
-            db.execute("SELECT id FROM users WHERE eMail=%s", (request.get_json()['fields']['eMail'], ))
-            dataFetched  = db.fetchone()
+            db.execute("SELECT id FROM users WHERE eMail=%s", (request.get_json()["fields"]["eMail"], ))
+            dataFetched  = db.fetchOne()
             if dataFetched:
                 return make_response(json.dumps({
                     "type": "error",
@@ -217,8 +234,8 @@ def signUp():
 
         # passwordInUse
         with MySQL(False) as db:
-            db.execute("SELECT id FROM users WHERE password = %s", (request.get_json()['fields']['password'], ))
-            dataFetched = db.fetchone()
+            db.execute("SELECT id FROM users WHERE password=%s", (request.get_json()["fields"]["password"], ))
+            dataFetched = db.fetchOne()
             if dataFetched:
                 return make_response(json.dumps({
                     "type": "error",
@@ -226,13 +243,14 @@ def signUp():
                     "field": "password"
                 }))
 
-        #### success
+        ######## Success
+        # Insert To Database
         with MySQL(False) as db:
             db.execute(
                 ("INSERT INTO users (eMail, password) VALUES (%s, %s)"),
                 (
-                    request.get_json()['fields']['eMail'],
-                    request.get_json()['fields']['password']
+                    request.get_json()["fields"]["eMail"],
+                    request.get_json()["fields"]["password"]
                 )
             )
             db.commit()
@@ -242,9 +260,27 @@ def signUp():
                     "message": "databaseError",
                 }), 200)
 
-            session['user'] = request.get_json()['fields']['eMail']
+            # Get User Data
+            with MySQL(False) as db:
+                db.execute(
+                    ("SELECT * FROM users WHERE eMail=%s AND password=%s"),
+                    (
+                        request.get_json()["fields"]["eMail"],
+                        request.get_json()["fields"]["password"]
+                    )
+                )
 
-            #success
+                # Set Session User Data
+                session["user"] = db.fetchOne()
+
+            # Setup Dirs
+            try:
+                os.makedirs(f'{APP_RUNNING_FROM}/users/{session["user"]["id"]}/images', mode=0o777, exist_ok=True)
+            except:
+                # catch for folder already exists
+                pass
+
+            # On Success Redirect
             return make_response(json.dumps({
                 "type": "success",
                 "message": "success",
@@ -255,8 +291,13 @@ def signUp():
 #################################################### Log In
 @app.route("/logIn", methods=["GET", "POST"])
 def logIn():
+
+    # Check If Feature Is Enabled
     if conf["features"]["logIn"] == False:
-        return redirect(url_for('home'))
+        return redirect(url_for("home"))
+
+    # Check If User Already Logged In
+    if 'user' in session: return redirect(url_for('home'))
 
     if request.method == "GET":
         return render_template("index.html", **globals())
@@ -287,8 +328,13 @@ def logIn():
 #################################################### Log Out
 @app.route("/logOut", methods=["GET", "POST"])
 def logOut():
+
+    # Check If Feature Is Enabled
     if conf["features"]["logOut"] == False:
-        return redirect(url_for('home'))
+        return redirect(url_for("home"))
+
+    # Check If User Already Logged Out
+    if 'user' not in session: return redirect(url_for('home'))
 
     if request.method == "GET":
         return render_template("index.html", **globals())
@@ -345,7 +391,7 @@ def contact():
 #################################################### none/404
 @app.errorhandler(404)
 def page_not_found(error):
-    return redirect(url_for('home'))
+    return redirect(url_for("home"))
 
 
 #################################################### Bridge
