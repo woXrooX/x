@@ -37,7 +37,7 @@ export default function logIn(){
       </row>
 
       <row>
-        <a href="{url_for('signUp')}">${langDict["dontHaveAccountGoToSignUp"][langCode]}</a>
+        <a href="/signUp">${langDict["dontHaveAccountGoToSignUp"][langCode]}</a>
       </row>
 
     </column>
