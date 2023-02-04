@@ -5,7 +5,7 @@ export default function content() {
   let dom = `
 <container>
   <row>
-    <column class="w-50 box p-5 bc-2">
+    <column class="w-50 p-5 bc-2 bs radius">
 
       <row>
         <h1>${langDict["signUp"][langCode]}</h1>
@@ -43,4 +43,5 @@ export default function content() {
   `;
 
   return dom;
+
 }

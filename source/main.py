@@ -127,23 +127,7 @@ currencyCode = conf["default"]["currency"]
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
-# def home():
-#     session = stripe.checkout.Session.create(
-#         payment_method_types=['card'],
-#         line_items=[{
-#             'price': 'price_1MO2KSAh3t85mIMGoprvVse6',
-#             'quantity': 1
-#         }],
-#         mode='payment',
-#         success_url=url_for('home', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
-#         cancel_url=url_for('home', _external=True)
-#     )
-#     return render_template('index.html', checkout_session_id=session['id'], checkout_public_key=conf['stripe_payment']['pb_key'], TITLE="Yzoken", **globals())
 def home():
-    def main():
-        main = f"""Main"""
-        return main
-
     if request.method == "GET":
         return render_template("index.html", **globals())
 
@@ -156,7 +140,7 @@ def home():
 def signUp():
     if conf["features"]["signUp"] == False:
         return redirect(url_for('home'))
- 
+
     if request.method == "GET":
         return render_template("index.html", **globals())
 
@@ -202,7 +186,7 @@ def signUp():
                 "message": "passwordMinLength",
                 "field": "password"
             }), 200)
-        
+
         # passwordMaxLength
         if len(request.get_json()['fields']['password']) > conf['password']['max_length']:
             return make_response(json.dumps({
@@ -218,13 +202,13 @@ def signUp():
                 "message": "passwordAllowedChars",
                 "field": "password"
             }), 200)
-        
-        #### eMail and Password DB
+
+        #### eMail and Password In Use
         # eMailInUse
         with MySQL(False) as db:
-            db.execute("SELECT eMail from users WHERE eMail=%s", request.get_json()['fields']['eMail'])
-            fetchedData  = db.fetchone()
-            if fetchedData:
+            db.execute("SELECT id FROM users WHERE eMail=%s", (request.get_json()['fields']['eMail'], ))
+            dataFetched  = db.fetchone()
+            if dataFetched:
                 return make_response(json.dumps({
                     "type": "error",
                     "message": "eMailInUse",
@@ -233,15 +217,15 @@ def signUp():
 
         # passwordInUse
         with MySQL(False) as db:
-            db.execute("SELECT password from users WHERE password=%s", request.get_json()['fields']['password'])
-            fetchedData  = db.fetchone()
-            if fetchedData:
+            db.execute("SELECT id FROM users WHERE password = %s", (request.get_json()['fields']['password'], ))
+            dataFetched = db.fetchone()
+            if dataFetched:
                 return make_response(json.dumps({
                     "type": "error",
                     "message": "passwordInUse",
                     "field": "password"
                 }))
-               
+
         #### success
         with MySQL(False) as db:
             db.execute(
