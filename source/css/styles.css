@@ -58,6 +58,9 @@ form input:where([type=text], [type=eMail], [type=password], [type=number], [typ
   border-radius: var(--f-radius);
   border: var(--f-border);
 
+  transition: calc(var(--transition-velocity) * 2) ease-in-out;
+  transition-property: background-color, border;
+
 }
 /************ select, textarea, imput -> type = [text, password, eMail, number, color] END ************/
 
@@ -68,8 +71,6 @@ form input[type=number]:where(:hover, :focus),
 form input:where(:hover, :focus){
   background-color: var(--color-surface-4);
   border: 1px solid var(--color-text-primary);
-  transition: var(--transition-velocity) ease-in-out;
-  transition-property: background-color, border;
 
 }
 /************ :focus -> inputs & textarea & select END ************/
