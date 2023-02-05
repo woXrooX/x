@@ -133,8 +133,7 @@ currencyCode = conf["default"]["currency"]
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
 def home():
-    if request.method == "GET":
-        return render_template("index.html", **globals())
+    if request.method == "GET": return render_template("index.html", **globals())
 
     elif request.method == "POST":
         return make_response(json.dumps({"response": "OK"}), 200)
@@ -151,8 +150,7 @@ def signUp():
     # Check If User Already Logged In
     if 'user' in session: return redirect(url_for('home'))
 
-    if request.method == "GET":
-        return render_template("index.html", **globals())
+    if request.method == "GET": return render_template("index.html", **globals())
 
     if request.method == "POST":
 
@@ -299,8 +297,7 @@ def logIn():
     # Check If User Already Logged In
     if 'user' in session: return redirect(url_for('home'))
 
-    if request.method == "GET":
-        return render_template("index.html", **globals())
+    if request.method == "GET": return render_template("index.html", **globals())
 
     elif request.method == "POST":
         return make_response(json.dumps({
@@ -336,11 +333,24 @@ def logOut():
     # Check If User Already Logged Out
     if 'user' not in session: return redirect(url_for('home'))
 
-    if request.method == "GET":
-        return render_template("index.html", **globals())
+    if request.method == "GET": return render_template("index.html", **globals())
 
     elif request.method == "POST":
-        return make_response(json.dumps({"response": "OK"}), 200)
+
+        # Remove User From Session
+        session.pop('user')
+
+        # Reset Site Language To The Default
+        global langCode
+        langCode = conf["default"]["language"]
+
+        # Redirect To Home
+        return make_response(json.dumps({
+            "type": "success",
+            "message": "success",
+            "action": "redirect",
+            "url": "/home"
+        }), 200)
 
 
 #################################################### Me | MyPage
@@ -361,8 +371,7 @@ def plansAndPricing():
 #################################################### Privacy Policy
 @app.route("/privacyPolicy", methods=["GET", "POST"])
 def privacyPolicy():
-    if request.method == "GET":
-        return render_template("index.html", **globals())
+    if request.method == "GET": return render_template("index.html", **globals())
 
     elif request.method == "POST":
         return make_response(json.dumps({"response": "OK"}), 200)
@@ -371,8 +380,7 @@ def privacyPolicy():
 #################################################### Terms Of Use
 @app.route("/termsOfUse", methods=["GET", "POST"])
 def termsOfUse():
-    if request.method == "GET":
-        return render_template("index.html", **globals())
+    if request.method == "GET": return render_template("index.html", **globals())
 
     elif request.method == "POST":
         return make_response(json.dumps({"response": "OK"}), 200)
@@ -381,8 +389,7 @@ def termsOfUse():
 #################################################### Contact
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
-    if request.method == "GET":
-        return render_template("index.html", **globals())
+    if request.method == "GET": return render_template("index.html", **globals())
 
     elif request.method == "POST":
         return make_response(json.dumps({"response": "OK"}), 200)
@@ -443,8 +450,7 @@ def bridge():
 #################################################### Demo
 @app.route("/demo", methods=["GET"])
 def demo():
-    if request.method == "GET":
-        return render_template("index.html", **globals())
+    if request.method == "GET": return render_template("index.html", **globals())
 
 
 #################################################### RUN
