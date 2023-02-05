@@ -12,16 +12,16 @@ export default function content() {
       </row>
 
       <row>
-        <form for='signUp' autocomplete='off'>
+        <form for='signUp'>
 
           <label>
               <p for='eMail'>${langDict["eMail"][langCode]}</p>
-              <input type='text' name='eMail'>
+              <input type='eMail' name='eMail'>
           </label>
 
           <label>
               <p for='password'>${langDict["password"][langCode]}</p>
-              <input type='password' name='password'><br>
+              <input type='password' name='password' minlength='${conf["password"]["min_length"]}' maxlength='${conf["password"]["max_length"]}'><br>
           </label>
 
           <label>
