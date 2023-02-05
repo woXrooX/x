@@ -20,12 +20,12 @@ export default function logIn(){
 
           <label>
               <p for='username'>${langDict["username"][langCode]}</p>
-              <input type='text' name='username' minlength='${conf["username_min_length"]}' maxlength='${conf["username_max_length"]}' autofocus>
+              <input type='text' name='username' minlength='${conf["username_min_length"]}' maxlength='${conf["username_max_length"]}'>
           </label>
 
           <label>
               <p for='password'>${langDict["password"][langCode]}</p>
-              <input type='password' name='password' minlength='${conf["password_min_length"]}' maxlength='${conf["password_max_length"]}' autocomplete='on'><br>
+              <input type='password' name='password' minlength='${conf["password_min_length"]}' maxlength='${conf["password_max_length"]}'><br>
           </label>
 
           <label>
