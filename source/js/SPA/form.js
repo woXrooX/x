@@ -44,7 +44,7 @@ export default class Form{
       event.preventDefault();
 
       // PLZW8
-      Form.#response(form.getAttribute("for"), "info", "plzW8");
+      Form.#response("info", "plzW8", form.getAttribute("for"));
 
       // FormData / Data
       let formData = new FormData(event.target);
@@ -59,10 +59,10 @@ export default class Form{
       console.log(response);
 
       // Above Input Field
-      if("field" in response) Form.#response(response["field"], response["type"], response["message"], true, true);
+      if("field" in response) Form.#response(response["type"], null, response["field"], true);
 
       // Above Submit Field
-      Form.#response(form.getAttribute("for"), response["type"], response["message"], false, true);
+      Form.#response(response["type"], response["message"], form.getAttribute("for"));
 
       ///// Check If Response Includes Action
       if("action" in response === false) return;
@@ -81,29 +81,43 @@ export default class Form{
     };
   }
 
-  static #response(field, type, message = null, flash = false, toast = false){
+  static #response(type, message, field, flash = false, toast = false){
+    const elementP = document.querySelector(`p[for=${field}]`);
+
+    // Check If Element <p> Exists
+    if(!!elementP === false) return;
+
     // Above Submit Button
-    if(!!document.querySelector(`p[for=${field}]`) && message != null)
-      document.querySelector(`p[for=${field}]`).innerHTML = `<${type}>${langDict[message][langCode]}</${type}>`;
+    if(!!message != false) elementP.innerHTML = `<${type}>${langDict[message][langCode]}</${type}>`;
 
-    // Activate | Flash Border Color
-    if(!!document.querySelector(`input[name=${field}]`) && document.querySelector(`input[name=${field}]`).getAttribute("type") != "submit"){
-      // Breaking Border Animation On Focus
-      // document.querySelector(`input[name=${field}]`).focus();
-
-      // Activate Border Color
-      document.querySelector(`input[name=${field}]`).style.borderColor = getComputedStyle(document.body).getPropertyValue(`--color-${type}`);
+    // Focus & Flash The Border Color
+    const elementInput = document.querySelector(`input[name=${field}]`);
+    if(!!elementInput && elementInput.getAttribute("type") != "submit"){
+      // Focus
+      elementInput.focus();
 
       // Flash Border Color
-      if(flash === true){
-        setTimeout(()=>{
-          document.querySelector(`input[name=${field}]`).removeAttribute("style");
-        }, 1500);
-      }
+      if(flash === true) Form.#flash(type, field);
+
     }
 
     // Enable Toast
     if(toast === true) Toast.new(type, message);
 
   }
+
+  static #flash(type, field){
+    const element = document.querySelector(`input[name=${field}]`);
+
+    // Check If Element Exists
+    if(!!element === false) return;
+
+    // Activate Border Color
+    element.style.borderColor = getComputedStyle(document.body).getPropertyValue(`--color-${type}`);
+
+    // Flash Border Color
+    setTimeout(()=>{element.removeAttribute("style");}, 2000);
+
+  }
+
 }
