@@ -160,7 +160,10 @@ export default class Toast extends HTMLElement{
     this.shadow.querySelector("toast>dismiss").onclick = ()=> this.style.display = "none";
   }
 
-  static new(type = "warning", content = ""){
+  static new(type, content){
+    if(!!type === false || !!content === false) return;
+
+
     document.querySelector(Toast.#selector).innerHTML += `<x-toast type="${type}">${content}</x-toast>`;
 
     // Auto Remove After N Seconds
