@@ -71,7 +71,7 @@ features:
   logIn: true
   logOut: true
 
-  paymentMethod: false
+  paymentSystem: false
 
 
 ######### Username
