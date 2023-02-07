@@ -16,11 +16,11 @@ export default function logIn(){
       </row>
 
       <row>
-        <form for='logIn' autocomplete='off'>
+        <form for='logIn'>
 
           <label>
-              <p for='username'>${langDict["username"][langCode]}</p>
-              <input type='text' name='username' minlength='${conf["username_min_length"]}' maxlength='${conf["username_max_length"]}'>
+              <p for='eMail'>${langDict["eMail"][langCode]}</p>
+              <input type='email' name='eMail'>
           </label>
 
           <label>
