@@ -252,7 +252,8 @@ def signUp():
                 )
             )
             db.commit()
-            if db.hasError:
+
+            if db.hasError():
                 return make_response(json.dumps({
                     "type": "error",
                     "message": "databaseError",
@@ -267,6 +268,13 @@ def signUp():
                         request.get_json()["fields"]["password"]
                     )
                 )
+
+                if db.hasError():
+                    return make_response(json.dumps({
+                        "type": "error",
+                        "message": "databaseError",
+                    }), 200)
+
 
                 # Set Session User Data
                 session["user"] = db.fetchOne()
@@ -307,7 +315,7 @@ def logIn():
                 "type": "warning",
                 "message": "unknownError"
             }), 200)
-        
+
         # unknownError
         if "field" not in request.get_json() or request.get_json()["field"] != "all":
             return make_response(json.dumps({
@@ -333,30 +341,44 @@ def logIn():
                 "field": "password"
             }), 200)
 
-        ######## Check eMail and Password Exist
+        ######## Check If eMail And Password matching User Exist
         with MySQL(False) as db:
-            db.execute("SELECT * FROM users WHERE eMail=%s AND password=%s", (request.get_json()["fields"]["eMail"], request.get_json()["fields"]["password"], ))
-            if db.hasError: 
+            db.execute(
+                ("SELECT * FROM users WHERE eMail=%s AND password=%s"),
+                (
+                    request.get_json()["fields"]["eMail"],
+                    request.get_json()["fields"]["password"],
+                )
+            )
+
+            if db.hasError():
                 return make_response(json.dumps({
                     "type": "error",
                     "message": "databaseError"
                 }))
 
             dataFetched = db.fetchOne()
-            if dataFetched is None: 
+
+            # No Match
+            if dataFetched is None:
                 return make_response(json.dumps({
                     "type": "error",
                     "message": "usernameOrPasswordWrong"
                 }))
-            
-            # session set up
+
+            # Set Session User Data
             session["user"] = dataFetched
+
+            # On Success Redirect
             return make_response(json.dumps({
                 "type": "success",
                 "message": "success",
                 "action": "redirect",
                 "url": "home"
             }))
+
+
+
         # return make_response(json.dumps({
             # "type": "success",
             # "type": "info",
