@@ -3,19 +3,19 @@ if __name__ != "__main__":
 
     class MySQL:
         def __init__(self, prep=True):
-            self.hasError = False
-            self.conn = mysql.connector.connect(
+            self._hasError = False
+            self._conn = mysql.connector.connect(
                 user = MySQL.user,
                 password = MySQL.password,
                 host = MySQL.host,
                 database = MySQL.database,
                 use_pure=True
             )
-            self.conn.set_charset_collation(MySQL.charset, MySQL.collate)
+            self._conn.set_charset_collation(MySQL.charset, MySQL.collate)
             if prep:
-                self.curs = self.conn.cursor(prepared=True)
+                self._curs = self._conn.cursor(prepared=True)
             else:
-                self.curs = self.conn.cursor(dictionary=True)
+                self._curs = self._conn.cursor(dictionary=True)
 
         @staticmethod
         def setUp(user, password, host, database, charset, collate):
@@ -28,37 +28,55 @@ if __name__ != "__main__":
 
         def __enter__(self):
             return self
+
         def __exit__(self, exc_type, exc_value, traceback):
             self.close()
 
         @property
         def connection(self):
-            return self.conn
+            return self._conn
+
         @property
         def cursor(self):
-            return self.curs
+            return self._curs
 
         def execute(self, sql, params=None):
             try:
                 self.cursor.execute(sql, params or ())
             except:
-                self.hasError = True
+                self._hasError = True
 
         def fetchOne(self):
+            # Check If Execute Has Error
+            if self._hasError == True: return False
+
             return self.cursor.fetchone()
+
         def fetchAll(self):
+            # Check If Execute Has Error
+            if self._hasError == True: return False
+
             return self.cursor.fetchall()
+
         def fetchmany(self):
+            # Check If Execute Has Error
+            if self._hasError == True: return False
+
             return self.cursor.fetchmany()
+
         def rowcount(self):
+            # Check If Execute Has Error
+            if self._hasError == True: return False
+
             return self.cursor.rowcount()
 
         # Error
         def hasError(self):
-            return self.hasError
+            return self._hasError
 
         def commit(self):
             self.connection.commit()
+
         def close(self, commit=True):
             if commit:
                 self.commit()
