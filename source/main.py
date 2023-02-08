@@ -485,14 +485,15 @@ def bridge():
                 "type": "success",
                 "conf": {
                     "default": conf["default"],
+                    "features": conf["features"],
                     "username": conf["username"],
                     "password": conf["password"],
                     "phoneNumber": conf["phoneNumber"],
                     "eMail": conf["eMail"]
                 },
                 # "session":session["user"] if "user" in session else None,
-                "langDict": langDict,
                 "langCode": langCode,
+                "langDict": langDict,
                 # "languages":languages,
                 # "currencies":currencies
             }, 200)
