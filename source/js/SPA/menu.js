@@ -11,11 +11,13 @@ export default class Menu{
   static #elementMenu = null;
 
   // Class Static Initialization Block
-  static {
+  static init(){
     Menu.#elementMenu = document.querySelector(Menu.selector);
 
     // Check If Menu Exists Then Listen To The Events
     if(!!Menu.#elementMenu !== false){
+      Menu.#build();
+
       Menu.#onClickMenuButtonShow();
       Menu.#onClickCoverHide();
       Menu.#onClickHyperlinksHide();
@@ -24,15 +26,38 @@ export default class Menu{
 
   }
 
+  /////////////////// Create Menu | Re-Build
+  static #build(){
+    // Check If Menu Exists
+    if(!!Menu.#elementMenu === false) return;
+
+    // Check If Menu Feature Enabled
+    if(window.conf["features"]["menu"]["status"] === false) return;
+
+    // Build Menus
+    let hyperlinks = "";
+    window.conf["features"]["menu"]["menus"].forEach((menu) => {
+      hyperlinks += `
+<a href="/${menu.name}">
+  <svg><use href="#${menu.svg}"></use></svg>
+  ${window.langDict[menu.name][window.langCode]}
+</a>
+      `;
+    });
+
+    // Add Hyperlinks Into Menu > Main
+    Menu.#elementMenu.querySelector("main").innerHTML = hyperlinks;
+
+  }
+
   /////////////////// Active
   static setActive(){
     document.querySelectorAll(Menu.#selectorHyperlinks).forEach((a) => {
       a.removeAttribute("active");
-      if(a.getAttribute("href") == window.location.pathname){
-        a.setAttribute("active", "");
-      }else if(window.location.pathname == "/"){
-        document.querySelector("body > menu > * > a[href='/home']").setAttribute("active", "");
-      }
+
+      if(a.getAttribute("href") == window.location.pathname) a.setAttribute("active", "");
+      else if(window.location.pathname == "/") document.querySelector("body > menu > * > a[href='/home']").setAttribute("active", "");
+
     });
   }
 
@@ -84,10 +109,4 @@ export default class Menu{
 
   }
 
-
-  //
-  // /////////////////// close MENU, CART, COVER On URL Change
-  // window.addEventListener('locationchange', ()=>{
-  //   closeMenuCartCover();
-  // });
 }

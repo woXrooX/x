@@ -40,31 +40,32 @@ HTML:
 # False = Disabled
 # True = Enabled
 features:
-  menu: true
-  menus:
-    - name: "home"
-      svg: "home"
+  menu:
+    status: true
+    menus:
+      - name: "home"
+        svg: "home"
 
-    - name: "signUp"
-      svg: "signUp"
+      - name: "signUp"
+        svg: "signUp"
 
-    - name: "logIn"
-      svg: "logIn"
+      - name: "logIn"
+        svg: "logIn"
 
-    - name: "logOut"
-      svg: "logOut"
+      - name: "logOut"
+        svg: "logOut"
 
-    - name: "demo"
-      svg: "contact"
+      - name: "demo"
+        svg: "contact"
 
-    - name: "privacyPolicy"
-      svg: "privacyPolicy"
+      - name: "privacyPolicy"
+        svg: "privacyPolicy"
 
-    - name: "termsOfUse"
-      svg: "termsOfUse"
+      - name: "termsOfUse"
+        svg: "termsOfUse"
 
-    - name: "contact"
-      svg: "contact"
+      - name: "contact"
+        svg: "contact"
 
 
   signUp: true
