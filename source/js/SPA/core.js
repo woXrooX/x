@@ -1,6 +1,12 @@
 //////////////// SPA - Single Page Application
 "use strict";
 
+///////////////////////////// Brideg / Fetch
+import bridge from "../modules/bridge.js";
+
+///////////////////////////// Brideg / Fetch
+// import bridge from "./modules/bridge.js";
+
 //// Custom Elements
 import El from "./elements/el.js";
 // import Form from "./elements/form.js";
@@ -22,15 +28,45 @@ import Menu from "./menu.js";
 
 export default class Core{
   static {
-    Core.#onLoad();
-    Core.#onUrlChange();
-    Core.#onHashChange();
-    Core.#onHistoryButtonClicked();
-    Core.#onDomChange();
+    // Try To Load Global Data Then Init The Methods
+    Core.#getGlobalData()
+    .then(()=>{
+      Core.#firstLoad();
+      Core.#onLoad();
+      Core.#onUrlChange();
+      Core.#onHashChange();
+      Core.#onHistoryButtonClicked();
+      Core.#onDomChange();
+
+    });
+
 
   }
 
+  /////// Global Data
+  static async #getGlobalData(){
+      let response = await bridge("bridge", {for:"globalData"});
+      window.conf = response["conf"];
+      // window.session = response["session"];
+      window.langCode = response["langCode"];
+      window.langDict = response["langDict"];
+      // window.languages = response["languages"];
+      // window.currencies = response["currencies"];
+  }
+
   /////// Event Handlers
+  static #firstLoad(){
+    // console.log("firstLoad");
+
+    Menu.init();
+    Menu.setActive();
+
+    Router.handle();
+
+    Loading.done();
+
+  }
+
   static #onLoad(){
     document.addEventListener('readystatechange', ()=>{
       if(event.target.readyState === 'loading') return;
@@ -38,7 +74,7 @@ export default class Core{
       // if(event.target.readyState === 'complete');
 
       // window.dispatchEvent(new Event('load'));
-      // console.log("onLoad");
+      console.log("onLoad");
 
       Router.handle();
 
@@ -86,7 +122,11 @@ export default class Core{
       // window.dispatchEvent(new CustomEvent('domChange'));
       // console.log("onDomChange");
 
+      // Check if changed DOM is related to body > menu else do not re build menu
+      // Menu.init();
+
       Hyperlink.collect();
+
       Form.collect();
 
     });
