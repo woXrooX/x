@@ -1,20 +1,4 @@
 "use strict";
-///////////////////////////// Brideg / Fetch
-import bridge from "./modules/bridge.js";
-
-///////////////////////////// GLOBAL DATA
-// conf, session, langCode, langDict, languages, currencies
-GlobalData: {
-  let response = await bridge("bridge", {for:"globalData"});
-  window.conf = response["conf"];
-  // window.session = response["session"];
-  window.langCode = response["langCode"];
-  window.langDict = response["langDict"];
-  // window.languages = response["languages"];
-  // window.currencies = response["currencies"];
-}
-
-
 ///////////////////////////// SPA / Core
 import Core from "./SPA/core.js";
 
