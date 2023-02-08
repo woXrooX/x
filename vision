@@ -1,12 +1,12 @@
 v1.0.0
-  1. Sign Up (With Email Or Phone Number Verifications) 📌️
-  2. Log In ⚠️
-  3. Log Out ⚠️
+  1. Sign Up (With Email Or Phone Number Verifications) ⚠️
+  2. Log In ✅️
+  3. Log Out ✅️
   4. Menu (Dynamic) ✅️
   5. Layout System ✅️
   6. Payment System (Stripe) 💰️
   7. Simplest UI System 🗿️
-  8. Basic Database Structure For Saving User Data
+  8. Basic Database Structure For Saving User Data ✅️
 
 v2.0.0
   1. Sign Up (Through Social Platforms)
