@@ -33,10 +33,21 @@ export default class Menu{
 
     // Check If Menu Feature Enabled
     if(window.conf["features"]["menu"]["status"] === false) return;
-
+    
     // Build Menus
     let hyperlinks = "";
     window.conf["features"]["menu"]["menus"].forEach((menu) => {
+      console.log(window.session);
+      if (
+        //  If User Logged In Then Do Not Show Link For "logIn"
+        (menu.name == "logOut" && !!window.session) ||
+
+        //  If User Is Not Logged In Then Show "logIn" And "signUp" Links
+        ((menu.name == "signUp" || menu.name == "logIn") && !window.session) ||
+
+        //  If Current Menu Is Not Followings Then Just Show The Links
+        (menu.name !== "signUp" && menu.name != "logIn" && menu.name !== "logOut")
+    )
       hyperlinks += `
 <a href="/${menu.name}">
   <svg><use href="#${menu.svg}"></use></svg>
