@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, session, redirect, url_for, m
 import json, yaml, re, html, pathlib
 import os # For Creating Folders
 # import stripe
-
+from functools import wraps # For featureEnabled() Wrapper
 
 #################################################### GLOBAL appRunningFrom
 APP_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
@@ -17,6 +17,31 @@ with open(f"{APP_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
 #################################################### GLOBAL tools
 from python.MySQL import MySQL
 # import python.tools as tools
+
+"""
+
+@wraps(func)
+
+The functools.wraps function is a decorator used to preserve metadata of a decorated function,
+such as the name, docstring, and argument signature, to the wrapped function.
+When you use the functools.wraps decorator,
+it takes the original function as an argument and returns a new function that has the same metadata as the original function.
+
+"""
+
+# Feature Checker
+def featureEnabled(feature):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if conf["features"][feature] == False: return redirect(url_for("home"))
+
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
 
 ## Generates Menu Links Dynamically
 def generateMenus():
@@ -141,13 +166,10 @@ def home():
 
 #################################################### Sign Up
 @app.route("/signUp", methods=["GET", "POST"])
+@featureEnabled("signUp")
 def signUp():
 
-    # Check If Feature Is Enabled
-    if conf["features"]["signUp"] == False:
-        return redirect(url_for('home'))
-
-    # Check If User Already Logged In
+    # # Check If User Already Logged In
     if 'user' in session: return redirect(url_for('home'))
 
     if request.method == "GET": return render_template("index.html", **globals())
@@ -296,11 +318,8 @@ def signUp():
 
 #################################################### Log In
 @app.route("/logIn", methods=["GET", "POST"])
+@featureEnabled("logIn")
 def logIn():
-
-    # Check If Feature Is Enabled
-    if conf["features"]["logIn"] == False:
-        return redirect(url_for("home"))
 
     # Check If User Already Logged In
     if 'user' in session: return redirect(url_for('home'))
@@ -408,11 +427,8 @@ def logIn():
 
 #################################################### Log Out
 @app.route("/logOut", methods=["GET", "POST"])
+@featureEnabled("logOut")
 def logOut():
-
-    # Check If Feature Is Enabled
-    if conf["features"]["logOut"] == False:
-        return redirect(url_for("home"))
 
     # Check If User Already Logged Out
     if 'user' not in session: return redirect(url_for('home'))
@@ -436,7 +452,7 @@ def logOut():
                 {
                     "name": "redirect",
                     "url": "home",
-                }            
+                }
             ]
         }), 200)
 
