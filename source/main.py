@@ -291,7 +291,7 @@ def signUp():
                 "type": "success",
                 "message": "success",
                 "action": "redirect",
-                "url": "/"
+                "url": "home"
             }), 200)
 
 #################################################### Log In
@@ -388,10 +388,20 @@ def logIn():
             # "message": "someSuccessMessage", # From Lang Dict
             # "field": "username" # From Front-End Form Name OR ID Or For
             #
-            # "action": "redirect",
-            # "url": "/me"
+            # "actions": [
+            #     {
+            #         "name": "redirect",
+            #         "url": "me",
+            #     },
+            #     {
+            #         "name": "domChange",
+            #         "section": "menu", # menu header main footer
+            #     },
+            #     {
+            #         "name": "reload"
+            #     },
             #
-            # "action": "reload"
+            # ]
         #
         # }), 200)
 
@@ -422,8 +432,12 @@ def logOut():
         return make_response(json.dumps({
             "type": "success",
             "message": "success",
-            "action": "redirect",
-            "url": "/home"
+            "actions": [
+                {
+                    "name": "redirect",
+                    "url": "home",
+                }            
+            ]
         }), 200)
 
 
@@ -491,7 +505,7 @@ def bridge():
                     "phoneNumber": conf["phoneNumber"],
                     "eMail": conf["eMail"]
                 },
-                # "session":session["user"] if "user" in session else None,
+                "session": session,
                 "langCode": langCode,
                 "langDict": langDict,
                 # "languages":languages,
