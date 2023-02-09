@@ -80,6 +80,26 @@ features:
   paymentSystem: false
 
 
+######### Pages
+#### Insiders
+# Root      -> No Limit
+# Admin     -> Can Control (Some Parts Of) The Site Via UI
+
+#### Basic Types
+# everyone  -> Literally Everyone
+# Guests    -> Users Who are not Signed Up
+# Users     -> Signed Up Users
+
+#### Plan Owners
+# User Must Be Signed Up In Order To Get A Plan
+# Plans Differ From Project To Project
+# PlanName  -> An User With A PlanName
+
+pages:
+  home:
+    allowed: "everyone"
+
+
 ######### Username
 username:
   min_length: 6

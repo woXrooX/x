@@ -42,6 +42,20 @@ def featureEnabled(feature):
 
     return decorator
 
+# Page Guard
+def pageGuard(page):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            # conf["pages"][page]...
+            # session..
+
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
 
 ## Generates Menu Links Dynamically
 def generateMenus():
