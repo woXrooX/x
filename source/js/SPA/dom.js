@@ -26,7 +26,7 @@ export default class Dom{
     // If Passed String Like: "<x-form></x-from>"
     else if(typeof dom === "string") Dom.#elementMain.innerHTML = dom;
 
-    window.dispatchEvent(new CustomEvent('domChange'));
+    window.dispatchEvent(new CustomEvent("domChange"));
 
   }
 

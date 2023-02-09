@@ -47,7 +47,7 @@ export default class Core{
   static async #getGlobalData(){
       let response = await bridge("bridge", {for:"globalData"});
       window.conf = response["conf"];
-      // window.session = response["session"];
+      window.session = response["session"];
       window.langCode = response["langCode"];
       window.langDict = response["langDict"];
       // window.languages = response["languages"];
@@ -120,13 +120,18 @@ export default class Core{
   static #onDomChange(){
     window.addEventListener('domChange', ()=>{
       // window.dispatchEvent(new CustomEvent('domChange'));
+      // window.dispatchEvent(new CustomEvent("domChange", {detail:"menu"}));
       // console.log("onDomChange");
 
-      // Check if changed DOM is related to body > menu else do not re build menu
-      // Menu.init();
+      // Dom Change For body > menu
+      if(!!event.detail === true && event.detail == "menu") Menu.build();
 
+      // Dom Change For body > header
+      // Dom Change For body > main
+      // Dom Change For body > footer
+
+      // Globals
       Hyperlink.collect();
-
       Form.collect();
 
     });
