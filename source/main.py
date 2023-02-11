@@ -13,6 +13,17 @@ APP_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
 with open(f"{APP_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
     conf = yaml.safe_load(file)
 
+# Public Version Of conf (Minus Senstive Data)
+PUBLIC_CONF = {
+    "default": conf["default"],
+    "features": conf["features"],
+    "username": conf["username"],
+    "password": conf["password"],
+    "phoneNumber": conf["phoneNumber"],
+    "eMail": conf["eMail"]
+
+}
+
 
 #################################################### GLOBAL tools
 from python.MySQL import MySQL
@@ -56,31 +67,18 @@ def pageGuard(page):
 
     return decorator
 
+def publicSessionUser():
+    # Check If User In Session
+    if "user" not in session: return None
 
-## Generates Menu Links Dynamically
-def generateMenus():
-    html = ''
-    for menu in conf["features"]["menus"]:
-        if (
-            # If User Logged In Then Do Not Show Link For "logIn"
-            (menu["name"] == "logOut" and 'user' in session) or
+    publicData = {
+        "username": session["user"]["username"],
+        "firstname": session["user"]["firstname"],
+        "lastname": session["user"]["lastname"]
 
-            # If User Is Not Logged In Then Show "logIn" And "signUp" Links
-            ((menu["name"] == "signUp" or menu["name"] == "logIn") and 'user' not in session) or
+    }
 
-            # If Current Menu Is Not Followings Then Just Show The Links
-            (menu["name"] != "signUp" and menu["name"] != "logIn" and menu["name"] != "logOut")
-        ):
-            html += f"""
-<a href="{url_for(menu['name'])}">
-  <svg>
-    <use href="#{menu['svg']}"></use>
-  </svg>
-  {langDict[menu["name"]][langCode]}
-</a>
-            """
-
-    return html
+    return publicData
 
 
 #################################################### URL
@@ -322,13 +320,20 @@ def signUp():
                 # catch for folder already exists
                 pass
 
-            # On Success Redirect
+            # On Success Redirect & Update Front-End Session
             return make_response(json.dumps({
                 "type": "success",
                 "message": "success",
-                "action": "redirect",
-                "url": "home"
-            }), 200)
+                "actions": {
+                    "setSessionUser": publicSessionUser(),
+                    "redirect": {
+                        "url": "home"
+                    },
+                    "domChange": {
+                        "section": "menu"
+                    }
+                }
+            }))
 
 #################################################### Log In
 @app.route("/logIn", methods=["GET", "POST"])
@@ -402,41 +407,20 @@ def logIn():
             # Set Session User Data
             session["user"] = dataFetched
 
-            # On Success Redirect
+            # On Success Redirect & Update Front-End Session
             return make_response(json.dumps({
                 "type": "success",
                 "message": "success",
-                "action": "redirect",
-                "url": "home"
+                "actions": {
+                    "setSessionUser": publicSessionUser(),
+                    "redirect": {
+                        "url": "home"
+                    },
+                    "domChange": {
+                        "section": "menu"
+                    }
+                }
             }))
-
-
-
-        # return make_response(json.dumps({
-            # "type": "success",
-            # "type": "info",
-            # "type": "warning",
-            # "type": "error",
-            #
-            # "message": "someSuccessMessage", # From Lang Dict
-            # "field": "username" # From Front-End Form Name OR ID Or For
-            #
-            # "actions": [
-            #     {
-            #         "name": "redirect",
-            #         "url": "me",
-            #     },
-            #     {
-            #         "name": "domChange",
-            #         "section": "menu", # menu header main footer
-            #     },
-            #     {
-            #         "name": "reload"
-            #     },
-            #
-            # ]
-        #
-        # }), 200)
 
 
 #################################################### Log Out
@@ -462,12 +446,15 @@ def logOut():
         return make_response(json.dumps({
             "type": "success",
             "message": "success",
-            "actions": [
-                {
-                    "name": "redirect",
-                    "url": "home",
+            "actions": {
+                "deleteSessionUser": 0,
+                "redirect": {
+                    "url": "home"
+                },
+                "domChange": {
+                    "section": "menu"
                 }
-            ]
+            }
         }), 200)
 
 
@@ -526,16 +513,10 @@ def bridge():
     if request.get_json()["for"] == "globalData":
         return make_response(
             {
-                "type": "success",
-                "conf": {
-                    "default": conf["default"],
-                    "features": conf["features"],
-                    "username": conf["username"],
-                    "password": conf["password"],
-                    "phoneNumber": conf["phoneNumber"],
-                    "eMail": conf["eMail"]
+                "conf": PUBLIC_CONF,
+                "session": {
+                    "user": publicSessionUser()
                 },
-                "session": session,
                 "langCode": langCode,
                 "langDict": langDict,
                 # "languages":languages,
