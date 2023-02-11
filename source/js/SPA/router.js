@@ -6,62 +6,50 @@ import Title from "./title.js";
 
 export default class Router{
   static async handle(){
-    let link = window.location.pathname;
-    let response, content;
+    let endpoint = null;
+    // Pages
+    for(const page in window.conf["pages"]){
 
-    // On "/"
-    if(link == "/"){
-      // Load The Page
-      response = await import(`../pages/home.js`);
+      // Aliases
+      for(const alias of window.conf["pages"][page]["aliases"]){
 
-      // Render The Content
-      Dom.render(response.default());
+        if(
+          // Check If Page Is Enabled
+          window.conf["pages"][page]["enabled"] === true &&
 
-      // Set Title
-      Title.set(response.TITLE);
+          // Check If Page Alias Equals To Currnt Endpoint
+          alias == window.location.pathname
+          
+        ) endpoint = alias;
 
-      // console.log(content);
-
-      return;
-    }
-
-    // Try To Load The Page
-    try{
-      // Load The Page
-      response = await import(`../pages${link}.js`);
-
-      // Render The Content
-      Dom.render(response.default());
-
-      // Set Title
-      Title.set(response.TITLE);
-
-      // console.log(content);
-
-    }catch(error){
-      // Error: 404
-      if(error.message.search("Failed to fetch dynamically imported module:") !== -1){
-        // Change URL To /404
-        window.history.pushState("", "", URL+"404");
-
-        // Load The Page 404
-        response = await import(`../pages/404.js`);
-
-        // Render The Content
-        Dom.render(response.default());
-
-        // Set Title
-        Title.set(response.TITLE);
-
-      }else{
-        Dom.render(error);
-
-        console.log(error);
+        // If Still No Alias Matched Then Set To "/404"
+        else if(endpoint === null) endpoint = "/404";
 
       }
 
-      // console.log(content);
+    }
+
+    try{
+      // Change URL To /404 In Case endpoint Is /404
+      // Currntly causing infintive back and forth page looping
+      // if(endpoint === "/404") window.history.pushState("", "", URL+"404");
+
+      // Load The Page
+      const response = await import(`../pages${endpoint}.js`);
+
+      // Render The Content
+      Dom.render(response.default());
+
+      // Set Title
+      Title.set(response.TITLE);
+
+    }catch(error){
+      console.log(error);
+
+      Dom.render(error);
 
     }
+
   }
+
 }
