@@ -82,23 +82,51 @@ features:
 
 ######### Pages
 #### Insiders
-# Root      -> No Limit
-# Admin     -> Can Control (Some Parts Of) The Site Via UI
+# Root        -> No Limit
+# Admin       -> Can Control (Some Parts Of) The Site Via UI
 
 #### Basic Types
-# everyone  -> Literally Everyone
-# Guests    -> Users Who are not Signed Up
-# Users     -> Signed Up Users
+# everyone    -> Literally Everyone
+# anonymous   -> Users Who are not Signed Up Or Logged In
+# guest
+# users       -> Signed Up Or Logged In Users
 
 #### Plan Owners
 # User Must Be Signed Up In Order To Get A Plan
 # Plans Differ From Project To Project
-# PlanName  -> An User With A PlanName
+# PlanName    -> An User With A PlanName
 
 pages:
   home:
+    enabled: true
     allowed: "everyone"
+    aliases:
+      - "/"
+      - "/home"
 
+  signUp:
+    enabled: true
+    allowed: "guest"
+    aliases:
+      - "/signUp"
+
+  logIn:
+    enabled: true
+    allowed: "guest"
+    aliases:
+      - "/logIn"
+
+  logOut:
+    enabled: true
+    allowed: "user"
+    aliases:
+      - "/logOut"
+
+  demo:
+    enabled: true
+    allowed: "everyone"
+    aliases:
+      - "/demo"
 
 ######### Username
 username:
