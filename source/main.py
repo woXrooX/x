@@ -17,6 +17,7 @@ with open(f"{APP_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
 PUBLIC_CONF = {
     "default": conf["default"],
     "features": conf["features"],
+    "pages": conf["pages"],
     "username": conf["username"],
     "password": conf["password"],
     "phoneNumber": conf["phoneNumber"],
@@ -514,9 +515,7 @@ def bridge():
         return make_response(
             {
                 "conf": PUBLIC_CONF,
-                "session": {
-                    "user": publicSessionUser()
-                },
+                "session": {"user": publicSessionUser()} if "user" in session else {},
                 "langCode": langCode,
                 "langDict": langDict,
                 # "languages":languages,
@@ -546,6 +545,7 @@ def bridge():
                 "response":"ok",
                 "langDict":langDict
             }, 200)
+
 
 #################################################### Demo
 @app.route("/demo", methods=["GET"])
