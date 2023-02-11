@@ -39,7 +39,7 @@ export default class Menu{
         (menu.name == "logOut" && "user" in window.session) ||
 
         // If User Is Not Logged In Then Show "logIn" And "signUp" Links
-        ((menu.name == "signUp" || menu.name == "logIn") && ("user" in window.session)) ||
+        ((menu.name == "signUp" || menu.name == "logIn") && !("user" in window.session)) ||
 
         // If Current Menu Is Not Followings Then Just Show The Links
         (menu.name !== "signUp" && menu.name != "logIn" && menu.name !== "logOut")

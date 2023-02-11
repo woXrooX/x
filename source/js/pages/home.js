@@ -2,7 +2,9 @@
 
 export const TITLE = "Home";
 export default function home(){
-  let data = `<container>Home</container>`;
+  let data = `<container>
+ home
+</container>`;
 
   return data;
 
