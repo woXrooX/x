@@ -4,13 +4,13 @@ v1.0.0
   3. Log Out ✅️
   4. Menu (Dynamic) ✅️
   5. Layout System ✅️
-  6. Payment System (Stripe) 💰️
+  6. Payment System (Stripe) ⚠️
   7. Simplest UI System 🗿️
   8. Basic Database Structure For Saving User Data ✅️
 
 v2.0.0
   1. Sign Up (Through Social Platforms)
-  2. Log In (Two Factor Authentication)
+  2. Sub Routing System (/channel/video/1234)
   3. Mix Of Stripe And Home Made System Payment System
   4. Browser Extensions
   5. Site Language
@@ -23,3 +23,7 @@ v3.0.0
   2. Customizable Site Color Scheme
   3. Customizable Site Fonts
   4. File Management System
+  5. Log In (Two Factor Authentication)
+    a. SMS Verifications
+    b. Random Code Generator Like Steam
+    c. Log In Through QR Code Scanning
