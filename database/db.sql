@@ -93,8 +93,13 @@ CREATE TABLE IF NOT EXISTS `user_types` (
 INSERT INTO user_types (name)
   VALUES
     ("root"),
+    ("dev"),
     ("admin"),
-    ("user")
+
+    ("unauthenticated"),
+    ("unauthorized"),
+    ("authorized")
+    
 ;
 
 
