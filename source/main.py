@@ -59,8 +59,23 @@ def pageGuard(page):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            # conf["pages"][page]...
-            # session..
+            # Is Page Enabled
+            if conf["pages"][page]["enabled"] == False: return redirect(url_for("home"))
+
+            # Looping Through Page's Allowed List
+            for allowed in conf["pages"][page]["allowed"]:
+                # Only Allowed "unauthenticated" Users
+                if allowed == "unauthenticated" and "user" in session: return redirect(url_for("home"))
+
+                # Only Allowed "unauthorized" Users
+                if allowed == "unauthorized" and "user" not in session: return redirect(url_for("home"))
+
+                # Only Allowed "authorized" Users
+                # Retrive authorized_type_id From Database
+                # authorized_type_id = 5
+                # if allowed == "authorized":
+                #     if "user" not in session or "user" in session and session["user"]["type"] != authorized_type_id:
+                #         return redirect(url_for("home"))
 
             return func(*args, **kwargs)
 
@@ -170,8 +185,10 @@ currencyCode = conf["default"]["currency"]
 #################################################### HOME | Index | Landing
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
+@pageGuard("home")
 def home():
     if request.method == "GET": return render_template("index.html", **globals())
+
 
     elif request.method == "POST":
         return make_response(json.dumps({"response": "OK"}), 200)
@@ -179,12 +196,8 @@ def home():
 
 #################################################### Sign Up
 @app.route("/signUp", methods=["GET", "POST"])
-@featureEnabled("signUp")
+@pageGuard("signUp")
 def signUp():
-
-    # # Check If User Already Logged In
-    if 'user' in session: return redirect(url_for('home'))
-
     if request.method == "GET": return render_template("index.html", **globals())
 
     if request.method == "POST":
@@ -338,12 +351,8 @@ def signUp():
 
 #################################################### Log In
 @app.route("/logIn", methods=["GET", "POST"])
-@featureEnabled("logIn")
+@pageGuard("logIn")
 def logIn():
-
-    # Check If User Already Logged In
-    if 'user' in session: return redirect(url_for('home'))
-
     if request.method == "GET": return render_template("index.html", **globals())
 
     if request.method == "POST":
@@ -426,13 +435,10 @@ def logIn():
 
 #################################################### Log Out
 @app.route("/logOut", methods=["GET", "POST"])
-@featureEnabled("logOut")
+@pageGuard("logOut")
 def logOut():
-
-    # Check If User Already Logged Out
-    if 'user' not in session: return redirect(url_for('home'))
-
     if request.method == "GET": return render_template("index.html", **globals())
+
 
     elif request.method == "POST":
 
