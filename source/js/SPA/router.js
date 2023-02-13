@@ -7,7 +7,8 @@ import Title from "./title.js";
 export default class Router{
   static async handle(){
     let endpoint = null;
-    // Pages
+
+    // Loop Through Pages
     for(const page in window.conf["pages"]){
 
       // Aliases
@@ -19,8 +20,8 @@ export default class Router{
 
           // Check If Page Alias Equals To Currnt Endpoint
           alias == window.location.pathname
-          
-        ) endpoint = alias;
+
+        ) endpoint = '/'+page;
 
         // If Still No Alias Matched Then Set To "/404"
         else if(endpoint === null) endpoint = "/404";
