@@ -64,19 +64,26 @@ export default class Form{
       // Above Submit Field
       Form.#response(response["type"], response["message"], form.getAttribute("for"));
 
-      ///// Check If Response Includes Action
-      if("action" in response === false) return;
+      ////////// Check If Response Includes Actions
+      if("actions" in response === false) return;
 
-      // // Update body > main
-      // if(response["action"] == "updateMain"){
-      //   Html.updateMain(path);
-      // }
+      // Update window.conf
+      if("updateConf" in response["actions"]) window.conf = response["actions"]["updateConf"];
+
+      // Set window.session["user"]
+      if("setSessionUser" in response["actions"]) window.session["user"] = response["actions"]["setSessionUser"];
+
+      // Delete window.session["user"]
+      if("deleteSessionUser" in response["actions"]) delete window.session["user"];
+
+      // Dom Update
+      if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]["section"]}));
 
       // Redirect
-      if(response["action"] == "redirect") Hyperlink.locate(response["url"]);
+      if("redirect" in response["actions"]) Hyperlink.locate(response["actions"]["redirect"]["url"]);
 
       // Reload
-      if(response["action"] == "reload") window.location.reload();
+      if("reload" in response["actions"]) window.location.reload();
 
     };
   }

@@ -30,7 +30,8 @@ export default class Menu{
 
   /////////////////// Create Menu | Re-Build
   static build(){
-    console.log(1);
+    // console.log("Menu.build()");
+
     let hyperlinks = "";
 
     for(const menu of window.conf["features"]["menu"]["menus"]){
