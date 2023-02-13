@@ -80,51 +80,50 @@ features:
   paymentSystem: false
 
 
-######### Pages
-#### Insiders
-# Root        -> No Limit
-# Admin       -> Can Control (Some Parts Of) The Site Via UI
-
-#### Basic Types
-# everyone    -> Literally Everyone
-# anonymous   -> Users Who are not Signed Up Or Logged In
-# guest
-# users       -> Signed Up Or Logged In Users
-
-#### Plan Owners
-# User Must Be Signed Up In Order To Get A Plan
-# Plans Differ From Project To Project
-# PlanName    -> An User With A PlanName
-
 pages:
   home:
     enabled: true
-    allowed: "everyone"
+    allowed:
+      - "everyone"
+
     aliases:
       - "/"
       - "/home"
 
+
   signUp:
     enabled: true
-    allowed: "guest"
+    allowed:
+      - "unauthenticated"
+
     aliases:
       - "/signUp"
 
+
   logIn:
     enabled: true
-    allowed: "guest"
+    allowed:
+      - "unauthenticated"
+
     aliases:
       - "/logIn"
 
+
   logOut:
     enabled: true
-    allowed: "user"
+    allowed:
+      - "unauthorized"
+      - "authorized"
+
     aliases:
       - "/logOut"
 
+
   demo:
     enabled: true
-    allowed: "everyone"
+    allowed:
+      - "everyone"
+
     aliases:
       - "/demo"
 
