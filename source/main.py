@@ -42,19 +42,6 @@ it takes the original function as an argument and returns a new function that ha
 
 """
 
-# Feature Checker
-def featureEnabled(feature):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            if conf["features"][feature] == False: return redirect(url_for("home"))
-
-            return func(*args, **kwargs)
-
-        return wrapper
-
-    return decorator
-
 # Page Guard
 def pageGuard(page):
     def decorator(func):
