@@ -70,11 +70,28 @@
       "aliases": ["/termsOfUse"]
     },
 
+    "plans": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/plans", "/pricing", "/plansAndPricing"]
+    },
 
     "contact": {
       "enabled": true,
       "allowed": ["everyone"],
       "aliases": ["/contact"]
+    },
+
+    "faq": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/faq"]
+    },
+
+    "updates": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/updates"]
     },
 
     "demo": {
