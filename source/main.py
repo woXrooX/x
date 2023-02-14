@@ -35,10 +35,10 @@ if "database" in PROJECT: CONF["database"] = PROJECT["database"]
 if "default" in PROJECT: CONF["default"] = PROJECT["default"]
 
 # Menu
-if "menu" in PROJECT: CONF["menu"] = PROJECT["menu"]
+if "menu" in PROJECT: CONF["menu"].update(PROJECT["menu"])
 
-# Pages
-if "pages" in PROJECT: CONF["pages"] = PROJECT["pages"]
+# Pages - Override Default Pages
+if "pages" in PROJECT: CONF["pages"].update(PROJECT["pages"])
 
 # Public Version Of CONF (Minus Senstive Data)
 PUBLIC_CONF = {
