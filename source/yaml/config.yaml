@@ -19,6 +19,94 @@ HTML:
   charset: "utf-8"
 
 
+######### Menu
+menu:
+    enabled: true
+    menus:
+      - "home"
+      - "signUp"
+      - "logIn"
+      - "logOut"
+      - "privacyPolicy"
+      - "termsOfUse"
+      - "contact"
+      - "demo"
+
+######### Pages
+pages:
+  home:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/"
+      - "/home"
+
+
+  signUp:
+    enabled: true
+    allowed:
+      - "unauthenticated"
+
+    aliases:
+      - "/signUp"
+
+
+  logIn:
+    enabled: true
+    allowed:
+      - "unauthenticated"
+
+    aliases:
+      - "/logIn"
+
+
+  logOut:
+    enabled: true
+    allowed:
+      - "unauthorized"
+      - "authorized"
+
+    aliases:
+      - "/logOut"
+
+
+  privacyPolicy:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/privacyPolicy"
+
+
+  termsOfUse:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/termsOfUse"
+
+
+  contact:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/contact"
+
+
+  demo:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/demo"
+
 ######### Username
 username:
   min_length: 6
