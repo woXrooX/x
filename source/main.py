@@ -29,10 +29,10 @@ with open(f"{APP_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
 
 #### Merge Project Dependent Configurations To X-WebApp Configurations
 # Database
-if "database" in PROJECT: CONF["database"] = PROJECT["database"]
+if "database" in PROJECT: CONF["database"].update(PROJECT["database"])
 
 # Defaults
-if "default" in PROJECT: CONF["default"] = PROJECT["default"]
+if "default" in PROJECT: CONF["default"].update(PROJECT["default"])
 
 # Menu
 if "menu" in PROJECT: CONF["menu"].update(PROJECT["menu"])
