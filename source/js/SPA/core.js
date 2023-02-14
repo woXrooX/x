@@ -45,7 +45,10 @@ export default class Core{
 
   /////// Global Data
   static async #getGlobalData(){
-      let response = await bridge("bridge", {for:"globalData"});
+      let response = await bridge("API", {for:"globalData"});
+
+      // console.log(response);
+
       window.conf = response["conf"];
       window.session = response["session"];
       window.langCode = response["langCode"];
