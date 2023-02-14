@@ -5,6 +5,7 @@ static_folder: "/"
 
 
 ######### URL
+# Won't be needed in production
 URL:
   prefix: "http"
   sub_domain: "www"
@@ -13,132 +14,10 @@ URL:
   port: "8088"
 
 
-######### Database
-database:
-  name: "template"
-  user: "template"
-  password: "password_template"
-  host: "127.0.0.1"
-  port: "33060"
-  charset: "utf8mb4"
-  collate: "utf8mb4_0900_ai_ci"
-
-
-######### Site
-default:
-  currency: "USD"
-  title: "XSite"
-  language: "en"
-
-
 ######### HTML
 HTML:
   charset: "utf-8"
 
-
-######### Features
-features:
-  menu:
-    status: true
-    menus:
-      - name: "home"
-        svg: "home"
-
-      - name: "signUp"
-        svg: "signUp"
-
-      - name: "logIn"
-        svg: "logIn"
-
-      - name: "logOut"
-        svg: "logOut"
-
-      - name: "demo"
-        svg: "contact"
-
-      - name: "privacyPolicy"
-        svg: "privacyPolicy"
-
-      - name: "termsOfUse"
-        svg: "termsOfUse"
-
-      - name: "contact"
-        svg: "contact"
-
-
-pages:
-  home:
-    enabled: true
-    allowed:
-      - "everyone"
-
-    aliases:
-      - "/"
-      - "/home"
-
-
-  signUp:
-    enabled: true
-    allowed:
-      - "unauthenticated"
-
-    aliases:
-      - "/signUp"
-
-
-  logIn:
-    enabled: true
-    allowed:
-      - "unauthenticated"
-
-    aliases:
-      - "/logIn"
-
-
-  logOut:
-    enabled: true
-    allowed:
-      - "unauthorized"
-      - "authorized"
-
-    aliases:
-      - "/logOut"
-
-
-  privacyPolicy:
-    enabled: true
-    allowed:
-      - "everyone"
-
-    aliases:
-      - "/privacyPolicy"
-
-
-  termsOfUse:
-    enabled: true
-    allowed:
-      - "everyone"
-
-    aliases:
-      - "/termsOfUse"
-
-
-  contact:
-    enabled: true
-    allowed:
-      - "everyone"
-
-    aliases:
-      - "/contact"
-
-
-  demo:
-    enabled: true
-    allowed:
-      - "everyone"
-
-    aliases:
-      - "/demo"
 
 ######### Username
 username:
