@@ -1,21 +1,45 @@
 # Py Cache
 __pycache__/
 
+#### Back
+# User Made Pages
+# source/python/pages/*.py
 
+# Allow Default Pages
+# !source/python/pages/home.py
+
+# !source/python/pages/signUp.py
+# !source/python/pages/logIn.py
+# !source/python/pages/logOut.py
+
+# !source/python/pages/privacyPolicy.py
+# !source/python/pages/termsOfUse.py
+
+# !source/python/pages/plans.py
+# !source/python/pages/contact.py
+# !source/python/pages/faq.py
+# !source/python/pages/updates.py
+
+# !source/python/pages/page_not_found.py
+
+
+#### Front
 # User Made Pages
 # source/js/pages/*.js
 
 # Allow Default Pages
 # !source/js/pages/home.js
 
-# !source/js/pages/404.js
-
 # !source/js/pages/signUp.js
 # !source/js/pages/logIn.js
 # !source/js/pages/logOut.js
 
-# !source/js/pages/contact.js
 # !source/js/pages/privacyPolicy.js
 # !source/js/pages/termsOfUse.js
-# !source/js/pages/updates.js
+
+# !source/js/pages/plans.js
+# !source/js/pages/contact.js
 # !source/js/pages/faq.js
+# !source/js/pages/updates.js
+
+# !source/js/pages/404.js
