@@ -22,7 +22,7 @@ def logOut():
 
         # Reset Site Language To The Default
         global langCode
-        langCode = conf["default"]["language"]
+        langCode = CONF["default"]["language"]
 
         # Redirect To Home
         return make_response(json.dumps({
