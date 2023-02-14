@@ -2,7 +2,8 @@
 from flask import Flask, render_template, request, session, redirect, url_for, make_response
 import json, yaml, re, html
 import pathlib # APP_RUNNING_FROM
-import os # For Creating Folders
+import os # For Creating Folders, Checking if project.json exists
+import sys # for eixt
 # import stripe
 from functools import wraps # For pageGuard() Wrapper
 
@@ -10,19 +11,44 @@ from functools import wraps # For pageGuard() Wrapper
 APP_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
 
 
+#################################################### PROJECT Dependent Configurations
+# Check If project.json exists
+if not os.path.exists(f"{APP_RUNNING_FROM}/project.json"):
+    print("------------ Error ------------")
+    print(f"{APP_RUNNING_FROM}/project.json does not exist.")
+    sys.exit()
+
+# If Exists Open It
+with open(f"{APP_RUNNING_FROM}/project.json", 'r') as file:
+    PROJECT = json.load(file)
+
+
 #################################################### GLOBAL config
 with open(f"{APP_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
-    conf = yaml.safe_load(file)
+    CONF = yaml.safe_load(file)
 
-# Public Version Of conf (Minus Senstive Data)
+#### Merge Project Dependent Configurations To X-WebApp Configurations
+# Database
+if "database" in PROJECT: CONF["database"] = PROJECT["database"]
+
+# Defaults
+if "default" in PROJECT: CONF["default"] = PROJECT["default"]
+
+# Menu
+if "menu" in PROJECT: CONF["menu"] = PROJECT["menu"]
+
+# Pages
+if "pages" in PROJECT: CONF["pages"] = PROJECT["pages"]
+
+# Public Version Of CONF (Minus Senstive Data)
 PUBLIC_CONF = {
-    "default": conf["default"],
-    "features": conf["features"],
-    "pages": conf["pages"],
-    "username": conf["username"],
-    "password": conf["password"],
-    "phoneNumber": conf["phoneNumber"],
-    "eMail": conf["eMail"]
+    "default": CONF["default"],
+    "menu": CONF["menu"],
+    "pages": CONF["pages"],
+    "username": CONF["username"],
+    "password": CONF["password"],
+    "phoneNumber": CONF["phoneNumber"],
+    "eMail": CONF["eMail"]
 
 }
 
@@ -47,11 +73,14 @@ def pageGuard(page):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
+            # Check If Page Exists
+            if page not in CONF["pages"]: return redirect(url_for("home"))
+
             # Is Page Enabled
-            if conf["pages"][page]["enabled"] == False: return redirect(url_for("home"))
+            if CONF["pages"][page]["enabled"] == False: return redirect(url_for("home"))
 
             # Looping Through Page's Allowed List
-            for allowed in conf["pages"][page]["allowed"]:
+            for allowed in CONF["pages"][page]["allowed"]:
                 # Only Allowed "unauthenticated" Users
                 if allowed == "unauthenticated" and "user" in session: return redirect(url_for("home"))
 
@@ -86,29 +115,31 @@ def publicSessionUser():
 
 
 #################################################### URL
-URL = f'{conf["URL"]["prefix"]}://{conf["URL"]["domain_name"]}:{conf["URL"]["port"]}/'
+URL = f'{CONF["URL"]["prefix"]}://{CONF["URL"]["domain_name"]}:{CONF["URL"]["port"]}/'
 
 
 #################################################### Flask APP
 app = Flask(
     __name__,
-    root_path = conf["root_path"],
-    template_folder = conf["template_folder"],
-    static_folder = conf["static_folder"]
+    root_path = CONF["root_path"],
+    template_folder = CONF["template_folder"],
+    static_folder = CONF["static_folder"]
 )
 
 app.secret_key = b'asZ8#Q!@97_+asQ]s/s\]/'
 
 
 #################################################### GLOBAL MySQL
-MySQL.setUp(
-    conf["database"]["user"],
-    conf["database"]["password"],
-    conf["database"]["host"],
-    conf["database"]["name"],
-    conf["database"]["charset"],
-    conf["database"]["collate"]
-)
+# If Database Enabled Then Set Up
+if "database" in CONF and CONF["database"]["enabled"] == True:
+    MySQL.setUp(
+        CONF["database"]["user"],
+        CONF["database"]["password"],
+        CONF["database"]["host"],
+        CONF["database"]["name"],
+        CONF["database"]["charset"],
+        CONF["database"]["collate"]
+    )
 
 
 #################################################### GLOBAL language
@@ -118,7 +149,7 @@ MySQL.setUp(
 #     languages = db.fetchAll()
 
 ### language Default Code
-langCode = conf["default"]["language"]
+langCode = CONF["default"]["language"]
 
 ### language Dictionary
 with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") as file:
@@ -144,7 +175,7 @@ with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") a
 
 
 ### currency Default Code
-currencyCode = conf["default"]["currency"]
+# currencyCode = CONF["default"]["currency"]
 
 
 #################################################### Decorations
@@ -189,7 +220,7 @@ import python.pages.demo
 ### Flask server
 if __name__ == "__main__":
     # No SSL
-    app.run(host=conf["URL"]["domain_name"], port=conf["URL"]["port"], debug=True, threaded=True)
+    app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True)
 
     # OpenSSL
-    # app.run(host=conf["URL"]["domain_name"], port=conf["URL"]["port"], debug=True, threaded=True, ssl_context=('SSL/cert.pem', 'SSL/key.pem'))
+    # app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True, ssl_context=('SSL/cert.pem', 'SSL/key.pem'))
