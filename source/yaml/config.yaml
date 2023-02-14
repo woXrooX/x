@@ -119,6 +119,33 @@ pages:
       - "/logOut"
 
 
+  privacyPolicy:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/privacyPolicy"
+
+
+  termsOfUse:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/termsOfUse"
+
+
+  contact:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/contact"
+
+
   demo:
     enabled: true
     allowed:
