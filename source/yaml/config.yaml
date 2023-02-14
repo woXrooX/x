@@ -68,18 +68,6 @@ features:
         svg: "contact"
 
 
-  signUp:
-    status: true
-
-  logIn:
-    status: true
-
-  logOut:
-    status: true
-
-  paymentSystem: false
-
-
 pages:
   home:
     enabled: true
