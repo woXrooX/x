@@ -49,7 +49,7 @@ export default class Core{
 
       // console.log(response);
 
-      window.conf = response["conf"];
+      window.CONF = response["conf"];
       window.session = response["session"];
       window.langCode = response["langCode"];
       window.langDict = response["langDict"];

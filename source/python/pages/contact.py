@@ -5,7 +5,7 @@ from __main__ import app, request, render_template, make_response
 from __main__ import json
 
 # Home Made
-from __main__ import conf, pageGuard
+from __main__ import CONF, pageGuard
 
 #################################################### Contact
 @app.route("/contact", methods=["GET", "POST"])

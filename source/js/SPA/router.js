@@ -9,14 +9,14 @@ export default class Router{
     let endpoint = null;
 
     // Loop Through Pages
-    for(const page in window.conf["pages"]){
+    for(const page in window.CONF["pages"]){
 
       // Aliases
-      for(const alias of window.conf["pages"][page]["aliases"]){
+      for(const alias of window.CONF["pages"][page]["aliases"]){
 
         if(
           // Check If Page Is Enabled
-          window.conf["pages"][page]["enabled"] === true &&
+          window.CONF["pages"][page]["enabled"] === true &&
 
           // Check If Page Alias Equals To Currnt Endpoint
           alias == window.location.pathname

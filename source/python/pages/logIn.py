@@ -5,7 +5,7 @@ from __main__ import app, request, render_template, make_response
 from __main__ import json
 
 # Home Made
-from __main__ import conf, MySQL, pageGuard, session, publicSessionUser
+from __main__ import CONF, MySQL, pageGuard, session, publicSessionUser
 
 
 #################################################### Log In

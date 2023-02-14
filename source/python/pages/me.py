@@ -2,7 +2,7 @@
 from __main__ import app, request, render_template, make_response
 
 # Home Made
-from __main__ import conf, MySQL, pageGuard, session, publicSessionUser
+from __main__ import CONF, MySQL, pageGuard, session, publicSessionUser
 
 
 #################################################### Me | MyPage

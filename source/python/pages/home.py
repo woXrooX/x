@@ -2,7 +2,7 @@
 from __main__ import app, request, render_template, make_response
 
 # Home Made
-from __main__ import conf, MySQL, pageGuard
+from __main__ import CONF, MySQL, pageGuard
 
 
 #################################################### HOME | Index | Landing

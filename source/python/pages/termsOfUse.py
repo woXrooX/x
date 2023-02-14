@@ -2,7 +2,7 @@
 from __main__ import app, request, render_template
 
 # Home Made
-from __main__ import conf, pageGuard
+from __main__ import CONF, pageGuard
 
 #################################################### Terms Of Use
 @app.route("/termsOfUse", methods=["GET"])
