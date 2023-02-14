@@ -37,8 +37,6 @@ HTML:
 
 
 ######### Features
-# False = Disabled
-# True = Enabled
 features:
   menu:
     status: true
