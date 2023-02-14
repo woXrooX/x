@@ -41,20 +41,20 @@ export default class Menu{
     for(const menu of window.CONF["menu"]["menus"]){
       if(
         // If User Logged In Then Do Not Show Link For "logIn"
-        (menu.name == "logOut" && "user" in window.session) ||
+        (menu == "logOut" && "user" in window.session) ||
 
         // If User Is Not Logged In Then Show "logIn" And "signUp" Links
-        ((menu.name == "signUp" || menu.name == "logIn") && !("user" in window.session)) ||
+        ((menu == "signUp" || menu == "logIn") && !("user" in window.session)) ||
 
         // If Current Menu Is Not Followings Then Just Show The Links
-        (menu.name !== "signUp" && menu.name != "logIn" && menu.name !== "logOut")
+        (menu !== "signUp" && menu != "logIn" && menu !== "logOut")
       )
 
       // Hyperlink Blue Print
       hyperlinks += `
-<a href="/${menu.name}">
-  <svg><use href="#${menu.svg}"></use></svg>
-  ${window.langDict[menu.name][window.langCode]}
+<a href="/${menu}">
+  <svg><use href="#${menu}"></use></svg>
+  ${window.langDict[menu][window.langCode]}
 </a>
       `;
 
