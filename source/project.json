@@ -19,10 +19,14 @@
   "menu":{
     "enabled": true,
     "menus":[
-      {
-        "name": "home",
-        "svg": "home"
-      }
+      {"name": "home", "svg": "home"},
+      {"name": "signUp", "svg": "signUp"},
+      {"name": "logIn", "svg": "logIn"},
+      {"name": "logOut", "svg": "logOut"},
+      {"name": "privacyPolicy", "svg": "privacyPolicy"},
+      {"name": "termsOfUse", "svg": "termsOfUse"},
+      {"name": "contact", "svg": "contact"},
+      {"name": "demo", "svg": "contact"}
     ]
   },
 
@@ -31,9 +35,50 @@
       "enabled": true,
       "allowed": ["everyone"],
       "aliases": ["/", "/home"]
-    }
+    },
 
-    
+    "signUp": {
+      "enabled": true,
+      "allowed": ["unauthenticated"],
+      "aliases": ["/signUp"]
+    },
+
+    "logIn": {
+      "enabled": true,
+      "allowed": ["unauthenticated"],
+      "aliases": ["/logIn"]
+    },
+
+    "logOut": {
+      "enabled": true,
+      "allowed": ["unauthorized", "authorized"],
+      "aliases": ["/logOut"]
+    },
+
+    "privacyPolicy": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/privacyPolicy"]
+    },
+
+    "termsOfUse": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/termsOfUse"]
+    },
+
+
+    "contact": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/contact"]
+    },
+
+    "demo": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/demo"]
+    }
 
   }
 }
