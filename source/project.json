@@ -10,25 +10,28 @@
     "collate": "utf8mb4_0900_ai_ci"
   },
 
+
   "default":{
     "currency": "USD",
     "title": "Project",
     "language": "en"
   },
 
+
   "menu":{
     "enabled": true,
     "menus":[
-      {"name": "home", "svg": "home"},
-      {"name": "signUp", "svg": "signUp"},
-      {"name": "logIn", "svg": "logIn"},
-      {"name": "logOut", "svg": "logOut"},
-      {"name": "privacyPolicy", "svg": "privacyPolicy"},
-      {"name": "termsOfUse", "svg": "termsOfUse"},
-      {"name": "contact", "svg": "contact"},
-      {"name": "demo", "svg": "contact"}
+      "home",
+      "signUp",
+      "logIn",
+      "logOut",
+      "privacyPolicy",
+      "termsOfUse",
+      "contact",
+      "demo"
     ]
   },
+
 
   "pages": {
     "home": {
@@ -81,4 +84,6 @@
     }
 
   }
+
+
 }
