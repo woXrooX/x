@@ -14,11 +14,15 @@ export default class Menu{
   static init(){
     Menu.#elementMenu = document.querySelector(Menu.selector);
 
-    // Check If Menu Feature Enabled
-    if(window.conf["features"]["menu"]["status"] === false) return;
+    // Check If CONF Has Menu
+    if(!("menu" in window.CONF)) return;
+
+    // Check If Menu Is Enabled
+    if(window.CONF["menu"]["enabled"] === false) return;
 
     // Check If Menu Exists
     if(!!Menu.#elementMenu === false) return;
+
 
     // Events Listen To The Events
     Menu.build();
@@ -34,7 +38,7 @@ export default class Menu{
 
     let hyperlinks = "";
 
-    for(const menu of window.conf["features"]["menu"]["menus"]){
+    for(const menu of window.CONF["menu"]["menus"]){
       if(
         // If User Logged In Then Do Not Show Link For "logIn"
         (menu.name == "logOut" && "user" in window.session) ||
