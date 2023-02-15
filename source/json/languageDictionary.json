@@ -534,15 +534,20 @@
     "ru":"Стиль",
     "uz":"Uslub"
   },
+  "tel":{
+    "en":"Tel:",
+    "ru":"Тел:",
+    "uz":"Tel:"
+  },
   "termsOfUse":{
     "en":"Terms of use",
     "ru":"Условия эксплуатации",
     "uz":"Foydalanish shartlari"
   },
-  "tel":{
-    "en":"Tel:",
-    "ru":"Тел:",
-    "uz":"Tel:"
+  "test":{
+    "en":"Test",
+    "ru":"Тест",
+    "uz":"Sinov"
   },
   "titleEmpty":{
     "en":"Title must be filled",
