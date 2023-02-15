@@ -2,16 +2,16 @@
 
 
 ## Built-Ins
-#### Sign Up
+#### Sign Up (BACK, FRONT)
 - /signUp
 
-#### Log In
+#### Log In (BACK, FRONT)
 - /logIn
 
-#### Log Out
+#### Log Out (BACK, FRONT)
 - /logOut
 
-#### 404, Page Not Found
+#### 404, Page Not Found (BACK, FRONT)
 - /404
 
 
