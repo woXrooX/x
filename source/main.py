@@ -1,111 +1,89 @@
 #################################################### IMPORTS
 from flask import Flask, render_template, request, session, redirect, url_for, make_response
-import json, yaml, re, html, pathlib
-import os # For Creating Folders
+import json, yaml, re, html
+import pathlib # APP_RUNNING_FROM
+import os # For Creating Folders, Checking if project.json exists
+import sys # for eixt
 # import stripe
-from functools import wraps # For featureEnabled() Wrapper
 
 #################################################### GLOBAL appRunningFrom
 APP_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
 
 
+#################################################### PROJECT Dependent Configurations
+# Check If project.json exists
+if not os.path.exists(f"{APP_RUNNING_FROM}/project.json"):
+    print("------------ Error ------------")
+    print(f"{APP_RUNNING_FROM}/project.json does not exist.")
+    sys.exit()
+
+# If Exists Open It
+with open(f"{APP_RUNNING_FROM}/project.json", 'r') as file:
+    PROJECT = json.load(file)
+
+
 #################################################### GLOBAL config
 with open(f"{APP_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
-    conf = yaml.safe_load(file)
+    CONF = yaml.safe_load(file)
 
-# Public Version Of conf (Minus Senstive Data)
+#### Merge Project Dependent Configurations To X-WebApp Configurations
+# Database
+if "database" in PROJECT: CONF["database"].update(PROJECT["database"])
+
+# Defaults
+if "default" in PROJECT: CONF["default"].update(PROJECT["default"])
+
+# Menu
+if "menu" in PROJECT: CONF["menu"].update(PROJECT["menu"])
+
+# Pages - Override Default Pages
+if "pages" in PROJECT: CONF["pages"].update(PROJECT["pages"])
+
+# Public Version Of CONF (Minus Senstive Data)
 PUBLIC_CONF = {
-    "default": conf["default"],
-    "features": conf["features"],
-    "pages": conf["pages"],
-    "username": conf["username"],
-    "password": conf["password"],
-    "phoneNumber": conf["phoneNumber"],
-    "eMail": conf["eMail"]
+    "default": CONF["default"],
+    "menu": CONF["menu"],
+    "pages": CONF["pages"],
+    "username": CONF["username"],
+    "password": CONF["password"],
+    "phoneNumber": CONF["phoneNumber"],
+    "eMail": CONF["eMail"]
 
 }
 
 
 #################################################### GLOBAL tools
-from python.MySQL import MySQL
-# import python.tools as tools
-
-"""
-
-@wraps(func)
-
-The functools.wraps function is a decorator used to preserve metadata of a decorated function,
-such as the name, docstring, and argument signature, to the wrapped function.
-When you use the functools.wraps decorator,
-it takes the original function as an argument and returns a new function that has the same metadata as the original function.
-
-"""
-
-# Feature Checker
-def featureEnabled(feature):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            if conf["features"][feature] == False: return redirect(url_for("home"))
-
-            return func(*args, **kwargs)
-
-        return wrapper
-
-    return decorator
-
-# Page Guard
-def pageGuard(page):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            # conf["pages"][page]...
-            # session..
-
-            return func(*args, **kwargs)
-
-        return wrapper
-
-    return decorator
-
-def publicSessionUser():
-    # Check If User In Session
-    if "user" not in session: return None
-
-    publicData = {
-        "username": session["user"]["username"],
-        "firstname": session["user"]["firstname"],
-        "lastname": session["user"]["lastname"]
-
-    }
-
-    return publicData
+# import python.tools.tools as tools
+from python.tools.MySQL import MySQL
+from python.tools.tools import pageGuard, publicSessionUser
 
 
 #################################################### URL
-URL = f'{conf["URL"]["prefix"]}://{conf["URL"]["domain_name"]}:{conf["URL"]["port"]}/'
+URL = f'{CONF["URL"]["prefix"]}://{CONF["URL"]["domain_name"]}:{CONF["URL"]["port"]}/'
 
 
-#################################################### APP
+#################################################### Flask APP
 app = Flask(
     __name__,
-    root_path = conf["root_path"],
-    template_folder = conf["template_folder"],
-    static_folder = conf["static_folder"]
+    root_path = CONF["root_path"],
+    template_folder = CONF["template_folder"],
+    static_folder = CONF["static_folder"]
 )
 
 app.secret_key = b'asZ8#Q!@97_+asQ]s/s\]/'
 
 
 #################################################### GLOBAL MySQL
-MySQL.setUp(
-    conf["database"]["user"],
-    conf["database"]["password"],
-    conf["database"]["host"],
-    conf["database"]["name"],
-    conf["database"]["charset"],
-    conf["database"]["collate"]
-)
+# If Database Enabled Then Set Up
+if "database" in CONF and CONF["database"]["enabled"] == True:
+    MySQL.setUp(
+        CONF["database"]["user"],
+        CONF["database"]["password"],
+        CONF["database"]["host"],
+        CONF["database"]["name"],
+        CONF["database"]["charset"],
+        CONF["database"]["collate"]
+    )
 
 
 #################################################### GLOBAL language
@@ -115,7 +93,7 @@ MySQL.setUp(
 #     languages = db.fetchAll()
 
 ### language Default Code
-langCode = conf["default"]["language"]
+langCode = CONF["default"]["language"]
 
 ### language Dictionary
 with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") as file:
@@ -141,7 +119,7 @@ with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") a
 
 
 ### currency Default Code
-currencyCode = conf["default"]["currency"]
+# currencyCode = CONF["default"]["currency"]
 
 
 #################################################### Decorations
@@ -166,398 +144,27 @@ currencyCode = conf["default"]["currency"]
 ######################################## PAGES ######################################
 #####################################################################################
 
-
-#################################################### HOME | Index | Landing
-@app.route("/", methods=["GET", "POST"])
-@app.route("/home", methods=["GET", "POST"])
-def home():
-    if request.method == "GET": return render_template("index.html", **globals())
-
-    elif request.method == "POST":
-        return make_response(json.dumps({"response": "OK"}), 200)
-
-
-#################################################### Sign Up
-@app.route("/signUp", methods=["GET", "POST"])
-@featureEnabled("signUp")
-def signUp():
-
-    # # Check If User Already Logged In
-    if 'user' in session: return redirect(url_for('home'))
-
-    if request.method == "GET": return render_template("index.html", **globals())
-
-    if request.method == "POST":
-
-        # unknownError
-        if "for" not in request.get_json() or request.get_json()["for"] != "signUp":
-            return make_response(json.dumps({
-                "type": "warning",
-                "message": "unknownError"
-            }), 200)
-
-        # unknownError
-        if "field" not in request.get_json() or request.get_json()["field"] != "all":
-            return make_response(json.dumps({
-                "type": "warning",
-                "message": "unknownError"
-            }), 200)
-
-        ######## eMail
-        # eMailEmpty
-        if "eMail" not in request.get_json()["fields"] or not request.get_json()["fields"]["eMail"]:
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "eMailEmpty",
-                "field": "eMail"
-            }), 200)
-
-        # eMailInvalid
-        if not re.match(conf["eMail"]["regEx"], request.get_json()["fields"]["eMail"]):
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "eMailInvalid",
-                "field": "eMail"
-            }), 200)
-
-        ######## password
-        # passwordEmpty
-        if "password" not in request.get_json()["fields"] or not request.get_json()["fields"]["password"]:
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "passwordEmpty",
-                "field": "password"
-            }), 200)
-
-        # passwordMinLength
-        if len(request.get_json()["fields"]["password"]) < conf["password"]["min_length"]:
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "passwordMinLength",
-                "field": "password"
-            }), 200)
-
-        # passwordMaxLength
-        if len(request.get_json()["fields"]["password"]) > conf["password"]["max_length"]:
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "passwordMaxLength",
-                "field": "password"
-            }), 200)
-
-        # passwordAllowedChars
-        if not re.match(conf["password"]["regEx"], request.get_json()["fields"]["password"]):
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "passwordAllowedChars",
-                "field": "password"
-            }), 200)
-
-        ######## eMail and Password In Use
-        # eMailInUse
-        with MySQL(False) as db:
-            db.execute("SELECT id FROM users WHERE eMail=%s", (request.get_json()["fields"]["eMail"], ))
-            dataFetched  = db.fetchOne()
-            if dataFetched:
-                return make_response(json.dumps({
-                    "type": "error",
-                    "message": "eMailInUse",
-                    "field": "eMail"
-                }))
-
-        # passwordInUse
-        with MySQL(False) as db:
-            db.execute("SELECT id FROM users WHERE password=%s", (request.get_json()["fields"]["password"], ))
-            dataFetched = db.fetchOne()
-            if dataFetched:
-                return make_response(json.dumps({
-                    "type": "error",
-                    "message": "passwordInUse",
-                    "field": "password"
-                }))
-
-        ######## Success
-        # Insert To Database
-        with MySQL(False) as db:
-            db.execute(
-                ("INSERT INTO users (eMail, password) VALUES (%s, %s)"),
-                (
-                    request.get_json()["fields"]["eMail"],
-                    request.get_json()["fields"]["password"]
-                )
-            )
-            db.commit()
-
-            if db.hasError():
-                return make_response(json.dumps({
-                    "type": "error",
-                    "message": "databaseError",
-                }), 200)
-
-            # Get User Data
-            with MySQL(False) as db:
-                db.execute(
-                    ("SELECT * FROM users WHERE eMail=%s AND password=%s"),
-                    (
-                        request.get_json()["fields"]["eMail"],
-                        request.get_json()["fields"]["password"]
-                    )
-                )
-
-                if db.hasError():
-                    return make_response(json.dumps({
-                        "type": "error",
-                        "message": "databaseError",
-                    }), 200)
-
-
-                # Set Session User Data
-                session["user"] = db.fetchOne()
-
-            # Setup Dirs
-            try:
-                os.makedirs(f'{APP_RUNNING_FROM}/users/{session["user"]["id"]}/images', mode=0o777, exist_ok=True)
-            except:
-                # catch for folder already exists
-                pass
-
-            # On Success Redirect & Update Front-End Session
-            return make_response(json.dumps({
-                "type": "success",
-                "message": "success",
-                "actions": {
-                    "setSessionUser": publicSessionUser(),
-                    "redirect": {
-                        "url": "home"
-                    },
-                    "domChange": {
-                        "section": "menu"
-                    }
-                }
-            }))
-
-#################################################### Log In
-@app.route("/logIn", methods=["GET", "POST"])
-@featureEnabled("logIn")
-def logIn():
-
-    # Check If User Already Logged In
-    if 'user' in session: return redirect(url_for('home'))
-
-    if request.method == "GET": return render_template("index.html", **globals())
-
-    if request.method == "POST":
-
-        # unknownError
-        if "for" not in request.get_json() or request.get_json()["for"] != "logIn":
-            return make_response(json.dumps({
-                "type": "warning",
-                "message": "unknownError"
-            }), 200)
-
-        # unknownError
-        if "field" not in request.get_json() or request.get_json()["field"] != "all":
-            return make_response(json.dumps({
-                "type": "warning",
-                "message": "unknownError"
-            }), 200)
-
-        ######## eMail
-        # eMailEmpty
-        if "eMail" not in request.get_json()["fields"] or not request.get_json()["fields"]["eMail"]:
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "eMailEmpty",
-                "field": "eMail"
-            }), 200)
-
-        ######## password
-        # passwordEmpty
-        if "password" not in request.get_json()["fields"] or not request.get_json()["fields"]["password"]:
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "passwordEmpty",
-                "field": "password"
-            }), 200)
-
-        ######## Check If eMail And Password matching User Exist
-        with MySQL(False) as db:
-            db.execute(
-                ("SELECT * FROM users WHERE eMail=%s AND password=%s"),
-                (
-                    request.get_json()["fields"]["eMail"],
-                    request.get_json()["fields"]["password"],
-                )
-            )
-
-            if db.hasError():
-                return make_response(json.dumps({
-                    "type": "error",
-                    "message": "databaseError"
-                }))
-
-            dataFetched = db.fetchOne()
-
-            # No Match
-            if dataFetched is None:
-                return make_response(json.dumps({
-                    "type": "error",
-                    "message": "usernameOrPasswordWrong"
-                }))
-
-            # Set Session User Data
-            session["user"] = dataFetched
-
-            # On Success Redirect & Update Front-End Session
-            return make_response(json.dumps({
-                "type": "success",
-                "message": "success",
-                "actions": {
-                    "setSessionUser": publicSessionUser(),
-                    "redirect": {
-                        "url": "home"
-                    },
-                    "domChange": {
-                        "section": "menu"
-                    }
-                }
-            }))
-
-
-#################################################### Log Out
-@app.route("/logOut", methods=["GET", "POST"])
-@featureEnabled("logOut")
-def logOut():
-
-    # Check If User Already Logged Out
-    if 'user' not in session: return redirect(url_for('home'))
-
-    if request.method == "GET": return render_template("index.html", **globals())
-
-    elif request.method == "POST":
-
-        # Remove User From Session
-        session.pop('user')
-
-        # Reset Site Language To The Default
-        global langCode
-        langCode = conf["default"]["language"]
-
-        # Redirect To Home
-        return make_response(json.dumps({
-            "type": "success",
-            "message": "success",
-            "actions": {
-                "deleteSessionUser": 0,
-                "redirect": {
-                    "url": "home"
-                },
-                "domChange": {
-                    "section": "menu"
-                }
-            }
-        }), 200)
-
-
-#################################################### Me | MyPage
-@app.route("/me", methods=["POST"])
-@app.route("/myPage", methods=["POST"])
-def me():
-    pass
-
-
-#################################################### Plans & Pricing
-@app.route("/plans", methods=["POST"])
-@app.route("/pricing", methods=["POST"])
-@app.route("/plansAndPricing", methods=["POST"])
-def plansAndPricing():
-    pass
-
-
-#################################################### Privacy Policy
-@app.route("/privacyPolicy", methods=["GET", "POST"])
-def privacyPolicy():
-    if request.method == "GET": return render_template("index.html", **globals())
-
-    elif request.method == "POST":
-        return make_response(json.dumps({"response": "OK"}), 200)
-
-
-#################################################### Terms Of Use
-@app.route("/termsOfUse", methods=["GET", "POST"])
-def termsOfUse():
-    if request.method == "GET": return render_template("index.html", **globals())
-
-    elif request.method == "POST":
-        return make_response(json.dumps({"response": "OK"}), 200)
-
-
-#################################################### Contact
-@app.route("/contact", methods=["GET", "POST"])
-def contact():
-    if request.method == "GET": return render_template("index.html", **globals())
-
-    elif request.method == "POST":
-        return make_response(json.dumps({"response": "OK"}), 200)
-
-
-#################################################### none/404
-@app.errorhandler(404)
-def page_not_found(error):
-    return redirect(url_for("home"))
-
-
-#################################################### Bridge
-@app.route("/bridge", methods=["POST"])
-def bridge():
-    # globalData
-    if request.get_json()["for"] == "globalData":
-        return make_response(
-            {
-                "conf": PUBLIC_CONF,
-                "session": {"user": publicSessionUser()} if "user" in session else {},
-                "langCode": langCode,
-                "langDict": langDict,
-                # "languages":languages,
-                # "currencies":currencies
-            }, 200)
-
-    # languages
-    # if request.get_json()["for"] == "languages":
-    #     return make_response(
-    #         {
-    #             "response":"ok",
-    #             "languages":languages
-    #         }, 200)
-
-    # langCode
-    if request.get_json()["for"] == "langCode":
-        return make_response(
-            {
-                "response":"ok",
-                "langCode":langCode
-            }, 200)
-
-    # langDict
-    if request.get_json()["for"] == "langDict":
-        return make_response(
-            {
-                "response":"ok",
-                "langDict":langDict
-            }, 200)
-
-
-#################################################### Demo
-@app.route("/demo", methods=["GET"])
-def demo():
-    if request.method == "GET": return render_template("index.html", **globals())
-
+import python.pages.home
+import python.pages.signUp
+import python.pages.logIn
+import python.pages.logOut
+# import python.pages.me
+# import python.pages.plans
+import python.pages.privacyPolicy
+import python.pages.termsOfUse
+import python.pages.contact
+
+import python.pages.api
+
+import python.pages.page_not_found
+
+import python.pages.demo
 
 #################################################### RUN
 ### Flask server
 if __name__ == "__main__":
     # No SSL
-    app.run(host=conf["URL"]["domain_name"], port=conf["URL"]["port"], debug=True, threaded=True)
+    app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True)
 
     # OpenSSL
-    # app.run(host=conf["URL"]["domain_name"], port=conf["URL"]["port"], debug=True, threaded=True, ssl_context=('SSL/cert.pem', 'SSL/key.pem'))
+    # app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True, ssl_context=('SSL/cert.pem', 'SSL/key.pem'))

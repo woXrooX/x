@@ -12,32 +12,32 @@ export default function logIn(){
     <column class="w-50 bc-2 p-5 bs radius">
 
       <row>
-        <h1>${langDict["logIn"][langCode]}</h1>
+        <h1>${window.langDict["logIn"][window.langCode]}</h1>
       </row>
 
       <row>
         <form for='logIn'>
 
           <label>
-              <p for='eMail'>${langDict["eMail"][langCode]}</p>
+              <p for='eMail'>${window.langDict["eMail"][window.langCode]}</p>
               <input type='email' name='eMail'>
           </label>
 
           <label>
-              <p for='password'>${langDict["password"][langCode]}</p>
-              <input type='password' name='password' minlength='${conf["password_min_length"]}' maxlength='${conf["password_max_length"]}'><br>
+              <p for='password'>${window.langDict["password"][window.langCode]}</p>
+              <input type='password' name='password' minlength='${window.CONF["password_min_length"]}' maxlength='${window.CONF["password_max_length"]}'><br>
           </label>
 
           <label>
               <p for='logIn'></p>
-              <input type='submit' name='logIn' value='${langDict["logIn"][langCode]}'>
+              <input type='submit' name='logIn' value='${window.langDict["logIn"][window.langCode]}'>
           </label>
 
         </form>
       </row>
 
       <row>
-        <a href="/signUp">${langDict["dontHaveAccountGoToSignUp"][langCode]}</a>
+        <a href="/signUp">${window.langDict["dontHaveAccountGoToSignUp"][window.langCode]}</a>
       </row>
 
     </column>

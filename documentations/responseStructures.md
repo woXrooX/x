@@ -34,7 +34,7 @@ return make_response(json.dumps({
       },
 
       #### Reload
-      "reload": {}
+      "reload": 0
 
     }
 }), 200)

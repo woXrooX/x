@@ -5,6 +5,7 @@ static_folder: "/"
 
 
 ######### URL
+# Won't be needed in production
 URL:
   prefix: "http"
   sub_domain: "www"
@@ -14,7 +15,9 @@ URL:
 
 
 ######### Database
+# By default database disabled
 database:
+  enabled: false
   name: "template"
   user: "template"
   password: "password_template"
@@ -24,10 +27,10 @@ database:
   collate: "utf8mb4_0900_ai_ci"
 
 
-######### Site
+######### Site Defaults
 default:
   currency: "USD"
-  title: "XSite"
+  title: "X-WebApp"
   language: "en"
 
 
@@ -36,95 +39,120 @@ HTML:
   charset: "utf-8"
 
 
-######### Features
-# False = Disabled
-# True = Enabled
-features:
-  menu:
-    status: true
+######### Menu
+menu:
+    enabled: true
     menus:
-      - name: "home"
-        svg: "home"
-
-      - name: "signUp"
-        svg: "signUp"
-
-      - name: "logIn"
-        svg: "logIn"
-
-      - name: "logOut"
-        svg: "logOut"
-
-      - name: "demo"
-        svg: "contact"
-
-      - name: "privacyPolicy"
-        svg: "privacyPolicy"
-
-      - name: "termsOfUse"
-        svg: "termsOfUse"
-
-      - name: "contact"
-        svg: "contact"
-
-
-  signUp:
-    status: true
-
-  logIn:
-    status: true
-
-  logOut:
-    status: true
-
-  paymentSystem: false
-
+      - "home"
+      - "signUp"
+      - "logIn"
+      - "logOut"
+      - "privacyPolicy"
+      - "termsOfUse"
+      - "contact"
+      - "demo"
 
 ######### Pages
-#### Insiders
-# Root        -> No Limit
-# Admin       -> Can Control (Some Parts Of) The Site Via UI
-
-#### Basic Types
-# everyone    -> Literally Everyone
-# anonymous   -> Users Who are not Signed Up Or Logged In
-# guest
-# users       -> Signed Up Or Logged In Users
-
-#### Plan Owners
-# User Must Be Signed Up In Order To Get A Plan
-# Plans Differ From Project To Project
-# PlanName    -> An User With A PlanName
-
 pages:
   home:
     enabled: true
-    allowed: "everyone"
+    allowed:
+      - "everyone"
+
     aliases:
       - "/"
       - "/home"
 
+
   signUp:
     enabled: true
-    allowed: "guest"
+    allowed:
+      - "unauthenticated"
+
     aliases:
       - "/signUp"
 
+
   logIn:
     enabled: true
-    allowed: "guest"
+    allowed:
+      - "unauthenticated"
+
     aliases:
       - "/logIn"
 
+
   logOut:
     enabled: true
-    allowed: "user"
+    allowed:
+      - "unauthorized"
+      - "authorized"
+
     aliases:
       - "/logOut"
 
+
+  privacyPolicy:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/privacyPolicy"
+
+
+  termsOfUse:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/termsOfUse"
+
+
+  plans:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/plans"
+      - "/pricing"
+      - "/plansAndPricing"
+
+
+  contact:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/contact"
+
+
+  faq:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/faq"
+
+
+  updates:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/updates"
+
+
   demo:
     enabled: true
-    allowed: "everyone"
+    allowed:
+      - "everyone"
+
     aliases:
       - "/demo"
 

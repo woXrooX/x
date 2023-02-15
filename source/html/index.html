@@ -9,7 +9,7 @@
 
     <toasts></toasts>
 
-    {% if conf["features"]["menu"]["status"] == True  %}
+    {% if CONF["menu"]["enabled"] == True  %}
       {% include 'menu.html' %}
     {% endif %}
 

@@ -7,20 +7,21 @@ import Title from "./title.js";
 export default class Router{
   static async handle(){
     let endpoint = null;
-    // Pages
-    for(const page in window.conf["pages"]){
+
+    // Loop Through Pages
+    for(const page in window.CONF["pages"]){
 
       // Aliases
-      for(const alias of window.conf["pages"][page]["aliases"]){
+      for(const alias of window.CONF["pages"][page]["aliases"]){
 
         if(
           // Check If Page Is Enabled
-          window.conf["pages"][page]["enabled"] === true &&
+          window.CONF["pages"][page]["enabled"] === true &&
 
           // Check If Page Alias Equals To Currnt Endpoint
           alias == window.location.pathname
-          
-        ) endpoint = alias;
+
+        ) endpoint = '/'+page;
 
         // If Still No Alias Matched Then Set To "/404"
         else if(endpoint === null) endpoint = "/404";

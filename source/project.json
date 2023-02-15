@@ -1,0 +1,106 @@
+{
+  "database":{
+    "enabled": true,
+    "name": "template",
+    "user": "template",
+    "password": "password_template",
+    "host": "127.0.0.1",
+    "port": "33060",
+    "charset": "utf8mb4",
+    "collate": "utf8mb4_0900_ai_ci"
+  },
+
+
+  "default":{
+    "currency": "USD",
+    "title": "Project",
+    "language": "en"
+  },
+
+
+  "menu":{
+    "enabled": true,
+    "menus":[
+      "home",
+      "signUp",
+      "logIn",
+      "logOut",
+      "privacyPolicy",
+      "termsOfUse",
+      "contact",
+      "demo"
+    ]
+  },
+
+
+  "pages": {
+    "home": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/", "/home"]
+    },
+
+    "signUp": {
+      "enabled": true,
+      "allowed": ["unauthenticated"],
+      "aliases": ["/signUp"]
+    },
+
+    "logIn": {
+      "enabled": true,
+      "allowed": ["unauthenticated"],
+      "aliases": ["/logIn"]
+    },
+
+    "logOut": {
+      "enabled": true,
+      "allowed": ["unauthorized", "authorized"],
+      "aliases": ["/logOut"]
+    },
+
+    "privacyPolicy": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/privacyPolicy"]
+    },
+
+    "termsOfUse": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/termsOfUse"]
+    },
+
+    "plans": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/plans", "/pricing", "/plansAndPricing"]
+    },
+
+    "contact": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/contact"]
+    },
+
+    "faq": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/faq"]
+    },
+
+    "updates": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/updates"]
+    },
+
+    "demo": {
+      "enabled": true,
+      "allowed": ["everyone"],
+      "aliases": ["/demo"]
+    }
+
+  }
+
+
+}
