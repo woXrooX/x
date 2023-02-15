@@ -7,28 +7,31 @@ import Title from "./title.js";
 export default class Router{
   static async handle(){
     let endpoint = null;
+    console.log(window.CONF["pages"]);
 
     // Loop Through Pages
+    loopPages:
     for(const page in window.CONF["pages"]){
+      console.log(page);
+
+      // Pass The Page Guard Tests
+      if(Router.#pageGuard(page) === false) continue;
 
       // Aliases
-      for(const alias of window.CONF["pages"][page]["aliases"]){
+      loopAliases:
+      for(const alias of window.CONF["pages"][page]["aliases"])
 
-        if(
-          // Check If Page Is Enabled
-          window.CONF["pages"][page]["enabled"] === true &&
-
-          // Check If Page Alias Equals To Currnt Endpoint
-          alias == window.location.pathname
-
-        ) endpoint = '/'+page;
-
-        // If Still No Alias Matched Then Set To "/404"
-        else if(endpoint === null) endpoint = "/404";
-
-      }
+        // Check If Page Alias Equals To Currnt Endpoint
+        if(alias == window.location.pathname){
+          endpoint = '/'+page;
+          // Break Out Of The Loops
+          break loopPages;
+        }
 
     }
+
+    // If Still No Alias Matched Then Set It To "/404"
+    if(endpoint === null) endpoint = "/404";
 
     try{
       // Change URL To /404 In Case endpoint Is /404
@@ -47,9 +50,38 @@ export default class Router{
     }catch(error){
       console.log(error);
 
+      // Render The Error
       Dom.render(error);
 
     }
+
+  }
+
+  static #pageGuard(page){
+    console.log(1);
+
+    // Check If Page Is Enabled
+    if(window.CONF["pages"][page]["enabled"] === false) return false;
+
+     // Looping Through Page's Allowance List
+    for(const allowed of window.CONF["pages"][page]["allowed"]){
+      // Only Allowed "unauthenticated" Users
+      if(allowed == "unauthenticated" && "user" in window.session) return false;
+
+      // Only Allowed "unauthorized" Users
+      if(allowed == "unauthorized" && !("user" in window.session)) return false;
+
+      // Only Allowed "authorized" Users
+      // Retrive authorized_type_id From Database
+      // const authorized_type_id = 5
+      // if(allowed == "authorized")
+      //   if(!("user" in window.session) || ("user" in window.session && window.session["user"]["type"] != authorized_type_id))
+      //     return false;
+
+    }
+
+    // Passed The Guard Checks
+    return true;
 
   }
 
