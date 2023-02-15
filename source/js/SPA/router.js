@@ -7,12 +7,11 @@ import Title from "./title.js";
 export default class Router{
   static async handle(){
     let endpoint = null;
-    console.log(window.CONF["pages"]);
 
     // Loop Through Pages
     loopPages:
     for(const page in window.CONF["pages"]){
-      console.log(page);
+      // console.log(page);
 
       // Pass The Page Guard Tests
       if(Router.#pageGuard(page) === false) continue;
@@ -58,8 +57,6 @@ export default class Router{
   }
 
   static #pageGuard(page){
-    console.log(1);
-
     // Check If Page Is Enabled
     if(window.CONF["pages"][page]["enabled"] === false) return false;
 
