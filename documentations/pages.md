@@ -12,7 +12,8 @@
 - /logOut
 
 #### 404, Page Not Found (BACK, FRONT)
-- /404
+If No Matching Route Back-End Will Just Render *index.html* And **SPA/Router** Will Route To */404*
+- /404 (FRONT)
 
 
 ## Recommended Naming Convention
