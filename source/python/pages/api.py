@@ -1,11 +1,10 @@
 # Flask
 from __main__ import app, request, make_response
 
-# Utils
-from __main__ import json
-
 # Home Made
 from __main__ import PUBLIC_CONF, langCode, langDict, session, publicSessionUser
+
+import json
 
 
 

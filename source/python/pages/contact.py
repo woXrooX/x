@@ -1,11 +1,10 @@
 # Flask
 from __main__ import app, request, render_template, make_response
 
-# Utils
-from __main__ import json
-
 # Home Made
 from __main__ import CONF, pageGuard
+
+import json
 
 #################################################### Contact
 @app.route("/contact", methods=["GET", "POST"])
