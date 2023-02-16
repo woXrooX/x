@@ -52,6 +52,7 @@ menu:
       - "contact"
       - "demo"
 
+
 ######### Pages
 pages:
   home:
@@ -155,6 +156,7 @@ pages:
 
     aliases:
       - "/demo"
+
 
 ######### Username
 username:

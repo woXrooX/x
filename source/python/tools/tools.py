@@ -1,6 +1,6 @@
 from functools import wraps # For pageGuard() Wrapper
 
-from __main__ import CONF, session
+from __main__ import CONF, session, redirect, url_for
 
 ######################################### Page Guard
 """
@@ -23,7 +23,7 @@ def pageGuard(page):
             # Is Page Enabled
             if CONF["pages"][page]["enabled"] == False: return redirect(url_for("home"))
 
-            # Looping Through Page's Allowed List
+            # Looping Through Page's Allowance List
             for allowed in CONF["pages"][page]["allowed"]:
                 # Only Allowed "unauthenticated" Users
                 if allowed == "unauthenticated" and "user" in session: return redirect(url_for("home"))

@@ -140,25 +140,9 @@ with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") a
 #     return None
 
 
-#####################################################################################
-######################################## PAGES ######################################
-#####################################################################################
+#################################################### Dynamically Improting All Pages
+from python.pages import *
 
-import python.pages.home
-import python.pages.signUp
-import python.pages.logIn
-import python.pages.logOut
-# import python.pages.me
-# import python.pages.plans
-import python.pages.privacyPolicy
-import python.pages.termsOfUse
-import python.pages.contact
-
-import python.pages.api
-
-import python.pages.page_not_found
-
-import python.pages.demo
 
 #################################################### RUN
 ### Flask server
