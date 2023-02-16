@@ -1,11 +1,14 @@
 v1.0.0 (MVP)
-  1. Sign Up (With Email Verifications: Currently No Branded EMail But Working With GMail) ⚠️
+  1. Sign Up (Email Verification) ⚠️
+    1.1. SendGrid 💰️
+    1.2. GMail ✅️
+
   2. Log In ✅️
   3. Log Out ✅️
   4. Menu (Dynamic) ✅️
   5. Layout System ✅️
   6. Payment System ⚠️
-    6.1. Visa Direct
+    6.1. Visa Direct 🛠️
     6.2. Mastercard
     6.3. PayPal
 
