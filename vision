@@ -1,10 +1,14 @@
 v1.0.0 (MVP)
-  1. Sign Up (With Email Verifications) ⚠️
+  1. Sign Up (With Email Verifications: Currently No Branded EMail But Working With GMail) ⚠️
   2. Log In ✅️
   3. Log Out ✅️
   4. Menu (Dynamic) ✅️
   5. Layout System ✅️
-  6. Payment System (Stripe) ⚠️
+  6. Payment System ⚠️
+    6.1. Visa Direct
+    6.2. Mastercard
+    6.3. PayPal
+
   7. Simplest UI System 🗿️
   8. Basic Database Structure For Saving User Data ✅️
   9. Page/Routing Guards (Both Back/Front) ✅️
