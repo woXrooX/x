@@ -10,7 +10,7 @@ import json
 
 #################################################### Bridge
 @app.route("/API", methods=["POST"])
-def API():
+def api():
     # globalData
     if request.get_json()["for"] == "globalData":
         return make_response(
