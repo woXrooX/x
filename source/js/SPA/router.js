@@ -14,7 +14,7 @@ export default class Router{
       // console.log(page);
 
       // Pass The Page Guard Tests
-      if(Router.#pageGuard(page) === false) continue;
+      if(Router.#guard(page) === false) continue;
 
       // Aliases
       loopAliases:
@@ -56,7 +56,7 @@ export default class Router{
 
   }
 
-  static #pageGuard(page){
+  static #guard(page){
     // Check If Page Is Enabled
     if(window.CONF["pages"][page]["enabled"] === false) return false;
 

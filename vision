@@ -1,21 +1,31 @@
 v1.0.0 (MVP)
-  1. Sign Up (With Email Verifications) ⚠️
+  1. Sign Up (With Email Verification) ⚠️
+    1.1. SendGrid 💰️
+    1.2. GMail ✅️
+
   2. Log In ✅️
   3. Log Out ✅️
   4. Menu (Dynamic) ✅️
-  5. Layout System ✅️
-  6. Payment System (Stripe) ⚠️
-  7. Simplest UI System 🗿️
-  8. Basic Database Structure For Saving User Data ✅️
-  9. Page/Routing Guards (Both Back/Front) ✅️
-  10. Dynamic Language ✅️
+  5. Payment System ⚠️
+    5.1. Visa Direct 🛠️
+    5.2. Mastercard
+    5.3. PayPal
+
+  6. Simplest UI System ✅️
+    6.1. Layout System ✅️
+    6.2. Dynamic Color System ✅️
+    6.3. Light-Dark Modes ✅️
+
+  7. Basic Database Structure For Saving User Data ✅️
+  8. Page/Routing/Menu Guards (Both Back/Front) ✅️
+  9. Dynamic Language ✅️
 
 v2.0.0 (Tooling)
-  1. Sign Up (Through Social Platforms) + (Phone Number Verifications)
+  1. Sign Up (Through Social Platforms) + (Phone Number Verification)
   2. Sub Routing System (/channel/video/1234)
   3. Mix Of Stripe And Home Made Payment Systems
   4. Browser Extensions
-  5. Dynamic And Multi-Language 📌️
+  5. Dynamic And Multi-Language 🛠️
   6. Menu (Sub Menus)
   7. Chart Tool (Front-End)
   8. Mobile Friendly

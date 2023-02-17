@@ -1,6 +1,6 @@
 # X-WebApp
 
-# Git Flow (Working With Existence Branches)
+# Git Flow (Working With Existing Branches)
 1. git clone https://github.com/woXrooX/x-webapp
 2. git branch -r (Shows remote branches) And git fetch --all (Pulls all remote branches)
 3. git checkout feature/menu
@@ -48,3 +48,4 @@
 - ⚠️
 - 💰️
 - 🇺🇿️
+- 🛠️

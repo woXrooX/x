@@ -84,6 +84,16 @@
     "ru":"Создать магазин",
     "uz":"Do'kon yaratish"
   },
+  "couldNotSendEMail":{
+    "en":"Could Not Send EMail!",
+    "ru":"Не удалось отправить электронное письмо!",
+    "uz":"E-pochta yuborib bo'lmadi!"
+  },
+  "couldNotSendEMailVerificationCode":{
+    "en":"Could Not Send EMail Verification Code!",
+    "ru":"Не удалось отправить код подтверждения по электронной почте!",
+    "uz":"Tasdiqlash kodini elektron pochtaga yuborib bo‘lmadi!"
+  },
   "currency":{
     "en":"Currency",
     "ru":"Валюта",

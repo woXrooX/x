@@ -1,11 +1,14 @@
 # Flask
 from __main__ import app, request, render_template, make_response
 
-# Utils
-from __main__ import re, json
-
 # Home Made
-from __main__ import CONF, MySQL, pageGuard
+from __main__ import CONF, MySQL, pageGuard, session, publicSessionUser
+
+import re, json, random
+
+from python.tools.GMail import GMail
+
+
 
 
 #################################################### Sign Up
@@ -40,7 +43,7 @@ def signUp():
             }), 200)
 
         # eMailInvalid
-        if not re.match(conf["eMail"]["regEx"], request.get_json()["fields"]["eMail"]):
+        if not re.match(CONF["eMail"]["regEx"], request.get_json()["fields"]["eMail"]):
             return make_response(json.dumps({
                 "type": "error",
                 "message": "eMailInvalid",
@@ -57,7 +60,7 @@ def signUp():
             }), 200)
 
         # passwordMinLength
-        if len(request.get_json()["fields"]["password"]) < conf["password"]["min_length"]:
+        if len(request.get_json()["fields"]["password"]) < CONF["password"]["min_length"]:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "passwordMinLength",
@@ -65,7 +68,7 @@ def signUp():
             }), 200)
 
         # passwordMaxLength
-        if len(request.get_json()["fields"]["password"]) > conf["password"]["max_length"]:
+        if len(request.get_json()["fields"]["password"]) > CONF["password"]["max_length"]:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "passwordMaxLength",
@@ -73,7 +76,7 @@ def signUp():
             }), 200)
 
         # passwordAllowedChars
-        if not re.match(conf["password"]["regEx"], request.get_json()["fields"]["password"]):
+        if not re.match(CONF["password"]["regEx"], request.get_json()["fields"]["password"]):
             return make_response(json.dumps({
                 "type": "error",
                 "message": "passwordAllowedChars",
@@ -104,13 +107,24 @@ def signUp():
                 }))
 
         ######## Success
+        # Generate Randome Verification Code
+        eMailVerificationCode = random.randint(1000, 9999)
+
+        # Check If Verification Code Sent Successfully
+        if GMail(request.get_json()["fields"]["eMail"], eMailVerificationCode) == False:
+            return make_response(json.dumps({
+                "type": "error",
+                "message": "couldNotSendEMailVerificationCode",
+            }), 200)
+
         # Insert To Database
         with MySQL(False) as db:
             db.execute(
-                ("INSERT INTO users (eMail, password) VALUES (%s, %s)"),
+                ("INSERT INTO users (password, eMail, eMail_verification_code) VALUES (%s, %s, %s)"),
                 (
+                    request.get_json()["fields"]["password"],
                     request.get_json()["fields"]["eMail"],
-                    request.get_json()["fields"]["password"]
+                    eMailVerificationCode
                 )
             )
             db.commit()

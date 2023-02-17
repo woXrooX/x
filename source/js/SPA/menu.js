@@ -127,4 +127,12 @@ export default class Menu{
 
   }
 
+
+  /////////////////// Guard
+  static #guard(menu){
+
+    return true;
+
+  }
+
 }
