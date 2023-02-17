@@ -17,7 +17,7 @@ v1.0.0 (MVP)
     6.3. Light-Dark Modes ✅️
 
   7. Basic Database Structure For Saving User Data ✅️
-  8. Page/Routing Guards (Both Back/Front) ✅️
+  8. Page/Routing/Menu Guards (Both Back/Front) ✅️
   9. Dynamic Language ✅️
 
 v2.0.0 (Tooling)
