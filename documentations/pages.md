@@ -2,19 +2,21 @@
 
 
 ## Built-Ins
-#### Sign Up (BACK, FRONT)
-- /signUp
+#### Sign Up
+- /signUp (BACK, FRONT)
 
-#### Log In (BACK, FRONT)
-- /logIn
+#### Log In
+- /logIn (BACK, FRONT)
 
-#### Log Out (BACK, FRONT)
-- /logOut
+#### Log Out
+- /logOut (BACK, FRONT)
 
-#### 404, Page Not Found (BACK, FRONT)
+#### 404, Page Not Found
 If No Matching Route Back-End Will Just Render *index.html* And **SPA/Router** Will Route To */404*
 - /404 (FRONT)
 
+#### API
+- /api (BACK)
 
 ## Recommended Naming Convention
 #### Home, Landing Page
