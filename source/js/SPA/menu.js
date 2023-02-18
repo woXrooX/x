@@ -129,7 +129,7 @@ export default class Menu{
 
 
   /////////////////// Guard
-  static #guard(menu){
+  static #menuGuard(menu){
 
     return true;
 
