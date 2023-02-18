@@ -16,6 +16,18 @@ APP_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
 
 
 #################################################### home.py
+#################################################### project.json
+# Check If project.json exists
+if not os.path.exists(f"{APP_RUNNING_FROM}/project.json"):
+    print("------------ Error ------------")
+    print(f"{APP_RUNNING_FROM}/project.json does not exist.")
+    sys.exit()
+
+# If Exists Open It
+with open(f"{APP_RUNNING_FROM}/project.json", 'r') as file:
+    PROJECT = json.load(file)
+
+
 # Check If home.py Is Created By The User Of X-WebApp
 if not os.path.exists(f"{APP_RUNNING_FROM}/python/pages/home.py"):
     print("------------ Error ------------")
@@ -28,19 +40,6 @@ if not os.path.exists(f"{APP_RUNNING_FROM}/js/pages/home.js"):
     print("------------ Error ------------")
     print(f"{APP_RUNNING_FROM}/js/pages/home.js does not exist.")
     sys.exit()
-
-
-#################################################### project.json
-# Check If project.json exists
-if not os.path.exists(f"{APP_RUNNING_FROM}/project.json"):
-    print("------------ Error ------------")
-    print(f"{APP_RUNNING_FROM}/project.json does not exist.")
-    sys.exit()
-
-# If Exists Open It
-with open(f"{APP_RUNNING_FROM}/project.json", 'r') as file:
-    PROJECT = json.load(file)
-
 
 ################################################################
 ################################################################ Required Files To Run The Script END
