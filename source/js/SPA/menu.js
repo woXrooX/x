@@ -38,17 +38,9 @@ export default class Menu{
 
     let hyperlinks = "";
 
-    for(const menu of window.CONF["menu"]["menus"]){
-      if(
-        // If User Logged In Then Do Not Show Link For "logIn"
-        (menu == "logOut" && "user" in window.session) ||
+    for(const menu in window.CONF["menu"]["menus"]){
 
-        // If User Is Not Logged In Then Show "logIn" And "signUp" Links
-        ((menu == "signUp" || menu == "logIn") && !("user" in window.session)) ||
-
-        // If Current Menu Is Not Followings Then Just Show The Links
-        (menu !== "signUp" && menu != "logIn" && menu !== "logOut")
-      )
+      if(Menu.#menuGuard(menu) === true)
 
       // Hyperlink Blue Print
       hyperlinks += `
@@ -130,7 +122,27 @@ export default class Menu{
 
   /////////////////// Guard
   static #menuGuard(menu){
+    // Check If Current Menu Is Enabled
+    if(window.CONF["menu"]["menus"][menu]["enabled"] === false) return false;
 
+    // Looping Through Current Menu's Allowance List
+    for(const allowed of window.CONF["menu"]["menus"][menu]["allowed"]){
+      // Only Allowed "unauthenticated" Users
+      if(allowed == "unauthenticated" && "user" in window.session) return false;
+
+      // Only Allowed "unauthorized" Users
+      if(allowed == "unauthorized" && !("user" in window.session)) return false;
+
+      // Only Allowed "authorized" Users
+      // Retrive authorized_type_id From Database
+      // const authorized_type_id = 5
+      // if(allowed == "authorized")
+      //   if(!("user" in window.session) || ("user" in window.session && window.session["user"]["type"] != authorized_type_id))
+      //     return false;
+
+    }
+
+    // Passed The Guard Checks
     return true;
 
   }

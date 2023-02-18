@@ -20,16 +20,34 @@
 
   "menu":{
     "enabled": true,
-    "menus":[
-      "home",
-      "signUp",
-      "logIn",
-      "logOut",
-      "privacyPolicy",
-      "termsOfUse",
-      "contact",
-      "demo"
-    ]
+    "menus":{
+
+      "home": {
+        "enabled": true,
+        "allowed": ["everyone"]
+      },
+
+      "signUp": {
+        "enabled": true,
+        "allowed": ["unauthenticated"]
+      },
+
+      "logIn": {
+        "enabled": true,
+        "allowed": ["unauthenticated"]
+      },
+
+      "logOut": {
+        "enabled": true,
+        "allowed": ["unauthorized", "authorized"]
+      },
+
+      "demo": {
+        "enabled": true,
+        "allowed": ["everyone"]
+      }
+
+    }
   },
 
 
@@ -56,42 +74,6 @@
       "enabled": true,
       "allowed": ["unauthorized", "authorized"],
       "aliases": ["/logOut"]
-    },
-
-    "privacyPolicy": {
-      "enabled": true,
-      "allowed": ["everyone"],
-      "aliases": ["/privacyPolicy"]
-    },
-
-    "termsOfUse": {
-      "enabled": true,
-      "allowed": ["everyone"],
-      "aliases": ["/termsOfUse"]
-    },
-
-    "plans": {
-      "enabled": true,
-      "allowed": ["everyone"],
-      "aliases": ["/plans", "/pricing", "/plansAndPricing"]
-    },
-
-    "contact": {
-      "enabled": true,
-      "allowed": ["everyone"],
-      "aliases": ["/contact"]
-    },
-
-    "faq": {
-      "enabled": true,
-      "allowed": ["everyone"],
-      "aliases": ["/faq"]
-    },
-
-    "updates": {
-      "enabled": true,
-      "allowed": ["everyone"],
-      "aliases": ["/updates"]
     },
 
     "demo": {
