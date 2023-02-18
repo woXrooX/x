@@ -18,6 +18,9 @@ If No Matching Route Back-End Will Just Render *index.html* And **SPA/Router** W
 #### API
 - /api (BACK)
 
+#### Demo
+- /demo (BACK, FRONT)
+
 ## Recommended Naming Convention
 #### Home, Landing Page
 - /
