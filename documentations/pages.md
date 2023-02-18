@@ -21,10 +21,19 @@ If No Matching Route Back-End Will Just Render *index.html* And **SPA/Router** W
 #### Demo
 - /demo (BACK, FRONT)
 
-## Recommended Naming Convention
-#### Home, Landing Page
+---
+
+## Required
+Pages which are required to be created by the users of the X-WebApp platform in order to run it!
+
+#### Home, Landing Page (BACK, FRONT)
 - /
 - /home
+
+---
+
+## Recommended Naming Convention
+
 
 #### Privacy Policy
 - /privacyPolicy
