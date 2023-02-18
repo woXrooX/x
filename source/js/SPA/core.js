@@ -45,7 +45,7 @@ export default class Core{
 
   /////// Global Data
   static async #getGlobalData(){
-      let response = await bridge("API", {for:"globalData"});
+      let response = await bridge("api", {for:"globalData"});
 
       // console.log(response);
 
