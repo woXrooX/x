@@ -1,6 +1,8 @@
 # Py Cache
 __pycache__/
 
+################ Users
+users/*
 
 ################ Pages
 #### Back
