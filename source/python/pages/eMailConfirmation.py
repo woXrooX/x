@@ -89,6 +89,10 @@ def eMailConfirmation():
                 "type": "success",
                 "message": "success",
                 "actions": {
+                    "toast": {
+                        "type": "success",
+                        "content": "eMailVerificationSuccess"
+                    },
                     "redirect": {
                         "url": "home"
                     }
