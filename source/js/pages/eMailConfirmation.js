@@ -17,7 +17,7 @@ export default function content(){
         </label>
 
         <label>
-          <p for='verify'></p>
+          <p for='eMailConfirmation'></p>
           <input type='submit' name='verify' value='${window.langDict["verifyEmail"][window.langCode]}'>
         </label>
 
@@ -31,5 +31,5 @@ export default function content(){
   `;
 
   return dom;
-  
+
 }
