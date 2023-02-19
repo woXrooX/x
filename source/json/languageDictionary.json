@@ -189,6 +189,16 @@
     "ru":"На вашу электронную почту отправлено письмо с кодом подтверждения",
     "uz":"Sizning elektron pochtangizga tasdiqlash kodi yuborildi"
   },
+  "eMailConfirmationCodeDidNotMatch":{
+    "en":"The email confirmation code did not match!",
+    "ru":"Код подтверждения электронной почты не совпадает!",
+    "uz":"Elektron pochtani tasdiqlash kodi mos kelmadi!"
+  },
+  "eMailConfirmationCodeEmpty":{
+    "en":"The email confirmation code was not entered!",
+    "ru":"Код подтверждения электронной почты не был введен!",
+    "uz":"Elektron pochtani tasdiqlash kodi kiritilmadi!"
+  },
   "eMailConfirmationCodeNotCorrect":{
     "en":"The email confirmation code is not correct!",
     "ru":"Код подтверждения электронной почты неверен!",
