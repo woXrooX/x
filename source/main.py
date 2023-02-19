@@ -84,28 +84,12 @@ PUBLIC_CONF = {
 }
 
 
-#################################################### GLOBAL tools
-# import python.tools.tools as tools
-from python.tools.MySQL import MySQL
-from python.tools.tools import pageGuard, publicSessionUser
-
-
 #################################################### URL
 URL = f'{CONF["URL"]["prefix"]}://{CONF["URL"]["domain_name"]}:{CONF["URL"]["port"]}/'
 
 
-#################################################### Flask APP
-app = Flask(
-    __name__,
-    root_path = CONF["root_path"],
-    template_folder = CONF["template_folder"],
-    static_folder = CONF["static_folder"]
-)
-
-app.secret_key = b'asZ8#Q!@97_+asQ]s/s\]/'
-
-
 #################################################### GLOBAL MySQL
+from python.tools.MySQL import MySQL
 # If Database Enabled Then Set Up
 if "database" in CONF and CONF["database"]["enabled"] == True:
     MySQL.setUp(
@@ -116,6 +100,22 @@ if "database" in CONF and CONF["database"]["enabled"] == True:
         CONF["database"]["charset"],
         CONF["database"]["collate"]
     )
+
+
+#################################################### GLOBAL user_types
+USER_TYPES = {}
+if "database" in CONF and CONF["database"]["enabled"] == True:
+    with MySQL(False) as db:
+        db.execute("SELECT * FROM user_types")
+        dataFetched = db.fetchAll()
+
+        # Making USER_TYPES accessible by keyword like "root" or "dev"
+        for user_type in dataFetched: USER_TYPES[user_type["name"]] = user_type
+
+
+#################################################### GLOBAL tools
+# import python.tools.tools as tools
+from python.tools.tools import pageGuard, publicSessionUser
 
 
 #################################################### GLOBAL language
@@ -154,15 +154,15 @@ with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") a
 # currencyCode = CONF["default"]["currency"]
 
 
-#################################################### GLOBAL user_types
-USER_TYPES = {}
-if "database" in CONF and CONF["database"]["enabled"] == True:
-    with MySQL(False) as db:
-        db.execute("SELECT * FROM user_types")
-        dataFetched = db.fetchAll()
+#################################################### Flask APP
+app = Flask(
+    __name__,
+    root_path = CONF["root_path"],
+    template_folder = CONF["template_folder"],
+    static_folder = CONF["static_folder"]
+)
 
-        # Making USER_TYPES accessible by keyword like "root" or "dev"
-        for user_type in dataFetched: USER_TYPES[user_type["name"]] = user_type
+app.secret_key = b'asZ8#Q!@97_+asQ]s/s\]/'
 
 
 #################################################### Decorations
