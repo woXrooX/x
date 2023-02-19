@@ -134,6 +134,11 @@
     "ru":"Описание",
     "uz":"Tavsif"
   },
+  "didNotReceiveCode":{
+    "en":"Did not receive a code?",
+    "ru":"Не получили код?",
+    "uz":"Kod kelmadimi?"
+  },
   "differentOptionsForSameProduct":{
     "en":"You can have different options for the same product like different colors, sizes, prices, etc.",
     "ru":"У вас могут быть разные варианты одного продукта например разные цвета, размеры, цены, так далее.",
@@ -143,6 +148,21 @@
     "en":"Don't have an account ? Go to sign up",
     "ru":"Нет учетной записи? Перейти к подписке",
     "uz":"Ro'yxatdan o'tmaganmisiz? Ro'yxatdan o'tish bu yerda"
+  },
+  "eMail":{
+    "en":"E-mail",
+    "ru":"Эл. почта",
+    "uz":"Elektron pochta"
+  },
+  "eMailEmpty":{
+    "en":"E-mail address is empty",
+    "ru":"Адрес электронной почты пуст",
+    "uz":"Elektron pochta manzili bo'sh bo'lmasligi kerak"
+  },
+  "eMailFieldCheck":{
+    "en":"Check E-Mail field",
+    "ru":"Проверить поле электронной почты",
+    "uz":"Elektron pochta maydonini tekshiring"
   },
   "eMailInvalid":{
     "en":"Invalid E-mail address",
@@ -154,30 +174,20 @@
     "ru":"Этот электронный адрес уже используется",
     "uz":"Ushbu elektron pochta manzili band"
   },
-  "eMailEmpty":{
-    "en":"E-mail address is empty",
-    "ru":"Адрес электронной почты пуст",
-    "uz":"Elektron pochta manzili bo'sh bo'lmasligi kerak"
-  },
   "eMailOk":{
     "en":"E-mail address is OK",
     "ru":"Адрес электронной почты в порядке",
     "uz":"Elektron pochta manzili yaxshi"
   },
-  "eMailFieldCheck":{
-    "en":"Check E-Mail field",
-    "ru":"Проверить поле электронной почты",
-    "uz":"Elektron pochta maydonini tekshiring"
+  "eMailConfirmationCodeHasBeenSent":{
+    "en":"An email with a verification code has been sent to your email",
+    "ru":"На вашу электронную почту отправлено письмо с кодом подтверждения",
+    "uz":"Sizning elektron pochtangizga tasdiqlash kodi yuborildi"
   },
-  "eMail":{
-    "en":"E-mail",
-    "ru":"Эл. почта",
-    "uz":"Elektron pochta"
-  },
-  "eMailVerificationCodeNotValid":{
-    "en":"The email verification code is not valid",
-    "ru":"Код подтверждения электронной почты недействителен",
-    "uz":"Elektron pochtani tasdiqlash kodi yaroqsiz"
+  "eMailConfirmationCodeNotCorrect":{
+    "en":"The email confirmation code is not correct!",
+    "ru":"Код подтверждения электронной почты неверен!",
+    "uz":"Elektron pochtani tasdiqlash kodi noto'g'ri!"
   },
   "en":{
     "en":"English",
@@ -464,6 +474,11 @@
     "ru":"Необходимые",
     "uz":"Majburiy"
   },
+  "resendAgain":{
+    "en":"Resend again",
+    "ru":"Отправить еще раз",
+    "uz":"Qayta yuborish"
+  },
   "retailer":{
     "en":"Retailer",
     "ru":"Розничный продавец",
@@ -658,6 +673,11 @@
     "en":"Variants",
     "ru":"Варианты",
     "uz":"Variantlar"
+  },
+  "verifyEmail":{
+    "en":"Verify Email",
+    "ru":"Подтвердить Email",
+    "uz":"Elektron pochtani tasdiqlash"
   },
   "warning":{
     "en":"Warning",
