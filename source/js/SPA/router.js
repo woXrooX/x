@@ -66,14 +66,14 @@ export default class Router{
       if(allowed == "unauthenticated" && "user" in window.session) return false;
 
       // Only Allowed "unauthorized" Users
-      if(allowed == "unauthorized" && !("user" in window.session)) return false;
+      if(allowed == "unauthorized")
+        if(!("user" in window.session) || "user" in window.session && window.session["user"]["type"] != window.USER_TYPES["unauthorized"]["id"])
+          return false;
 
       // Only Allowed "authorized" Users
-      // Retrive authorized_type_id From Database
-      // const authorized_type_id = 5
-      // if(allowed == "authorized")
-      //   if(!("user" in window.session) || ("user" in window.session && window.session["user"]["type"] != authorized_type_id))
-      //     return false;
+      if(allowed == "authorized")
+        if(!("user" in window.session) || ("user" in window.session && window.session["user"]["type"] != window.USER_TYPES["authorized"]["id"]))
+          return false;
 
     }
 
