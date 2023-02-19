@@ -16,15 +16,15 @@ URL:
 
 ######### Database
 # By default database disabled
-database:
-  enabled: false
-  name: "template"
-  user: "template"
-  password: "password_template"
-  host: "127.0.0.1"
-  port: "33060"
-  charset: "utf8mb4"
-  collate: "utf8mb4_0900_ai_ci"
+# database:
+#   enabled: false
+#   name: "template"
+#   user: "template"
+#   password: "password_template"
+#   host: "127.0.0.1"
+#   port: "33060"
+#   charset: "utf8mb4"
+#   collate: "utf8mb4_0900_ai_ci"
 
 
 ######### Site Defaults
