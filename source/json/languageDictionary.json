@@ -159,6 +159,26 @@
     "ru":"Подтверждение электонной почты",
     "uz":"Elektron pochtani tasdiqlash"
   },
+  "eMailConfirmationCodeHasBeenSent":{
+    "en":"An email with a verification code has been sent to your email",
+    "ru":"На вашу электронную почту отправлено письмо с кодом подтверждения",
+    "uz":"Sizning elektron pochtangizga tasdiqlash kodi yuborildi"
+  },
+  "eMailConfirmationCodeDidNotMatch":{
+    "en":"The email confirmation code did not match!",
+    "ru":"Код подтверждения электронной почты не совпадает!",
+    "uz":"Elektron pochtani tasdiqlash kodi mos kelmadi!"
+  },
+  "eMailConfirmationCodeEmpty":{
+    "en":"The email confirmation code was not entered!",
+    "ru":"Код подтверждения электронной почты не был введен!",
+    "uz":"Elektron pochtani tasdiqlash kodi kiritilmadi!"
+  },
+  "eMailConfirmationCodeNotCorrect":{
+    "en":"The email confirmation code is not correct!",
+    "ru":"Код подтверждения электронной почты неверен!",
+    "uz":"Elektron pochtani tasdiqlash kodi noto'g'ri!"
+  },
   "eMailEmpty":{
     "en":"E-mail address is empty",
     "ru":"Адрес электронной почты пуст",
@@ -184,25 +204,10 @@
     "ru":"Адрес электронной почты в порядке",
     "uz":"Elektron pochta manzili yaxshi"
   },
-  "eMailConfirmationCodeHasBeenSent":{
-    "en":"An email with a verification code has been sent to your email",
-    "ru":"На вашу электронную почту отправлено письмо с кодом подтверждения",
-    "uz":"Sizning elektron pochtangizga tasdiqlash kodi yuborildi"
-  },
-  "eMailConfirmationCodeDidNotMatch":{
-    "en":"The email confirmation code did not match!",
-    "ru":"Код подтверждения электронной почты не совпадает!",
-    "uz":"Elektron pochtani tasdiqlash kodi mos kelmadi!"
-  },
-  "eMailConfirmationCodeEmpty":{
-    "en":"The email confirmation code was not entered!",
-    "ru":"Код подтверждения электронной почты не был введен!",
-    "uz":"Elektron pochtani tasdiqlash kodi kiritilmadi!"
-  },
-  "eMailConfirmationCodeNotCorrect":{
-    "en":"The email confirmation code is not correct!",
-    "ru":"Код подтверждения электронной почты неверен!",
-    "uz":"Elektron pochtani tasdiqlash kodi noto'g'ri!"
+  "eMailVerificationSuccess":{
+    "en":"E-mail successfully has been verified!",
+    "ru":"Электронная почта успешно подтверждена!",
+    "uz":"Elektron pochta muvaffaqiyatli tasdiqlandi!"
   },
   "en":{
     "en":"English",
