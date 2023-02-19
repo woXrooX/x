@@ -92,6 +92,15 @@ pages:
       - "/signUp"
 
 
+  eMailConfirmation:
+    enabled: true
+    allowed:
+      - "unauthorized"
+
+    aliases:
+      - "/eMailConfirmation"
+
+
   logIn:
     enabled: true
     allowed:
@@ -119,13 +128,7 @@ pages:
     aliases:
       - "/demo"
 
-  eMailConfirmation:
-    enabled: true
-    allowed:
-      - "unauthorized"
 
-    aliases:
-      - "/eMailConfirmation"
 
 
 ######### Username

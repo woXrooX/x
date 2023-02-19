@@ -15,9 +15,9 @@ source/python/pages/*.py
 !source/python/pages/demo.py
 
 !source/python/pages/signUp.py
+!source/python/pages/eMailConfirmation.py
 !source/python/pages/logIn.py
 !source/python/pages/logOut.py
-!source/python/pages/eMailConfirmation.py
 
 !source/python/pages/page_not_found.py
 
@@ -32,9 +32,9 @@ source/js/pages/*.js
 !source/js/pages/demo.js
 
 !source/js/pages/signUp.js
+!source/js/pages/eMailConfirmation.js
 !source/js/pages/logIn.js
 !source/js/pages/logOut.js
-!source/js/pages/eMailConfirmation.js
 
 !source/js/pages/404.js
 
