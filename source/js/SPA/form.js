@@ -76,6 +76,9 @@ export default class Form{
       // Delete window.session["user"]
       if("deleteSessionUser" in response["actions"]) delete window.session["user"];
 
+      // Toast
+      if("toast" in response["actions"]) Toast.new(response["actions"]["toast"]["type"], response["actions"]["toast"]["content"]);
+
       // Dom Update
       if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]["section"]}));
 

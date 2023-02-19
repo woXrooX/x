@@ -22,15 +22,24 @@ return make_response(json.dumps({
       # Delete
       "deleteSessionUser": 0,
 
-      #### Redirect
-      "redirect": {
-        "url": "me"
+      # Toast
+      "toast": {
+        "type": "success",
+        "type": "info",
+        "type": "warning",
+        "type": "error",
+        "content": "My Content!"
       },
 
       #### To Update DOM
       # menu header main footer all
       "domChange": {
         "section": "menu"
+      },
+
+      #### Redirect
+      "redirect": {
+        "url": "me"
       },
 
       #### Reload
