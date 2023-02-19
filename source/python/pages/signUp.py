@@ -2,7 +2,7 @@
 from __main__ import app, request, render_template, make_response
 
 # Home Made
-from __main__ import CONF, MySQL, pageGuard, session, publicSessionUser
+from __main__ import CONF, MySQL, USER_TYPES, pageGuard, session, publicSessionUser
 
 import re, json, random
 
@@ -120,11 +120,12 @@ def signUp():
         # Insert To Database
         with MySQL(False) as db:
             db.execute(
-                ("INSERT INTO users (password, eMail, eMail_verification_code) VALUES (%s, %s, %s)"),
+                ("INSERT INTO users (password, eMail, eMail_verification_code, type) VALUES (%s, %s, %s, %s)"),
                 (
                     request.get_json()["fields"]["password"],
                     request.get_json()["fields"]["eMail"],
-                    eMailVerificationCode
+                    eMailVerificationCode,
+                    USER_TYPES["unauthorized"]["id"]
                 )
             )
             db.commit()
@@ -168,8 +169,12 @@ def signUp():
                 "message": "success",
                 "actions": {
                     "setSessionUser": publicSessionUser(),
+                    "toast": {
+                        "type": "info",
+                        "content": "eMailConfirmationCodeHasBeenSent"
+                    },
                     "redirect": {
-                        "url": "home"
+                        "url": "eMailConfirmation"
                     },
                     "domChange": {
                         "section": "menu"

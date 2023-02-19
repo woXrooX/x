@@ -2,6 +2,24 @@ if __name__ != "__main__":
     import mysql.connector
 
     class MySQL:
+        #################### Static
+        ########## Static Methods
+        @staticmethod
+        def setUp(user, password, host, database, charset, collate):
+            # Enabler
+            # MySQL.enabled = True
+
+            MySQL.user = user
+            MySQL.password = password
+            MySQL.host = host
+            MySQL.database = database
+            MySQL.charset = charset
+            MySQL.collate = collate
+
+        ########## Static Variables
+        # enabled = False
+
+
         def __init__(self, prep=True):
             self._hasError = False
             self._conn = mysql.connector.connect(
@@ -16,15 +34,6 @@ if __name__ != "__main__":
                 self._curs = self._conn.cursor(prepared=True)
             else:
                 self._curs = self._conn.cursor(dictionary=True)
-
-        @staticmethod
-        def setUp(user, password, host, database, charset, collate):
-            MySQL.user = user
-            MySQL.password = password
-            MySQL.host = host
-            MySQL.database = database
-            MySQL.charset = charset
-            MySQL.collate = collate
 
         def __enter__(self):
             return self

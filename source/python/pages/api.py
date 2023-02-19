@@ -2,7 +2,7 @@
 from __main__ import app, request, make_response
 
 # Home Made
-from __main__ import PUBLIC_CONF, langCode, langDict, session, publicSessionUser
+from __main__ import PUBLIC_CONF, session, langCode, langDict, USER_TYPES, publicSessionUser
 
 import json
 
@@ -15,10 +15,11 @@ def api():
     if request.get_json()["for"] == "globalData":
         return make_response(
             {
-                "conf": PUBLIC_CONF,
+                "CONF": PUBLIC_CONF,
                 "session": {"user": publicSessionUser()} if "user" in session else {},
                 "langCode": langCode,
                 "langDict": langDict,
+                "USER_TYPES": USER_TYPES
                 # "languages":languages,
                 # "currencies":currencies
             }, 200)

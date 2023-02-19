@@ -5,6 +5,9 @@
 #### Sign Up
 - /signUp (BACK, FRONT)
 
+#### eMailConfirmation
+- /eMailConfirmation (BACK, FRONT)
+
 #### Log In
 - /logIn (BACK, FRONT)
 
