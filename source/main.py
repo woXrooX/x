@@ -52,16 +52,24 @@ with open(f"{APP_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
 
 #### Merge Project Dependent Configurations To X-WebApp Configurations
 # Database
-if "database" in PROJECT: CONF["database"].update(PROJECT["database"])
+if "database" in PROJECT:
+    if "database" in CONF: CONF["database"].update(PROJECT["database"])
+    else: CONF["database"] = PROJECT["database"]
 
 # Defaults
-if "default" in PROJECT: CONF["default"].update(PROJECT["default"])
+if "default" in PROJECT:
+    if "default" in CONF: CONF["default"].update(PROJECT["default"])
+    else: CONF["default"] = PROJECT["default"]
 
 # Menu
-if "menu" in PROJECT: CONF["menu"].update(PROJECT["menu"])
+if "menu" in PROJECT:
+    if "menu" in CONF: CONF["menu"].update(PROJECT["menu"])
+    else: CONF["menu"] = PROJECT["menu"]
 
 # Pages - Override Default Pages
-if "pages" in PROJECT: CONF["pages"].update(PROJECT["pages"])
+if "pages" in PROJECT:
+    if "pages" in CONF: CONF["pages"].update(PROJECT["pages"])
+    else: CONF["pages"] = PROJECT["pages"]
 
 # Public Version Of CONF (Minus Senstive Data)
 PUBLIC_CONF = {
@@ -144,6 +152,17 @@ with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") a
 
 ### currency Default Code
 # currencyCode = CONF["default"]["currency"]
+
+
+#################################################### GLOBAL user_types
+USER_TYPES = {}
+if "database" in CONF and CONF["database"]["enabled"] == True:
+    with MySQL(False) as db:
+        db.execute("SELECT * FROM user_types")
+        dataFetched = db.fetchAll()
+
+        # Making USER_TYPES accessible by keyword like "root" or "dev"
+        for user_type in dataFetched: USER_TYPES[user_type["name"]] = user_type
 
 
 #################################################### Decorations
