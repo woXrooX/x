@@ -1,6 +1,6 @@
 from functools import wraps # For pageGuard() Wrapper
 
-from __main__ import CONF, session, redirect, url_for
+from __main__ import CONF, session, USER_TYPES, redirect, url_for
 
 ######################################### Page Guard
 """
@@ -29,14 +29,14 @@ def pageGuard(page):
                 if allowed == "unauthenticated" and "user" in session: return redirect(url_for("home"))
 
                 # Only Allowed "unauthorized" Users
-                if allowed == "unauthorized" and "user" not in session: return redirect(url_for("home"))
+                if allowed == "unauthorized":
+                    if "user" not in session or "user" in session and session["user"]["type"] != USER_TYPES["unauthorized"]["id"]:
+                        return redirect(url_for("home"))
 
                 # Only Allowed "authorized" Users
-                # Retrive authorized_type_id From Database
-                # authorized_type_id = 5
-                # if allowed == "authorized":
-                #     if "user" not in session or "user" in session and session["user"]["type"] != authorized_type_id:
-                #         return redirect(url_for("home"))
+                if allowed == "authorized":
+                    if "user" not in session or "user" in session and session["user"]["type"] != USER_TYPES["authorized"]["id"]:
+                        return redirect(url_for("home"))
 
             return func(*args, **kwargs)
 
@@ -52,7 +52,8 @@ def publicSessionUser():
     publicData = {
         "username": session["user"]["username"],
         "firstname": session["user"]["firstname"],
-        "lastname": session["user"]["lastname"]
+        "lastname": session["user"]["lastname"],
+        "type": session["user"]["type"]
     }
 
     return publicData
