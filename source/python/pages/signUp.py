@@ -169,7 +169,7 @@ def signUp():
                 "actions": {
                     "setSessionUser": publicSessionUser(),
                     "redirect": {
-                        "url": "home"
+                        "url": "eMailConfirmation"
                     },
                     "domChange": {
                         "section": "menu"
