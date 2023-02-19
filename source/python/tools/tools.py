@@ -1,6 +1,6 @@
 from functools import wraps # For pageGuard() Wrapper
 
-from __main__ import CONF, session, USER_TYPES, redirect, url_for
+from __main__ import CONF, session, USER_TYPES, redirect, url_for, MySQL
 
 ######################################### Page Guard
 """
@@ -43,6 +43,25 @@ def pageGuard(page):
         return wrapper
 
     return decorator
+
+######################################### Update Session User
+def updateSessionUser():
+    # Check If User In Session | Error
+    if "user" not in session: return False
+
+    # Get User Data
+    with MySQL(False) as db:
+        db.execute(("SELECT * FROM users WHERE id=%s"), (session["user"]["id"], ))
+
+        # Error
+        if db.hasError():
+            return False
+
+        session["user"] = db.fetchOne()
+
+        # Success
+        return True
+
 
 ######################################### Sanitized Session For Front
 def publicSessionUser():
