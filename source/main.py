@@ -4,10 +4,16 @@ import json, yaml, re, html
 import pathlib # APP_RUNNING_FROM
 import os # For Creating Folders, Checking if project.json exists
 import sys # for eixt
+import shutil # To Copy
 # import stripe
 
-#################################################### GLOBAL appRunningFrom
+#################################################### GLOBAL APP_RUNNING_FROM
 APP_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
+
+
+#################################################### GLOBAL PARENT_RUNNING_FROM
+# Go Back Two Times From "APP_RUNNING_FROM"
+PARENT_RUNNING_FROM = os.path.abspath(os.path.join(APP_RUNNING_FROM, '../..'))
 
 
 ################################################################
@@ -15,7 +21,50 @@ APP_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
 ################################################################
 
 
-#################################################### home.py
+#################################################### Copying project.json
+try:
+    print("------------ Copying The project.json ------------")
+
+    shutil.copy(PARENT_RUNNING_FROM+"/project.json", APP_RUNNING_FROM)
+
+except:
+    print("------------ Error ------------")
+    print("Could Not Copy The project.json file")
+
+    sys.exit()
+
+#################################################### Copying Pages (Back-End)
+try:
+    print("------------ Copying The Pages (Back-End) ------------")
+
+    files = os.listdir(PARENT_RUNNING_FROM+"/pages/back")
+
+    for file in files:
+        shutil.copy(PARENT_RUNNING_FROM+"/pages/back/"+file, str(APP_RUNNING_FROM)+"/python/pages")
+
+except:
+    print("------------ Error ------------")
+    print("Could Not Copy The Pages (Back-End)")
+
+    sys.exit()
+
+
+#################################################### Copying Pages (Front-End)
+try:
+    print("------------ Copying The Pages (Front-End) ------------")
+
+    files = os.listdir(PARENT_RUNNING_FROM+"/pages/front")
+
+    for file in files:
+        shutil.copy(PARENT_RUNNING_FROM+"/pages/front/"+file, str(APP_RUNNING_FROM)+"/js/pages")
+
+except:
+    print("------------ Error ------------")
+    print("Could Not Copy The Pages (Front-End)")
+
+    sys.exit()
+
+
 #################################################### project.json
 # Check If project.json exists
 if not os.path.exists(f"{APP_RUNNING_FROM}/project.json"):
@@ -28,6 +77,7 @@ with open(f"{APP_RUNNING_FROM}/project.json", 'r') as file:
     PROJECT = json.load(file)
 
 
+#################################################### home.py
 # Check If home.py Is Created By The User Of X-WebApp
 if not os.path.exists(f"{APP_RUNNING_FROM}/python/pages/home.py"):
     print("------------ Error ------------")
@@ -40,6 +90,7 @@ if not os.path.exists(f"{APP_RUNNING_FROM}/js/pages/home.js"):
     print("------------ Error ------------")
     print(f"{APP_RUNNING_FROM}/js/pages/home.js does not exist.")
     sys.exit()
+
 
 ################################################################
 ################################################################ Required Files To Run The Script END
