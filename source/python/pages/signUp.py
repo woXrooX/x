@@ -108,7 +108,7 @@ def signUp():
 
         ######## Success
         # Generate Randome Verification Code
-        eMailVerificationCode = random.randint(1000, 9999)
+        eMailVerificationCode = random.randint(100000, 999999)
 
         # Check If Verification Code Sent Successfully
         if GMail(request.get_json()["fields"]["eMail"], eMailVerificationCode) == False:
