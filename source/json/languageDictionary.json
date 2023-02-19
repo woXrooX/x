@@ -154,6 +154,11 @@
     "ru":"Эл. почта",
     "uz":"Elektron pochta"
   },
+  "eMailConfirmation":{
+    "en":"E-Mail confirmation",
+    "ru":"Подтверждение электонной почты",
+    "uz":"Elektron pochtani tasdiqlash"
+  },
   "eMailEmpty":{
     "en":"E-mail address is empty",
     "ru":"Адрес электронной почты пуст",
