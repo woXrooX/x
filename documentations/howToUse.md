@@ -1,21 +1,39 @@
 # How To Use X-WebApp?
-1. Create a folder **MyWebSite**
-2. **cd** into **MyWebSite**
-3. Create the ./MyWebSite/**project.json** file
-4. Create a folder called ./MyWebSite/**pages**
-5. Create a folder called ./MyWebSite/pages/**back** to store site's pages back-end codes
-6. Create the ./MyWebSite/pages/back/**home.py**
-6. Create a folder called ./MyWebSite/pages/**front** to store site's pages front-end codes
-7. Create the ./MyWebSite/pages/front/**home.js**
 
-## Note!
+---
+
+## Initializing
+1. Create a git repository **MyWebSite**
+2. **cd** into **MyWebSite**
+3. Use command: **git submodule add** https://github.com/woXrooX/x-webapp
+4. **cd** into **x-webapp**
+5. Use command: **git submodule update --init**
+6. **cd** back to **MyWebSite**
+7. Create the ./MyWebSite/**project.json** file
+8. Create a folder called ./MyWebSite/**pages**
+9. Create a folder called ./MyWebSite/pages/**back** to store site's pages back-end codes
+10. Create the ./MyWebSite/pages/back/**home.py**
+11. Create a folder called ./MyWebSite/pages/**front** to store site's pages front-end codes
+12. Create the ./MyWebSite/pages/front/**home.js**
+
+#### Note!
 **project.json**, **home.py** and **home.js** are requiered files in order to start the X-WebApp!
 W/O them X-WebApp will not start.
 
-# File Structure
+---
+
+## Updating the X-WebApp
+1. **cd** into **x-webapp**
+2. Use command: **git submodule update --init**
+
+---
+
+## File Structure
 ```
 MyWebSite
-│   project.json
+│    project.json
+│
+│─── x-webapp
 │
 └─── pages
      │
