@@ -17,28 +17,43 @@ def pageGuard(page):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
+
             # Check If Page Exists
             if page not in CONF["pages"]: return redirect(url_for("home"))
+
 
             # Is Page Enabled
             if CONF["pages"][page]["enabled"] == False: return redirect(url_for("home"))
 
-            # Looping Through Page's Allowance List
-            for allowed in CONF["pages"][page]["allowed"]:
-                # Only Allowed "unauthenticated" Users
-                if allowed == "unauthenticated" and "user" in session: return redirect(url_for("home"))
 
-                # Only Allowed "unauthorized" Users
-                if allowed == "unauthorized":
-                    if "user" not in session or "user" in session and session["user"]["type"] != USER_TYPES["unauthorized"]["id"]:
-                        return redirect(url_for("home"))
+            # Everyone
+            if "everyone" in CONF["pages"][page]["allowed"]: return func(*args, **kwargs)
 
-                # Only Allowed "authorized" Users
-                if allowed == "authorized":
-                    if "user" not in session or "user" in session and session["user"]["type"] != USER_TYPES["authorized"]["id"]:
-                        return redirect(url_for("home"))
 
-            return func(*args, **kwargs)
+            # Session Dependent Checks
+            if "user" in session:
+                # Root
+                if session["user"]["type"] == USER_TYPES["root"]["id"]: return func(*args, **kwargs)
+
+
+                # If User Type Matches With One Of The Page's Allowed User Types
+                for user_type in USER_TYPES:
+                    if(
+                        session["user"]["type"] == USER_TYPES[user_type]["id"] and
+                        user_type in CONF["pages"][page]["allowed"]
+                    ):
+                        return func(*args, **kwargs)
+
+
+            # Session Independent Checks
+            if "user" not in session:
+
+                # Unauthenticated User
+                if "unauthenticated" in CONF["pages"][page]["allowed"]: return func(*args, **kwargs)
+
+
+            # Failed The Guard Checks
+            return redirect(url_for("home"))
 
         return wrapper
 

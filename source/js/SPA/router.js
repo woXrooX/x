@@ -57,28 +57,46 @@ export default class Router{
   }
 
   static #routeGuard(page){
+    // Check If Page Exists
+    // Already Looping Through Existent Pages
+
+
     // Check If Page Is Enabled
     if(window.CONF["pages"][page]["enabled"] === false) return false;
 
-     // Looping Through Page's Allowance List
-    for(const allowed of window.CONF["pages"][page]["allowed"]){
-      // Only Allowed "unauthenticated" Users
-      if(allowed == "unauthenticated" && "user" in window.session) return false;
 
-      // Only Allowed "unauthorized" Users
-      if(allowed == "unauthorized")
-        if(!("user" in window.session) || "user" in window.session && window.session["user"]["type"] != window.USER_TYPES["unauthorized"]["id"])
-          return false;
+    // Everyone
+    if(window.CONF["pages"][page]["allowed"].includes("everyone")) return true;
 
-      // Only Allowed "authorized" Users
-      if(allowed == "authorized")
-        if(!("user" in window.session) || ("user" in window.session && window.session["user"]["type"] != window.USER_TYPES["authorized"]["id"]))
-          return false;
+
+    // Session Dependent Checks
+    if("user" in window.session){
+
+      // Root
+      if(window.session["user"]["type"] == window.USER_TYPES["root"]["id"]) return true;
+
+       // If User Type Matches With One Of The Page's Allowed User Types
+       for(user_type in window.USER_TYPES)
+           if(
+             window.session["user"]["type"] == window.USER_TYPES[user_type]["id"] &&
+             window.CONF["pages"][page]["allowed"].includes(user_type)
+           )
+               return true;
 
     }
 
-    // Passed The Guard Checks
-    return true;
+
+    // Session Independent Checks
+    if(!("user" in window.session)){
+
+        // Unauthenticated User
+        if(window.CONF["pages"][page]["allowed"].includes("unauthenticated")) return true;
+
+    }
+
+
+    // Failed The Guard Checks
+    return false;
 
   }
 

@@ -122,29 +122,47 @@ export default class Menu{
 
   /////////////////// Guard
   static #menuGuard(menu){
+    // Check If Menu Exists
+    // Already Looping Through Existent Menus
+
+
     // Check If Current Menu Is Enabled
     if(window.CONF["menu"]["menus"][menu]["enabled"] === false) return false;
 
-    // Looping Through Current Menu's Allowance List
-    for(const allowed of window.CONF["menu"]["menus"][menu]["allowed"]){
-      // Only Allowed "unauthenticated" Users
-      if(allowed == "unauthenticated" && "user" in window.session) return false;
 
-      // Only Allowed "unauthorized" Users
-      if(allowed == "unauthorized" && !("user" in window.session)) return false;
+    // Everyone
+    if(window.CONF["menu"]["menus"][menu]["allowed"].includes("everyone")) return true;
 
-      // Only Allowed "authorized" Users
-      // Retrive authorized_type_id From Database
-      // const authorized_type_id = 5
-      // if(allowed == "authorized")
-      //   if(!("user" in window.session) || ("user" in window.session && window.session["user"]["type"] != authorized_type_id))
-      //     return false;
+
+    // Session Dependent Checks
+    if("user" in window.session){
+
+      // Root
+      if(window.session["user"]["type"] == window.USER_TYPES["root"]["id"]) return true;
+
+       // If User Type Matches With One Of The Page's Allowed User Types
+       for(user_type in window.USER_TYPES)
+           if(
+             window.session["user"]["type"] == window.USER_TYPES[user_type]["id"] &&
+             window.CONF["menu"]["menus"][menu]["allowed"].includes(user_type)
+           )
+               return true;
 
     }
 
-    // Passed The Guard Checks
-    return true;
 
+    // Session Independent Checks
+    if(!("user" in window.session)){
+
+        // Unauthenticated User
+        if(window.CONF["menu"]["menus"][menu]["allowed"].includes("unauthenticated")) return true;
+
+    }
+
+
+    // Failed The Guard Checks
+    return false;
+    
   }
 
 }
