@@ -2,7 +2,9 @@
 from __main__ import app, request, make_response
 
 # Home Made
-from __main__ import PUBLIC_CONF, session, langCode, langDict, USER_TYPES, publicSessionUser
+from __main__ import PUBLIC_CONF, session, langCode, langDict, USER_TYPES
+
+from python.tools.tools import publicSessionUser
 
 import json
 

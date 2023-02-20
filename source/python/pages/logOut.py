@@ -5,7 +5,9 @@ from __main__ import app, request, render_template, make_response
 from __main__ import json
 
 # Home Made
-from __main__ import CONF, pageGuard, session
+from __main__ import CONF, session
+
+from python.tools.tools import pageGuard
 
 
 #################################################### Log Out

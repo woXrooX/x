@@ -2,7 +2,7 @@
 from __main__ import app, request, render_template, make_response, session
 
 # Home Made
-from __main__ import CONF, USER_TYPES, MySQL, publicSessionUser
+from __main__ import CONF, USER_TYPES, MySQL
 
 import json
 

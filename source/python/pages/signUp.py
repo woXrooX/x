@@ -2,11 +2,13 @@
 from __main__ import app, request, render_template, make_response
 
 # Home Made
-from __main__ import CONF, MySQL, USER_TYPES, pageGuard, session, publicSessionUser
+from __main__ import CONF, MySQL, USER_TYPES, session
 
 import re, json, random
 
 from python.tools.GMail import GMail
+
+from python.tools.tools import pageGuard, publicSessionUser
 
 
 

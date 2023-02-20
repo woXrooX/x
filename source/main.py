@@ -166,7 +166,7 @@ if "database" in CONF and CONF["database"]["enabled"] == True:
 
 #################################################### GLOBAL tools
 # import python.tools.tools as tools
-from python.tools.tools import pageGuard, publicSessionUser
+# from python.tools.tools import pageGuard, publicSessionUser
 
 
 #################################################### GLOBAL language
