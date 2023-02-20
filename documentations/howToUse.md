@@ -24,7 +24,7 @@ W/O them X-WebApp will not start.
 
 ## Updating the X-WebApp
 1. **cd** into **x-webapp**
-2. Use command: **git submodule update --init**
+2. Use command: **git pull**
 
 ---
 
