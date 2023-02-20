@@ -10,9 +10,6 @@ import shutil # To Copy
 #################################################### GLOBAL APP_RUNNING_FROM
 APP_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
 
-# Add APP_RUNNING_FROM To The Path
-sys.path.append(APP_RUNNING_FROM)
-
 
 #################################################### GLOBAL PARENT_RUNNING_FROM
 # Go Back Two Times From "APP_RUNNING_FROM"
