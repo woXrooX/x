@@ -76,7 +76,7 @@ export default class Router{
       if(window.session["user"]["type"] == window.USER_TYPES["root"]["id"]) return true;
 
        // If User Type Matches With One Of The Page's Allowed User Types
-       for(user_type in window.USER_TYPES)
+       for(let user_type in window.USER_TYPES)
            if(
              window.session["user"]["type"] == window.USER_TYPES[user_type]["id"] &&
              window.CONF["pages"][page]["allowed"].includes(user_type)
