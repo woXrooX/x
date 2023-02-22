@@ -9,6 +9,11 @@
     "ru":"Тип аккаунта",
     "uz":"Foydalanuvchi turi"
   },
+  "add":{
+    "en":"Add",
+    "ru":"Добавлять",
+    "uz":"Qo'shish"
+  },
   "addOption":{
     "en":"Add option",
     "ru":"Добавить вариант",
@@ -18,6 +23,11 @@
     "en":"Add a product",
     "ru":"Добавить товар",
     "uz":"Mahsulot qo'shish"
+  },
+  "addUser":{
+    "en":"Add user",
+    "ru":"Добавить пользователя",
+    "uz":"Foydalanuvchi qo'shish"
   },
   "allChangesWillTakeEffectAtNextLogIn":{
     "en":"All changes will take effect at next log in",
@@ -564,6 +574,11 @@
     "ru":"Что-то пошло не так",
     "uz":"Nimadir noto'g'ri bajarildi"
   },
+  "staff":{
+    "en":"Staff",
+    "ru":"Сотрудники",
+    "uz":"Xodimlar"
+  },
   "storeName":{
     "en":"Store name",
     "ru":"Название магазина",
@@ -688,6 +703,11 @@
     "en":"Username is OK",
     "ru":"Имя пользователя в порядке",
     "uz":"Foydalanuvchi nomi yaxshi"
+  },
+  "users":{
+    "en":"Users",
+    "ru":"Пользователи",
+    "uz":"Foydalanuvchilar"
   },
   "variants":{
     "en":"Variants",
