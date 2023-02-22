@@ -131,7 +131,7 @@ export default class Menu{
 
 
     // Everyone
-    if(window.CONF["menu"]["menus"][menu]["allowed"].includes("everyone")) return true;
+    if(window.CONF["pages"][menu]["allowed"].includes("everyone")) return true;
 
 
     // Session Dependent Checks
@@ -140,22 +140,21 @@ export default class Menu{
       // Root
       if(window.session["user"]["type"] == window.USER_TYPES["root"]["id"]) return true;
 
-       // If User Type Matches With One Of The Page's Allowed User Types
-       for(let user_type in window.USER_TYPES)
-           if(
-             window.session["user"]["type"] == window.USER_TYPES[user_type]["id"] &&
-             window.CONF["menu"]["menus"][menu]["allowed"].includes(user_type)
-           )
-               return true;
+      // If User Type Matches With One Of The Page's Allowed User Types
+      for(let user_type in window.USER_TYPES)
+        if(
+          window.session["user"]["type"] == window.USER_TYPES[user_type]["id"] &&
+          window.CONF["pages"][menu]["allowed"].includes(user_type)
+        )
+          return true;
 
     }
 
 
     // Session Independent Checks
     if(!("user" in window.session)){
-
-        // Unauthenticated User
-        if(window.CONF["menu"]["menus"][menu]["allowed"].includes("unauthenticated")) return true;
+      // Unauthenticated User
+      if(window.CONF["pages"][menu]["allowed"].includes("unauthenticated")) return true;
 
     }
 

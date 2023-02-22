@@ -72,25 +72,24 @@ export default class Router{
     // Session Dependent Checks
     if("user" in window.session){
 
-      // Root
-      if(window.session["user"]["type"] == window.USER_TYPES["root"]["id"]) return true;
+    // Root
+    if(window.session["user"]["type"] == window.USER_TYPES["root"]["id"]) return true;
 
-       // If User Type Matches With One Of The Page's Allowed User Types
-       for(let user_type in window.USER_TYPES)
-           if(
-             window.session["user"]["type"] == window.USER_TYPES[user_type]["id"] &&
-             window.CONF["pages"][page]["allowed"].includes(user_type)
-           )
-               return true;
+    // If User Type Matches With One Of The Page's Allowed User Types
+    for(let user_type in window.USER_TYPES)
+      if(
+        window.session["user"]["type"] == window.USER_TYPES[user_type]["id"] &&
+        window.CONF["pages"][page]["allowed"].includes(user_type)
+      )
+      return true;
 
     }
 
 
     // Session Independent Checks
     if(!("user" in window.session)){
-
-        // Unauthenticated User
-        if(window.CONF["pages"][page]["allowed"].includes("unauthenticated")) return true;
+      // Unauthenticated User
+      if(window.CONF["pages"][page]["allowed"].includes("unauthenticated")) return true;
 
     }
 
