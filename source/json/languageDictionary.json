@@ -69,6 +69,11 @@
     "ru":"Выберите имя пользователя",
     "uz":"Foydalanuvchi ismini tanlang"
   },
+  "chooseUserType":{
+    "en":"Choose a user type",
+    "ru":"Выберите тип пользователя",
+    "uz":"Foydalanuvchi turini tanlang"
+  },
   "color":{
     "en":"Color",
     "ru":"Цвет",
@@ -708,6 +713,11 @@
     "en":"Users",
     "ru":"Пользователи",
     "uz":"Foydalanuvchilar"
+  },
+  "userTypeInvalid":{
+    "en":"Invalid user type!",
+    "ru":"Неверный тип пользователя!",
+    "uz":"Foydalanuvchi turi noto'g'ri!"
   },
   "variants":{
     "en":"Variants",
