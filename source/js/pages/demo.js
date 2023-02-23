@@ -84,7 +84,58 @@ export default function content(){
 
   </row>
 
-<container>
+</container>
+
+<container class="bc-5 radius">
+
+  <row><h1>Table</h1></row>
+  <row>
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Header content 1</th>
+          <th>Header content 2</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Body content 1</td>
+          <td>Body content 2</td>
+        </tr>
+
+        <tr>
+          <td>Body content 3</td>
+          <td>Body content 4</td>
+        </tr>
+
+        <tr>
+          <td>Body content 5</td>
+          <td>Body content 6</td>
+        </tr>
+
+        <tr>
+          <td>Body content 7</td>
+          <td>Body content 8</td>
+        </tr>
+
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td>Footer content 1</td>
+          <td>Footer content 2</td>
+        </tr>
+      </tfoot>
+
+    </table>
+  </row>
+
+</container>
+
+<br>
 
 <container class="bc-5 radius">
   <row><h1>.bc-x</h1></row>
