@@ -14,7 +14,7 @@ v1.0.0 (MVP)
   6. Simplest UI System ✅️
     6.1. Layout System ✅️
     6.2. Dynamic Color System ✅️
-    6.3. Light-Dark Modes ✅️
+    6.3. Dynamic Light-Dark Modes ✅️
 
   7. Basic Database Structure For Saving User Data ✅️
   8. Page/Routing/Menu Guards (Both Back/Front) ✅️
@@ -23,20 +23,24 @@ v1.0.0 (MVP)
 v2.0.0 (Tooling)
   1. Sign Up (Through Social Platforms) + (Phone Number Verification)
   2. Sub Routing System (/channel/video/1234)
-  3. Mix Of Stripe And Home Made Payment Systems
+  3. Full Home Made Payment Systems
   4. Browser Extensions
   5. Dynamic And Multi-Language ✅️
   6. Menu (Sub Menus)
   7. Chart Tool (Front-End)
   8. Mobile Friendly
   9. Deployment Ready Structure ✅️
+  10. File Management System 🛠️
 
 v3.0.0 (UI / UX / Customizations / Versatility)
   1. Admin Panel
-  2. Customizable Site Color Scheme
+  2. Color Science
+    2.1. Customizable Site Color Scheme
+    2.2. Light-Dark Mode Switcher
+    2.3. Multiple Built-In Site Themes
+
   3. Customizable Site Fonts
-  4. File Management System
-  5. Log In (Two Factor Authentication)
+  4. Log In (Two Factor Authentication)
     a. SMS Verifications
     b. Random Code Generator Like Steam
     c. Log In Through QR Code Scanning
