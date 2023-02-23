@@ -46,29 +46,18 @@ menu:
 
       home:
         enabled: true
-        allowed:
-          - "everyone"
 
       signUp:
         enabled: true
-        allowed:
-          - "unauthenticated"
 
       logIn:
         enabled: true
-        allowed:
-          - "unauthenticated"
 
       logOut:
         enabled: true
-        allowed:
-          - "unauthorized"
-          - "authorized"
 
       demo:
         enabled: true
-        allowed:
-          - "everyone"
 
 
 ######### Pages
