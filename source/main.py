@@ -21,17 +21,18 @@ PARENT_RUNNING_FROM = os.path.abspath(os.path.join(APP_RUNNING_FROM, '../..'))
 ################################################################
 
 
-#################################################### Copying project.json
-try:
-    print("------------ Copying The project.json ------------")
-
-    shutil.copy(PARENT_RUNNING_FROM+"/project.json", APP_RUNNING_FROM)
-
-except:
+#################################################### project.json
+# Check If project.json exists
+if not os.path.exists(f"{PARENT_RUNNING_FROM}/project.json"):
     print("------------ Error ------------")
-    print("Could Not Copy The project.json file")
-
+    print(f"{PARENT_RUNNING_FROM}/project.json does not exist.")
     sys.exit()
+
+# If Exists Open It
+print("------------ Reading project.json ------------")
+with open(f"{PARENT_RUNNING_FROM}/project.json", 'r') as file:
+    PROJECT = json.load(file)
+
 
 #################################################### Copying Pages (Back-End)
 try:
@@ -63,18 +64,6 @@ except:
     print("Could Not Copy The Pages (Front-End)")
 
     sys.exit()
-
-
-#################################################### project.json
-# Check If project.json exists
-if not os.path.exists(f"{APP_RUNNING_FROM}/project.json"):
-    print("------------ Error ------------")
-    print(f"{APP_RUNNING_FROM}/project.json does not exist.")
-    sys.exit()
-
-# If Exists Open It
-with open(f"{APP_RUNNING_FROM}/project.json", 'r') as file:
-    PROJECT = json.load(file)
 
 
 #################################################### home.py
@@ -182,6 +171,14 @@ langCode = CONF["default"]["language"]
 with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") as file:
     langDict = json.load(file)
 
+
+#################################################### External Language Dictionary
+# Check If External languageDictionary.json exists
+if os.path.exists(f"{PARENT_RUNNING_FROM}/languageDictionary.json"):
+    print("------------ Reading languageDictionary.json ------------")
+
+    with open(f"{PARENT_RUNNING_FROM}/languageDictionary.json", 'r') as file:
+        PROJECT_LANG_DICT = json.load(file)
 
 #################################################### GLOBAL currencies
 ### currencies
