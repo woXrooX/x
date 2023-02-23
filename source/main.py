@@ -180,6 +180,10 @@ if os.path.exists(f"{PARENT_RUNNING_FROM}/languageDictionary.json"):
     with open(f"{PARENT_RUNNING_FROM}/languageDictionary.json", 'r') as file:
         PROJECT_LANG_DICT = json.load(file)
 
+# Update The langDict
+langDict.update(PROJECT_LANG_DICT)
+
+
 #################################################### GLOBAL currencies
 ### currencies
 # with MySQL(False) as db:
