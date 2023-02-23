@@ -174,12 +174,77 @@ form input[type=submit]:where(:active, :focus, :hover){
 
 /****************************** Form END ******************************/
 
+
+/****************************** Table START ******************************/
+
+/************ Table START ************/
+table{
+  --table-radius: 3px;
+
+  width: 100%;
+  border: 1px solid var(--color-main);
+  border-radius: var(--radius);
+  padding: var(--padding);
+
+}
+/************ Table END ************/
+
+/************ thead START ************/
+table > thead{
+  background-color: var(--color-surface-10);
+}
+
+table > thead > tr > th{
+  color: var(--color-text-accent);
+  font-weight: bold;
+
+  border-radius: var(--table-radius);
+  padding: var(--padding);
+
+}
+/************ thead END ************/
+
+/************ tbody START ************/
+table > tbody > tr:nth-child(odd){
+  background-color: var(--color-surface-3);
+
+}
+table > tbody > tr:nth-child(even){
+  background-color: var(--color-surface-4);
+
+}
+
+table > tbody > tr > td{
+  border-radius: var(--table-radius);
+  padding: var(--padding);
+
+}
+/************ tbody END ************/
+
+/************ tfead START ************/
+table > tfoot{
+  background-color: var(--color-surface-9);
+}
+
+table > tfoot > tr > td{
+  color: var(--color-text-accent);
+
+  border-radius: var(--table-radius);
+  padding: var(--padding);
+
+}
+/************ tfoot END ************/
+
+/****************************** Table END ******************************/
+
+
 /****************************** hr START ******************************/
 hr{
   border:none;
   border-top:1px solid var(--color-text-secondary);
 }
 /****************************** hr END ******************************/
+
 
 /****************************** a START ******************************/
 a{
@@ -189,6 +254,7 @@ a:where(:active, :focus, :hover){
   color:var(--color-text-primary);
 }
 /****************************** a END ******************************/
+
 
 /****************************** Info, Success, Warning, Error START ******************************/
 
