@@ -7,23 +7,17 @@ export default class Menu{
   static #shown = false;
   static #elementMenu = null;
 
-  // Class Static Initialization Block
+  // Init
   static init(){
     Menu.#elementMenu = document.querySelector(Menu.selector);
 
-    // Check If CONF Has Menu
-    if(!("menu" in window.CONF)) return;
-
-    // Check If Menu Is Enabled
-    if(window.CONF["menu"]["enabled"] === false) return;
-
-    // Check If Menu Exists
+    // Check If "body > menu" Exists
     if(!!Menu.#elementMenu === false) return;
 
+    // Try To Build The Menu
+    if(Menu.build() === false) return;
 
-    // Events Listen To The Events
-    Menu.build();
-
+    // Listen To The Events
     Menu.#onClickMenuButtonShow();
     Menu.#onClickCoverHide();
 
@@ -33,9 +27,16 @@ export default class Menu{
   static build(){
     // console.log("Menu.build()");
 
+    // Check If CONF Has Menu
+    if(!("menu" in window.CONF)) return false;
+
+    // Check If Menu Is Enabled
+    if(window.CONF["menu"]["enabled"] === false) return false;
+
+
     let hyperlinks = "";
 
-    for(const menu in window.CONF["menu"]["menus"]){
+    for(const menu of window.CONF["menu"]["menus"]){
 
       if(Menu.#menuGuard(menu) === true)
 
@@ -119,12 +120,25 @@ export default class Menu{
 
   /////////////////// Guard
   static #menuGuard(menu){
-    // Check If Menu Exists
+    // Check If Menu Is Enabled
+    // Done At Menu.init()
+
+
+    // Check If Menu Exists (Depreciated)
     // Already Looping Through Existent Menus
 
 
-    // Check If Current Menu Is Enabled
-    if(window.CONF["menu"]["menus"][menu]["enabled"] === false) return false;
+    // Check If Current Menu Is Enabled (Depreciated)
+    // If Menu In List Means Already Enabled
+    // if(window.CONF["menu"]["menus"][menu]["enabled"] === false) return false;
+
+
+    // Check If Menu Linked Page Exists In CONF["pages"]
+    if(!(menu in window.CONF["pages"])) return false;
+
+
+    // Check If Menu Linked Page Is Enabled In CONF["pages"]
+    if(window.CONF["pages"][menu]["enabled"] == false) return false;
 
 
     // Everyone
