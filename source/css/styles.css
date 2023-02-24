@@ -20,6 +20,17 @@ form{
 }
 /************ Form END ************/
 
+/************ Autofill START ************/
+/* input:-webkit-autofill */
+/* -webkit-text-fill-color: yellow !important; */
+
+input:-webkit-autofill,
+input:autofill{
+  /* background-color: red !important; */
+  /* -webkit-text-fill-color: red !important; */
+}
+/************ Autofill END ************/
+
 /************ fieldset START ************/
 form fieldset{
   padding: var(--f-padding);
