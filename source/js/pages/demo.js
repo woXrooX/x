@@ -207,6 +207,7 @@ const colorTextX = `
 </container>
 `;
 
+
 export default function content(){
   let dom = `
     ${form}

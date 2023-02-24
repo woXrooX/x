@@ -266,6 +266,17 @@ table > tbody > tr > td{
   padding: var(--padding);
 
 }
+
+/* tr:hover START */
+table > tbody > tr{
+  transition: var(--transition-velocity) ease-in-out background-color;
+}
+
+table > tbody > tr:hover{
+  background-color: var(--color-surface-7);
+}
+/* tr:hover END */
+
 /************ tbody END ************/
 
 /************ tfead START ************/
