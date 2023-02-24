@@ -1,16 +1,21 @@
 "use strict";
 
-export default function content(){
-  let dom = `
+///// Form
+const form = `
 <container>
+
+  <row><h1>Form</h1></row>
+
   <row>
+
     <column class="w-75 bc-3 radius p-5 bs">
+
       <form>
 
-      <label>
-          <p for='username'>Number</p>
-          <input type='number' name='number'>
-      </label>
+        <label>
+            <p for='username'>Number</p>
+            <input type='number' name='number'>
+        </label>
 
         <label>
             <p for='username'>Username</p>
@@ -85,76 +90,99 @@ export default function content(){
   </row>
 
 </container>
+`;
 
-<container class="bc-5 radius">
+
+///// Table
+const table = `
+<container>
 
   <row><h1>Table</h1></row>
+
   <row>
 
-    <table>
+    <column class="w-75 bc-5 radius">
 
-      <thead>
-        <tr>
-          <th>Header content 1</th>
-          <th>Header content 2</th>
-        </tr>
-      </thead>
+      <table>
 
-      <tbody>
-        <tr>
-          <td>Body content 1</td>
-          <td>Body content 2</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Header content 1</th>
+            <th>Header content 2</th>
+          </tr>
+        </thead>
 
-        <tr>
-          <td>Body content 3</td>
-          <td>Body content 4</td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>Body content 1</td>
+            <td>Body content 2</td>
+          </tr>
 
-        <tr>
-          <td>Body content 5</td>
-          <td>Body content 6</td>
-        </tr>
+          <tr>
+            <td>Body content 3</td>
+            <td>Body content 4</td>
+          </tr>
 
-        <tr>
-          <td>Body content 7</td>
-          <td>Body content 8</td>
-        </tr>
+          <tr>
+            <td>Body content 5</td>
+            <td>Body content 6</td>
+          </tr>
 
-      </tbody>
+          <tr>
+            <td>Body content 7</td>
+            <td>Body content 8</td>
+          </tr>
 
-      <tfoot>
-        <tr>
-          <td>Footer content 1</td>
-          <td>Footer content 2</td>
-        </tr>
-      </tfoot>
+        </tbody>
 
-    </table>
+        <tfoot>
+          <tr>
+            <td>Footer content 1</td>
+            <td>Footer content 2</td>
+          </tr>
+        </tfoot>
+
+      </table>
+
+    </column>
+
   </row>
 
 </container>
+`;
 
-<br>
 
-<container class="bc-5 radius">
+///// Class .bc-x
+const classBC = `
+<container>
+
   <row><h1>.bc-x</h1></row>
-  <row>
-    <div class="bc-1 p-5">bc-1</div>
-    <div class="bc-2 p-5">bc-2</div>
-    <div class="bc-3 p-5">bc-3</div>
-    <div class="bc-4 p-5">bc-4</div>
-    <div class="bc-5 p-5">bc-5</div>
-    <div class="bc-6 p-5">bc-6</div>
-    <div class="bc-7 p-5">bc-6</div>
-    <div class="bc-8 p-5">bc-6</div>
-    <div class="bc-9 p-5">bc-6</div>
-    <div class="bc-10 p-5">bc-6</div>
+
+  <row class="bc-5 radius p-5">
+
+    <div class="bc-1 p-5">.bc-1</div>
+    <div class="bc-2 p-5">.bc-2</div>
+    <div class="bc-3 p-5">.bc-3</div>
+    <div class="bc-4 p-5">.bc-4</div>
+    <div class="bc-5 p-5">.bc-5</div>
+    <div class="bc-6 p-5">.bc-6</div>
+    <div class="bc-7 p-5">.bc-6</div>
+    <div class="bc-8 p-5">.bc-6</div>
+    <div class="bc-9 p-5">.bc-6</div>
+    <div class="bc-10 p-5">.bc-6</div>
+
   </row>
 
 </container>
-  `;
+`;
 
+
+export default function content(){
+  let dom = `
+    ${form}
+    ${table}
+    ${classBC}
+  `;
 
   return dom;
 
