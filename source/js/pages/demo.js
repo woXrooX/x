@@ -1,10 +1,10 @@
 "use strict";
 
 ///// toast
-setTimeout(()=>{window.Toast.new("success", "success");}, 500);
-setTimeout(()=>{window.Toast.new("info", "info");}, 1000);
-setTimeout(()=>{window.Toast.new("warning", "warning");}, 1500);
-setTimeout(()=>{window.Toast.new("error", "error");}, 2000);
+setTimeout(()=>{window.Toast.new("success", "success");}, 1000);
+setTimeout(()=>{window.Toast.new("info", "info");}, 2000);
+setTimeout(()=>{window.Toast.new("warning", "warning");}, 3000);
+setTimeout(()=>{window.Toast.new("error", "error");}, 4000);
 
 
 ///// Form
