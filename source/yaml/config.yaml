@@ -1,7 +1,9 @@
 ######### Flask
-root_path: null
-template_folder: "html/"
-static_folder: "/"
+flask:
+  root_path: null
+  template_folder: "html/"
+  static_folder: "/"
+  secret_key: b'W\xac\x81*\x04\xd3\xd4\n\xbf\xb9\t\x18\xd7\xd9%\x9c\xff\xf9\x89 S\x81\xc9_'
 
 
 ######### URL
