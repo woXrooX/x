@@ -9,6 +9,8 @@ form{
   --f-width: 100%;
   --f-font-size: 20px;
   --f-border: 1px solid var(--color-text-secondary);
+  --f-transition: var(--transition-velocity) ease-in-out;
+  --f-transition-property: background-color, border;
 
   width: var(--f-width);
 
@@ -46,10 +48,10 @@ form label{
 }
 /************ label START ************/
 
-/************ select, textarea, imput -> type = [text, password, eMail, number, color] START ************/
+/************ select, textarea, imput -> type = [text, password, eMail, number, color, file] START ************/
 form select,
 form textarea,
-form input:where([type=text], [type=eMail], [type=password], [type=number], [type=color]){
+form input:where([type=text], [type=eMail], [type=password], [type=number], [type=color], [type=file]){
   background-color: var(--color-surface-3);
   width: var(--f-width);
   height: var(--f-height);
@@ -58,22 +60,22 @@ form input:where([type=text], [type=eMail], [type=password], [type=number], [typ
   border-radius: var(--f-radius);
   border: var(--f-border);
 
-  transition: calc(var(--transition-velocity) * 2) ease-in-out;
-  transition-property: background-color, border;
+  transition: var(--f-transition);
+  transition-property: var(--f-transition-property);
 
 }
-/************ select, textarea, imput -> type = [text, password, eMail, number, color] END ************/
+/************ select, textarea, imput -> type = [text, password, eMail, number, color, file] END ************/
 
-/************ :focus -> inputs & textarea & select START ************/
+/************ :hover & :focus -> inputs & textarea & select START ************/
 form select:where(:hover, :focus),
 form textarea:where(:hover, :focus),
 form input[type=number]:where(:hover, :focus),
 form input:where(:hover, :focus){
-  background-color: var(--color-surface-4);
+  background-color: var(--color-surface-5);
   border: 1px solid var(--color-text-primary);
 
 }
-/************ :focus -> inputs & textarea & select END ************/
+/************ :hover & :focus -> inputs & textarea & select END ************/
 
 /************ Textarea START ************/
 form textarea{
@@ -118,6 +120,40 @@ form input[type=color]::-moz-color-swatch{
 
 }
 /************ input[type=color] END ************/
+
+/************ input[type=file] START ************/
+
+/* Input */
+form input[type=file]{
+  padding: var(--padding);
+  font-size: var(--f-font-size);
+
+}
+
+/* File Button */
+form input[type=file]::file-selector-button{
+  background-color: var(--color-main);
+  color: var(--color-text-accent);
+  font-size: var(--f-font-size);
+
+  padding: 3px 10px;
+
+  border: none;
+  border-radius: var(--f-radius);
+
+  cursor: pointer;
+
+  filter: brightness(120%);
+  transition: var(--transition-velocity) filter;
+
+}
+
+/* File Button :hover */
+form input[type=file]::file-selector-button:hover{
+  filter: brightness(80%);
+
+}
+/************ input[type=file] END ************/
 
 /************ input[type=number] Hide Arrow START ************/
 /* Firefox */
