@@ -25,6 +25,8 @@ import Menu from "./menu.js";
 // import Nav from "./nav.js";
 
 export default class Core{
+
+  // Class Static Initialization Block
   static {
     // Try To Load Global Data Then Init The Methods
     Core.#getGlobalData()
