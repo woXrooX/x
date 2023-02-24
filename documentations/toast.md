@@ -9,7 +9,7 @@
 
 #### JavaScript
 ```JavaScript
-Toast.new("typeName", "Content");
+window.Toast.new("typeName", "Content");
 ```
 - `Toast.new(arg1, arg2)` accepts two arguments
   1. arg1: **typeName** will be toast's type
