@@ -13,13 +13,13 @@ const form = `
       <form>
 
         <label>
-            <p for='username'>Number</p>
+            <p for='number'>Number</p>
             <input type='number' name='number'>
         </label>
 
         <label>
-            <p for='username'>Username</p>
-            <input type='text' name='username'>
+            <p for='text'>Text</p>
+            <input type='text' name='text'>
         </label>
 
         <label>
@@ -28,39 +28,39 @@ const form = `
         </label>
 
         <label>
-            <p for='password'>E-Mail</p>
-            <input type='eMail' name='email'>
+            <p for='eMail'>eMail</p>
+            <input type='eMail' name='eMail'>
         </label>
 
         <label>
-          <p for='logIn'>Checkbox</p>
+          <p for='checkbox'>Checkbox</p>
           <input type='checkbox' name='checkbox' checked>
         </label>
 
-        <fieldset for='gender'>
+        <fieldset for='radio'>
 
           <legend>Radio</legend>
 
           <label>
-            <input type="radio" name="gender" value="male">
-            Male
+            <input type="radio" name="radio" value="first">
+            First
           </label>
 
           <label>
-            <input type="radio" name="gender" value="female">
-            Female
+            <input type="radio" name="radio" value="second">
+            Second
           </label>
 
         </fieldset>
 
         <label>
-            <p for='logIn'>Color</p>
+            <p for='color'>Color</p>
             <input type='color' name='color'>
         </label>
 
         <label>
-          <p for='language'>Select</p>
-          <select name="language">
+          <p for='select'>Select</p>
+          <select name="select">
             <option selected disabled>Choose</option>
             <option value="v1">V1</option>
             <option value="v2">V2</option>
@@ -69,8 +69,8 @@ const form = `
         </label>
 
         <label>
-            <p for='logIn'>Textarea</p>
-            <textarea rows="10"></textarea>
+            <p for='textarea'>Textarea</p>
+            <textarea name="textarea" rows="5"></textarea>
         </label>
 
         <label>
