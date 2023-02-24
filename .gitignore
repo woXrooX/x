@@ -37,6 +37,3 @@ source/js/pages/*.js
 !source/js/pages/logOut.js
 
 !source/js/pages/404.js
-
-################ Files
-source/project.json
