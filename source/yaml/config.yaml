@@ -45,22 +45,12 @@ HTML:
 menu:
     enabled: true
     menus:
-
-      home:
-        enabled: true
-
-      signUp:
-        enabled: true
-
-      logIn:
-        enabled: true
-
-      logOut:
-        enabled: true
-
-      demo:
-        enabled: true
-
+      - home
+      - signUp
+      - logIn
+      - logOut
+      - demo
+      
 
 ######### Pages
 pages:
