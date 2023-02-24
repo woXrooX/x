@@ -4,9 +4,6 @@
 ///////////////////////////// Brideg / Fetch
 import bridge from "../modules/bridge.js";
 
-///////////////////////////// Brideg / Fetch
-// import bridge from "./modules/bridge.js";
-
 //// Custom Elements
 import El from "./elements/el.js";
 // import Form from "./elements/form.js";
@@ -45,7 +42,7 @@ export default class Core{
 
   /////// Global Data
   static async #getGlobalData(){
-      let response = await bridge("api", {for:"globalData"});
+      let response = await window.bridge("api", {for:"globalData"});
 
       // console.log(response);
 

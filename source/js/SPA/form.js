@@ -1,7 +1,5 @@
 "use strict";
 
-import bridge from "../modules/bridge.js"
-
 import Hyperlink from "./hyperlink.js";
 import Toast from "./elements/toast.js";
 
@@ -33,7 +31,7 @@ export default class Form{
         }
         data["fields"][event.target.name] = event.target.value;
 
-        let response = await bridge(`${form.getAttribute("for")}`, data);
+        let response = await window.bridge(`${form.getAttribute("for")}`, data);
         if("field" in response) Form.#response(response["field"], response["type"], response["message"]);
       };
     });
@@ -55,7 +53,7 @@ export default class Form{
       }
       for(let entry of formData.entries()){data["fields"][entry[0]] = entry[1];}
 
-      let response = await bridge(form.getAttribute("for"), data);
+      let response = await window.bridge(form.getAttribute("for"), data);
       console.log(response);
 
       // Above Input Field
