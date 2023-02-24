@@ -21,3 +21,6 @@ export default class Loading{
 
   }
 };
+
+// Make Loading Usable W/O Importing It
+window.Loading = Loading;

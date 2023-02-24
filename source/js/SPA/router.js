@@ -1,9 +1,5 @@
 "use strict";
 
-import Dom from "./dom.js";
-import Title from "./title.js";
-
-
 export default class Router{
   static async handle(){
     let endpoint = null;
@@ -41,16 +37,19 @@ export default class Router{
       const response = await import(`../pages${endpoint}.js`);
 
       // Render The Content
-      Dom.render(response.default());
+      window.Dom.render(response.default());
 
       // Set Title
-      Title.set(response.TITLE);
+      window.Title.set(response.TITLE);
 
     }catch(error){
       console.log(error);
 
+      // Set Title To Error
+      window.Title.set("error");
+
       // Render The Error
-      Dom.render(error);
+      window.Dom.render(error);
 
     }
 
@@ -100,3 +99,6 @@ export default class Router{
   }
 
 }
+
+// Make Router Usable W/O Importing It
+window.Router = Router;

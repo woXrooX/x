@@ -1,8 +1,5 @@
 "use strict";
 
-import {elementExists} from "../modules/tools.js"
-import Cover from "./cover.js"
-
 export default class Menu{
   static selector = "body > menu";
   static #selectorMenuButton = "body > header > svg[for=menu]";
@@ -78,7 +75,7 @@ export default class Menu{
 
   /////////////////// On Click Cover Hide
   static #onClickCoverHide(){
-    document.querySelector(Cover.selector).addEventListener("click", Menu.#hide);
+    document.querySelector(window.Cover.selector).addEventListener("click", Menu.#hide);
   }
 
   /////////////////// On Click Menu Anchors Hide
@@ -98,7 +95,7 @@ export default class Menu{
     if(!!Menu.#elementMenu === false) return;
 
     Menu.#elementMenu.style.transform = "translate(0px, 0px)";
-    Cover.show();
+    window.Cover.show();
 
     Menu.#shown = true;
 
@@ -113,7 +110,7 @@ export default class Menu{
     if(!!Menu.#elementMenu === false) return;
 
     Menu.#elementMenu.removeAttribute("style");
-    Cover.hide();
+    window.Cover.hide();
 
     Menu.#shown = false;
 
@@ -165,3 +162,6 @@ export default class Menu{
   }
 
 }
+
+// Make Menu Usable W/O Importing It
+window.Menu = Menu;

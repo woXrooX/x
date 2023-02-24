@@ -16,6 +16,11 @@
 // const done = Dom.jsonToDom(form);
 // console.log(done);
 
+// const newDiv = document.createElement("div");
+// const newContent = document.createTextNode("Hi there and greetings!");
+// newDiv.appendChild(newContent);
+
+
 export default class Dom{
   static #elementMain = document.querySelector("body > main");
 
@@ -62,6 +67,5 @@ export default class Dom{
 
 }
 
-// const newDiv = document.createElement("div");
-// const newContent = document.createTextNode("Hi there and greetings!");
-// newDiv.appendChild(newContent);
+// Make Dom Usable W/O Importing It
+window.Dom = Dom;

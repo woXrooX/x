@@ -6,3 +6,6 @@ export default class Title{
     else document.title = newTitle + " | " + window.CONF["default"]["title"];
   }
 }
+
+// Make Title Usable W/O Importing It
+window.Title = Title;

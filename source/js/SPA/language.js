@@ -13,3 +13,6 @@ export default class Language{
 
   }
 }
+
+// Make Language Usable W/O Importing It
+window.Language = Language;

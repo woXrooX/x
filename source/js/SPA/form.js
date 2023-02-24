@@ -1,8 +1,5 @@
 "use strict";
 
-import Hyperlink from "./hyperlink.js";
-import Toast from "./elements/toast.js";
-
 export default class Form{
 
   static collect(){
@@ -75,13 +72,13 @@ export default class Form{
       if("deleteSessionUser" in response["actions"]) delete window.session["user"];
 
       // Toast
-      if("toast" in response["actions"]) Toast.new(response["actions"]["toast"]["type"], response["actions"]["toast"]["content"]);
+      if("toast" in response["actions"]) window.Toast.new(response["actions"]["toast"]["type"], response["actions"]["toast"]["content"]);
 
       // Dom Update
       if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]["section"]}));
 
       // Redirect
-      if("redirect" in response["actions"]) Hyperlink.locate(response["actions"]["redirect"]["url"]);
+      if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]["url"]);
 
       // Reload
       if("reload" in response["actions"]) window.location.reload();
@@ -110,7 +107,7 @@ export default class Form{
     }
 
     // Enable Toast
-    if(toast === true) Toast.new(type, message);
+    if(toast === true) window.Toast.new(type, message);
 
   }
 
@@ -129,3 +126,6 @@ export default class Form{
   }
 
 }
+
+// Make Form Usable W/O Importing It
+window.Form = Form;

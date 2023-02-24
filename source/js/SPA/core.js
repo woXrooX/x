@@ -5,20 +5,21 @@
 import bridge from "../modules/bridge.js";
 
 //// Custom Elements
+import Toast from "./elements/toast.js";
 import El from "./elements/el.js";
 // import Form from "./elements/form.js";
-// import Toast from "./elements/toast.js";
 
 // import CSS from "./css.js";
 // document.head.innerHTML += `<style>${CSS}</style>`;
 
 //// Core Classes
+import Language from "./language.js";
 import Dom from "./dom.js";
-// import Title from "./title.js";
+import Title from "./title.js";
 import Router from "./router.js";
 import Form from "./form.js";
-// import Cover from "./cover.js";
 import Hyperlink from "./hyperlink.js";
+import Cover from "./cover.js";
 import Loading from "./loading.js";
 import Menu from "./menu.js";
 // import Nav from "./nav.js";
