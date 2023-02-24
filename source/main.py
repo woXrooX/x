@@ -209,12 +209,12 @@ langDict.update(PROJECT_LANG_DICT)
 #################################################### Flask APP
 app = Flask(
     __name__,
-    root_path = CONF["root_path"],
-    template_folder = CONF["template_folder"],
-    static_folder = CONF["static_folder"]
+    root_path = CONF["flask"]["root_path"],
+    template_folder = CONF["flask"]["template_folder"],
+    static_folder = CONF["flask"]["static_folder"]
 )
 
-app.secret_key = b'asZ8#Q!@97_+asQ]s/s\]/'
+app.secret_key = CONF["flask"]["secret_key"]
 
 
 #################################################### Decorations
