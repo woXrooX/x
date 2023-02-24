@@ -157,24 +157,24 @@ const table = `
 `;
 
 
-///// Class .bc-x
-const classBC = `
+///// Class .bc-x & --color-surface-x
+const classBCcolorSurfaceX = `
 <container>
 
-  <row><h1>.bc-x</h1></row>
+  <row><h1>.bc-x (--color-surface-x)</h1></row>
 
   <row class="bc-5 radius p-5">
 
-    <div class="bc-1 p-5">.bc-1</div>
-    <div class="bc-2 p-5">.bc-2</div>
-    <div class="bc-3 p-5">.bc-3</div>
-    <div class="bc-4 p-5">.bc-4</div>
-    <div class="bc-5 p-5">.bc-5</div>
-    <div class="bc-6 p-5">.bc-6</div>
-    <div class="bc-7 p-5">.bc-6</div>
-    <div class="bc-8 p-5">.bc-6</div>
-    <div class="bc-9 p-5">.bc-6</div>
-    <div class="bc-10 p-5">.bc-6</div>
+    <div class="bc-1 p-2">.bc-1 <br> --color-surface-1</div>
+    <div class="bc-2 p-2">.bc-2 <br> --color-surface-2</div>
+    <div class="bc-3 p-2">.bc-3 <br> --color-surface-3</div>
+    <div class="bc-4 p-2">.bc-4 <br> --color-surface-4</div>
+    <div class="bc-5 p-2">.bc-5 <br> --color-surface-5</div>
+    <div class="bc-6 p-2">.bc-6 <br> --color-surface-6</div>
+    <div class="bc-7 p-2">.bc-7 <br> --color-surface-7</div>
+    <div class="bc-8 p-2">.bc-8 <br> --color-surface-8</div>
+    <div class="bc-9 p-2">.bc-9 <br> --color-surface-9</div>
+    <div class="bc-10 p-2">.bc-10 <br> --color-surface-10</div>
 
   </row>
 
@@ -182,11 +182,37 @@ const classBC = `
 `;
 
 
+///// --color-text-x
+const colorTextX = `
+<container>
+
+  <row><h1>--color-text-x</h1></row>
+
+  <row class="bc-3 radius p-5">
+
+    <div style="color:var(--color-text-primary)" class="bc-1 p-5">
+      <b>--color-text-primary</b>
+    </div>
+
+    <div style="color:var(--color-text-secondary)" class="bc-5 p-5">
+      <b>--color-text-secondary</b>
+    </div>
+
+    <div style="color:var(--color-text-accent)"  class="bc-10 p-5">
+      <b>--color-text-accent</b>
+    </div>
+
+  </row>
+
+</container>
+`;
+
 export default function content(){
   let dom = `
     ${form}
     ${table}
-    ${classBC}
+    ${classBCcolorSurfaceX}
+    ${colorTextX}
   `;
 
   return dom;
