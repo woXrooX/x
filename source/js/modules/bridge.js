@@ -25,3 +25,6 @@ export default async function bridge(url='', bodyData={}){
     console.warn("[Bridge] "+error);
   }
 }
+
+// Make bridge() Usable W/O Importing It
+window.bridge = bridge;
