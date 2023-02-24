@@ -59,6 +59,11 @@ const form = `
         </label>
 
         <label>
+            <p for='file'>File</p>
+            <input type='file' name='file'>
+        </label>
+
+        <label>
           <p for='select'>Select</p>
           <select name="select">
             <option selected disabled>Choose</option>
