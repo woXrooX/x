@@ -1,5 +1,12 @@
 "use strict";
 
+///// toast
+setTimeout(()=>{window.Toast.new("success", "success");}, 500);
+setTimeout(()=>{window.Toast.new("info", "info");}, 1000);
+setTimeout(()=>{window.Toast.new("warning", "warning");}, 1500);
+setTimeout(()=>{window.Toast.new("error", "error");}, 2000);
+
+
 ///// Form
 const form = `
 <container>
