@@ -90,7 +90,7 @@ if not os.path.exists(f"{APP_RUNNING_FROM}/js/pages/home.js"):
 with open(f"{APP_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
     CONF = yaml.safe_load(file)
 
-#### Merge Project Dependent Configurations To X-WebApp Configurations
+#### Merge Project Dependent Configurations To X-WebApp Configurations. Override Defaults
 # Database
 if "database" in PROJECT:
     if "database" in CONF: CONF["database"].update(PROJECT["database"])
@@ -103,13 +103,11 @@ if "default" in PROJECT:
 
 # Menu
 if "menu" in PROJECT:
-    if "menu" in CONF: CONF["menu"].update(PROJECT["menu"])
-    else: CONF["menu"] = PROJECT["menu"]
+    CONF["menu"] = PROJECT["menu"]
 
-# Pages - Override Default Pages
+# Pages
 if "pages" in PROJECT:
-    if "pages" in CONF: CONF["pages"].update(PROJECT["pages"])
-    else: CONF["pages"] = PROJECT["pages"]
+    CONF["pages"] = PROJECT["pages"]
 
 # Public Version Of CONF (Minus Senstive Data)
 PUBLIC_CONF = {
@@ -180,7 +178,7 @@ if os.path.exists(f"{PARENT_RUNNING_FROM}/languageDictionary.json"):
     with open(f"{PARENT_RUNNING_FROM}/languageDictionary.json", 'r') as file:
         PROJECT_LANG_DICT = json.load(file)
 
-# Update The langDict
+# Override The langDict With External "languageDictionary.json"
 langDict.update(PROJECT_LANG_DICT)
 
 
