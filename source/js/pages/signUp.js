@@ -12,7 +12,7 @@ export default function content() {
       </row>
 
       <row>
-        <form for='signUp'>
+        <form endpoint="signUp" for='signUp'>
 
           <label>
               <p for='eMail'>${window.langDict["eMail"][window.langCode]}</p>

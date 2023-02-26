@@ -7,7 +7,7 @@ export default function content(){
 <container>
   <row>
     <column class="bc-2 p-5 bs radius">
-      <form for="eMailConfirmation">
+      <form endpoint="eMailConfirmation" for="eMailConfirmation">
 
         <p>${window.langDict["eMailConfirmationCodeHasBeenSent"][window.langCode]}</p>
 

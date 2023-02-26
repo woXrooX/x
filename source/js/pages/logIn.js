@@ -16,7 +16,7 @@ export default function logIn(){
       </row>
 
       <row>
-        <form for='logIn'>
+        <form endpoint="logIn" for="logIn">
 
           <label>
               <p for='eMail'>${window.langDict["eMail"][window.langCode]}</p>
