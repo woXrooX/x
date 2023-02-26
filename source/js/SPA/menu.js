@@ -36,19 +36,17 @@ export default class Menu{
 
     let hyperlinks = "";
 
-    for(const menu of window.CONF["menu"]["menus"]){
-
+    for(const menu of window.CONF["menu"]["menus"])
       if(Menu.#menuGuard(menu) === true)
 
-      // Hyperlink Blue Print
-      hyperlinks += `
-<a href="/${menu}">
-  <svg><use href="#${menu}"></use></svg>
-  ${window.langDict[menu][window.langCode]}
-</a>
-      `;
+        // Hyperlink Blue Print
+        hyperlinks += `
+  <a href="/${menu}">
+    <svg><use href="#${menu}"></use></svg>
+    ${window.langDict[menu][window.langCode]}
+  </a>
+        `;
 
-    }
 
     // Add Hyperlinks Into Menu > Main
     Menu.#elementMenu.querySelector("main").innerHTML = hyperlinks;
