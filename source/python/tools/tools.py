@@ -1,6 +1,7 @@
 from functools import wraps # For pageGuard() Wrapper
 
-from __main__ import CONF, session, USER_TYPES, redirect, url_for, MySQL
+from __main__ import CONF, session, USER_TYPES, redirect, make_response, request, url_for, MySQL
+import json
 
 ######################################### Page Guard
 """
@@ -17,7 +18,31 @@ def pageGuard(page):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
+            ####### POST
+            if request.method == "POST":
+                # Check If "endpoint" In Request
+                if "endpoint" not in request.get_json():
+                    return make_response(json.dumps({
+                        "type": "warning",
+                        "message": "unknownError"
+                    }), 200)
 
+                # Check If "endpoint" Is For This Page | Route
+                if "endpoint" in request.get_json() and request.get_json()["endpoint"] != page:
+                    return make_response(json.dumps({
+                        "type": "warning",
+                        "message": "unknownError"
+                    }), 200)
+
+                # Check If "for" In Request
+                if "for" not in request.get_json():
+                    return make_response(json.dumps({
+                        "type": "warning",
+                        "message": "unknownError"
+                    }), 200)
+
+
+            ####### GET
             # Check If Page Exists
             if page not in CONF["pages"]: return redirect(url_for("home"))
 
