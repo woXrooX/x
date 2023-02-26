@@ -59,6 +59,7 @@ export default class Form{
       // FormData / Data
       let formData = new FormData(event.target);
       let data = {
+        endpoint: form.getAttribute("endpoint"),
         for: form.getAttribute("for"),
         field: "all",
         fields: {}
