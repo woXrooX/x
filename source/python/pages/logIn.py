@@ -17,9 +17,8 @@ def logIn():
     if request.method == "GET": return render_template("index.html", **globals())
 
     if request.method == "POST":
-
         # unknownError
-        if "for" not in request.get_json() or request.get_json()["for"] != "logIn":
+        if request.get_json()["for"] != "logIn":
             return make_response(json.dumps({
                 "type": "warning",
                 "message": "unknownError"

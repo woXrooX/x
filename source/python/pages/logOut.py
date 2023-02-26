@@ -18,6 +18,12 @@ def logOut():
 
 
     elif request.method == "POST":
+        # unknownError
+        if request.get_json()["for"] != "logOut":
+            return make_response(json.dumps({
+                "type": "warning",
+                "message": "unknownError"
+            }), 200)
 
         # Remove User From Session
         session.pop('user')

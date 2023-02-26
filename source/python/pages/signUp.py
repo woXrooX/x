@@ -22,7 +22,7 @@ def signUp():
     if request.method == "POST":
 
         # unknownError
-        if "for" not in request.get_json() or request.get_json()["for"] != "signUp":
+        if request.get_json()["for"] != "signUp":
             return make_response(json.dumps({
                 "type": "warning",
                 "message": "unknownError"

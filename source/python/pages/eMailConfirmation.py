@@ -15,21 +15,20 @@ def eMailConfirmation():
     if request.method == "GET": return render_template("index.html", **globals())
 
     if request.method == "POST":
+        # "for" Meant To Go To Here
+        if request.get_json()["for"] != "eMailConfirmation":
+            return make_response(json.dumps({
+                "type": "warning",
+                "message": "unknownError"
+            }), 200)
+            
 
-        # unknownError(s)
-        if(
-            # If No "for" In Request
-            "for" not in request.get_json() or
-
-            # "for" Meant To Go Other Route
-            request.get_json()["for"] != "eMailConfirmation" or
-
-            # If No "verificationCode" Key
-            "verificationCode" not in request.get_json()["fields"]
-        ):
+        # If No "verificationCode" Key In Request
+        if "verificationCode" not in request.get_json()["fields"]:
             return make_response(json.dumps({
                 "type": "error",
-                "message": "unknownError"
+                "message": "eMailConfirmationCodeEmpty",
+                "field": "verificationCode"
             }), 200)
 
 
