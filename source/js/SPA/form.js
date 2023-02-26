@@ -6,11 +6,26 @@ export default class Form{
     const forms = document.getElementsByTagName("form");
 
     for(const form of forms){
-      if(form.hasAttribute("for") && form.getAttribute("for") != ""){
-        Form.#onInput(form);
-        Form.#onSubmit(form);
+      // Check If "form" has "endpoint" Attribute
+      if(form.hasAttribute("endpoint") == false) continue;
 
-      }
+      // Check If "form" Attribute "endpoint" has Falsy Value
+      if(!!form.getAttribute("endpoint") == false) continue;
+
+      // Check If "form" has "for" Attribute
+      if(form.hasAttribute("for") == false) continue;
+
+      // Check If "form" Attribute "for" has Falsy Value
+      if(!!form.getAttribute("for") == false) continue;
+
+      Form.#onInput(form);
+      Form.#onSubmit(form);
+
+      // if(form.hasAttribute("for") && form.getAttribute("for") != ""){
+      //   Form.#onInput(form);
+      //   Form.#onSubmit(form);
+      //
+      // }
     }
 
   }
@@ -50,7 +65,7 @@ export default class Form{
       }
       for(let entry of formData.entries()){data["fields"][entry[0]] = entry[1];}
 
-      let response = await window.bridge(form.getAttribute("for"), data);
+      let response = await window.bridge(form.getAttribute("endpoint"), data);
       console.log(response);
 
       // Above Input Field
