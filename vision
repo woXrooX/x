@@ -50,3 +50,6 @@ v4.0.0 (UI / UX / Customizations / Versatility)
     a. SMS Verifications
     b. Random Code Generator Like Steam
     c. Log In Through QR Code Scanning
+
+v5.0.0 (Performance, Optimizations)
+  1. Back-End Full Migration To C++ Custom Server
