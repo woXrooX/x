@@ -228,6 +228,8 @@ form input[type=submit]:where(:active, :focus, :hover){
 table{
   --table-radius: 3px;
 
+  table-layout: fixed;
+
   width: 100%;
   border: 1px solid var(--color-main);
   border-radius: var(--radius);
