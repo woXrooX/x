@@ -7,8 +7,18 @@ return make_response(json.dumps({
     "type": "warning",
     "type": "error",
 
-    "message": "keywordOfAMessage", # From Lang Dict
-    "field": "nameAttributeValue", # From Front-End Form Name OR ID Or For
+    # "keywordOfAMessage" Must Be From Lang Dict
+    "message": "keywordOfAMessage",
+
+    # "nameAttributeValue" Must Be One Of Those -> Front-End > Form > Name OR ID Or For
+    "field": "nameAttributeValue",
+
+    # To Send Data From Back-End
+    "data": {
+      "key1": data1,
+      "key2": data2,
+      ...
+    },
 
     "actions": {
 
@@ -32,10 +42,7 @@ return make_response(json.dumps({
       },
 
       #### To Update DOM
-      # menu header main footer all
-      "domChange": {
-        "section": "menu"
-      },
+      "domChange": ["menu", "header", "main", "footer", "all"],
 
       #### Redirect
       "redirect": {
