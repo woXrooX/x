@@ -32,7 +32,13 @@ v2.0.0 (Tooling)
   9. Deployment Ready Structure ✅️
   10. File Management System 🛠️
 
-v3.0.0 (UI / UX / Customizations / Versatility)
+v3.0.0 (Security)
+  1. Minifier (Minify)
+  2. Uglifier (Uglify)
+  3. Hashed ID System
+  4. Hashed Passord System
+
+v4.0.0 (UI / UX / Customizations / Versatility)
   1. Admin Panel
   2. Color Science
     2.1. Customizable Site Color Scheme
