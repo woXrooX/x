@@ -664,6 +664,11 @@
     "ru":"Обновления",
     "uz":"Yangilanishlar"
   },
+  "upload":{
+    "en":"Upload",
+    "ru":"Загрузить",
+    "uz":"Yuklash"
+  },
   "usernameOrPasswordWrong":{
     "en":"Username or password wrong",
     "ru":"Неверное имя пользователя или пароль",
