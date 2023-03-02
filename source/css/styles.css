@@ -144,7 +144,7 @@ form input[type=file]{
 /* File Button */
 form input[type=file]::file-selector-button{
   background-color: var(--color-main);
-  color: var(--color-text-accent);
+  color: white;
   font-size: var(--f-font-size);
 
   padding: 3px 10px;
