@@ -2,7 +2,7 @@
 __pycache__/
 
 ################ Users
-users/*
+source/users/*
 
 ################ Pages
 #### Back
