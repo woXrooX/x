@@ -8,6 +8,8 @@ import re, json, random
 
 from python.tools.GMail import GMail
 
+from python.tools import userFolders
+
 from python.tools.tools import pageGuard, publicSessionUser
 
 
@@ -159,11 +161,10 @@ def signUp():
                 session["user"] = db.fetchOne()
 
             # Setup Dirs
-            try:
-                os.makedirs(f'{APP_RUNNING_FROM}/users/{session["user"]["id"]}/images', mode=0o777, exist_ok=True)
-            except:
-                # catch for folder already exists
+            if userFolders.create() == False:
+                # Handle Folder Creation Errors
                 pass
+                
 
             # On Success Redirect & Update Front-End Session
             return make_response(json.dumps({
