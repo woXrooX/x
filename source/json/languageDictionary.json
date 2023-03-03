@@ -99,6 +99,11 @@
     "ru":"Создать магазин",
     "uz":"Do'kon yaratish"
   },
+  "couldNotSaveFile":{
+    "en":"Could not save the file!",
+    "ru":"Не удалось сохранить файл!",
+    "uz":"Fayl saqlanmadi!"
+  },
   "couldNotSendEMail":{
     "en":"Could Not Send EMail!",
     "ru":"Не удалось отправить электронное письмо!",
@@ -253,6 +258,11 @@
     "en":"Faq",
     "ru":"Вопросы-Ответы",
     "uz":"Tss"
+  },
+  "fileWasNotChosen":{
+    "en":"File was not chosen!",
+    "ru":"Файл не выбран!",
+    "uz":"Fayl tanlanmadi!"
   },
   "female":{
     "en":"Female",
