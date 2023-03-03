@@ -1,6 +1,9 @@
 # Py Cache
 __pycache__/
 
+################ Assets
+source/assets/*
+
 ################ Users
 source/users/*
 
