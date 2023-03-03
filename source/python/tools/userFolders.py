@@ -11,6 +11,9 @@ def create():
 
     # Try To Create User Folders
     try:
+        # ID
+        os.makedirs(f'{path}', mode=0o777, exist_ok=True)
+
         # Images
         os.makedirs(f'{path}images', mode=0o777, exist_ok=True)
 
