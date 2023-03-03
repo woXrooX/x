@@ -18,14 +18,7 @@ def logIn():
 
     if request.method == "POST":
         # unknownError
-        if request.get_json()["for"] != "logIn":
-            return make_response(json.dumps({
-                "type": "warning",
-                "message": "unknownError"
-            }), 200)
-
-        # unknownError
-        if "field" not in request.get_json() or request.get_json()["field"] != "all":
+        if request.form["for"] != "logIn":
             return make_response(json.dumps({
                 "type": "warning",
                 "message": "unknownError"
@@ -33,7 +26,7 @@ def logIn():
 
         ######## eMail
         # eMailEmpty
-        if "eMail" not in request.get_json()["fields"] or not request.get_json()["fields"]["eMail"]:
+        if "eMail" not in request.form or not request.form["eMail"]:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "eMailEmpty",
@@ -42,7 +35,7 @@ def logIn():
 
         ######## password
         # passwordEmpty
-        if "password" not in request.get_json()["fields"] or not request.get_json()["fields"]["password"]:
+        if "password" not in request.form or not request.form["password"]:            
             return make_response(json.dumps({
                 "type": "error",
                 "message": "passwordEmpty",
@@ -54,8 +47,8 @@ def logIn():
             db.execute(
                 ("SELECT * FROM users WHERE eMail=%s AND password=%s"),
                 (
-                    request.get_json()["fields"]["eMail"],
-                    request.get_json()["fields"]["password"],
+                    request.form["eMail"],
+                    request.form["password"],
                 )
             )
 

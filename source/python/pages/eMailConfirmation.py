@@ -16,15 +16,15 @@ def eMailConfirmation():
 
     if request.method == "POST":
         # "for" Meant To Go To Here
-        if request.get_json()["for"] != "eMailConfirmation":
+        if request.form["for"] != "eMailConfirmation":
             return make_response(json.dumps({
                 "type": "warning",
                 "message": "unknownError"
             }), 200)
-            
+
 
         # If No "verificationCode" Key In Request
-        if "verificationCode" not in request.get_json()["fields"]:
+        if "verificationCode" not in request.form:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "eMailConfirmationCodeEmpty",
@@ -33,7 +33,7 @@ def eMailConfirmation():
 
 
         # Check If Verification Code Is Empty
-        if request.get_json()["fields"]["verificationCode"] == '':
+        if request.form["verificationCode"] == '':
             return make_response(json.dumps({
                 "type": "error",
                 "message": "eMailConfirmationCodeEmpty",
@@ -42,7 +42,7 @@ def eMailConfirmation():
 
 
         # Check If Verification Code Does Not Match
-        if int(request.get_json()["fields"]["verificationCode"]) != session["user"]["eMail_verification_code"]:
+        if int(request.form["verificationCode"]) != session["user"]["eMail_verification_code"]:
             with MySQL(False) as db:
                 db.execute(
                     ("UPDATE users SET eMail_verification_attempts_count=%s WHERE id=%s"),

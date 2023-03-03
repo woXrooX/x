@@ -19,7 +19,7 @@ def logOut():
 
     elif request.method == "POST":
         # unknownError
-        if request.get_json()["for"] != "logOut":
+        if request.form["for"] != "logOut":
             return make_response(json.dumps({
                 "type": "warning",
                 "message": "unknownError"

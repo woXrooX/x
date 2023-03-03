@@ -24,14 +24,7 @@ def signUp():
     if request.method == "POST":
 
         # unknownError
-        if request.get_json()["for"] != "signUp":
-            return make_response(json.dumps({
-                "type": "warning",
-                "message": "unknownError"
-            }), 200)
-
-        # unknownError
-        if "field" not in request.get_json() or request.get_json()["field"] != "all":
+        if request.form["for"] != "signUp":
             return make_response(json.dumps({
                 "type": "warning",
                 "message": "unknownError"
@@ -39,7 +32,7 @@ def signUp():
 
         ######## eMail
         # eMailEmpty
-        if "eMail" not in request.get_json()["fields"] or not request.get_json()["fields"]["eMail"]:
+        if "eMail" not in request.form or not request.form["eMail"]:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "eMailEmpty",
@@ -47,7 +40,7 @@ def signUp():
             }), 200)
 
         # eMailInvalid
-        if not re.match(CONF["eMail"]["regEx"], request.get_json()["fields"]["eMail"]):
+        if not re.match(CONF["eMail"]["regEx"], request.form["eMail"]):
             return make_response(json.dumps({
                 "type": "error",
                 "message": "eMailInvalid",
@@ -56,7 +49,7 @@ def signUp():
 
         ######## password
         # passwordEmpty
-        if "password" not in request.get_json()["fields"] or not request.get_json()["fields"]["password"]:
+        if "password" not in request.form or not request.form["password"]:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "passwordEmpty",
@@ -64,7 +57,7 @@ def signUp():
             }), 200)
 
         # passwordMinLength
-        if len(request.get_json()["fields"]["password"]) < CONF["password"]["min_length"]:
+        if len(request.form["password"]) < CONF["password"]["min_length"]:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "passwordMinLength",
@@ -72,7 +65,7 @@ def signUp():
             }), 200)
 
         # passwordMaxLength
-        if len(request.get_json()["fields"]["password"]) > CONF["password"]["max_length"]:
+        if len(request.form["password"]) > CONF["password"]["max_length"]:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "passwordMaxLength",
@@ -80,7 +73,7 @@ def signUp():
             }), 200)
 
         # passwordAllowedChars
-        if not re.match(CONF["password"]["regEx"], request.get_json()["fields"]["password"]):
+        if not re.match(CONF["password"]["regEx"], request.form["password"]):
             return make_response(json.dumps({
                 "type": "error",
                 "message": "passwordAllowedChars",
@@ -90,7 +83,7 @@ def signUp():
         ######## eMail and Password In Use
         # eMailInUse
         with MySQL(False) as db:
-            db.execute("SELECT id FROM users WHERE eMail=%s", (request.get_json()["fields"]["eMail"], ))
+            db.execute("SELECT id FROM users WHERE eMail=%s", (request.form["eMail"], ))
             dataFetched  = db.fetchOne()
             if dataFetched:
                 return make_response(json.dumps({
@@ -101,7 +94,7 @@ def signUp():
 
         # passwordInUse
         with MySQL(False) as db:
-            db.execute("SELECT id FROM users WHERE password=%s", (request.get_json()["fields"]["password"], ))
+            db.execute("SELECT id FROM users WHERE password=%s", (request.form["password"], ))
             dataFetched = db.fetchOne()
             if dataFetched:
                 return make_response(json.dumps({
@@ -115,7 +108,7 @@ def signUp():
         eMailVerificationCode = random.randint(100000, 999999)
 
         # Check If Verification Code Sent Successfully
-        if GMail(request.get_json()["fields"]["eMail"], eMailVerificationCode) == False:
+        if GMail(request.form["eMail"], eMailVerificationCode) == False:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "couldNotSendEMailVerificationCode",
@@ -126,8 +119,8 @@ def signUp():
             db.execute(
                 ("INSERT INTO users (password, eMail, eMail_verification_code, type) VALUES (%s, %s, %s, %s)"),
                 (
-                    request.get_json()["fields"]["password"],
-                    request.get_json()["fields"]["eMail"],
+                    request.form["password"],
+                    request.form["eMail"],
                     eMailVerificationCode,
                     USER_TYPES["unauthorized"]["id"]
                 )
@@ -145,8 +138,8 @@ def signUp():
                 db.execute(
                     ("SELECT * FROM users WHERE eMail=%s AND password=%s"),
                     (
-                        request.get_json()["fields"]["eMail"],
-                        request.get_json()["fields"]["password"]
+                        request.form["eMail"],
+                        request.form["password"]
                     )
                 )
 
@@ -164,7 +157,7 @@ def signUp():
             if userFolders.create() == False:
                 # Handle Folder Creation Errors
                 pass
-                
+
 
             # On Success Redirect & Update Front-End Session
             return make_response(json.dumps({
