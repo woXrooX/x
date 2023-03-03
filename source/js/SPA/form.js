@@ -7,10 +7,10 @@ export default class Form{
 
     for(const form of forms){
       // Check If "form" has "endpoint" Attribute
-      if(form.hasAttribute("endpoint") == false) continue;
+      if(form.hasAttribute("action") == false) continue;
 
       // Check If "form" Attribute "endpoint" has Falsy Value
-      if(!!form.getAttribute("endpoint") == false) continue;
+      if(!!form.action == false) continue;
 
       // Check If "form" has "for" Attribute
       if(form.hasAttribute("for") == false) continue;
@@ -18,14 +18,10 @@ export default class Form{
       // Check If "form" Attribute "for" has Falsy Value
       if(!!form.getAttribute("for") == false) continue;
 
+      // Enable Events Listeners
       Form.#onInput(form);
       Form.#onSubmit(form);
 
-      // if(form.hasAttribute("for") && form.getAttribute("for") != ""){
-      //   Form.#onInput(form);
-      //   Form.#onSubmit(form);
-      //
-      // }
     }
 
   }
@@ -56,17 +52,16 @@ export default class Form{
       // PLZW8
       Form.#response("info", "plzW8", form.getAttribute("for"));
 
-      // FormData / Data
+      // Get FormData
       let formData = new FormData(event.target);
-      let data = {
-        endpoint: form.getAttribute("endpoint"),
-        for: form.getAttribute("for"),
-        field: "all",
-        fields: {}
-      }
-      for(let entry of formData.entries()){data["fields"][entry[0]] = entry[1];}
 
-      let response = await window.bridge(form.getAttribute("endpoint"), data);
+      // Append for To FormData
+      formData.append("for", form.getAttribute("for"));
+
+      // Send The Request
+      let response = await window.bridge(form.action, formData, form.enctype);
+
+      // Data From Back-End
       console.log(response);
 
       // Above Input Field
