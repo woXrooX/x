@@ -18,24 +18,41 @@ def pageGuard(page):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
+
+            # For Debugging
+            # print("\n\n----------------- pageGuard START -----------------")
+            # print("\n----- Request")
+            # print(request)
+            # print("\n----- Headers")
+            # print(request.headers)
+            # print("\n----- Method")
+            # print(request.method)
+            # print("\n----- Form")
+            # print(request.form)
+            # print("\n----- Files")
+            # print(request.files)
+            # print("\n----- JSON")
+            # print(request.get_json)
+            # print("\n----------------- pageGuard END -----------------\n\n")
+
             ####### POST
             if request.method == "POST":
                 # Check If "endpoint" In Request
-                if "endpoint" not in request.get_json():
-                    return make_response(json.dumps({
-                        "type": "warning",
-                        "message": "unknownError"
-                    }), 200)
+                # if "endpoint" not in request.get_json():
+                #     return make_response(json.dumps({
+                #         "type": "warning",
+                #         "message": "unknownError"
+                #     }), 200)
 
                 # Check If "endpoint" Is For This Page | Route
-                if "endpoint" in request.get_json() and request.get_json()["endpoint"] != page:
-                    return make_response(json.dumps({
-                        "type": "warning",
-                        "message": "unknownError"
-                    }), 200)
+                # if "endpoint" in request.get_json() and request.get_json()["endpoint"] != page:
+                #     return make_response(json.dumps({
+                #         "type": "warning",
+                #         "message": "unknownError"
+                #     }), 200)
 
                 # Check If "for" In Request
-                if "for" not in request.get_json():
+                if "for" not in request.form:
                     return make_response(json.dumps({
                         "type": "warning",
                         "message": "unknownError"
