@@ -52,7 +52,13 @@ def pageGuard(page):
                 #     }), 200)
 
                 # Check If "for" In Request
-                if "for" not in request.form:
+                if(
+                    # Form
+                    "for" not in request.form and
+
+                    # JSON
+                    "for" not in request.get_json()
+                ):
                     return make_response(json.dumps({
                         "type": "warning",
                         "message": "unknownError"
