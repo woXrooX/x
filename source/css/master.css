@@ -58,10 +58,13 @@
   /* Screen Sizes END */
 
   /***************** Color Science START *****************/
-  --color-success: rgba(0, 128, 0, 1);
-  --color-info: rgba(0, 123, 255, 1);
-  --color-warning: rgba(245, 189, 0, 1);
-  --color-error: rgba(235, 57, 65, 1);
+
+  /* Situational Colors START */
+  --color-success: hsla(120, 100%, 25%, 1); /* rgba(0, 128, 0, 1) */
+  --color-info: hsla(211.059, 100%, 50%, 1); /* rgba(0, 123, 255, 1) */
+  --color-warning: hsla(46.286, 100%, 48%, 1); /* rgba(245, 189, 0, 1) */
+  --color-error: hsla(357.303, 82%, 57%, 1); /* rgba(235, 57, 65, 1) */
+  /* Situational Colors END */
 
   --color-cover: rgba(0, 0, 0, 0.6);
 
