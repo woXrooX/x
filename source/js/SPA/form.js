@@ -86,7 +86,7 @@ export default class Form{
       if("toast" in response["actions"]) window.Toast.new(response["actions"]["toast"]["type"], response["actions"]["toast"]["content"]);
 
       // Dom Update
-      if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]["section"]}));
+      if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));
 
       // Redirect
       if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]["url"]);
