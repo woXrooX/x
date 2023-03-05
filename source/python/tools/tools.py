@@ -62,9 +62,12 @@ def pageGuard(page):
                     }), 200)
 
 
-                ### "application/x-www-form-urlencoded"
+                ### "multipart/form-data"
+                # "multipart/form-data" will include boundary, which is not const value
+                # That's why we need to extract "multipart/form-data" then compare it
+                # Ex. "multipart/form-data; boundary=----WebKitFormBoundaryqZq6yAWEgk6aywYg"
                 # Check If "for" In Request
-                if request.content_type == "multipart/form-data" and "for" not in request.form:
+                if "multipart/form-data" in request.content_type.split(';') and "for" not in request.form:
                     return make_response(json.dumps({
                         "type": "warning",
                         "message": "unknownError"
