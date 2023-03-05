@@ -6,6 +6,9 @@ export default async function bridge(url='', data=null, contentType = null){
   // Check If url Is Not Falsy
   if(!!url == false) return;
 
+  // Default Content Type Is "application/json"
+  if(!!contentType == false) contentType = "application/json";
+
   try{
     const response = await fetch(url, {
       method: 'POST',
