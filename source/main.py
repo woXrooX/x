@@ -21,17 +21,6 @@ PARENT_RUNNING_FROM = os.path.abspath(os.path.join(APP_RUNNING_FROM, '../..'))
 ################################################################
 
 
-#################################################### Create Folder "assets" For Storing Site Assets
-try:
-    print("------------ Creating Folder source/assets ------------")
-    os.makedirs(f'{APP_RUNNING_FROM}/assets/', mode=0o777, exist_ok=True)
-except:
-    print("------------ Error ------------")
-    print("Could Not Create The Folder source/assets")
-
-    sys.exit()
-
-
 #################################################### project.json
 # Check If project.json exists
 if not os.path.exists(f"{PARENT_RUNNING_FROM}/project.json"):
@@ -94,6 +83,43 @@ if not os.path.exists(f"{APP_RUNNING_FROM}/js/pages/home.js"):
 
 ################################################################
 ################################################################ Required Files And Folders To Run The Scipt END
+################################################################
+
+
+################################################################
+################################################################ Not So Required Files And Folders To Run The Scipt START
+################################################################
+
+
+#################################################### Create Folder "assets" For Storing Site Assets
+try:
+    print("------------ Creating Folder source/assets ------------")
+    os.makedirs(f'{APP_RUNNING_FROM}/assets/', mode=0o777, exist_ok=True)
+except:
+    print("------------ Error ------------")
+    print("Could Not Create The Folder source/assets")
+
+
+#################################################### Check If PARENT_RUNNING_FROM/SVG Exists Then Load The SVGs To source/html/SVG.html
+SVG = []
+if os.path.exists(f"{PARENT_RUNNING_FROM}/SVG"):
+    print("------------ Loading SVG Files ------------")
+
+    for file in os.listdir(f'{PARENT_RUNNING_FROM}/SVG'):
+        # Check If File Is A SVG File
+        if not file.endswith(".svg"): continue
+
+        try:
+            with open(f'{PARENT_RUNNING_FROM}/SVG/{file}', "r") as svg:
+                svgContent = svg.read()
+                SVG.append(svgContent)
+
+        except:
+            print(f"Could Not Load The SVG File: {file}")
+
+
+################################################################
+################################################################ Not So Required Files And Folders To Run The Scipt END
 ################################################################
 
 
