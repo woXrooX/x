@@ -34,9 +34,9 @@ MyWebSite
 │    project.json
 │    languageDictionary.json
 │
-│─── SVG
-│
 │─── x-webapp
+│
+│─── SVG
 │
 └─── pages
      │
