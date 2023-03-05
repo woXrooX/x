@@ -32,6 +32,9 @@ W/O them X-WebApp will not start.
 ```
 MyWebSite
 │    project.json
+│    languageDictionary.json
+│
+│─── SVG
 │
 │─── x-webapp
 │
@@ -42,3 +45,45 @@ MyWebSite
      │
      └─── front
             home.js
+```
+
+---
+
+## project.json (Requiered)
+Uisng **project.json** you can control followings
+1. Database configurations
+
+2. Defaults
+  - currency
+  - title
+  - language
+
+3. Menu
+  - Enable / Disable
+  - List of menus to be shown
+
+4. Pages
+  - Enable / Disable each page
+  - Who can visit the specific page
+  - Page url(s)
+
+---
+
+## languageDictionary.json (Optional)
+```languageDictionary["keyword"]["languageCode"] -> Text```
+
+```JSON
+{
+  "keyword":{
+    "en":"Text in english",
+    "ru":"Текст на русском",
+    ...
+  },
+  ...
+}
+```
+
+---
+
+## SVG (Optional)
+If you want to add **.svg** files you need to create a folder called **SVG**
