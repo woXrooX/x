@@ -17,8 +17,12 @@ PARENT_RUNNING_FROM = os.path.abspath(os.path.join(APP_RUNNING_FROM, '../..'))
 
 
 ################################################################
-################################################################ Required Files To Run The Scipt START
+################################################################ Required Files And Folders To Run The Scipt START
 ################################################################
+
+
+#################################################### Create Folder "assets" For Storing Site Assets
+os.makedirs(f'{APP_RUNNING_FROM}/assets/', mode=0o777, exist_ok=True)
 
 
 #################################################### project.json
@@ -82,7 +86,7 @@ if not os.path.exists(f"{APP_RUNNING_FROM}/js/pages/home.js"):
 
 
 ################################################################
-################################################################ Required Files To Run The Script END
+################################################################ Required Files And Folders To Run The Scipt END
 ################################################################
 
 
