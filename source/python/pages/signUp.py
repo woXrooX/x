@@ -172,8 +172,6 @@ def signUp():
                     "redirect": {
                         "url": "eMailConfirmation"
                     },
-                    "domChange": {
-                        "section": "menu"
-                    }
+                    "domChange": ["menu"]
                 }
             }))

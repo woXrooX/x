@@ -41,8 +41,6 @@ def logOut():
                 "redirect": {
                     "url": "home"
                 },
-                "domChange": {
-                    "section": "menu"
-                }
+                "domChange": ["menu"]
             }
         }), 200)

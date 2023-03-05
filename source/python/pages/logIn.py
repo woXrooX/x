@@ -35,7 +35,7 @@ def logIn():
 
         ######## password
         # passwordEmpty
-        if "password" not in request.form or not request.form["password"]:            
+        if "password" not in request.form or not request.form["password"]:
             return make_response(json.dumps({
                 "type": "error",
                 "message": "passwordEmpty",
@@ -79,8 +79,6 @@ def logIn():
                     "redirect": {
                         "url": "home"
                     },
-                    "domChange": {
-                        "section": "menu"
-                    }
+                    "domChange": ["menu"]
                 }
             }))
