@@ -101,7 +101,8 @@ except:
 
 
 #################################################### Check If PARENT_RUNNING_FROM/SVG Exists Then Load The SVGs To source/html/SVG.html
-SVG = []
+# SVG FIles
+SVGs = []
 if os.path.exists(f"{PARENT_RUNNING_FROM}/SVG"):
     print("------------ Loading SVG Files ------------")
 
@@ -111,12 +112,14 @@ if os.path.exists(f"{PARENT_RUNNING_FROM}/SVG"):
 
         try:
             with open(f'{PARENT_RUNNING_FROM}/SVG/{file}', "r") as svg:
-                svgContent = svg.read()
-                SVG.append(svgContent)
+                SVGs.append(svg.read())
 
         except:
             print(f"Could Not Load The SVG File: {file}")
-
+# {% for svg in SVGs %}
+#   {{svg}}
+# {% endfor %}
+# print(SVGs)
 
 ################################################################
 ################################################################ Not So Required Files And Folders To Run The Scipt END
