@@ -20,20 +20,22 @@ def pageGuard(page):
         def wrapper(*args, **kwargs):
 
             # For Debugging
-            # print("\n\n----------------- pageGuard START -----------------")
-            # print("\n----- Request")
-            # print(request)
-            # print("\n----- Headers")
-            # print(request.headers)
-            # print("\n----- Method")
-            # print(request.method)
-            # print("\n----- Form")
-            # print(request.form)
-            # print("\n----- Files")
-            # print(request.files)
-            # print("\n----- JSON")
-            # print(request.get_json)
-            # print("\n----------------- pageGuard END -----------------\n\n")
+            print("\n\n----------------- pageGuard START -----------------")
+            print("\n----- Request")
+            print(request)
+            print("\n----- Headers")
+            print(request.headers)
+            print("\n----- Method")
+            print(request.method)
+            print("\n----- Content Type")
+            print(request.content_type)
+            print("\n----- Form")
+            print(request.form)
+            print("\n----- Files")
+            print(request.files)
+            print("\n----- JSON")
+            print(request.get_json)
+            print("\n----------------- pageGuard END -----------------\n\n")
 
             ####### POST
             if request.method == "POST":
@@ -51,18 +53,34 @@ def pageGuard(page):
                 #         "message": "unknownError"
                 #     }), 200)
 
+                ### "application/json"
                 # Check If "for" In Request
-                if(
-                    # Form
-                    "for" not in request.form and
-
-                    # JSON
-                    "for" not in request.get_json()
-                ):
+                if request.content_type == "application/json" and "for" not in request.get_json():
                     return make_response(json.dumps({
                         "type": "warning",
                         "message": "unknownError"
                     }), 200)
+
+
+                ### "application/x-www-form-urlencoded"
+                # Check If "for" In Request
+                if request.content_type == "multipart/form-data" and "for" not in request.form:
+                    return make_response(json.dumps({
+                        "type": "warning",
+                        "message": "unknownError"
+                    }), 200)
+
+                # if(
+                #     # Form
+                #     "for" not in request.form and
+                #
+                #     # JSON
+                #     "for" not in request.get_json()
+                # ):
+                #     return make_response(json.dumps({
+                #         "type": "warning",
+                #         "message": "unknownError"
+                #     }), 200)
 
 
             ####### GET
