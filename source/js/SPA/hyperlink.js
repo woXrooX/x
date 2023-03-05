@@ -29,10 +29,10 @@ export default class Hyperlink{
   // locate | load | open
   static locate(path = ""){
     // Check If Current Page Is Already Equal To Requesting Page
-    if(window.location.href == URL+path) return;
+    if(window.location.href == path) return;
 
     //// Change Url / Add To History
-    window.history.pushState("", "", URL+path);
+    window.history.pushState("", "", path);
 
     // Firing Event "locationchange" After Changing URL
     window.dispatchEvent(new Event('locationchange'));
