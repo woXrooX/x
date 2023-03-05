@@ -22,7 +22,14 @@ PARENT_RUNNING_FROM = os.path.abspath(os.path.join(APP_RUNNING_FROM, '../..'))
 
 
 #################################################### Create Folder "assets" For Storing Site Assets
-os.makedirs(f'{APP_RUNNING_FROM}/assets/', mode=0o777, exist_ok=True)
+try:
+    print("------------ Creating Folder source/assets ------------")
+    os.makedirs(f'{APP_RUNNING_FROM}/assets/', mode=0o777, exist_ok=True)
+except:
+    print("------------ Error ------------")
+    print("Could Not Create The Folder source/assets")
+
+    sys.exit()
 
 
 #################################################### project.json
