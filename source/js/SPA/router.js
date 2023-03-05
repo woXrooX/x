@@ -21,6 +21,7 @@ export default class Router{
           endpoint = '/'+page;
           // Break Out Of The Loops
           break loopPages;
+          
         }
 
     }
