@@ -20,22 +20,22 @@ def pageGuard(page):
         def wrapper(*args, **kwargs):
 
             # For Debugging
-            print("\n\n----------------- pageGuard START -----------------")
-            print("\n----- Request")
-            print(request)
-            print("\n----- Headers")
-            print(request.headers)
-            print("\n----- Method")
-            print(request.method)
-            print("\n----- Content Type")
-            print(request.content_type)
-            print("\n----- Form")
-            print(request.form)
-            print("\n----- Files")
-            print(request.files)
-            print("\n----- JSON")
-            print(request.get_json)
-            print("\n----------------- pageGuard END -----------------\n\n")
+            # print("\n\n----------------- pageGuard START -----------------")
+            # print("\n----- Request")
+            # print(request)
+            # print("\n----- Headers")
+            # print(request.headers)
+            # print("\n----- Method")
+            # print(request.method)
+            # print("\n----- Content Type")
+            # print(request.content_type)
+            # print("\n----- Form")
+            # print(request.form)
+            # print("\n----- Files")
+            # print(request.files)
+            # print("\n----- JSON")
+            # print(request.get_json)
+            # print("\n----------------- pageGuard END -----------------\n\n")
 
             ####### POST
             if request.method == "POST":
