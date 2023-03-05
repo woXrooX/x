@@ -127,12 +127,38 @@ export default class Core{
       // window.dispatchEvent(new CustomEvent("domChange", {detail:"menu"}));
       // console.log("onDomChange");
 
-      // Dom Change For body > menu
-      if(!!event.detail === true && event.detail == "menu") Menu.build();
+      //// This all should be done inside Dom class
+      //// Dom.update() or something
+      // Dom Change For body > target
+      if(!!event.detail === true)
+        for(const target of event.detail)
+          switch(target){
+            case "menu":
+              console.log("Menu");
+              Menu.build();
+              break;
 
-      // Dom Change For body > header
-      // Dom Change For body > main
-      // Dom Change For body > footer
+            case "header":
+              console.log("Header");
+              break;
+
+            case "main":
+              console.log("Main");
+              Router.handle();
+              break;
+
+            case "footer":
+              console.log("Footer");
+              break;
+
+            case "all":
+              console.log("All");
+              break;
+
+            default:
+              console.log("Unknown Target For Dom Change: ", target);
+
+          }
 
       // Globals
       Hyperlink.collect();
