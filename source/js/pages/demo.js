@@ -168,7 +168,7 @@ const table = `
 const classBCcolorSurfaceX = `
 <container>
 
-  <row><h1>.bc-x (--color-surface-x)</h1></row>
+  <row><h1>Background Color (class: .bc-x, variable: --color-surface-x)</h1></row>
 
   <row class="bc-5 radius p-5">
 
@@ -193,7 +193,7 @@ const classBCcolorSurfaceX = `
 const colorTextX = `
 <container>
 
-  <row><h1>--color-text-x</h1></row>
+  <row><h1>Text Color (--color-text-x)</h1></row>
 
   <row class="bc-3 radius p-5">
 
@@ -215,12 +215,41 @@ const colorTextX = `
 `;
 
 
+const situationalColors = `
+<container>
+
+  <row><h1>Situational Colors (--color-x)</h1></row>
+
+  <row class="bc-3 radius p-5">
+
+    <div style="background-color:var(--color-success)" class="p-5">
+      <b>--color-success</b>
+    </div>
+
+    <div style="background-color:var(--color-info)" class="p-5">
+      <b>--color-info</b>
+    </div>
+
+    <div style="background-color:var(--color-warning)" class="p-5">
+      <b>--color-warning</b>
+    </div>
+
+    <div style="background-color:var(--color-error)" class="p-5">
+      <b>--color-error</b>
+    </div>
+
+  </row>
+
+</container>
+`;
+
 export default function content(){
   let dom = `
     ${form}
     ${table}
     ${classBCcolorSurfaceX}
     ${colorTextX}
+    ${situationalColors}
   `;
 
   return dom;
