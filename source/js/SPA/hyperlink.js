@@ -8,8 +8,12 @@ export default class Hyperlink{
     for(const a of links){
       a.onclick = ()=>{
 
-        // Check IF Href Is Only Hash.
+        // Check IF Href Is Hash.
         if(a.getAttribute("href").charAt(0) == '#') return;
+
+        // Check IF Href Is for File.
+        // For Now Bulk Checking Using '.'
+        if(a.getAttribute("href").includes('.')) return;
 
         // Remove Forward Slash From Href
         let href = a.getAttribute("href").substring(1, a.getAttribute("href").length);
