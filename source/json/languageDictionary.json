@@ -549,6 +549,11 @@
     "ru":"Выберите деталь продукта",
     "uz":"Mahsulot detalini tanlang"
   },
+  "settings":{
+    "en":"Settings",
+    "ru":"Настройки",
+    "uz":"Sozlamalar"
+  },
   "signUp":{
     "en":"Sign up",
     "ru":"Регистрироваться",
