@@ -50,6 +50,7 @@ v4.0.0 (UI / UX / Customizations / Versatility)
     c. Log In Through QR Code Scanning
 
 v5.0.0 (Performance, Optimizations)
-  1. Back-End Full Migration To C++ Custom Server
+  1. Back-End Full Migration To C++ Custom Web Server
   2. Uglifier (Uglify)
   3. Minifier (Minify)
+  4. Email: Full Migration To C++ Custom Email Server
