@@ -78,14 +78,14 @@ except:
 # Check If home.py Is Created By The User Of X-WebApp
 if not os.path.exists(f"{APP_RUNNING_FROM}/python/pages/home.py"):
     print("------------ Error ------------")
-    print(f"{APP_RUNNING_FROM}/python/pages/home.py does not exist.")
+    print("pages/home.py does not exist.")
     sys.exit()
 
 
 #################################################### home.js
 if not os.path.exists(f"{APP_RUNNING_FROM}/js/pages/home.js"):
     print("------------ Error ------------")
-    print(f"{APP_RUNNING_FROM}/js/pages/home.js does not exist.")
+    print(f"pages/home.js does not exist.")
     sys.exit()
 
 
