@@ -143,8 +143,8 @@ export default class Core{
               break;
 
             case "main":
-              console.log("Main");
-              Router.handle();
+            console.log("main");
+              Dom.lifeCycle();
               break;
 
             case "footer":
@@ -153,6 +153,8 @@ export default class Core{
 
             case "all":
               console.log("All");
+              Menu.build();
+              Dom.lifeCycle();
               break;
 
             default:
