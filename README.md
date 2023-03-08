@@ -22,7 +22,7 @@
 [X-WebApp/documentations/pageBackEnd.md](./documentations/pageBackEnd.md)
 
 ### Response Structure (Back-End)
-[X-WebApp/documentations/responseStructures.md](./documentations/responseStructures.md)
+[X-WebApp/documentations/responseStructure.md](./documentations/responseStructure.md)
 
 ---
 
