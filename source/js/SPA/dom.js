@@ -23,6 +23,34 @@
 
 export default class Dom{
   static #elementMain = document.querySelector("body > main");
+  static #page = null;
+
+  static setPage(page){
+    // Check If Page Is Valid
+    if(!!page == false) return;
+
+    // Update "page" Variable
+    Dom.page = page;
+
+    // Start The Page's Life Cycle
+    Dom.lifeCycle();
+
+  }
+
+  static lifeCycle(){
+    // Set Title
+    window.Title.set(Dom.page.TITLE);
+
+    // Check If before() Exists
+    if(!!Dom.page.before == true) Dom.page.before();
+
+    // Render The Content
+    Dom.render(Dom.page.default());
+
+    // Check If after() Exists
+    if(!!Dom.page.after == true) Dom.page.after();
+
+  }
 
   static render(dom){
     // If Passed Object Like: createElement("x-form")
