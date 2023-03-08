@@ -9,7 +9,7 @@ export default class Router{
     for(const page in window.CONF["pages"]){
       // console.log(page);
 
-      // Pass The Page Guard Tests
+      // Pass The Page To routeGuard Tests
       if(Router.#routeGuard(page) === false) continue;
 
       // Aliases
@@ -21,7 +21,7 @@ export default class Router{
           endpoint = '/'+page;
           // Break Out Of The Loops
           break loopPages;
-          
+
         }
 
     }
@@ -35,13 +35,7 @@ export default class Router{
       // if(endpoint === "/404") window.history.pushState("", "", URL+"404");
 
       // Load The Page
-      const response = await import(`../pages${endpoint}.js`);
-
-      // Render The Content
-      window.Dom.render(response.default());
-
-      // Set Title
-      window.Title.set(response.TITLE);
+      window.Dom.setPage(await import(`../pages${endpoint}.js`));
 
     }catch(error){
       console.log(error);
