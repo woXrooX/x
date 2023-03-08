@@ -28,10 +28,18 @@ if not os.path.exists(f"{PARENT_RUNNING_FROM}/project.json"):
     print(f"{PARENT_RUNNING_FROM}/project.json does not exist.")
     sys.exit()
 
-# If Exists Open It
-print("------------ Reading project.json ------------")
-with open(f"{PARENT_RUNNING_FROM}/project.json", 'r') as file:
-    PROJECT = json.load(file)
+# If Exists Try To Open It
+try:
+    print("------------ Reading project.json ------------")
+
+    with open(f"{PARENT_RUNNING_FROM}/project.json", 'r') as file:
+        PROJECT = json.load(file)
+
+except:
+    print("------------ Error ------------")
+    print("Error While Reading The project.json")
+
+    sys.exit()
 
 
 #################################################### Copying Pages (Back-End)
