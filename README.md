@@ -21,7 +21,7 @@
 ### Page Structure (Back-End)
 [X-WebApp/documentations/pageBackEnd.md](./documentations/pageBackEnd.md)
 
-### Back-End Response Structure
+### Response Structure (Back-End)
 [X-WebApp/documentations/responseStructures.md](./documentations/responseStructures.md)
 
 ---
@@ -31,7 +31,7 @@
 ### Page Structure (Front-End)
 [X-WebApp/documentations/pageFrontEnd.md](./documentations/pageFrontEnd.md)
 
-### Front-End Request Structure
+### Request Structure (Front-End)
 [X-WebApp/documentations/requestStructures.md](./documentations/requestStructures.md)
 
 ---
