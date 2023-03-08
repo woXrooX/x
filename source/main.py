@@ -219,6 +219,8 @@ with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") a
 
 
 #################################################### External Language Dictionary
+PROJECT_LANG_DICT = {}
+
 # Check If External languageDictionary.json exists
 if os.path.exists(f"{PARENT_RUNNING_FROM}/languageDictionary.json"):
     print("------------ Reading languageDictionary.json ------------")
