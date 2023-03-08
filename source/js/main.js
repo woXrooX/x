@@ -2,9 +2,11 @@
 ///////////////////////////// SPA / Core
 import Core from "./SPA/core.js";
 
-
-///////////////////////////// Tools
-// import Form from "./modules/tools.js";
+// let root = document.querySelector(':root');
+// let currentColorScheme = root.getAttribute('color-scheme');
+// console.log(root);
+// console.log(currentColorScheme);
+// console.log(getComputedStyle(document.body).getPropertyValue('--z-minus'));
 
 
 // prefers-color-scheme TMP
