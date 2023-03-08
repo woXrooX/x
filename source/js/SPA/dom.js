@@ -21,6 +21,8 @@
 // newDiv.appendChild(newContent);
 
 
+// else if(Dom.page.before.constructor.name === 'Function') Dom.page.before();
+
 export default class Dom{
   static #elementMain = document.querySelector("body > main");
   static #page = null;
@@ -37,18 +39,32 @@ export default class Dom{
 
   }
 
-  static lifeCycle(){
+  static async lifeCycle(){
     // Set Title
     window.Title.set(Dom.page.TITLE);
 
+    ///// Before
     // Check If before() Exists
-    if(!!Dom.page.before == true) Dom.page.before();
+    if(!!Dom.page.before === true)
+      // If Async Function Passed Or Normal One
+      if(Dom.page.before.constructor.name === 'AsyncFunction') await Dom.page.before();
+      else Dom.page.before();
 
-    // Render The Content
-    Dom.render(Dom.page.default());
+    ///// Content - Render The Content
+    // Check If Default Function Exists
+    if(typeof Dom.page.default === "function")
+      // If Async Function Passed Or Normal One
+      if(Dom.page.default.constructor.name === 'AsyncFunction') Dom.render(await Dom.page.default());
+      else Dom.render(Dom.page.default());
 
+    else Dom.render("[DOM] Error: No Default Function Defined!");
+
+    ///// After
     // Check If after() Exists
-    if(!!Dom.page.after == true) Dom.page.after();
+    if(!!Dom.page.after === true)
+      // If Async Function Passed Or Normal One
+      if(Dom.page.after.constructor.name === 'AsyncFunction') await Dom.page.after();
+      else Dom.page.after();
 
   }
 
