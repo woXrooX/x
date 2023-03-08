@@ -19,7 +19,7 @@
 [X-WebApp/documentations/pages.md](./documentations/pages.md)
 
 ### Page Structure (Back-End)
-[X-WebApp/documentations/pagePackEnd.md](./documentations/pagePackEnd.md)
+[X-WebApp/documentations/pageBackEnd.md](./documentations/pageBackEnd.md)
 
 ### Back-End Response Structure
 [X-WebApp/documentations/responseStructures.md](./documentations/responseStructures.md)
