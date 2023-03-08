@@ -101,7 +101,7 @@ if not os.path.exists(f"{APP_RUNNING_FROM}/js/pages/home.js"):
 
 #################################################### Create Folder "assets" For Storing Site Assets
 try:
-    print("------------ Creating Folder source/assets ------------")
+    print("------------ Creating Folder X-WebApp/source/assets ------------")
     os.makedirs(f'{APP_RUNNING_FROM}/assets/', mode=0o777, exist_ok=True)
 except:
     print("------------ Error ------------")
