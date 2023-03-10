@@ -17,7 +17,7 @@ URL:
 
 
 ######### Database
-# By default database disabled
+# By default database is disabled
 # database:
 #   enabled: false
 #   name: "template"
@@ -27,6 +27,14 @@ URL:
 #   port: "33060"
 #   charset: "utf8mb4"
 #   collate: "utf8mb4_0900_ai_ci"
+
+
+######### eMail
+eMail:
+  GMail:
+    enabled: true
+    eMail: "woXrooX@gmail.com"
+    password: "hiptmhqcgcpwiijn"
 
 
 ######### Site Defaults
