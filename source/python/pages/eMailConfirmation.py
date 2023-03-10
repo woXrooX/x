@@ -15,16 +15,21 @@ def eMailConfirmation():
     if request.method == "GET": return render_template("index.html", **globals())
 
     if request.method == "POST":
-        # "for" Meant To Go To Here
+        # Check If "for" Meant To Go To Here
         if request.form["for"] != "eMailConfirmation":
             return make_response(json.dumps({
                 "type": "warning",
                 "message": "unknownError"
             }), 200)
 
+        # Check For Existentance Of "verificationCode"
+        if(
+            # If No "verificationCode" Key In Request
+            "verificationCode" not in request.form or
 
-        # If No "verificationCode" Key In Request
-        if "verificationCode" not in request.form:
+            # Check If Verification Code Is Empty
+            "verificationCode" in request.form and request.form["verificationCode"] == ''
+        ):
             return make_response(json.dumps({
                 "type": "error",
                 "message": "eMailConfirmationCodeEmpty",
@@ -32,16 +37,7 @@ def eMailConfirmation():
             }), 200)
 
 
-        # Check If Verification Code Is Empty
-        if request.form["verificationCode"] == '':
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "eMailConfirmationCodeEmpty",
-                "field": "verificationCode"
-            }), 200)
-
-
-        # Check If Verification Code Does Not Match
+        # Check If Verification Code Does Not Match Then Increment The Counter
         if int(request.form["verificationCode"]) != session["user"]["eMail_verification_code"]:
             with MySQL(False) as db:
                 db.execute(
@@ -67,11 +63,15 @@ def eMailConfirmation():
 
 
         # Success | Match
-        if int(request.get_json()["fields"]["verificationCode"]) == session["user"]["eMail_verification_code"]:
+        if int(request.form["verificationCode"]) == session["user"]["eMail_verification_code"]:
             with MySQL(False) as db:
                 db.execute(
                     ("UPDATE users SET eMail_verification_attempts_count=%s, type=%s  WHERE id=%s"),
-                    ((session["user"]["eMail_verification_attempts_count"] + 1), USER_TYPES["authorized"]["id"], session["user"]["id"])
+                    (
+                        (session["user"]["eMail_verification_attempts_count"] + 1),
+                        USER_TYPES["authorized"]["id"],
+                        session["user"]["id"],
+                    )
                 )
                 db.commit()
 
