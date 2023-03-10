@@ -107,7 +107,7 @@ export default class Form{
     if(!!message != false) elementP.innerHTML = `<${type}>${langDict[message][langCode]}</${type}>`;
 
     // Focus & Flash The Border Color
-    const elementInput = document.querySelector(`input[name=${field}]`);
+    const elementInput = document.querySelector(`[name=${field}]`);
     if(!!elementInput && elementInput.getAttribute("type") != "submit"){
       // Focus
       elementInput.focus();
