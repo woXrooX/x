@@ -31,6 +31,9 @@ URL:
 
 ######### eMail
 eMail:
+  regEx: "^[a-zA-Z0-9][a-zA-Z0-9._-]{0,20}[a-zA-Z0-9]@[a-z][a-zA-Z0-9-_]{1,20}.[a-z]{2,3}$"
+  subject: "X-WebApp"
+
   GMail:
     enabled: true
     eMail: "woXrooX@gmail.com"
@@ -135,11 +138,6 @@ password:
 ######### Phone Number
 phoneNumber:
   regEx: "^[+]{1,1}[0-9]{11,11}$"
-
-
-######### eMail
-eMail:
-  regEx: "^[a-zA-Z0-9][a-zA-Z0-9._-]{0,20}[a-zA-Z0-9]@[a-z][a-zA-Z0-9-_]{1,20}.[a-z]{2,3}$"
 
 
 ######## Stripe payment
