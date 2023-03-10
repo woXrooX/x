@@ -1,6 +1,7 @@
 "use strict";
 
 export default class Form{
+  static #flashDuration = 2000;
 
   static collect(){
     const forms = document.getElementsByTagName("form");
@@ -107,32 +108,27 @@ export default class Form{
     if(!!message != false) elementP.innerHTML = `<${type}>${langDict[message][langCode]}</${type}>`;
 
     // Focus & Flash The Border Color
-    const elementInput = document.querySelector(`[name=${field}]`);
-    if(!!elementInput && elementInput.getAttribute("type") != "submit"){
+    const element = document.querySelector(`[name=${field}]`);
+    if(!!element === true && element.getAttribute("type") != "submit"){
       // Focus
-      elementInput.focus();
+      element.focus();
 
       // Flash Border Color
-      if(flash === true) Form.#flash(type, field);
+      if(flash === true) Form.#flash(type, element);
 
     }
 
-    // Enable Toast
+    // If Toast Is Enabled
     if(toast === true) window.Toast.new(type, message);
 
   }
 
-  static #flash(type, field){
-    const element = document.querySelector(`[name=${field}]`);
-
-    // Check If Element Exists
-    if(!!element === false) return;
-
+  static #flash(type, element){
     // Activate Border Color
     element.style.borderColor = getComputedStyle(document.body).getPropertyValue(`--color-${type}`);
 
     // Flash Border Color
-    setTimeout(()=>{element.removeAttribute("style");}, 2000);
+    setTimeout(()=>{element.removeAttribute("style");}, Form.#flashDuration);
 
   }
 
