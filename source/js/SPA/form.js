@@ -123,7 +123,7 @@ export default class Form{
   }
 
   static #flash(type, field){
-    const element = document.querySelector(`input[name=${field}]`);
+    const element = document.querySelector(`[name=${field}]`);
 
     // Check If Element Exists
     if(!!element === false) return;
