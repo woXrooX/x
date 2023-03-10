@@ -145,7 +145,6 @@ export default class Menu{
 
     // Session Dependent Checks
     if("user" in window.session){
-
       // Root
       if(window.session["user"]["type"] == window.USER_TYPES["root"]["id"]) return true;
 
