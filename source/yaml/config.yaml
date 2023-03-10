@@ -35,9 +35,9 @@ eMail:
   subject: "X-WebApp"
 
   GMail:
-    enabled: true
-    eMail: "woXrooX@gmail.com"
-    password: "hiptmhqcgcpwiijn"
+    enabled: false
+    eMail: null
+    password: null
 
 
 ######### Site Defaults
