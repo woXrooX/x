@@ -54,13 +54,14 @@ HTML:
 
 ######### Menu
 menu:
-    enabled: true
-    menus:
-      - home
-      - signUp
-      - logIn
-      - logOut
-      - demo
+  enabled: true
+  menus:
+    - name: "home"
+    - name: "signUp"
+    - name: "logIn"
+    - name: "logOut"
+    - name: "demo"
+      logo: "laboratory"
 
 
 ######### Pages
