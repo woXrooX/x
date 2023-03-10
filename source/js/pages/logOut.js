@@ -13,7 +13,7 @@ export default function content(){
     <column class="bc-2 p-5 bs radius">
       <form action="logOut" for="logOut">
         <label>
-            <p for='logOut'></p>
+            <p for='logOut'>${window.Lang.use("areYouSure")}</p>
             <input type='submit' name='logOut' value='${langDict["logOut"][langCode]}'>
         </label>
       </form>
