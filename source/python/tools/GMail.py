@@ -1,16 +1,14 @@
+from __main__ import CONF
 
-def GMail(to, message):
+# Later We Will Create Class Called GMail That's Why Function Name Started With Capital Letters
+def GMail(to, message, subject = "X-WebApp"):
+    # Check If GMail Is Enabled
+    if CONF["eMail"]["GMail"]["enabled"] == False: return False
+
     import smtplib
 
-    # to = "brosappsalone@gmail.com"
-    gMail = "woXrooX@gmail.com"
-    password = "hiptmhqcgcpwiijn"
-
-    subject = "X-WebApp"
-    # message = "Hi! Friend:)"
-
     html = f"""\
-From: {gMail}
+From: {CONF["eMail"]["GMail"]["eMail"]}
 To: {to}
 Subject: {subject}
 MIME-Version: 1.0
@@ -27,8 +25,8 @@ Content-Type: text/html
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.ehlo()
         server.starttls()
-        server.login(gMail, password)
-        server.sendmail(gMail, to, html)
+        server.login(CONF["eMail"]["GMail"]["eMail"], CONF["eMail"]["GMail"]["password"])
+        server.sendmail(CONF["eMail"]["GMail"]["eMail"], to, html)
         server.quit()
 
         return True
