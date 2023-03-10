@@ -1,9 +1,12 @@
 from __main__ import CONF
 
 # Later We Will Create Class Called GMail That's Why Function Name Started With Capital Letters
-def GMail(to, message, subject = "X-WebApp"):
+def GMail(to, message, subject = ""):
     # Check If GMail Is Enabled
     if CONF["eMail"]["GMail"]["enabled"] == False: return False
+
+    # Check If Subject Is Passed
+    if not subject: subject = CONF["eMail"]["subject"]
 
     import smtplib
 
