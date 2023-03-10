@@ -144,6 +144,10 @@ if "database" in PROJECT:
     if "database" in CONF: CONF["database"].update(PROJECT["database"])
     else: CONF["database"] = PROJECT["database"]
 
+# eMail
+if "eMail" in PROJECT:
+    CONF["eMail"].update(PROJECT["eMail"])
+
 # Defaults
 if "default" in PROJECT:
     if "default" in CONF: CONF["default"].update(PROJECT["default"])
