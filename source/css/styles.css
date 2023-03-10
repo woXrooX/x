@@ -59,6 +59,10 @@ form label{
 }
 /************ label START ************/
 
+/************ label > p START ************/
+form label > p{height: 1.5em;}
+/************ label > p START ************/
+
 /************ select, textarea, imput -> type = [text, password, eMail, number, color, file] START ************/
 form select,
 form textarea,
