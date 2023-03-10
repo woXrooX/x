@@ -1,6 +1,6 @@
 "use strict";
 
-export const TITLE = window.langDict["eMailConfirmation"][langCode];
+export const TITLE = window.Lang.use(["eMailConfirmation"]);
 
 export default function content(){
   const dom = `
