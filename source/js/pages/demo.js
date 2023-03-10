@@ -248,6 +248,7 @@ const situationalColors = `
 window.pageData = "No Effect Here";
 
 ///// Before
+// Will Be Executed Before content() Has Been Rendered
 // Can Be Set Async
 export function before(){
   window.pageData = "Updated @ Function before()";
@@ -274,6 +275,7 @@ export default function content(){
 }
 
 ///// After
+// Will Be Executed After content() Has Been Rendered
 // Can Be Set Async
 export function after(){
   console.log("AFTER: ", window.pageData);
