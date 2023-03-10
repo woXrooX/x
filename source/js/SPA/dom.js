@@ -40,6 +40,9 @@ export default class Dom{
   }
 
   static async lifeCycle(){
+    // Create Page Scoped Variable
+    window.pageData = {};
+
     // Set Title
     window.Title.set(Dom.page.TITLE);
 
@@ -65,6 +68,9 @@ export default class Dom{
       // If Async Function Passed Or Normal One
       if(Dom.page.after.constructor.name === 'AsyncFunction') await Dom.page.after();
       else Dom.page.after();
+
+    // Delete The Page Data At The End Of Each Life Cycle
+    delete window.pageData;
 
   }
 
