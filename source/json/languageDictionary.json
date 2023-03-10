@@ -304,6 +304,11 @@
     "ru":"Главная",
     "uz":"Bosh sahifa"
   },
+  "ifLogOutWontBeAbleTo":{
+    "en":"Before you go, keep in mind that logging out will terminate your current session and limit your ability to engage with the site.",
+    "ru":"Прежде чем уйти, имейте в виду, что выход из системы прекратит ваш текущий сеанс и ограничит вашу способность взаимодействовать с сайтом.",
+    "uz":"Chiqishdan oldin, tizimdan chiqish joriy seansni to'xtatishini va sayt bilan bog'lanish imkoniyatini cheklashini yodda tuting."
+  },
   "info":{
     "en":"Info",
     "ru":"Информация",
