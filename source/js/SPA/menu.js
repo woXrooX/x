@@ -37,13 +37,13 @@ export default class Menu{
     let hyperlinks = "";
 
     for(const menu of window.CONF["menu"]["menus"])
-      if(Menu.#menuGuard(menu) === true)
+      if(Menu.#menuGuard(menu["name"]) === true)
 
         // Hyperlink Blue Print
         hyperlinks += `
-  <a href="/${menu}">
-    <svg><use href="#${menu}"></use></svg>
-    ${window.langDict[menu][window.langCode]}
+  <a href="/${menu["name"]}">
+    <svg><use href="#${"logo" in menu ? menu["logo"] : menu["name"] }"></use></svg>
+    ${window.Lang.use(menu["name"])}
   </a>
         `;
 
