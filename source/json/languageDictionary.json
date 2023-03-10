@@ -34,6 +34,11 @@
     "ru":"Все изменения вступят в силу при следующем входе в систему",
     "uz":"Barcha o'zgarishlar keyingi kirishda kuchga kiradi"
   },
+  "areYouSure":{
+    "en":"Are you sure?",
+    "ru":"Вы уверены?",
+    "uz":"Ishonchingiz komilmi?"
+  },
   "byClckingSignUpYouAgree":{
     "en":"By clicking Sign up, you agree to our <a href='/termsOfUse'>Terms of use</a> and that you have read our <a href='/privacyPolicy'>Privacy Policy</a> , Including our <a href='/cookieTerms'>Cookie Use</a>",
     "ru":"Нажимая «Зарегистрироваться», вы соглашаетесь с нашими <a href='/termsOfUse'>Условиями использования</a> и с нашей <a href='/privacyPolicy'>Политикой конфиденциальности</a>, включая <a href = '/cookieTerms'>Использование файлов cookie</a>",
