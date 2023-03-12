@@ -316,6 +316,7 @@ hr{
 /****************************** a START ******************************/
 a{
   color:var(--color-text-secondary);
+  cursor: pointer;
 }
 a:where(:active, :focus, :hover){
   color:var(--color-text-primary);
