@@ -145,7 +145,6 @@ if os.path.exists(f"{APP_RUNNING_FROM}/css/styles.css"):
         print("------------ Error ------------")
         print("Could Not Read The External CSS")
 
-print(EXTERNALS)
 
 ################################################################
 ################################################################ Not So Required Files And Folders To Run The Scipt END
