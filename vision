@@ -29,8 +29,14 @@ v2.0.0 (Tooling)
   6. Menu (Sub Menus)
   7. Chart Tool (Front-End)
   8. Mobile Friendly
-  9. Deployment Ready Structure ✅️
-  10. File Management System 🛠️
+  9. Deployment Ready Structure (External Files) ✅️
+    a. Pages (Front, Back) ✅️
+    b. SVG Files ✅️
+    C. JavaScript Files 🛠️
+    d. Dictionaries ✅️
+    e. CSS Files ✅️
+
+  10. File Management System (General Assets Folder For The Site Resources) ✅️
 
 v3.0.0 (Security)
   1. Hashed ID System
