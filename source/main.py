@@ -98,6 +98,11 @@ if not os.path.exists(f"{APP_RUNNING_FROM}/js/pages/home.js"):
 ################################################################ Not So Required Files And Folders To Run The Scipt START
 ################################################################
 
+#################################################### EXTERNALS
+EXTERNALS = {
+    "SVG": [],
+    "CSS": None
+}
 
 #################################################### Create Folder "assets" For Storing Site Assets
 try:
@@ -110,7 +115,6 @@ except:
 
 #################################################### Check If PARENT_RUNNING_FROM/SVG Exists Then Load The SVGs To source/html/SVG.html
 # SVG FIles
-SVGs = []
 if os.path.exists(f"{PARENT_RUNNING_FROM}/SVG"):
     print("------------ Loading SVG Files ------------")
 
@@ -120,7 +124,7 @@ if os.path.exists(f"{PARENT_RUNNING_FROM}/SVG"):
 
         try:
             with open(f'{PARENT_RUNNING_FROM}/SVG/{file}', "r") as svg:
-                SVGs.append(svg.read())
+                EXTERNALS["SVG"].append(svg.read())
 
         except:
             print(f"Could Not Load The SVG File: {file}")
@@ -128,6 +132,20 @@ if os.path.exists(f"{PARENT_RUNNING_FROM}/SVG"):
 #   {{svg}}
 # {% endfor %}
 # print(SVGs)
+
+#################################################### Load External CSS
+if os.path.exists(f"{APP_RUNNING_FROM}/css/styles.css"):
+    print("------------ Reading The External CSS Files ------------")
+
+    try:
+        with open(f'{PARENT_RUNNING_FROM}/css/styles.css', "r") as css:
+            EXTERNALS["CSS"] = css.read()
+
+    except:
+        print("------------ Error ------------")
+        print("Could Not Read The External CSS")
+
+print(EXTERNALS)
 
 ################################################################
 ################################################################ Not So Required Files And Folders To Run The Scipt END
@@ -213,9 +231,6 @@ if "database" in CONF and CONF["database"]["enabled"] == True:
 # with MySQL(False) as db:
 #     db.execute(f"SELECT * FROM languages")
 #     languages = db.fetchAll()
-
-### language Default Code
-langCode = CONF["default"]["language"]
 
 ### language Dictionary
 with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") as file:
