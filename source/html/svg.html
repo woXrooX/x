@@ -74,5 +74,10 @@
     </symbol>
 
 
+    {% for svg in EXTERNALS["SVG"] %}
+      {{svg|safe}}
+    {% endfor %}
+
+
   </defs>
 </svg>
