@@ -2,7 +2,7 @@
 from __main__ import app, request, make_response
 
 # Home Made
-from __main__ import PUBLIC_CONF, session, langCode, langDict, USER_TYPES
+from __main__ import CONF, PUBLIC_CONF, session, langDict, USER_TYPES
 
 from python.tools.tools import publicSessionUser
 
@@ -19,7 +19,7 @@ def api():
             {
                 "CONF": PUBLIC_CONF,
                 "session": {"user": publicSessionUser()} if "user" in session else {},
-                "langCode": langCode,
+                "langCode": CONF["default"]["language"],
                 "langDict": langDict,
                 "USER_TYPES": USER_TYPES
                 # "languages":languages,
