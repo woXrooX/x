@@ -8,6 +8,9 @@ export default class Hyperlink{
     for(const a of links){
       a.onclick = ()=>{
 
+        // Check IF Has Href
+        if(!!a.hasAttribute("href") === false) return;
+
         // Check IF Href Is Hash.
         if(a.getAttribute("href").charAt(0) == '#') return;
 
