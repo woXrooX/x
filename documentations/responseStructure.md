@@ -45,9 +45,7 @@ return make_response(json.dumps({
       "domChange": ["menu", "header", "main", "footer", "all"],
 
       #### Redirect
-      "redirect": {
-        "url": "me"
-      },
+      "redirect": "me",
 
       #### Reload
       "reload": 0
