@@ -17,10 +17,7 @@ def eMailConfirmation():
     if request.method == "POST":
         # Check If "for" Meant To Go To Here
         if request.form["for"] != "eMailConfirmation":
-            return make_response(json.dumps({
-                "type": "warning",
-                "message": "unknownError"
-            }), 200)
+            return response(type="warning", message="unknownError")
 
         # Check For Existentance Of "verificationCode"
         if(
@@ -30,12 +27,7 @@ def eMailConfirmation():
             # Check If Verification Code Is Empty
             "verificationCode" in request.form and request.form["verificationCode"] == ''
         ):
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "eMailConfirmationCodeEmpty",
-                "field": "verificationCode"
-            }), 200)
-
+            return response(type="warning", message="eMailConfirmationCodeEmpty", field="verificationCode")
 
         # Check If Verification Code Does Not Match Then Increment The Counter
         if int(request.form["verificationCode"]) != session["user"]["eMail_verification_code"]:
@@ -46,20 +38,12 @@ def eMailConfirmation():
                 )
                 db.commit()
 
-                if db.hasError():
-                    return make_response(json.dumps({
-                        "type": "error",
-                        "message": "databaseError",
-                    }), 200)
+                if db.hasError(): return response(type="error", message="databaseError")
 
                 # Update The session["user"] After The Changes To The Database
                 updateSessionUser()
 
-            return make_response(json.dumps({
-                "type": "warning",
-                "message": "eMailConfirmationCodeDidNotMatch",
-                "field": "verificationCode"
-            }), 200)
+            return response(type="warning", message="eMailConfirmationCodeDidNotMatch", field="verificationCode")
 
 
         # Success | Match
@@ -75,25 +59,14 @@ def eMailConfirmation():
                 )
                 db.commit()
 
-                if db.hasError():
-                    return make_response(json.dumps({
-                        "type": "error",
-                        "message": "databaseError",
-                    }), 200)
+                if db.hasError(): return response(type="error", message="databaseError")
 
                 # Update The session["user"] After The Changes To The Database
                 updateSessionUser()
 
-            return make_response(json.dumps({
-                "type": "success",
-                "message": "success",
-                "actions": {
-                    "toast": {
-                        "type": "success",
-                        "content": "eMailVerificationSuccess"
-                    },
-                    "redirect": {
-                        "url": "home"
-                    }
-                }
-            }), 200)
+            return response(
+                type="success",
+                message="success",
+                toast={"type":"success", "content":"eMailVerificationSuccess"},
+                redirect="home"
+            )
