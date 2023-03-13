@@ -1,5 +1,5 @@
 # Flask
-from __main__ import app, request, render_template, make_response
+from __main__ import app, request, render_template
 
 # Home Made
 from __main__ import CONF, MySQL, USER_TYPES, session, EXTERNALS
@@ -9,6 +9,7 @@ import re, json, random
 from python.tools.GMail import GMail
 
 from python.tools import userFolders
+from python.tools.response import response
 
 from python.tools.tools import pageGuard, publicSessionUser
 
@@ -120,7 +121,7 @@ def signUp():
                 type="success",
                 message="success",
                 setSessionUser=True,
-                toast={"type":"info","content":"eMailConfirmationCodeHasBeenSent"}
+                toast={"type":"info","content":"eMailConfirmationCodeHasBeenSent"},
                 redirect="eMailConfirmation",
                 domChange=["menu"]
             )
