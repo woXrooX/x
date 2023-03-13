@@ -25,60 +25,33 @@ def signUp():
 
         # unknownError
         if request.form["for"] != "signUp":
-            return make_response(json.dumps({
-                "type": "warning",
-                "message": "unknownError"
-            }), 200)
+            return response(type="warning", message="unknownError")
 
         ######## eMail
         # eMailEmpty
         if "eMail" not in request.form or not request.form["eMail"]:
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "eMailEmpty",
-                "field": "eMail"
-            }), 200)
+            return response(type="error", message="eMailEmpty", field="eMail")
 
         # eMailInvalid
         if not re.match(CONF["eMail"]["regEx"], request.form["eMail"]):
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "eMailInvalid",
-                "field": "eMail"
-            }), 200)
+            return response(type="error", message="eMailInvalid", field="eMail")
 
         ######## password
         # passwordEmpty
         if "password" not in request.form or not request.form["password"]:
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "passwordEmpty",
-                "field": "password"
-            }), 200)
+            return response(type="error", message="passwordEmpty", field="password")
 
         # passwordMinLength
         if len(request.form["password"]) < CONF["password"]["min_length"]:
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "passwordMinLength",
-                "field": "password"
-            }), 200)
+            return response(type="error", message="passwordMinLength", field="password")
 
         # passwordMaxLength
         if len(request.form["password"]) > CONF["password"]["max_length"]:
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "passwordMaxLength",
-                "field": "password"
-            }), 200)
+            return response(type="error", message="passwordMaxLength", field="password")
 
         # passwordAllowedChars
         if not re.match(CONF["password"]["regEx"], request.form["password"]):
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "passwordAllowedChars",
-                "field": "password"
-            }), 200)
+            return response(type="error", message="passwordAllowedChars", field="password")
 
         ######## eMail and Password In Use
         # eMailInUse
@@ -86,22 +59,14 @@ def signUp():
             db.execute("SELECT id FROM users WHERE eMail=%s", (request.form["eMail"], ))
             dataFetched  = db.fetchOne()
             if dataFetched:
-                return make_response(json.dumps({
-                    "type": "error",
-                    "message": "eMailInUse",
-                    "field": "eMail"
-                }))
+                return response(type="error", message="eMailInUse", field="eMail")
 
         # passwordInUse
         with MySQL(False) as db:
             db.execute("SELECT id FROM users WHERE password=%s", (request.form["password"], ))
             dataFetched = db.fetchOne()
             if dataFetched:
-                return make_response(json.dumps({
-                    "type": "error",
-                    "message": "passwordInUse",
-                    "field": "password"
-                }))
+                return response(type="error", message="passwordInUse", field="password")
 
         ######## Success
         # Generate Randome Verification Code
@@ -109,10 +74,7 @@ def signUp():
 
         # Check If Verification Code Sent Successfully
         if GMail(request.form["eMail"], eMailVerificationCode) == False:
-            return make_response(json.dumps({
-                "type": "error",
-                "message": "couldNotSendEMailVerificationCode",
-            }), 200)
+            return response(type="error", message="couldNotSendEMailVerificationCode")
 
         # Insert To Database
         with MySQL(False) as db:
@@ -128,10 +90,7 @@ def signUp():
             db.commit()
 
             if db.hasError():
-                return make_response(json.dumps({
-                    "type": "error",
-                    "message": "databaseError",
-                }), 200)
+                return response(type="error", message="databaseError")
 
             # Get User Data
             with MySQL(False) as db:
@@ -144,10 +103,7 @@ def signUp():
                 )
 
                 if db.hasError():
-                    return make_response(json.dumps({
-                        "type": "error",
-                        "message": "databaseError",
-                    }), 200)
+                    return response(type="error", message="databaseError")
 
 
                 # Set Session User Data
@@ -160,18 +116,11 @@ def signUp():
 
 
             # On Success Redirect & Update Front-End Session
-            return make_response(json.dumps({
-                "type": "success",
-                "message": "success",
-                "actions": {
-                    "setSessionUser": publicSessionUser(),
-                    "toast": {
-                        "type": "info",
-                        "content": "eMailConfirmationCodeHasBeenSent"
-                    },
-                    "redirect": {
-                        "url": "eMailConfirmation"
-                    },
-                    "domChange": ["menu"]
-                }
-            }))
+            return response(
+                type="success",
+                message="success",
+                setSessionUser=True,
+                toast={"type":"info","content":"eMailConfirmationCodeHasBeenSent"}
+                redirect="eMailConfirmation",
+                domChange=["menu"]
+            )
