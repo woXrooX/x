@@ -178,6 +178,10 @@ if "menu" in PROJECT:
 if "pages" in PROJECT:
     CONF["pages"] = PROJECT["pages"]
 
+# OpenAI
+if "OpenAI" in PROJECT:
+    CONF["OpenAI"] = PROJECT["OpenAI"]
+
 # Public Version Of CONF (Minus Senstive Data)
 PUBLIC_CONF = {
     "default": CONF["default"],
