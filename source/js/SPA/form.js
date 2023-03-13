@@ -90,7 +90,7 @@ export default class Form{
       if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));
 
       // Redirect
-      if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]["url"]);
+      if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
 
       // Reload
       if("reload" in response["actions"]) window.location.reload();
