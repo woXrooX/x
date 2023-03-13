@@ -13,7 +13,7 @@ if __name__ != "__main__":
         @staticmethod
         def prompt(
             model="text-davinci-003",
-            prompt,
+            prompt=False,
             max_tokens=1000,
             temperature=0.1
         ):
@@ -21,7 +21,7 @@ if __name__ != "__main__":
             if "OpenAI" not in CONF: response(type="info", message="OpenAI Is Not Enabled!")
 
             # Check If prompt Is Valid
-            if not prompt: return response(type="error", message="Invalid Prompt!")
+            if prompt is False: return response(type="error", message="Invalid Prompt!")
 
             try:
                 openai.api_key = CONF["OpenAI"]["api_key"]
