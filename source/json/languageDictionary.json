@@ -334,6 +334,11 @@
     "ru":"Выбраны неверные данные",
     "uz":"Noto'g'ri ma'lumotlar tanlandi"
   },
+  "invalidKeyword":{
+    "en":"Invalid keyword!",
+    "ru":"Неверное ключевое слово!",
+    "uz":"Noto'g'ri kalit so'z!"
+  },
   "invalidPrice":{
     "en":"Invalid price",
     "ru":"Неверная цена",
