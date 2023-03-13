@@ -1,5 +1,5 @@
 # Flask
-from __main__ import app, request, render_template, make_response, session
+from __main__ import app, request, render_template, session
 
 # Home Made
 from __main__ import CONF, USER_TYPES, MySQL, EXTERNALS
@@ -7,6 +7,7 @@ from __main__ import CONF, USER_TYPES, MySQL, EXTERNALS
 import json
 
 from python.tools.tools import pageGuard, updateSessionUser
+from python.tools.response import response
 
 #################################################### Demo
 @app.route("/eMailConfirmation", methods=["GET", "POST"])
