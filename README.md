@@ -8,6 +8,9 @@
 ### For The Users Of Our App
 [X-WebApp/documentations/howToUse.md](./documentations/howToUse.md)
 
+### Dependencies
+[X-WebApp/documentations/dependencies.md](./documentations/dependencies.md)
+
 ---
 
 # Back-End
