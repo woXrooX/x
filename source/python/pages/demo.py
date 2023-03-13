@@ -2,7 +2,7 @@
 from __main__ import app, request, render_template
 
 # Home Made
-from __main__ import CONF
+from __main__ import CONF, EXTERNALS
 
 
 #################################################### Demo
