@@ -37,7 +37,7 @@ if __name__ != "__main__":
                   # stop="\n"
                 )
 
-                return response(type="success", data={"OpenAI": responseOpenAI})
+                return response(type="success", data=responseOpenAI["choices"][0]["text"])
 
             except:
                 return response(type="error", message="OpenAIError")
