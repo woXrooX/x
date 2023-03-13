@@ -8,7 +8,7 @@ if __name__ != "__main__":
     import openai
     import json
 
-    class MySQL:
+    class OpenAI:
 
         @staticmethod
         def prompt(
@@ -18,14 +18,14 @@ if __name__ != "__main__":
             temperature=0.1
         ):
             # Check If Feature Is Enabled
-            if "OpenAI" not in CONF: response(type="info", message="OpenAI Is Not Enabled!")
+            if "OpenAI" not in CONF: return response(type="info", message="OpenAI Is Not Enabled!")
 
             # Check If prompt Is Valid
             if prompt is False: return response(type="error", message="Invalid Prompt!")
 
             try:
                 openai.api_key = CONF["OpenAI"]["api_key"]
-                response = openai.Completion.create(
+                responseOpenAI = openai.Completion.create(
                   model="text-davinci-003",
                   prompt=prompt,
                   max_tokens=max_tokens,
@@ -37,7 +37,7 @@ if __name__ != "__main__":
                   # stop="\n"
                 )
 
-                return response(type="success", data={"OpenAI": response})
+                return response(type="success", data={"OpenAI": responseOpenAI})
 
             except:
                 return response(type="error", message="OpenAIError")
