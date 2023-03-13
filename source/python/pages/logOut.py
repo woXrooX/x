@@ -20,10 +20,7 @@ def logOut():
     elif request.method == "POST":
         # unknownError
         if request.form["for"] != "logOut":
-            return make_response(json.dumps({
-                "type": "warning",
-                "message": "unknownError"
-            }), 200)
+            return response(type="warning", message="unknownError")
 
         # Remove User From Session
         session.pop('user')
@@ -33,12 +30,10 @@ def logOut():
         langCode = CONF["default"]["language"]
 
         # Redirect To Home
-        return make_response(json.dumps({
-            "type": "success",
-            "message": "success",
-            "actions": {
-                "deleteSessionUser": 0,
-                "redirect": "home",
-                "domChange": ["menu"]
-            }
-        }), 200)
+        return response(
+            type="success",
+            message="success",
+            deleteSessionUser=True,
+            redirect="home",
+            domChange=["menu"]
+        )
