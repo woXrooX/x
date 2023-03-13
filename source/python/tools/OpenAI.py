@@ -11,7 +11,7 @@ if __name__ != "__main__":
     class OpenAI:
 
         @staticmethod
-        def prompt(
+        def generate(
             model="text-davinci-003",
             prompt=False,
             max_tokens=1000,
