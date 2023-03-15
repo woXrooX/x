@@ -230,7 +230,9 @@ input[type=submit]:where(:active, :focus, :hover){
 
 button:disabled,
 input[type=submit]:disabled{
-  filter: brightness(200%);
+  cursor: disabled;
+
+  filter: brightness(250%);
 }
 /************ input[type=submit] & button END ************/
 
