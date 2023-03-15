@@ -101,9 +101,10 @@ input:where(:hover, :focus){
 /************ Textarea START ************/
 textarea{
   height: unset;
-  min-height: 50px;
+  font-size: calc(var(--f-font-size) / 1.5);
+  min-height: 300px;
   resize: vertical;
-  padding: 5px;
+  padding: var(--f-padding);
 
 }
 /************ Textarea END ************/
