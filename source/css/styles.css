@@ -2,7 +2,7 @@
 
 /************ Form START ************/
 :root{
-  --f-padding: 100px;
+  --f-padding: 10px;
   --f-radius: 5px;
   --f-gap: 10px;
   --f-height: 40px;
@@ -226,6 +226,11 @@ input[type=submit]{
 button:where(:active, :focus, :hover),
 input[type=submit]:where(:active, :focus, :hover){
   filter: brightness(80%);
+}
+
+button:disabled,
+input[type=submit]:disabled{
+  filter: brightness(200%);
 }
 /************ input[type=submit] & button END ************/
 
