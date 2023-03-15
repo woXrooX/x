@@ -200,8 +200,8 @@ form select{
 /************ select hide arrow END ************/
 
 /************ input[type=submit] & button START ************/
-form button,
-form input[type=submit]{
+button,
+input[type=submit]{
   background-color: var(--color-main);
   color: white;
   overflow: hidden;
@@ -219,8 +219,8 @@ form input[type=submit]{
 
 }
 
-form button:where(:active, :focus, :hover),
-form input[type=submit]:where(:active, :focus, :hover){
+button:where(:active, :focus, :hover),
+input[type=submit]:where(:active, :focus, :hover){
   filter: brightness(80%);
 }
 /************ input[type=submit] & button END ************/
