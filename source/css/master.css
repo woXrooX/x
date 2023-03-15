@@ -242,7 +242,7 @@ body > menu{
 }
 body > menu > *{
   width: 100%;
-  padding: calc(var(--padding) * 4 );
+  padding: calc(var(--padding) * 2);
 
   display: flex;
   flex-direction: column;
@@ -250,7 +250,9 @@ body > menu > *{
 
 }
 body > menu > * > a{
-  filter: brightness(70%);
+  /* background-color: var(--menu-background-color); */
+
+  /* filter: brightness(70%); */
 
   color: white;
   font-size: 2rem;
@@ -260,17 +262,24 @@ body > menu > * > a{
   align-items: center;
   gap: var(--gap);
 
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: var(--padding) calc(var(--padding) * 2);
+
   transition: var(--transition-velocity) ease-in-out;
-  transition-property: filter;
+  transition-property: filter, background-color, border;
 
 }
 body > menu > * > a:where([active], :hover){
-  filter: brightness(130%);
+  background-color: var(--menu-background-color);
+  filter: brightness(120%);
+
+}
+body > menu > * > a:where([active]){
+  border: 1px solid white;
 
 }
 body > menu > * > a > svg{
-
-
   height: 40px;
   width: 40px;
 
