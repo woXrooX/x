@@ -207,7 +207,7 @@ input[type=submit]{
   overflow: hidden;
   width: auto;
   height: var(--f-height);
-  padding: 0px var(--f-padding);
+  padding: var(--f-padding);
   border-radius: var(--f-radius);
   border: none;
   text-transform: uppercase;
