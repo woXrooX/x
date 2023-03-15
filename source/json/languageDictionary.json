@@ -344,6 +344,11 @@
     "ru":"Неверная цена",
     "uz":"Noto'g'ri narx"
   },
+  "invalidPrompt":{
+    "en":"Invalid Prompt",
+    "ru":"Неверная подсказка",
+    "uz":"Noto'g'ri buyruq"
+  },
   "javaScriptDisabled":{
     "en":"JavaScript is disabled",
     "ru":"JavaScript отключен",
