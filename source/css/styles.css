@@ -1,8 +1,8 @@
 /****************************** Form START ******************************/
 
 /************ Form START ************/
-form{
-  --f-padding: 10px;
+:root{
+  --f-padding: 100px;
   --f-radius: 5px;
   --f-gap: 10px;
   --f-height: 40px;
@@ -12,6 +12,10 @@ form{
   --f-transition: var(--transition-velocity) ease-in-out;
   --f-transition-property: background-color, border;
 
+}
+
+
+form{
   width: var(--f-width);
 
   display: grid;
@@ -207,7 +211,7 @@ input[type=submit]{
   overflow: hidden;
   width: auto;
   height: var(--f-height);
-  padding: var(--f-padding);
+  padding: 0px var(--f-padding);
   border-radius: var(--f-radius);
   border: none;
   text-transform: uppercase;
