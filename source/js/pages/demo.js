@@ -95,6 +95,11 @@ const form = `
             <button type='submit' name='button'>Button</button>
         </label>
 
+        <label>
+            <p for='disabledButton'></p>
+            <button type='submit' name='disabledButton' disabled>Disabled button</button>
+        </label>
+
       </form>
 
     </column>
