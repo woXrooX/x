@@ -32,10 +32,18 @@ export default class Dom{
     if(!!page == false) return;
 
     // Update "page" Variable
-    Dom.page = page;
+    Dom.#page = page;
 
     // Start The Page's Life Cycle
     Dom.lifeCycle();
+
+  }
+
+  static async executeOnFormGotResponse(response){
+
+    // If Async Function Passed Or Normal One
+    if(Dom.#page.onFormGotResponse.constructor.name === 'AsyncFunction') await Dom.#page.onFormGotResponse(response);
+    else Dom.#page.onFormGotResponse(response);
 
   }
 
@@ -44,30 +52,30 @@ export default class Dom{
     window.pageData = {};
 
     // Set Title
-    window.Title.set(Dom.page.TITLE);
+    window.Title.set(Dom.#page.TITLE);
 
     ///// Before
     // Check If before() Exists
-    if(!!Dom.page.before === true)
+    if(!!Dom.#page.before === true)
       // If Async Function Passed Or Normal One
-      if(Dom.page.before.constructor.name === 'AsyncFunction') await Dom.page.before();
-      else Dom.page.before();
+      if(Dom.#page.before.constructor.name === 'AsyncFunction') await Dom.#page.before();
+      else Dom.#page.before();
 
     ///// Content - Render The Content
     // Check If Default Function Exists
-    if(typeof Dom.page.default === "function")
+    if(typeof Dom.#page.default === "function")
       // If Async Function Passed Or Normal One
-      if(Dom.page.default.constructor.name === 'AsyncFunction') Dom.render(await Dom.page.default());
-      else Dom.render(Dom.page.default());
+      if(Dom.#page.default.constructor.name === 'AsyncFunction') Dom.render(await Dom.#page.default());
+      else Dom.render(Dom.#page.default());
 
     else Dom.render("[DOM] Error: No Default Function Defined!");
 
     ///// After
     // Check If after() Exists
-    if(!!Dom.page.after === true)
+    if(!!Dom.#page.after === true)
       // If Async Function Passed Or Normal One
-      if(Dom.page.after.constructor.name === 'AsyncFunction') await Dom.page.after();
-      else Dom.page.after();
+      if(Dom.#page.after.constructor.name === 'AsyncFunction') await Dom.#page.after();
+      else Dom.#page.after();
 
     // Delete The Page Data At The End Of Each Life Cycle
     delete window.pageData;
