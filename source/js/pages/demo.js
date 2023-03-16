@@ -165,7 +165,7 @@ const table = `
 
   <row>
 
-    <column class="w-75 bc-5 radius">
+    <column class="w-75 bc-5 radius p-5">
 
       <table>
 
@@ -222,7 +222,7 @@ const classBCcolorSurfaceX = `
 
   <row><h1>Background Color (class: .bc-x, variable: --color-surface-x)</h1></row>
 
-  <row class="bc-5 radius p-5">
+  <row class="w-90 bc-5 radius p-5">
 
     <div class="bc-1 p-2">.bc-1 <br> --color-surface-1</div>
     <div class="bc-2 p-2">.bc-2 <br> --color-surface-2</div>
@@ -247,7 +247,7 @@ const colorTextX = `
 
   <row><h1>Text Color (--color-text-x)</h1></row>
 
-  <row class="bc-3 radius p-5">
+  <row class="bc-3 radius p-5 w-90">
 
     <div style="color:var(--color-text-primary)" class="bc-1 p-5">
       <b>--color-text-primary</b>
@@ -267,12 +267,13 @@ const colorTextX = `
 `;
 
 
+///// --color-x
 const situationalColors = `
 <container>
 
   <row><h1>Situational Colors (--color-x)</h1></row>
 
-  <row class="bc-3 radius p-5">
+  <row class="bc-3 radius p-5 w-90">
 
     <div style="background-color:var(--color-success)" class="p-5">
       <b>--color-success</b>
@@ -290,6 +291,27 @@ const situationalColors = `
       <b>--color-error</b>
     </div>
 
+  </row>
+
+</container>
+`;
+
+
+///// box-x
+const themedBoxes = `
+<container>
+
+  <row><h1>Themed Boxes (.box-x)</h1></row>
+
+  <row>
+    <column class="box-1 w-25 p-5">.box-1 w-25 p-5</column>
+    <column class="box-1 w-35 p-2">.box-1 w-35 p-2</column>
+    <column class="box-1 w-40 p-4">.box-1 w-40 p-4</column>
+  </row>
+
+  <row>
+    <column class="box-1 w-45 p-5">.box-1 w-45 p-5</column>
+    <column class="box-1 w-55 p-2">.box-1 w-55 p-2</column>
   </row>
 
 </container>
@@ -320,6 +342,8 @@ export default function content(){
     ${classBCcolorSurfaceX}
     ${colorTextX}
     ${situationalColors}
+    ${themedBoxes}
+    <br>
   `;
 
   return dom;
@@ -333,3 +357,6 @@ export function after(){
   console.log("AFTER: ", window.pageData);
 
 }
+
+///// Executes The Function When On Form Got Response
+export function onFormGotResponse(response){}
