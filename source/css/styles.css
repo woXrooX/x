@@ -88,10 +88,10 @@ input:where([type=text], [type=eMail], [type=password], [type=number], [type=col
 /************ select, textarea, imput -> type = [text, password, eMail, number, color, file] END ************/
 
 /************ :hover & :focus -> inputs & textarea & select START ************/
-select:where(:hover, :focus),
-textarea:where(:hover, :focus),
-input[type=number]:where(:hover, :focus),
-input:where(:hover, :focus){
+select:not(:disabled):where(:hover, :focus),
+textarea:not(:disabled):where(:hover, :focus),
+input[type=number]:not(:disabled):where(:hover, :focus),
+input:not(:disabled):where(:hover, :focus){
   background-color: var(--color-surface-5);
   border: 1px solid var(--color-text-primary);
 
@@ -171,7 +171,7 @@ input[type=file]::file-selector-button{
 }
 
 /* File Button :hover */
-input[type=file]::file-selector-button:hover{
+input[type=file]::file-selector-button:not(:disabled):hover{
   filter: brightness(80%);
 
 }
@@ -224,20 +224,23 @@ input[type=submit]{
 
 }
 
-button:where(:active, :focus, :hover),
-input[type=submit]:where(:active, :focus, :hover){
+button:not(:disabled):where(:active, :focus, :hover),
+input[type=submit]:not(:disabled):where(:active, :focus, :hover){
   filter: brightness(80%);
 }
 
-button:disabled,
-input[type=submit]:disabled{
-  cursor: not-allowed;
-
-  filter: brightness(250%);
-}
 /************ input[type=submit] & button END ************/
 
 /****************************** Form END ******************************/
+
+/****************************** Disabled START ******************************/
+*:disabled,
+input[type=submit]:disabled{
+  cursor: not-allowed;
+  opacity: 0.5;
+
+}
+/****************************** Disabled END ******************************/
 
 
 /****************************** Table START ******************************/
