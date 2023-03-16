@@ -237,6 +237,15 @@ const classBCcolorSurfaceX = `
 
   </row>
 
+
+  <row><h3>Gradient Background Colors (.box-gradient)</h3></row>
+
+  <row class="g-1">
+    <column class="box-default bc-g-45 p-5">bc-g-45</column>
+    <column class="box-default bc-g-right p-5">bc-g-right</column>
+    <column class="box-default bc-g-left p-5">bc-g-left</column>
+  </row>
+
 </container>
 `;
 
