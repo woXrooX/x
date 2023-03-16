@@ -222,7 +222,7 @@ const classBCcolorSurfaceX = `
 
   <row><h1>Background Color (class: .bc-x, variable: --color-surface-x)</h1></row>
 
-  <row class="w-90 bc-5 radius p-5">
+  <row class="w-90 bs bc-5 radius p-5">
 
     <div class="bc-1 p-2">.bc-1 <br> --color-surface-1</div>
     <div class="bc-2 p-2">.bc-2 <br> --color-surface-2</div>
@@ -247,7 +247,7 @@ const colorTextX = `
 
   <row><h1>Text Color (--color-text-x)</h1></row>
 
-  <row class="bc-3 radius p-5 w-90">
+  <row class="bc-3 bs radius p-5 w-90">
 
     <div style="color:var(--color-text-primary)" class="bc-1 p-5">
       <b>--color-text-primary</b>
@@ -273,7 +273,7 @@ const situationalColors = `
 
   <row><h1>Situational Colors (--color-x)</h1></row>
 
-  <row class="bc-3 radius p-5 w-90">
+  <row class="bc-3 bs radius p-5 w-90">
 
     <div style="background-color:var(--color-success)" class="p-5">
       <b>--color-success</b>
@@ -300,20 +300,45 @@ const situationalColors = `
 ///// box-x
 const themedBoxes = `
 <container>
-
   <row><h1>Themed Boxes (.box-x)</h1></row>
+</container>
+
+<container class="p-5">
+
+  <row><h3>Default Box (.box-default)</h3></row>
+
+  <row class="g-1">
+    <column class="box-default w-25 p-5">box-default w-25 p-5"</column>
+    <column class="box-default w-75 p-2">box-default w-75 p-2</column>
+  </row>
+</container>
+
+<container>
+
+  <row><h3>2D Box (.box-2D)</h3></row>
 
   <row>
-    <column class="box-1 w-25 p-5">.box-1 w-25 p-5</column>
-    <column class="box-1 w-35 p-2">.box-1 w-35 p-2</column>
-    <column class="box-1 w-40 p-4">.box-1 w-40 p-4</column>
+    <column class="box-2D w-25 p-5">box-2D w-25 p-5</column>
+    <column class="box-2D w-35 p-2">box-2D w-35 p-2</column>
+    <column class="box-2D w-40 p-4">box-2D w-40 p-4</column>
   </row>
 
   <row>
-    <column class="box-1 w-45 p-5">.box-1 w-45 p-5</column>
-    <column class="box-1 w-55 p-2">.box-1 w-55 p-2</column>
+    <column class="box-2D w-45 p-5">box-2D w-45 p-5</column>
+    <column class="box-2D w-55 p-2">box-2D w-55 p-2</column>
   </row>
 
+</container>
+
+<container class="p-5">
+
+  <row><h3>Round Box (.box-round)</h3></row>
+
+  <row class="g-1">
+    <column class="box-round bc-4 w-25 p-2">box-round bc-4 w-25 p-2"</column>
+    <column class="box-round w-50 p-5">box-round w-50 p-5</column>
+    <column class="box-round w-25 bc-5 p-1">box-round bc-5 w-25 p-1</column>
+  </row>
 </container>
 `;
 
