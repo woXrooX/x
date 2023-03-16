@@ -50,6 +50,12 @@ export default class Form{
     form.onsubmit = async ()=>{
       event.preventDefault();
 
+      // The Submitter
+      const submitter = event.submitter;
+
+      // Disable Submitter Button
+      submitter.disabled = true;
+
       // PLZW8
       Form.#response("info", "plzW8", form.getAttribute("for"));
 
@@ -70,6 +76,9 @@ export default class Form{
 
       // Above Submit Field
       Form.#response(response["type"], response["message"], form.getAttribute("for"));
+
+      // Enable Submitter Button
+      submitter.disabled = false;
 
       ////////// Check If Response Includes Actions
       if("actions" in response === false) return;
