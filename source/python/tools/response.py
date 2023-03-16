@@ -29,6 +29,8 @@ if __name__ != "__main__":
         redirect=False,
         reload=False,
 
+        onFormGotResponse=False,
+
         # HTTP Response Status Code
         HTTP_response_status_code=200
     ):
@@ -78,6 +80,9 @@ if __name__ != "__main__":
 
         ## reload
         if reload: actionsDict["reload"] = 0
+
+        ## Execute Function On Form Got Response
+        if onFormGotResponse: actionsDict["onFormGotResponse"] = 0
 
         # Check If Actions Has At Least One Object
         if actionsDict: responseDict["actions"] = actionsDict
