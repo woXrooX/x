@@ -20,28 +20,43 @@ const form = `
       <form>
 
         <label>
-            <p for='number'>Number</p>
-            <input type='number' name='number'>
+          <p for='text'>Text</p>
+          <input type='text' name='text'>
         </label>
 
         <label>
-            <p for='text'>Text</p>
-            <input type='text' name='text'>
+          <p for='textDisabled'>Text Disabled</p>
+          <input type='text' name='textDisabled' disabled>
         </label>
 
         <label>
-            <p for='password'>Password</p>
-            <input type='password' name='password'>
+          <p for='number'>Number</p>
+          <input type='number' name='number'>
         </label>
 
         <label>
-            <p for='eMail'>eMail</p>
-            <input type='eMail' name='eMail'>
+          <p for='password'>Password</p>
+          <input type='password' name='password'>
+        </label>
+
+        <label>
+          <p for='eMail'>eMail</p>
+          <input type='eMail' name='eMail'>
         </label>
 
         <label>
           <p for='checkbox'>Checkbox</p>
-          <input type='checkbox' name='checkbox' checked>
+          <input type='checkbox' name='checkbox'>
+        </label>
+
+        <label>
+          <p for='checkboxChecked'>Checkbox Checked</p>
+          <input type='checkbox' name='checkboxChecked' checked>
+        </label>
+
+        <label>
+          <p for='checkboxCheckedDisabled'>Checkbox Checked & Disabled</p>
+          <input type='checkbox' name='checkboxCheckedDisabled' checked disabled>
         </label>
 
         <fieldset for='radio'>
@@ -58,16 +73,31 @@ const form = `
             Second
           </label>
 
+          <label>
+            <input type="radio" name="radio" value="third" disabled>
+            Third Disabled
+          </label>
+
         </fieldset>
 
         <label>
-            <p for='color'>Color</p>
-            <input type='color' name='color'>
+          <p for='color'>Color</p>
+          <input type='color' name='color'>
         </label>
 
         <label>
-            <p for='file'>File</p>
-            <input type='file' name='file'>
+          <p for='colorDisabled'>Color Disabled</p>
+          <input type='color' name='colorDisabled' disabled>
+        </label>
+
+        <label>
+          <p for='file'>File</p>
+          <input type='file' name='file'>
+        </label>
+
+        <label>
+          <p for='fileDisabled'>File Disabled</p>
+          <input type='file' name='fileDisabled' disabled>
         </label>
 
         <label>
@@ -81,23 +111,40 @@ const form = `
         </label>
 
         <label>
-            <p for='textarea'>Textarea</p>
-            <textarea name="textarea" rows="5"></textarea>
+          <p for='selectDisabled'>Select Disabled</p>
+          <select name="selectDisabled" disabled>
+            <option selected disabled>Choose</option>
+          </select>
         </label>
 
         <label>
-            <p for='submit'></p>
-            <input type='submit' name='submit' value='Submit'>
+          <p for='textarea'>Textarea</p>
+          <textarea name="textarea" rows="5"></textarea>
         </label>
 
         <label>
-            <p for='button'></p>
-            <button type='submit' name='button'>Button</button>
+          <p for='textareaDisabled'>Textarea Disabled</p>
+          <textarea name="textareaDisabled" rows="5" disabled></textarea>
         </label>
 
         <label>
-            <p for='disabledButton'></p>
-            <button type='submit' name='disabledButton' disabled>Disabled button</button>
+          <p for='submit'></p>
+          <input type='submit' name='submit' value='Submit'>
+        </label>
+
+        <label>
+          <p for='submitDisabled'></p>
+          <input type='submit' name='submitsubmitDisabled' value='Submit Disabled' disabled>
+        </label>
+
+        <label>
+          <p for='button'></p>
+          <button type='submit' name='button'>Button</button>
+        </label>
+
+        <label>
+          <p for='disabledButton'></p>
+          <button type='submit' name='disabledButton' disabled>Disabled button</button>
         </label>
 
       </form>
