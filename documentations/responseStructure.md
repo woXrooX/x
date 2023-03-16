@@ -48,7 +48,10 @@ return make_response(json.dumps({
       "redirect": "me",
 
       #### Reload
-      "reload": 0
+      "reload": 0,
+
+      #### Execute Function On Form Got Response
+      "onFormGotResponse": 0
 
     }
 }), 200)
