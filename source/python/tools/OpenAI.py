@@ -7,7 +7,6 @@
 if __name__ != "__main__":
 
     from __main__ import CONF
-    from python.tools.response import response
 
     import openai
     import json
@@ -22,10 +21,10 @@ if __name__ != "__main__":
             temperature=0.1
         ):
             # Check If Feature Is Enabled
-            if "OpenAI" not in CONF: return response(type="info", message="OpenAI Is Not Enabled!")
+            if "OpenAI" not in CONF: return False
 
             # Check If prompt Is Valid
-            if not prompt: return response(type="error", message="Invalid Prompt!")
+            if not prompt: return False
 
             try:
                 openai.api_key = CONF["OpenAI"]["api_key"]
@@ -41,10 +40,10 @@ if __name__ != "__main__":
                   # stop="\n"
                 )
 
-                return response(type="success", data=responseOpenAI["choices"][0]["text"])
+                return responseOpenAI["choices"][0]["text"]
 
             except:
-                return response(type="error", message="OpenAIError")
+                return False
 
 
 
@@ -56,10 +55,10 @@ if __name__ != "__main__":
             temperature=0.1
         ):
             # Check If Feature Is Enabled
-            if "OpenAI" not in CONF: return response(type="info", message="OpenAI Is Not Enabled!")
+            if "OpenAI" not in CONF: return False
 
             # Check If prompt Is Valid
-            if not message: return response(type="error", message="Invalid Messages!")
+            if not message: return False
 
             # Messages | Chat History
             chatHistory = [
@@ -84,7 +83,7 @@ if __name__ != "__main__":
                 # Append Assistant Message
                 chatHistory.append({"role": "assistant", "content": completion["choices"][0]["message"]["content"]})
 
-                return response(type="success", data=completion["choices"][0]["message"]["content"])
+                return completion["choices"][0]["message"]["content"]
 
             except:
-                return response(type="error", message="OpenAIError")
+                return False
