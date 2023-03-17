@@ -322,7 +322,7 @@ const themedBoxes = `
   </row>
 </container>
 
-<container class="m-t-5 p-5">
+<container class="m-t-5">
 
   <row><h3>2D Box (.box-2D)</h3></row>
 
