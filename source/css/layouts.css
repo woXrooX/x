@@ -132,6 +132,44 @@ column{
 
 /***** Paddings END *****/
 
+/***** Margings START *****/
+
+.m-1{margin: var(--padding);}
+.m-2{margin: calc(var(--padding) * 2);}
+.m-3{margin: calc(var(--padding) * 3);}
+.m-4{margin: calc(var(--padding) * 4);}
+.m-5{margin: calc(var(--padding) * 5);}
+
+/* Top */
+.m-t-1{margin-top: var(--padding);}
+.m-t-2{margin-top: calc(var(--padding) * 2);}
+.m-t-3{margin-top: calc(var(--padding) * 3);}
+.m-t-4{margin-top: calc(var(--padding) * 4);}
+.m-t-5{margin-top: calc(var(--padding) * 5);}
+
+/* Right */
+.m-r-1{margin-right: var(--padding);}
+.m-r-2{margin-right: calc(var(--padding) * 2);}
+.m-r-3{margin-right: calc(var(--padding) * 3);}
+.m-r-4{margin-right: calc(var(--padding) * 4);}
+.m-r-5{margin-right: calc(var(--padding) * 5);}
+
+/* Bottom */
+.m-b-1{margin-bottom: var(--padding);}
+.m-b-2{margin-bottom: calc(var(--padding) * 2);}
+.m-b-3{margin-bottom: calc(var(--padding) * 3);}
+.m-b-4{margin-bottom: calc(var(--padding) * 4);}
+.m-b-5{margin-bottom: calc(var(--padding) * 5);}
+
+/* Left */
+.m-l-1{margin-left: var(--padding);}
+.m-l-2{margin-left: calc(var(--padding) * 2);}
+.m-l-3{margin-left: calc(var(--padding) * 3);}
+.m-l-4{margin-left: calc(var(--padding) * 4);}
+.m-l-5{margin-left: calc(var(--padding) * 5);}
+
+/***** Margings END *****/
+
 /***** Gap START *****/
 
 .g-1{gap: var(--gap);}
