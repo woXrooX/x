@@ -62,6 +62,8 @@ menu:
     - name: "logOut"
     - name: "demo"
       logo: "laboratory"
+    - name: "languagesLibrary"
+      logo: "folder"
 
 
 ######### Pages
@@ -120,6 +122,15 @@ pages:
 
     aliases:
       - "/demo"
+
+
+  languagesLibrary:
+    enabled: true
+    allowed:
+      - "everyone"
+
+    aliases:
+      - "/languagesLibrary"
 
 
 ######### Username
