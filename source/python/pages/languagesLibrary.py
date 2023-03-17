@@ -7,7 +7,7 @@ from __main__ import CONF, EXTERNALS
 from python.tools.tools import pageGuard
 
 #################################################### Demo
-@app.route("/languageDictionary", methods=["GET"])
-@pageGuard("languageDictionary")
-def languageDictionary():
+@app.route("/languagesLibrary", methods=["GET"])
+@pageGuard("languagesLibrary")
+def languagesLibrary():
     if request.method == "GET": return render_template("index.html", **globals())
