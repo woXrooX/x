@@ -359,6 +359,11 @@
     "ru":"JavaScript отключен",
     "uz":"JavaScript o'chirilgan"
   },
+  "languagesLibrary":{
+    "en":"Languages library",
+    "ru":"Библиотека языков",
+    "uz":"Tillar kutubxonasi"
+  },
   "lastname":{
     "en":"Last name",
     "ru":"Фамилия",
