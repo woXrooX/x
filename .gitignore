@@ -16,6 +16,7 @@ source/python/pages/*.py
 !source/python/pages/__init__.py
 
 !source/python/pages/demo.py
+!source/python/pages/languageDictionary.py
 
 !source/python/pages/signUp.py
 !source/python/pages/eMailConfirmation.py
@@ -33,6 +34,7 @@ source/js/pages/*.js
 
 # Allow Default Pages
 !source/js/pages/demo.js
+!source/js/pages/languageDictionary.js
 
 !source/js/pages/signUp.js
 !source/js/pages/eMailConfirmation.js
