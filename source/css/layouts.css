@@ -38,8 +38,6 @@ container{
 
   width: 100%;
 
-  margin-bottom: var(--gap);
-
 }
 
 row, column{
