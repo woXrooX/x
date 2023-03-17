@@ -10,7 +10,7 @@ export default function content(){
   </row>
 
   <row>
-    <column class="bc-2 p-5 bs radius">
+    <column class="w-50 box-default p-5 m-t-5">
       <form action="logOut" for="logOut">
         <label>
             <p for='logOut'>${window.Lang.use("areYouSure")}</p>

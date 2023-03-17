@@ -5,7 +5,7 @@ export default function content() {
   let dom = `
 <container>
   <row>
-    <column class="w-50 p-5 bc-2 bs radius">
+    <column class="w-50 box-default p-5 m-t-5">
 
       <row>
         <h1>${window.langDict["signUp"][window.langCode]}</h1>

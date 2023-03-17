@@ -6,7 +6,7 @@ export default function content(){
   const dom = `
 <container>
   <row>
-    <column class="bc-2 p-5 bs radius">
+    <column class="w-50 box-default p-5 m-t-5">
       <form action="eMailConfirmation" for="eMailConfirmation">
 
         <p>${window.langDict["eMailConfirmationCodeHasBeenSent"][window.langCode]}</p>
