@@ -45,6 +45,11 @@ default:
   currency: "USD"
   title: "X-WebApp"
   language: "en"
+  # appIsDown:
+  #   reason: "Under Development"
+  #   explanation: "Long text that describes the 'reason'"
+  #   logo: "SVG Logo To Be Shown"
+
 
 
 ######### HTML
