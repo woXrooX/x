@@ -24,6 +24,7 @@ source/python/pages/*.py
 !source/python/pages/logOut.py
 
 !source/python/pages/page_not_found.py
+!source/python/pages/app_is_down.py
 
 !source/python/pages/api.py
 
@@ -42,3 +43,4 @@ source/js/pages/*.js
 !source/js/pages/logOut.js
 
 !source/js/pages/404.js
+!source/js/pages/appIsDown.js
