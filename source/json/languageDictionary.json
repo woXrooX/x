@@ -19,20 +19,15 @@
     "ru":"Добавить вариант",
     "uz":"Variantni qo'shish"
   },
-  "addProduct":{
-    "en":"Add a product",
-    "ru":"Добавить товар",
-    "uz":"Mahsulot qo'shish"
-  },
   "addUser":{
     "en":"Add user",
     "ru":"Добавить пользователя",
     "uz":"Foydalanuvchi qo'shish"
   },
-  "allChangesWillTakeEffectAtNextLogIn":{
+  "allChangesWillTakeEffectAfterNextLogIn":{
     "en":"All changes will take effect at next log in",
-    "ru":"Все изменения вступят в силу при следующем входе в систему",
-    "uz":"Barcha o'zgarishlar keyingi kirishda kuchga kiradi"
+    "ru":"Все изменения вступят в силу после следующего входа в систему",
+    "uz":"Barcha o'zgarishlar keyingi tizimga kirgandan keyin kuchga kiradi"
   },
   "areYouSure":{
     "en":"Are you sure?",
@@ -89,21 +84,6 @@
     "ru":"Связаться с нами",
     "uz":"Aloqa"
   },
-  "contactInfo":{
-    "en":"Contact info",
-    "ru":"Контактная информация",
-    "uz":"Aloqa ma'lumotlari"
-  },
-  "companyInfo":{
-    "en":"Company info",
-    "ru":"Информация о компании",
-    "uz":"Kompaniya haqida ma'lumot"
-  },
-  "createStore":{
-    "en":"Create a store",
-    "ru":"Создать магазин",
-    "uz":"Do'kon yaratish"
-  },
   "couldNotSaveFile":{
     "en":"Could not save the file!",
     "ru":"Не удалось сохранить файл!",
@@ -124,11 +104,6 @@
     "ru":"Валюта",
     "uz":"Valyuta"
   },
-  "customer":{
-    "en":"Customer",
-    "ru":"Клиент",
-    "uz":"Mijoz"
-  },
   "databaseError":{
     "en":"Database error",
     "ru":"Ошибка базы данных",
@@ -139,35 +114,15 @@
     "ru":"По умолчанию",
     "uz":"Odatiy"
   },
-  "deliveryAddress":{
-    "en":"Delivery address",
-    "ru":"Адресс доставки",
-    "uz":"Jo'natma manzili"
-  },
   "demo":{
     "en":"Demo",
     "ru":"Демо",
     "uz":"Namoyish"
   },
-  "description":{
-    "en":"Description",
-    "ru":"Описание",
-    "uz":"Tavsif"
-  },
-  "details":{
-    "en":"Details",
-    "ru":"Описание",
-    "uz":"Tavsif"
-  },
   "didNotReceiveCode":{
     "en":"Did not receive a code?",
     "ru":"Не получили код?",
     "uz":"Kod kelmadimi?"
-  },
-  "differentOptionsForSameProduct":{
-    "en":"You can have different options for the same product like different colors, sizes, prices, etc.",
-    "ru":"У вас могут быть разные варианты одного продукта например разные цвета, размеры, цены, так далее.",
-    "uz":"Sizda bir xil mahsulot turli xil variantlar bo'lishi mumkin. Misol uchun turli xil ranglar, o'lchamlar, narxlar va boshqalar kabi."
   },
   "dontHaveAccountGoToSignUp":{
     "en":"Don't have an account ? Go to sign up",
@@ -175,12 +130,12 @@
     "uz":"Ro'yxatdan o'tmaganmisiz? Ro'yxatdan o'tish bu yerda"
   },
   "eMail":{
-    "en":"E-mail",
+    "en":"Email",
     "ru":"Эл. почта",
     "uz":"Elektron pochta"
   },
   "eMailConfirmation":{
-    "en":"E-Mail confirmation",
+    "en":"Email confirmation",
     "ru":"Подтверждение электонной почты",
     "uz":"Elektron pochtani tasdiqlash"
   },
@@ -205,27 +160,27 @@
     "uz":"Elektron pochtani tasdiqlash kodi noto'g'ri!"
   },
   "eMailEmpty":{
-    "en":"E-mail address is empty",
+    "en":"Email address is empty",
     "ru":"Адрес электронной почты пуст",
     "uz":"Elektron pochta manzili bo'sh bo'lmasligi kerak"
   },
   "eMailFieldCheck":{
-    "en":"Check E-Mail field",
-    "ru":"Проверить поле электронной почты",
-    "uz":"Elektron pochta maydonini tekshiring"
+    "en":"Please check the Email field",
+    "ru":"Пожалуйста, проверьте поле электронной почты",
+    "uz":"Iltimos Elektron pochta maydonini tekshiring"
   },
   "eMailInvalid":{
-    "en":"Invalid E-mail address",
+    "en":"Invalid Email address",
     "ru":"Неверный адрес электронной почты",
     "uz":"Elektron pochta manzili noto‘g‘ri"
   },
   "eMailInUse":{
-    "en":"This E-mail is already in use",
+    "en":"This Email is already in use",
     "ru":"Этот электронный адрес уже используется",
     "uz":"Ushbu elektron pochta manzili band"
   },
   "eMailOk":{
-    "en":"E-mail address is OK",
+    "en":"Email address is OK",
     "ru":"Адрес электронной почты в порядке",
     "uz":"Elektron pochta manzili yaxshi"
   },
@@ -253,11 +208,6 @@
     "en":"Error",
     "ru":"Ошибка",
     "uz":"Xato"
-  },
-  "evenJupiterHere":{
-    "en":"Even Jupiter can be found here!",
-    "ru":"Здесь можно найти даже Юпитер!",
-    "uz":"Hatto Yupiterni ham bu erda topish mumkin!"
   },
   "faq":{
     "en":"Faq",
@@ -293,11 +243,6 @@
     "en":"General",
     "ru":"Общее",
     "uz":"Umumiy"
-  },
-  "generalPrice":{
-    "en":"General price",
-    "ru":"Общая цена",
-    "uz":"Umumiy narx"
   },
   "haveAccountGoToLogIn":{
     "en":"Have an account ? Go to log in",
@@ -344,11 +289,6 @@
     "ru":"Неверное ключевое слово!",
     "uz":"Noto'g'ri kalit so'z!"
   },
-  "invalidPrice":{
-    "en":"Invalid price",
-    "ru":"Неверная цена",
-    "uz":"Noto'g'ri narx"
-  },
   "invalidPrompt":{
     "en":"Invalid Prompt",
     "ru":"Неверная подсказка",
@@ -379,55 +319,20 @@
     "ru":"Выйти",
     "uz":"Chiqish"
   },
-  "makeProductInvisibleFromSearchesTillReady":{
-    "en":"You can prepare products for later launches and hide them from searches till they are ready",
-    "ru":"Вы можете подготовить продукты для последующих запусков и скрыть их от поиска, пока они не будут готовы",
-    "uz":"Siz mahsulotlarni keyinchalik ishga tushirish uchun tayyorlashingiz va ularni tayyor bo'lguncha qidiruvlardan yashirishingiz mumkin"
-  },
   "male":{
     "en":"Male",
     "ru":"Мужчина",
     "uz":"Erkak"
-  },
-  "manufacturer":{
-    "en":"Manufacturer",
-    "ru":"Производитель",
-    "uz":"Ishlab chiqaruvchi"
-  },
-  "material":{
-    "en":"Material",
-    "ru":"Материал",
-    "uz":"Material"
   },
   "me":{
     "en":"My page",
     "ru":"Моя страница",
     "uz":"Mening sahifam"
   },
-  "merchant":{
-    "en":"Merchant",
-    "ru":"Торговец",
-    "uz":"Savdogar"
-  },
-  "myStores":{
-    "en":"My stores",
-    "ru":"Мои магазины",
-    "uz":"Mening do'konlarim"
-  },
   "myPage":{
     "en":"My page",
     "ru":"Моя страница",
     "uz":"Mening sahifam"
-  },
-  "myProducts":{
-    "en":"My products",
-    "ru":"Мои товары",
-    "uz":"Mening mahsulotlarim"
-  },
-  "newProduct":{
-    "en":"New product",
-    "ru":"Новый товар",
-    "uz":"Yangi mahsulot"
   },
   "notSpecified":{
     "en":"Not specified",
@@ -509,35 +414,10 @@
     "ru":"Политика конфиденциальности",
     "uz":"Maxfiylik siyosati"
   },
-  "productManufacturerEmpty":{
-    "en":"Manufacturer must be specified",
-    "ru":"Необходимо указать производителя",
-    "uz":"Ishlab chiqaruvchi ko'rsatilishi kerak"
-  },
-  "productPrice":{
-    "en":"Product price",
-    "ru":"Цена продукта",
-    "uz":"Mahsulot narxi"
-  },
   "products":{
     "en":"Products",
     "ru":"Товары",
     "uz":"Mahsulotlar"
-  },
-  "productTitle":{
-    "en":"Product title",
-    "ru":"Название товара",
-    "uz":"Mahsulot nomi"
-  },
-  "productTitleEmpty":{
-    "en":"Product title must be filled",
-    "ru":"Название продукта должно быть заполнено",
-    "uz":"Mahsulot nomi to'ldirilishi kerak"
-  },
-  "quantity":{
-    "en":"Quantity",
-    "ru":"Количество",
-    "uz":"Miqdor"
   },
   "remove":{
     "en":"Remove",
@@ -554,11 +434,6 @@
     "ru":"Отправить еще раз",
     "uz":"Qayta yuborish"
   },
-  "retailer":{
-    "en":"Retailer",
-    "ru":"Розничный продавец",
-    "uz":"Chakana sotuvchi"
-  },
   "save":{
     "en":"Save",
     "ru":"Сохранить",
@@ -568,16 +443,6 @@
     "en":"Saved",
     "ru":"Сохранено",
     "uz":"Saqlandi"
-  },
-  "searchable":{
-    "en":"Searchable",
-    "ru":"Доступный для поиска",
-    "uz":"Qidirish mumkin"
-  },
-  "selectProductDetail":{
-    "en":"Select product detail",
-    "ru":"Выберите деталь продукта",
-    "uz":"Mahsulot detalini tanlang"
   },
   "settings":{
     "en":"Settings",
@@ -624,26 +489,6 @@
     "ru":"Что-то пошло не так",
     "uz":"Nimadir noto'g'ri bajarildi"
   },
-  "staff":{
-    "en":"Staff",
-    "ru":"Сотрудники",
-    "uz":"Xodimlar"
-  },
-  "storeName":{
-    "en":"Store name",
-    "ru":"Название магазина",
-    "uz":"Do'kon nomi"
-  },
-  "storePhoneNumber":{
-    "en":"Store phone number",
-    "ru":"Телефонный номер магазина",
-    "uz":"Do'kon telefon raqami"
-  },
-  "storeCategory":{
-    "en":"Store category",
-    "ru":"Категория магазина",
-    "uz":"Do'kon toifasi"
-  },
   "style":{
     "en":"Style",
     "ru":"Стиль",
@@ -663,16 +508,6 @@
     "en":"Test",
     "ru":"Тест",
     "uz":"Sinov"
-  },
-  "titleEmpty":{
-    "en":"Title must be filled",
-    "ru":"Название должно быть заполнено",
-    "uz":"Sarlavha to'ldirilishi kerak"
-  },
-  "trader":{
-    "en":"Trader",
-    "ru":"Торговец",
-    "uz":"Savdogar"
   },
   "type":{
     "en":"Type",
@@ -769,11 +604,6 @@
     "ru":"Неверный тип пользователя!",
     "uz":"Foydalanuvchi turi noto'g'ri!"
   },
-  "variants":{
-    "en":"Variants",
-    "ru":"Варианты",
-    "uz":"Variantlar"
-  },
   "verifyEmail":{
     "en":"Verify Email",
     "ru":"Подтвердить Email",
@@ -783,16 +613,6 @@
     "en":"Warning",
     "ru":"Предупреждение",
     "uz":"Ogohlantirish"
-  },
-  "weight":{
-    "en":"Weight",
-    "ru":"Вес",
-    "uz":"Vazn"
-  },
-  "whatCurrencyForThisProduct":{
-    "en":"What currency would You like to use for this product?",
-    "ru":"Какую валюту вы хотите использовать для этого продукта?",
-    "uz":"Ushbu mahsulot uchun qaysi valyutadan foydalanmoqchisiz?"
   },
   "wrongLanguageSelected":{
     "en":"Wrong language selected",
