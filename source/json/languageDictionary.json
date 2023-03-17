@@ -29,6 +29,11 @@
     "ru":"Все изменения вступят в силу после следующего входа в систему",
     "uz":"Barcha o'zgarishlar keyingi tizimga kirgandan keyin kuchga kiradi"
   },
+  "appIsDown":{
+    "en":"App is down!",
+    "ru":"Приложение не работает!",
+    "uz":"Ilova ishlamayapti!"
+  },
   "areYouSure":{
     "en":"Are you sure?",
     "ru":"Вы уверены?",
