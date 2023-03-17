@@ -9,13 +9,13 @@ setTimeout(()=>{window.Toast.new("error", "error");}, 4000);
 
 ///// Form
 const form = `
-<container>
+<container class="m-t-5">
 
   <row><h1>Form</h1></row>
 
   <row>
 
-    <column class="w-75 bc-3 radius p-5 bs">
+    <column class="w-75 box-default p-5">
 
       <form>
 
@@ -159,13 +159,13 @@ const form = `
 
 ///// Table
 const table = `
-<container>
+<container class="m-t-5">
 
   <row><h1>Table</h1></row>
 
   <row>
 
-    <column class="w-75 bc-5 radius p-5">
+    <column class="w-75 box-default p-5">
 
       <table>
 
@@ -218,11 +218,11 @@ const table = `
 
 ///// Class .bc-x & --color-surface-x
 const classBCcolorSurfaceX = `
-<container>
+<container class="m-t-5">
 
   <row><h1>Background Color (class: .bc-x, variable: --color-surface-x)</h1></row>
 
-  <row class="w-90 bs bc-5 radius p-5">
+  <row class="w-90 box-default p-5">
 
     <div class="bc-1 p-2">.bc-1 <br> --color-surface-1</div>
     <div class="bc-2 p-2">.bc-2 <br> --color-surface-2</div>
@@ -252,11 +252,11 @@ const classBCcolorSurfaceX = `
 
 ///// --color-text-x
 const colorTextX = `
-<container>
+<container class="m-t-5">
 
   <row><h1>Text Color (--color-text-x)</h1></row>
 
-  <row class="bc-3 bs radius p-5 w-90">
+  <row class="w-90 box-default p-5">
 
     <div style="color:var(--color-text-primary)" class="bc-1 p-5">
       <b>--color-text-primary</b>
@@ -278,11 +278,11 @@ const colorTextX = `
 
 ///// --color-x
 const situationalColors = `
-<container>
+<container class="m-t-5">
 
   <row><h1>Situational Colors (--color-x)</h1></row>
 
-  <row class="bc-3 bs radius p-5 w-90">
+  <row class="w-90 box-default p-5">
 
     <div style="background-color:var(--color-success)" class="p-5">
       <b>--color-success</b>
@@ -308,11 +308,11 @@ const situationalColors = `
 
 ///// box-x
 const themedBoxes = `
-<container>
+<container class="m-t-5 p-5">
   <row><h1>Themed Boxes (.box-x)</h1></row>
 </container>
 
-<container class="p-5">
+<container class="m-t-5 p-5">
 
   <row><h3>Default Box (.box-default)</h3></row>
 
@@ -322,7 +322,7 @@ const themedBoxes = `
   </row>
 </container>
 
-<container>
+<container class="m-t-5 p-5">
 
   <row><h3>2D Box (.box-2D)</h3></row>
 
@@ -339,7 +339,7 @@ const themedBoxes = `
 
 </container>
 
-<container class="p-5">
+<container class="m-t-5 p-5">
 
   <row><h3>Round Box (.box-round)</h3></row>
 
