@@ -18,11 +18,19 @@
 If No Matching Route Back-End Will Just Render *index.html* And **SPA/Router** Will Route To */404*
 - /404 (FRONT)
 
+#### App Is Down
+Will Prevent Rendering Or GET/POSTing Any Data/Content On The App
+Can Be Enabled At By Adding `project.json -> ["default"]["appIsDown"]`
+- /appIsDown (FRONT)
+
 #### API
 - /api (BACK)
 
 #### Demo
 - /demo (BACK, FRONT)
+
+#### Languages Library
+- /languagesLibrary (BACK, FRONT)
 
 ---
 
