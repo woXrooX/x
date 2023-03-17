@@ -19,7 +19,7 @@ If No Matching Route Back-End Will Just Render *index.html* And **SPA/Router** W
 - /404 (FRONT)
 
 #### App Is Down
-Will Prevent Rendering Or GET/POSTing Any Data/Content On The App
+Will Prevent Rendering Or GET/POSTing Any Data/Content On The App\
 Can Be Enabled At By Adding `project.json -> ["default"]["appIsDown"]`
 - /appIsDown (FRONT)
 
