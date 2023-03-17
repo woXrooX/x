@@ -1,6 +1,6 @@
 from functools import wraps # For pageGuard() Wrapper
 
-from __main__ import CONF, session, USER_TYPES, redirect, make_response, request, url_for, MySQL
+from __main__ import CONF, EXTERNALS, session, USER_TYPES, redirect, render_template, request, url_for, MySQL
 import json
 
 ######################################### Page Guard
@@ -53,13 +53,14 @@ def pageGuard(page):
                 #         "message": "unknownError"
                 #     }), 200)
 
+                ### App Is Down
+                if "appIsDown" in CONF["default"]:
+                    return response(type="warning", message="appIsDown")
+
                 ### "application/json"
                 # Check If "for" In Request
                 if request.content_type == "application/json" and "for" not in request.get_json():
-                    return make_response(json.dumps({
-                        "type": "warning",
-                        "message": "unknownError"
-                    }), 200)
+                    return response(type="warning", message="unknownError")
 
 
                 ### "multipart/form-data"
@@ -68,10 +69,7 @@ def pageGuard(page):
                 # Ex. "multipart/form-data; boundary=----WebKitFormBoundaryqZq6yAWEgk6aywYg"
                 # Check If "for" In Request
                 if "multipart/form-data" in request.content_type.split(';') and "for" not in request.form:
-                    return make_response(json.dumps({
-                        "type": "warning",
-                        "message": "unknownError"
-                    }), 200)
+                    return response(type="warning", message="unknownError")
 
                 # if(
                 #     # Form
@@ -87,6 +85,12 @@ def pageGuard(page):
 
 
             ####### GET
+
+            ####### App Is Down
+            if "appIsDown" in CONF["default"]:
+                return render_template("index.html", **globals())
+
+
             # Check If Page Exists
             if page not in CONF["pages"]: return redirect(url_for("home"))
 
