@@ -2,8 +2,15 @@
 
 export default class Router{
   static async handle(){
+    // Check If App Is Down If So Stop Handling Set appIsDown As Current Page
+    if("appIsDown" in window.CONF["default"]){
+      window.Dom.setPage(await import(`../pages/appIsDown.js`));
+      return;
+    }
+
     let endpoint = null;
 
+    // We have much efficient way of detecting if page exists if we give up on alias system
     // Loop Through Pages
     loopPages:
     for(const page in window.CONF["pages"]){
