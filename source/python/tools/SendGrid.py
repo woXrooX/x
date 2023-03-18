@@ -4,14 +4,19 @@
 
 
 if __name__ != "__main__":
+    from __main__ import CONF
+
     import sendgrid
     from sendgrid.helpers.mail import Mail, Email, To, Content
 
     class SendGrid:
 
         @staticmethod
-        def test():
-            sg = sendgrid.SendGridAPIClient(api_key="MY_API_KEY")
+        def send():
+            # Check If SendGrid Is Enabled
+            if CONF["eMail"]["SendGrid"]["enabled"] == False: return False;
+
+            sg = sendgrid.SendGridAPIClient(api_key=CONF["eMail"]["SendGrid"]["api_key"])
             from_email = Email("test@example.com")  # Change to your verified sender
             to_email = To("woXrooX@mail.ru")  # Change to your recipient
             subject = "Sending with SendGrid is Fun"
