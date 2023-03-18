@@ -39,6 +39,10 @@ eMail:
     eMail: null
     password: null
 
+  SendGrid:
+    enabled: false
+    api_key: null
+
 
 ######### Site Defaults
 default:
