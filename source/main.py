@@ -190,7 +190,6 @@ PUBLIC_CONF = {
     "username": CONF["username"],
     "password": CONF["password"],
     "phoneNumber": CONF["phoneNumber"],
-    "eMail": CONF["eMail"]
 
 }
 
