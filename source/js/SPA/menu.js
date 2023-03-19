@@ -72,7 +72,7 @@ export default class Menu{
     document.querySelector(Menu.#selectorMenuButton).onclick = Menu.#show;
   }
 
-  /////////////////// On Click Cover Hide
+  /////////////////// On Click Cover Hide Menu
   static #onClickCoverHide(){
     document.querySelector(window.Cover.selector).addEventListener("click", Menu.#hide);
   }
