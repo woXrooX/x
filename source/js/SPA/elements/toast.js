@@ -11,8 +11,6 @@
 // Raw HTML
 // <x-toast type="typeName">Content</x-toast>
 
-import Language from "../language.js";
-
 export default class Toast extends HTMLElement{
   static #selector = "body>toasts";
   static #autoDismissTimer = 5000;
@@ -147,10 +145,10 @@ export default class Toast extends HTMLElement{
     this.shadow.querySelector("toast>main>icon").innerHTML = !!ICONS[this.typeName] ? ICONS[this.typeName] : ICONS["warning"];
 
     // InnerHTML "typeName"
-    this.shadow.querySelector("toast>main>type").innerHTML = Language.translate(this.typeName);
+    this.shadow.querySelector("toast>main>type").innerHTML = window.Language.use(this.typeName);
 
     // InnerHTML "textContent"
-    this.shadow.querySelector("toast>main>content").innerHTML = Language.translate(this.textContent);
+    this.shadow.querySelector("toast>main>content").innerHTML = window.Language.use(this.textContent);
 
     // InnerHTML Close Button Icon
     this.shadow.querySelector("toast>dismiss").innerHTML = ICONS["close"];
