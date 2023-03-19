@@ -67,17 +67,17 @@ export default class Menu{
     });
   }
 
-  /////////////////// On Click Menu Button Show
+  /////////////////// On Click Menu Button Show The Menu
   static #onClickMenuButtonShow(){
     document.querySelector(Menu.#selectorMenuButton).onclick = Menu.#show;
   }
 
-  /////////////////// On Click Cover Hide Menu
+  /////////////////// On Click Cover Hide The Menu
   static #onClickCoverHide(){
     document.querySelector(window.Cover.selector).addEventListener("click", Menu.#hide);
   }
 
-  /////////////////// On Click Menu Anchors Hide
+  /////////////////// On Click Menu Anchors Hide The Menu
   static #onClickHyperlinksHide(){
     document.querySelectorAll(Menu.#selectorHyperlinks).forEach((a) => {
       a.addEventListener("click", Menu.#hide);
