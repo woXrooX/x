@@ -30,8 +30,9 @@ export default class Toast extends HTMLElement{
 
     Type: {
       this.typeName = "warning";
-      const attributeType = this.getAttribute("type").toLowerCase();
-      if(["success", "info", "warning", "error"].indexOf(attributeType) > -1) this.typeName = attributeType;
+      let attributeType = this.typeName;
+      if(this.hasAttribute("type") === true) attributeType = this.getAttribute("type").toLowerCase();
+      if(["success", "info", "warning", "error"].includes(attributeType)) this.typeName = attributeType;
       else this.textContent = this.getAttribute("type");
     }
 
