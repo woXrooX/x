@@ -83,11 +83,7 @@ export default class Menu{
     document.querySelector(Menu.#selectorMenuButton).onclick = Menu.#show;
   }
 
-<<<<<<< HEAD
-  /////////////////// On Click Cover Hide The Menu
-=======
-  /////////////////// On Click Lock Sidebar
-
+  /////////////////// toggleAlwaysOpenMode
   static #toggleAlwaysOpenMode(){
     const toggler = document.querySelector(`${Menu.selector} > header > svg[for=toggleAlwaysOpenMode]`);
 
@@ -142,7 +138,6 @@ export default class Menu{
   }
 
   /////////////////// On Click Cover Hide
->>>>>>> feature/menu
   static #onClickCoverHide(){
     document.querySelector(window.Cover.selector).addEventListener("click", Menu.#hide);
   }
