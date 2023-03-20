@@ -24,7 +24,7 @@
 // else if(Dom.page.before.constructor.name === 'Function') Dom.page.before();
 
 export default class Dom{
-  static #elementMain = document.querySelector("body > main");
+  static #elementMain = document.querySelector(window.Main.selector);
   static #page = null;
 
   static setPage(page){
