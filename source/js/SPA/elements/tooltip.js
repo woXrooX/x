@@ -53,13 +53,13 @@ export default class Tooltip extends HTMLElement{
           pointer-events: none;
 
           background-color: var(--color-brand);
-          color: var(--color-text-primary);
+          color: white;
 
           opacity: 0;
 
           padding: var(--padding);
           border-radius: var(--radius);
-          box-shadow: var(--shadow-light);
+          box-shadow: 0px 0px 10px var(--color-brand);
 
           max-width: 30vw;
           height: auto;
