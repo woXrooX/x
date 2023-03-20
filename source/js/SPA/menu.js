@@ -2,14 +2,21 @@
 
 export default class Menu{
   static selector = "body > menu";
-  static isLocked = false;
   static #selectorMenuButton = "body > header > svg[for=menu]";
   static #selectorHyperlinks = `${Menu.selector} > * > a`;
-  static #shown = false;
+
+  static #elementMenuHamburgerButton = null;
   static #elementMenu = null;
+
+  static #shown = false;
+
+  static #modes = ["normal", "alwaysOpen", "onlyLogos"];
+  static #currentMode = null;
+
 
   // Init
   static init(){
+    Menu.#elementMenuHamburgerButton = document.querySelector(Menu.#selectorMenuButton);
     Menu.#elementMenu = document.querySelector(Menu.selector);
 
     // Check If "body > menu" Exists
@@ -21,7 +28,9 @@ export default class Menu{
     // Listen To The Events
     Menu.#onClickMenuButtonShow();
     Menu.#onClickCoverHide();
-    Menu.#onClickLockSidebar()
+    Menu.#toggleAlwaysOpenMode();
+
+    // Menu.#onClickLockSidebar()
 
   }
 
@@ -73,61 +82,60 @@ export default class Menu{
   static #onClickMenuButtonShow(){
     document.querySelector(Menu.#selectorMenuButton).onclick = Menu.#show;
   }
-  
+
   /////////////////// On Click Lock Sidebar
-  static #onClickLockSidebar(){
-    let selectorMenuButton = document.querySelector(Menu.#selectorMenuButton)
-    const lockSidebarBtn = document.querySelector("body > menu > header > button")
-    const menu = document.querySelector(Menu.selector);
-    const header = document.querySelector("body > header");
-    const main = document.querySelector("body > main");
-    const footer = document.querySelector("body > footer");
-    const selectorHyperlinks = document.querySelectorAll(Menu.#selectorHyperlinks)
-    const menuWidth = document.querySelector("body > menu").offsetWidth + "px";
-    
-    lockSidebarBtn.addEventListener("click", ()=> {
-      
-      if(!Menu.isLocked){
 
-        window.Cover.hide()
+  static #toggleAlwaysOpenMode(){
+    const toggler = document.querySelector(`${Menu.selector} > header > svg[for=toggleAlwaysOpenMode]`);
 
-        lockSidebarBtn.innerHTML = "Locked";
+    const header = document.querySelector(window.Header.selector);
+    const main = document.querySelector(window.Main.selector);
+    const footer = document.querySelector(window.Footer.selector);
 
-        menu.style.width = "auto";
+    toggler.addEventListener("click", ()=>{
 
-        selectorMenuButton.style.visibility="hidden"
+      if(Menu.#currentMode === 1){
+        // Mode Change To "normal"
+        Menu.#currentMode = 0;
 
-        selectorHyperlinks.forEach((a) => {
-          a.addEventListener("click", ()=> {
-            Menu.#elementMenu.style.transform = "translate(0px, 0px)";
-            window.Cover.hide();
-          });
-        });
+        window.Cover.show();
 
-        [header, main, footer].forEach(element => {
-          console.log(element);
+        // Show Hamburger Button
+        Menu.#elementMenuHamburgerButton.style.visibility = "visible";
+
+        // Change The Lock Logo To Open
+        toggler.querySelector("svg > use").setAttribute("href", "#lockOpen")
+
+        // Header, Main, Footer Maximize
+        header.removeAttribute("style");
+        main.removeAttribute("style");
+        footer.removeAttribute("style");
+
+      }else{
+        // Mode Change To "alwaysOpen"
+        Menu.#currentMode = 1;
+
+        window.Cover.hide();
+
+        // Hide Hamburger Button
+        Menu.#elementMenuHamburgerButton.style.visibility = "hidden";
+
+        // Change The Lock Logo To Locked
+        toggler.querySelector("svg > use").setAttribute("href", "#lockLocked")
+
+        // Get Calculated Meni Width
+        const menuWidth = Menu.#elementMenu.offsetWidth + "px";
+
+        // Header, Main, Footer Minimize
+        for(const element of [header, main, footer]){
           element.style.width = `calc(100% - ${menuWidth})`;
           element.style.marginLeft = menuWidth;
-        });
-     
-      }else{
+        }
 
-        [header, main, footer].forEach(element => {
-          element.style.width = "100%";
-          element.style.marginLeft = 0;
-          console.log(element);
-        });
-
-        Menu.#hide()
-
-        lockSidebarBtn.innerHTML = "Lock Sidebar";
-
-        selectorMenuButton.style.visibility="visible"
       }
 
-      Menu.isLocked = !Menu.isLocked
-    
-    }); 
+    });
+
   }
 
   /////////////////// On Click Cover Hide
@@ -162,6 +170,9 @@ export default class Menu{
   static #hide(){
     // Check If Already Hidden
     if(!Menu.#shown) return;
+
+    // Check If Current Mode Is "alwaysOpen" Mode
+    if(Menu.#currentMode === 1) return;
 
     // Check if body > menu exists
     if(!!Menu.#elementMenu === false) return;
