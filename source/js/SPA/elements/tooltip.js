@@ -6,7 +6,7 @@ export default class Tooltip extends HTMLElement{
   static {
     Tooltip.#template.innerHTML = `
       <tooltip>
-        <icon></icon>
+        <icon>a</icon>
         <content></content>
       </tooltip>
     `;
@@ -19,14 +19,17 @@ export default class Tooltip extends HTMLElement{
 
     Type: {
       this.type = "warning";
-      let attributeType = this.type;
-      if(this.hasAttribute("type") === true) attributeType = this.getAttribute("type").toLowerCase();
-      if(["info", "warning", "error"].includes(attributeType)) this.type = attributeType;
-      else this.textContent = this.getAttribute("type");
+
+      if(this.hasAttribute("type") === true) this.type = this.getAttribute("type").toLowerCase();
+
+      if(!!["success", "info", "warning", "error"].includes(this.type) === false){
+        this.type = "warning";
+        this.textContent = this.getAttribute("type");
+
+      }
     }
 
-    console.log(this.type);
-    console.log(this.textContent);
+
 
     CSS: {
         const style = document.createElement('style');
@@ -38,10 +41,19 @@ export default class Tooltip extends HTMLElement{
           cursor: help;
 
           background-color: var(--color-${this.type});
+
           color: white;
+          font-size: 15px;
           text-align: center;
-          padding: 3px 10px;
-          border-radius: 100%;
+
+          width: 25px;
+          height: 25px;
+
+          display: grid;
+          place-items: center;
+
+          border-radius: 50%;
+
         }
 
         icon:hover + content{
