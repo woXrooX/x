@@ -2,6 +2,7 @@
 
 export default class Menu{
   static selector = "body > menu";
+  static isLocked = false;
   static #selectorMenuButton = "body > header > svg[for=menu]";
   static #selectorHyperlinks = `${Menu.selector} > * > a`;
   static #shown = false;
@@ -20,6 +21,7 @@ export default class Menu{
     // Listen To The Events
     Menu.#onClickMenuButtonShow();
     Menu.#onClickCoverHide();
+    Menu.#onClickLockSidebar()
 
   }
 
@@ -70,6 +72,62 @@ export default class Menu{
   /////////////////// On Click Menu Button Show
   static #onClickMenuButtonShow(){
     document.querySelector(Menu.#selectorMenuButton).onclick = Menu.#show;
+  }
+  
+  /////////////////// On Click Lock Sidebar
+  static #onClickLockSidebar(){
+    let selectorMenuButton = document.querySelector(Menu.#selectorMenuButton)
+    const lockSidebarBtn = document.querySelector("body > menu > header > button")
+    const menu = document.querySelector(Menu.selector);
+    const header = document.querySelector("body > header");
+    const main = document.querySelector("body > main");
+    const footer = document.querySelector("body > footer");
+    const selectorHyperlinks = document.querySelectorAll(Menu.#selectorHyperlinks)
+    const menuWidth = document.querySelector("body > menu").offsetWidth + "px";
+    
+    lockSidebarBtn.addEventListener("click", ()=> {
+      
+      if(!Menu.isLocked){
+
+        window.Cover.hide()
+
+        lockSidebarBtn.innerHTML = "Locked";
+
+        menu.style.width = "auto";
+
+        selectorMenuButton.style.visibility="hidden"
+
+        selectorHyperlinks.forEach((a) => {
+          a.addEventListener("click", ()=> {
+            Menu.#elementMenu.style.transform = "translate(0px, 0px)";
+            window.Cover.hide();
+          });
+        });
+
+        [header, main, footer].forEach(element => {
+          console.log(element);
+          element.style.width = `calc(100% - ${menuWidth})`;
+          element.style.marginLeft = menuWidth;
+        });
+     
+      }else{
+
+        [header, main, footer].forEach(element => {
+          element.style.width = "100%";
+          element.style.marginLeft = 0;
+          console.log(element);
+        });
+
+        Menu.#hide()
+
+        lockSidebarBtn.innerHTML = "Lock Sidebar";
+
+        selectorMenuButton.style.visibility="visible"
+      }
+
+      Menu.isLocked = !Menu.isLocked
+    
+    }); 
   }
 
   /////////////////// On Click Cover Hide
