@@ -6,6 +6,7 @@ import bridge from "../modules/bridge.js";
 
 //// Custom Elements
 import Toast from "./elements/toast.js";
+import Tooltip from "./elements/tooltip.js";
 import El from "./elements/el.js";
 // import Form from "./elements/form.js";
 
