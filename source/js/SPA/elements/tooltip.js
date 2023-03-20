@@ -35,7 +35,10 @@ export default class Tooltip extends HTMLElement{
         const style = document.createElement('style');
 
         style.textContent = `
-        tooltip{}
+        tooltip{
+          position: relative;
+
+        }
 
         tooltip > icon{
           cursor: help;
@@ -58,7 +61,7 @@ export default class Tooltip extends HTMLElement{
 
         icon:hover + content{
           opacity: 1;
-          transform: translate(-50%, -120%);
+          transform: translate(-50%, -130%);
         }
 
         tooltip > content{
@@ -77,7 +80,10 @@ export default class Tooltip extends HTMLElement{
           height: auto;
 
           position: absolute;
+          left: 50%;
+          top: 0%;
           transform: translate(-50%, -100%);
+
 
           transition: var(--transition-velocity) ease-in-out;
           transition-property: opacity, transform;
@@ -89,7 +95,7 @@ export default class Tooltip extends HTMLElement{
           position: absolute;
           top: 100%;
           left: 50%;
-          margin-left: -17px;
+          margin-left: -5px;
           border-width: 5px;
           border-style: solid;
           border-color: var(--color-brand) transparent transparent transparent;
