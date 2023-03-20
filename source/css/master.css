@@ -240,7 +240,22 @@ body > menu{
   transition-property: all;
 
 }
-body > menu > *{
+
+body > menu > header{
+  width: 100%;
+
+  padding: calc(var(--padding) * 2);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+}
+body > menu > header > svg{
+  width: 30px;
+  height: 30px;
+}
+body > menu > main{
   width: 100%;
   padding: calc(var(--padding) * 2);
 
@@ -249,7 +264,7 @@ body > menu > *{
   gap: calc(var(--gap) / 2);
 
 }
-body > menu > * > a{
+body > menu > main > a{
   /* background-color: var(--menu-background-color); */
 
   /* filter: brightness(70%); */
@@ -270,21 +285,22 @@ body > menu > * > a{
   transition-property: filter, background-color, border;
 
 }
-body > menu > * > a:where([active], :hover){
+body > menu > main > a:where([active], :hover){
   background-color: var(--menu-background-color);
   filter: brightness(120%);
 
 }
-body > menu > * > a:where([active]){
+body > menu > main > a:where([active]){
   border: 1px solid white;
 
 }
-body > menu > * > a > svg{
+body > menu > main > a > svg{
   height: 40px;
   width: 40px;
 
 }
 
+body > menu > footer{}
 
 body > cover{
   pointer-events:auto;

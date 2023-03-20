@@ -15,15 +15,23 @@ import El from "./elements/el.js";
 
 //// Core Classes
 import Language from "./language.js";
-import Dom from "./dom.js";
+
 import Title from "./title.js";
-import Router from "./router.js";
-import Form from "./form.js";
+
+import Header from "./header.js";
+import Main from "./main.js";
+import Footer from "./footer.js";
+
 import Hyperlink from "./hyperlink.js";
+import Router from "./router.js";
+import Dom from "./dom.js";
+
 import Cover from "./cover.js";
 import Loading from "./loading.js";
 import Menu from "./menu.js";
 // import Nav from "./nav.js";
+
+import Form from "./form.js";
 
 export default class Core{
 

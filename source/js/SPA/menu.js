@@ -4,11 +4,19 @@ export default class Menu{
   static selector = "body > menu";
   static #selectorMenuButton = "body > header > svg[for=menu]";
   static #selectorHyperlinks = `${Menu.selector} > * > a`;
-  static #shown = false;
+
+  static #elementMenuHamburgerButton = null;
   static #elementMenu = null;
+
+  static #shown = false;
+
+  static #modes = ["normal", "alwaysOpen", "onlyLogos"];
+  static #currentMode = null;
+
 
   // Init
   static init(){
+    Menu.#elementMenuHamburgerButton = document.querySelector(Menu.#selectorMenuButton);
     Menu.#elementMenu = document.querySelector(Menu.selector);
 
     // Check If "body > menu" Exists
@@ -20,6 +28,9 @@ export default class Menu{
     // Listen To The Events
     Menu.#onClickMenuButtonShow();
     Menu.#onClickCoverHide();
+    Menu.#toggleAlwaysOpenMode();
+
+    // Menu.#onClickLockSidebar()
 
   }
 
@@ -72,7 +83,66 @@ export default class Menu{
     document.querySelector(Menu.#selectorMenuButton).onclick = Menu.#show;
   }
 
+<<<<<<< HEAD
   /////////////////// On Click Cover Hide The Menu
+=======
+  /////////////////// On Click Lock Sidebar
+
+  static #toggleAlwaysOpenMode(){
+    const toggler = document.querySelector(`${Menu.selector} > header > svg[for=toggleAlwaysOpenMode]`);
+
+    const header = document.querySelector(window.Header.selector);
+    const main = document.querySelector(window.Main.selector);
+    const footer = document.querySelector(window.Footer.selector);
+
+    toggler.addEventListener("click", ()=>{
+
+      if(Menu.#currentMode === 1){
+        // Mode Change To "normal"
+        Menu.#currentMode = 0;
+
+        window.Cover.show();
+
+        // Show Hamburger Button
+        Menu.#elementMenuHamburgerButton.style.visibility = "visible";
+
+        // Change The Lock Logo To Open
+        toggler.querySelector("svg > use").setAttribute("href", "#lockOpen")
+
+        // Header, Main, Footer Maximize
+        header.removeAttribute("style");
+        main.removeAttribute("style");
+        footer.removeAttribute("style");
+
+      }else{
+        // Mode Change To "alwaysOpen"
+        Menu.#currentMode = 1;
+
+        window.Cover.hide();
+
+        // Hide Hamburger Button
+        Menu.#elementMenuHamburgerButton.style.visibility = "hidden";
+
+        // Change The Lock Logo To Locked
+        toggler.querySelector("svg > use").setAttribute("href", "#lockLocked")
+
+        // Get Calculated Meni Width
+        const menuWidth = Menu.#elementMenu.offsetWidth + "px";
+
+        // Header, Main, Footer Minimize
+        for(const element of [header, main, footer]){
+          element.style.width = `calc(100% - ${menuWidth})`;
+          element.style.marginLeft = menuWidth;
+        }
+
+      }
+
+    });
+
+  }
+
+  /////////////////// On Click Cover Hide
+>>>>>>> feature/menu
   static #onClickCoverHide(){
     document.querySelector(window.Cover.selector).addEventListener("click", Menu.#hide);
   }
@@ -104,6 +174,9 @@ export default class Menu{
   static #hide(){
     // Check If Already Hidden
     if(!Menu.#shown) return;
+
+    // Check If Current Mode Is "alwaysOpen" Mode
+    if(Menu.#currentMode === 1) return;
 
     // Check if body > menu exists
     if(!!Menu.#elementMenu === false) return;
