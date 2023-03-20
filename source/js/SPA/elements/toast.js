@@ -1,13 +1,5 @@
 "use strict";
 
-
-// setTimeout(()=>{
-//   Toast.new("warning", "chooseLang");
-//   Toast.new("info", "chooseCurrency");
-//   Toast.new("error", "change");
-//   Toast.new("success", "chooseSiteLang");
-// }, 1000);
-
 // Raw HTML
 // <x-toast type="typeName">Content</x-toast>
 
@@ -156,6 +148,7 @@ export default class Toast extends HTMLElement{
     // Remove Toast On Click Dismiss
     // dismiss.onclick = ()=> this.remove(); // Bug w/ N sec removal
     this.shadow.querySelector("toast>dismiss").onclick = ()=> this.style.display = "none";
+
   }
 
   static new(type, content){
