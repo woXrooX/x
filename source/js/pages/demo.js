@@ -352,7 +352,7 @@ const themedBoxes = `
 `;
 
 ///// x-tooltip
-const themedBoxes = `
+const tooltips = `
 <container class="m-t-5">
 
   <row><h1>Tooltips (x-tooltip)</h1></row>
@@ -393,6 +393,7 @@ export default function content(){
     ${colorTextX}
     ${situationalColors}
     ${themedBoxes}
+    ${tooltips}
     <br>
   `;
 
