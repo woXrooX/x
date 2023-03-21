@@ -308,7 +308,7 @@ app.secret_key = CONF["flask"]["secret_key"]
 from python.pages import *
 
 
-#################################################### RUN
+#################################################### RUN (For Development)
 ### Flask server
 if __name__ == "__main__":
     # No SSL
