@@ -13,7 +13,7 @@ URL:
   sub_domain: "www"
   domain_name: "localhost"
   domain_extension: "com"
-  port: "8088"
+  port: "5000"
 
 
 ######### Database
