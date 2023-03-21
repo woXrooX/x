@@ -9,7 +9,8 @@
 - yaml
 - re
 - html
-- sendgrid (If You Prefer SendGrid APIs) (pip install sendgrid)
+- sendgrid (OPTIONAL: If You Prefer SendGrid APIs) [pip install sendgrid]
+- uWSGI (OPTIONAL: If You Need To Run On Your Local Machine) [pip install uWSGI] 
 
 ### JavaScript
 - All In House
