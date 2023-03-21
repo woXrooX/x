@@ -1,6 +1,6 @@
 from functools import wraps # For pageGuard() Wrapper
 
-from __main__ import CONF, EXTERNALS, session, USER_TYPES, redirect, render_template, request, url_for, MySQL
+from main import CONF, EXTERNALS, session, USER_TYPES, redirect, render_template, request, url_for, MySQL
 import json
 
 ######################################### Page Guard

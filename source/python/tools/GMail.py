@@ -1,4 +1,4 @@
-from __main__ import CONF
+from main import CONF
 
 # Later We Will Create Class Called GMail That's Why Function Name Started With Capital Letters
 def GMail(to, message, subject = ""):

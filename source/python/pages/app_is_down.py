@@ -1,8 +1,8 @@
 # Flask
-from __main__ import app, request, render_template
+from main import app, request, render_template
 
 # Home Made
-from __main__ import CONF, EXTERNALS
+from main import CONF, EXTERNALS
 
 from python.tools.tools import pageGuard
 

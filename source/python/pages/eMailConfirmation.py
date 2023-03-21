@@ -1,8 +1,8 @@
 # Flask
-from __main__ import app, request, render_template, session
+from main import app, request, render_template, session
 
 # Home Made
-from __main__ import CONF, USER_TYPES, MySQL, EXTERNALS
+from main import CONF, USER_TYPES, MySQL, EXTERNALS
 
 import json
 

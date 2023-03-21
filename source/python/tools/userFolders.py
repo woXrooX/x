@@ -1,5 +1,5 @@
 import os
-from __main__ import APP_RUNNING_FROM, session
+from main import APP_RUNNING_FROM, session
 
 def create():
     # Check If User Is In Session

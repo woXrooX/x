@@ -1,8 +1,8 @@
 # Flask
-from __main__ import app, render_template
+from main import app, render_template
 
 # Home Made
-from __main__ import CONF, EXTERNALS
+from main import CONF, EXTERNALS
 
 
 #################################################### none | 404 | Page Not Found

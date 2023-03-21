@@ -6,7 +6,7 @@
 # SendGrid.send("woXrooX@gmail.com", "My Subject", "My Content")
 
 if __name__ != "__main__":
-    from __main__ import CONF
+    from main import CONF
 
     import sendgrid
     from sendgrid.helpers.mail import Mail, Email, To, Content

@@ -1,4 +1,4 @@
-from __main__ import APP_RUNNING_FROM
+from main import APP_RUNNING_FROM
 
 import os
 

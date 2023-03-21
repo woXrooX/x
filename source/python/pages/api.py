@@ -1,8 +1,8 @@
 # Flask
-from __main__ import app, request, make_response
+from main import app, request, make_response
 
 # Home Made
-from __main__ import CONF, PUBLIC_CONF, session, langDict, USER_TYPES
+from main import CONF, PUBLIC_CONF, session, langDict, USER_TYPES
 
 from python.tools.tools import publicSessionUser
 

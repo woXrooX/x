@@ -1,7 +1,7 @@
 if __name__ != "__main__":
-    from __main__ import make_response
+    from main import make_response
 
-    from __main__ import PUBLIC_CONF
+    from main import PUBLIC_CONF
 
     from python.tools.tools import publicSessionUser
 

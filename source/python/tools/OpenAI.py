@@ -6,7 +6,7 @@
 
 if __name__ != "__main__":
 
-    from __main__ import CONF
+    from main import CONF
 
     import openai
     import json
