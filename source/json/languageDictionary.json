@@ -294,6 +294,11 @@
     "ru":"Выбраны неверные данные",
     "uz":"Noto'g'ri ma'lumotlar tanlandi"
   },
+  "invalidFile":{
+    "en":"Invalid file",
+    "ru":"Неверный файл",
+    "uz":"Yaroqsiz fayl"
+  },
   "invalidKeyword":{
     "en":"Invalid keyword!",
     "ru":"Неверное ключевое слово!",
