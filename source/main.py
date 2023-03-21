@@ -310,9 +310,9 @@ from python.pages import *
 
 #################################################### RUN (For Development)
 ### Flask server
-if __name__ == "__main__":
+# if __name__ == "__main__":
     # No SSL
-    app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True)
+    # app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True)
 
     # OpenSSL
     # app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True, ssl_context=('SSL/cert.pem', 'SSL/key.pem'))
