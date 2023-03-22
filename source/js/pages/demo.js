@@ -35,6 +35,16 @@ const form = `
         </label>
 
         <label>
+          <p for='date'>Date</p>
+          <input type='date' name='date'>
+        </label>
+
+        <label>
+          <p for='dateDisabled'>Date Disabled</p>
+          <input type='date' name='dateDisabled' disabled>
+        </label>
+
+        <label>
           <p for='password'>Password</p>
           <input type='password' name='password'>
         </label>
