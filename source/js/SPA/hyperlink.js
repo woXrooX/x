@@ -18,6 +18,10 @@ export default class Hyperlink{
         // For Now Bulk Checking Using '.'
         if(a.getAttribute("href").includes('.')) return;
 
+        // Check If Href Is For External Webistes
+        // Previous Check Is Already Doing This Job By Checking If Href Has '.' example.com always Has '.'
+        if(a.getAttribute("href").includes('http://') || a.getAttribute("href").includes('https://')) return;
+
         // Remove Forward Slash From Href
         let href = a.getAttribute("href").substring(1, a.getAttribute("href").length);
 
