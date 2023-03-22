@@ -12,7 +12,7 @@ export default class Loading{
   static start(){
     // Check if body > loading exists
     if(!!Loading.#elementLoading === false) return;
-    console.log("start");
+    // console.log("start");
 
     // Set z-index To --z-loading
     Loading.#elementLoading.style.zIndex = getComputedStyle(document.body).getPropertyValue('--z-loading');
@@ -25,7 +25,7 @@ export default class Loading{
   static end(){
     // Check if body > loading exists
     if(!!Loading.#elementLoading === false) return;
-    console.log("end");
+    // console.log("end");
 
     // Change The Opacity To 0
     Loading.#elementLoading.style.opacity = 0;
