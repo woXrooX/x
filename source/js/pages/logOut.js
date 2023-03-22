@@ -6,7 +6,7 @@ export default function content(){
   const dom = `
 <container>
   <row>
-    <p for='logOut'>${window.Lang.use("ifLogOutWontBeAbleTo")}</p>
+    <p>${window.Lang.use("ifLogOutWontBeAbleTo")}</p>
   </row>
 
   <row>
