@@ -294,6 +294,11 @@
     "ru":"Выбраны неверные данные",
     "uz":"Noto'g'ri ma'lumotlar tanlandi"
   },
+  "invalidField":{
+    "en":"Invalid field",
+    "ru":"Недопустимое поле",
+    "uz":"Maydon noto‘g‘ri"
+  },
   "invalidFile":{
     "en":"Invalid file",
     "ru":"Неверный файл",
@@ -308,6 +313,11 @@
     "en":"Invalid Prompt",
     "ru":"Неверная подсказка",
     "uz":"Noto'g'ri buyruq"
+  },
+  "invalidValue":{
+    "en":"Invalid value",
+    "ru":"Неверное значение",
+    "uz":"Qiymat noto‘g‘ri"
   },
   "javaScriptDisabled":{
     "en":"JavaScript is disabled",
