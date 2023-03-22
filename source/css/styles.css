@@ -69,10 +69,10 @@ form label > p{
 }
 /************ label > p START ************/
 
-/************ select, textarea, imput -> type = [text, password, eMail, number, color, file] START ************/
+/************ select, textarea, imput -> type = [text, password, eMail, number, color, file, date] START ************/
 select,
 textarea,
-input:where([type=text], [type=eMail], [type=password], [type=number], [type=color], [type=file]){
+input:where([type=text], [type=eMail], [type=password], [type=number], [type=color], [type=file], [type=date]){
   background-color: var(--color-surface-3);
   width: var(--f-width);
   height: var(--f-height);
@@ -85,7 +85,7 @@ input:where([type=text], [type=eMail], [type=password], [type=number], [type=col
   transition-property: var(--f-transition-property);
 
 }
-/************ select, textarea, imput -> type = [text, password, eMail, number, color, file] END ************/
+/************ select, textarea, imput -> type = [text, password, eMail, number, color, file, date] END ************/
 
 /************ :hover & :focus -> inputs & textarea & select START ************/
 select:not(:disabled):where(:hover, :focus),
@@ -235,7 +235,8 @@ input[type=submit]:not(:disabled):where(:active, :focus, :hover){
 
 /****************************** Disabled START ******************************/
 *:disabled,
-input[type=submit]:disabled{
+input[type=submit]:disabled,
+input[type=file]:disabled::file-selector-button{
   cursor: not-allowed;
   opacity: 0.5;
 
