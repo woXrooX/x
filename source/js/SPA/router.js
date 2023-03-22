@@ -37,6 +37,9 @@ export default class Router{
     if(endpoint === null) endpoint = "/404";
 
     try{
+      // Start Loading Effect
+      window.Loading.start();
+
       // Change URL To /404 In Case endpoint Is /404
       // Currntly causing infintive back and forth page looping
       // if(endpoint === "/404") window.history.pushState("", "", URL+"404");
@@ -52,6 +55,10 @@ export default class Router{
 
       // Render The Error
       window.Dom.render(error);
+
+    }finally{
+      // End Loading Effect
+      window.Loading.end();
 
     }
 
