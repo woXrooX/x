@@ -6,7 +6,7 @@ export default class Tooltip extends HTMLElement{
   static {
     Tooltip.#template.innerHTML = `
       <tooltip>
-        <icon>a</icon>
+        <icon></icon>
         <content></content>
       </tooltip>
     `;
