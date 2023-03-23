@@ -1,6 +1,14 @@
 "use strict";
 
 export default class El extends HTMLElement{
+  static #template = document.createElement("template");
+
+  static {
+    El.#template.innerHTML = `
+      <el>Content</el>
+    `;
+  }
+
   constructor(){
     super();
 
@@ -11,6 +19,9 @@ export default class El extends HTMLElement{
     // this.attachShadow({mode: 'open'});
     // this.shadowRoot.appendChild(Node);
     // this.shadowRoot.querySelector("toast>main>icon").innerHTML = "HTML";
+
+    // Clone And Append Template
+    this.shadow.appendChild(El.#template.content.cloneNode(true));
 
     DOM: {
       // const content = JSON.parse(this.textContent);
@@ -33,7 +44,7 @@ export default class El extends HTMLElement{
   }
 
   disconnectedCallback(){
-    console.log("connectedCallback");
+    console.log("disconnectedCallback");
   }
 
   adoptedCallback(){
@@ -54,3 +65,6 @@ export default class El extends HTMLElement{
 };
 
 window.customElements.define('x-el', El);
+
+// Make El Usable W/O Importing It
+window.El = El;
