@@ -294,7 +294,7 @@ body > menu > main > a:where([active]){
   border: 1px solid white;
 
 }
-body > menu > main > a > svg{
+body > menu > main > a > x-icon{
   height: 40px;
   width: 40px;
 
