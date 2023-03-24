@@ -1,14 +1,4 @@
-// <!-- HTML code -->
-// <i class="search-icon"></i>
-//
-// <!-- CSS code -->
-// .search-icon {
-//   display: inline-block;
-//   width: 24px;
-//   height: 24px;
-//   background-image: url('search-icon.svg');
-//   background-size: cover;
-// }
+// <x-icon>yzoken</x-icon>
 
 "use strict";
 
@@ -16,9 +6,7 @@ export default class Icon extends HTMLElement{
   static #template = document.createElement("template");
 
   static {
-    El.#template.innerHTML = `
-      <icon></icon>
-    `;
+    Icon.#template.innerHTML = `<icon></icon>`;
   }
 
   constructor(){
@@ -27,22 +15,19 @@ export default class Icon extends HTMLElement{
     // Closed
     this.shadow = this.attachShadow({mode: 'closed'});
 
+    CSS: {
+      const style = document.createElement('style');
+      style.textContent = `
+        icon{}
+      `;
+      this.shadow.appendChild(style);
+    }
+
     // Clone And Append Template
     this.shadow.appendChild(Icon.#template.content.cloneNode(true));
 
-    Content: {
-      // this.textContent;
-    }
-
-    // CSS: {
-    //   style.textContent = `
-    //     icon{}
-    //   `;
-    //   this.shadow.appendChild(style);
-    // }
-
-    // Clone And Append Template
-    this.shadow.appendChild(Toast.#template.content.cloneNode(true));
+    // SVG
+    this.shadow.querySelector("icon").innerHTML = window.SVG.use(this.textContent);
 
   }
 
