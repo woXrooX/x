@@ -50,6 +50,7 @@ export default class Icon extends HTMLElement{
       // Hover In
       this.addEventListener("mouseover", ()=>{
         this.svg.style.filter = "brightness(90%)";
+        this.svg.style.transform = "scale(1.1)";
       });
 
       // Hover Out
