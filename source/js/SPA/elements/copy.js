@@ -1,12 +1,14 @@
+// <x-icon>yzoken</x-icon>
+
 "use strict";
 
 export default class Copy extends HTMLElement{
   static #template = document.createElement("template");
 
   static {
-    Tooltip.#template.innerHTML = `
+    Copy.#template.innerHTML = `
       <copy>
-        <icon></icon>
+        <x-icon>copyContent</x-icon>
       </copy>
     `;
   }
@@ -14,50 +16,49 @@ export default class Copy extends HTMLElement{
   constructor(){
     super();
 
+    // Closed
     this.shadow = this.attachShadow({mode: 'closed'});
 
-
     Selector: {
-      console.log(this.selector);
+      if(this.hasAttribute("selector"))
+        this.selector = this.getAttribute("selector");
+
     }
 
     CSS: {
-        const style = document.createElement('style');
-
-        style.textContent = `
-          copy{
-
-          }
-
-          copy > icon{
-
-          }
-        `;
-
-        this.shadow.appendChild(style);
-
+      const style = document.createElement('style');
+      style.textContent = `
+        copy{
+          width: 50px;
+          height: 50px;
+        }
+      `;
+      this.shadow.appendChild(style);
     }
 
     // Clone And Append Template
-    this.shadow.appendChild(Tooltip.#template.content.cloneNode(true));
+    this.shadow.appendChild(Copy.#template.content.cloneNode(true));
 
-    // If type === TRUE Append Type Specific Icon Else Append "warning" Icon
-    this.shadow.querySelector("tooltip>icon").innerHTML = !!ICONS[this.type] ? ICONS[this.type] : ICONS["warning"];
+    this.onclick = ()=>{
+      if(!!this.selector === false) return;
 
-    // InnerHTML "textContent"
-    this.shadow.querySelector("tooltip>content").innerHTML = Language.translate(this.textContent);
+      // Select The Element
+      const element = document.querySelector(this.selector);
+
+      if(!!element === false) return;
+
+      // Copy The Value
+      navigator.clipboard.writeText(element.innerText);
+
+      window.Toast.new("info", "Copied")
+
+    };
 
   }
 
-  static new(type, content, parentSelector){
-    if(!!type === false || !!content === false || !!parentSelector === false) return;
+};
 
-
-    document.querySelector(parentSelector).innerHTML += `<x-tooltip type="${type}">${content}</x-tooltip>`;
-
-  }
-}
-customElements.define('x-copy', Copy);
+window.customElements.define('x-copy', Copy);
 
 // Make Copy Usable W/O Importing It
 window.Copy = Copy;
