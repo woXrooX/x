@@ -1,4 +1,4 @@
-// import Dom from "./dom.js";
+// import Dom from "./DOM.js";
 //
 // const form = {
 //   "form":{
@@ -13,7 +13,7 @@
 //   }
 // };
 //
-// const done = Dom.jsonToDom(form);
+// const done = DOM.jsonToDom(form);
 // console.log(done);
 
 // const newDiv = document.createElement("div");
@@ -21,9 +21,9 @@
 // newDiv.appendChild(newContent);
 
 
-// else if(Dom.page.before.constructor.name === 'Function') Dom.page.before();
+// else if(DOM.page.before.constructor.name === 'Function') DOM.page.before();
 
-export default class Dom{
+export default class DOM{
   static #elementMain = document.querySelector(window.Main.selector);
   static #page = null;
 
@@ -32,18 +32,18 @@ export default class Dom{
     if(!!page == false) return;
 
     // Update "page" Variable
-    Dom.#page = page;
+    DOM.#page = page;
 
     // Start The Page's Life Cycle
-    Dom.lifeCycle();
+    DOM.lifeCycle();
 
   }
 
   static async executeOnFormGotResponse(response){
 
     // If Async Function Passed Or Normal One
-    if(Dom.#page.onFormGotResponse.constructor.name === 'AsyncFunction') await Dom.#page.onFormGotResponse(response);
-    else Dom.#page.onFormGotResponse(response);
+    if(DOM.#page.onFormGotResponse.constructor.name === 'AsyncFunction') await DOM.#page.onFormGotResponse(response);
+    else DOM.#page.onFormGotResponse(response);
 
   }
 
@@ -52,30 +52,30 @@ export default class Dom{
     window.pageData = {};
 
     // Set Title
-    window.Title.set(Dom.#page.TITLE);
+    window.Title.set(DOM.#page.TITLE);
 
     ///// Before
     // Check If before() Exists
-    if(!!Dom.#page.before === true)
+    if(!!DOM.#page.before === true)
       // If Async Function Passed Or Normal One
-      if(Dom.#page.before.constructor.name === 'AsyncFunction') await Dom.#page.before();
-      else Dom.#page.before();
+      if(DOM.#page.before.constructor.name === 'AsyncFunction') await DOM.#page.before();
+      else DOM.#page.before();
 
     ///// Content - Render The Content
     // Check If Default Function Exists
-    if(typeof Dom.#page.default === "function")
+    if(typeof DOM.#page.default === "function")
       // If Async Function Passed Or Normal One
-      if(Dom.#page.default.constructor.name === 'AsyncFunction') Dom.render(await Dom.#page.default());
-      else Dom.render(Dom.#page.default());
+      if(DOM.#page.default.constructor.name === 'AsyncFunction') DOM.render(await DOM.#page.default());
+      else DOM.render(DOM.#page.default());
 
-    else Dom.render("[DOM] Error: No Default Function Defined!");
+    else DOM.render("[DOM] Error: No Default Function Defined!");
 
     ///// After
     // Check If after() Exists
-    if(!!Dom.#page.after === true)
+    if(!!DOM.#page.after === true)
       // If Async Function Passed Or Normal One
-      if(Dom.#page.after.constructor.name === 'AsyncFunction') await Dom.#page.after();
-      else Dom.#page.after();
+      if(DOM.#page.after.constructor.name === 'AsyncFunction') await DOM.#page.after();
+      else DOM.#page.after();
 
     // Delete The Page Data At The End Of Each Life Cycle
     delete window.pageData;
@@ -84,10 +84,10 @@ export default class Dom{
 
   static render(dom){
     // If Passed Object Like: createElement("x-form")
-    if(typeof dom === "object") Dom.#elementMain.replaceChildren(dom);
+    if(typeof dom === "object") DOM.#elementMain.replaceChildren(dom);
 
     // If Passed String Like: "<x-form></x-from>"
-    else if(typeof dom === "string") Dom.#elementMain.innerHTML = dom;
+    else if(typeof dom === "string") DOM.#elementMain.innerHTML = dom;
 
     window.dispatchEvent(new CustomEvent("domChange"));
 
@@ -117,7 +117,7 @@ export default class Dom{
     // Creating Child Nodes If Exists
     if("childNodes" in object[tagName])
       for(const childNode of object[tagName]["childNodes"])
-        element.appendChild(Dom.jsonToDom(childNode));
+        element.appendChild(DOM.jsonToDom(childNode));
 
     return element;
 
@@ -125,5 +125,5 @@ export default class Dom{
 
 }
 
-// Make Dom Usable W/O Importing It
-window.Dom = Dom;
+// Make DOM Usable W/O Importing It
+window.DOM = DOM;
