@@ -105,7 +105,7 @@ export default class Form{
       if("reload" in response["actions"]) window.location.reload();
 
       // Execute Function On Form Got Response
-      if("onFormGotResponse" in response["actions"]) window.Dom.executeOnFormGotResponse(response);
+      if("onFormGotResponse" in response["actions"]) window.DOM.executeOnFormGotResponse(response);
 
     };
   }
