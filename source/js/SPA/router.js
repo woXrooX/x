@@ -4,7 +4,7 @@ export default class Router{
   static async handle(){
     // Check If App Is Down If So Stop Handling Set appIsDown As Current Page
     if("appIsDown" in window.CONF["default"]){
-      window.Dom.setPage(await import(`../pages/appIsDown.js`));
+      window.DOM.setPage(await import(`../pages/appIsDown.js`));
       return;
     }
 
@@ -45,7 +45,7 @@ export default class Router{
       // if(endpoint === "/404") window.history.pushState("", "", URL+"404");
 
       // Load The Page
-      window.Dom.setPage(await import(`../pages${endpoint}.js`));
+      window.DOM.setPage(await import(`../pages${endpoint}.js`));
 
     }catch(error){
       console.log(error);
@@ -54,7 +54,7 @@ export default class Router{
       window.Title.set("error");
 
       // Render The Error
-      window.Dom.render(error);
+      window.DOM.render(error);
 
     }finally{
       // End Loading Effect
