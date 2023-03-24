@@ -18,7 +18,9 @@ export default class Icon extends HTMLElement{
     CSS: {
       const style = document.createElement('style');
       style.textContent = `
-        icon{}
+        icon{
+          cursor: pointer;
+        }
       `;
       this.shadow.appendChild(style);
     }
