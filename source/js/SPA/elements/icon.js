@@ -27,10 +27,10 @@ export default class Icon extends HTMLElement{
           width: 100%;
           height: 100%;
 
+          filter: brightness(100%);
+
           transition: 100ms ease-in-out;
           transition-property: transform, filter;
-
-          filter: brightness(80%);
 
         }
       `;
@@ -49,12 +49,12 @@ export default class Icon extends HTMLElement{
     Events: {
       // Hover In
       this.addEventListener("mouseover", ()=>{
-        this.svg.style.filter = "brightness(100%)";
+        this.svg.style.filter = "brightness(90%)";
       });
 
       // Hover Out
       this.addEventListener("mouseout", ()=>{
-        this.svg.style.filter = "brightness(80%)";
+        this.svg.style.filter = "brightness(100%)";
         this.svg.style.transform = "scale(1)";
       });
 
