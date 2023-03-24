@@ -2,7 +2,7 @@
 
 export default class Menu{
   static selector = "body > menu";
-  static #selectorMenuButton = "body > header > svg[for=menu]";
+  static #selectorMenuButton = "body > header > x-icon[for=menu]";
   static #selectorHyperlinks = `${Menu.selector} > * > a`;
 
   static #elementMenuHamburgerButton = null;
