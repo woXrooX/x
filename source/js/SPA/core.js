@@ -5,6 +5,7 @@
 import bridge from "../modules/bridge.js";
 
 //// Custom Elements
+import Icon from "./elements/icon.js";
 import Toast from "./elements/toast.js";
 import Tooltip from "./elements/tooltip.js";
 import El from "./elements/el.js";
@@ -24,7 +25,7 @@ import Footer from "./footer.js";
 
 import Hyperlink from "./hyperlink.js";
 import Router from "./router.js";
-import Dom from "./dom.js";
+import DOM from "./dom.js";
 
 import Cover from "./cover.js";
 import Loading from "./loading.js";
@@ -133,7 +134,7 @@ export default class Core{
       // console.log("onDomChange");
 
       //// This all should be done inside Dom class
-      //// Dom.update() or something
+      //// DOM.update() or something
       // Dom Change For body > target
       if(!!event.detail === true)
         for(const target of event.detail)
@@ -149,7 +150,7 @@ export default class Core{
 
             case "main":
             console.log("main");
-              Dom.lifeCycle();
+              DOM.lifeCycle();
               break;
 
             case "footer":
@@ -159,7 +160,7 @@ export default class Core{
             case "all":
               console.log("All");
               Menu.build();
-              Dom.lifeCycle();
+              DOM.lifeCycle();
               break;
 
             default:
