@@ -1,4 +1,6 @@
 // <x-icon>yzoken</x-icon>
+// SVG shadow
+// filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
 
 "use strict";
 
@@ -24,6 +26,12 @@ export default class Icon extends HTMLElement{
         icon > svg{
           width: 100%;
           height: 100%;
+
+          transition: 100ms ease-in-out;
+          transition-property: transform, filter;
+
+          filter: brightness(80%);
+
         }
       `;
       this.shadow.appendChild(style);
@@ -32,8 +40,35 @@ export default class Icon extends HTMLElement{
     // Clone And Append Template
     this.shadow.appendChild(Icon.#template.content.cloneNode(true));
 
+
     // SVG
     this.shadow.querySelector("icon").innerHTML = window.SVG.use(this.textContent);
+
+    this.svg = this.shadow.querySelector("icon>svg");
+
+    Events: {
+      // Hover In
+      this.addEventListener("mouseover", ()=>{
+        this.svg.style.filter = "brightness(100%)";
+      });
+
+      // Hover Out
+      this.addEventListener("mouseout", ()=>{
+        this.svg.style.filter = "brightness(80%)";
+        this.svg.style.transform = "scale(1)";
+      });
+
+      // Down
+      this.addEventListener("mousedown", ()=>{
+        this.svg.style.transform = "scale(0.5)";
+      });
+
+      // Up
+      this.addEventListener("mouseup", ()=>{
+        this.svg.style.transform = "scale(1)";
+      });
+
+    }
 
   }
 
