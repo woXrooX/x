@@ -377,6 +377,20 @@ const tooltips = `
 </container>
 `;
 
+///// x-tooltip
+const copy = `
+<container class="m-t-5">
+
+  <row><h1>Copy (x-copy)</h1></row>
+
+  <row class="box-default w-25 p-5" class="g-1">
+    <column><x-copy selector="#dataToBeCopied"></x-copy></column>
+    <column id="dataToBeCopied">Data To Be Copied!</column>
+  </row>
+
+</container>
+`;
+
 ///// Page Scoped Data Holder
 // Must Be Set/Change The Value Inside The before(), content() or after()
 window.pageData = "No Effect Here";
@@ -404,6 +418,7 @@ export default function content(){
     ${situationalColors}
     ${themedBoxes}
     ${tooltips}
+    ${copy}
     <br>
   `;
 
