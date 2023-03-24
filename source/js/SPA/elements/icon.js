@@ -21,6 +21,10 @@ export default class Icon extends HTMLElement{
         icon{
           cursor: pointer;
         }
+        icon > svg{
+          width: 100%;
+          height: 100%;
+        }
       `;
       this.shadow.appendChild(style);
     }
