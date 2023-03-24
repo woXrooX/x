@@ -53,7 +53,7 @@ export default class Menu{
         // Hyperlink Blue Print
         hyperlinks += `
   <a href="/${menu["name"]}">
-    <svg><use href="#${"logo" in menu ? menu["logo"] : menu["name"] }"></use></svg>
+    <x-icon>${"logo" in menu ? menu["logo"] : menu["name"]}</x-icon>
     ${window.Lang.use(menu["name"])}
   </a>
         `;
