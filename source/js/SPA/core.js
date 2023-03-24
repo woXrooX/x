@@ -4,13 +4,6 @@
 ///////////////////////////// Brideg / Fetch
 import bridge from "../modules/bridge.js";
 
-//// Custom Elements
-import Icon from "./elements/icon.js";
-import Toast from "./elements/toast.js";
-import Tooltip from "./elements/tooltip.js";
-import El from "./elements/el.js";
-// import Form from "./elements/form.js";
-
 // import CSS from "./css.js";
 // document.head.innerHTML += `<style>${CSS}</style>`;
 
@@ -34,6 +27,13 @@ import Menu from "./menu.js";
 // import Nav from "./nav.js";
 
 import Form from "./form.js";
+
+//// Custom Elements
+import Icon from "./elements/icon.js";
+import Toast from "./elements/toast.js";
+import Tooltip from "./elements/tooltip.js";
+import El from "./elements/el.js";
+// import Form from "./elements/form.js";
 
 export default class Core{
 
