@@ -337,12 +337,7 @@ body > header{
   place-items: center;
 
 }
-body > header > svg[for=menu]{
-  cursor: pointer;
-
-  display: flex;
-  justify-content: flex-start;
-
+body > header > x-icon[for=menu]{
   height: calc(var(--header-height) - var(--padding) * 2);
   width: calc(var(--header-height) - var(--padding) * 2);
 
