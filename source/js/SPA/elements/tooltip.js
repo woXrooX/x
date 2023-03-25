@@ -43,51 +43,60 @@ export default class Tooltip extends HTMLElement{
         tooltip > icon{
           cursor: help;
 
-          background-color: var(--color-${this.type});
+          width: 20px;
 
-          color: white;
-          font-size: 15px;
+          color: var(--color-${this.type});
+          font-size: 1em;
+          font-weight: bold;
           text-align: center;
-
-          width: 25px;
-          height: 25px;
 
           display: grid;
           place-items: center;
 
-          border-radius: 50%;
+          margin: 0px 5px;
+          border: 1px solid transparent;
+          border-radius: 5px;
+
+          transition: var(--transition-velocity) ease-in-out;
+          transition-property: border;
 
         }
 
-        icon:hover + content{
-          opacity: 1;
-          transform: translate(-50%, -130%);
+        icon:hover{
+          border: 1px solid var(--color-${this.type});
         }
 
         tooltip > content{
           pointer-events: none;
+
+          display: block;
 
           background-color: var(--color-brand);
           color: white;
 
           opacity: 0;
 
-          padding: var(--padding);
+          padding: calc(var(--padding) * 2);
           border-radius: var(--radius);
           box-shadow: 0px 0px 10px var(--color-brand);
 
-          max-width: 30vw;
-          height: auto;
+          max-width: 50vw;
+          width: max-content;
+          height: max-content;
 
           position: absolute;
           left: 50%;
           top: 0%;
           transform: translate(-50%, -100%);
 
-
           transition: var(--transition-velocity) ease-in-out;
           transition-property: opacity, transform;
 
+        }
+
+        icon:hover + content{
+          opacity: 1;
+          transform: translate(-50%, calc(-100% - 10px));
         }
 
         tooltip > content::after{
