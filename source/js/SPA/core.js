@@ -31,6 +31,7 @@ import Form from "./form.js";
 //// Custom Elements
 import Icon from "./elements/icon.js";
 import Copy from "./elements/copy.js";
+import Share from "./elements/share.js";
 import Toast from "./elements/toast.js";
 import Tooltip from "./elements/tooltip.js";
 import El from "./elements/el.js";
