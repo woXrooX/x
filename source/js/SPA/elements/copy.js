@@ -50,7 +50,7 @@ export default class Copy extends HTMLElement{
       // Copy The Value
       navigator.clipboard.writeText(element.innerText);
 
-      window.Toast.new("info", "Copied")
+      window.Toast.new("info", "Copied");
 
     };
 
