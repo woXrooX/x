@@ -4,7 +4,7 @@ export default class Share extends HTMLElement{
   static #template = document.createElement("template");
 
   static {
-    Copy.#template.innerHTML = `
+    Share.#template.innerHTML = `
       <share>
         <x-icon>share</x-icon>
       </share>
@@ -35,17 +35,24 @@ export default class Share extends HTMLElement{
     }
 
     // Clone And Append Template
-    this.shadow.appendChild(Copy.#template.content.cloneNode(true));
+    this.shadow.appendChild(Share.#template.content.cloneNode(true));
 
-    this.onclick = ()=>{
-      if(!!this.selector === false) return;
+    this.onclick = async ()=>{
+      const shareData = {
+        title: "MDN",
+        text: "Learn web development on MDN!",
+        url: "https://developer.mozilla.org",
+      };
 
-      // Select The Element
-      const element = document.querySelector(this.selector);
+      try{
+        await navigator.share(shareData);
+        console.log("MDN shared successfully");
 
-      if(!!element === false) return;
+      }catch(err){
+        console.log(`Error: ${err}`);
 
-      window.Toast.new("info", "Copied")
+      }
+
 
     };
 
