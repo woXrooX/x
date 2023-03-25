@@ -65,7 +65,9 @@ form label{
 
 /************ label > p START ************/
 form label > p{
-  height: 1.5em;
+  height: 2em;
+  display: flex;
+  flex-direction: row;
 }
 /************ label > p START ************/
 
