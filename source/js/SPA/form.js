@@ -117,7 +117,7 @@ export default class Form{
     if(!!elementP === false) return;
 
     // Above Submit Button
-    if(!!message != false) elementP.innerHTML = `<${type}>${langDict[message][langCode]}</${type}>`;
+    if(!!message != false) elementP.innerHTML = `<${type}>${window.Lang.use(message)}</${type}>`;
 
     // Focus & Flash The Border Color
     const element = document.querySelector(`[name=${field}]`);
