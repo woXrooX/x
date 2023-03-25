@@ -2,7 +2,7 @@
 from main import app, request, make_response
 
 # Home Made
-from main import CONF, PUBLIC_CONF, session, langDict, USER_TYPES
+from main import CONF, EXTERNALS, PUBLIC_CONF, session, langDict, USER_TYPES
 
 from python.tools.tools import publicSessionUser
 
@@ -13,15 +13,16 @@ import json
 #################################################### Bridge
 @app.route("/api", methods=["POST"])
 def api():
-    # globalData
-    if request.get_json()["for"] == "globalData":
+    # initialData
+    if request.get_json()["for"] == "initialData":
         return make_response(
             {
                 "CONF": PUBLIC_CONF,
                 "session": {"user": publicSessionUser()} if "user" in session else {},
                 "langCode": CONF["default"]["language"],
                 "langDict": langDict,
-                "USER_TYPES": USER_TYPES
+                "USER_TYPES": USER_TYPES,
+                "SVG": EXTERNALS["SVG"]
                 # "languages":languages,
                 # "currencies":currencies
             }, 200)
