@@ -17,6 +17,9 @@ export default class Tooltip extends HTMLElement{
 
     this.shadow = this.attachShadow({mode: 'closed'});
 
+    // Left Persentage
+    const left = (this.getBoundingClientRect().x / window.innerWidth) * 100;
+
     Type: {
       this.type = "warning";
 
@@ -80,14 +83,15 @@ export default class Tooltip extends HTMLElement{
           border-radius: var(--radius);
           box-shadow: 0px 0px 10px var(--color-brand);
 
-          max-width: 50vw;
+          max-width: 40vw;
           width: max-content;
           height: max-content;
 
           position: absolute;
           left: 50%;
           top: 0%;
-          transform: translate(-50%, -100%);
+          transform: translate(${left < 50 ? -left:-50}%, -100%);
+          transform-origin: center;
 
           transition: var(--transition-velocity) ease-in-out;
           transition-property: opacity, transform;
@@ -96,14 +100,15 @@ export default class Tooltip extends HTMLElement{
 
         icon:hover + content{
           opacity: 1;
-          transform: translate(-50%, calc(-100% - 10px));
+          transform: translate(${left < 50 ? -left:-50}%, calc(-100% - 12px));
+
         }
 
         tooltip > content::after{
           content: "";
           position: absolute;
           top: 100%;
-          left: 50%;
+          left: ${left}%;
           margin-left: -5px;
           border-width: 5px;
           border-style: solid;
