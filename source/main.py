@@ -100,7 +100,7 @@ if not os.path.exists(f"{APP_RUNNING_FROM}/js/pages/home.js"):
 
 #################################################### EXTERNALS
 EXTERNALS = {
-    "SVG": [],
+    "SVG": {},
     "CSS": None
 }
 
@@ -124,14 +124,12 @@ if os.path.exists(f"{PARENT_RUNNING_FROM}/SVG"):
 
         try:
             with open(f'{PARENT_RUNNING_FROM}/SVG/{file}', "r") as svg:
-                EXTERNALS["SVG"].append(svg.read())
+                EXTERNALS["SVG"][os.path.splitext(file)[0]] = svg.read()
 
         except:
             print(f"Could Not Load The SVG File: {file}")
-# {% for svg in SVGs %}
-#   {{svg}}
-# {% endfor %}
-# print(SVGs)
+
+# print(EXTERNALS)
 
 #################################################### Load External CSS
 if os.path.exists(f"{APP_RUNNING_FROM}/css/styles.css"):
