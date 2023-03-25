@@ -24,11 +24,6 @@ export default class SVG{
   static #open = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">`
   static #close = `</svg>`
 
-  static {
-    console.log(1);
-
-  }
-
   static use(name){
     // Keeps SVG Body
     let body = "";
@@ -44,6 +39,13 @@ export default class SVG{
 
     // Build And Return
     return SVG.#open + body + SVG.#close;
+
+  }
+
+  static set(SVGs){
+    if(!!SVGs === false) return;
+
+    for(const svg in SVGs) SVG.#all[svg] = SVGs[svg];
 
   }
 

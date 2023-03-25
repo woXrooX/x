@@ -67,9 +67,11 @@ export default class Core{
       window.langCode = response["langCode"];
       window.langDict = response["langDict"];
       window.USER_TYPES = response["USER_TYPES"];
-      window.EXTERNAL_SVG = response["EXTERNAL_SVG"];
       // window.languages = response["languages"];
       // window.currencies = response["currencies"];
+
+      // Load External SVGs To SVG Class
+      window.SVG.set(response["EXTERNAL_SVG"]);
   }
 
   /////// Event Handlers
