@@ -41,8 +41,8 @@ export default class Core{
 
   // Class Static Initialization Block
   static {
-    // Try To Load Global Data Then Init The Methods
-    Core.#getGlobalData()
+    // Try To Get Initial Data Then Init The Methods
+    Core.#getInitialData()
     .then(()=>{
       Core.#firstLoad();
       Core.#onLoad();
@@ -56,9 +56,9 @@ export default class Core{
 
   }
 
-  /////// Global Data
-  static async #getGlobalData(){
-      let response = await window.bridge("api", {for:"globalData"}, "application/json");
+  /////// Initial Data
+  static async #getInitialData(){
+      let response = await window.bridge("api", {for:"initialData"});
 
       // console.log(response);
 
