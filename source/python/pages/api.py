@@ -22,7 +22,7 @@ def api():
                 "langCode": CONF["default"]["language"],
                 "langDict": langDict,
                 "USER_TYPES": USER_TYPES,
-                "SVG": EXTERNALS["SVG"]
+                "EXTERNAL_SVG": EXTERNALS["SVG"]
                 # "languages":languages,
                 # "currencies":currencies
             }, 200)
