@@ -17,9 +17,6 @@ export default class Tooltip extends HTMLElement{
 
     this.shadow = this.attachShadow({mode: 'closed'});
 
-    // Left Persentage
-    const left = (this.getBoundingClientRect().x / window.innerWidth) * 100;
-
     Type: {
       this.type = "warning";
 
@@ -32,7 +29,65 @@ export default class Tooltip extends HTMLElement{
       }
     }
 
+    // Clone And Append Template
+    this.shadow.appendChild(Tooltip.#template.content.cloneNode(true));
 
+    // If type === TRUE Append Type Specific Icon Else Append "warning" Icon
+    this.shadow.querySelector("tooltip>icon").innerHTML = !!ICONS[this.type] ? ICONS[this.type] : ICONS["warning"];
+
+    // InnerHTML "textContent"
+    this.shadow.querySelector("tooltip>content").innerHTML = window.Lang.use(this.textContent);
+
+    // Left Persentage
+    const left = (this.getBoundingClientRect().x / window.innerWidth) * 100;
+
+    ContentDetails: {
+      const distance = "12px";
+
+      const contentElement = this.shadow.querySelector("tooltip>content");
+      const content = {
+        x: contentElement.offsetLeft,
+        y: contentElement.offsetTop,
+        // width: contentElement.offsetWidth,
+        // height: contentElement.offsetHeight
+
+      }
+      // console.log(content);
+
+      this.shadow.querySelector("tooltip>icon").onmouseover = ()=>{
+        const rect = this.shadow.querySelector("tooltip>content").getBoundingClientRect();
+
+        console.log("window width / height", window.innerWidth ,window.innerHeight);
+
+        if (rect.left < 0){
+          console.log("Left out");
+        }
+
+        if(rect.top < 0){
+          console.log("Top out");
+          contentElement.classList.add("showOnBottom");
+
+
+        }
+
+        if(rect.bottom > window.innerHeight){
+          console.log("Bottom out");
+        }
+
+        if(rect.right > window.innerWidth){
+          console.log("Right out");
+        }
+
+        // Default
+        contentElement.classList.add("showOnTop");
+
+      };
+
+      this.shadow.querySelector("tooltip>icon").onmouseout = ()=>{
+        contentElement.removeAttribute("class");
+      };
+
+    }
 
     CSS: {
         const style = document.createElement('style');
@@ -77,11 +132,12 @@ export default class Tooltip extends HTMLElement{
           background-color: var(--color-brand);
           color: white;
 
-          opacity: 0;
+          opacity: 1;
 
           padding: calc(var(--padding) * 2);
           border-radius: var(--radius);
           box-shadow: 0px 0px 10px var(--color-brand);
+          box-sizing: border-box;
 
           max-width: 40vw;
           width: max-content;
@@ -91,7 +147,7 @@ export default class Tooltip extends HTMLElement{
           z-index: var(--z-tooltip);
           left: 50%;
           top: 0%;
-          transform: translate(${left < 50 ? -left:-50}%, -100%);
+          transform: translate(-50%, -100%);
           transform-origin: center;
 
           transition: var(--transition-velocity) ease-in-out;
@@ -99,21 +155,44 @@ export default class Tooltip extends HTMLElement{
 
         }
 
-        icon:hover + content{
-          opacity: 1;
-          transform: translate(${left < 50 ? -left:-50}%, calc(-100% - 12px));
+        tooltip > content.showOnTop{
+          transform: translate(-50%, calc(-100% - 12px));
+
+        }
+
+        tooltip > content.showOnTop::after{
+          top: 100%;
+          left: 50%;
+
+        }
+
+        tooltip > content.showOnBottom{
+          transform: translate(-50%, 30px);
+
+        }
+
+        tooltip > content.showOnBottom::after{
+          top: 0%;
+          left: 50%;
+          transform: rotate(180deg) scale(1);
+          transform-origin: top;
 
         }
 
         tooltip > content::after{
           content: "";
+
           position: absolute;
-          top: 100%;
-          left: ${left}%;
+
           margin-left: -5px;
           border-width: 5px;
           border-style: solid;
           border-color: var(--color-brand) transparent transparent transparent;
+
+        }
+
+        icon:hover + content{
+          opacity: 1;
 
         }
 
@@ -122,15 +201,6 @@ export default class Tooltip extends HTMLElement{
         this.shadow.appendChild(style);
 
     }
-
-    // Clone And Append Template
-    this.shadow.appendChild(Tooltip.#template.content.cloneNode(true));
-
-    // If type === TRUE Append Type Specific Icon Else Append "warning" Icon
-    this.shadow.querySelector("tooltip>icon").innerHTML = !!ICONS[this.type] ? ICONS[this.type] : ICONS["warning"];
-
-    // InnerHTML "textContent"
-    this.shadow.querySelector("tooltip>content").innerHTML = window.Lang.use(this.textContent);
 
   }
 
