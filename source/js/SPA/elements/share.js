@@ -44,13 +44,22 @@ export default class Share extends HTMLElement{
         url: "https://developer.mozilla.org",
       };
 
-      try{
-        await navigator.share(shareData);
-        console.log("MDN shared successfully");
+      // Check If navigator.share
+      if(!!navigator.share === true)
+        try{
+          await navigator.share(shareData);
+          console.log("MDN shared successfully");
 
-      }catch(err){
-        console.log(`Error: ${err}`);
+        }catch(err){
+          console.log(`Error: ${err}`);
 
+        }
+
+      else{
+        console.log("No Native 'navigator.share' Support On Your Device!");
+
+        // Yzoken
+        
       }
 
 
