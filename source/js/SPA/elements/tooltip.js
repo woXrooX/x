@@ -132,7 +132,7 @@ export default class Tooltip extends HTMLElement{
           background-color: var(--color-brand);
           color: white;
 
-          opacity: 1;
+          opacity: 0;
 
           padding: calc(var(--padding) * 2);
           border-radius: var(--radius);
