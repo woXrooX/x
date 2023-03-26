@@ -88,6 +88,7 @@ export default class Tooltip extends HTMLElement{
           height: max-content;
 
           position: absolute;
+          z-index: var(--z-tooltip);
           left: 50%;
           top: 0%;
           transform: translate(${left < 50 ? -left:-50}%, -100%);
