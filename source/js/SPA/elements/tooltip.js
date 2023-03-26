@@ -41,31 +41,20 @@ export default class Tooltip extends HTMLElement{
     // Left Persentage
     const left = (this.getBoundingClientRect().x / window.innerWidth) * 100;
 
-    ContentDetails: {
-      const distance = "12px";
-
+    MouseEvents: {
       const contentElement = this.shadow.querySelector("tooltip>content");
-      const content = {
-        x: contentElement.offsetLeft,
-        y: contentElement.offsetTop,
-        // width: contentElement.offsetWidth,
-        // height: contentElement.offsetHeight
-
-      }
-      // console.log(content);
 
       this.shadow.querySelector("tooltip>icon").onmouseover = ()=>{
         const rect = this.shadow.querySelector("tooltip>content").getBoundingClientRect();
 
-        console.log("window width / height", window.innerWidth ,window.innerHeight);
-
+        // Left Out
         if(rect.left < 0) contentElement.classList.add("showOnRight");
 
         // Top Out
-        if(rect.top < 0) contentElement.classList.add("showOnBottom");
+        if(rect.top - rect.height < 0) contentElement.classList.add("showOnBottom");
 
         // Bottom Out
-        if(rect.bottom > window.innerHeight) console.log("Bottom out");
+        // if(rect.bottom > window.innerHeight) console.log("Bottom out");
 
         // Right Out
         if(rect.right > window.innerWidth) contentElement.classList.add("showOnLeft");
@@ -75,9 +64,8 @@ export default class Tooltip extends HTMLElement{
 
       };
 
-      this.shadow.querySelector("tooltip>icon").onmouseout = ()=>{
-        contentElement.removeAttribute("class");
-      };
+      // On Mouse Out Remove Class
+      this.shadow.querySelector("tooltip>icon").onmouseout = ()=>{contentElement.removeAttribute("class");};
 
     }
 
@@ -139,7 +127,7 @@ export default class Tooltip extends HTMLElement{
           z-index: var(--z-tooltip);
           left: 50%;
           top: 0%;
-          transform: translate(-50%, -100%);
+          transform: translate(-50%, calc(-50% + 10px));
           transform-origin: center;
 
           transition: var(--transition-velocity) ease-in-out;
