@@ -59,24 +59,16 @@ export default class Tooltip extends HTMLElement{
 
         console.log("window width / height", window.innerWidth ,window.innerHeight);
 
-        if (rect.left < 0){
-          console.log("Left out");
-        }
+        if(rect.left < 0) contentElement.classList.add("showOnRight");
 
-        if(rect.top < 0){
-          console.log("Top out");
-          contentElement.classList.add("showOnBottom");
+        // Top Out
+        if(rect.top < 0) contentElement.classList.add("showOnBottom");
 
+        // Bottom Out
+        if(rect.bottom > window.innerHeight) console.log("Bottom out");
 
-        }
-
-        if(rect.bottom > window.innerHeight){
-          console.log("Bottom out");
-        }
-
-        if(rect.right > window.innerWidth){
-          console.log("Right out");
-        }
+        // Right Out
+        if(rect.right > window.innerWidth) contentElement.classList.add("showOnLeft");
 
         // Default
         contentElement.classList.add("showOnTop");
@@ -174,7 +166,33 @@ export default class Tooltip extends HTMLElement{
         tooltip > content.showOnBottom::after{
           top: 0%;
           left: 50%;
-          transform: rotate(180deg) scale(1);
+          transform: rotate(180deg);
+          transform-origin: top;
+
+        }
+
+        tooltip > content.showOnRight{
+          transform: translate(calc(0% + 22px), calc(-50% + 10px));
+
+        }
+
+        tooltip > content.showOnRight::after{
+          top: 50%;
+          left: 0%;
+          transform: rotate(90deg);
+          transform-origin: top;
+
+        }
+
+        tooltip > content.showOnLeft{
+          transform: translate(calc(-100% - 42px), calc(-50% + 10px));
+
+        }
+
+        tooltip > content.showOnLeft::after{
+          top: 50%;
+          left: 100%;
+          transform: rotate(270deg);
           transform-origin: top;
 
         }
