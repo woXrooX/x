@@ -56,10 +56,10 @@ export default class Share extends HTMLElement{
         }
 
       else{
-        console.log("No Native 'navigator.share' Support On Your Device!");
+        console.log("No Native Support For 'navigator.share' On Your Device!");
 
         // Yzoken
-        
+
       }
 
 
