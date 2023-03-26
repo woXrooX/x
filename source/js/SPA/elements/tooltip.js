@@ -130,7 +130,7 @@ export default class Tooltip extends HTMLElement{
     this.shadow.querySelector("tooltip>icon").innerHTML = !!ICONS[this.type] ? ICONS[this.type] : ICONS["warning"];
 
     // InnerHTML "textContent"
-    this.shadow.querySelector("tooltip>content").innerHTML = Language.translate(this.textContent);
+    this.shadow.querySelector("tooltip>content").innerHTML = window.Lang.use(this.textContent);
 
   }
 

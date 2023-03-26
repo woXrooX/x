@@ -138,10 +138,10 @@ export default class Toast extends HTMLElement{
     this.shadow.querySelector("toast>main>icon").innerHTML = !!ICONS[this.typeName] ? ICONS[this.typeName] : ICONS["warning"];
 
     // InnerHTML "typeName"
-    this.shadow.querySelector("toast>main>type").innerHTML = window.Language.use(this.typeName);
+    this.shadow.querySelector("toast>main>type").innerHTML = window.Lang.use(this.typeName);
 
     // InnerHTML "textContent"
-    this.shadow.querySelector("toast>main>content").innerHTML = window.Language.use(this.textContent);
+    this.shadow.querySelector("toast>main>content").innerHTML = window.Lang.use(this.textContent);
 
     // InnerHTML Close Button Icon
     this.shadow.querySelector("toast>dismiss").innerHTML = ICONS["close"];
