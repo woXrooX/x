@@ -391,6 +391,19 @@ const copy = `
 </container>
 `;
 
+///// x-tooltip
+const share = `
+<container class="m-t-5">
+
+  <row><h1>Share (x-share)</h1></row>
+
+  <row class="box-default w-25 p-5" class="g-1">
+    <column><x-share></x-share></column>
+  </row>
+
+</container>
+`;
+
 ///// Page Scoped Data Holder
 // Must Be Set/Change The Value Inside The before(), content() or after()
 window.pageData = "No Effect Here";
@@ -419,6 +432,7 @@ export default function content(){
     ${themedBoxes}
     ${tooltips}
     ${copy}
+    ${share}
     <br>
   `;
 
