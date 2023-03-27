@@ -9,15 +9,16 @@ export default class Form{
     for(const form of forms){
       if(Form.#formGuard(form) === false) continue;
 
-      // Enable Events Listeners
-      Form.#onInput(form);
-      Form.#onSubmit(form);
+      Form.register(form);
 
     }
 
   }
 
-  static register(){
+  static register(form){
+    // Enable Events Listeners
+    Form.#onInput(form);
+    Form.#onSubmit(form);
 
   }
 
