@@ -35,6 +35,12 @@ export default class Cover{
 
   }
 
+  static onClickExecute(func){
+    // Execute External Function
+    document.querySelector(Cover.selector).addEventListener("click", func);
+
+  }
+
 }
 
 // Make Cover Usable W/O Importing It
