@@ -30,11 +30,12 @@
   --z-boxes: 4;
   --z-header: 5;
   --z-cover: 6;
-  --z-menu: 7;
-  --z-tooltip: 8;
-  --z-toasts: 9;
-  --z-loading: 10;
-  --z-urgent: 11;
+  --z-modal: 7;
+  --z-menu: 8;
+  --z-tooltip: 9;
+  --z-toasts: 10;
+  --z-loading: 11;
+  --z-urgent: 12;
   /* Layers END */
 
   /* Transition START */
