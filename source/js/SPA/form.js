@@ -7,23 +7,17 @@ export default class Form{
     const forms = document.getElementsByTagName("form");
 
     for(const form of forms){
-      // Check If "form" has "endpoint" Attribute
-      if(form.hasAttribute("action") == false) continue;
-
-      // Check If "form" Attribute "endpoint" has Falsy Value
-      if(!!form.action == false) continue;
-
-      // Check If "form" has "for" Attribute
-      if(form.hasAttribute("for") == false) continue;
-
-      // Check If "form" Attribute "for" has Falsy Value
-      if(!!form.getAttribute("for") == false) continue;
+      if(Form.#formGuard(form) === false) continue;
 
       // Enable Events Listeners
       Form.#onInput(form);
       Form.#onSubmit(form);
 
     }
+
+  }
+
+  static register(){
 
   }
 
@@ -141,6 +135,26 @@ export default class Form{
 
     // Flash Border Color
     setTimeout(()=>{element.removeAttribute("style");}, Form.#flashDuration);
+
+  }
+
+  static #formGuard(form){
+    // form Value Is Falsy
+    if(!!form === false) return false;
+
+    // Check If "form" has "action" Attribute
+    if(form.hasAttribute("action") === false) return false;
+
+    // Check If "form" Attribute "action" has Falsy Value
+    if(!!form.action === false) return false;
+
+    // Check If "form" has "for" Attribute
+    if(form.hasAttribute("for") === false) return false;
+
+    // Check If "form" Attribute "for" has Falsy Value
+    if(!!form.getAttribute("for") === false) return false;
+
+    return true;
 
   }
 
