@@ -35,6 +35,7 @@ if __name__ != "__main__":
                 # Send an HTTP POST request to /mail/send
                 response = sg.client.mail.send.post(request_body=mail_json)
                 print(response.status_code)
+                print(response.body)
                 print(response.headers)
 
                 return True
@@ -43,3 +44,27 @@ if __name__ != "__main__":
                 print("Error")
 
                 return False
+
+
+# Raw
+# mail_json = {
+#   "personalizations": [
+#     {
+#       "to": [
+#         {
+#           "email": receiver_email
+#         }
+#       ],
+#       "subject": "Sending with SendGrid is Fun"
+#     }
+#   ],
+#   "from": {
+#     "email": sender_email
+#   },
+#   "content": [
+#     {
+#       "type": "text/plain",
+#       "value": "and easy to do anywhere, even with Python"
+#     }
+#   ]
+# }
