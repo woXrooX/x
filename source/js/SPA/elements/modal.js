@@ -95,6 +95,28 @@ export default class Modal extends HTMLElement{
           pointer-events: none;
         }
 
+        trigger > button{
+          background-color: var(--color-main);
+          color: white;
+          overflow: hidden;
+          width: auto;
+          height: var(--f-height);
+          padding: 0px var(--f-padding);
+          border-radius: var(--f-radius);
+          border: none;
+          text-transform: uppercase;
+
+          cursor: pointer;
+
+          filter: brightness(120%);
+          transition: var(--transition-velocity) filter;
+
+        }
+
+        trigger > button:hover{
+          filter: brightness(80%);
+        }
+
 
       `;
       this.shadow.appendChild(style);
