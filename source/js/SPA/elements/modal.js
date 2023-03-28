@@ -7,6 +7,7 @@
 
 export default class Modal extends HTMLElement{
   static #template = document.createElement("template");
+  static #inUse = false;
 
   static {
     Modal.#template.innerHTML = `
@@ -18,6 +19,7 @@ export default class Modal extends HTMLElement{
       </modal>
       <trigger></trigger>
     `;
+
   }
 
   constructor(){
@@ -168,7 +170,9 @@ export default class Modal extends HTMLElement{
   }
 
   #show = ()=>{
-    if(this.shown === true) return;
+    if(this.shown === true || Modal.#inUse === true) return;
+
+    Modal.#inUse = true;
 
     this.shown = true;
 
@@ -182,6 +186,8 @@ export default class Modal extends HTMLElement{
   // Regular Function Missing The Context Of "this" When Passed To "window.Cover.onClickExecute"
   #hide = ()=>{
     if(this.shown === false) return;
+
+    Modal.#inUse = false;
 
     this.shown = false;
 
