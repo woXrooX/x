@@ -1,4 +1,7 @@
-// <x-modal>yzoken</x-modal>
+// <x-modal>Nothing</x-modal>
+// <x-modal trigger="auto">Auto</x-modal>
+// <x-modal trigger="click" type="icon" value="avatar">Click + Icon</x-modal>
+// <x-modal trigger="click" type="text" value="Click Me"> Click + Text</x-modal>
 
 "use strict";
 
@@ -95,7 +98,6 @@ export default class Modal extends HTMLElement{
 
     // Clone And Append Template
     this.shadow.appendChild(Modal.#template.content.cloneNode(true));
-    console.log(this.shadow);
 
     // Content
     this.shadow.querySelector("modal>main").innerHTML = this.innerHTML;
@@ -115,12 +117,17 @@ export default class Modal extends HTMLElement{
 
           if(this.getAttribute("type") === "icon"){
             this.shadow.querySelector("trigger").innerHTML = `<x-icon>${this.getAttribute("value")}</x-icon>`;
-            this.shadow.querySelector("trigger>x-icon").onclick = this.#show;
+            this.shadow.querySelector("trigger").onclick = this.#show;
+
           }
 
 
-          else if(this.getAttribute("type") === "text")
+          else if(this.getAttribute("type") === "text"){
             this.shadow.querySelector("trigger").innerHTML = `<button>${this.getAttribute("value")}</button>`;
+            this.shadow.querySelector("trigger").onclick = this.#show;
+
+          }
+
 
 
 
