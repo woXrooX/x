@@ -38,7 +38,9 @@ export default class Modal extends HTMLElement{
           opacity: 0;
 
           width: 200px;
-          height: 200px;
+          max-width: 50vw;
+          height: 150px;
+          max-height: 70vh;
 
           border-radius: var(--radius);
           box-shadow: var(--shadow-light);
