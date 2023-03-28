@@ -3,8 +3,14 @@
 export default class Form{
   static #flashDuration = 2000;
 
-  static collect(){
-    const forms = document.getElementsByTagName("form");
+  static collect(element = null){
+    if(!!element === false) element = document;
+
+    // Returns Live Collection
+    // const forms = element.getElementsByTagName("form");
+
+    // Since We Are Manuallay Collecting Inside Modal We Want To Isolate Collecting "x-modal form" Here
+    const forms = element.querySelectorAll(':not(x-modal) > form');
 
     for(const form of forms){
       if(Form.#formGuard(form) === false) continue;
@@ -42,7 +48,7 @@ export default class Form{
   }
 
   static #onSubmit(form){
-    form.onsubmit = async ()=>{
+    form.onsubmit = async (event)=>{
       event.preventDefault();
 
       // The Submitter
