@@ -1,7 +1,7 @@
 // <x-modal>Nothing</x-modal>
 // <x-modal trigger="auto">Auto</x-modal>
 // <x-modal trigger="click" type="icon" value="avatar">Click + Icon</x-modal>
-// <x-modal trigger="click" type="text" value="Click Me"> Click + Text</x-modal>
+// <x-modal trigger="click" type="text" value="Click Me">Click + Text</x-modal>
 
 "use strict";
 
@@ -91,6 +91,10 @@ export default class Modal extends HTMLElement{
 
         }
 
+        trigger:empty{
+          pointer-events: none;
+        }
+
 
       `;
       this.shadow.appendChild(style);
@@ -115,21 +119,16 @@ export default class Modal extends HTMLElement{
 
         if(!!this.hasAttribute("type") === true && !!this.hasAttribute("value") === true)
 
-          if(this.getAttribute("type") === "icon"){
+          if(this.getAttribute("type") === "icon")
             this.shadow.querySelector("trigger").innerHTML = `<x-icon>${this.getAttribute("value")}</x-icon>`;
-            this.shadow.querySelector("trigger").onclick = this.#show;
-
-          }
 
 
-          else if(this.getAttribute("type") === "text"){
+          else if(this.getAttribute("type") === "text")
             this.shadow.querySelector("trigger").innerHTML = `<button>${this.getAttribute("value")}</button>`;
-            this.shadow.querySelector("trigger").onclick = this.#show;
-
-          }
 
 
-
+      // Show On Click trigger
+      this.shadow.querySelector("trigger").onclick = this.#show;
 
       // Close On Cover Click
       window.Cover.onClickExecute(this.#hide);
