@@ -45,7 +45,7 @@ export default class Modal extends HTMLElement{
           border-radius: var(--radius);
           box-shadow: var(--shadow-light);
 
-          position: absolute;
+          position: fixed;
           z-index: var(--z-modal);
           top: 50%;
           left: 50%;
