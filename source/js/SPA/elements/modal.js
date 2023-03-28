@@ -39,10 +39,12 @@ export default class Modal extends HTMLElement{
           background-color: var(--color-surface-4);
           opacity: 0;
 
-          width: 200px;
-          max-width: 50vw;
-          height: 150px;
-          max-height: 70vh;
+          display: block;
+
+          width: auto;
+          max-width: 80vw;
+          height: auto;
+          max-height: 80vh;
 
           border-radius: var(--radius);
           box-shadow: var(--shadow-light);
@@ -86,7 +88,8 @@ export default class Modal extends HTMLElement{
         }
 
         modal > main{
-          width: 100%;
+          width: max-content;
+          height: max-content;
 
           padding: var(--padding);
 
