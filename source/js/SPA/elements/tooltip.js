@@ -36,7 +36,7 @@ export default class Tooltip extends HTMLElement{
     this.shadow.querySelector("tooltip>icon").innerHTML = !!ICONS[this.type] ? ICONS[this.type] : ICONS["warning"];
 
     // InnerHTML "textContent"
-    this.shadow.querySelector("tooltip>content").innerHTML = window.Lang.use(this.textContent);
+    this.shadow.querySelector("tooltip>content").innerHTML = window.Lang.use(this.innerHTML);
 
     // Left Persentage
     const left = (this.getBoundingClientRect().x / window.innerWidth) * 100;
