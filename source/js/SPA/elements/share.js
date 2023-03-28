@@ -70,6 +70,10 @@ export default class Share extends HTMLElement{
               <x-icon>facebook_original</x-icon>
             </a>
 
+            <a href="https://www.linkedin.com/shareArticle?url=${shareData.url}&title=${shareData.title}&summary=${shareData.text}" target="_blank">
+              <x-icon>linkedin_original</x-icon>
+            </a>
+
           </x-modal>
         `;
 
@@ -78,9 +82,6 @@ export default class Share extends HTMLElement{
         // <a href="https://twitter.com/intent/tweet?url=${shareData.url}&text=${shareData.text}" target="_blank">
         //   <x-icon>instagram_original</x-icon>
         // </a>
-
-        // Linked in share url
-        // https://www.linkedin.com/shareArticle?url=${shareData.url}&title=${shareData.title}&summary=${shareData.text}
 
       }
 
