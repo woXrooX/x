@@ -130,6 +130,9 @@ export default class Modal extends HTMLElement{
     // Content
     this.shadow.querySelector("modal>main").innerHTML = this.innerHTML;
 
+    // Manually Collecting Forms
+    window.Form.collect(this.shadow.querySelector("modal>main"));
+
     Interactions: {
       // Instant Pop-Up
       if(
