@@ -38,7 +38,7 @@ export default class Share extends HTMLElement{
     // Clone And Append Template
     this.shadow.appendChild(Share.#template.content.cloneNode(true));
 
-    this.onclick = async ()=>{
+    this.shadow.querySelector("x-icon").onclick = async ()=>{
       const shareData = {
         title: this.getAttribute("title") || document.title,
         text: this.getAttribute("text") || window.Lang.use("shareDefaultText"),
