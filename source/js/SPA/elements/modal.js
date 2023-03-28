@@ -144,7 +144,7 @@ export default class Modal extends HTMLElement{
         !!this.hasAttribute("trigger") === false ||
         !!this.hasAttribute("trigger") === true &&
         this.getAttribute("trigger") === "auto"
-      ) setTimeout(()=>{this.#show();}, 500);
+      ) setTimeout(this.#show, 500);
 
       // Create Click Event
       else if(this.getAttribute("trigger") === "click")
