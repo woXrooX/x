@@ -404,6 +404,21 @@ const share = `
 </container>
 `;
 
+///// x-modal
+const modal = `
+<container class="m-t-5">
+
+  <row><h1>Modal (x-modal)</h1></row>
+
+  <row class="box-default w-25 p-5" class="g-1">
+    <x-modal trigger="auto">Auto</x-modal>
+    <x-modal trigger="click" type="icon" value="idea">Icon + Click</x-modal>
+    <x-modal trigger="click" type="text" value="Click Me">Button + Text + Click</x-modal>
+  </row>
+
+</container>
+`;
+
 ///// Page Scoped Data Holder
 // Must Be Set/Change The Value Inside The before(), content() or after()
 window.pageData = "No Effect Here";
@@ -433,6 +448,7 @@ export default function content(){
     ${tooltips}
     ${copy}
     ${share}
+    ${modal}
     <br>
   `;
 
