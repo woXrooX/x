@@ -7,6 +7,7 @@ export default class Share extends HTMLElement{
     Share.#template.innerHTML = `
       <share>
         <x-icon>share</x-icon>
+        <section for="modal"></section>
       </share>
     `;
   }
@@ -39,9 +40,9 @@ export default class Share extends HTMLElement{
 
     this.onclick = async ()=>{
       const shareData = {
-        title: "MDN",
-        text: "Learn web development on MDN!",
-        url: "https://developer.mozilla.org",
+        title: this.getAttribute("title") || document.title,
+        text: this.getAttribute("text") || window.Lang.use("shareDefaultText"),
+        url: this.getAttribute("url") || window.location.href,
       };
 
       // Check If navigator.share
@@ -58,7 +59,28 @@ export default class Share extends HTMLElement{
       else{
         console.log("No Native Support For 'navigator.share' On Your Device!");
 
-        // Yzoken
+        this.shadow.querySelector("section").innerHTML = `
+          <x-modal trigger="auto">
+
+            <a href="https://twitter.com/intent/tweet?url=${shareData.url}&text=${shareData.text}" target="_blank">
+              <x-icon>twitter_original</x-icon>
+            </a>
+
+            <a href="https://www.facebook.com/sharer.php?u=${shareData.url}&quote=${shareData.text}" target="_blank">
+              <x-icon>facebook_original</x-icon>
+            </a>
+
+          </x-modal>
+        `;
+
+
+        // Need insta share url
+        // <a href="https://twitter.com/intent/tweet?url=${shareData.url}&text=${shareData.text}" target="_blank">
+        //   <x-icon>instagram_original</x-icon>
+        // </a>
+
+        // Linked in share url
+        // https://www.linkedin.com/shareArticle?url=${shareData.url}&title=${shareData.title}&summary=${shareData.text}
 
       }
 
