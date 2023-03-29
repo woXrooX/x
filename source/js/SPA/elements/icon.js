@@ -27,6 +27,8 @@ export default class Icon extends HTMLElement{
           width: 100%;
           height: 100%;
 
+          fill: ${this.getAttribute("color") || "var(--color-text-primary)"};
+
           filter: brightness(100%);
 
           transition: 100ms ease-in-out;
