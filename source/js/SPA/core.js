@@ -12,6 +12,7 @@ import Language from "./language.js";
 
 import Title from "./title.js";
 import SVG from "./svg.js";
+import CSS from "./css.js";
 
 import Header from "./header.js";
 import Main from "./main.js";
