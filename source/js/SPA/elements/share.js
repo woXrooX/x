@@ -45,7 +45,10 @@ export default class Share extends HTMLElement{
       const shareData = {
         title: this.getAttribute("title") || document.title,
         text: this.textToShare || window.Lang.use("shareDefaultText"),
-        url: this.getAttribute("url") || window.location.href,
+
+        // If Share URL Is Not HTTPS I Won't Work
+        url: this.getAttribute("url") || window.location.href
+        
       };
 
       // Check If navigator.share
@@ -69,15 +72,15 @@ export default class Share extends HTMLElement{
               <x-icon>twitter_original</x-icon>
             </a>
 
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=${shareData.url}&title=${shareData.title}&summary=${shareData.text}&source=${shareData.url}" target="_blank">
+              <x-icon>linkedin_original</x-icon>
+            </a>
+
             <a href="https://www.facebook.com/sharer.php?u=${shareData.url}&quote=${shareData.text}" target="_blank">
               <x-icon>facebook_original</x-icon>
             </a>
 
-            <a href="https://www.linkedin.com/shareArticle?url=${shareData.url}&title=${shareData.title}&summary=${shareData.text}" target="_blank">
-              <x-icon>linkedin_original</x-icon>
-            </a>
-
-            <a href="https://twitter.com/intent/tweet?url=${shareData.url}&text=${shareData.text}" target="_blank">
+            <a href="https://www.instagram.com/share?url=${shareData.url}&caption=${shareData.text}" target="_blank">
               <x-icon>instagram_original</x-icon>
             </a>
 
