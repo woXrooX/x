@@ -53,7 +53,7 @@ export default class Menu{
         // Hyperlink Blue Print
         hyperlinks += `
   <a href="/${menu["name"]}">
-    <x-icon>${"logo" in menu ? menu["logo"] : menu["name"]}</x-icon>
+    <x-icon color="#ffffff">${"logo" in menu ? menu["logo"] : menu["name"]}</x-icon>
     ${window.Lang.use(menu["name"])}
   </a>
         `;
@@ -103,7 +103,7 @@ export default class Menu{
         Menu.#elementMenuHamburgerButton.style.visibility = "visible";
 
         // Change The Lock Logo To Open
-        toggler.innerHTML = "<x-icon>lockOpen</x-icon>";
+        toggler.innerHTML = "<x-icon color='#ffffff'>lockOpen</x-icon>";
 
         // Header, Main, Footer Maximize
         header.removeAttribute("style");
@@ -120,7 +120,7 @@ export default class Menu{
         Menu.#elementMenuHamburgerButton.style.visibility = "hidden";
 
         // Change The Lock Logo To Locked
-        toggler.innerHTML = "<x-icon>lockLocked</x-icon>";
+        toggler.innerHTML = "<x-icon color='#ffffff'>lockLocked</x-icon>";
 
         // Get Calculated Meni Width
         const menuWidth = Menu.#elementMenu.offsetWidth + "px";
