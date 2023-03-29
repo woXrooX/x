@@ -18,9 +18,11 @@ export default class Share extends HTMLElement{
     // Closed
     this.shadow = this.attachShadow({mode: 'closed'});
 
-    Selector: {
-      if(this.hasAttribute("selector"))
-        this.selector = this.getAttribute("selector");
+    Text: {
+      this.textToShare = null;
+      if(!!this.getAttribute("selector") === true) this.textToShare = this.getAttribute("selector");
+      else if(!!this.getAttribute("text") === true) this.textToShare = this.getAttribute("text");
+
 
     }
 
@@ -39,9 +41,10 @@ export default class Share extends HTMLElement{
     this.shadow.appendChild(Share.#template.content.cloneNode(true));
 
     this.shadow.querySelector("x-icon").onclick = async ()=>{
+
       const shareData = {
         title: this.getAttribute("title") || document.title,
-        text: this.getAttribute("text") || window.Lang.use("shareDefaultText"),
+        text: this.textToShare || window.Lang.use("shareDefaultText"),
         url: this.getAttribute("url") || window.location.href,
       };
 
