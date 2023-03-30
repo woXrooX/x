@@ -36,7 +36,7 @@ export default class Modal extends HTMLElement{
         modal{
           pointer-events: none;
 
-          background-color: var(--color-surface-4);
+          background-color: ${window.CSS.values.color.surface["4"]};
           opacity: 0;
 
           display: block;
@@ -46,16 +46,16 @@ export default class Modal extends HTMLElement{
           height: auto;
           max-height: 80vh;
 
-          border-radius: var(--radius);
-          box-shadow: var(--shadow-light);
+          border-radius: ${window.CSS.values.radius.default};
+          box-shadow: ${window.CSS.values.shadow.default};
 
           position: fixed;
-          z-index: var(--z-modal);
+          z-index: ${window.CSS.values.zIndex.modal};
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%) scale(0.8);
 
-          transition: var(--transition-velocity) ease-in-out;
+          transition: ${window.CSS.values.transition.velocity} ease-in-out;
           transition-property: transform, opacity;
 
         }
@@ -91,7 +91,7 @@ export default class Modal extends HTMLElement{
           width: max-content;
           height: max-content;
 
-          padding: var(--padding);
+          padding: ${window.CSS.values.padding.default};
 
           display: grid;
           place-items: center;
@@ -103,20 +103,20 @@ export default class Modal extends HTMLElement{
         }
 
         trigger > button{
-          background-color: var(--color-main);
+          background-color: ${window.CSS.values.color.main};
           color: white;
           overflow: hidden;
           width: auto;
-          height: var(--f-height);
-          padding: 0px var(--f-padding);
-          border-radius: var(--f-radius);
+          height: 50px;
+          padding: 0px 5px;
+          border-radius: ${window.CSS.values.padding.default};
           border: none;
           text-transform: uppercase;
 
           cursor: pointer;
 
           filter: brightness(120%);
-          transition: var(--transition-velocity) filter;
+          transition: ${window.CSS.values.transition.velocity} filter;
 
         }
 
