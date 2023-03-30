@@ -73,6 +73,8 @@ export default class CSS{
     },
 
     color: {
+      scheme: "dark light",
+
       success: "hsla(120, 100%, 25%, 1);",    // rgba(0, 128, 0, 1)
       info: "hsla(211.059, 100%, 50%, 1);",   // rgba(0, 123, 255, 1)
       warning: "hsla(46.286, 100%, 48%, 1);", // rgba(245, 189, 0, 1)
@@ -84,10 +86,7 @@ export default class CSS{
         hue: 230,         // deg
         saturation: 13,   // %
         lightness: 9      // %
-      },
-
-      scheme: "dark light",
-
+      }
 
     },
 
@@ -99,11 +98,23 @@ export default class CSS{
 
   static {
     CSS.dark();
+    CSS.light();
     CSS.doMath();
+
+    console.log(CSS.val);
 
   }
 
   static doMath(){
+    // Not Sure If We Ever Used This
+    CSS.val.color.accent = CSS.val.color.main;
+
+  }
+
+  //////////// Modes
+  static dark(){
+    CSS.val.color.scheme = "dark";
+
     // The Color, Main Color, Brand Color
     CSS.val.color.main =
     CSS.val.color.brand = `
@@ -112,17 +123,6 @@ export default class CSS{
         ${CSS.val.color.science.saturation / 2}%,
         ${CSS.val.color.science.lightness / 2}%, 1);
     `;
-
-    // Not Sure If We Ever Used This
-    CSS.val.color.accent = CSS.val.color.main;
-
-    CSS.val.shadow.default = `0px 10px 10px -5px hsla(${CSS.val.shadow.color} / ${CSS.val.shadow.opacity})`;
-
-  }
-
-  //////////// Modes
-  static dark(){
-    CSS.val.color.scheme = "dark";
 
     CSS.val.color.text = {
       primary: `hsla(${CSS.val.color.science.hue}deg, 15%, 95%, 1)`,
@@ -143,8 +143,7 @@ export default class CSS{
       "10": `hsla(${CSS.val.color.science.hue}deg, 10%, 95%, 1)`,
     };
 
-    CSS.val.shadow.color = `${CSS.val.color.science.hue}deg 50% 3%`;
-    CSS.val.shadow.opacity = `0.3`;
+    CSS.val.shadow.default = `0px 10px 10px -5px hsla(${CSS.val.color.science.hue}deg 50% 3% / 0.3)`;
 
   }
 
@@ -180,8 +179,7 @@ export default class CSS{
       "10": `hsla(${CSS.val.color.science.hue}, 20%, 15%, 1)`,
     };
 
-    CSS.val.shadow.color = `${CSS.val.color.science.hue}deg 10% 2%`;
-    CSS.val.shadow.opacity = `0.2`;
+    CSS.val.shadow.default = `0px 10px 10px -5px hsla(${CSS.val.color.science.hue}deg 10% 2% / 0.2)`;
 
   }
 
