@@ -10,10 +10,16 @@
 // button.textContent = 'Click me';
 // document.body.appendChild(button);
 
+
+// background -> middleground -> foreground
+// Alias .color.brand -> .color.main
+
 "use strict";
 
 export default class CSS{
-  static var = {
+  static #mode = "dark";
+
+  static val = {
 
     zIndex: {
       minus: -1,
@@ -70,12 +76,59 @@ export default class CSS{
       success: "hsla(120, 100%, 25%, 1);",    // rgba(0, 128, 0, 1)
       info: "hsla(211.059, 100%, 50%, 1);",   // rgba(0, 123, 255, 1)
       warning: "hsla(46.286, 100%, 48%, 1);", // rgba(245, 189, 0, 1)
-      error: "hsla(357.303, 82%, 57%, 1);"    // rgba(235, 57, 65, 1)
+      error: "hsla(357.303, 82%, 57%, 1);",    // rgba(235, 57, 65, 1)
+
+      cover: "rgba(0, 0, 0, 0.6)",
+
+      science: {
+        hue: 230,         // deg
+        saturation: 13,   // %
+        lightness: 9      // %
+      },
+
+      scheme: "dark light",
 
     }
 
   };
-  
+
+
+
+  static {
+    CSS.dark();
+    CSS.doMath();
+
+  }
+
+  static doMath(){
+    // The Color, Main Color, Brand Color
+    CSS.val.color.main =
+    CSS.val.color.brand = `
+      hsla(
+        ${CSS.val.color.science.hue}deg,
+        ${CSS.val.color.science.saturation / 1.5}%,
+        ${CSS.val.color.science.lightness}%, 1
+      );
+    `;
+
+    // Not Sure If We Ever Used This
+    CSS.val.color.accent = CSS.val.color.main;
+
+    CSS.val.shadow = {
+      light: `0px 10px 10px -5px hsla(var(--color-shadow) / var(--shadow-opacity));`,
+    }
+
+  }
+
+  // Modes
+  static dark(){
+
+  }
+
+  static light(){
+
+  }
+
 }
 
 // Make CSS Usable W/O Importing It
