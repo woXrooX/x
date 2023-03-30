@@ -101,8 +101,6 @@ export default class CSS{
     CSS.light();
     CSS.doMath();
 
-    console.log(CSS.val);
-
   }
 
   static doMath(){
