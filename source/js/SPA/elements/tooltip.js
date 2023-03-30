@@ -83,7 +83,7 @@ export default class Tooltip extends HTMLElement{
 
           width: 20px;
 
-          color: var(--color-${this.type});
+          color: ${CSS.values.color[this.typeName]};
           font-size: 1em;
           font-weight: bold;
           text-align: center;
@@ -95,13 +95,13 @@ export default class Tooltip extends HTMLElement{
           border: 1px solid transparent;
           border-radius: 5px;
 
-          transition: var(--transition-velocity) ease-in-out;
+          transition: ${CSS.values.transition.velocity} ease-in-out;
           transition-property: border;
 
         }
 
         icon:hover{
-          border: 1px solid var(--color-${this.type});
+          border: 1px solid ${CSS.values.color[this.typeName]};
         }
 
         tooltip > content{
@@ -109,14 +109,14 @@ export default class Tooltip extends HTMLElement{
 
           display: block;
 
-          background-color: var(--color-brand);
+          background-color: ${CSS.values.color.main};
           color: white;
 
           opacity: 0;
 
-          padding: calc(var(--padding) * 2);
-          border-radius: var(--radius);
-          box-shadow: 0px 0px 10px var(--color-brand);
+          padding: calc(${CSS.values.padding.default} * 2);
+          border-radius: ${CSS.values.radius.default};
+          box-shadow: 0px 0px 10px ${CSS.values.color.main};
           box-sizing: border-box;
 
           max-width: 40vw;
@@ -124,13 +124,13 @@ export default class Tooltip extends HTMLElement{
           height: max-content;
 
           position: absolute;
-          z-index: var(--z-tooltip);
+          z-index: ${CSS.values.zIndex.tooltip};
           left: 50%;
           top: 0%;
           transform: translate(-50%, calc(-50% + 10px));
           transform-origin: center;
 
-          transition: var(--transition-velocity) ease-in-out;
+          transition: ${CSS.values.transition.velocity} ease-in-out;
           transition-property: opacity, transform;
 
         }
@@ -193,7 +193,7 @@ export default class Tooltip extends HTMLElement{
           margin-left: -5px;
           border-width: 5px;
           border-style: solid;
-          border-color: var(--color-brand) transparent transparent transparent;
+          border-color: ${CSS.values.color.main} transparent transparent transparent;
 
         }
 
