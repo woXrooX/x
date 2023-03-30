@@ -39,6 +39,7 @@
   <script type="module" src="{{url_for('static', filename='js/main.js')}}"></script>
 
 
-  <style media="all">{{EXTERNALS["CSS"]|safe}}</style>
+  <style media="all" for="INTERNAL_CSS"></style>
+  <style media="all" for="EXTERNALS_CSS">{{EXTERNALS["CSS"]|safe}}</style>
 
 </head>
