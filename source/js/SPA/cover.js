@@ -14,7 +14,7 @@ export default class Cover{
     if(!!Cover.#elementCover === false) return;
 
     Cover.#elementCover.style.opacity = 1;
-    Cover.#elementCover.style.zIndex = getComputedStyle(document.body).getPropertyValue('--z-cover');
+    Cover.#elementCover.style.zIndex = window.CSS.values.zIndex.cover;
 
     // disable scrolling
     document.body.style = "overflow: hidden";
@@ -27,8 +27,8 @@ export default class Cover{
 
     Cover.#elementCover.style.opacity = 0;
     setTimeout(()=>{
-      Cover.#elementCover.style.zIndex = getComputedStyle(document.body).getPropertyValue('--z-minus');
-    }, parseInt(getComputedStyle(document.body).getPropertyValue('--transition-velocity')));
+      Cover.#elementCover.style.zIndex = window.CSS.values.zIndex.minus;
+    }, window.CSS.values.transition.velocity);
 
     // enable scrolling
     document.body.removeAttribute("style");
