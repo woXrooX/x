@@ -49,19 +49,19 @@ export default class Toast extends HTMLElement{
         toast{
           overflow: hidden;
 
-          background-color: var(--color-surface-1);
-          padding: var(--padding);
+          background-color: ${CSS.values.color.surface["1"]};
+          padding: ${CSS.values.padding.default};
           margin: 0px;
-          border-radius: var(--radius);
+          border-radius: ${CSS.values.radius.default};
 
-          box-shadow: var(--shadow-light);
+          box-shadow: ${CSS.values.shadow.default};
 
           display: grid;
           gap: 10px;
           grid-template-columns:auto 2fr auto;
           align-items: center;
 
-          animation: fadeIn var(--transition-velocity) ease;
+          animation: fadeIn ${CSS.values.transition.velocity} ease;
         }
         @keyframes fadeIn{
           0%{transform:translateY(-10px);}
@@ -69,10 +69,10 @@ export default class Toast extends HTMLElement{
         }
 
         labelColor{
-          background-color: var(--color-${this.typeName});
+          background-color: ${CSS.values.color[this.typeName]};
           height: 100%;
           width: 5px;
-          border-radius: var(--radius);
+          border-radius: ${CSS.values.radius.default};
         }
 
         toast > main{
@@ -87,43 +87,43 @@ export default class Toast extends HTMLElement{
         toast > main > icon{
           font-size: 30px;
           padding-right: 5px;
-          color: var(--color-${this.typeName});
+          color: ${CSS.values.color[this.typeName]};
           grid-area: icon;
         }
 
         toast > main > type{
           font-size: 20px;
-          color: var(--color-text-primary);
+          color: ${CSS.values.color.text.primary};
           text-transform: uppercase;
           font-weight: bold;
           grid-area: type;
         }
 
         toast > main > content{
-          color: var(--color-text-secondary);
+          color: ${CSS.values.color.text.secondary};
           grid-area:content;
         }
 
         toast > dismiss{
-          color: var(--color-text-primary);
+          color: ${CSS.values.color.text.primary};
           font-size: 30px;
           user-select: none;
 
           width: 40px;
           height: 40px;
 
-          border-radius: var(--radius);
+          border-radius: ${CSS.values.radius.default};
 
           display: grid;
           place-items: center;
 
           cursor: pointer;
 
-          transition: var(--transition-velocity) background-color;
+          transition: ${CSS.values.transition.velocity} background-color;
         }
 
         toast > dismiss:hover{
-          background-color: var(--color-surface-4);
+          background-color: ${CSS.values.color.surface["4"]};
         }
         `;
 
