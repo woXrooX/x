@@ -132,7 +132,7 @@ if os.path.exists(f"{PARENT_RUNNING_FROM}/SVG"):
 # print(EXTERNALS)
 
 #################################################### Load External CSS
-if os.path.exists(f"{APP_RUNNING_FROM}/CSS/styles.css"):
+if os.path.exists(f"{PARENT_RUNNING_FROM}/CSS/styles.css"):
     print("------------ Reading The External CSS Files ------------")
 
     try:
