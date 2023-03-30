@@ -79,7 +79,7 @@ export default class CSS{
     },
 
     color: {
-      scheme: "dark light",
+      scheme: null,
 
       success: "hsla(120, 100%, 25%, 1);",    // rgba(0, 128, 0, 1)
       info: "hsla(211.059, 100%, 50%, 1);",   // rgba(0, 123, 255, 1)
@@ -235,6 +235,10 @@ export default class CSS{
     `;
 
     const skeleton = `
+      root:{
+        color-scheme: ${CSS.values.color.scheme};
+      }
+
       body {
         background-color: ${CSS.values.color.surface["1"]};
         color: ${CSS.values.color.text.primary};
@@ -646,7 +650,7 @@ export default class CSS{
       textarea{
         height: unset;
         font-size: calc(var(--f-font-size) / 1.5);
-        min-height: 300px;
+        min-height: 150px;
         resize: vertical;
         padding: var(--f-padding);
 
