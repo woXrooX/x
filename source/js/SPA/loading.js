@@ -14,8 +14,8 @@ export default class Loading{
     if(!!Loading.#elementLoading === false) return;
     // console.log("start");
 
-    // Set z-index To --z-loading
-    Loading.#elementLoading.style.zIndex = getComputedStyle(document.body).getPropertyValue('--z-loading');
+    // Set z-index To loading
+    Loading.#elementLoading.style.zIndex = window.CSS.val.zIndex.loading;
 
     // Change The Opacity To 1
     Loading.#elementLoading.style.opacity = 1;
@@ -32,8 +32,8 @@ export default class Loading{
 
     // Wait For The Duration Of --transition-velocity
     setTimeout(()=>{
-      // Set z-index To --z-loading
-      Loading.#elementLoading.style.zIndex = getComputedStyle(document.body).getPropertyValue('--z-minus');
+      // Set z-index To minus
+      Loading.#elementLoading.style.zIndex = window.CSS.val.zIndex.minus;
 
     }, parseInt(getComputedStyle(document.body).getPropertyValue('--transition-velocity')));
 
