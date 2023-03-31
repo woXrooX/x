@@ -347,6 +347,8 @@ export default class CSS{
         height: 100vh;
 
         position: fixed;
+        left: 0px;
+        top: 0px;
         z-index: ${CSS.values.zIndex.loading};
 
         transition: ${CSS.values.transition.velocity} opacity ease-in-out;
