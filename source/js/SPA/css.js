@@ -782,8 +782,87 @@ export default class CSS{
       /****************************** Form END ******************************/
     `;
 
+    const table = `
+      /****************************** Table START ******************************/
+
+      /************ Table START ************/
+      table{
+        --table-radius: 3px;
+
+        /* make table cells with same */
+        table-layout: fixed;
+
+        width: 100%;
+        border: 1px solid ${CSS.values.color.main};
+        border-radius: ${CSS.values.radius.default};
+        padding: ${CSS.values.padding.default};
+
+      }
+      /************ Table END ************/
+
+      /************ thead START ************/
+      table > thead{
+        background-color: ${CSS.values.color.surface["10"]};
+      }
+
+      table > thead > tr > th{
+        color: ${CSS.values.color.text.accent};
+        font-weight: bold;
+
+        border-radius: var(--table-radius);
+        padding: ${CSS.values.padding.default};
+
+      }
+      /************ thead END ************/
+
+      /************ tbody START ************/
+      table > tbody > tr:nth-child(odd){
+        background-color: ${CSS.values.color.surface["3"]};
+
+      }
+      table > tbody > tr:nth-child(even){
+        background-color: ${CSS.values.color.surface["4"]};
+
+      }
+
+      table > tbody > tr > td{
+        border-radius: var(--table-radius);
+        padding: ${CSS.values.padding.default};
+
+      }
+
+      /* tr:hover START */
+      table > tbody > tr{
+        transition: ${CSS.values.transition.velocity} ease-in-out background-color;
+      }
+
+      table > tbody > tr:hover{
+        background-color: ${CSS.values.color.surface["7"]};
+      }
+      /* tr:hover END */
+
+      /************ tbody END ************/
+
+      /************ tfead START ************/
+      table > tfoot{
+        background-color: ${CSS.values.color.surface["9"]};
+      }
+
+      table > tfoot > tr > td{
+        color: ${CSS.values.color.text.accent};
+
+        border-radius: var(--table-radius);
+        padding: ${CSS.values.padding.default};
+
+      }
+      /************ tfoot END ************/
+
+      /****************************** Table END ******************************/
+    `;
+
     return `
       ${form}
+      ${table}
     `;
 
   }
