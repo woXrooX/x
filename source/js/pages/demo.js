@@ -299,15 +299,15 @@ const situationalColors = `
     </div>
 
     <div style="background-color:${window.CSS.values.color.info}" class="p-5">
-      <b>window.CSS.values.color.success</b>
+      <b>window.CSS.values.color.info</b>
     </div>
 
     <div style="background-color:${window.CSS.values.color.warning}" class="p-5">
-      <b>window.CSS.values.color.success</b>
+      <b>window.CSS.values.color.warning</b>
     </div>
 
     <div style="background-color:${window.CSS.values.color.error}" class="p-5">
-      <b>window.CSS.values.color.success</b>
+      <b>window.CSS.values.color.error</b>
     </div>
 
   </row>
