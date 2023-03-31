@@ -290,24 +290,24 @@ const colorTextX = `
 const situationalColors = `
 <container class="m-t-5">
 
-  <row><h1>Situational Colors (--color-x)</h1></row>
+  <row><h1>Situational Colors</h1></row>
 
   <row class="w-90 box-default p-5">
 
-    <div style="background-color:var(--color-success)" class="p-5">
-      <b>--color-success</b>
+    <div style="background-color:${window.CSS.values.color.success}" class="p-5">
+      <b>window.CSS.values.color.success</b>
     </div>
 
-    <div style="background-color:var(--color-info)" class="p-5">
-      <b>--color-info</b>
+    <div style="background-color:${window.CSS.values.color.info}" class="p-5">
+      <b>window.CSS.values.color.success</b>
     </div>
 
-    <div style="background-color:var(--color-warning)" class="p-5">
-      <b>--color-warning</b>
+    <div style="background-color:${window.CSS.values.color.warning}" class="p-5">
+      <b>window.CSS.values.color.success</b>
     </div>
 
-    <div style="background-color:var(--color-error)" class="p-5">
-      <b>--color-error</b>
+    <div style="background-color:${window.CSS.values.color.error}" class="p-5">
+      <b>window.CSS.values.color.success</b>
     </div>
 
   </row>
