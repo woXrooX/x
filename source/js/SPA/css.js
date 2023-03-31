@@ -100,7 +100,9 @@ export default class CSS{
         hue: 230,         // deg
         saturation: 13,   // %
         lightness: 9      // %
-      }
+      },
+
+      text: {}
 
     },
 
