@@ -143,6 +143,7 @@ export default class CSS{
 
   }
 
+  // Updates The CSS Rules
   static #update(){
     window.document.querySelector("style[for=INTERNAL_CSS]").innerText = `
       ${CSS.common()}
@@ -224,7 +225,7 @@ export default class CSS{
 
   }
 
-  //////////// Styles
+  //////////// CSS
   static common(){
     const fonts = `
       /*********************** FONTS START ***********************/
