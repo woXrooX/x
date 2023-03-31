@@ -235,8 +235,9 @@ export default class CSS{
     `;
 
     const skeleton = `
-      root:{
+      :root{
         color-scheme: ${CSS.values.color.scheme};
+        accent-color: ${CSS.values.color.main};
       }
 
       body {
@@ -547,7 +548,7 @@ export default class CSS{
       /****************************** Form START ******************************/
 
       /************ Form START ************/
-      :root{
+      form{
         --f-padding: 10px;
         --f-radius: 5px;
         --f-gap: 10px;
@@ -558,10 +559,6 @@ export default class CSS{
         --f-transition: ${CSS.values.transition.velocity} ease-in-out;
         --f-transition-property: background-color, border;
 
-      }
-
-
-      form{
         width: var(--f-width);
 
         display: grid;
