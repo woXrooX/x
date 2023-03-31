@@ -17,13 +17,13 @@
 "use strict";
 
 export default class CSS{
-  // UI Modes
+  // Color Modes
   static colorModes = Object.freeze({
     DARK: 0,
     LIGHT: 1
   });
 
-  // Default To Dark Mode
+  // Color Mode Default: Dark Mode
   static currentColorMode = CSS.colorModes.DARK;
 
   // Values
