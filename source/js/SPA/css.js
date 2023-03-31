@@ -118,8 +118,6 @@ export default class CSS{
 
   //////////// APIs
   static colorModeSwitcher(){
-    console.log(CSS.currentColorMode);
-
     switch(CSS.currentColorMode){
       case CSS.colorModes.DARK:
         // console.log("Dark");
