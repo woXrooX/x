@@ -83,7 +83,7 @@ export default class Tooltip extends HTMLElement{
 
           width: 20px;
 
-          color: ${CSS.values.color[this.typeName]};
+          color: ${window.CSS.values.color[this.type]};
           font-size: 1em;
           font-weight: bold;
           text-align: center;
@@ -95,13 +95,13 @@ export default class Tooltip extends HTMLElement{
           border: 1px solid transparent;
           border-radius: 5px;
 
-          transition: ${CSS.values.transition.velocity} ease-in-out;
+          transition: ${window.CSS.values.transition.velocity} ease-in-out;
           transition-property: border;
 
         }
 
         icon:hover{
-          border: 1px solid ${CSS.values.color[this.typeName]};
+          border: 1px solid ${window.CSS.values.color[this.type]};
         }
 
         tooltip > content{
@@ -109,14 +109,14 @@ export default class Tooltip extends HTMLElement{
 
           display: block;
 
-          background-color: ${CSS.values.color.main};
+          background-color: ${window.CSS.values.color.main};
           color: white;
 
           opacity: 0;
 
-          padding: calc(${CSS.values.padding.default} * 2);
-          border-radius: ${CSS.values.radius.default};
-          box-shadow: 0px 0px 10px ${CSS.values.color.main};
+          padding: calc(${window.CSS.values.padding.default} * 2);
+          border-radius: ${window.CSS.values.radius.default};
+          box-shadow: 0px 0px 10px ${window.CSS.values.color.main};
           box-sizing: border-box;
 
           max-width: 40vw;
@@ -124,13 +124,13 @@ export default class Tooltip extends HTMLElement{
           height: max-content;
 
           position: absolute;
-          z-index: ${CSS.values.zIndex.tooltip};
+          z-index: ${window.CSS.values.zIndex.tooltip};
           left: 50%;
           top: 0%;
           transform: translate(-50%, calc(-50% + 10px));
           transform-origin: center;
 
-          transition: ${CSS.values.transition.velocity} ease-in-out;
+          transition: ${window.CSS.values.transition.velocity} ease-in-out;
           transition-property: opacity, transform;
 
         }
@@ -193,7 +193,7 @@ export default class Tooltip extends HTMLElement{
           margin-left: -5px;
           border-width: 5px;
           border-style: solid;
-          border-color: ${CSS.values.color.main} transparent transparent transparent;
+          border-color: ${window.CSS.values.color.main} transparent transparent transparent;
 
         }
 
