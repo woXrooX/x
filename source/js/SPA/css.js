@@ -136,14 +136,14 @@ export default class CSS{
 
     CSS.values.color.surface = {
       "1": `hsla(${CSS.values.color.science.hue}deg, 10%, 10%, 1)`,
-      "2": `hsla(${CSS.values.color.science.hue}deg, 10%, 19.5%, 1)`,
-      "3": `hsla(${CSS.values.color.science.hue}deg, 10%, 29%, 1)`,
-      "4": `hsla(${CSS.values.color.science.hue}deg, 10%, 38.5%, 1)`,
-      "5": `hsla(${CSS.values.color.science.hue}deg, 10%, 48%, 1)`,
-      "6": `hsla(${CSS.values.color.science.hue}deg, 10%, 57.5%, 1)`,
-      "7": `hsla(${CSS.values.color.science.hue}deg, 10%, 66.5%, 1)`,
-      "8": `hsla(${CSS.values.color.science.hue}deg, 10%, 76%, 1)`,
-      "9": `hsla(${CSS.values.color.science.hue}deg, 10%, 85.5%, 1)`,
+      "2": `hsla(${CSS.values.color.science.hue}deg, 10%, 15%, 1)`,
+      "3": `hsla(${CSS.values.color.science.hue}deg, 10%, 20%, 1)`,
+      "4": `hsla(${CSS.values.color.science.hue}deg, 10%, 25%, 1)`,
+      "5": `hsla(${CSS.values.color.science.hue}deg, 10%, 30%, 1)`,
+      "6": `hsla(${CSS.values.color.science.hue}deg, 10%, 35%, 1)`,
+      "7": `hsla(${CSS.values.color.science.hue}deg, 10%, 50%, 1)`,
+      "8": `hsla(${CSS.values.color.science.hue}deg, 10%, 65%, 1)`,
+      "9": `hsla(${CSS.values.color.science.hue}deg, 10%, 80%, 1)`,
       "10": `hsla(${CSS.values.color.science.hue}deg, 10%, 95%, 1)`,
     };
 
@@ -172,14 +172,14 @@ export default class CSS{
 
     CSS.values.color.surface = {
       "1": `hsla(${CSS.values.color.science.hue}, 20%, 100%, 1)`,
-      "2": `hsla(${CSS.values.color.science.hue}, 20%, 89.5%, 1)`,
-      "3": `hsla(${CSS.values.color.science.hue}, 20%, 79%, 1)`,
-      "4": `hsla(${CSS.values.color.science.hue}, 20%, 68.5%, 1)`,
-      "5": `hsla(${CSS.values.color.science.hue}, 20%, 58%, 1)`,
-      "6": `hsla(${CSS.values.color.science.hue}, 20%, 47%, 1)`,
-      "7": `hsla(${CSS.values.color.science.hue}, 20%, 36.5%, 1)`,
-      "8": `hsla(${CSS.values.color.science.hue}, 20%, 26%, 1)`,
-      "9": `hsla(${CSS.values.color.science.hue}, 20%, 15.5%, 1)`,
+      "2": `hsla(${CSS.values.color.science.hue}, 20%, 95%, 1)`,
+      "3": `hsla(${CSS.values.color.science.hue}, 20%, 90%, 1)`,
+      "4": `hsla(${CSS.values.color.science.hue}, 20%, 85%, 1)`,
+      "5": `hsla(${CSS.values.color.science.hue}, 20%, 80%, 1)`,
+      "6": `hsla(${CSS.values.color.science.hue}, 20%, 75%, 1)`,
+      "7": `hsla(${CSS.values.color.science.hue}, 20%, 60%, 1)`,
+      "8": `hsla(${CSS.values.color.science.hue}, 20%, 45%, 1)`,
+      "9": `hsla(${CSS.values.color.science.hue}, 20%, 30%, 1)`,
       "10": `hsla(${CSS.values.color.science.hue}, 20%, 15%, 1)`,
     };
 
