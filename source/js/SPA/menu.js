@@ -14,7 +14,7 @@ export default class Menu{
   static #currentMode = null;
 
 
-  // Init
+  /////////////////// Init
   static init(){
     Menu.#elementMenuHamburgerButton = document.querySelector(Menu.#selectorMenuButton);
     Menu.#elementMenu = document.querySelector(Menu.selector);
@@ -29,8 +29,7 @@ export default class Menu{
     Menu.#onClickMenuButtonShow();
     Menu.#onClickCoverHide();
     Menu.#toggleAlwaysOpenMode();
-
-    // Menu.#onClickLockSidebar()
+    Menu.#colorModeSwitcher();
 
   }
 
@@ -67,7 +66,8 @@ export default class Menu{
 
   }
 
-  /////////////////// Active
+  /////////////////// On Click Events
+  // Active
   static setActive(){
     document.querySelectorAll(Menu.#selectorHyperlinks).forEach((a) => {
       a.removeAttribute("active");
@@ -78,12 +78,58 @@ export default class Menu{
     });
   }
 
-  /////////////////// On Click Menu Button Show The Menu
+  // On Click Menu Button Show The Menu
   static #onClickMenuButtonShow(){
     document.querySelector(Menu.#selectorMenuButton).onclick = Menu.#show;
   }
 
-  /////////////////// toggleAlwaysOpenMode
+  // On Click Cover Hide
+  static #onClickCoverHide(){
+    document.querySelector(window.Cover.selector).addEventListener("click", Menu.#hide);
+  }
+
+  // On Click Menu Anchors Hide The Menu
+  static #onClickHyperlinksHide(){
+    document.querySelectorAll(Menu.#selectorHyperlinks).forEach((a) => {
+      a.addEventListener("click", Menu.#hide);
+    });
+  }
+
+  /////////////////// Tools
+  // Show
+  static #show(){
+    // Check If Already Shown
+    if(Menu.#shown) return;
+
+    // Check if body > menu exists
+    if(!!Menu.#elementMenu === false) return;
+
+    Menu.#elementMenu.style.transform = "translate(0px, 0px)";
+    window.Cover.show();
+
+    Menu.#shown = true;
+
+  }
+
+  // Hide
+  static #hide(){
+    // Check If Already Hidden
+    if(!Menu.#shown) return;
+
+    // Check If Current Mode Is "alwaysOpen" Mode
+    if(Menu.#currentMode === 1) return;
+
+    // Check if body > menu exists
+    if(!!Menu.#elementMenu === false) return;
+
+    Menu.#elementMenu.removeAttribute("style");
+    window.Cover.hide();
+
+    Menu.#shown = false;
+
+  }
+
+  // toggleAlwaysOpenMode
   static #toggleAlwaysOpenMode(){
     const toggler = document.querySelector(`${Menu.selector} > header > div[for=toggleAlwaysOpenMode]`);
 
@@ -137,54 +183,27 @@ export default class Menu{
 
   }
 
-  /////////////////// On Click Cover Hide
-  static #onClickCoverHide(){
-    document.querySelector(window.Cover.selector).addEventListener("click", Menu.#hide);
-  }
+  static #colorModeSwitcher(){
+    const switcher = document.querySelector(`${Menu.selector} > header > div[for=colorModeSwitcher]`);
 
-  /////////////////// On Click Menu Anchors Hide The Menu
-  static #onClickHyperlinksHide(){
-    document.querySelectorAll(Menu.#selectorHyperlinks).forEach((a) => {
-      a.addEventListener("click", Menu.#hide);
+    switcher.addEventListener("click", ()=>{
+      // Dark Mode
+      if(window.CSS.currentColorMode === window.CSS.colorModes.LIGHT){
+        switcher.innerHTML = "<x-icon color='#ffffff'>light_mode</x-icon>";
+        window.CSS.currentColorMode = window.CSS.colorModes.DARK;
+      }
+      // Light Mode
+      else{
+        switcher.innerHTML = "<x-icon color='#ffffff'>dark_mode</x-icon>";
+        window.CSS.currentColorMode = window.CSS.colorModes.LIGHT;
+      }
+
+      window.CSS.colorModeSwitcher();
+
     });
   }
 
-
-  /////////////////// Show
-  static #show(){
-    // Check If Already Shown
-    if(Menu.#shown) return;
-
-    // Check if body > menu exists
-    if(!!Menu.#elementMenu === false) return;
-
-    Menu.#elementMenu.style.transform = "translate(0px, 0px)";
-    window.Cover.show();
-
-    Menu.#shown = true;
-
-  }
-
-  /////////////////// Hide
-  static #hide(){
-    // Check If Already Hidden
-    if(!Menu.#shown) return;
-
-    // Check If Current Mode Is "alwaysOpen" Mode
-    if(Menu.#currentMode === 1) return;
-
-    // Check if body > menu exists
-    if(!!Menu.#elementMenu === false) return;
-
-    Menu.#elementMenu.removeAttribute("style");
-    window.Cover.hide();
-
-    Menu.#shown = false;
-
-  }
-
-
-  /////////////////// Guard
+  // Guard
   static #menuGuard(menu){
     // Check If Menu Is Enabled
     // Done At Menu.init()
