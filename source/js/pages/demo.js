@@ -264,20 +264,20 @@ const classBCcolorSurfaceX = `
 const colorTextX = `
 <container class="m-t-5">
 
-  <row><h1>Text Color (--color-text-x)</h1></row>
+  <row><h1>Text Color (window.CSS.values.color.text.x)</h1></row>
 
   <row class="w-90 box-default p-5">
 
-    <div style="color:var(--color-text-primary)" class="bc-1 p-5">
-      <b>--color-text-primary</b>
+    <div style="color:${window.CSS.values.color.text.primary}" class="bc-1 p-5">
+      <b>window.CSS.values.color.text.primary</b>
     </div>
 
-    <div style="color:var(--color-text-secondary)" class="bc-5 p-5">
-      <b>--color-text-secondary</b>
+    <div style="color:${window.CSS.values.color.text.secondary}" class="bc-5 p-5">
+      <b>window.CSS.values.color.text.secondary</b>
     </div>
 
-    <div style="color:var(--color-text-accent)"  class="bc-10 p-5">
-      <b>--color-text-accent</b>
+    <div style="color:${window.CSS.values.color.text.accent}"  class="bc-10 p-5">
+      <b>window.CSS.values.color.text.accent</b>
     </div>
 
   </row>
