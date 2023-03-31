@@ -311,6 +311,21 @@ export default class CSS{
         --color-warning: ${CSS.values.color.warning};
         --color-error: ${CSS.values.color.error};
 
+        --color-surface-1: ${CSS.values.color.surface["1"]};
+        --color-surface-2: ${CSS.values.color.surface["2"]};
+        --color-surface-3: ${CSS.values.color.surface["3"]};
+        --color-surface-4: ${CSS.values.color.surface["4"]};
+        --color-surface-5: ${CSS.values.color.surface["5"]};
+        --color-surface-6: ${CSS.values.color.surface["6"]};
+        --color-surface-7: ${CSS.values.color.surface["7"]};
+        --color-surface-8: ${CSS.values.color.surface["8"]};
+        --color-surface-9: ${CSS.values.color.surface["9"]};
+        --color-surface-10: ${CSS.values.color.surface["10"]};
+
+        --color-text-primary: ${CSS.values.color.text.primary};
+        --color-text-secondary: ${CSS.values.color.text.secondary};
+        --color-text-accent: ${CSS.values.color.text.accent};
+
         --color-cover: ${CSS.values.color.cover};
 
       }
