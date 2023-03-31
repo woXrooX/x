@@ -274,6 +274,45 @@ export default class CSS{
       :root{
         color-scheme: ${CSS.values.color.scheme};
         accent-color: ${CSS.values.color.main};
+
+
+        --z-minus: ${CSS.values.zIndex.minus};
+        --z-body: ${CSS.values.zIndex.body};
+        --z-footer: ${CSS.values.zIndex.footer};
+        --z-main: ${CSS.values.zIndex.main};
+        --z-boxes: ${CSS.values.zIndex.boxes};
+        --z-header: ${CSS.values.zIndex.header};
+        --z-cover: ${CSS.values.zIndex.cover};
+        --z-modal: ${CSS.values.zIndex.modal};
+        --z-menu: ${CSS.values.zIndex.menu};
+        --z-tooltip: ${CSS.values.zIndex.tooltip};
+        --z-toasts: ${CSS.values.zIndex.toasts};
+        --z-loading: ${CSS.values.zIndex.loading};
+        --z-urgent: ${CSS.values.zIndex.urgent};
+
+
+        --header-height: ${CSS.values.header.height};
+        --footer-height: ${CSS.values.footer.height};
+
+
+        --padding: ${CSS.values.padding.default};
+        --gap: ${CSS.values.gap.default};
+        --radius: ${CSS.values.radius.default};
+        --blur: ${CSS.values.blur.default};
+        --transition-velocity: ${CSS.values.transition.velocity};
+        --shadow-default: ${CSS.values.shadow.default};
+
+
+        --color-main: ${CSS.values.color.main};
+        --color-brand: var(--color-main);
+
+        --color-success: ${CSS.values.color.success};
+        --color-info: ${CSS.values.color.info};
+        --color-warning: ${CSS.values.color.warning};
+        --color-error: ${CSS.values.color.error};
+
+        --color-cover: ${CSS.values.color.cover};
+
       }
 
       body {
