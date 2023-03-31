@@ -638,9 +638,8 @@ export default class CSS{
   static styles(){
     const form = `
       /****************************** Form START ******************************/
-
-      /************ Form START ************/
-      form{
+      /************ Form Variables START ************/
+      :root{
         --f-padding: 10px;
         --f-radius: 5px;
         --f-gap: 10px;
@@ -650,7 +649,11 @@ export default class CSS{
         --f-border: 1px solid ${CSS.values.color.text.secondary};
         --f-transition: ${CSS.values.transition.velocity} ease-in-out;
         --f-transition-property: background-color, border;
+      }
+      /************ Form Variables END ************/
 
+      /************ Form START ************/
+      form{
         width: var(--f-width);
 
         display: grid;
