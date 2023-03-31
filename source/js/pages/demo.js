@@ -295,19 +295,19 @@ const situationalColors = `
   <row class="w-90 box-default p-5">
 
     <div style="background-color:${window.CSS.values.color.success}" class="p-5">
-      <b>window.CSS.values.color.success</b>
+      <b>window.CSS.values.color.success<br>var(--color-success)</b>
     </div>
 
     <div style="background-color:${window.CSS.values.color.info}" class="p-5">
-      <b>window.CSS.values.color.info</b>
+      <b>window.CSS.values.color.info<br>var(--color-info)</b>
     </div>
 
     <div style="background-color:${window.CSS.values.color.warning}" class="p-5">
-      <b>window.CSS.values.color.warning</b>
+      <b>window.CSS.values.color.warning<br>var(--color-warning)</b>
     </div>
 
     <div style="background-color:${window.CSS.values.color.error}" class="p-5">
-      <b>window.CSS.values.color.error</b>
+      <b>window.CSS.values.color.error<br>var(--color-error)</b>
     </div>
 
   </row>
