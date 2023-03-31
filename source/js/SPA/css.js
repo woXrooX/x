@@ -17,13 +17,16 @@
 "use strict";
 
 export default class CSS{
-  static modes = Object.freeze({
+  // UI Modes
+  static colorModes = Object.freeze({
     DARK: 0,
     LIGHT: 1
   });
 
-  static #currentMode = CSS.modes.DARK;
+  // Default To Dark Mode
+  static currentColorMode = CSS.colorModes.DARK;
 
+  // Values
   static values = {
 
     font: {
@@ -105,44 +108,48 @@ export default class CSS{
 
   };
 
-
-
+  // Init
   static {
+    CSS.colorModeSwitcher();
 
-    CSS.switcher();
+    CSS.#update();
 
-    // CSS.#dark();
-    // CSS.light();
+  }
 
+  //////////// APIs
+  static colorModeSwitcher(){
+    console.log(CSS.currentColorMode);
+
+    switch(CSS.currentColorMode){
+      case CSS.colorModes.DARK:
+        // console.log("Dark");
+        CSS.#dark();
+        CSS.currentColorMode = CSS.colorModes.DARK;
+        break;
+
+      case CSS.colorModes.LIGHT:
+        // console.log("Light");
+        CSS.#light();
+        CSS.currentColorMode = CSS.colorModes.LIGHT;
+        break;
+
+      default:
+        // console.log("Default");
+        CSS.#dark();
+        CSS.currentColorMode = CSS.colorModes.DARK;
+    }
+
+    CSS.#update();
+
+  }
+
+  static #update(){
     window.document.querySelector("style[for=INTERNAL_CSS]").innerText = `
       ${CSS.common()}
       ${CSS.master()}
       ${CSS.styles()}
       ${CSS.layouts()}
     `;
-
-  }
-
-  //////////// APIs
-  static switcher(mode = CSS.modes.DARK){
-    switch(mode){
-      case CSS.modes.DARK:
-        CSS.#dark();
-        console.log("Dark");
-        break;
-
-      case CSS.modes.LIGHT:
-        CSS.#light();
-        console.log("Light");
-        break;
-
-      default:
-        CSS.#dark();
-        console.log("Default");
-
-
-
-    }
   }
 
   //////////// Modes
@@ -366,7 +373,7 @@ export default class CSS{
 
         display: flex;
         flex-direction: row;
-        justify-content: flex-end;
+        justify-content: space-between;
 
       }
       body > menu > header > div{
