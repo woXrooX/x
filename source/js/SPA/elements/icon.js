@@ -27,7 +27,7 @@ export default class Icon extends HTMLElement{
           width: 100%;
           height: 100%;
 
-          fill: ${this.getAttribute("color") || window.CSS.values.color.text.primary};
+          fill: ${this.getAttribute("color") || "var(--color-text-primary)"};
 
           filter: brightness(100%);
 
