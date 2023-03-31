@@ -17,7 +17,12 @@
 "use strict";
 
 export default class CSS{
-  static #mode = "dark";
+  static modes = Object.freeze({
+    DARK: 0,
+    LIGHT: 1
+  });
+
+  static #currentMode = CSS.modes.DARK;
 
   static values = {
 
@@ -103,7 +108,10 @@ export default class CSS{
 
 
   static {
-    CSS.dark();
+
+    CSS.switcher();
+
+    // CSS.#dark();
     // CSS.light();
 
     window.document.querySelector("style[for=INTERNAL_CSS]").innerText = `
@@ -115,8 +123,30 @@ export default class CSS{
 
   }
 
+  //////////// APIs
+  static switcher(mode = CSS.modes.DARK){
+    switch(mode){
+      case CSS.modes.DARK:
+        CSS.#dark();
+        console.log("Dark");
+        break;
+
+      case CSS.modes.LIGHT:
+        CSS.#light();
+        console.log("Light");
+        break;
+
+      default:
+        CSS.#dark();
+        console.log("Default");
+
+
+
+    }
+  }
+
   //////////// Modes
-  static dark(){
+  static #dark(){
     CSS.values.color.scheme = "dark";
 
     // The Color, Main Color, Brand Color
@@ -151,7 +181,7 @@ export default class CSS{
 
   }
 
-  static light(){
+  static #light(){
     CSS.values.color.scheme = "light";
 
     // The Color, Main Color, Brand Color
