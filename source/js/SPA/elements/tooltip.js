@@ -73,134 +73,134 @@ export default class Tooltip extends HTMLElement{
         const style = document.createElement('style');
 
         style.textContent = `
-        tooltip{
-          position: relative;
+          tooltip{
+            position: relative;
 
-        }
+          }
 
-        tooltip > icon{
-          cursor: help;
+          tooltip > icon{
+            cursor: help;
 
-          width: 20px;
+            width: 20px;
 
-          color: ${window.CSS.values.color[this.type]};
-          font-size: 1em;
-          font-weight: bold;
-          text-align: center;
+            color: ${window.CSS.values.color[this.type]};
+            font-size: 1em;
+            font-weight: bold;
+            text-align: center;
 
-          display: grid;
-          place-items: center;
+            display: grid;
+            place-items: center;
 
-          margin: 0px 5px;
-          border: 1px solid transparent;
-          border-radius: 5px;
+            margin: 0px 5px;
+            border: 1px solid transparent;
+            border-radius: 5px;
 
-          transition: ${window.CSS.values.transition.velocity} ease-in-out;
-          transition-property: border;
+            transition: ${window.CSS.values.transition.velocity} ease-in-out;
+            transition-property: border;
 
-        }
+          }
 
-        icon:hover{
-          border: 1px solid ${window.CSS.values.color[this.type]};
-        }
+          icon:hover{
+            border: 1px solid ${window.CSS.values.color[this.type]};
+          }
 
-        tooltip > content{
-          pointer-events: none;
+          tooltip > content{
+            pointer-events: none;
 
-          display: block;
+            display: block;
 
-          background-color: ${window.CSS.values.color.main};
-          color: white;
+            background-color: ${window.CSS.values.color.main};
+            color: white;
 
-          opacity: 0;
+            opacity: 0;
 
-          padding: calc(${window.CSS.values.padding.default} * 2);
-          border-radius: ${window.CSS.values.radius.default};
-          box-shadow: 0px 0px 10px ${window.CSS.values.color.main};
-          box-sizing: border-box;
+            padding: calc(${window.CSS.values.padding.default} * 2);
+            border-radius: ${window.CSS.values.radius.default};
+            box-shadow: 0px 0px 10px ${window.CSS.values.color.main};
+            box-sizing: border-box;
 
-          max-width: 40vw;
-          width: max-content;
-          height: max-content;
+            max-width: 40vw;
+            width: max-content;
+            height: max-content;
 
-          position: absolute;
-          z-index: ${window.CSS.values.zIndex.tooltip};
-          left: 50%;
-          top: 0%;
-          transform: translate(-50%, calc(-50% + 10px));
-          transform-origin: center;
+            position: absolute;
+            z-index: ${window.CSS.values.zIndex.tooltip};
+            left: 50%;
+            top: 0%;
+            transform: translate(-50%, calc(-50% + 10px));
+            transform-origin: center;
 
-          transition: ${window.CSS.values.transition.velocity} ease-in-out;
-          transition-property: opacity, transform;
+            transition: ${window.CSS.values.transition.velocity} ease-in-out;
+            transition-property: opacity, transform;
 
-        }
+          }
 
-        tooltip > content.showOnTop{
-          transform: translate(-50%, calc(-100% - 12px));
+          tooltip > content.showOnTop{
+            transform: translate(-50%, calc(-100% - 12px));
 
-        }
+          }
 
-        tooltip > content.showOnTop::after{
-          top: 100%;
-          left: 50%;
+          tooltip > content.showOnTop::after{
+            top: 100%;
+            left: 50%;
 
-        }
+          }
 
-        tooltip > content.showOnBottom{
-          transform: translate(-50%, 30px);
+          tooltip > content.showOnBottom{
+            transform: translate(-50%, 30px);
 
-        }
+          }
 
-        tooltip > content.showOnBottom::after{
-          top: 0%;
-          left: 50%;
-          transform: rotate(180deg);
-          transform-origin: top;
+          tooltip > content.showOnBottom::after{
+            top: 0%;
+            left: 50%;
+            transform: rotate(180deg);
+            transform-origin: top;
 
-        }
+          }
 
-        tooltip > content.showOnRight{
-          transform: translate(calc(0% + 22px), calc(-50% + 10px));
+          tooltip > content.showOnRight{
+            transform: translate(calc(0% + 22px), calc(-50% + 10px));
 
-        }
+          }
 
-        tooltip > content.showOnRight::after{
-          top: 50%;
-          left: 0%;
-          transform: rotate(90deg);
-          transform-origin: top;
+          tooltip > content.showOnRight::after{
+            top: 50%;
+            left: 0%;
+            transform: rotate(90deg);
+            transform-origin: top;
 
-        }
+          }
 
-        tooltip > content.showOnLeft{
-          transform: translate(calc(-100% - 42px), calc(-50% + 10px));
+          tooltip > content.showOnLeft{
+            transform: translate(calc(-100% - 42px), calc(-50% + 10px));
 
-        }
+          }
 
-        tooltip > content.showOnLeft::after{
-          top: 50%;
-          left: 100%;
-          transform: rotate(270deg);
-          transform-origin: top;
+          tooltip > content.showOnLeft::after{
+            top: 50%;
+            left: 100%;
+            transform: rotate(270deg);
+            transform-origin: top;
 
-        }
+          }
 
-        tooltip > content::after{
-          content: "";
+          tooltip > content::after{
+            content: "";
 
-          position: absolute;
+            position: absolute;
 
-          margin-left: -5px;
-          border-width: 5px;
-          border-style: solid;
-          border-color: ${window.CSS.values.color.main} transparent transparent transparent;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--color-main) transparent transparent transparent;
 
-        }
+          }
 
-        icon:hover + content{
-          opacity: 1;
+          icon:hover + content{
+            opacity: 1;
 
-        }
+          }
 
         `;
 
