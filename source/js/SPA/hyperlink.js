@@ -39,7 +39,7 @@ export default class Hyperlink{
     if(window.location.href == path) return;
 
     //// Change Url / Add To History
-    window.history.pushState("", "", path);
+    window.history.pushState("", "", window.location.origin + '/' + path);
 
     // Firing Event "locationchange" After Changing URL
     window.dispatchEvent(new Event('locationchange'));

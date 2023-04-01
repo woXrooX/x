@@ -10,7 +10,7 @@ export default async function bridge(url='', data=null, contentType = null){
   if(!!contentType == false) contentType = "application/json";
 
   try{
-    const response = await fetch(url, {
+    const response = await fetch(window.location.origin + '/' + url, {
       method: 'POST',
       mode: 'same-origin',
       cache: 'force-cache',
