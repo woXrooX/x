@@ -1,7 +1,7 @@
 # How To Contribute?
 
 # Git Flow (Working With Existing Branches)
-1. git clone https://github.com/woXrooX/x-webapp
+1. git clone https://github.com/woXrooX/x
 2. git branch -r (Shows remote branches) And git fetch --all (Pulls all remote branches)
 3. git checkout feature/menu
 4. git pull

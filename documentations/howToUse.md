@@ -5,7 +5,7 @@
 ## Initializing
 1. Create a git repository **MyWebSite**
 2. **cd** into **MyWebSite**
-3. Use command to add X-WebApp as a submodule: **git submodule add** https://github.com/woXrooX/x-webapp
+3. Use command to add X as a submodule: **git submodule add** https://github.com/woXrooX/x
 4. Use command to to initialize and update submodule: **git submodule update --init**
 5. **cd** back to **MyWebSite**
 6. Create the ./MyWebSite/**project.json** file
@@ -16,7 +16,7 @@
 11. Create the ./MyWebSite/pages/front/**home.js**
 
 #### Note!
-**project.json**, **home.py** and **home.js** are requiered files in order to start the X-WebApp!
+**project.json**, **home.py** and **home.js** are requiered files in order to start the X!
 W/O them X-WebApp will not start.
 
 ---
@@ -33,7 +33,7 @@ MyWebSite
 │    project.json
 │    languageDictionary.json
 │
-│─── x-webapp
+│─── x
 │
 │─── SVG
 │

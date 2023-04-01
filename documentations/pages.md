@@ -35,7 +35,7 @@ Can Be Enabled At By Adding `project.json -> ["default"]["appIsDown"]`
 ---
 
 ## Required
-Pages which are required to be created by the users of the X-WebApp platform in order to run it!
+Pages which are required to be created by the users of the X platform in order to run it!
 
 #### Home, Landing Page (BACK, FRONT)
 - /
