@@ -51,7 +51,7 @@ export default class Menu{
 
         // Hyperlink Blue Print
         hyperlinks += `
-  <a href="/${menu["name"]}">
+  <a href="${window.CONF["pages"][menu["name"]]["aliases"][0]}">
     <x-icon color="#ffffff">${"logo" in menu ? menu["logo"] : menu["name"]}</x-icon>
     ${window.Lang.use(menu["name"])}
   </a>
@@ -73,7 +73,8 @@ export default class Menu{
       a.removeAttribute("active");
 
       if(a.getAttribute("href") == window.location.pathname) a.setAttribute("active", "");
-      else if(window.location.pathname == "/") document.querySelector("body > menu > * > a[href='/home']").setAttribute("active", "");
+      else if(window.location.pathname == "/" || window.location.pathname == "" || window.location.pathname == "/home")
+        document.querySelector("body > menu > * > a:first-child").setAttribute("active", "");
 
     });
   }
