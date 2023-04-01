@@ -43,11 +43,13 @@ export default class Share extends HTMLElement{
     this.shadow.querySelector("x-icon").onclick = async ()=>{
 
       const shareData = {
-        title: this.getAttribute("title") || document.title,
-        text: this.textToShare || window.Lang.use("shareDefaultText"),
+        title: encodeURIComponent(this.getAttribute("title") || document.title),
+        text: encodeURIComponent(this.textToShare || window.Lang.use("shareDefaultText")),
 
-        // If Share URL Is Not HTTPS I Won't Work
-        url: this.getAttribute("url") || window.location.href
+        // If Share URL Is Not HTTPS It Won't Work
+        // On Facebook
+        // On Linkedin
+        url: encodeURIComponent(this.getAttribute("url") || window.location.href)
 
       };
 
