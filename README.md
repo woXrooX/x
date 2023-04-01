@@ -12,4 +12,4 @@ If you need help using our software or want to learn more about its features, pl
 To stay up-to-date on the latest developments and updates, please visit our full change log page at https://woXrooX.com/x/updates. Here, you will find a comprehensive list of version changes and updates, ensuring that you are always using the most current version of our software.
 
 
-(**NOTE:***Website Is Under Development*)
+(**NOTE:** *Website Is Under Development*)
