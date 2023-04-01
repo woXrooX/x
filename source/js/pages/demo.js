@@ -354,7 +354,7 @@ const themedBoxes = `
   <row><h3>Round Box (.box-round)</h3></row>
 
   <row class="g-1">
-    <column class="box-round bc-4 w-25 p-2">box-round bc-4 w-25 p-2"</column>
+    <column class="box-round bc-4 w-25 p-2">box-round bc-4 w-25 p-2</column>
     <column class="box-round w-50 p-5">box-round w-50 p-5</column>
     <column class="box-round w-25 bc-5 p-1">box-round bc-5 w-25 p-1</column>
   </row>
