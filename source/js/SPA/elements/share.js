@@ -48,7 +48,7 @@ export default class Share extends HTMLElement{
 
         // If Share URL Is Not HTTPS I Won't Work
         url: this.getAttribute("url") || window.location.href
-        
+
       };
 
       // Check If navigator.share
@@ -82,6 +82,14 @@ export default class Share extends HTMLElement{
 
             <a href="https://www.instagram.com/share?url=${shareData.url}&caption=${shareData.text}" target="_blank">
               <x-icon>instagram_original</x-icon>
+            </a>
+
+            <a href="https://t.me/share/url?url=${shareData.url}&text=${shareData.text}" target="_blank">
+              <x-icon>telegram_original</x-icon>
+            </a>
+
+            <a href="https://www.reddit.com/submit?selftext=${shareData.text}&title=${shareData.title}&url=${shareData.url}" target="_blank">
+              <x-icon>reddit_original</x-icon>
             </a>
 
           </x-modal>
