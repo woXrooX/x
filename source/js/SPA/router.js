@@ -54,7 +54,13 @@ export default class Router{
       window.Title.set("error");
 
       // Render The Error
-      window.DOM.render(error);
+      window.DOM.render(`
+        <container>
+          <row class="m-t-5 box-default p-5 w-50">
+            <error>${error}</error>
+          </row>
+        </container>
+      `);
 
     }finally{
       // End Loading Effect
