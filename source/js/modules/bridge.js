@@ -4,13 +4,16 @@
 // export default async function bridge(url='', data={}, contentType = null){
 export default async function bridge(url='', data=null, contentType = null){
   // Check If url Is Not Falsy
-  if(!!url == false) return;
+  if(!!url === false) return;
 
   // Default Content Type Is "application/json"
-  if(!!contentType == false) contentType = "application/json";
+  if(!!contentType === false) contentType = "application/json";
+
+  let tmp_url = new URL(url, window.location.origin);
+  console.log(tmp_url.href);
 
   try{
-    const response = await fetch(window.location.origin + '/' + url, {
+    const response = await fetch(tmp_url, {
       method: 'POST',
       mode: 'same-origin',
       cache: 'force-cache',
