@@ -274,6 +274,8 @@ export default class CSS{
 
     const skeleton = `
       :root{
+        font-size: 22px;
+
         color-scheme: ${CSS.values.color.scheme};
         accent-color: ${CSS.values.color.main};
 
@@ -336,7 +338,7 @@ export default class CSS{
         background-color: ${CSS.values.color.surface["1"]};
         color: ${CSS.values.color.text.primary};
         font-family: Quicksand;
-        font-size: 22px;
+        font-size: 1rem;
 
       }
 
@@ -454,7 +456,7 @@ export default class CSS{
         /* filter: brightness(70%); */
 
         color: white;
-        font-size: 2rem;
+        font-size: 1.5rem;
 
         display: flex;
         justify-content: flex-start;
@@ -548,7 +550,7 @@ export default class CSS{
       }
 
       @media only screen and (max-width: ${CSS.values.screenSize.phone}) {
-        body{
+        :root{
           font-size: 16px;
         }
 
