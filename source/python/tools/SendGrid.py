@@ -8,9 +8,6 @@
 if __name__ != "__main__":
     from main import CONF
 
-    import sendgrid
-    from sendgrid.helpers.mail import Mail, Email, To, Content
-
     class SendGrid:
 
         @staticmethod
@@ -26,6 +23,9 @@ if __name__ != "__main__":
 
             # Check If Subject Is Passed
             if not subject: subject = CONF["eMail"]["subject"]
+
+            import sendgrid
+            from sendgrid.helpers.mail import Mail, Email, To, Content
 
             # Load The API Key
             sg = sendgrid.SendGridAPIClient(api_key=CONF["eMail"]["SendGrid"]["api_key"])
