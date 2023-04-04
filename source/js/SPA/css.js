@@ -336,7 +336,7 @@ export default class CSS{
         background-color: ${CSS.values.color.surface["1"]};
         color: ${CSS.values.color.text.primary};
         font-family: Quicksand;
-        font-size: 15px;
+        font-size: 22px;
 
       }
 
@@ -544,6 +544,13 @@ export default class CSS{
 
         display: grid;
         place-items: center;
+
+      }
+
+      @media only screen and (max-width: ${CSS.values.screenSize.phone}) {
+        body{
+          font-size: 16px;
+        }
 
       }
 
