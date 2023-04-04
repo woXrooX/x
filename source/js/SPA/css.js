@@ -29,6 +29,8 @@ export default class CSS{
   // Values
   static values = {
 
+    document: {},
+
     font: {
       size: {
         default: "15"     // px
@@ -114,6 +116,8 @@ export default class CSS{
   static {
     CSS.colorModeSwitcher();
 
+    CSS.#calculateDocumentHeight();
+
     CSS.#update();
 
   }
@@ -140,6 +144,21 @@ export default class CSS{
     }
 
     CSS.#update();
+
+  }
+
+  static #calculateDocumentHeight(){
+    // Set Document Height For THe First Time
+    CSS.#setDocumentHeight();
+
+    // Update Document Height On Resize
+    window.addEventListener("resize", CSS.#setDocumentHeight);
+
+  }
+
+  static #setDocumentHeight(){
+    // Set Document Height
+    CSS.values.document.height = `${window.innerHeight}px`;
 
   }
 
@@ -272,13 +291,14 @@ export default class CSS{
       /* Removing Default Scroll Bar END */
     `;
 
-    const skeleton = `
+    const root = `
       :root{
         font-size: 22px;
 
         color-scheme: ${CSS.values.color.scheme};
         accent-color: ${CSS.values.color.main};
 
+        --document-Height: ${CSS.values.document.height};
 
         --z-minus: ${CSS.values.zIndex.minus};
         --z-body: ${CSS.values.zIndex.body};
@@ -333,7 +353,9 @@ export default class CSS{
         --color-cover: ${CSS.values.color.cover};
 
       }
+    `;
 
+    const skeleton = `
       body {
         background-color: ${CSS.values.color.surface["1"]};
         color: ${CSS.values.color.text.primary};
@@ -554,6 +576,21 @@ export default class CSS{
         :root{
           font-size: 16px;
         }
+
+        html, body{
+          height: 100vh;
+          height: ${CSS.values.document.height};
+          overflow: hidden;
+
+        }
+        body > main {
+          width: 100vw;
+          height: 100%;
+          overflow: scroll;
+
+        }
+
+
       }
 
     `;
@@ -640,6 +677,7 @@ export default class CSS{
     return `
       ${all}
       ${scrollbar}
+      ${root}
       ${skeleton}
       ${defaults}
     `;
