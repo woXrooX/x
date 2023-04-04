@@ -14,57 +14,46 @@ if __name__ != "__main__":
     class SendGrid:
 
         @staticmethod
-        def send(to_email, subject, content):
+        def send(from_email, to_email, content, subject = ""):
             # Check If SendGrid Is In CONF["eMail"]
-            if "SendGrid" not in CONF["eMail"]: return False;
+            if "SendGrid" not in CONF["eMail"]: return False
+
+            # Check If to_email Is Valid
+            if not to_email: return False
+
+            # Check If content Is Valid
+            if not content: return False
+
+            # Check If Subject Is Passed
+            if not subject: subject = CONF["eMail"]["subject"]
 
             # Load The API Key
             sg = sendgrid.SendGridAPIClient(api_key=CONF["eMail"]["SendGrid"]["api_key"])
 
-            mail = Mail(
-                Email("woXrooX@gmail.com"), # Change to your verified sender
-                To(to_email), # Change to your recipient
-                subject,
-                Content("text/plain", content)
+            # From Email
+            from_email = f'{from_email}@{CONF["eMail"]["SendGrid"]["domain"]}'
+
+            message = Mail(
+                from_email = from_email,
+                to_emails = to_email,
+                subject = subject,
+                html_content = str(content)
             )
 
-            # Get a JSON-ready representation of the Mail object
-            mail_json = mail.get()
-
             try:
-                # Send an HTTP POST request to /mail/send
-                response = sg.client.mail.send.post(request_body=mail_json)
+                # Load The API Key
+                sg = sendgrid.SendGridAPIClient(api_key=CONF["eMail"]["SendGrid"]["api_key"])
+
+                # Send A Send Request :)
+                response = sg.send(message)
+
                 print(response.status_code)
                 print(response.body)
                 print(response.headers)
 
                 return True
 
-            except:
-                print("Error")
+            except Exception as error:
+                print("SendGrid Error:", error.message)
 
                 return False
-
-
-# Raw
-# mail_json = {
-#   "personalizations": [
-#     {
-#       "to": [
-#         {
-#           "email": receiver_email
-#         }
-#       ],
-#       "subject": "Sending with SendGrid is Fun"
-#     }
-#   ],
-#   "from": {
-#     "email": sender_email
-#   },
-#   "content": [
-#     {
-#       "type": "text/plain",
-#       "value": "and easy to do anywhere, even with Python"
-#     }
-#   ]
-# }
