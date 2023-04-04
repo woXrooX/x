@@ -7,6 +7,7 @@ from main import CONF, MySQL, USER_TYPES, session, EXTERNALS
 import re, json, random
 
 from python.tools.GMail import GMail
+from python.tools.SendGrid import SendGrid
 
 from python.tools import userFolders
 from python.tools.response import response
@@ -73,8 +74,13 @@ def signUp():
         # Generate Randome Verification Code
         eMailVerificationCode = random.randint(100000, 999999)
 
-        # Check If Verification Code Sent Successfully
-        if GMail(request.form["eMail"], eMailVerificationCode) == False:
+        #### Check If Verification Code Sent Successfully
+        # GMail
+        # if GMail(request.form["eMail"], eMailVerificationCode) == False:
+        #     return response(type="error", message="couldNotSendEMailVerificationCode")
+
+        # SendGrid
+        if SendGrid.send("yahya", request.form["eMail"], eMailVerificationCode, "Sign Up") == False:
             return response(type="error", message="couldNotSendEMailVerificationCode")
 
         # Insert To Database
