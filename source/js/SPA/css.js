@@ -1084,6 +1084,17 @@ export default class CSS{
 
       }
 
+      @media only screen and (max-width: ${CSS.values.screenSize.phone}) {
+        row{
+          flex-direction: column;
+          width: 100% !important;
+        }
+        column{
+          width: 100% !important;
+        }
+        
+      }
+
       /* Widths START */
       .w-10{width: 10%;}
       .w-15{width: 15%;}
