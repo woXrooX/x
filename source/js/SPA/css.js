@@ -339,6 +339,7 @@ export default class CSS{
         color: ${CSS.values.color.text.primary};
         font-family: Quicksand;
         font-size: 1rem;
+        height: 100vh;
 
       }
 
@@ -552,6 +553,17 @@ export default class CSS{
       @media only screen and (max-width: ${CSS.values.screenSize.phone}) {
         :root{
           font-size: 16px;
+        }
+        html{
+          height: -moz-available;
+          height: -webkit-fill-available;
+          height: fill-available;
+        }
+        body{
+          height: 100vh;
+          height: -moz-available;
+          height: -webkit-fill-available;
+          height: fill-available;
         }
 
       }
