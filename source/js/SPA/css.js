@@ -554,18 +554,6 @@ export default class CSS{
         :root{
           font-size: 16px;
         }
-        html{
-          height: -moz-available;
-          height: -webkit-fill-available;
-          height: fill-available;
-        }
-        body{
-          height: 100vh;
-          height: -moz-available;
-          height: -webkit-fill-available;
-          height: fill-available;
-        }
-
       }
 
     `;
