@@ -555,7 +555,7 @@ export default class CSS{
 
       body > main {
         width: 100vw;
-        min-height: calc(100vh - ${CSS.values.header.height} - ${CSS.values.footer.height});
+        min-height: calc(100vh - ${CSS.values.header.height});
 
       }
 
@@ -1092,7 +1092,7 @@ export default class CSS{
         column{
           width: 100% !important;
         }
-        
+
       }
 
       /* Widths START */
