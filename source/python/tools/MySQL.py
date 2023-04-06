@@ -22,6 +22,7 @@ if __name__ != "__main__":
 
         def __init__(self, prep=True):
             self._hasError = False
+
             self._conn = mysql.connector.connect(
                 user = MySQL.user,
                 password = MySQL.password,
@@ -29,11 +30,11 @@ if __name__ != "__main__":
                 database = MySQL.database,
                 use_pure=True
             )
+
             self._conn.set_charset_collation(MySQL.charset, MySQL.collate)
-            if prep:
-                self._curs = self._conn.cursor(prepared=True)
-            else:
-                self._curs = self._conn.cursor(dictionary=True)
+
+            if prep: self._curs = self._conn.cursor(prepared=True)
+            else: self._curs = self._conn.cursor(dictionary=True)
 
         def __enter__(self):
             return self
