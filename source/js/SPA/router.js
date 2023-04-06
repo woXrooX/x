@@ -1,6 +1,8 @@
 "use strict";
 
 export default class Router{
+  static currentPage = null;
+
   static async handle(){
     // Check If App Is Down If So Stop Handling Set appIsDown As Current Page
     if("appIsDown" in window.CONF["default"]){
@@ -26,6 +28,8 @@ export default class Router{
         // Check If Page Alias Equals To Currnt Endpoint
         if(alias == window.location.pathname){
           endpoint = '/'+page;
+          Router.currentPage = page;
+
           // Break Out Of The Loops
           break loopPages;
 
