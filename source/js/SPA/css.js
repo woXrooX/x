@@ -1,3 +1,7 @@
+// OG Importing Way Of The CSS Files
+// <link rel="preload" href="{{url_for('static', filename='css/master.css')}}" as="style">
+// <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/master.css')}}">
+
 // const buttonStyles = `
 //   background-color: blue;
 //   color: white;
