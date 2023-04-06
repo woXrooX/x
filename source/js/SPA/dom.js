@@ -90,6 +90,9 @@ export default class DOM{
   }
 
   static render(dom){
+    // Scroll To Top Before Rendering
+    scrollTo(0, 0);
+
     // If Passed Object Like: createElement("x-form")
     if(typeof dom === "object") DOM.#elementMain.replaceChildren(dom);
 
