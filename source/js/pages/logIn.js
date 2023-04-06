@@ -7,9 +7,9 @@ export const CSS = ``;
 export default function logIn(){
 
   let dom = `
-<container>
+<container class="p-5">
   <row>
-    <column class="w-50 box-default p-5 m-t-5">
+    <column class="w-50 box-default p-5">
 
       <row>
         <h1>${window.langDict["logIn"][window.langCode]}</h1>
