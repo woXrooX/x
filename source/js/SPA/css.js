@@ -366,6 +366,7 @@ export default class CSS{
         font-family: Quicksand;
         font-size: 1rem;
         height: 100vh;
+        padding-top: ${CSS.values.header.height};
 
       }
 
@@ -561,7 +562,7 @@ export default class CSS{
 
       body > main {
         width: 100vw;
-        min-height: calc(100vh - ${CSS.values.header.height});
+        height: calc(100vh - ${CSS.values.header.height});
 
       }
 
@@ -591,11 +592,15 @@ export default class CSS{
         }
         body > main {
           width: 100vw;
-          height: 100%;
-          overflow: scroll;
+          height: calc(${CSS.values.document.height} - ${CSS.values.header.height});
+          overflow: hidden;
+          overflow-y: scroll;
 
         }
 
+        body > footer{
+          display: none;
+        }
 
       }
 
