@@ -21,6 +21,9 @@ if __name__ != "__main__":
 
 
         def __init__(self, prep=True):
+            # Check If MySQL Is Enabled
+            # if MySQL.enabled == False: return False
+
             self._hasError = False
 
             self._conn = mysql.connector.connect(
