@@ -51,9 +51,11 @@ export default class DOM{
     // Create Page Scoped Variable
     window.pageData = {};
 
+    ////////// Title
     // Set Title
     window.Title.set(DOM.#page.TITLE);
 
+    ////////// Content / Main
     ///// Before
     // Check If before() Exists
     if(!!DOM.#page.before === true)
@@ -76,6 +78,11 @@ export default class DOM{
       // If Async Function Passed Or Normal One
       if(DOM.#page.after.constructor.name === 'AsyncFunction') await DOM.#page.after();
       else DOM.#page.after();
+
+    ////////// Footer
+    // If User Defined footer() Exists Then Let Footer To Handle It
+    // Else Pass Null Which Make Load Default Content
+    window.Footer.handle(!!DOM.#page.footer === true ? DOM.#page.footer() : null);
 
     // Delete The Page Data At The End Of Each Life Cycle
     delete window.pageData;
