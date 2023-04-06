@@ -525,6 +525,8 @@ export default class CSS{
         height: 100vh;
 
         position: fixed;
+        top: 0px;
+        left: 0px;
         z-index: ${CSS.values.zIndex.minus};
 
         transition: ${CSS.values.transition.velocity} opacity;
@@ -539,9 +541,9 @@ export default class CSS{
         height: ${CSS.values.header.height};
         padding: ${CSS.values.padding.default};
 
-        position: sticky;
-        top: 0;
-        left: 0;
+        position: fixed;
+        top: 0px;
+        left: 0px;
         z-index: ${CSS.values.zIndex.header};
 
         display: grid;
