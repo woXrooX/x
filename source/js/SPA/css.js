@@ -756,9 +756,11 @@ export default class CSS{
 
       /************ label > p START ************/
       form label > p{
-        height: 2em;
+        font-size: 0.8rem;
+        min-height: 1rem;
         display: flex;
         flex-direction: row;
+        padding: ${CSS.values.padding.default};
       }
       /************ label > p START ************/
 
