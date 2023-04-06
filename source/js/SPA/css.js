@@ -590,6 +590,12 @@ export default class CSS{
           overflow: hidden;
 
         }
+
+        body > toasts{
+          width: 100vw;
+          gap: 5px;
+        }
+
         body > main {
           width: 100vw;
           height: calc(${CSS.values.document.height} - ${CSS.values.header.height});
