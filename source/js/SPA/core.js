@@ -83,7 +83,10 @@ export default class Core{
     Menu.init();
     Menu.setActive();
 
+    Footer.init();
+
     Router.handle();
+
 
   }
 

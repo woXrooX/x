@@ -466,3 +466,9 @@ export function after(){
 
 ///// Executes The Function When On Form Got Response
 export function onFormGotResponse(response){}
+
+///// Footer
+export function footer(){
+  return "This Is Demo Footer!";
+
+}
