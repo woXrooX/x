@@ -112,6 +112,7 @@ export default class Form{
   }
 
   static #response(type, message, field, flash = false, toast = false){
+    // Element <p>
     const elementP = document.querySelector(`p[for=${field}]`);
 
     // Above Submit Button
