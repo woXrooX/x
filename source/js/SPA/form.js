@@ -114,11 +114,8 @@ export default class Form{
   static #response(type, message, field, flash = false, toast = false){
     const elementP = document.querySelector(`p[for=${field}]`);
 
-    // Check If Element <p> Exists
-    if(!!elementP === false) return;
-
     // Above Submit Button
-    if(!!message != false) elementP.innerHTML = `<${type}>${window.Lang.use(message)}</${type}>`;
+    if(!!message != false && !!elementP === true) elementP.innerHTML = `<${type}>${window.Lang.use(message)}</${type}>`;
 
     // Focus & Flash The Border Color
     const element = document.querySelector(`[name=${field}]`);
