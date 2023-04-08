@@ -479,12 +479,8 @@ export default class CSS{
 
       }
       body > menu > main > a{
-        /* background-color: var(--menu-background-color); */
-
-        /* filter: brightness(70%); */
-
         color: white;
-        font-size: 1.5rem;
+        font-size: 1rem;
 
         display: flex;
         justify-content: flex-start;
@@ -509,8 +505,8 @@ export default class CSS{
 
       }
       body > menu > main > a > x-icon{
-        height: 40px;
-        width: 40px;
+        height: 30px;
+        width: 30px;
 
       }
 
