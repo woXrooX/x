@@ -412,21 +412,23 @@ export default class CSS{
         height: auto;
         max-height: 100vh;
         width: 400px;
-        /* padding: ${CSS.values.padding.default}; */
-        padding: 5px 5px 20px 5px;
+        padding: ${CSS.values.padding.default};
+
+        overflow-x: hidden;
         overflow-y: scroll;
 
         display: flex;
         flex-direction: column-reverse;
         gap: ${CSS.values.gap.default};
 
-        /* pointer-events: none; */
-
         position: fixed;
         top: 0px;
         right: 0px;
         z-index: ${CSS.values.zIndex.toasts};
 
+      }
+      body > toasts:empty{
+        padding: 0px;
       }
 
       body > menu{
