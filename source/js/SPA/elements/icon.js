@@ -21,7 +21,7 @@ export default class Icon extends HTMLElement{
       const style = document.createElement('style');
       style.textContent = `
         icon{
-          cursor: pointer;
+          cursor: ${this.parentElement.disabled ? 'pointer': 'disabled'};
         }
         icon > svg{
           width: 100%;
