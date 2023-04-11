@@ -123,10 +123,10 @@ export default class Modal extends HTMLElement{
           filter: brightness(80%);
         }
 
-        ${window.CSS.rules.form}
+        ${!!this.querySelector("form") === true ? window.CSS.rules.form : ""}
 
       `;
-      
+
       this.shadow.appendChild(style);
     }
 
