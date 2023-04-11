@@ -97,6 +97,10 @@ export default class Modal extends HTMLElement{
 
         }
 
+        trigger{
+          cursor: pointer;
+        }
+
         trigger:empty{
           pointer-events: none;
         }
@@ -106,8 +110,8 @@ export default class Modal extends HTMLElement{
           color: white;
           overflow: hidden;
           width: auto;
-          height: 50px;
-          padding: 0px 5px;
+          height: auto;
+          padding: 10px;
           border-radius: ${window.CSS.values.padding.default};
           border: none;
           text-transform: uppercase;
@@ -150,14 +154,28 @@ export default class Modal extends HTMLElement{
       // Create Click Event
       else if(this.getAttribute("trigger") === "click")
 
-        if(!!this.hasAttribute("type") === true && !!this.hasAttribute("value") === true)
+        if(!!this.hasAttribute("type") === true && !!this.hasAttribute("value") === true){
 
-          if(this.getAttribute("type") === "icon")
-            this.shadow.querySelector("trigger").innerHTML = `<x-icon>${this.getAttribute("value")}</x-icon>`;
+          if(this.getAttribute("type") === "icon"){
+            if(this.hasAttribute("button") === true)
+              this.shadow.querySelector("trigger").innerHTML = `<button><x-icon>${this.getAttribute("value")}</x-icon></button>`;
+
+            else
+              this.shadow.querySelector("trigger").innerHTML = `<x-icon>${this.getAttribute("value")}</x-icon>`;
+
+          }
 
 
-          else if(this.getAttribute("type") === "text")
-            this.shadow.querySelector("trigger").innerHTML = `<button>${this.getAttribute("value")}</button>`;
+          else if(this.getAttribute("type") === "text"){
+            if(this.hasAttribute("button") === true)
+              this.shadow.querySelector("trigger").innerHTML = `<button>${this.getAttribute("value")}</button>`;
+
+            else
+              this.shadow.querySelector("trigger").innerHTML = `${this.getAttribute("value")}`;
+
+          }
+
+        }
 
 
       // Show On Click trigger
