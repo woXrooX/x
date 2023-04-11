@@ -88,8 +88,7 @@ export default class Modal extends HTMLElement{
         }
 
         modal > main{
-          width: max-content;
-          height: max-content;
+          width: auto;
 
           padding: ${window.CSS.values.padding.default};
 
@@ -124,8 +123,10 @@ export default class Modal extends HTMLElement{
           filter: brightness(80%);
         }
 
+        ${window.CSS.rules.form}
 
       `;
+      
       this.shadow.appendChild(style);
     }
 
