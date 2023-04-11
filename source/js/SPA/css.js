@@ -116,6 +116,9 @@ export default class CSS{
 
   };
 
+  // Rules
+  static rules = {};
+
   // Init
   static {
     CSS.colorModeSwitcher();
@@ -706,7 +709,7 @@ export default class CSS{
   }
 
   static styles(){
-    const form = `
+    CSS.rules.form = `
       /****************************** Form START ******************************/
       /************ Form Variables START ************/
       :root{
@@ -1025,7 +1028,7 @@ export default class CSS{
     `;
 
     return `
-      ${form}
+      ${CSS.rules.form}
       ${table}
     `;
 
