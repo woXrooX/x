@@ -958,7 +958,7 @@ export default class CSS{
         --table-radius: 3px;
 
         /* make table cells with same */
-        table-layout: fixed;
+        table-layout: auto;
 
         width: 100%;
         border: 1px solid var(--color-main);
