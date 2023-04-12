@@ -171,12 +171,14 @@ export default class CSS{
 
   // Updates The CSS Rules
   static #update(){
-    window.document.querySelector("style[for=INTERNAL_CSS]").innerText = `
+    CSS.rules.all = `
       ${CSS.common()}
       ${CSS.master()}
       ${CSS.styles()}
       ${CSS.layouts()}
     `;
+
+    window.document.querySelector("style[for=INTERNAL_CSS]").innerText = CSS.rules.all;
   }
 
   //////////// Modes
