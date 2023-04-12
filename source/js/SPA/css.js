@@ -121,11 +121,9 @@ export default class CSS{
 
   // Init
   static {
-    CSS.colorModeSwitcher();
-
     CSS.#calculateDocumentHeight();
 
-    CSS.#update();
+    CSS.colorModeSwitcher();
 
   }
 
