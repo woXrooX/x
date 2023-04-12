@@ -30,13 +30,19 @@ export default class Modal extends HTMLElement{
 
     this.shown = false;
 
+    console.log(window.CSS.rules.scrollbar);
+
     CSS: {
       const style = document.createElement('style');
       style.textContent = `
+        ${window.CSS.rules.selectorsDefaults}
+        ${window.CSS.rules.scrollbar}
+        ${!!this.querySelector("form") === true ? window.CSS.rules.form : ""}
+
         modal{
           pointer-events: none;
 
-          background-color: ${window.CSS.values.color.surface["4"]};
+          background-color: var(--color-surface-4);
           opacity: 0;
 
           display: block;
@@ -46,16 +52,19 @@ export default class Modal extends HTMLElement{
           height: auto;
           max-height: 80vh;
 
-          border-radius: ${window.CSS.values.radius.default};
-          box-shadow: ${window.CSS.values.shadow.default};
+          overflow: hidden;
+          overflow-y: scroll;
+
+          border-radius: var(--radius);
+          box-shadow: var(--shadow-default);
 
           position: fixed;
-          z-index: ${window.CSS.values.zIndex.modal};
+          z-index: var(--z-modal);
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%) scale(0.8);
 
-          transition: ${window.CSS.values.transition.velocity} ease-in-out;
+          transition: var(--transition-velocity) ease-in-out;
           transition-property: transform, opacity;
 
         }
@@ -90,7 +99,7 @@ export default class Modal extends HTMLElement{
         modal > main{
           width: auto;
 
-          padding: ${window.CSS.values.padding.default};
+          padding: var(--padding);
 
           display: grid;
           place-items: center;
@@ -106,28 +115,26 @@ export default class Modal extends HTMLElement{
         }
 
         trigger > button{
-          background-color: ${window.CSS.values.color.main};
+          background-color: var(--color-main);
           color: white;
           overflow: hidden;
           width: auto;
           height: auto;
           padding: 10px;
-          border-radius: ${window.CSS.values.padding.default};
+          border-radius: var(--radius);
           border: none;
           text-transform: uppercase;
 
           cursor: pointer;
 
           filter: brightness(120%);
-          transition: ${window.CSS.values.transition.velocity} filter;
+          transition: var(--transition-velocity) filter;
 
         }
 
         trigger > button:hover{
           filter: brightness(80%);
         }
-
-        ${!!this.querySelector("form") === true ? window.CSS.rules.form : ""}
 
       `;
 
