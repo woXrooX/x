@@ -28,13 +28,15 @@ v2.0.0 (Tooling)
   5. Dynamic And Multi-Language ✅️
   6. Menu (Sub Menus)
   7. Chart Tool (Front-End)
-  8. Mobile Friendly
+  8. Mobile Friendly 🛠️
   9. Deployment Ready Structure (External Files) ✅️
     a. Pages (Front, Back) ✅️
     b. SVG Files ✅️
     C. JavaScript Files 🛠️
     d. Dictionaries ✅️
     e. CSS Files ✅️
+    f. Fonts ✅️
+    g. External Customizations File (project.json) ✅️
 
   10. File Management System (General Assets Folder For The Site Resources) ✅️
 
@@ -49,8 +51,7 @@ v4.0.0 (UI / UX / Customizations / Versatility)
     2.2. Light-Dark Mode Switcher ✅️
     2.3. Multiple Built-In Site Themes
 
-  3. Customizable Site Fonts
-  4. Log In (Two Factor Authentication)
+  3. Log In (Two Factor Authentication)
     a. SMS Verifications
     b. Random Code Generator Like Steam
     c. Log In Through QR Code Scanning
