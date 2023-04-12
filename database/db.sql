@@ -1,3 +1,4 @@
+\! clear
 \W
 
 DROP DATABASE IF EXISTS x;
