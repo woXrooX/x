@@ -720,7 +720,7 @@ export default class CSS{
         --f-height: 40px;
         --f-width: 100%;
         --f-font-size: 20px;
-        --f-border: 1px solid ${CSS.values.color.text.secondary};
+        --f-border: 1px solid var(--color-text-secondary);
         --f-transition: ${CSS.values.transition.velocity} ease-in-out;
         --f-transition-property: background-color, border;
       }
@@ -762,8 +762,8 @@ export default class CSS{
 
       /************ fieldset > legend START ************/
       form fieldset legend{
-        background-color: ${CSS.values.color.text.primary};
-        color: ${CSS.values.color.text.accent};
+        background-color: var(--color-text-primary);
+        color: var(--color-text-accent);
         border-radius: var(--f-radius);
         padding: 2px 5px;
 
@@ -789,7 +789,7 @@ export default class CSS{
       select,
       textarea,
       input:where([type=text], [type=eMail], [type=password], [type=number], [type=color], [type=file], [type=date]){
-        background-color: ${CSS.values.color.surface["3"]};
+        background-color: var(--color-surface-3);
         width: var(--f-width);
         height: var(--f-height);
         font-size: var(--f-font-size);
@@ -808,8 +808,8 @@ export default class CSS{
       textarea:not(:disabled):where(:hover, :focus),
       input[type=number]:not(:disabled):where(:hover, :focus),
       input:not(:disabled):where(:hover, :focus){
-        background-color: ${CSS.values.color.surface["5"]};
-        border: 1px solid ${CSS.values.color.text.primary};
+        background-color: var(--color-surface-5);
+        border: 1px solid var(--color-text-primary);
 
       }
       /************ :hover & :focus -> inputs & textarea & select END ************/
@@ -870,7 +870,7 @@ export default class CSS{
 
       /* File Button */
       input[type=file]::file-selector-button{
-        background-color: ${CSS.values.color.main};
+        background-color: var(--color-main);
         color: white;
         font-size: var(--f-font-size);
 
@@ -923,7 +923,7 @@ export default class CSS{
       /************ input[type=submit] & button START ************/
       button,
       input[type=submit]{
-        background-color: ${CSS.values.color.main};
+        background-color: var(--color-main);
         color: white;
         overflow: hidden;
         width: auto;
