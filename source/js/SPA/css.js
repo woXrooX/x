@@ -961,51 +961,51 @@ export default class CSS{
         table-layout: fixed;
 
         width: 100%;
-        border: 1px solid ${CSS.values.color.main};
-        border-radius: ${CSS.values.radius.default};
-        padding: ${CSS.values.padding.default};
+        border: 1px solid var(--color-main);
+        border-radius: var(--radius);
+        padding: var(--padding);
 
       }
       /************ Table END ************/
 
       /************ thead START ************/
       table > thead{
-        background-color: ${CSS.values.color.surface["10"]};
+        background-color: var(--color-surface-10);
       }
 
       table > thead > tr > th{
-        color: ${CSS.values.color.text.accent};
+        color: var(--color-text-accent);
         font-weight: bold;
 
         border-radius: var(--table-radius);
-        padding: ${CSS.values.padding.default};
+        padding: var(--padding);
 
       }
       /************ thead END ************/
 
       /************ tbody START ************/
       table > tbody > tr:nth-child(odd){
-        background-color: ${CSS.values.color.surface["3"]};
+        background-color: var(--color-surface-4);
 
       }
       table > tbody > tr:nth-child(even){
-        background-color: ${CSS.values.color.surface["4"]};
+        background-color: var(--color-surface-5);
 
       }
 
       table > tbody > tr > td{
         border-radius: var(--table-radius);
-        padding: ${CSS.values.padding.default};
+        padding: var(--padding);
 
       }
 
       /* tr:hover START */
       table > tbody > tr{
-        transition: ${CSS.values.transition.velocity} ease-in-out background-color;
+        transition: var(--transition-velocity) ease-in-out background-color;
       }
 
       table > tbody > tr:hover{
-        background-color: ${CSS.values.color.surface["7"]};
+        background-color: var(--color-surface-7);
       }
       /* tr:hover END */
 
@@ -1013,14 +1013,14 @@ export default class CSS{
 
       /************ tfead START ************/
       table > tfoot{
-        background-color: ${CSS.values.color.surface["9"]};
+        background-color: var(--color-surface-9);
       }
 
       table > tfoot > tr > td{
-        color: ${CSS.values.color.text.accent};
+        color: var(--color-text-accent);
 
         border-radius: var(--table-radius);
-        padding: ${CSS.values.padding.default};
+        padding: var(--padding);
 
       }
       /************ tfoot END ************/
