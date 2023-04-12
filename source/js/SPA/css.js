@@ -720,7 +720,7 @@ export default class CSS{
         --f-width: 100%;
         --f-font-size: 20px;
         --f-border: 1px solid var(--color-text-secondary);
-        --f-transition: ${CSS.values.transition.velocity} ease-in-out;
+        --f-transition: var(--transition-velocity) ease-in-out;
         --f-transition-property: background-color, border;
       }
       /************ Form Variables END ************/
@@ -780,7 +780,7 @@ export default class CSS{
         min-height: 1rem;
         display: flex;
         flex-direction: row;
-        padding: ${CSS.values.padding.default};
+        padding: var(--padding);
       }
       /************ label > p START ************/
 
