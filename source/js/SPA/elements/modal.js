@@ -143,7 +143,7 @@ export default class Modal extends HTMLElement{
     // Manually Collecting Forms
     window.Form.collect(this.shadow.querySelector("modal>main"));
 
-    Interactions: {
+    Trigger: {
       // Instant Pop-Up
       if(
         !!this.hasAttribute("trigger") === false ||
@@ -158,10 +158,10 @@ export default class Modal extends HTMLElement{
 
           if(this.getAttribute("type") === "icon"){
             if(this.hasAttribute("button") === true)
-              this.shadow.querySelector("trigger").innerHTML = `<button><x-icon>${this.getAttribute("value")}</x-icon></button>`;
+              this.shadow.querySelector("trigger").innerHTML = `<button><x-icon color="ffffff">${this.getAttribute("value")}</x-icon></button>`;
 
             else
-              this.shadow.querySelector("trigger").innerHTML = `<x-icon>${this.getAttribute("value")}</x-icon>`;
+              this.shadow.querySelector("trigger").innerHTML = `<x-icon color="ffffff">${this.getAttribute("value")}</x-icon>`;
 
           }
 
