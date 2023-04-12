@@ -148,6 +148,7 @@ export default class CSS{
         // console.log("Default");
         CSS.#dark();
         CSS.currentColorMode = CSS.colorModes.DARK;
+
     }
 
     CSS.#update();
@@ -253,7 +254,7 @@ export default class CSS{
 
   //////////// CSS
   static common(){
-    const fonts = `
+    CSS.rules.fonts = `
       /*********************** FONTS START ***********************/
 
       @font-face{
@@ -265,13 +266,13 @@ export default class CSS{
     `;
 
     return `
-      ${fonts}
+      ${CSS.rules.fonts}
     `;
 
   }
 
   static master(){
-    const all = `
+    CSS.rules.all = `
       :root, html, body, *, *::before, *::after{
         margin: 0;
         padding: 0;
@@ -286,7 +287,7 @@ export default class CSS{
       }
     `;
 
-    const scrollbar = `
+    CSS.rules.scrollbar = `
       /* Removing Default Scroll Bar START */
       *{
         -ms-overflow-style: none;
@@ -298,7 +299,8 @@ export default class CSS{
       /* Removing Default Scroll Bar END */
     `;
 
-    const root = `
+
+    CSS.rules.root = `
       :root{
         font-size: 22px;
 
@@ -362,7 +364,7 @@ export default class CSS{
       }
     `;
 
-    const skeleton = `
+    CSS.rules.scrollbar = `
       body {
         background-color: ${CSS.values.color.surface["1"]};
         color: ${CSS.values.color.text.primary};
@@ -613,7 +615,7 @@ export default class CSS{
 
     `;
 
-    const defaults = `
+    CSS.rules.defaults = `
       /****************************** SVG START ******************************/
       svg{
         cursor: pointer;
@@ -699,11 +701,11 @@ export default class CSS{
     `;
 
     return `
-      ${all}
-      ${scrollbar}
-      ${root}
-      ${skeleton}
-      ${defaults}
+      ${CSS.rules.all}
+      ${CSS.rules.scrollbar}
+      ${CSS.rules.root}
+      ${CSS.rules.skeleton}
+      ${CSS.rules.defaults}
     `;
 
   }
@@ -949,7 +951,7 @@ export default class CSS{
       /****************************** Form END ******************************/
     `;
 
-    const table = `
+    CSS.rules.table = `
       /****************************** Table START ******************************/
 
       /************ Table START ************/
@@ -1029,13 +1031,13 @@ export default class CSS{
 
     return `
       ${CSS.rules.form}
-      ${table}
+      ${CSS.rules.table}
     `;
 
   }
 
   static layouts(){
-    const boxes = `
+    CSS.rules.boxes = `
       /*********************** Themed Boxes START ***********************/
       /* Default */
       .box-default{
@@ -1068,7 +1070,7 @@ export default class CSS{
       /*********************** Themed Boxes END ***********************/
     `;
 
-    const layoutSystem = `
+    CSS.rules.layoutSystem = `
       /*********************** Layout System START ***********************/
       container{
         /* border: 1px green solid; */
@@ -1284,8 +1286,8 @@ export default class CSS{
     `;
 
     return `
-      ${boxes}
-      ${layoutSystem}
+      ${CSS.rules.boxes}
+      ${CSS.rules.layoutSystem}
     `;
 
   }
