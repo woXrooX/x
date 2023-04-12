@@ -57,8 +57,13 @@ export default class Form{
       // Disable Submitter Button
       submitter.disabled = true;
 
-      // PLZW8
-      Form.#response("info", "plzW8", form.getAttribute("for"));
+      // After Submitting Form PLZW8
+      Form.#response({
+        form: form,
+        type: "info",
+        message: "plzW8",
+        field: form.getAttribute("for")
+      });
 
       // Get FormData
       let formData = new FormData(event.target);
@@ -72,11 +77,23 @@ export default class Form{
       // Data From Back-End
       console.log(response);
 
-      // Above Input Field
-      if("field" in response) Form.#response(response["type"], null, response["field"], true);
+      // Flash Above Input Field
+      if("field" in response)
+        Form.#response({
+          form: form,
+          type: response["type"],
+          message: null,
+          field: response["field"],
+          flash: true
+        });
 
-      // Above Submit Field
-      Form.#response(response["type"], response["message"], form.getAttribute("for"));
+      // Text Above Submit Field
+      Form.#response({
+        form: form,
+        type: response["type"],
+        message: response["message"],
+        field: form.getAttribute("for")
+      });
 
       // Enable Submitter Button
       submitter.disabled = false;
@@ -111,15 +128,26 @@ export default class Form{
     };
   }
 
-  static #response(type, message, field, flash = false, toast = false){
+  // static #response(type, message, field, flash = false, toast = false){
+  static #response({
+    form = null,
+    type,
+    message,
+    field,
+    flash = false,
+    toast = false
+  }){
+    // Check If Form Element Passed
+    if(!!form === false) return;
+
     // Element <p>
-    const elementP = document.querySelector(`p[for=${field}]`);
+    const elementP = form.querySelector(`p[for=${field}]`);
 
     // Above Submit Button
     if(!!message != false && !!elementP === true) elementP.innerHTML = `<${type}>${window.Lang.use(message)}</${type}>`;
 
     // Focus & Flash The Border Color
-    const element = document.querySelector(`[name=${field}]`);
+    const element = form.querySelector(`[name=${field}]`);
     if(!!element === true && element.getAttribute("type") != "submit"){
       // Focus
       element.focus();
