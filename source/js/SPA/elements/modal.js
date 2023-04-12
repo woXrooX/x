@@ -33,9 +33,7 @@ export default class Modal extends HTMLElement{
     CSS: {
       const style = document.createElement('style');
       style.textContent = `
-        ${window.CSS.rules.selectorsDefaults}
-        ${window.CSS.rules.scrollbar}
-        ${!!this.querySelector("form") === true ? window.CSS.rules.form : ""}
+        ${window.CSS.rules.all}
 
         modal{
           pointer-events: none;
