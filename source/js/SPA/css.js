@@ -272,7 +272,7 @@ export default class CSS{
   }
 
   static master(){
-    CSS.rules.all = `
+    CSS.rules.selectorsDefaults = `
       :root, html, body, *, *::before, *::after{
         margin: 0;
         padding: 0;
@@ -298,7 +298,6 @@ export default class CSS{
       }
       /* Removing Default Scroll Bar END */
     `;
-
 
     CSS.rules.root = `
       :root{
@@ -364,7 +363,7 @@ export default class CSS{
       }
     `;
 
-    CSS.rules.scrollbar = `
+    CSS.rules.skeleton = `
       body {
         background-color: ${CSS.values.color.surface["1"]};
         color: ${CSS.values.color.text.primary};
@@ -615,7 +614,7 @@ export default class CSS{
 
     `;
 
-    CSS.rules.defaults = `
+    CSS.rules.elementsDefaults = `
       /****************************** SVG START ******************************/
       svg{
         cursor: pointer;
@@ -701,11 +700,11 @@ export default class CSS{
     `;
 
     return `
-      ${CSS.rules.all}
+      ${CSS.rules.selectorsDefaults}
       ${CSS.rules.scrollbar}
       ${CSS.rules.root}
       ${CSS.rules.skeleton}
-      ${CSS.rules.defaults}
+      ${CSS.rules.elementsDefaults}
     `;
 
   }
