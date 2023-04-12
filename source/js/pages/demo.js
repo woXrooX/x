@@ -412,8 +412,13 @@ const modal = `
 
   <row class="box-default w-25 p-5" class="g-1">
     <x-modal trigger="auto">Auto</x-modal>
+
     <x-modal trigger="click" type="icon" value="idea">Icon + Click</x-modal>
-    <x-modal trigger="click" type="text" value="Click Me">Button + Text + Click</x-modal>
+    <x-modal trigger="click" type="text" value="Click Me">Text + Click</x-modal>
+
+    <x-modal trigger="click" button type="icon" value="idea">Button + Icon + Click</x-modal>
+    <x-modal trigger="click" button type="text" value="Click Me">Button + Text + Click</x-modal>
+
   </row>
 
 </container>
