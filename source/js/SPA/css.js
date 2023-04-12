@@ -149,6 +149,7 @@ export default class CSS{
 
     }
 
+    // After Color Mode Selection Update The Rules
     CSS.#update();
 
   }
