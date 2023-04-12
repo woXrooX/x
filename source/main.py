@@ -113,7 +113,22 @@ except:
     print("Could Not Create The Folder source/assets")
 
 
-#################################################### Check If PARENT_RUNNING_FROM/SVG Exists Then Load The SVGs To source/html/SVG.html
+#################################################### PARENT_RUNNING_FROM/fonts
+if os.path.exists(f"{PARENT_RUNNING_FROM}/fonts"):
+    try:
+        print("------------ Copying The Fonts ------------")
+
+        files = os.listdir(PARENT_RUNNING_FROM+"/fonts")
+
+        for file in files:
+            shutil.copy(PARENT_RUNNING_FROM+"/fonts/"+file, str(APP_RUNNING_FROM)+"/fonts")
+
+    except:
+        print("------------ Error ------------")
+        print("Could Not Copy The Fonts")
+
+
+#################################################### PARENT_RUNNING_FROM/SVG
 # SVG FIles
 if os.path.exists(f"{PARENT_RUNNING_FROM}/SVG"):
     print("------------ Loading SVG Files ------------")
@@ -129,7 +144,6 @@ if os.path.exists(f"{PARENT_RUNNING_FROM}/SVG"):
         except:
             print(f"Could Not Load The SVG File: {file}")
 
-# print(EXTERNALS)
 
 #################################################### Load External CSS
 if os.path.exists(f"{PARENT_RUNNING_FROM}/CSS/styles.css"):

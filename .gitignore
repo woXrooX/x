@@ -4,6 +4,10 @@ __pycache__/
 ################ Assets
 source/assets/*
 
+################ Fonts
+source/fonts/*
+!source/fonts/Quicksand-Regular.ttf
+
 ################ Users
 source/users/*
 
