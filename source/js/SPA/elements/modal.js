@@ -30,8 +30,6 @@ export default class Modal extends HTMLElement{
 
     this.shown = false;
 
-    console.log(window.CSS.rules.scrollbar);
-
     CSS: {
       const style = document.createElement('style');
       style.textContent = `
