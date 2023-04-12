@@ -711,7 +711,6 @@ export default class CSS{
 
   static styles(){
     CSS.rules.form = `
-      /****************************** Form START ******************************/
       /************ Form Variables START ************/
       :root{
         --f-padding: 10px;
@@ -863,7 +862,7 @@ export default class CSS{
 
       /* Input */
       input[type=file]{
-        padding: ${CSS.values.padding.default};
+        padding: var(--padding);
         font-size: var(--f-font-size);
 
       }
@@ -882,7 +881,7 @@ export default class CSS{
         cursor: pointer;
 
         filter: brightness(120%);
-        transition: ${CSS.values.transition.velocity} filter;
+        transition: var(--transition-velocity) filter;
 
       }
 
@@ -936,7 +935,7 @@ export default class CSS{
         cursor: pointer;
 
         filter: brightness(120%);
-        transition: ${CSS.values.transition.velocity} filter;
+        transition: var(--transition-velocity) filter;
 
       }
 
@@ -946,13 +945,9 @@ export default class CSS{
       }
 
       /************ input[type=submit] & button END ************/
-
-      /****************************** Form END ******************************/
     `;
 
     CSS.rules.table = `
-      /****************************** Table START ******************************/
-
       /************ Table START ************/
       table{
         --table-radius: 3px;
@@ -1024,8 +1019,6 @@ export default class CSS{
 
       }
       /************ tfoot END ************/
-
-      /****************************** Table END ******************************/
     `;
 
     return `
