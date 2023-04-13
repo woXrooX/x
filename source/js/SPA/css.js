@@ -418,7 +418,7 @@ export default class CSS{
         max-height: 100vh;
         width: 400px;
         padding: var(--padding);
-        padding-bottom: calc(var(--padding) * 2);
+        padding-bottom: calc(var(--padding) * 4);
 
         overflow-x: hidden;
         overflow-y: scroll;
