@@ -371,7 +371,7 @@ export default class CSS{
         font-family: Quicksand;
         font-size: 1rem;
         height: 100vh;
-        padding-top: ${CSS.values.header.height};
+        padding-top: var(--header-height);
 
       }
 
@@ -384,9 +384,9 @@ export default class CSS{
         position: fixed;
         left: 0px;
         top: 0px;
-        z-index: ${CSS.values.zIndex.loading};
+        z-index: var(--z-loading);
 
-        transition: ${CSS.values.transition.velocity} opacity ease-in-out;
+        transition: var(--transition-velocity) opacity ease-in-out;
 
       }
       body > loading::after{
@@ -424,12 +424,12 @@ export default class CSS{
 
         display: flex;
         flex-direction: column-reverse;
-        gap: ${CSS.values.gap.default};
+        gap: var(--gap);
 
         position: fixed;
         top: 0px;
         right: 0px;
-        z-index: ${CSS.values.zIndex.toasts};
+        z-index: var(--z-toasts);
 
       }
       body > toasts:empty{
@@ -447,14 +447,14 @@ export default class CSS{
         display: grid;
         grid-template-rows: auto 2fr auto;
         justify-items: start;
-        gap: ${CSS.values.gap.default};
+        gap: var(--gap);
 
         position: fixed;
-        z-index: ${CSS.values.zIndex.menu};
+        z-index: var(--z-menu);
         top: 0;
         left: 0;
         transform: translate(-100%, 0);
-        transition-duration: ${CSS.values.transition.velocity};
+        transition-duration: var(--transition-velocity);
         transition-timing-function: ease;
         transition-property: all;
 
@@ -463,7 +463,7 @@ export default class CSS{
       body > menu > header{
         width: 100%;
 
-        padding: calc(${CSS.values.padding.default} * 2);
+        padding: calc(var(--padding) * 2);
 
         display: flex;
         flex-direction: row;
@@ -478,11 +478,11 @@ export default class CSS{
       }
       body > menu > main{
         width: 100%;
-        padding: calc(${CSS.values.padding.default} * 2);
+        padding: calc(var(--padding) * 2);
 
         display: flex;
         flex-direction: column;
-        gap: calc(${CSS.values.gap.default} / 2);
+        gap: calc(var(--gap) / 2);
 
       }
       body > menu > main > a{
@@ -492,13 +492,13 @@ export default class CSS{
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        gap: ${CSS.values.gap.default};
+        gap: var(--gap);
 
         border: 1px solid transparent;
-        border-radius: ${CSS.values.radius.default};
-        padding: ${CSS.values.padding.default} calc(${CSS.values.padding.default} * 2);
+        border-radius: var(--radius);
+        padding: var(--padding) calc(var(--padding) * 2);
 
-        transition: ${CSS.values.transition.velocity} ease-in-out;
+        transition: var(--transition-velocity) ease-in-out;
         transition-property: filter, background-color, border;
 
       }
@@ -522,8 +522,8 @@ export default class CSS{
       body > cover{
         pointer-events:auto;
 
-        background: ${CSS.values.color.cover};
-        backdrop-filter: blur(${CSS.values.blur.default});
+        background: var(--color-cover);
+        backdrop-filter: blur(var(--blur));
         opacity: 0;
         width: 100vw;
         height: 100vh;
@@ -531,24 +531,24 @@ export default class CSS{
         position: fixed;
         top: 0px;
         left: 0px;
-        z-index: ${CSS.values.zIndex.minus};
+        z-index: var(--z-minus);
 
-        transition: ${CSS.values.transition.velocity} opacity;
+        transition: var(--transition-velocity) opacity;
 
       }
 
       body > header{
-        background-color: ${CSS.values.color.main};
+        background-color: var(--color-main);
         color: white;
 
         width: 100%;
-        height: ${CSS.values.header.height};
-        padding: ${CSS.values.padding.default};
+        height: var(--header-height);
+        padding: var(--padding);
 
         position: fixed;
         top: 0px;
         left: 0px;
-        z-index: ${CSS.values.zIndex.header};
+        z-index: var(--z-header);
 
         display: grid;
         grid-template-columns: auto 3fr;
@@ -557,25 +557,25 @@ export default class CSS{
 
       }
       body > header > x-icon[for=menu]{
-        height: calc(${CSS.values.header.height} - ${CSS.values.padding.default} * 2);
-        width: calc(${CSS.values.header.height} - ${CSS.values.padding.default} * 2);
+        height: calc(var(--header-height) - var(--padding) * 2);
+        width: calc(var(--header-height) - var(--padding) * 2);
 
       }
 
 
       body > main {
         width: 100vw;
-        height: calc(100vh - ${CSS.values.header.height});
+        height: calc(100vh - var(--header-height));
 
       }
 
       body > footer {
-        background-color: ${CSS.values.color.surface["2"]};
-        color: ${CSS.values.color.text.primary};
+        background-color: var(--color-surface-2);
+        color: var(--color-text-primary);
 
         width: 100%;
-        height: ${CSS.values.footer.height};
-        padding: ${CSS.values.padding.default};
+        height: var(--footer-height);
+        padding: var(--padding);
 
         display: grid;
         place-items: center;
@@ -601,7 +601,7 @@ export default class CSS{
 
         body > main {
           width: 100vw;
-          height: calc(${CSS.values.document.height} - ${CSS.values.header.height});
+          height: calc(${CSS.values.document.height} - var(--header-height));
           overflow: hidden;
           overflow-y: scroll;
 
