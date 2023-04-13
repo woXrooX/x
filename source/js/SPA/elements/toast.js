@@ -49,19 +49,20 @@ export default class Toast extends HTMLElement{
         toast{
           overflow: hidden;
 
-          background-color: ${window.CSS.values.color.surface["1"]};
-          padding: ${window.CSS.values.padding.default};
+          background-color: var(--color-surface-1);
+          padding: var(--padding);
           margin: 0px;
-          border-radius: ${window.CSS.values.radius.default};
+          border-radius: var(--radius);
 
-          box-shadow: ${window.CSS.values.shadow.default};
+          box-shadow: var(--shadow-default);
 
           display: grid;
           gap: 10px;
           grid-template-columns:auto 2fr auto;
           align-items: center;
 
-          animation: fadeIn ${window.CSS.values.transition.velocity} ease;
+          animation: fadeIn var(--transition-velocity) ease;
+
         }
         @keyframes fadeIn{
           0%{transform:translateY(-10px);}
@@ -69,10 +70,10 @@ export default class Toast extends HTMLElement{
         }
 
         labelColor{
-          background-color: ${window.CSS.values.color[this.typeName]};
+          background-color: var(--color-${[this.typeName]});
           height: 100%;
           width: 5px;
-          border-radius: ${window.CSS.values.radius.default};
+          border-radius: var(--radius);
         }
 
         toast > main{
@@ -87,43 +88,43 @@ export default class Toast extends HTMLElement{
         toast > main > icon{
           font-size: 30px;
           padding-right: 5px;
-          color: ${window.CSS.values.color[this.typeName]};
+          color: var(--color-${[this.typeName]});
           grid-area: icon;
         }
 
         toast > main > type{
           font-size: 20px;
-          color: ${window.CSS.values.color.text.primary};
+          color: var(--color-text-primary);
           text-transform: uppercase;
           font-weight: bold;
           grid-area: type;
         }
 
         toast > main > content{
-          color: ${window.CSS.values.color.text.secondary};
+          color: var(--color-text-secondary);
           grid-area:content;
         }
 
         toast > dismiss{
-          color: ${window.CSS.values.color.text.primary};
+          color: var(--color-text-primary);
           font-size: 30px;
           user-select: none;
 
           width: 40px;
           height: 40px;
 
-          border-radius: ${window.CSS.values.radius.default};
+          border-radius: var(--radius);
 
           display: grid;
           place-items: center;
 
           cursor: pointer;
 
-          transition: ${window.CSS.values.transition.velocity} background-color;
+          transition: var(--transition-velocity) background-color;
         }
 
         toast > dismiss:hover{
-          background-color: ${window.CSS.values.color.surface["4"]};
+          background-color: var(--color-surface-2);
         }
         `;
 
