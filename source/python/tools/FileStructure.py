@@ -59,13 +59,20 @@ if __name__ != "__main__":
             try:
                 print(f"Folder: {path}")
                 os.makedirs(f'{path}', mode=0o777, exist_ok=True)
+
             except:
-                print(f"Error: Could Not Create The Folder -> {path}")
+                print(f"Error: Could Not Create The Folder: {path}")
                 sys.exit()
 
         @staticmethod
         def createFile(pathNameExtension, content = ""):
             if not os.path.exists(f"{pathNameExtension}"):
-                print(f"File: {pathNameExtension}")
-                with open(f'{pathNameExtension}', 'w') as f:
-                    f.write(f"{content}")
+
+                try:
+                    print(f"File: {pathNameExtension}")
+                    with open(f'{pathNameExtension}', 'w') as f:
+                        f.write(f"{content}")
+
+                except:
+                    print(f"Error: Could Not Create The File: {path}")
+                    sys.exit()
