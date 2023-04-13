@@ -366,8 +366,8 @@ export default class CSS{
 
     CSS.rules.skeleton = `
       body {
-        background-color: ${CSS.values.color.surface["1"]};
-        color: ${CSS.values.color.text.primary};
+        background-color: var(--color-surface-1);
+        color: var(--color-text-primary);
         font-family: Quicksand;
         font-size: 1rem;
         height: 100vh;
@@ -376,7 +376,7 @@ export default class CSS{
       }
 
       body > loading{
-        background-color: ${CSS.values.color.surface["1"]};
+        background-color: var(--color-surface-1);
 
         width: 100vw;
         height: 100vh;
@@ -396,7 +396,7 @@ export default class CSS{
         width: 20vh;
         border-radius: 100%;
         border: 0px solid transparent;
-        border-right: 2px solid ${CSS.values.color.text.primary};
+        border-right: 2px solid var(--color-text-primary);
 
         position: absolute;
         left: 50%;
@@ -404,7 +404,7 @@ export default class CSS{
         transform: translate(-50%, -50%);
         transform-origin: center;
 
-        animation: loading 500ms infinite ease-in-out;
+        animation: loading 1000ms infinite linear;
 
       }
       @keyframes loading{
@@ -417,7 +417,7 @@ export default class CSS{
         height: auto;
         max-height: 100vh;
         width: 400px;
-        padding: ${CSS.values.padding.default};
+        padding: var(--padding);
 
         overflow-x: hidden;
         overflow-y: scroll;
