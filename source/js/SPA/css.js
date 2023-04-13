@@ -925,24 +925,37 @@ export default class CSS{
       input[type=submit]{
         background-color: var(--color-main);
         color: white;
+        text-transform: uppercase;
+
         overflow: hidden;
         width: auto;
         height: var(--f-height);
+
         padding: 0px var(--f-padding);
         border-radius: var(--f-radius);
         border: none;
-        text-transform: uppercase;
+        box-shadow: var(--shadow-default);
 
         cursor: pointer;
 
         filter: brightness(120%);
-        transition: var(--transition-velocity) filter;
+        transition: var(--transition-velocity) ease-in-out;
+        transition-property: filter transform;
 
       }
 
-      button:not(:disabled):where(:active, :focus, :hover),
-      input[type=submit]:not(:disabled):where(:active, :focus, :hover){
+      /* On Hover */
+      button:not(:disabled):where(:hover),
+      input[type=submit]:not(:disabled):where(:hover){
         filter: brightness(80%);
+        transform: scale(1.1);
+      }
+
+      /* On Activate */
+      button:not(:disabled):where(:active, :focus),
+      input[type=submit]:not(:disabled):where(:active, :focus){
+        filter: brightness(80%);
+        transform: scale(0.8);
       }
 
       /************ input[type=submit] & button END ************/
