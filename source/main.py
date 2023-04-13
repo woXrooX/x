@@ -15,12 +15,17 @@ APP_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
 # Go Back Two Times From "APP_RUNNING_FROM"
 PARENT_RUNNING_FROM = os.path.abspath(os.path.join(APP_RUNNING_FROM, '../..'))
 
+#################################################### Draw "The X"
+from python.tools.Logger import Log
+Log.clear()
+Log.brand()
+
 
 ################################################################
 ################################################################ Initializing File Structure START
 ################################################################
-from python.tools.FileStructure import FileStructure
-FileStructure.init()
+from python.tools.FileSystem import FileSystem
+FileSystem.init()
 
 
 ################################################################
@@ -35,46 +40,42 @@ FileStructure.init()
 
 #################################################### project.json
 try:
-    print("------------ Reading project.json ------------")
-
     with open(f"{PARENT_RUNNING_FROM}/project.json", 'r') as file:
         PROJECT = json.load(file)
 
-except:
-    print("------------ Error ------------")
-    print("Error While Reading The project.json")
+    Log.success("Loaded: project.json")
 
+except:
+    Log.error("Could Not Reading The project.json")
     sys.exit()
 
 
 #################################################### Copying Pages (Back-End)
 try:
-    print("------------ Copying The Pages (Back-End) ------------")
-
     files = os.listdir(PARENT_RUNNING_FROM+"/pages/back")
 
     for file in files:
         shutil.copy(PARENT_RUNNING_FROM+"/pages/back/"+file, str(APP_RUNNING_FROM)+"/python/pages")
 
+    Log.success("Pages Are Copied (Back-End)")
+
 except:
-    print("------------ Error ------------")
-    print("Could Not Copy The Pages (Back-End)")
+    Log.error("Could Not Copy The Pages (Back-End)")
 
     sys.exit()
 
 
 #################################################### Copying Pages (Front-End)
 try:
-    print("------------ Copying The Pages (Front-End) ------------")
-
     files = os.listdir(PARENT_RUNNING_FROM+"/pages/front")
 
     for file in files:
         shutil.copy(PARENT_RUNNING_FROM+"/pages/front/"+file, str(APP_RUNNING_FROM)+"/js/pages")
 
+    Log.success("Pages Are Copied (Front-End)")
+
 except:
-    print("------------ Error ------------")
-    print("Could Not Copy The Pages (Front-End)")
+    Log.error("Could Not Copy The Pages (Front-End)")
 
     sys.exit()
 
@@ -96,22 +97,19 @@ EXTERNALS = {
 
 #################################################### PARENT_RUNNING_FROM/fonts
 try:
-    print("------------ Copying The Fonts ------------")
-
     files = os.listdir(PARENT_RUNNING_FROM+"/fonts")
 
     for file in files:
         shutil.copy(PARENT_RUNNING_FROM+"/fonts/"+file, str(APP_RUNNING_FROM)+"/fonts")
 
+    Log.success("Fonts Are Copied")
+
 except:
-    print("------------ Error ------------")
-    print("Could Not Copy The Fonts")
+    Log.error("Could Not Copy The Fonts")
 
 
 #################################################### PARENT_RUNNING_FROM/SVG
 # SVG FIles
-print("------------ Loading SVG Files ------------")
-
 for file in os.listdir(f'{PARENT_RUNNING_FROM}/SVG'):
     # Check If File Is A SVG File
     if not file.endswith(".svg"): continue
@@ -120,20 +118,21 @@ for file in os.listdir(f'{PARENT_RUNNING_FROM}/SVG'):
         with open(f'{PARENT_RUNNING_FROM}/SVG/{file}', "r") as svg:
             EXTERNALS["SVG"][os.path.splitext(file)[0]] = svg.read()
 
+        Log.success(f"SVG File Loaded: {file}")
+
     except:
-        print(f"Could Not Load The SVG File: {file}")
+        Log.error(f"Could Not Load The SVG File: {file}")
 
 
 #################################################### Load External CSS
 try:
-    print("------------ Reading The External CSS Files ------------")
-
     with open(f'{PARENT_RUNNING_FROM}/CSS/styles.css', "r") as css:
         EXTERNALS["CSS"] = css.read()
 
+    Log.success("External CSS Files Are Loaded")
+
 except:
-    print("------------ Error ------------")
-    print("Could Not Read The External CSS")
+    Log.error("Could Not Read The External CSS")
 
 
 ################################################################
@@ -233,14 +232,13 @@ with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") a
 PROJECT_LANG_DICT = {}
 
 try:
-    print("------------ Reading languageDictionary.json ------------")
-    
     with open(f"{PARENT_RUNNING_FROM}/languageDictionary.json", 'r') as file:
         PROJECT_LANG_DICT = json.load(file)
 
+    Log.success("languageDictionary.json Is Loaded")
+
 except:
-    print("------------ Error ------------")
-    print("Could Not Read The External languageDictionary.json")
+    Log.error("Could Not Read The External languageDictionary.json")
 
 # Override The langDict With External "languageDictionary.json"
 langDict.update(PROJECT_LANG_DICT)
