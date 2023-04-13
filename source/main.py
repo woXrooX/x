@@ -17,18 +17,23 @@ PARENT_RUNNING_FROM = os.path.abspath(os.path.join(APP_RUNNING_FROM, '../..'))
 
 
 ################################################################
+################################################################ Initializing File Structure START
+################################################################
+from python.tools.FileStructure import FileStructure
+FileStructure.init()
+
+
+################################################################
+################################################################ Initializing File Structure END
+################################################################
+
+
+################################################################
 ################################################################ Required Files And Folders To Run The Scipt START
 ################################################################
 
 
 #################################################### project.json
-# Check If project.json exists
-if not os.path.exists(f"{PARENT_RUNNING_FROM}/project.json"):
-    print("------------ Error ------------")
-    print(f"{PARENT_RUNNING_FROM}/project.json does not exist.")
-    sys.exit()
-
-# If Exists Try To Open It
 try:
     print("------------ Reading project.json ------------")
 
@@ -74,21 +79,6 @@ except:
     sys.exit()
 
 
-#################################################### home.py
-# Check If home.py Is Created By The User Of X-WebApp
-if not os.path.exists(f"{APP_RUNNING_FROM}/python/pages/home.py"):
-    print("------------ Error ------------")
-    print("pages/home.py does not exist.")
-    sys.exit()
-
-
-#################################################### home.js
-if not os.path.exists(f"{APP_RUNNING_FROM}/js/pages/home.js"):
-    print("------------ Error ------------")
-    print(f"pages/home.js does not exist.")
-    sys.exit()
-
-
 ################################################################
 ################################################################ Required Files And Folders To Run The Scipt END
 ################################################################
@@ -104,58 +94,46 @@ EXTERNALS = {
     "CSS": None
 }
 
-#################################################### Create Folder "assets" For Storing Site Assets
+#################################################### PARENT_RUNNING_FROM/fonts
 try:
-    print("------------ Creating Folder X-WebApp/source/assets ------------")
-    os.makedirs(f'{APP_RUNNING_FROM}/assets/', mode=0o777, exist_ok=True)
+    print("------------ Copying The Fonts ------------")
+
+    files = os.listdir(PARENT_RUNNING_FROM+"/fonts")
+
+    for file in files:
+        shutil.copy(PARENT_RUNNING_FROM+"/fonts/"+file, str(APP_RUNNING_FROM)+"/fonts")
+
 except:
     print("------------ Error ------------")
-    print("Could Not Create The Folder source/assets")
-
-
-#################################################### PARENT_RUNNING_FROM/fonts
-if os.path.exists(f"{PARENT_RUNNING_FROM}/fonts"):
-    try:
-        print("------------ Copying The Fonts ------------")
-
-        files = os.listdir(PARENT_RUNNING_FROM+"/fonts")
-
-        for file in files:
-            shutil.copy(PARENT_RUNNING_FROM+"/fonts/"+file, str(APP_RUNNING_FROM)+"/fonts")
-
-    except:
-        print("------------ Error ------------")
-        print("Could Not Copy The Fonts")
+    print("Could Not Copy The Fonts")
 
 
 #################################################### PARENT_RUNNING_FROM/SVG
 # SVG FIles
-if os.path.exists(f"{PARENT_RUNNING_FROM}/SVG"):
-    print("------------ Loading SVG Files ------------")
+print("------------ Loading SVG Files ------------")
 
-    for file in os.listdir(f'{PARENT_RUNNING_FROM}/SVG'):
-        # Check If File Is A SVG File
-        if not file.endswith(".svg"): continue
+for file in os.listdir(f'{PARENT_RUNNING_FROM}/SVG'):
+    # Check If File Is A SVG File
+    if not file.endswith(".svg"): continue
 
-        try:
-            with open(f'{PARENT_RUNNING_FROM}/SVG/{file}', "r") as svg:
-                EXTERNALS["SVG"][os.path.splitext(file)[0]] = svg.read()
+    try:
+        with open(f'{PARENT_RUNNING_FROM}/SVG/{file}', "r") as svg:
+            EXTERNALS["SVG"][os.path.splitext(file)[0]] = svg.read()
 
-        except:
-            print(f"Could Not Load The SVG File: {file}")
+    except:
+        print(f"Could Not Load The SVG File: {file}")
 
 
 #################################################### Load External CSS
-if os.path.exists(f"{PARENT_RUNNING_FROM}/CSS/styles.css"):
+try:
     print("------------ Reading The External CSS Files ------------")
 
-    try:
-        with open(f'{PARENT_RUNNING_FROM}/CSS/styles.css', "r") as css:
-            EXTERNALS["CSS"] = css.read()
+    with open(f'{PARENT_RUNNING_FROM}/CSS/styles.css', "r") as css:
+        EXTERNALS["CSS"] = css.read()
 
-    except:
-        print("------------ Error ------------")
-        print("Could Not Read The External CSS")
+except:
+    print("------------ Error ------------")
+    print("Could Not Read The External CSS")
 
 
 ################################################################
@@ -254,12 +232,15 @@ with open(f'{APP_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") a
 #################################################### External Language Dictionary
 PROJECT_LANG_DICT = {}
 
-# Check If External languageDictionary.json exists
-if os.path.exists(f"{PARENT_RUNNING_FROM}/languageDictionary.json"):
+try:
     print("------------ Reading languageDictionary.json ------------")
-
+    
     with open(f"{PARENT_RUNNING_FROM}/languageDictionary.json", 'r') as file:
         PROJECT_LANG_DICT = json.load(file)
+
+except:
+    print("------------ Error ------------")
+    print("Could Not Read The External languageDictionary.json")
 
 # Override The langDict With External "languageDictionary.json"
 langDict.update(PROJECT_LANG_DICT)
