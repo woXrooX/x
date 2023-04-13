@@ -50,7 +50,7 @@
       width: 20vh;
       border-radius: 100%;
       border: 0px solid transparent;
-      border-right: 2px solid red;
+      border-right: 0px solid red;
 
       position: absolute;
       left: 50%;
@@ -58,12 +58,21 @@
       transform: translate(-50%, -50%);
       transform-origin: center;
 
-      animation: loading 500ms infinite ease-in-out;
+      animation: loading 1000ms infinite linear;
 
     }
     @keyframes loading{
-      0%{transform: translate(-50%, -50%) rotate(0deg);}
-      100%{transform: translate(-50%, -50%) rotate(720deg);}
+      0%{
+        transform: translate(-50%, -50%) rotate(0deg);
+        border-right: 0px solid red;
+      }
+      50%{
+        border-right: 25px solid red;
+      }
+      100%{
+        transform: translate(-50%, -50%) rotate(720deg);
+        border-right: 0px solid red;
+      }
 
     }
   </style>
