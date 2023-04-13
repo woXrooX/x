@@ -43,14 +43,6 @@ export default class Modal extends HTMLElement{
 
           display: block;
 
-          width: auto;
-          max-width: 80vw;
-          height: auto;
-          max-height: 80vh;
-
-          overflow: hidden;
-          overflow-y: scroll;
-
           border-radius: var(--radius);
           box-shadow: var(--shadow-default);
 
@@ -84,18 +76,40 @@ export default class Modal extends HTMLElement{
         }
 
         modal > header{
-          width: 100%;
+          background: var(--color-surface-2);
+
+          width: 35px;
           height: 35px;
 
-          display: flex;
-          justify-content: flex-end;
+          padding: 5px;
+          border-radius: 50%;
+          box-shadow: var(--shadow-default);
+
+          position: absolute;
+          top: -15px;
+          right: -15px;
+
+          transition: var(--transition-velocity) ease-in-out transform;
+
+        }
+        modal > header:hover{
+          transform: scale(1.1);
 
         }
 
         modal > main{
           width: auto;
 
+          width: auto;
+          max-width: 80vw;
+          height: auto;
+          max-height: 80vh;
+
+          overflow: hidden;
+          overflow-y: scroll;
+
           padding: var(--padding);
+          padding-top: 25px;
 
           display: grid;
           place-items: center;
