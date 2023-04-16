@@ -61,7 +61,7 @@ if __name__ != "__main__":
                 os.makedirs(f'{path}', mode=0o777, exist_ok=True)
 
             except:
-                Log.error(f"Error: Could Not Create The Folder: {path}")
+                Log.error(f"Could Not Create The Folder: {path}")
                 sys.exit()
 
         @staticmethod
@@ -73,5 +73,5 @@ if __name__ != "__main__":
                         f.write(f"{content}")
 
                 except:
-                    Log.error(f"Error: Could Not Create The File: {path}")
+                    Log.error(f"Could Not Create The File: {path}")
                     sys.exit()
