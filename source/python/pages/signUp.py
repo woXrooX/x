@@ -6,12 +6,11 @@ from main import CONF, MySQL, USER_TYPES, session, EXTERNALS
 
 import re, json, random
 
-from python.tools.GMail import GMail
+# from python.tools.GMail import GMail
 from python.tools.SendGrid import SendGrid
 
-from python.tools import userFolders
+from python.tools.FileSystem import FileSystem
 from python.tools.response import response
-
 from python.tools.tools import pageGuard, publicSessionUser
 
 
@@ -117,7 +116,7 @@ def signUp():
                 session["user"] = db.fetchOne()
 
             # Setup Dirs
-            if userFolders.create() == False:
+            if FileSystem.initUserFolders() == False:
                 # Handle Folder Creation Errors
                 pass
 
