@@ -49,16 +49,20 @@ default:
   currency: "USD"
   title: "X"
   language: "en"
+  charset: "utf-8"
+
+  # To Control App's State (Offline, Under Development etc.)
   # appIsDown:
   #   reason: "Under Development"
   #   explanation: "Long text that describes the 'reason'"
   #   logo: "SVG Logo To Be Shown"
 
-
-
-######### HTML
-HTML:
-  charset: "utf-8"
+  # For External Color Configurations
+  color:
+    brand:
+      hue: 230        # deg
+      saturation: 13  # %
+      lightness: 9    # %
 
 
 ######### Menu
