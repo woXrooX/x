@@ -140,11 +140,11 @@ except:
 ################################################################
 
 
-#################################################### GLOBAL config
+#################################################### Default Config
 with open(f"{APP_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
     CONF = yaml.safe_load(file)
 
-#### Merge Project Dependent Configurations To X-WebApp Configurations. Override Defaults
+#### Merge Project Dependent Configurations To Default Configurations. Override Defaults
 # Database
 if "database" in PROJECT:
     if "database" in CONF: CONF["database"].update(PROJECT["database"])
