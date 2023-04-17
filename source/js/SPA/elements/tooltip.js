@@ -83,7 +83,7 @@ export default class Tooltip extends HTMLElement{
 
             width: 30px;
 
-            color: ${window.CSS.values.color[this.type]};
+            color: var(--color-${this.type});
             font-size: 1em;
             font-weight: bold;
             text-align: center;
@@ -95,13 +95,13 @@ export default class Tooltip extends HTMLElement{
             border: 1px solid transparent;
             border-radius: 5px;
 
-            transition: ${window.CSS.values.transition.velocity} ease-in-out;
+            transition: var(--transition-velocity) ease-in-out;
             transition-property: border;
 
           }
 
           icon:hover{
-            border: 1px solid ${window.CSS.values.color[this.type]};
+            border: 1px solid var(--color-${this.type});
           }
 
           tooltip > content{
@@ -109,28 +109,27 @@ export default class Tooltip extends HTMLElement{
 
             display: block;
 
-            background-color: ${window.CSS.values.color.main};
+            background-color: var(--color-main);
             color: white;
 
             opacity: 0;
 
-            padding: calc(${window.CSS.values.padding.default} * 2);
-            border-radius: ${window.CSS.values.radius.default};
-            box-shadow: 0px 0px 10px ${window.CSS.values.color.main};
-            box-sizing: border-box;
+            padding: calc(var(--padding) * 2);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-default);
 
             max-width: 40vw;
             width: max-content;
             height: max-content;
 
             position: absolute;
-            z-index: ${window.CSS.values.zIndex.tooltip};
+            z-index: var(--z-tooltip);
             left: 50%;
             top: 0%;
             transform: translate(-50%, calc(-50% + 10px));
             transform-origin: center;
 
-            transition: ${window.CSS.values.transition.velocity} ease-in-out;
+            transition: var(--transition-velocity) ease-in-out;
             transition-property: opacity, transform;
 
           }
