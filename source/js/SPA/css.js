@@ -102,11 +102,7 @@ export default class CSS{
 
       cover: "rgba(0, 0, 0, 0.6)",
 
-      science: {
-        hue: 230,         // deg
-        saturation: 13,   // %
-        lightness: 9      // %
-      },
+      brand: {},
 
       text: {}
 
@@ -119,15 +115,18 @@ export default class CSS{
   // Rules
   static rules = {};
 
-  // Init
-  static {
+  //////////// APIs
+  ///// Init
+  static init(){
     CSS.#calculateDocumentHeight();
+
+    CSS.#loadColorBrand();
 
     CSS.colorModeSwitcher();
 
   }
 
-  //////////// APIs
+  ///// Color Mode Switcher
   static colorModeSwitcher(){
     switch(CSS.currentColorMode){
       case CSS.colorModes.DARK:
@@ -154,6 +153,8 @@ export default class CSS{
 
   }
 
+  ///// Document Height
+  // Calculate Document Height
   static #calculateDocumentHeight(){
     // Set Document Height For THe First Time
     CSS.#setDocumentHeight();
@@ -163,13 +164,23 @@ export default class CSS{
 
   }
 
+  // Set Document Height
   static #setDocumentHeight(){
     // Set Document Height
     CSS.values.document.height = `${window.innerHeight}px`;
 
   }
 
-  // Updates The CSS Rules
+  ///// Load Brand Color From Configurations File
+  static #loadColorBrand(){
+    CSS.values.color.brand = {
+      hue: window.CONF.default.color.brand.hue || 230,
+      saturation: window.CONF.default.color.brand.saturation || 13,
+      lightness: window.CONF.default.color.brand.lightness || 9
+    }
+  }
+
+  ///// Updates The CSS Rules
   static #update(){
     CSS.rules.all = `
       ${CSS.common()}
@@ -181,39 +192,39 @@ export default class CSS{
     window.document.querySelector("style[for=INTERNAL_CSS]").innerText = CSS.rules.all;
   }
 
+
   //////////// Modes
   static #dark(){
     CSS.values.color.scheme = "dark";
 
     // The Color, Main Color, Brand Color
-    CSS.values.color.main =
-    CSS.values.color.brand = `
+    CSS.values.color.main = `
       hsla(
-        ${CSS.values.color.science.hue}deg,
-        ${CSS.values.color.science.saturation / 2}%,
-        ${CSS.values.color.science.lightness / 2}%, 1);
+        ${CSS.values.color.brand.hue}deg,
+        ${CSS.values.color.brand.saturation / 2}%,
+        ${CSS.values.color.brand.lightness / 2}%, 1);
     `;
 
     CSS.values.color.text = {
-      primary: `hsla(${CSS.values.color.science.hue}deg, 15%, 95%, 1)`,
-      secondary: `hsla(${CSS.values.color.science.hue}deg, 5%, 75%, 1)`,
-      accent: `hsla(${CSS.values.color.science.hue}deg, ${CSS.values.color.science.saturation}%, 5%, 1)`
+      primary: `hsla(${CSS.values.color.brand.hue}deg, 15%, 95%, 1)`,
+      secondary: `hsla(${CSS.values.color.brand.hue}deg, 5%, 75%, 1)`,
+      accent: `hsla(${CSS.values.color.brand.hue}deg, ${CSS.values.color.brand.saturation}%, 5%, 1)`
     };
 
     CSS.values.color.surface = {
-      "1": `hsla(${CSS.values.color.science.hue}deg, 10%, 10%, 1)`,
-      "2": `hsla(${CSS.values.color.science.hue}deg, 10%, 15%, 1)`,
-      "3": `hsla(${CSS.values.color.science.hue}deg, 10%, 20%, 1)`,
-      "4": `hsla(${CSS.values.color.science.hue}deg, 10%, 25%, 1)`,
-      "5": `hsla(${CSS.values.color.science.hue}deg, 10%, 30%, 1)`,
-      "6": `hsla(${CSS.values.color.science.hue}deg, 10%, 35%, 1)`,
-      "7": `hsla(${CSS.values.color.science.hue}deg, 10%, 50%, 1)`,
-      "8": `hsla(${CSS.values.color.science.hue}deg, 10%, 65%, 1)`,
-      "9": `hsla(${CSS.values.color.science.hue}deg, 10%, 80%, 1)`,
-      "10": `hsla(${CSS.values.color.science.hue}deg, 10%, 95%, 1)`,
+      "1": `hsla(${CSS.values.color.brand.hue}deg, 10%, 10%, 1)`,
+      "2": `hsla(${CSS.values.color.brand.hue}deg, 10%, 15%, 1)`,
+      "3": `hsla(${CSS.values.color.brand.hue}deg, 10%, 20%, 1)`,
+      "4": `hsla(${CSS.values.color.brand.hue}deg, 10%, 25%, 1)`,
+      "5": `hsla(${CSS.values.color.brand.hue}deg, 10%, 30%, 1)`,
+      "6": `hsla(${CSS.values.color.brand.hue}deg, 10%, 35%, 1)`,
+      "7": `hsla(${CSS.values.color.brand.hue}deg, 10%, 50%, 1)`,
+      "8": `hsla(${CSS.values.color.brand.hue}deg, 10%, 65%, 1)`,
+      "9": `hsla(${CSS.values.color.brand.hue}deg, 10%, 80%, 1)`,
+      "10": `hsla(${CSS.values.color.brand.hue}deg, 10%, 95%, 1)`,
     };
 
-    CSS.values.shadow.default = `0px 10px 10px -5px hsla(${CSS.values.color.science.hue}deg 50% 3% / 0.3)`;
+    CSS.values.shadow.default = `0px 10px 10px -5px hsla(${CSS.values.color.brand.hue}deg 50% 3% / 0.3)`;
 
   }
 
@@ -221,35 +232,34 @@ export default class CSS{
     CSS.values.color.scheme = "light";
 
     // The Color, Main Color, Brand Color
-    CSS.values.color.main =
-    CSS.values.color.brand = `
+    CSS.values.color.main = `
       hsla(
-        ${CSS.values.color.science.hue}deg,
-        ${CSS.values.color.science.saturation / 2}%,
-        ${CSS.values.color.science.lightness / 1.2}%, 1);
+        ${CSS.values.color.brand.hue}deg,
+        ${CSS.values.color.brand.saturation / 2}%,
+        ${CSS.values.color.brand.lightness / 1.2}%, 1);
     `;
 
 
     CSS.values.color.text = {
-      primary: `hsla(${CSS.values.color.science.hue}deg, ${CSS.values.color.science.saturation}%, 10%, 1)`,
-      secondary: `hsla(${CSS.values.color.science.hue}deg, 30%, 30%, 1)`,
-      accent: `hsla(${CSS.values.color.science.hue}deg, 15%, 95%, 1)`
+      primary: `hsla(${CSS.values.color.brand.hue}deg, ${CSS.values.color.brand.saturation}%, 10%, 1)`,
+      secondary: `hsla(${CSS.values.color.brand.hue}deg, 30%, 30%, 1)`,
+      accent: `hsla(${CSS.values.color.brand.hue}deg, 15%, 95%, 1)`
     };
 
     CSS.values.color.surface = {
-      "1": `hsla(${CSS.values.color.science.hue}, 20%, 100%, 1)`,
-      "2": `hsla(${CSS.values.color.science.hue}, 20%, 95%, 1)`,
-      "3": `hsla(${CSS.values.color.science.hue}, 20%, 90%, 1)`,
-      "4": `hsla(${CSS.values.color.science.hue}, 20%, 85%, 1)`,
-      "5": `hsla(${CSS.values.color.science.hue}, 20%, 80%, 1)`,
-      "6": `hsla(${CSS.values.color.science.hue}, 20%, 75%, 1)`,
-      "7": `hsla(${CSS.values.color.science.hue}, 20%, 60%, 1)`,
-      "8": `hsla(${CSS.values.color.science.hue}, 20%, 45%, 1)`,
-      "9": `hsla(${CSS.values.color.science.hue}, 20%, 30%, 1)`,
-      "10": `hsla(${CSS.values.color.science.hue}, 20%, 15%, 1)`,
+      "1": `hsla(${CSS.values.color.brand.hue}, 20%, 100%, 1)`,
+      "2": `hsla(${CSS.values.color.brand.hue}, 20%, 95%, 1)`,
+      "3": `hsla(${CSS.values.color.brand.hue}, 20%, 90%, 1)`,
+      "4": `hsla(${CSS.values.color.brand.hue}, 20%, 85%, 1)`,
+      "5": `hsla(${CSS.values.color.brand.hue}, 20%, 80%, 1)`,
+      "6": `hsla(${CSS.values.color.brand.hue}, 20%, 75%, 1)`,
+      "7": `hsla(${CSS.values.color.brand.hue}, 20%, 60%, 1)`,
+      "8": `hsla(${CSS.values.color.brand.hue}, 20%, 45%, 1)`,
+      "9": `hsla(${CSS.values.color.brand.hue}, 20%, 30%, 1)`,
+      "10": `hsla(${CSS.values.color.brand.hue}, 20%, 15%, 1)`,
     };
 
-    CSS.values.shadow.default = `0px 10px 10px -5px hsla(${CSS.values.color.science.hue}deg 10% 2% / 0.2)`;
+    CSS.values.shadow.default = `0px 10px 10px -5px hsla(${CSS.values.color.brand.hue}deg 10% 2% / 0.2)`;
 
   }
 
@@ -438,7 +448,7 @@ export default class CSS{
       }
 
       body > menu{
-        --menu-background-color: hsla(${CSS.values.color.science.hue}, 5%, 20%, 1);
+        --menu-background-color: hsla(${CSS.values.color.brand.hue}, 5%, 20%, 1);
         background-color: var(--menu-background-color);
         height: 100vh;
         width: auto;
