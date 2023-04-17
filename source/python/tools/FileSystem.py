@@ -78,13 +78,24 @@ if __name__ != "__main__":
                     sys.exit()
 
         @staticmethod
-        def initUserFolders():
-            # Check If User Is In Session
-            if "user" not in session: return False
+        def initUserFolders(id = None):
+            ID = None
+
+            if id is not None:
+                if isinstance(id, int) and id > 0: ID = id
+                else:
+                    Log.warning(f"Invalid Argument Passed To The Method @ FileSystem.initUserFolders(): {id}. Due To That Could Not Initiate User Folders")
+                    
+                    return False
+
+            elif "user" in session: ID = session["user"]["id"]
+
+            else: return False
+
 
             # Must Match With The Path In .gitignore
             # source/users/id/...
-            path = f'{APP_RUNNING_FROM}/users/{session["user"]["id"]}/'
+            path = f'{APP_RUNNING_FROM}/users/{ID}/'
 
             # Try To Create User Folders
             try:
@@ -96,6 +107,8 @@ if __name__ != "__main__":
 
                 # PDF
                 os.makedirs(f'{path}PDF', mode=0o777, exist_ok=True)
+
+                Log.success(f"User Folders Created @: {path}")
 
                 return True
 
