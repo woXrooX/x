@@ -83,6 +83,12 @@ if __name__ != "__main__":
 
             return self.cursor.rowcount()
 
+        def lastrowid(self):
+            # Check If Execute Has Error
+            if self._hasError == True: return False
+
+            return self.cursor.lastrowid
+
         # Error
         def hasError(self):
             return self._hasError
