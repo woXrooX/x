@@ -28,7 +28,7 @@ export default class Cover{
     Cover.#elementCover.style.opacity = 0;
     setTimeout(()=>{
       Cover.#elementCover.style.zIndex = window.CSS.values.zIndex.minus;
-    }, window.CSS.values.transition.velocity);
+    }, parseInt(window.CSS.values.transition.velocity));
 
     // enable scrolling
     document.body.removeAttribute("style");
