@@ -1,5 +1,6 @@
 if __name__ != "__main__":
     import os
+    import shutil
     from main import APP_RUNNING_FROM, PARENT_RUNNING_FROM, session
     from python.tools.Logger import Log
 
@@ -100,5 +101,20 @@ if __name__ != "__main__":
 
             except:
                 Log.error(f"Could Not Create User Folder(s) @: {path}")
+
+                return False
+
+
+        @staticmethod
+        def deleteUserFiles(id):
+            try:
+                shutil.rmtree(f'{APP_RUNNING_FROM}/users/{id}/')
+
+                Log.success(f"User Files Deleted. User ID: {id}")
+
+                return True
+
+            except:
+                Log.error(f"Could Not Delete User Files. User ID: {id}")
 
                 return False
