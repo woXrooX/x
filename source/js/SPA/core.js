@@ -78,7 +78,9 @@ export default class Core{
 
   /////// Event Handlers
   static #firstLoad(){
-    // console.log("firstLoad");
+    console.log("firstLoad");
+
+    CSS.init();
 
     Menu.init();
     Menu.setActive();
@@ -91,6 +93,7 @@ export default class Core{
   }
 
   static #onLoad(){
+    // Works On The First Visit
     document.addEventListener('readystatechange', ()=>{
       if(event.target.readyState === 'loading') return;
       if(event.target.readyState === 'interactive') return;
