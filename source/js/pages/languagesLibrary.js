@@ -4,7 +4,7 @@ export function before(){
   window.pageData.dom = "";
   window.pageData.count = 0;
 
-  for(const keyword in window.langDict){
+  for(const keyword in window.LANG_DICT){
     // Counter
     window.pageData.count++;
 
