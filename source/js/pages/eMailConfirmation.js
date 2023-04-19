@@ -9,7 +9,7 @@ export default function content(){
     <column class="w-50 box-default p-5">
       <form action="eMailConfirmation" for="eMailConfirmation">
 
-        <p>${window.langDict["eMailConfirmationCodeHasBeenSent"][window.langCode]}</p>
+        <p>${window.Lang.use("eMailConfirmationCodeHasBeenSent")}</p>
 
         <label>
           <p for='verificationCode'></p>
@@ -18,12 +18,12 @@ export default function content(){
 
         <label>
           <p for='eMailConfirmation'></p>
-          <input type='submit' name='verify' value='${window.langDict["verifyEmail"][window.langCode]}'>
+          <input type='submit' name='verify' value='${window.Lang.use("verifyEmail")}'>
         </label>
 
       </form>
 
-      <p>${window.langDict["didNotReceiveCode"][window.langCode]} <a href="/home">${window.langDict["resendAgain"][window.langCode]}</a></p>
+      <p>${window.Lang.use("didNotReceiveCode")} <a href="/home">${window.Lang.use("resendAgain")}</a></p>
 
     </column>
   </row>
