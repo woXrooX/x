@@ -79,9 +79,8 @@ export default class DOM{
       else DOM.#page.after();
 
     ////////// Footer
-    // If User Defined footer() Exists Then Let Footer To Handle It
-    // Else Pass Null Which Make Load Default Content
-    window.Footer.handle(!!DOM.#page.footer === true ? DOM.#page.footer() : null);
+    // Let Footer Class To Handle
+    window.Footer.handle(DOM.#page.footer);
 
     // Delete The Page Data At The End Of Each Life Cycle
     delete window.pageData;

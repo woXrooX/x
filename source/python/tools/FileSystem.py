@@ -164,11 +164,16 @@ if __name__ != "__main__":
             ################################ Copying
             Log.center("Copying Pages", '-')
 
-            # (Back-End)
+            # Pages (Back-End)
             FileSystem.copyPagesBackEnd()
 
-            # (Front-End)
+            # Pages (Front-End)
             FileSystem.copyPagesFrontEnd()
+
+            Log.center("Copying JavaScripts", '-')
+
+            # JS
+            FileSystem.copyJavaScripts()
 
             # Fonts
             Log.center("Copying FONTS", '-')
@@ -195,6 +200,16 @@ if __name__ != "__main__":
 
             else:
                 Log.error("Could Not Copy The Pages (Front-End)")
+                sys.exit()
+
+        # Copy JavaScripts
+        @staticmethod
+        def copyJavaScripts():
+            if FileSystem.copyFiles(f"{PROJECT_RUNNING_FROM}/JS", f"{str(X_RUNNING_FROM)}/js/modules") is True:
+                Log.success("JavaScripts Are Copied")
+
+            else:
+                Log.error("Could Not Copy The JavaScripts")
                 sys.exit()
 
         # Copy Fonts
