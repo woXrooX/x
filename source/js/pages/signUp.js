@@ -8,32 +8,32 @@ export default function content() {
     <column class="w-50 box-default p-5">
 
       <row>
-        <h1>${window.langDict["signUp"][window.langCode]}</h1>
+        <h1>${window.Lang.use("signUp")}</h1>
       </row>
 
       <row>
         <form action="signUp" for='signUp'>
 
           <label>
-              <p for='eMail'>${window.langDict["eMail"][window.langCode]}</p>
+              <p for='eMail'>${window.Lang.use("eMail")}</p>
               <input type='eMail' name='eMail'>
           </label>
 
           <label>
-              <p for='password'>${window.langDict["password"][window.langCode]}</p>
+              <p for='password'>${window.Lang.use("password")}</p>
               <input type='password' name='password' minlength='${window.CONF["password"]["min_length"]}' maxlength='${window.CONF["password"]["max_length"]}'><br>
           </label>
 
           <label>
               <p for='signUp'></p>
-              <input type='submit' name='signUp' value='${window.langDict["signUp"][window.langCode]}'>
+              <input type='submit' name='signUp' value='${window.Lang.use("signUp")}'>
           </label>
 
         </form>
       </row>
 
       <row>
-        <a href="/logIn">${window.langDict["haveAccountGoToLogIn"][window.langCode]}</a>
+        <a href="/logIn">${window.Lang.use("haveAccountGoToLogIn")}</a>
       </row>
 
     </column>
