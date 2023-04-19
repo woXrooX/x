@@ -3,12 +3,12 @@
 export default class Language{
 
   // Can Be Used For Translations And Just For Normal Use Cases
-  static translate(keyword, code = window.langCode){
+  static translate(keyword, code = window.LANG_CODE){
     // Check If keyword Is Valid
-    if(!!keyword === false) return window.langDict["unkow"][code];
+    if(!!keyword === false) return window.LANG_DICT["unkow"][code];
 
     try{
-      return window.langDict[keyword][code];
+      return window.LANG_DICT[keyword][code];
 
     }catch(error){
       return keyword;
