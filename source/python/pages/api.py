@@ -1,12 +1,10 @@
-# Flask
+import json
+
 from main import app, request, make_response
 
-# Home Made
-from main import CONF, EXTERNALS, PUBLIC_CONF, session, langDict, USER_TYPES
+from main import CONF, PROJECT_SVG, LANG_DICT, PUBLIC_CONF, session, USER_TYPES
 
 from python.tools.tools import publicSessionUser
-
-import json
 
 
 
@@ -19,34 +17,8 @@ def api():
             {
                 "CONF": PUBLIC_CONF,
                 "session": {"user": publicSessionUser()} if "user" in session else {},
-                "langCode": CONF["default"]["language"],
-                "langDict": langDict,
+                "LANG_CODE": CONF["default"]["language"],
+                "LANG_DICT": LANG_DICT,
                 "USER_TYPES": USER_TYPES,
-                "EXTERNAL_SVG": EXTERNALS["SVG"]
-                # "languages":languages,
-                # "currencies":currencies
-            }, 200)
-
-    # languages
-    # if request.get_json()["for"] == "languages":
-    #     return make_response(
-    #         {
-    #             "response":"ok",
-    #             "languages":languages
-    #         }, 200)
-
-    # langCode
-    if request.get_json()["for"] == "langCode":
-        return make_response(
-            {
-                "response":"ok",
-                "langCode":langCode
-            }, 200)
-
-    # langDict
-    if request.get_json()["for"] == "langDict":
-        return make_response(
-            {
-                "response":"ok",
-                "langDict":langDict
+                "PROJECT_SVG": PROJECT_SVG
             }, 200)

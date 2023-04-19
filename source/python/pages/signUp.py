@@ -1,10 +1,9 @@
-# Flask
-from main import app, request, render_template
+import re, json, random
+
+from main import app, request, render_template, session
 
 # Home Made
-from main import CONF, MySQL, USER_TYPES, session, EXTERNALS
-
-import re, json, random
+from main import CONF, PROJECT_CSS, MySQL, USER_TYPES
 
 # from python.tools.GMail import GMail
 from python.tools.SendGrid import SendGrid

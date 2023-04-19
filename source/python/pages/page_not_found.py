@@ -2,7 +2,7 @@
 from main import app, render_template
 
 # Home Made
-from main import CONF, EXTERNALS
+from main import CONF, PROJECT_CSS
 
 
 #################################################### none | 404 | Page Not Found

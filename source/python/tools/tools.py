@@ -1,7 +1,8 @@
 from functools import wraps # For pageGuard() Wrapper
-
-from main import CONF, EXTERNALS, session, USER_TYPES, redirect, render_template, request, url_for, MySQL
 import json
+from flask import redirect, render_template, request, url_for
+
+from main import CONF, session, USER_TYPES, MySQL
 
 ######################################### Page Guard
 """

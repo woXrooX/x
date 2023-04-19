@@ -2,7 +2,7 @@
 from main import app, request, render_template
 
 # Home Made
-from main import CONF, EXTERNALS
+from main import CONF, PROJECT_CSS
 
 from python.tools.tools import pageGuard
 

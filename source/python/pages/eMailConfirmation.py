@@ -1,10 +1,9 @@
-# Flask
 from main import app, request, render_template, session
+import json
 
 # Home Made
-from main import CONF, USER_TYPES, MySQL, EXTERNALS
+from main import CONF, PROJECT_CSS, USER_TYPES, MySQL
 
-import json
 
 from python.tools.tools import pageGuard, updateSessionUser
 from python.tools.response import response

@@ -1,11 +1,9 @@
 # Flask
-from main import app, request, render_template
-
-# Utils
-from main import json
+from main import app, request, render_template, session
+import json
 
 # Home Made
-from main import CONF, session, EXTERNALS
+from main import CONF, PROJECT_CSS
 
 from python.tools.tools import pageGuard
 from python.tools.response import response
