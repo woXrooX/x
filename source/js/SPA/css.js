@@ -189,7 +189,7 @@ export default class CSS{
       ${CSS.layouts()}
     `;
 
-    window.document.querySelector("style[for=INTERNAL_CSS]").innerText = CSS.rules.all;
+    window.document.querySelector("style[for=X_CSS]").innerText = CSS.rules.all;
   }
 
 
