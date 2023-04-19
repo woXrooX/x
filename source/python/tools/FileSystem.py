@@ -123,6 +123,9 @@ if __name__ != "__main__":
             # styles.css
             FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/CSS/styles.css")
 
+            # footer.js
+            FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/JS/footer.js")
+
             Log.line()
 
             ################################ Reading
