@@ -1,6 +1,6 @@
 "use strict";
 
-export const TITLE = "Log Out";
+export const TITLE = window.Lang.use("logOut");
 export default function content(){
 
   const dom = `
@@ -14,7 +14,7 @@ export default function content(){
       <form action="logOut" for="logOut">
         <label>
             <p for='logOut'>${window.Lang.use("areYouSure")}</p>
-            <input type='submit' name='logOut' value='${langDict["logOut"][langCode]}'>
+            <input type='submit' name='logOut' value='${window.Lang.use("logOut")}'>
         </label>
       </form>
     </column>
