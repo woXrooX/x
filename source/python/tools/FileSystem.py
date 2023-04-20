@@ -115,10 +115,31 @@ if __name__ != "__main__":
             FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/languageDictionary.json", '{"theX": {"en": "The X"}}')
 
             # pages/back/home.py
-            FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/pages/back/home.py")
+            FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/pages/back/home.py",
+'''from main import app, request, render_template
+
+from main import CONF, PROJECT_CSS
+
+from python.tools.tools import pageGuard
+from python.tools.response import response
+
+@app.route("/", methods=["GET", "POST"])
+@app.route("/home", methods=["GET", "POST"])
+@pageGuard("home")
+def home():
+    if request.method == "GET":
+        return render_template("index.html", **globals())'''
+            )
 
             # pages/front/home.js
-            FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/pages/front/home.js")
+            FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/pages/front/home.js",
+'''export const TITLE = window.Lang.use("home");
+
+export default function content(){
+
+  return "Home";
+}'''
+            )
 
             # styles.css
             FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/CSS/styles.css")
