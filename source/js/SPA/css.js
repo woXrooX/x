@@ -576,7 +576,7 @@ export default class CSS{
 
       body > main {
         width: 100vw;
-        height: calc(100vh - var(--header-height));
+        min-height: calc(100vh - var(--header-height));
 
       }
 
