@@ -124,7 +124,7 @@ if __name__ != "__main__":
             FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/CSS/styles.css")
 
             # footer.js
-            FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/JS/footer.js")
+            FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/JS/footer.js", 'export default function footer(){\n\treturn "The X";\n}')
 
             Log.line()
 
