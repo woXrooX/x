@@ -121,7 +121,6 @@ if __name__ != "__main__":
 from main import CONF, PROJECT_CSS
 
 from python.tools.tools import pageGuard
-from python.tools.response import response
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
