@@ -2,6 +2,7 @@ from main import app, request, render_template, session
 from python.modules.tools import pageGuard, updateSessionUser
 from python.modules.response import response
 from python.modules.Globals import Globals
+from python.modules.MySQL import MySQL
 
 #################################################### Demo
 @app.route("/eMailConfirmation", methods=["GET", "POST"])
@@ -48,7 +49,7 @@ def eMailConfirmation():
                     ("UPDATE users SET eMail_verification_attempts_count=%s, type=%s  WHERE id=%s"),
                     (
                         (session["user"]["eMail_verification_attempts_count"] + 1),
-                        USER_TYPES["authorized"]["id"],
+                        Globals.USER_TYPES["authorized"]["id"],
                         session["user"]["id"],
                     )
                 )

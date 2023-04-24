@@ -21,7 +21,7 @@ def logOut():
 
         # Reset Site Language To The Default
         global langCode
-        langCode = CONF["default"]["language"]
+        langCode = Globals.CONF["default"]["language"]
 
         # Redirect To Home
         return response(

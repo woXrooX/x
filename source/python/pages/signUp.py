@@ -30,7 +30,7 @@ def signUp():
             return response(type="error", message="eMailEmpty", field="eMail")
 
         # eMailInvalid
-        if not re.match(CONF["eMail"]["regEx"], request.form["eMail"]):
+        if not re.match(Globals.CONF["eMail"]["regEx"], request.form["eMail"]):
             return response(type="error", message="eMailInvalid", field="eMail")
 
         ######## password
@@ -39,15 +39,15 @@ def signUp():
             return response(type="error", message="passwordEmpty", field="password")
 
         # passwordMinLength
-        if len(request.form["password"]) < CONF["password"]["min_length"]:
+        if len(request.form["password"]) < Globals.CONF["password"]["min_length"]:
             return response(type="error", message="passwordMinLength", field="password")
 
         # passwordMaxLength
-        if len(request.form["password"]) > CONF["password"]["max_length"]:
+        if len(request.form["password"]) > Globals.CONF["password"]["max_length"]:
             return response(type="error", message="passwordMaxLength", field="password")
 
         # passwordAllowedChars
-        if not re.match(CONF["password"]["regEx"], request.form["password"]):
+        if not re.match(Globals.CONF["password"]["regEx"], request.form["password"]):
             return response(type="error", message="passwordAllowedChars", field="password")
 
         ######## eMail and Password In Use

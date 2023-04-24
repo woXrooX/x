@@ -22,16 +22,16 @@ if __name__ != "__main__":
             if not content: return False
 
             # Check If Subject Is Passed
-            if not subject: subject = Globals.CONFCONF["eMail"]["subject"]
+            if not subject: subject = Globals.CONF["eMail"]["subject"]
 
             import sendgrid
             from sendgrid.helpers.mail import Mail, Email, To, Content
 
             # Load The API Key
-            sg = sendgrid.SendGridAPIClient(api_key=Globals.CONFCONF["eMail"]["SendGrid"]["api_key"])
+            sg = sendgrid.SendGridAPIClient(api_key=Globals.CONF["eMail"]["SendGrid"]["api_key"])
 
             # From Email
-            from_email = f'{from_email}@{Globals.CONFCONF["eMail"]["SendGrid"]["domain"]}'
+            from_email = f'{from_email}@{Globals.CONF["eMail"]["SendGrid"]["domain"]}'
 
             message = Mail(
                 from_email = from_email,
@@ -42,7 +42,7 @@ if __name__ != "__main__":
 
             try:
                 # Load The API Key
-                sg = sendgrid.SendGridAPIClient(api_key=Globals.CONFCONF["eMail"]["SendGrid"]["api_key"])
+                sg = sendgrid.SendGridAPIClient(api_key=Globals.CONF["eMail"]["SendGrid"]["api_key"])
 
                 # Send A Send Request :)
                 response = sg.send(message)
