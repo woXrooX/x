@@ -1,8 +1,8 @@
-from main import app, request, render_template
-from main import MySQL, session
+from main import app, request, render_template, session
 from python.modules.tools import pageGuard, publicSessionUser
 from python.modules.response import response
 from python.modules.Globals import Globals
+from python.modules.MySQL import MySQL
 
 
 #################################################### Log In

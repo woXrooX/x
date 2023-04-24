@@ -1,6 +1,5 @@
 import json
-from main import app, request, make_response
-from main import session
+from main import app, request, make_response, session
 from python.modules.tools import publicSessionUser
 from python.modules.Globals import Globals
 

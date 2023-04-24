@@ -1,13 +1,13 @@
 import re, random
-
 from main import app, request, render_template, session
-from main import MySQL
+
 # from python.modules.GMail import GMail
 from python.modules.SendGrid import SendGrid
 from python.modules.FileSystem import FileSystem
 from python.modules.response import response
 from python.modules.tools import pageGuard, publicSessionUser
 from python.modules.Globals import Globals
+from python.modules.MySQL import MySQL
 
 
 
