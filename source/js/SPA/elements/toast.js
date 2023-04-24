@@ -93,7 +93,7 @@ export default class Toast extends HTMLElement{
         }
 
         toast > main > type{
-          font-size: 20px;
+          font-size: 1rem;
           color: var(--color-text-primary);
           text-transform: uppercase;
           font-weight: bold;
@@ -102,6 +102,7 @@ export default class Toast extends HTMLElement{
 
         toast > main > content{
           color: var(--color-text-secondary);
+          font-size: 0.8rem;
           grid-area:content;
         }
 
