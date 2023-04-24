@@ -4,8 +4,8 @@ import json
 # Home Made
 from main import CONF, PROJECT_CSS, MySQL, session
 
-from python.tools.tools import pageGuard, publicSessionUser
-from python.tools.response import response
+from python.modules.tools import pageGuard, publicSessionUser
+from python.modules.response import response
 
 
 #################################################### Log In

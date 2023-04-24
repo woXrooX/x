@@ -4,7 +4,7 @@ from main import app, request, render_template
 # Home Made
 from main import CONF, PROJECT_CSS
 
-from python.tools.tools import pageGuard
+from python.modules.tools import pageGuard
 
 #################################################### App Is Down
 @app.route("/appIsDown", methods=["GET"])

@@ -2,7 +2,7 @@
 # https://docs.sendgrid.com/api-reference/how-to-use-the-sendgrid-v3-api/authentication
 # pip install sendgrid
 
-# from python.tools.SendGrid import SendGrid
+# from python.modules.SendGrid import SendGrid
 # SendGrid.send("woXrooX@gmail.com", "My Subject", "My Content")
 
 if __name__ != "__main__":

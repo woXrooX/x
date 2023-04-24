@@ -4,7 +4,7 @@ if __name__ != "__main__":
     import json
     import yaml
     from main import X_RUNNING_FROM, PROJECT_RUNNING_FROM, session
-    from python.tools.Logger import Log
+    from python.modules.Logger import Log
 
 
     CONF = {}
@@ -120,7 +120,7 @@ if __name__ != "__main__":
 
 from main import CONF, PROJECT_CSS
 
-from python.tools.tools import pageGuard
+from python.modules.tools import pageGuard
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])

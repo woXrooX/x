@@ -15,22 +15,22 @@ X_RUNNING_FROM = pathlib.Path(__file__).parent.absolute()
 PROJECT_RUNNING_FROM = os.path.abspath(os.path.join(X_RUNNING_FROM, '../..'))
 
 #################################################### Draw "The X"
-from python.tools.Logger import Log
+from python.modules.Logger import Log
 Log.clear()
 Log.brand()
 
 #################################################### Initializing File Structure
-from python.tools.FileSystem import FileSystem
+from python.modules.FileSystem import FileSystem
 FileSystem.init()
 
 #################################################### Imprting Global Data Holders
-from python.tools.FileSystem import CONF, LANG_DICT, PROJECT, PROJECT_CSS, PROJECT_SVG, PROJECT_LANG_DICT, PUBLIC_CONF
+from python.modules.FileSystem import CONF, LANG_DICT, PROJECT, PROJECT_CSS, PROJECT_SVG, PROJECT_LANG_DICT, PUBLIC_CONF
 
 #################################################### URL
 URL = f'{CONF["URL"]["prefix"]}://{CONF["URL"]["domain_name"]}:{CONF["URL"]["port"]}/'
 
 #################################################### GLOBAL MySQL
-from python.tools.MySQL import MySQL
+from python.modules.MySQL import MySQL
 # If Database Enabled Then Set It Up
 if "database" in CONF and CONF["database"]["enabled"] == True:
     MySQL.setUp(

@@ -5,12 +5,12 @@ from main import app, request, render_template, session
 # Home Made
 from main import CONF, PROJECT_CSS, MySQL, USER_TYPES
 
-# from python.tools.GMail import GMail
-from python.tools.SendGrid import SendGrid
+# from python.modules.GMail import GMail
+from python.modules.SendGrid import SendGrid
 
-from python.tools.FileSystem import FileSystem
-from python.tools.response import response
-from python.tools.tools import pageGuard, publicSessionUser
+from python.modules.FileSystem import FileSystem
+from python.modules.response import response
+from python.modules.tools import pageGuard, publicSessionUser
 
 
 

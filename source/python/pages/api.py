@@ -4,7 +4,7 @@ from main import app, request, make_response
 
 from main import CONF, PROJECT_SVG, LANG_DICT, PUBLIC_CONF, session, USER_TYPES
 
-from python.tools.tools import publicSessionUser
+from python.modules.tools import publicSessionUser
 
 
 

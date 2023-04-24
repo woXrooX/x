@@ -3,7 +3,7 @@ if __name__ != "__main__":
 
     from main import PUBLIC_CONF
 
-    from python.tools.tools import publicSessionUser
+    from python.modules.tools import publicSessionUser
 
     import json
 

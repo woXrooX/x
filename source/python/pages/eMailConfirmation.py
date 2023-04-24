@@ -5,8 +5,8 @@ import json
 from main import CONF, PROJECT_CSS, USER_TYPES, MySQL
 
 
-from python.tools.tools import pageGuard, updateSessionUser
-from python.tools.response import response
+from python.modules.tools import pageGuard, updateSessionUser
+from python.modules.response import response
 
 #################################################### Demo
 @app.route("/eMailConfirmation", methods=["GET", "POST"])
