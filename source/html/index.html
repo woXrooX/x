@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{CONF["default"]["language"]}}" dir="ltr">
+<html lang="{{Globals.CONF["default"]["language"]}}" dir="ltr">
 
   {% include 'head.html' %}
 
@@ -9,7 +9,7 @@
 
     <toasts></toasts>
 
-    {% if CONF["menu"]["enabled"] == True  %}
+    {% if Globals.CONF["menu"]["enabled"] == True  %}
       {% include 'menu.html' %}
     {% endif %}
 

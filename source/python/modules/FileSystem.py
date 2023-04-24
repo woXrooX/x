@@ -3,19 +3,9 @@ if __name__ != "__main__":
     import shutil
     import json
     import yaml
-    from main import X_RUNNING_FROM, PROJECT_RUNNING_FROM, session
+    from main import session
     from python.modules.Logger import Log
-
-
-    CONF = {}
-    LANG_DICT = {}
-
-    PROJECT = {}
-    PROJECT_CSS = None
-    PROJECT_SVG = {}
-    PROJECT_LANG_DICT = {}
-
-    PUBLIC_CONF = {}
+    from python.modules.Globals import Globals
 
     class FileSystem:
         ####### Helpers
@@ -84,24 +74,24 @@ if __name__ != "__main__":
             Log.center("Creating Folders", '-')
 
             ## x/source/assets
-            FileSystem.createFolder(f'{X_RUNNING_FROM}/assets/')
+            FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/assets/')
 
             ## CSS
-            FileSystem.createFolder(f'{PROJECT_RUNNING_FROM}/CSS/')
+            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/CSS/')
 
             ## fonts
-            FileSystem.createFolder(f'{PROJECT_RUNNING_FROM}/fonts/')
+            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/fonts/')
 
             ## JS
-            FileSystem.createFolder(f'{PROJECT_RUNNING_FROM}/JS/')
+            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/JS/')
 
             ## pages
-            FileSystem.createFolder(f'{PROJECT_RUNNING_FROM}/pages/')
-            FileSystem.createFolder(f'{PROJECT_RUNNING_FROM}/pages/back')
-            FileSystem.createFolder(f'{PROJECT_RUNNING_FROM}/pages/front')
+            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/pages/')
+            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/pages/back')
+            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/pages/front')
 
             ## SVG
-            FileSystem.createFolder(f'{PROJECT_RUNNING_FROM}/SVG/')
+            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/SVG/')
 
             Log.line()
 
@@ -109,16 +99,16 @@ if __name__ != "__main__":
             Log.center("Creating Files", '-')
 
             # project.json
-            FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/project.json", "{}")
+            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/project.json", "{}")
 
             # languageDictionary.json
-            FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/languageDictionary.json", '{"theX": {"en": "The X"}}')
+            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", '{"theX": {"en": "The X"}}')
 
             # pages/back/home.py
-            FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/pages/back/home.py",
+            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py",
 '''from main import app, request, render_template
 
-from main import CONF, PROJECT_CSS
+from main import Globals.CONF, Globals.PROJECT_CSS
 
 from python.modules.tools import pageGuard
 
@@ -131,7 +121,7 @@ def home():
             )
 
             # pages/front/home.js
-            FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/pages/front/home.js",
+            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/front/home.js",
 '''export const TITLE = window.Lang.use("home");
 
 export default function content(){
@@ -141,10 +131,10 @@ export default function content(){
             )
 
             # styles.css
-            FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/CSS/styles.css")
+            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css")
 
             # footer.js
-            FileSystem.createFile(f"{PROJECT_RUNNING_FROM}/JS/footer.js", 'export default function footer(){\n\treturn "The X";\n}')
+            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/footer.js", 'export default function footer(){\n\treturn "The X";\n}')
 
             Log.line()
 
@@ -205,7 +195,7 @@ export default function content(){
         # Copy Pages (Back-End)
         @staticmethod
         def copyPagesBackEnd():
-            if FileSystem.copyFiles(f"{PROJECT_RUNNING_FROM}/pages/back", f"{str(X_RUNNING_FROM)}/python/pages") is True:
+            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{str(Globals.X_RUNNING_FROM)}/python/pages") is True:
                 Log.success("Pages Are Copied (Back-End)")
 
             else:
@@ -215,7 +205,7 @@ export default function content(){
         # Copy Pages (Back-End)
         @staticmethod
         def copyPagesFrontEnd():
-            if FileSystem.copyFiles(f"{PROJECT_RUNNING_FROM}/pages/front", f"{str(X_RUNNING_FROM)}/js/pages") is True:
+            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{str(Globals.X_RUNNING_FROM)}/js/pages") is True:
                 Log.success("Pages Are Copied (Front-End)")
 
             else:
@@ -225,7 +215,7 @@ export default function content(){
         # Copy JavaScripts
         @staticmethod
         def copyJavaScripts():
-            if FileSystem.copyFiles(f"{PROJECT_RUNNING_FROM}/JS", f"{str(X_RUNNING_FROM)}/js/modules") is True:
+            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{str(Globals.X_RUNNING_FROM)}/js/modules") is True:
                 Log.success("JavaScripts Are Copied")
 
             else:
@@ -235,7 +225,7 @@ export default function content(){
         # Copy Fonts
         @staticmethod
         def copyFonts():
-            if FileSystem.copyFiles(f"{PROJECT_RUNNING_FROM}/fonts", f"{str(X_RUNNING_FROM)}/fonts") is True:
+            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{str(Globals.X_RUNNING_FROM)}/fonts") is True:
                 Log.success("Fonts Are Copied")
 
             else: Log.error("Could Not Copy The Fonts")
@@ -245,11 +235,11 @@ export default function content(){
         # Configurations - config.yaml
         @staticmethod
         def loadDefaultConfigurations():
-            global CONF
+            # global CONF
 
             try:
-                with open(f"{X_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
-                    CONF = yaml.safe_load(file)
+                with open(f"{Globals.X_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
+                    Globals.CONF = yaml.safe_load(file)
 
                 Log.success("Loaded: config.yaml")
 
@@ -260,11 +250,9 @@ export default function content(){
         # Language Dictionary
         @staticmethod
         def loadInternalLanguageDictionary():
-            global LANG_DICT
-
             try:
-                with open(f'{X_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") as file:
-                    LANG_DICT = json.load(file)
+                with open(f'{Globals.X_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") as file:
+                    Globals.LANG_DICT = json.load(file)
 
                 Log.success("Internal languageDictionary.json Is Loaded")
 
@@ -275,11 +263,9 @@ export default function content(){
         # Project Configurations - project.json
         @staticmethod
         def loadProjectConfigurations():
-            global PROJECT
-
             try:
-                with open(f"{PROJECT_RUNNING_FROM}/project.json", 'r') as file:
-                    PROJECT = json.load(file)
+                with open(f"{Globals.PROJECT_RUNNING_FROM}/project.json", 'r') as file:
+                    Globals.PROJECT = json.load(file)
 
                 Log.success("Loaded: project.json")
 
@@ -290,11 +276,9 @@ export default function content(){
         # Load External CSS
         @staticmethod
         def loadExternalCSS():
-            global PROJECT_CSS
-
             try:
-                with open(f'{PROJECT_RUNNING_FROM}/CSS/styles.css', "r") as css:
-                    PROJECT_CSS = css.read()
+                with open(f'{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css', "r") as css:
+                    Globals.PROJECT_CSS = css.read()
 
                 Log.success("External CSS Files Are Loaded")
 
@@ -304,15 +288,13 @@ export default function content(){
         # Load External SVG
         @staticmethod
         def loadExternalSVG():
-            global PROJECT_SVG
-
-            for file in os.listdir(f'{PROJECT_RUNNING_FROM}/SVG'):
+            for file in os.listdir(f'{Globals.PROJECT_RUNNING_FROM}/SVG'):
                 # Check If File Is A SVG File
                 if not file.endswith(".svg"): continue
 
                 try:
-                    with open(f'{PROJECT_RUNNING_FROM}/SVG/{file}', "r") as svg:
-                        PROJECT_SVG[os.path.splitext(file)[0]] = svg.read()
+                    with open(f'{Globals.PROJECT_RUNNING_FROM}/SVG/{file}', "r") as svg:
+                        Globals.PROJECT_SVG[os.path.splitext(file)[0]] = svg.read()
 
                     Log.success(f"SVG Loaded: {file}")
 
@@ -321,11 +303,9 @@ export default function content(){
 
         @staticmethod
         def loadExternalLanguageDictionary():
-            global PROJECT_LANG_DICT
-
             try:
-                with open(f"{PROJECT_RUNNING_FROM}/languageDictionary.json", 'r') as file:
-                    PROJECT_LANG_DICT = json.load(file)
+                with open(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", 'r') as file:
+                    Globals.PROJECT_LANG_DICT = json.load(file)
 
                 Log.success("External languageDictionary.json Is Loaded")
 
@@ -338,49 +318,44 @@ export default function content(){
         # Merge Project Dependent Configurations To Default Configurations. Override Defaults
         @staticmethod
         def mergeConfigurations():
-            global CONF, PROJECT, PUBLIC_CONF
-
             #### Merge
             # Database
-            if "database" in PROJECT:
-                if "database" in CONF: CONF["database"].update(PROJECT["database"])
-                else: CONF["database"] = PROJECT["database"]
+            if "database" in Globals.PROJECT:
+                if "database" in Globals.CONF: Globals.CONF["database"].update(Globals.PROJECT["database"])
+                else: Globals.CONF["database"] = Globals.PROJECT["database"]
 
             # eMail
-            if "eMail" in PROJECT:
-                CONF["eMail"].update(PROJECT["eMail"])
+            if "eMail" in Globals.PROJECT:
+                Globals.CONF["eMail"].update(Globals.PROJECT["eMail"])
 
             # Defaults
-            if "default" in PROJECT:
-                if "default" in CONF: CONF["default"].update(PROJECT["default"])
-                else: CONF["default"] = PROJECT["default"]
+            if "default" in Globals.PROJECT:
+                if "default" in Globals.CONF: Globals.CONF["default"].update(Globals.PROJECT["default"])
+                else: Globals.CONF["default"] = Globals.PROJECT["default"]
 
             # Menu
-            if "menu" in PROJECT:
-                CONF["menu"] = PROJECT["menu"]
+            if "menu" in Globals.PROJECT:
+                Globals.CONF["menu"] = Globals.PROJECT["menu"]
 
             # Pages
-            if "pages" in PROJECT:
-                CONF["pages"] = PROJECT["pages"]
+            if "pages" in Globals.PROJECT:
+                Globals.CONF["pages"] = Globals.PROJECT["pages"]
 
             # OpenAI
-            if "OpenAI" in PROJECT:
-                CONF["OpenAI"] = PROJECT["OpenAI"]
+            if "OpenAI" in Globals.PROJECT:
+                Globals.CONF["OpenAI"] = Globals.PROJECT["OpenAI"]
 
             #### Public Configurations
-            PUBLIC_CONF = {
-                "default": CONF["default"],
-                "menu": CONF["menu"],
-                "pages": CONF["pages"],
-                "username": CONF["username"],
-                "password": CONF["password"],
-                "phoneNumber": CONF["phoneNumber"],
-
-            }
+            Globals.PUBLIC_CONF["default"] = Globals.CONF["default"]
+            Globals.PUBLIC_CONF["menu"] = Globals.CONF["menu"]
+            Globals.PUBLIC_CONF["pages"] = Globals.CONF["pages"]
+            Globals.PUBLIC_CONF["username"] = Globals.CONF["username"]
+            Globals.PUBLIC_CONF["password"] = Globals.CONF["password"]
+            Globals.PUBLIC_CONF["phoneNumber"] = Globals.CONF["phoneNumber"]
 
         def mergeLanguageDictionaries():
             # Override The LANG_DICT w/ The PROJECT_LANG_DICT
-            LANG_DICT.update(PROJECT_LANG_DICT)
+            Globals.LANG_DICT.update(Globals.PROJECT_LANG_DICT)
 
 
         ############## User
@@ -402,7 +377,7 @@ export default function content(){
 
             # Must Match With The Path In .gitignore
             # source/users/id/...
-            path = f'{X_RUNNING_FROM}/users/{ID}/'
+            path = f'{Globals.X_RUNNING_FROM}/users/{ID}/'
 
             # Try To Create User Folders
             try:

@@ -1,5 +1,5 @@
 <head>
-  <meta charset="{{CONF["default"]["charset"]}}">
+  <meta charset="{{Globals.CONF["default"]["charset"]}}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <meta name="color-schema" content="dark light">
@@ -7,7 +7,7 @@
 
   <meta name="description" content="{{TITLE}}">
 
-  <title>{{CONF["default"]["title"]}}</title>
+  <title>{{Globals.CONF["default"]["title"]}}</title>
 
   <link rel="apple-touch-icon"        sizes="180x180"   href="images/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png"   sizes="32x32"     href="images/favicon/favicon-32x32.png">
@@ -76,6 +76,6 @@
 
     }
   </style>
-  <style media="all" for="PROJECT_CSS">{{PROJECT_CSS|safe}}</style>
+  <style media="all" for="PROJECT_CSS">{{Globals.PROJECT_CSS|safe}}</style>
 
 </head>

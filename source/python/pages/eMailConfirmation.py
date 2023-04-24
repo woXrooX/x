@@ -1,12 +1,7 @@
 from main import app, request, render_template, session
-import json
-
-# Home Made
-from main import CONF, PROJECT_CSS, USER_TYPES, MySQL
-
-
 from python.modules.tools import pageGuard, updateSessionUser
 from python.modules.response import response
+from python.modules.Globals import Globals
 
 #################################################### Demo
 @app.route("/eMailConfirmation", methods=["GET", "POST"])

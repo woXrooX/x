@@ -1,9 +1,5 @@
-# Flask
 from main import app, render_template
-
-# Home Made
-from main import CONF, PROJECT_CSS
-
+from python.modules.Globals import Globals
 
 #################################################### none | 404 | Page Not Found
 @app.errorhandler(404)

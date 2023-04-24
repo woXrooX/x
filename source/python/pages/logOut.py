@@ -1,12 +1,7 @@
-# Flask
 from main import app, request, render_template, session
-import json
-
-# Home Made
-from main import CONF, PROJECT_CSS
-
 from python.modules.tools import pageGuard
 from python.modules.response import response
+from python.modules.Globals import Globals
 
 
 #################################################### Log Out

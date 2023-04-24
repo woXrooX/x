@@ -1,10 +1,8 @@
 import json
-
 from main import app, request, make_response
-
-from main import CONF, PROJECT_SVG, LANG_DICT, PUBLIC_CONF, session, USER_TYPES
-
+from main import session
 from python.modules.tools import publicSessionUser
+from python.modules.Globals import Globals
 
 
 
@@ -15,10 +13,10 @@ def api():
     if request.get_json()["for"] == "initialData":
         return make_response(
             {
-                "CONF": PUBLIC_CONF,
+                "CONF": Globals.PUBLIC_CONF,
                 "session": {"user": publicSessionUser()} if "user" in session else {},
-                "LANG_CODE": CONF["default"]["language"],
-                "LANG_DICT": LANG_DICT,
-                "USER_TYPES": USER_TYPES,
-                "PROJECT_SVG": PROJECT_SVG
+                "LANG_CODE": Globals.CONF["default"]["language"],
+                "LANG_DICT": Globals.LANG_DICT,
+                "USER_TYPES": Globals.USER_TYPES,
+                "PROJECT_SVG": Globals.PROJECT_SVG
             }, 200)

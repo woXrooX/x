@@ -6,14 +6,14 @@
 # SendGrid.send("woXrooX@gmail.com", "My Subject", "My Content")
 
 if __name__ != "__main__":
-    from main import CONF
+    from python.modules.Globals import Globals
 
     class SendGrid:
 
         @staticmethod
         def send(from_email, to_email, content, subject = ""):
             # Check If SendGrid Is In CONF["eMail"]
-            if "SendGrid" not in CONF["eMail"]: return False
+            if "SendGrid" not in Globals.CONF["eMail"]: return False
 
             # Check If to_email Is Valid
             if not to_email: return False
@@ -22,16 +22,16 @@ if __name__ != "__main__":
             if not content: return False
 
             # Check If Subject Is Passed
-            if not subject: subject = CONF["eMail"]["subject"]
+            if not subject: subject = Globals.CONFCONF["eMail"]["subject"]
 
             import sendgrid
             from sendgrid.helpers.mail import Mail, Email, To, Content
 
             # Load The API Key
-            sg = sendgrid.SendGridAPIClient(api_key=CONF["eMail"]["SendGrid"]["api_key"])
+            sg = sendgrid.SendGridAPIClient(api_key=Globals.CONFCONF["eMail"]["SendGrid"]["api_key"])
 
             # From Email
-            from_email = f'{from_email}@{CONF["eMail"]["SendGrid"]["domain"]}'
+            from_email = f'{from_email}@{Globals.CONFCONF["eMail"]["SendGrid"]["domain"]}'
 
             message = Mail(
                 from_email = from_email,
@@ -42,7 +42,7 @@ if __name__ != "__main__":
 
             try:
                 # Load The API Key
-                sg = sendgrid.SendGridAPIClient(api_key=CONF["eMail"]["SendGrid"]["api_key"])
+                sg = sendgrid.SendGridAPIClient(api_key=Globals.CONFCONF["eMail"]["SendGrid"]["api_key"])
 
                 # Send A Send Request :)
                 response = sg.send(message)

@@ -1,11 +1,11 @@
 <header>
 
-{% if CONF["menu"]["enabled"] == True  %}
+{% if Globals.CONF["menu"]["enabled"] == True  %}
   <x-icon color="#ffffff" for="menu">menu</x-icon>
 {% else %}
   <span></span>
 {% endif %}
 
-  <span>{{CONF["default"]["title"]}}</span>
+  <span>{{Globals.CONF["default"]["title"]}}</span>
 
 </header>

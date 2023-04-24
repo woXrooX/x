@@ -1,16 +1,13 @@
-import re, json, random
+import re, random
 
 from main import app, request, render_template, session
-
-# Home Made
-from main import CONF, PROJECT_CSS, MySQL, USER_TYPES
-
+from main import MySQL
 # from python.modules.GMail import GMail
 from python.modules.SendGrid import SendGrid
-
 from python.modules.FileSystem import FileSystem
 from python.modules.response import response
 from python.modules.tools import pageGuard, publicSessionUser
+from python.modules.Globals import Globals
 
 
 
@@ -89,7 +86,7 @@ def signUp():
                     request.form["password"],
                     request.form["eMail"],
                     eMailVerificationCode,
-                    USER_TYPES["unauthorized"]["id"]
+                    Globals.USER_TYPES["unauthorized"]["id"]
                 )
             )
             db.commit()

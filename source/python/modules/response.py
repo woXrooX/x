@@ -1,9 +1,7 @@
 if __name__ != "__main__":
     from main import make_response
-
-    from main import PUBLIC_CONF
-
     from python.modules.tools import publicSessionUser
+    from python.modules.Globals import Globals
 
     import json
 

@@ -1,6 +1,5 @@
-from main import X_RUNNING_FROM
-
 import os
+from python.modules.Globals import Globals
 
 """
 The __all__ variable is a special variable in
@@ -17,7 +16,7 @@ the module can define a variable named __all__ that lists the names that should 
 __all__ = []
 
 # Loop Through All Files And Detect Python Files Exclude And __init_.py
-for file in os.listdir(f"{X_RUNNING_FROM}/python/pages"):
+for file in os.listdir(f"{Globals.X_RUNNING_FROM}/python/pages"):
 
     # Convert A File System Encoded Byte String Into A Unicode String
     filename = os.fsdecode(file)

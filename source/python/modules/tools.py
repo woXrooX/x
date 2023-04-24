@@ -1,8 +1,8 @@
 from functools import wraps # For pageGuard() Wrapper
 import json
 from flask import redirect, render_template, request, url_for
-
-from main import CONF, session, USER_TYPES, MySQL
+from main import session, MySQL
+from python.modules.Globals import Globals
 
 ######################################### Page Guard
 """
@@ -55,7 +55,7 @@ def pageGuard(page):
                 #     }), 200)
 
                 ### App Is Down
-                if "appIsDown" in CONF["default"]:
+                if "appIsDown" in Globals.CONF["default"]:
                     return response(type="warning", message="appIsDown")
 
                 ### "application/json"
@@ -88,33 +88,33 @@ def pageGuard(page):
             ####### GET
 
             ####### App Is Down
-            if "appIsDown" in CONF["default"]:
+            if "appIsDown" in Globals.CONF["default"]:
                 return render_template("index.html", **globals())
 
 
             # Check If Page Exists
-            if page not in CONF["pages"]: return redirect(url_for("home"))
+            if page not in Globals.CONF["pages"]: return redirect(url_for("home"))
 
 
             # Is Page Enabled
-            if CONF["pages"][page]["enabled"] == False: return redirect(url_for("home"))
+            if Globals.CONF["pages"][page]["enabled"] == False: return redirect(url_for("home"))
 
 
             # Everyone
-            if "everyone" in CONF["pages"][page]["allowed"]: return func(*args, **kwargs)
+            if "everyone" in Globals.CONF["pages"][page]["allowed"]: return func(*args, **kwargs)
 
 
             # Session Dependent Checks
             if "user" in session:
                 # Root
-                if session["user"]["type"] == USER_TYPES["root"]["id"]: return func(*args, **kwargs)
+                if session["user"]["type"] == Globals.USER_TYPES["root"]["id"]: return func(*args, **kwargs)
 
 
                 # If User Type Matches With One Of The Page's Allowed User Types
-                for user_type in USER_TYPES:
+                for user_type in Globals.USER_TYPES:
                     if(
-                        session["user"]["type"] == USER_TYPES[user_type]["id"] and
-                        user_type in CONF["pages"][page]["allowed"]
+                        session["user"]["type"] == Globals.USER_TYPES[user_type]["id"] and
+                        user_type in Globals.CONF["pages"][page]["allowed"]
                     ):
                         return func(*args, **kwargs)
 
@@ -123,7 +123,7 @@ def pageGuard(page):
             if "user" not in session:
 
                 # Unauthenticated User
-                if "unauthenticated" in CONF["pages"][page]["allowed"]: return func(*args, **kwargs)
+                if "unauthenticated" in Globals.CONF["pages"][page]["allowed"]: return func(*args, **kwargs)
 
 
             # Failed The Guard Checks
