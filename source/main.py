@@ -1,21 +1,23 @@
-#################################################### IMPORTS
+#################################################### Flask Imports
 from flask import Flask, render_template, request, session, redirect, url_for, make_response
+
 
 #################################################### Draw "The X"
 from python.modules.Logger import Log
 Log.clear()
 Log.brand()
 
-#################################################### Initializing File Structure
-from python.modules.Globals import Globals
-from python.modules.FileSystem import FileSystem
 
+#################################################### Globals
+from python.modules.Globals import Globals
+
+
+#################################################### Initializing File Structure
+from python.modules.FileSystem import FileSystem
 FileSystem.init()
 
-#################################################### Imprting Global Data Holders
-# from python.modules.FileSystem import CONF, LANG_DICT, PROJECT, PROJECT_CSS, PROJECT_SVG, PROJECT_LANG_DICT, PUBLIC_CONF
 
-#################################################### GLOBAL MySQL
+#################################################### Setting Up MySQL
 from python.modules.MySQL import MySQL
 # If Database Enabled Then Set It Up
 if "database" in Globals.CONF and Globals.CONF["database"]["enabled"] == True:
@@ -27,6 +29,7 @@ if "database" in Globals.CONF and Globals.CONF["database"]["enabled"] == True:
         Globals.CONF["database"]["charset"],
         Globals.CONF["database"]["collate"]
     )
+
 
 #################################################### GLOBAL user_types
 if "database" in Globals.CONF and Globals.CONF["database"]["enabled"] == True:
