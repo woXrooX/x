@@ -107,10 +107,9 @@ if __name__ != "__main__":
             # pages/back/home.py
             FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py",
 '''from main import app, request, render_template
-
-from main import Globals.CONF, Globals.PROJECT_CSS
-
 from python.modules.tools import pageGuard
+from python.modules.response import response
+from python.modules.Globals import Globals
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
