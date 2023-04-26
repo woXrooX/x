@@ -22,17 +22,17 @@ from python.modules.MySQL import MySQL
 # If Database Enabled Then Set It Up
 if "database" in Globals.CONF and Globals.CONF["database"]["enabled"] == True:
     MySQL.setUp(
-        Globals.CONF["database"]["user"],
-        Globals.CONF["database"]["password"],
-        Globals.CONF["database"]["host"],
-        Globals.CONF["database"]["name"],
-        Globals.CONF["database"]["charset"],
-        Globals.CONF["database"]["collate"]
+        Globals.CONF["database"]["MySQL"]["user"],
+        Globals.CONF["database"]["MySQL"]["password"],
+        Globals.CONF["database"]["MySQL"]["host"],
+        Globals.CONF["database"]["MySQL"]["name"],
+        Globals.CONF["database"]["MySQL"]["charset"],
+        Globals.CONF["database"]["MySQL"]["collate"]
     )
 
 
 #################################################### GLOBAL user_types
-if "database" in Globals.CONF and Globals.CONF["database"]["enabled"] == True:
+if "database" in Globals.CONF and Globals.CONF["database"]["MySQL"]["enabled"] == True:
     with MySQL(False) as db:
         db.execute("SELECT * FROM user_types")
         dataFetched = db.fetchAll()
