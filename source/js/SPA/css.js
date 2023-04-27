@@ -201,8 +201,8 @@ export default class CSS{
     CSS.values.color.main = `
       hsla(
         ${CSS.values.color.brand.hue}deg,
-        ${CSS.values.color.brand.saturation / 2}%,
-        ${CSS.values.color.brand.lightness / 2}%, 1);
+        ${CSS.values.color.brand.saturation}%,
+        ${CSS.values.color.brand.lightness}%, 1);
     `;
 
     CSS.values.color.text = {
@@ -235,8 +235,8 @@ export default class CSS{
     CSS.values.color.main = `
       hsla(
         ${CSS.values.color.brand.hue}deg,
-        ${CSS.values.color.brand.saturation / 2}%,
-        ${CSS.values.color.brand.lightness / 1.2}%, 1);
+        ${CSS.values.color.brand.saturation}%,
+        ${CSS.values.color.brand.lightness}%, 1);
     `;
 
 
