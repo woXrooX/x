@@ -33,11 +33,28 @@ if __name__ != "__main__":
             # From Email
             from_email = f'{from_email}@{Globals.CONF["eMail"]["SendGrid"]["domain"]}'
 
+            email_html = f"""
+                <!DOCTYPE html>
+                <html>
+                  <head>
+                    <meta charset="utf-8">
+                    <title>{Globals.CONF["default"]["title"]}</title>
+                  </head>
+                  <body style="width:70%; padding:10px;">
+                    <header style="text-aligment:center; color: white; padding:5px; background-color:hsl({Globals.CONF["default"]["color"]["brand"]["hue"]}deg, {Globals.CONF["default"]["color"]["brand"]["saturation"]}%, {Globals.CONF["default"]["color"]["brand"]["lightness"]}%); width:100%;">
+                      {Globals.CONF["default"]["title"]}
+                    </header>
+                    <main>{content}</main>
+                    <footer></footer>
+                  </body>
+                </html>
+            """
+
             message = Mail(
                 from_email = from_email,
                 to_emails = to_email,
                 subject = subject,
-                html_content = str(content)
+                html_content = str(email_html)
             )
 
             try:
