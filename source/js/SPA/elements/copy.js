@@ -39,20 +39,54 @@ export default class Copy extends HTMLElement{
     // Clone And Append Template
     this.shadow.appendChild(Copy.#template.content.cloneNode(true));
 
-    this.onclick = ()=>{
-      if(!!this.selector === false) return;
+    ClickEvents: {
 
-      // Select The Element
-      const element = document.querySelector(this.selector);
+      this.copyElement = this.shadow.querySelector("copy");
+      this.isClicked = false;
 
-      if(!!element === false) return;
+      this.onclick = ()=>{
+        // Check If Selector Passed As Argument
+        if(!!this.selector === false) return;
 
-      // Copy The Value
-      navigator.clipboard.writeText(element.innerText);
+        // Select The Element
+        const element = document.querySelector(this.selector);
 
-      window.Toast.new("info", "Copied");
+        // Check If Corresponding Element To The Selector Exists
+        if(!!element === false) return;
 
-    };
+        // Check If Already Clicked
+        if(!!this.isClicked === true) return;
+
+        // State: Clicked
+        this.isClicked = true;
+
+        // Copy The Value
+        navigator.clipboard.writeText(element.innerText);
+
+        // Disable The Copy Button
+        this.copyElement.setAttribute("disabled", "");
+
+        // Change The Copy Icon To Done
+        this.copyElement.innerHTML = "<x-icon color='var(--color-success)'>done</x-icon>";
+
+        // Show Toast
+        window.Toast.new("info", "Copied");
+
+        // Restore The Un-Clicked State
+        setTimeout(()=>{
+          // Enable The Copy Button
+          this.copyElement.removeAttribute("disabled");
+
+          // Back To Copy Icon
+          this.copyElement.innerHTML = "<x-icon>copyContent</x-icon>";
+
+          // State: Un-Clicked
+          this.isClicked = false;
+
+        }, 5000);
+
+      };
+    }
 
   }
 
