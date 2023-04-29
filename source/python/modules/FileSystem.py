@@ -402,7 +402,7 @@ export default function content(){
         @staticmethod
         def deleteUserFiles(id):
             try:
-                shutil.rmtree(f'{X_RUNNING_FROM}/users/{id}/')
+                shutil.rmtree(f'{Globals.X_RUNNING_FROM}/users/{id}/')
 
                 Log.success(f"User Files Deleted. User ID: {id}")
 
