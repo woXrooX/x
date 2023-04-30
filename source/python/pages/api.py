@@ -16,6 +16,8 @@ def api():
                 "session": {"user": publicSessionUser()} if "user" in session else {},
                 "LANG_CODE": Globals.CONF["default"]["language"],
                 "LANG_DICT": Globals.LANG_DICT,
-                "USER_TYPES": Globals.USER_TYPES,
+                "USER_AUTHENTICITY_STATUSES": Globals.USER_AUTHENTICITY_STATUSES,
+                "USER_ROLES": Globals.USER_ROLES,
+                "USER_ASSIGNED_ROLES": Globals.USER_ASSIGNED_ROLES,
                 "PROJECT_SVG": Globals.PROJECT_SVG
             }, 200)

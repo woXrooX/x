@@ -13,7 +13,9 @@ if __name__ != "__main__":
         #### X
         CONF = {}
         LANG_DICT = {}
-        USER_TYPES = {}
+        USER_AUTHENTICITY_STATUSES = {}
+        USER_ROLES = {}
+        USER_ASSIGNED_ROLES = []
 
         #### Project
         PROJECT = {}

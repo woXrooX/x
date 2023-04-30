@@ -21,19 +21,6 @@ INSERT INTO genders (name)
     ("female")
 ;
 
--- -------------------------- user_roles
-CREATE TABLE IF NOT EXISTS `user_roles` (
-  `id` INT NOT NULL UNIQUE auto_increment,
-  `name` VARCHAR(20) NOT NULL UNIQUE,
-  PRIMARY KEY (`id`)
-);
-INSERT INTO user_roles (name)
-  VALUES
-    ("root"),
-    ("dev"),
-    ("admin")
-;
-
 -- -------------------------- user_authenticity_status
 CREATE TABLE IF NOT EXISTS `user_authenticity_statuses` (
   `id` INT NOT NULL UNIQUE auto_increment,
@@ -45,6 +32,19 @@ INSERT INTO user_authenticity_statuses (name)
     ("unauthenticated"),
     ("unauthorized"),
     ("authorized")
+;
+
+-- -------------------------- user_roles
+CREATE TABLE IF NOT EXISTS `user_roles` (
+  `id` INT NOT NULL UNIQUE auto_increment,
+  `name` VARCHAR(20) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO user_roles (name)
+  VALUES
+    ("root"),
+    ("dev"),
+    ("admin")
 ;
 
 -- -------------------------- user_states
@@ -149,7 +149,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `cover_picture` VARCHAR(100) NULL,
   `background_picture` VARCHAR(100) NULL,
 
-  `role` INT NULL,
   `authenticity_status` INT NULL,
   `state` INT NULL,
   `plan` INT NULL,
@@ -163,7 +162,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 
   FOREIGN KEY (gender) REFERENCES genders(id) ON DELETE SET NULL,
 
-  FOREIGN KEY (role) REFERENCES user_roles(id) ON DELETE SET NULL,
   FOREIGN KEY (authenticity_status) REFERENCES user_authenticity_statuses(id) ON DELETE SET NULL,
   FOREIGN KEY (state) REFERENCES user_states(id) ON DELETE SET NULL,
   FOREIGN KEY (plan) REFERENCES user_plans(id) ON DELETE SET NULL,
@@ -171,6 +169,20 @@ CREATE TABLE IF NOT EXISTS `users` (
   FOREIGN KEY (currency) REFERENCES currencies(id) ON DELETE SET NULL,
   FOREIGN KEY (app_language) REFERENCES languages(id) ON DELETE SET NULL,
   FOREIGN KEY (app_color_scheme) REFERENCES app_color_schemes(id) ON DELETE SET NULL,
+
+  PRIMARY KEY (`id`)
+);
+
+-- -------------------------- users_roles
+CREATE TABLE IF NOT EXISTS `users_roles` (
+  `id` INT NOT NULL UNIQUE auto_increment,
+  `user` INT NOT NULL,
+  `role` INT NOT NULL,
+
+  FOREIGN KEY (`user`) REFERENCES users(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`role`) REFERENCES user_roles(`id`) ON DELETE CASCADE,
+
+  CONSTRAINT `unique_users_roles` UNIQUE (`user`, `role`),
 
   PRIMARY KEY (`id`)
 );

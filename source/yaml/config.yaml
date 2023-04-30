@@ -83,66 +83,66 @@ menu:
 pages:
   home:
     enabled: true
-    allowed:
+    authenticity_statuses:
       - "everyone"
 
-    aliases:
+    endpoints:
       - "/"
       - "/home"
 
 
   signUp:
     enabled: true
-    allowed:
+    authenticity_statuses:
       - "unauthenticated"
 
-    aliases:
+    endpoints:
       - "/signUp"
 
 
   eMailConfirmation:
     enabled: true
-    allowed:
+    authenticity_statuses:
       - "unauthorized"
 
-    aliases:
+    endpoints:
       - "/eMailConfirmation"
 
 
   logIn:
     enabled: true
-    allowed:
+    authenticity_statuses:
       - "unauthenticated"
 
-    aliases:
+    endpoints:
       - "/logIn"
 
 
   logOut:
     enabled: true
-    allowed:
+    authenticity_statuses:
       - "unauthorized"
       - "authorized"
 
-    aliases:
+    endpoints:
       - "/logOut"
 
 
   demo:
     enabled: true
-    allowed:
+    authenticity_statuses:
       - "everyone"
 
-    aliases:
+    endpoints:
       - "/demo"
 
 
   languagesLibrary:
     enabled: true
-    allowed:
+    authenticity_statuses:
       - "everyone"
 
-    aliases:
+    endpoints:
       - "/languagesLibrary"
 
 

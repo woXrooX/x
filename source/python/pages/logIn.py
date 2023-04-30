@@ -1,5 +1,5 @@
 from main import app, request, render_template, session
-from python.modules.tools import pageGuard, publicSessionUser
+from python.modules.tools import pageGuard, publicSessionUser, updateSessionUser
 from python.modules.response import response
 from python.modules.Globals import Globals
 from python.modules.MySQL import MySQL
@@ -29,7 +29,7 @@ def logIn():
         ######## Check If eMail And Password matching User Exist
         with MySQL(False) as db:
             db.execute(
-                ("SELECT * FROM users WHERE eMail=%s AND password=%s"),
+                ("SELECT id FROM users WHERE eMail=%s AND password=%s"),
                 (
                     request.form["eMail"],
                     request.form["password"],
@@ -41,12 +41,16 @@ def logIn():
 
             dataFetched = db.fetchOne()
 
+
             # No Match
             if dataFetched is None:
                 return response(type="error", message="usernameOrPasswordWrong")
 
             # Set Session User Data
             session["user"] = dataFetched
+            # Handle The Session Update Error
+            if not updateSessionUser():
+                pass
 
             # On Success Redirect & Update Front-End Session
             return response(

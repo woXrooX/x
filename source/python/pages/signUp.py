@@ -5,7 +5,7 @@ from main import app, request, render_template, session
 from python.modules.SendGrid import SendGrid
 from python.modules.FileSystem import FileSystem
 from python.modules.response import response
-from python.modules.tools import pageGuard, publicSessionUser
+from python.modules.tools import pageGuard, publicSessionUser, updateSessionUser
 from python.modules.Globals import Globals
 from python.modules.MySQL import MySQL
 
@@ -81,12 +81,12 @@ def signUp():
         # Insert To Database
         with MySQL(False) as db:
             db.execute(
-                ("INSERT INTO users (password, eMail, eMail_verification_code, type) VALUES (%s, %s, %s, %s)"),
+                ("INSERT INTO users (password, eMail, eMail_verification_code, authenticity_status) VALUES (%s, %s, %s, %s)"),
                 (
                     request.form["password"],
                     request.form["eMail"],
                     eMailVerificationCode,
-                    Globals.USER_TYPES["unauthorized"]["id"]
+                    Globals.USER_AUTHENTICITY_STATUSES["unauthorized"]["id"]
                 )
             )
             db.commit()
@@ -97,7 +97,7 @@ def signUp():
             # Get User Data
             with MySQL(False) as db:
                 db.execute(
-                    ("SELECT * FROM users WHERE eMail=%s AND password=%s"),
+                    ("SELECT id FROM users WHERE eMail=%s AND password=%s"),
                     (
                         request.form["eMail"],
                         request.form["password"]
@@ -110,6 +110,9 @@ def signUp():
 
                 # Set Session User Data
                 session["user"] = db.fetchOne()
+                # Handle The Session Update Error
+                if not updateSessionUser():
+                    pass
 
             # Setup Dirs
             if FileSystem.initUserFolders() == False:

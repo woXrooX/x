@@ -3,6 +3,7 @@ from functools import wraps # For pageGuard() Wrapper
 from main import redirect, render_template, request, url_for, session
 from python.modules.Globals import Globals
 from python.modules.MySQL import MySQL
+from python.modules.Logger import Log
 
 ######################################### Page Guard
 """
@@ -21,7 +22,8 @@ def pageGuard(page):
         def wrapper(*args, **kwargs):
 
             # For Debugging
-            # print("\n\n----------------- pageGuard START -----------------")
+            # Log.line()
+            # Log.center("pageGuard START", '-')
             # print("\n----- Request")
             # print(request)
             # print("\n----- Headers")
@@ -36,9 +38,13 @@ def pageGuard(page):
             # print(request.files)
             # print("\n----- JSON")
             # print(request.get_json)
-            # print("\n----------------- pageGuard END -----------------\n\n")
+            #
+            # print("\n----- page")
+            # print(page)
+            # Log.center("pageGuard END", '-')
+            # Log.line()
 
-            ####### POST
+            ##################### POST
             if request.method == "POST":
                 # Check If "endpoint" In Request
                 # if "endpoint" not in request.get_json():
@@ -85,14 +91,14 @@ def pageGuard(page):
                 #     }), 200)
 
 
-            ####### GET
+            ##################### GET
 
             ####### App Is Down
             if "appIsDown" in Globals.CONF["default"]:
                 return render_template("index.html", **globals())
 
 
-            # Check If Page Exists
+            # Check If Page Exists In CONF["pages"]
             if page not in Globals.CONF["pages"]: return redirect(url_for("home"))
 
 
@@ -101,29 +107,64 @@ def pageGuard(page):
 
 
             # Everyone
-            if "everyone" in Globals.CONF["pages"][page]["allowed"]: return func(*args, **kwargs)
+            if(
+                "authenticity_statuses" not in Globals.CONF["pages"][page] and
+                "roles" not in Globals.CONF["pages"][page] and
+                "plans" not in Globals.CONF["pages"][page]
+            ): return func(*args, **kwargs)
 
 
             # Session Dependent Checks
             if "user" in session:
                 # Root
-                if session["user"]["type"] == Globals.USER_TYPES["root"]["id"]: return func(*args, **kwargs)
+                if "root" in Globals.USER_ASSIGNED_ROLES: return func(*args, **kwargs)
 
 
-                # If User Type Matches With One Of The Page's Allowed User Types
-                for user_type in Globals.USER_TYPES:
-                    if(
-                        session["user"]["type"] == Globals.USER_TYPES[user_type]["id"] and
-                        user_type in Globals.CONF["pages"][page]["allowed"]
-                    ):
-                        return func(*args, **kwargs)
+                #### Authenticity Statuses
+                authenticity_check = False
+                if "authenticity_statuses" in Globals.CONF["pages"][page]:
+                    for user_authenticity_status in Globals.USER_AUTHENTICITY_STATUSES:
+                        if(
+                            session["user"]["authenticity_status"] == Globals.USER_AUTHENTICITY_STATUSES[user_authenticity_status]["id"] and
+                            user_authenticity_status in Globals.CONF["pages"][page]["authenticity_statuses"]
+                        ):
+                            authenticity_check = True
+
+                else: authenticity_check = True
+
+
+                #### Roles
+                role_check = False
+                if "roles" in Globals.CONF["pages"][page]:
+
+                    # Check If One Of The User Assigned Rules Match With The CONF[page]["roles"]
+                    if any(role in Globals.CONF["pages"][page]["roles"] for role in Globals.USER_ASSIGNED_ROLES):
+                        role_check = True
+
+                else: role_check = True
+
+
+                #### Plans - similar to role check
+                plan_check = True # Should be false in actual implementation
+
+
+                #### Final Check: IF All Checks Passed
+                if(
+                    authenticity_check is True and
+                    role_check is True and
+                    plan_check is True
+                ): return func(*args, **kwargs)
 
 
             # Session Independent Checks
             if "user" not in session:
 
                 # Unauthenticated User
-                if "unauthenticated" in Globals.CONF["pages"][page]["allowed"]: return func(*args, **kwargs)
+                if(
+                    "authenticity_statuses" not in Globals.CONF["pages"][page] or
+                    "authenticity_statuses" in Globals.CONF["pages"][page] and
+                    "unauthenticated" in Globals.CONF["pages"][page]["authenticity_statuses"]
+                ): return func(*args, **kwargs)
 
 
             # Failed The Guard Checks
@@ -148,8 +189,8 @@ def updateSessionUser():
 
         session["user"] = db.fetchOne()
 
-        # Success
-        return True
+    # Success
+    return True
 
 
 ######################################### Sanitized Session For Front
@@ -161,34 +202,7 @@ def publicSessionUser():
         "username": session["user"]["username"],
         "firstname": session["user"]["firstname"],
         "lastname": session["user"]["lastname"],
-        "type": session["user"]["type"]
+        "authenticity_status": session["user"]["authenticity_status"]
     }
 
     return publicData
-
-
-# class C(object):
-#     def __init__(self):
-#         self._x = None
-#
-#     @property
-#     def x(self):
-#         """I'm the 'x' property."""
-#         print("getter of x called")
-#         return self._x
-#
-#     @x.setter
-#     def x(self, value):
-#         print("setter of x called")
-#         self._x = value
-#
-#     @x.deleter
-#     def x(self):
-#         print("deleter of x called")
-#         del self._x
-#
-#
-# c = C()
-# foo = c.x    # getter called
-# c.x = 'foo'  # setter called
-# del c.x      # deleter called

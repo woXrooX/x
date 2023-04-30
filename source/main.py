@@ -19,8 +19,10 @@ FileSystem.init()
 
 #################################################### Setting Up MySQL
 from python.modules.MySQL import MySQL
-# If Database Enabled Then Set It Up
+######## If Database Enabled
 if "database" in Globals.CONF and Globals.CONF["database"]["enabled"] == True:
+
+    ######## Set Up Connection
     MySQL.setUp(
         Globals.CONF["database"]["MySQL"]["user"],
         Globals.CONF["database"]["MySQL"]["password"],
@@ -30,15 +32,25 @@ if "database" in Globals.CONF and Globals.CONF["database"]["enabled"] == True:
         Globals.CONF["database"]["MySQL"]["collate"]
     )
 
-
-#################################################### GLOBAL user_types
-if "database" in Globals.CONF and Globals.CONF["database"]["MySQL"]["enabled"] == True:
+    ######## GLOBAL USER_AUTHENTICITY_STATUSES
     with MySQL(False) as db:
-        db.execute("SELECT * FROM user_types")
+        db.execute("SELECT * FROM user_authenticity_statuses")
+        dataFetched = db.fetchAll()
+
+        # Making USER_AUTHENTICITY_STATUSES accessible by name
+        for user_authenticity_status in dataFetched:
+            Globals.USER_AUTHENTICITY_STATUSES[user_authenticity_status["name"]] = user_authenticity_status
+
+
+    ######## GLOBAL USER_ROLES
+    with MySQL(False) as db:
+        db.execute("SELECT * FROM user_roles")
         dataFetched = db.fetchAll()
 
         # Making USER_TYPES accessible by keyword like "root" or "dev"
-        for user_type in dataFetched: Globals.USER_TYPES[user_type["name"]] = user_type
+        for user_role in dataFetched:
+            Globals.USER_ROLES[user_role["name"]] = user_role
+
 
 
 #################################################### Flask APP
@@ -53,9 +65,26 @@ app.secret_key = Globals.CONF["flask"]["secret_key"]
 
 
 #################################################### Decorations
-# @app.before_first_request
-# def app_init():
-#     return None
+@app.before_first_request
+def app_init():
+    if "database" in Globals.CONF and Globals.CONF["database"]["enabled"] == True:
+        ######## GLOBAL USER_ASSIGNED_ROLES
+        if "user" in session:
+            with MySQL(False) as db:
+                db.execute(
+                    ("""
+                        SELECT x.user_roles.name
+                        FROM x.user_roles
+                        RIGHT JOIN x.users_roles
+                        ON x.user_roles.id = x.users_roles.role AND x.users_roles.user = %s
+                    """),
+                    (session["user"]["id"],)
+                )
+
+                # Extracting IDs From Response
+                for role in db.fetchAll(): Globals.USER_ASSIGNED_ROLES.append(role["name"])
+
+    return None
 
 # @app.before_request
 # def before_request():

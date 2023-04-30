@@ -51,7 +51,7 @@ export default class Menu{
 
         // Hyperlink Blue Print
         hyperlinks += `
-  <a href="${window.CONF["pages"][menu["name"]]["aliases"][0]}">
+  <a href="${window.CONF["pages"][menu["name"]]["endpoints"][0]}">
     <x-icon color="#ffffff">${"logo" in menu ? menu["logo"] : menu["name"]}</x-icon>
     ${window.Lang.use(menu["name"])}
   </a>
@@ -209,54 +209,14 @@ export default class Menu{
     // Check If Menu Is Enabled
     // Done At Menu.init()
 
-
-    // Check If Menu Exists (Depreciated)
-    // Already Looping Through Existent Menus
-
-
-    // Check If Current Menu Is Enabled (Depreciated)
-    // If Menu In List Means Already Enabled
-    // if(window.CONF["menu"]["menus"][menu]["enabled"] === false) return false;
-
-
     // Check If Menu Linked Page Exists In CONF["pages"]
     if(!(menu in window.CONF["pages"])) return false;
-
 
     // Check If Menu Linked Page Is Enabled In CONF["pages"]
     if(window.CONF["pages"][menu]["enabled"] == false) return false;
 
-
-    // Everyone
-    if(window.CONF["pages"][menu]["allowed"].includes("everyone")) return true;
-
-
-    // Session Dependent Checks
-    if("user" in window.session){
-      // Root
-      if(window.session["user"]["type"] == window.USER_TYPES["root"]["id"]) return true;
-
-      // If User Type Matches With One Of The Page's Allowed User Types
-      for(let user_type in window.USER_TYPES)
-        if(
-          window.session["user"]["type"] == window.USER_TYPES[user_type]["id"] &&
-          window.CONF["pages"][menu]["allowed"].includes(user_type)
-        )
-          return true;
-
-    }
-
-
-    // Session Independent Checks
-    if(!("user" in window.session)){
-      // Unauthenticated User
-      if(window.CONF["pages"][menu]["allowed"].includes("unauthenticated")) return true;
-
-    }
-
-
-    // Failed The Guard Checks
-    return false;
+    // Use Route Guard To Check Menus
+    return window.Router.routeGuard(menu);
 
   }
 
