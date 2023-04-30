@@ -40,7 +40,7 @@ if __name__ != "__main__":
                     <meta charset="utf-8">
                     <title>{Globals.CONF["default"]["title"]}</title>
                   </head>
-                  <body style="width:70%; padding:10px;">
+                  <body style="width:100%; padding:10px;">
                     <header style="text-aligment:center; color: white; padding:5px; background-color:hsl({Globals.CONF["default"]["color"]["brand"]["hue"]}deg, {Globals.CONF["default"]["color"]["brand"]["saturation"]}%, {Globals.CONF["default"]["color"]["brand"]["lightness"]}%); width:100%;">
                       {Globals.CONF["default"]["title"]}
                     </header>
