@@ -8,10 +8,73 @@ USE x;
 SET NAMES utf8mb4;
 
 
---
--- Table structure for table `currencies`
---
+-- -------------------------- genders
+CREATE TABLE IF NOT EXISTS `genders` (
+  `id` INT NOT NULL UNIQUE auto_increment,
+  `name` VARCHAR(10) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO genders (name)
+  VALUES
+    ("unknown"),
+    ("male"),
+    ("female")
+;
 
+-- -------------------------- user_roles
+CREATE TABLE IF NOT EXISTS `user_roles` (
+  `id` INT NOT NULL UNIQUE auto_increment,
+  `name` VARCHAR(20) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO user_roles (name)
+  VALUES
+    ("root"),
+    ("dev"),
+    ("admin")
+;
+
+-- -------------------------- user_authenticity_status
+CREATE TABLE IF NOT EXISTS `user_authenticity_statuses` (
+  `id` INT NOT NULL UNIQUE auto_increment,
+  `name` VARCHAR(20) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO user_authenticity_status (name)
+  VALUES
+    ("unauthenticated"),
+    ("unauthorized"),
+    ("authorized")
+;
+
+-- -------------------------- user_states
+CREATE TABLE IF NOT EXISTS `user_states` (
+  `id` INT NOT NULL UNIQUE auto_increment,
+  `name` VARCHAR(10) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO user_states (name)
+  VALUES
+    ("active"),
+    ("inactive"),
+    ("deleted"),
+    ("suspended")
+;
+
+-- -------------------------- user_plans
+CREATE TABLE IF NOT EXISTS `user_plans` (
+  `id` INT NOT NULL UNIQUE auto_increment,
+  `name` VARCHAR(10) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO user_plans (name)
+  VALUES
+    ("free"),
+    ("pro"),
+    ("business")
+;
+
+-- -------------------------- currencies
 -- https://en.wikipedia.org/wiki/List_of_circulating_currencies
 -- decimal_digits is The number of digits after the decimal separator (By wikipedia)
 -- UZS https://en.wikipedia.org/wiki/Uzbekistani_so%CA%BBm
@@ -33,10 +96,7 @@ INSERT INTO currencies (code, decimal_digits, fractional_unit, symbol, native_na
     ("RUB", 2, "Копейка", "₽", "Российский рубль")
 ;
 
-
---
--- Table structure for table `languages`
---
+-- -------------------------- languages
 CREATE TABLE IF NOT EXISTS `languages` (
   `id` INT NOT NULL UNIQUE auto_increment,
   `code` VARCHAR(3) NOT NULL UNIQUE,
@@ -51,81 +111,22 @@ INSERT INTO languages (code, native_name)
     ("ja", "日本語 (にほんご／にっぽんご)")
 ;
 
-
---
--- Table structure for table `site_color_scheme`
---
-CREATE TABLE IF NOT EXISTS `site_color_schemes` (
+-- -------------------------- app_color_scheme
+CREATE TABLE IF NOT EXISTS `app_color_schemes` (
   `id` INT NOT NULL UNIQUE auto_increment,
   `name` VARCHAR(10) NOT NULL UNIQUE,
   PRIMARY KEY (`id`)
 );
-INSERT INTO site_color_schemes (name)
+INSERT INTO app_color_schemes (name)
   VALUES
     ("light"),
     ("dark")
 ;
 
-
---
--- Table structure for table `genders`
---
-CREATE TABLE IF NOT EXISTS `genders` (
-  `id` INT NOT NULL UNIQUE auto_increment,
-  `name` VARCHAR(10) NOT NULL UNIQUE,
-  PRIMARY KEY (`id`)
-);
-INSERT INTO genders (name)
-  VALUES
-    ("unknown"),
-    ("male"),
-    ("female")
-;
-
-
---
--- Table structure for table `user_types`
---
-CREATE TABLE IF NOT EXISTS `user_types` (
-  `id` INT NOT NULL UNIQUE auto_increment,
-  `name` VARCHAR(20) NOT NULL UNIQUE,
-  PRIMARY KEY (`id`)
-);
-INSERT INTO user_types (name)
-  VALUES
-    ("root"),
-    ("dev"),
-    ("admin"),
-
-    ("unauthenticated"),
-    ("unauthorized"),
-    ("authorized")
-
-;
-
-
---
--- Table structure for table `user_states`
---
-CREATE TABLE IF NOT EXISTS `user_states` (
-  `id` INT NOT NULL UNIQUE auto_increment,
-  `name` VARCHAR(10) NOT NULL UNIQUE,
-  PRIMARY KEY (`id`)
-);
-INSERT INTO user_states (name)
-  VALUES
-    ("active"),
-    ("inactive"),
-    ("deleted")
-;
-
---
--- Table structure for table `users`
---
+-- -------------------------- users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT NOT NULL UNIQUE auto_increment,
   `username` VARCHAR(100) NULL UNIQUE,
-  -- `password` VARCHAR(100) NOT NULL UNIQUE COLLATE utf8_bin, -> adds case sensitiveity
   `password` VARCHAR(100) NOT NULL UNIQUE,
   `password_salt` VARCHAR(100),
 
@@ -148,23 +149,28 @@ CREATE TABLE IF NOT EXISTS `users` (
   `cover_picture` VARCHAR(100) NULL,
   `background_picture` VARCHAR(100) NULL,
 
-  -- NULL = customer level (but not customer more precisely equals -> not specified/undefined -> not unknown)
-  `type` INT NULL,
+  `role` INT NULL,
+  `authenticity_status` INT NULL,
   `state` INT NULL,
+  `plan` INT NULL,
 
   `currency` INT NULL,
-  `site_language` INT NULL,
-  `site_color_scheme` INT NULL,
+  `app_language` INT NULL,
+  `app_color_scheme` INT NULL,
 
   `last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
   FOREIGN KEY (gender) REFERENCES genders(id) ON DELETE SET NULL,
-  FOREIGN KEY (type) REFERENCES user_types(id) ON DELETE SET NULL,
+
+  FOREIGN KEY (role) REFERENCES user_roles(id) ON DELETE SET NULL,
+  FOREIGN KEY (authenticity_status) REFERENCES user_authenticity_statuses(id) ON DELETE SET NULL,
   FOREIGN KEY (state) REFERENCES user_states(id) ON DELETE SET NULL,
+  FOREIGN KEY (plan) REFERENCES user_plans(id) ON DELETE SET NULL,
+
   FOREIGN KEY (currency) REFERENCES currencies(id) ON DELETE SET NULL,
-  FOREIGN KEY (site_language) REFERENCES languages(id) ON DELETE SET NULL,
-  FOREIGN KEY (site_color_scheme) REFERENCES site_color_schemes(id) ON DELETE SET NULL,
+  FOREIGN KEY (app_language) REFERENCES languages(id) ON DELETE SET NULL,
+  FOREIGN KEY (app_color_scheme) REFERENCES app_color_schemes(id) ON DELETE SET NULL,
 
   PRIMARY KEY (`id`)
 );
