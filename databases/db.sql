@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `user_authenticity_statuses` (
   `name` VARCHAR(20) NOT NULL UNIQUE,
   PRIMARY KEY (`id`)
 );
-INSERT INTO user_authenticity_status (name)
+INSERT INTO user_authenticity_statuses (name)
   VALUES
     ("unauthenticated"),
     ("unauthorized"),
