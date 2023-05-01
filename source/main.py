@@ -73,10 +73,10 @@ def app_init():
             with MySQL(False) as db:
                 db.execute(
                     ("""
-                        SELECT x.user_roles.name
-                        FROM x.user_roles
-                        RIGHT JOIN x.users_roles
-                        ON x.user_roles.id = x.users_roles.role AND x.users_roles.user = %s
+                        SELECT user_roles.name
+                        FROM user_roles
+                        RIGHT JOIN users_roles
+                        ON user_roles.id = users_roles.role AND users_roles.user = %s
                     """),
                     (session["user"]["id"],)
                 )
