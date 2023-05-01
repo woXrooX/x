@@ -134,13 +134,32 @@ export default class Router{
 
 
     // Session Independent Checks
-    if(!("user" in window.session))
+    if(!("user" in window.session)){
+      ///// Authenticity Statuses
+      let authenticity_check = false;
       // Unauthenticated User
       if(
         !("authenticity_statuses" in window.CONF["pages"][page]) ||
         "authenticity_statuses" in window.CONF["pages"][page] &&
         window.CONF["pages"][page]["authenticity_statuses"].includes("unauthenticated")
+      ) authenticity_check = true;
+
+      ///// Roles
+      let role_check = false;
+      if(!("roles" in window.CONF["pages"][page])) role_check = true;
+
+      ///// Plans
+      let plan_check = false;
+      if(!("plans" in window.CONF["pages"][page])) plan_check = true;
+
+      ///// Final Check: IF All Checks Passed
+      if(
+        authenticity_check === true &&
+        role_check === true &&
+        plan_check === true
       ) return true;
+
+    }
 
 
     // Failed The Guard Checks

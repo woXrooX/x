@@ -159,13 +159,28 @@ def pageGuard(page):
             # Session Independent Checks
             if "user" not in session:
 
-                # Unauthenticated User
+                #### Authenticity Statuses
+                authenticity_check = False
                 if(
                     "authenticity_statuses" not in Globals.CONF["pages"][page] or
                     "authenticity_statuses" in Globals.CONF["pages"][page] and
                     "unauthenticated" in Globals.CONF["pages"][page]["authenticity_statuses"]
-                ): return func(*args, **kwargs)
+                ): authenticity_check = True
 
+                #### Roles
+                role_check = False
+                if "roles" not in Globals.CONF["pages"][page]: role_check = True
+
+                #### Plans
+                plan_check = False
+                if "plans" not in Globals.CONF["pages"][page]: plan_check = True
+
+                #### Final Check: IF All Checks Passed
+                if(
+                    authenticity_check is True and
+                    role_check is True and
+                    plan_check is True
+                ): return func(*args, **kwargs)
 
             # Failed The Guard Checks
             return redirect(url_for("home"))

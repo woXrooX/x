@@ -83,9 +83,6 @@ menu:
 pages:
   home:
     enabled: true
-    authenticity_statuses:
-      - "everyone"
-
     endpoints:
       - "/"
       - "/home"
@@ -130,18 +127,12 @@ pages:
 
   demo:
     enabled: true
-    authenticity_statuses:
-      - "everyone"
-
     endpoints:
       - "/demo"
 
 
   languagesLibrary:
     enabled: true
-    authenticity_statuses:
-      - "everyone"
-
     endpoints:
       - "/languagesLibrary"
 
