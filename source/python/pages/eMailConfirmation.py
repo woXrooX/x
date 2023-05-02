@@ -1,7 +1,8 @@
 from main import app, request, render_template, session
-from python.modules.tools import pageGuard, updateSessionUser
+from python.modules.tools import pageGuard
 from python.modules.response import response
 from python.modules.Globals import Globals
+from python.modules.User import User
 from python.modules.MySQL import MySQL
 
 #################################################### Demo
@@ -58,7 +59,7 @@ def eMailConfirmation():
                 if db.hasError(): return response(type="error", message="databaseError")
 
                 # Update The session["user"] After The Changes To The Database
-                updateSessionUser()
+                User.updateSession()
 
             return response(
                 type="success",

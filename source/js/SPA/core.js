@@ -68,9 +68,8 @@ export default class Core{
       window.session = response["session"];
       window.LANG_CODE = response["LANG_CODE"];
       window.LANG_DICT = response["LANG_DICT"];
-      window.USER_AUTHENTICITY_STATUSES = response["USER_AUTHENTICITY_STATUSES"];      
+      window.USER_AUTHENTICITY_STATUSES = response["USER_AUTHENTICITY_STATUSES"];
       window.USER_ROLES = response["USER_ROLES"];
-      window.USER_ASSIGNED_ROLES = response["USER_ASSIGNED_ROLES"];
 
       // Load External SVGs To SVG Class
       window.SVG.set(response["PROJECT_SVG"]);

@@ -1,7 +1,8 @@
 from main import app, request, render_template, session
-from python.modules.tools import pageGuard, publicSessionUser, updateSessionUser
+from python.modules.tools import pageGuard
 from python.modules.response import response
 from python.modules.Globals import Globals
+from python.modules.User import User
 from python.modules.MySQL import MySQL
 
 
@@ -49,7 +50,7 @@ def logIn():
             # Set Session User Data
             session["user"] = dataFetched
             # Handle The Session Update Error
-            if not updateSessionUser():
+            if not User.updateSession():
                 pass
 
             # On Success Redirect & Update Front-End Session

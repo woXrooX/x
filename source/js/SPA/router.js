@@ -95,7 +95,7 @@ export default class Router{
     if("user" in window.session){
 
       // Root
-      if(window.USER_ASSIGNED_ROLES.includes("root")) return true;
+      if(window.session["user"]["roles"].includes("root")) return true;
 
       ///// Authenticity Statuses
       let authenticity_check = false;
@@ -112,8 +112,8 @@ export default class Router{
       let role_check = false;
       if("roles" in window.CONF["pages"][page]){
         // Check If One Of The User Assigned Roles Match With The CONF[page]["roles"]
-        for(let i = 0; i < window.USER_ASSIGNED_ROLES.length; i++)
-          if(window.CONF["pages"][page]["roles"].includes(window.USER_ASSIGNED_ROLES[i])){
+        for(let i = 0; i < window.session["user"]["roles"].length; i++)
+          if(window.CONF["pages"][page]["roles"].includes(window.session["user"]["roles"][i])){
             role_check = true;
             break;
           }

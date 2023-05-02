@@ -33,23 +33,10 @@ if "database" in Globals.CONF and Globals.CONF["database"]["enabled"] == True:
     )
 
     ######## GLOBAL USER_AUTHENTICITY_STATUSES
-    with MySQL(False) as db:
-        db.execute("SELECT * FROM user_authenticity_statuses")
-        dataFetched = db.fetchAll()
-
-        # Making USER_AUTHENTICITY_STATUSES accessible by name
-        for user_authenticity_status in dataFetched:
-            Globals.USER_AUTHENTICITY_STATUSES[user_authenticity_status["name"]] = user_authenticity_status
-
+    Globals.getUserAuthenticityStatuses()
 
     ######## GLOBAL USER_ROLES
-    with MySQL(False) as db:
-        db.execute("SELECT * FROM user_roles")
-        dataFetched = db.fetchAll()
-
-        # Making USER_TYPES accessible by keyword like "root" or "dev"
-        for user_role in dataFetched:
-            Globals.USER_ROLES[user_role["name"]] = user_role
+    Globals.getUserRoles()
 
 
 
@@ -65,26 +52,9 @@ app.secret_key = Globals.CONF["flask"]["secret_key"]
 
 
 #################################################### Decorations
-@app.before_first_request
-def app_init():
-    if "database" in Globals.CONF and Globals.CONF["database"]["enabled"] == True:
-        ######## GLOBAL USER_ASSIGNED_ROLES
-        if "user" in session:
-            with MySQL(False) as db:
-                db.execute(
-                    ("""
-                        SELECT user_roles.name
-                        FROM user_roles
-                        RIGHT JOIN users_roles
-                        ON user_roles.id = users_roles.role AND users_roles.user = %s
-                    """),
-                    (session["user"]["id"],)
-                )
-
-                # Extracting IDs From Response
-                for role in db.fetchAll(): Globals.USER_ASSIGNED_ROLES.append(role["name"])
-
-    return None
+# @app.before_first_request
+# def app_init():
+#     return None
 
 # @app.before_request
 # def before_request():

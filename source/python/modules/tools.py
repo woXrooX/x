@@ -117,7 +117,7 @@ def pageGuard(page):
             # Session Dependent Checks
             if "user" in session:
                 # Root
-                if "root" in Globals.USER_ASSIGNED_ROLES: return func(*args, **kwargs)
+                if "root" in session["user"]["roles"]: return func(*args, **kwargs)
 
 
                 #### Authenticity Statuses
@@ -138,7 +138,7 @@ def pageGuard(page):
                 if "roles" in Globals.CONF["pages"][page]:
 
                     # Check If One Of The User Assigned Rules Match With The CONF[page]["roles"]
-                    if any(role in Globals.CONF["pages"][page]["roles"] for role in Globals.USER_ASSIGNED_ROLES):
+                    if any(role in Globals.CONF["pages"][page]["roles"] for role in session["user"]["roles"]):
                         role_check = True
 
                 else: role_check = True
@@ -188,36 +188,3 @@ def pageGuard(page):
         return wrapper
 
     return decorator
-
-######################################### Update Session User
-def updateSessionUser():
-    # Check If User In Session | Error
-    if "user" not in session: return False
-
-    # Get User Data
-    with MySQL(False) as db:
-        db.execute(("SELECT * FROM users WHERE id=%s"), (session["user"]["id"], ))
-
-        # Error
-        if db.hasError():
-            return False
-
-        session["user"] = db.fetchOne()
-
-    # Success
-    return True
-
-
-######################################### Sanitized Session For Front
-def publicSessionUser():
-    # Check If User In Session
-    if "user" not in session: return None
-
-    publicData = {
-        "username": session["user"]["username"],
-        "firstname": session["user"]["firstname"],
-        "lastname": session["user"]["lastname"],
-        "authenticity_status": session["user"]["authenticity_status"]
-    }
-
-    return publicData

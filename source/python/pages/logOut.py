@@ -19,9 +19,6 @@ def logOut():
         # Remove User From Session
         session.pop('user')
 
-        # Reset Site Language To The Default
-        global langCode
-        langCode = Globals.CONF["default"]["language"]
 
         # Redirect To Home
         return response(
