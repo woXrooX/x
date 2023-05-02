@@ -33,7 +33,7 @@ if __name__ != "__main__":
                     ("""
                         SELECT user_roles.name
                         FROM user_roles
-                        RIGHT JOIN users_roles
+                        INNER JOIN users_roles
                         ON user_roles.id = users_roles.role AND users_roles.user = %s
                     """),
                     (session["user"]["id"],)
