@@ -10,41 +10,60 @@ if __name__ != "__main__":
 
     class FileSystem:
         ####### Helpers
+        # Helpers With Strict Mode True Will Exists The Script (Stop The Server) On Fail
+
         @staticmethod
         def createFolder(path, strict = True):
             try:
                 Log.info(f"Folder: {path}")
+
                 os.makedirs(f'{path}', mode=0o777, exist_ok=True)
+
+                return True
 
             except:
                 Log.error(f"Could Not Create The Folder: {path}")
+
                 if strict is True: sys.exit()
+
+                return False
 
         @staticmethod
         def createFile(pathNameExtension, content = "", strict = True):
             if not os.path.exists(f"{pathNameExtension}"):
                 try:
                     Log.info(f"File: {pathNameExtension}")
+
                     with open(f'{pathNameExtension}', 'w') as f:
                         f.write(f"{content}")
+
+                    return True
 
                 except:
                     Log.error(f"Could Not Create The File: {path}")
 
                     if strict is True: sys.exit()
 
+                    return False
+
         @staticmethod
         def copyFile(fromPath, toPath, file, strict = True):
             try:
                 shutil.copy(f"{fromPath}/{file}", toPath)
+
                 Log.info(f"File Copied: {file}")
+
+                return True
 
             except:
                 Log.error(f"Could Not Copy The File: {file}")
+
                 if strict is True: sys.exit()
 
+                return False
+
+        # Will Copy All The Files In A Folder With A Given Extension
         @staticmethod
-        # Will Copy All The Files In A Folder
         def copyFiles(fromPath, toPath, extension = None, strict = True):
             try:
                 files = os.listdir(fromPath)
@@ -61,9 +80,25 @@ if __name__ != "__main__":
             except:
                 Log.error(f"Could Not Copy The Files @: {fromPath}")
 
-                # If Strict Then Stop The Server Else Return False So Executor Can Handle
                 if strict is True: sys.exit()
-                else: return False
+
+                return False
+
+        @staticmethod
+        def deleteFile(pathAndFile, strict = True):
+            try:
+                os.remove(f"{pathAndFile}")
+
+                Log.success(f"File Deleted Successfully: {pathAndFile}")
+
+                return True
+
+            except:
+                Log.error(f"Could Not Delete The Files @: {pathAndFile}")
+
+                if strict is True: sys.exit()
+
+                return False
 
 
         ############## System
