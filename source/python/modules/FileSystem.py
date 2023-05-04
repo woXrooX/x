@@ -126,6 +126,9 @@ if __name__ != "__main__":
             FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/pages/back')
             FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/pages/front')
 
+            # python
+            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/python/')
+
             ## SVG
             FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/SVG/')
 
@@ -134,11 +137,11 @@ if __name__ != "__main__":
             ################ Files
             Log.center("Creating Files", '-')
 
-            # project.json
-            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/project.json", "{}")
+            # styles.css
+            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css")
 
-            # languageDictionary.json
-            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", '{"theX": {"en": "The X"}}')
+            # footer.js
+            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/footer.js", 'export default function footer(){\n\treturn "The X";\n}')
 
             # pages/back/home.py
             FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py",
@@ -165,11 +168,11 @@ export default function content(){
 }'''
             )
 
-            # styles.css
-            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css")
+            # languageDictionary.json
+            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", '{"theX": {"en": "The X"}}')
 
-            # footer.js
-            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/footer.js", 'export default function footer(){\n\treturn "The X";\n}')
+            # project.json
+            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/project.json", "{}")
 
             Log.line()
 
@@ -207,6 +210,19 @@ export default function content(){
             Log.line()
 
             ################################ Copying
+            ## Fonts
+            Log.center("Copying FONTS", '-')
+            FileSystem.copyFonts()
+
+            ## JS
+            Log.center("Copying JavaScripts", '-')
+            FileSystem.copyJavaScripts()
+
+            ## Pythons
+            Log.center("Copying Pythons", '-')
+            FileSystem.copyPythons()
+
+            ## Pages
             Log.center("Copying Pages", '-')
 
             # Pages (Back-End)
@@ -214,15 +230,6 @@ export default function content(){
 
             # Pages (Front-End)
             FileSystem.copyPagesFrontEnd()
-
-            Log.center("Copying JavaScripts", '-')
-
-            # JS
-            FileSystem.copyJavaScripts()
-
-            # Fonts
-            Log.center("Copying FONTS", '-')
-            FileSystem.copyFonts()
 
             Log.line()
 
@@ -255,6 +262,16 @@ export default function content(){
 
             else:
                 Log.error("Could Not Copy The JavaScripts")
+                sys.exit()
+
+        # Copy Pythons (Care! Pythons inside your folders xD)
+        @staticmethod
+        def copyPythons():
+            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/python", f"{str(Globals.X_RUNNING_FROM)}/python/modules") is True:
+                Log.success("Pythons Are Copied")
+
+            else:
+                Log.error("Could Not Copy The Pythons")
                 sys.exit()
 
         # Copy Fonts
