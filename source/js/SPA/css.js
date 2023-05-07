@@ -498,8 +498,7 @@ export default class CSS{
       }
 
       body > menu{
-        --menu-background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.1);
-        background-color: var(--menu-background-color);
+        background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.1);
         backdrop-filter: blur(100px);
         height: 100vh;
         width: auto;
@@ -561,12 +560,11 @@ export default class CSS{
         padding: var(--padding) calc(var(--padding) * 2);
 
         transition: var(--transition-velocity) ease-in-out;
-        transition-property: filter, background-color, border;
+        transition-property: background-color, border;
 
       }
       body > menu > main > a:where([active], :hover){
-        background-color: var(--menu-background-color);
-        filter: brightness(120%);
+        background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.3);
 
       }
       body > menu > main > a:where([active]){
