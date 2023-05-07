@@ -498,8 +498,9 @@ export default class CSS{
       }
 
       body > menu{
-        --menu-background-color: hsla(${CSS.values.color.brand.hue}, 5%, 20%, 1);
+        --menu-background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.1);
         background-color: var(--menu-background-color);
+        backdrop-filter: blur(100px);
         height: 100vh;
         width: auto;
 
