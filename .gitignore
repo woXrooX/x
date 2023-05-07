@@ -10,6 +10,16 @@ source/users/*
 ################ Fonts
 source/fonts/*
 !source/fonts/Quicksand-Regular.ttf
+!source/fonts/AlegreyaSans-Regular.ttf
+!source/fonts/Cardo-Regular.ttf
+!source/fonts/Cinzel-Regular.ttf
+!source/fonts/Eczar-Regular.ttf
+!source/fonts/Gruppo-Regular.ttf
+!source/fonts/JosefinSans-Regular.ttf
+!source/fonts/JosefinSlab-Regular.ttf
+!source/fonts/Macondo-Regular.ttf
+!source/fonts/Philosopher-Regular.ttf
+!source/fonts/Marcellus-Regular.ttf
 
 ################ JavaScripts
 source/js/modules/*
