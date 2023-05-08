@@ -112,6 +112,9 @@ INSERT INTO languages (code, native_name)
 ;
 
 -- -------------------------- app_color_scheme
+-- 1 Is For Dark Mode
+-- 2 Is For Light Mode
+
 CREATE TABLE IF NOT EXISTS `app_color_schemes` (
   `id` INT NOT NULL UNIQUE auto_increment,
   `name` VARCHAR(10) NOT NULL UNIQUE,
@@ -119,8 +122,8 @@ CREATE TABLE IF NOT EXISTS `app_color_schemes` (
 );
 INSERT INTO app_color_schemes (name)
   VALUES
-    ("light"),
-    ("dark")
+    ("dark"),
+    ("light")
 ;
 
 -- -------------------------- users

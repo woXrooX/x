@@ -49,6 +49,9 @@ export default class Menu{
     // Check If Menu Is Enabled
     if(window.CONF["menu"]["enabled"] === false) return false;
 
+    // Create Color Mode Switcher Button According To Current Color Mode
+    document.querySelector(`${Menu.selector} > header > div[for=colorModeSwitcher]`).innerHTML =
+      `<x-icon color="#ffffff">${CSS.currentColorMode === CSS.colorModes.DARK ? "light_mode" : "dark_mode"}</x-icon>`;
 
     let hyperlinks = "";
 
@@ -203,6 +206,7 @@ export default class Menu{
 
   }
 
+  // colorModeSwitcher
   static #colorModeSwitcher(){
     const switcher = document.querySelector(`${Menu.selector} > header > div[for=colorModeSwitcher]`);
 

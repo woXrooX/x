@@ -23,8 +23,8 @@
 export default class CSS{
   // Color Modes
   static colorModes = Object.freeze({
-    DARK: 0,
-    LIGHT: 1
+    DARK: 1,
+    LIGHT: 2
   });
 
   // Color Mode Default: Dark Mode
@@ -122,11 +122,42 @@ export default class CSS{
 
     CSS.#loadColorBrand();
 
+    CSS.#detectColorMode();
+
+  }
+
+  ///// Color Mode
+  // Detect Color Mode
+  static #detectColorMode(){
+    // Get User Preferred Color Mode
+    if(
+      // If User Is In Session
+      "user" in window.session &&
+
+      // If Session User Has "app_color_scheme"
+      "app_color_scheme" in window.session["user"] &&
+
+      // If "app_color_scheme" Is In CSS.colorModes
+      Object.values(CSS.colorModes).includes(window.session["user"]["app_color_scheme"])
+    )
+      CSS.currentColorMode = window.session["user"]["app_color_scheme"];
+
+    // Get System Color Mode
+    else if(window.matchMedia){
+      // System Default: Dark
+      if(window.matchMedia('(prefers-color-scheme: dark)').matches) CSS.currentColorMode = CSS.colorModes.DARK;
+
+      // System Default: Light
+      else CSS.currentColorMode = CSS.colorModes.LIGHT;
+
+    }
+
+    // Update The Colors According To Color Mode
     CSS.colorModeSwitcher();
 
   }
 
-  ///// Color Mode Switcher
+  // Color Mode Switcher
   static colorModeSwitcher(){
     switch(CSS.currentColorMode){
       case CSS.colorModes.DARK:
