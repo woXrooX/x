@@ -41,10 +41,10 @@ export default class Footer{
       try{
        Footer.#contentFunc = await import(`../modules/footer.js`);
 
-
       }catch(error){
         Footer.#hide();
         return;
+
       }
 
       // Check If
@@ -68,7 +68,7 @@ export default class Footer{
     // Check If "body > footer" Exists
     if(!!Footer.#element === false) return;
 
-    Footer.#element.style.display = "none";
+    Footer.#element.classList.add("hide");
 
   }
 
@@ -76,7 +76,7 @@ export default class Footer{
     // Check If "body > footer" Exists
     if(!!Footer.#element === false) return;
 
-    Footer.#element.removeAttribute("style");
+    Footer.#element.classList.remove("hide");
 
   }
 
