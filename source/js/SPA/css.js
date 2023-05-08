@@ -122,13 +122,13 @@ export default class CSS{
 
     CSS.#loadColorBrand();
 
-    CSS.#detectColorMode();
+    CSS.detectColorMode();
 
   }
 
   ///// Color Mode
   // Detect Color Mode
-  static #detectColorMode(){
+  static detectColorMode(){
     // Get User Preferred Color Mode
     if(
       // If User Is In Session
