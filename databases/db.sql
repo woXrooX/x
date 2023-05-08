@@ -111,16 +111,16 @@ INSERT INTO languages (code, native_name)
     ("ja", "日本語 (にほんご／にっぽんご)")
 ;
 
--- -------------------------- app_color_scheme
+-- -------------------------- app_color_mode
 -- 1 Is For Dark Mode
 -- 2 Is For Light Mode
 
-CREATE TABLE IF NOT EXISTS `app_color_schemes` (
+CREATE TABLE IF NOT EXISTS `app_color_modes` (
   `id` INT NOT NULL UNIQUE auto_increment,
   `name` VARCHAR(10) NOT NULL UNIQUE,
   PRIMARY KEY (`id`)
 );
-INSERT INTO app_color_schemes (name)
+INSERT INTO app_color_modes (name)
   VALUES
     ("dark"),
     ("light")
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
   `currency` INT NULL,
   `app_language` INT NULL,
-  `app_color_scheme` INT NULL,
+  `app_color_mode` INT NULL,
 
   `last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
   FOREIGN KEY (currency) REFERENCES currencies(id) ON DELETE SET NULL,
   FOREIGN KEY (app_language) REFERENCES languages(id) ON DELETE SET NULL,
-  FOREIGN KEY (app_color_scheme) REFERENCES app_color_schemes(id) ON DELETE SET NULL,
+  FOREIGN KEY (app_color_mode) REFERENCES app_color_modes(id) ON DELETE SET NULL,
 
   PRIMARY KEY (`id`)
 );

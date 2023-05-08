@@ -134,13 +134,13 @@ export default class CSS{
       // If User Is In Session
       "user" in window.session &&
 
-      // If Session User Has "app_color_scheme"
-      "app_color_scheme" in window.session["user"] &&
+      // If Session User Has "app_color_mode"
+      "app_color_mode" in window.session["user"] &&
 
-      // If "app_color_scheme" Is In CSS.colorModes
-      Object.values(CSS.colorModes).includes(window.session["user"]["app_color_scheme"])
+      // If "app_color_mode" Is In CSS.colorModes
+      Object.values(CSS.colorModes).includes(window.session["user"]["app_color_mode"])
     )
-      CSS.currentColorMode = window.session["user"]["app_color_scheme"];
+      CSS.currentColorMode = window.session["user"]["app_color_mode"];
 
     // Get System Color Mode
     else if(window.matchMedia){

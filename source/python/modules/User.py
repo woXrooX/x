@@ -78,6 +78,7 @@ if __name__ != "__main__":
                 "username": session["user"]["username"],
                 "firstname": session["user"]["firstname"],
                 "lastname": session["user"]["lastname"],
+                "app_color_mode": session["user"]["app_color_mode"],
                 "authenticity_status": session["user"]["authenticity_status"],
                 "roles": session["user"]["roles"],
             }
