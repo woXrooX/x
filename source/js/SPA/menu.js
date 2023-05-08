@@ -10,8 +10,14 @@ export default class Menu{
 
   static #shown = false;
 
-  static #modes = ["normal", "alwaysOpen", "onlyLogos"];
-  static #currentMode = null;
+  // Modes
+  static #modes = Object.freeze({
+    DEFAULT: 0,
+    ALWAYS_OPEN: 1,
+    ICON_ONLY: 2
+  });
+
+  static currentMode = Menu.#modes.DEFAULT;
 
 
   /////////////////// Init
@@ -115,15 +121,18 @@ export default class Menu{
   // Hide
   static #hide(){
     // Check If Already Hidden
-    if(!Menu.#shown) return;
+    if(Menu.#shown === false) return;
 
-    // Check If Current Mode Is "alwaysOpen" Mode
-    if(Menu.#currentMode === 1) return;
+    // Check If Current Mode Is "ALWAYS_OPEN" Mode
+    if(Menu.currentMode === Menu.#modes.ALWAYS_OPEN) return;
 
     // Check if body > menu exists
     if(!!Menu.#elementMenu === false) return;
 
+    // Remove The Styles
     Menu.#elementMenu.removeAttribute("style");
+
+    // Hide The Cover
     window.Cover.hide();
 
     Menu.#shown = false;
@@ -140,9 +149,10 @@ export default class Menu{
 
     toggler.addEventListener("click", ()=>{
 
-      if(Menu.#currentMode === 1){
-        // Mode Change To "normal"
-        Menu.#currentMode = 0;
+      // DEFAULT
+      if(Menu.currentMode === Menu.#modes.ALWAYS_OPEN){
+        // Mode Change To "DEFAULT"
+        Menu.currentMode = Menu.#modes.DEFAULT;
 
         window.Cover.show();
 
@@ -152,14 +162,20 @@ export default class Menu{
         // Change The Lock Logo To Open
         toggler.innerHTML = "<x-icon color='#ffffff'>lockOpen</x-icon>";
 
-        // Header, Main, Footer Maximize
-        header.removeAttribute("style");
-        main.removeAttribute("style");
-        footer.removeAttribute("style");
+        // Remove Background Color Inline Rule
+        Menu.#elementMenu.style.removeProperty('background-color');
 
+        // Header, Main, Footer Maximize
+        // Remove Only What Was Added Not Entire Style Atribute Values
+        for(const element of [header, main, footer]){
+          element.style.removeProperty('width');
+          element.style.removeProperty('margin-left');
+        }
+
+      // ALWAYS_OPEN
       }else{
-        // Mode Change To "alwaysOpen"
-        Menu.#currentMode = 1;
+        // Mode Change To "ALWAYS_OPEN"
+        Menu.currentMode = Menu.#modes.ALWAYS_OPEN;
 
         window.Cover.hide();
 
@@ -169,7 +185,10 @@ export default class Menu{
         // Change The Lock Logo To Locked
         toggler.innerHTML = "<x-icon color='#ffffff'>lockLocked</x-icon>";
 
-        // Get Calculated Meni Width
+        // Change Menu Background Color To Darker Brand Hue Based Color So It Will Look Nicer On Light Mode
+        Menu.#elementMenu.style.backgroundColor = `hsla(${CSS.values.color.brand.hue}, 10%, 20%, 1)`;
+
+        // Get Live Calculated Menu Width
         const menuWidth = Menu.#elementMenu.offsetWidth + "px";
 
         // Header, Main, Footer Minimize

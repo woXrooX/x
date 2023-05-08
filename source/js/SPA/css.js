@@ -425,7 +425,7 @@ export default class CSS{
     `;
 
     CSS.rules.skeleton = `
-      body {
+      body{
         background-color: var(--color-surface-1);
         color: var(--color-text-primary);
         font-family: Quicksand;
@@ -623,13 +623,13 @@ export default class CSS{
       }
 
 
-      body > main {
+      body > main{
         width: 100vw;
         min-height: calc(100vh - var(--header-height));
 
       }
 
-      body > footer {
+      body > footer{
         background-color: var(--color-surface-2);
         color: var(--color-text-primary);
 
@@ -640,6 +640,9 @@ export default class CSS{
         display: grid;
         place-items: center;
 
+      }
+      body > footer.hide{
+        display: none;
       }
 
       @media only screen and (max-width: ${CSS.values.screenSize.phone}) {
