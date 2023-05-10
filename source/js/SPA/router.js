@@ -1,7 +1,8 @@
 "use strict";
 
 export default class Router{
-  static currentPage = null;
+  // Init Current Page With Initial Pathname
+  static currentPage = window.location.pathname;
 
   static async handle(){
     // Check If App Is Down If So Stop Handling Set appIsDown As Current Page
@@ -28,6 +29,14 @@ export default class Router{
         // Check If Page Alias Equals To Currnt Endpoint
         if(alias == window.location.pathname){
           endpoint = '/'+page;
+
+          // Check If Page Is Not Current Loaded Page
+          if(
+            '/'+Router.currentPage == window.location.pathname ||
+            Router.currentPage === "home" &&
+            window.location.pathname === '/'
+          ) return;
+
           Router.currentPage = page;
 
           // Break Out Of The Loops
