@@ -17,7 +17,7 @@ const form = `
 
     <column class="w-75 box-default p-5">
 
-      <form>
+      <form action="toPage" for="toPartOfThePage">
 
         <label>
           <p for='text'>Text</p>
@@ -47,6 +47,11 @@ const form = `
         <label>
           <p for='password'>Password</p>
           <input type='password' name='password'>
+        </label>
+
+        <label>
+          <p for='telephone'>Telephone</p>
+          <input type='tel' name='telephone'>
         </label>
 
         <label>
