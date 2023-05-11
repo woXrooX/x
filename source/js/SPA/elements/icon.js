@@ -26,6 +26,7 @@ export default class Icon extends HTMLElement{
 
         }
         icon > svg{
+          user-select: none;
           width: 100%;
           height: 100%;
 
