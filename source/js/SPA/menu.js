@@ -3,7 +3,8 @@
 export default class Menu{
   static selector = "body > menu";
   static #selectorMenuButton = "body > header > x-icon[for=menu]";
-  static #selectorHyperlinks = `${Menu.selector} > * > a`;
+  static #selectorParentMenuHyperlinks = `${Menu.selector} > main > section > section.parentMenu > a`;
+  static #selectorSubMenuHyperlinks = `${Menu.selector} > main > section > section.subMenu > a`;
 
   static #elementMenuHamburgerButton = null;
   static #elementMenu = null;
@@ -53,39 +54,82 @@ export default class Menu{
     document.querySelector(`${Menu.selector} > header > div[for=colorModeSwitcher]`).innerHTML =
       `<x-icon color="#ffffff">${CSS.currentColorMode === CSS.colorModes.DARK ? "light_mode" : "dark_mode"}</x-icon>`;
 
-    let hyperlinks = "";
+    let menus = "";
 
     for(const menu of window.CONF["menu"]["menus"])
       if(Menu.#menuGuard(menu["name"]) === true)
 
         // Hyperlink Blue Print
-        hyperlinks += `
-  <a href="${window.CONF["pages"][menu["name"]]["endpoints"][0]}">
-    <x-icon color="#ffffff">${"logo" in menu ? menu["logo"] : menu["name"]}</x-icon>
-    ${window.Lang.use(menu["name"])}
-  </a>
+        menus += `
+          <section>
+
+            <section class="parentMenu">
+              <a href="${window.CONF["pages"][menu["name"]]["endpoints"][0]}">
+                <x-icon color="#ffffff">${"logo" in menu ? menu["logo"] : menu["name"]}</x-icon>
+                ${window.Lang.use(menu["name"])}
+              </a>
+
+              ${"subMenu" in menu ? `<x-icon for="toggleSubMenu" color="#ffffff">arrow_bottom_small</x-icon>` : ""}
+            </section>
+
+
+            <section class="subMenu">${"subMenu" in menu ? Menu.#subMenuBuilder(menu["subMenu"]) : ""}</section>
+
+          </section>
         `;
 
 
     // Add Hyperlinks Into Menu > Main
-    Menu.#elementMenu.querySelector("main").innerHTML = hyperlinks;
+    Menu.#elementMenu.querySelector("main").innerHTML = menus;
 
     // After Adding Hyperlinks To Dom Create Hide Event For Each Of The Hyperlinks
     Menu.#onClickHyperlinksHide();
+
+    //
+    Menu.#showSubMenu();
 
   }
 
   /////////////////// On Click Events
   // Active
   static setActive(){
-    document.querySelectorAll(Menu.#selectorHyperlinks).forEach((a) => {
+    ///// Parent Menu
+    // Hyperlinks Of Parent Menu
+    const hyperlinksParentMenu = document.querySelectorAll(Menu.#selectorParentMenuHyperlinks);
+
+    // loop Through All The Hyperlinks Of Parent Menu
+    for(const a of hyperlinksParentMenu){
+      // De-Activate All
+      a.parentElement.removeAttribute("active");
+
+      // Activate Menu If Href Matches
+      if(a.getAttribute("href") == window.location.pathname) a.parentElement.setAttribute("active", "");
+
+      // Else Active The First Menu Item
+      else if(window.location.pathname == "/" || window.location.pathname == "" || window.location.pathname == "/home")
+        document.querySelector(`${Menu.#selectorParentMenuHyperlinks}:first-child`).parentElement.setAttribute("active", "");
+
+    }
+
+    ///// Sub Menu
+    // Hyperlinks Of Sub Menu
+    const hyperlinksSubMenu = document.querySelectorAll(Menu.#selectorSubMenuHyperlinks);
+    console.log(Menu.#selectorSubMenuHyperlinks, hyperlinksSubMenu);
+
+    // loop Through All The Hyperlinks Of Sub Menu
+    for(const a of hyperlinksSubMenu){
+      // De-Activate All
       a.removeAttribute("active");
 
+      // Activate Menu If Href Matches
       if(a.getAttribute("href") == window.location.pathname) a.setAttribute("active", "");
-      else if(window.location.pathname == "/" || window.location.pathname == "" || window.location.pathname == "/home")
-        document.querySelector("body > menu > * > a:first-child").setAttribute("active", "");
 
-    });
+      // Else Active The First Menu Item
+      else if(window.location.pathname == "/" || window.location.pathname == "" || window.location.pathname == "/home")
+        document.querySelector(`${Menu.#selectorParentMenuHyperlinks}:first-child`).setAttribute("active", "");
+
+    }
+
   }
 
   // On Click Menu Button Show The Menu
@@ -100,9 +144,35 @@ export default class Menu{
 
   // On Click Menu Anchors Hide The Menu
   static #onClickHyperlinksHide(){
-    document.querySelectorAll(Menu.#selectorHyperlinks).forEach((a) => {
-      a.addEventListener("click", Menu.#hide);
-    });
+    ///// Parent Menu
+    // Hyperlinks Of Parent Menu
+    const hyperlinksParentMenu = document.querySelectorAll(Menu.#selectorParentMenuHyperlinks);
+
+    // Assign Hide Method To On Click Event
+    for(const hyperlink of hyperlinksParentMenu)
+      hyperlink.addEventListener("click", Menu.#hide);
+
+    ///// Sub Menu
+    // Hyperlinks Of Sub Menu
+    const hyperlinksSubMenu = document.querySelectorAll(Menu.#selectorSubMenuHyperlinks);
+
+    // Assign Hide Method To On Click Event
+    for(const hyperlink of hyperlinksSubMenu)
+      hyperlink.addEventListener("click", Menu.#hide);
+
+  }
+
+  // On Click Sub Menu Trigger Icon Extend The Sub Menu
+  static #showSubMenu(){
+    const subMenuTogglers = document.querySelectorAll(`${Menu.selector} > main > section > section.parentMenu > x-icon[for=toggleSubMenu]`);
+
+    for(const toggler of subMenuTogglers)
+      toggler.onclick = ()=> {
+        toggler.classList.toggle("open");
+        toggler.parentElement.parentElement.querySelector("section.subMenu").classList.toggle("show");
+      }
+
+
   }
 
   /////////////////// Tools
@@ -240,6 +310,22 @@ export default class Menu{
 
     // Use Route Guard To Check Menus
     return window.Router.routeGuard(menu);
+
+  }
+
+  // Sub Menu HTML Builder
+  static #subMenuBuilder(subMenus){
+    let subMenusHtml = "";
+    for(const subMenu of subMenus)
+      if(Menu.#menuGuard(subMenu["name"]) === true)
+        subMenusHtml += `
+          <a href="${window.CONF["pages"][subMenu["name"]]["endpoints"][0]}">
+            <x-icon color="#ffffff">${"logo" in subMenu ? subMenu["logo"] : subMenu["name"]}</x-icon>
+            ${window.Lang.use(subMenu["name"])}
+          </a>
+        `;
+
+    return subMenusHtml;
 
   }
 

@@ -563,8 +563,6 @@ export default class CSS{
 
       }
       body > menu > header > div{
-        user-select: none;
-
         width: 30px;
         height: 30px;
       }
@@ -577,14 +575,10 @@ export default class CSS{
         gap: calc(var(--gap) / 2);
 
       }
-      body > menu > main > a{
-        color: white;
-        font-size: 1rem;
-
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: var(--gap);
+      body > menu > main > section > section.parentMenu{
+        display: grid;
+        grid-template-columns: 2fr auto;
+        place-items: center;
 
         border: 1px solid transparent;
         border-radius: var(--radius);
@@ -594,17 +588,86 @@ export default class CSS{
         transition-property: background-color, border;
 
       }
-      body > menu > main > a:where([active], :hover){
+      body > menu > main > section > section.parentMenu > a{
+        width: 100%;
+
+        color: white;
+        font-size: 1rem;
+
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: var(--gap);
+
+      }
+      body > menu > main > section > section.parentMenu:where([active], :hover){
         background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.3);
 
       }
-      body > menu > main > a:where([active]){
+      body > menu > main > section > section.parentMenu:where([active]){
         border: 1px solid white;
 
       }
-      body > menu > main > a > x-icon{
+      body > menu > main > section > section.parentMenu > a > x-icon{
         height: 30px;
         width: 30px;
+
+      }
+
+      body > menu > main > section > section.parentMenu > x-icon[for=toggleSubMenu]{
+        height: 30px;
+        width: 30px;
+
+        transition: var(--transition-velocity) ease-in-out transform;
+
+      }
+      body > menu > main > section > section.parentMenu > x-icon[for=toggleSubMenu].open{
+        transform: scaleY(-1);
+      }
+
+      body > menu > main > section > section.subMenu{
+        background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.3);
+
+        margin-top: 5px;
+        padding: calc(var(--padding) * 2);
+        border-radius: var(--radius);
+
+        display: none;
+        flex-direction: column;
+        gap: calc(var(--gap) / 2);
+
+      }
+      body > menu > main > section > section.subMenu.show{
+        display: flex;
+      }
+      body > menu > main > section > section.subMenu:empty{
+        display: none;
+      }
+      body > menu > main > section > section.subMenu > a{
+        width: 100%;
+
+        color: white;
+        font-size: 0.8rem;
+
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 7px;
+
+        border: 1px solid transparent;
+        border-radius: var(--radius);
+        padding: var(--padding) calc(var(--padding) * 2);
+
+        transition: var(--transition-velocity) ease-in-out;
+        transition-property: background-color, border;
+
+      }
+      body > menu > main > section > section.subMenu > a:where([active], :hover){
+        background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.3);
+
+      }
+      body > menu > main > section > section.subMenu > a:where([active]){
+        border: 1px solid white;
 
       }
 
