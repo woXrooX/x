@@ -6,10 +6,11 @@ v1.0.0 (MVP)
   2. Log In ✅️
   3. Log Out ✅️
   4. Menu (Dynamic) ✅️
-  5. Payment System ⚠️
-    5.1. Visa Direct 🛠️
+  5. Payment System ⚠️ 🛠
+    5.1. Visa Direct️
     5.2. Mastercard
     5.3. PayPal
+    5.4. Stripe 🛠
 
   6. Simplest UI System ✅️
     6.1. Layout System ✅️
@@ -21,18 +22,18 @@ v1.0.0 (MVP)
   9. Dynamic Language ✅️
 
 v2.0.0 (Tooling)
-  1. Sub Routing System (/channel/video/1234)
+  1. Sub Routing System W/ Route Arguments (/channel/video/1234)
   2. Browser Extensions
   3. Full Home Made Payment Systems
   4. Sign Up (Through Social Platforms) + (Phone Number + Verification)
   5. Dynamic And Multi-Language ✅️
-  6. Menu (Sub Menus)
+  6. Menu (Sub Menus) ✅️
   7. Chart Tool (Front-End)
-  8. Mobile Friendly 🛠️
+  8. Mobile Friendly ✅️
   9. Deployment Ready Structure (External Files) ✅️
     a. Pages (Front, Back) ✅️
     b. SVG Files ✅️
-    C. JavaScript Files 🛠️
+    C. JavaScript Files ✅️
     d. Dictionaries ✅️
     e. CSS Files ✅️
     f. Fonts ✅️
@@ -47,7 +48,7 @@ v3.0.0 (Security)
 v4.0.0 (UI / UX / Customizations / Versatility)
   1. Admin Panel
   2. Color Science
-    2.1. Customizable Site Color Scheme
+    2.1. Customizable Site Color Scheme ✅️
     2.2. Light-Dark Mode Switcher ✅️
     2.3. Multiple Built-In Site Themes
 
