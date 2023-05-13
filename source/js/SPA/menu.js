@@ -114,7 +114,6 @@ export default class Menu{
     ///// Sub Menu
     // Hyperlinks Of Sub Menu
     const hyperlinksSubMenu = document.querySelectorAll(Menu.#selectorSubMenuHyperlinks);
-    console.log(Menu.#selectorSubMenuHyperlinks, hyperlinksSubMenu);
 
     // loop Through All The Hyperlinks Of Sub Menu
     for(const a of hyperlinksSubMenu){
