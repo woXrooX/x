@@ -202,7 +202,7 @@ export default class Select extends HTMLElement{
           option.style.display = "none";
 
           // Show Option On "optionsSelected"
-          this.shadow.querySelector(`main > section#optionsSelected > div[value=${option.getAttribute("value")}]`).style.display = "block";
+          this.shadow.querySelector(`main > section#optionsSelected > div[value="${option.getAttribute("value")}"]`).style.display = "block";
 
           // Add To Form Entry
           entries.append(this.getAttribute('name'), option.getAttribute("value"));
@@ -228,7 +228,7 @@ export default class Select extends HTMLElement{
           option.style.display = "none";
 
           // Show Option On "optionsToSelect"
-          this.shadow.querySelector(`main > section#optionsToSelect > div[value=${option.getAttribute("value")}]`).style.display = "block";
+          this.shadow.querySelector(`main > section#optionsToSelect > div[value="${option.getAttribute("value")}"]`).style.display = "block";
 
           // Delete Form Entry
           entries.delete(this.getAttribute('name'), option.getAttribute("value"));
