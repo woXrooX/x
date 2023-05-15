@@ -5,7 +5,7 @@ export default class Language{
   // Can Be Used For Translations And Just For Normal Use Cases
   static translate(keyword, code = window.LANG_CODE){
     // Check If keyword Is Valid
-    if(!!keyword === false) return window.LANG_DICT["unkow"][code];
+    if(!!keyword === false || keyword === '') return window.LANG_DICT["unknown"][code];
 
     try{
       return window.LANG_DICT[keyword][code];
