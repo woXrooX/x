@@ -439,8 +439,17 @@ export default function content(){
                 # Images
                 os.makedirs(f'{path}images', mode=0o777, exist_ok=True)
 
-                # PDF
-                os.makedirs(f'{path}PDF', mode=0o777, exist_ok=True)
+                # Videos
+                os.makedirs(f'{path}videos', mode=0o777, exist_ok=True)
+
+                # Audios
+                os.makedirs(f'{path}audios', mode=0o777, exist_ok=True)
+
+                # Files (For all kinds of files. For example: .zip or .exe ...)
+                os.makedirs(f'{path}files', mode=0o777, exist_ok=True)
+
+                # Documents (.pdf, .doc, .docx, .txt ...)
+                os.makedirs(f'{path}documents', mode=0o777, exist_ok=True)
 
                 Log.success(f"User Folders Created @: {path}")
 
