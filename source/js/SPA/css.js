@@ -1080,6 +1080,9 @@ export default class CSS{
       /************ input[type=submit] & button START ************/
       button,
       input[type=submit]{
+        cursor: pointer;
+        user-select: none;
+
         background-color: var(--color-main);
         color: white;
         text-transform: uppercase;
@@ -1091,13 +1094,11 @@ export default class CSS{
         padding: 0px var(--f-padding);
         border-radius: var(--f-radius);
         border: none;
-        box-shadow: var(--shadow-default);
-
-        cursor: pointer;
+        box-shadow: 0px 5px 10px 0px rgba(0 0 0 / 0.5);
 
         filter: brightness(120%);
         transition: var(--transition-velocity) ease-in-out;
-        transition-property: filter transform;
+        transition-property: filter transform box-shadow;
 
       }
 
@@ -1105,14 +1106,18 @@ export default class CSS{
       button:not(:disabled):where(:hover),
       input[type=submit]:not(:disabled):where(:hover){
         filter: brightness(80%);
-        transform: scale(1.1);
       }
 
-      /* On Activate */
-      button:not(:disabled):where(:active, :focus),
-      input[type=submit]:not(:disabled):where(:active, :focus){
-        filter: brightness(80%);
-        transform: scale(0.8);
+      /* On Active */
+      button:not(:disabled):where(:active),
+      input[type=submit]:not(:disabled):where(:active){
+        transform: translateY(5px);
+        box-shadow: 0px 5px 10px -5px rgba(0 0 0 / 1);
+      }
+
+      /* On Focus */
+      button:not(:disabled):where(:focus),
+      input[type=submit]:not(:disabled):where(:focus){
       }
 
       /************ input[type=submit] & button END ************/
