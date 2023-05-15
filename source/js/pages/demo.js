@@ -125,20 +125,23 @@ const form = `
           </select>
         </label>
 
-        <x-select name="customSelect" max="5" placeholder="Custom Select">
-          [
-            {"value": "one", "placeholder": "One"},
-            {"value": "two", "placeholder": "Two"},
-            {"value": "three", "placeholder": "Three"},
-            {"value": "four", "placeholder": "Four"},
-            {"value": "five", "placeholder": "Five"},
-            {"value": "six", "placeholder": "Six"},
-            {"value": "seven", "placeholder": "Seven"},
-            {"value": "eight", "placeholder": "Eight"},
-            {"value": "nine", "placeholder": "Nine"},
-            {"value": "longText", "placeholder": "Looooong Text"}
-          ]
-        </x-select>
+        <label>
+          <p for='customSelect'>Custom Select</p>
+          <x-select name="customSelect" max="5" placeholder="Custom Select">
+            [
+              {"value": "one", "placeholder": "One"},
+              {"value": "two", "placeholder": "Two"},
+              {"value": "three", "placeholder": "Three"},
+              {"value": "four", "placeholder": "Four"},
+              {"value": "five", "placeholder": "Five"},
+              {"value": "six", "placeholder": "Six"},
+              {"value": "seven", "placeholder": "Seven"},
+              {"value": "eight", "placeholder": "Eight"},
+              {"value": "nine", "placeholder": "Nine"},
+              {"value": "longText", "placeholder": "Looooong Text"}
+            ]
+          </x-select>
+        </label>
 
         <label>
           <p for='selectDisabled'>Select Disabled</p>
