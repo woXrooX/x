@@ -143,7 +143,6 @@ export default class Select extends HTMLElement{
         this.MAX = parseInt(this.getAttribute('max'));
 
       else this.MAX = this.options.length || this.MAX;
-      console.log(this.MAX);
 
       for(const option of this.options)
         optionsHtml += `<div value="${option["value"]}">${option.placeholder}</div>`;
