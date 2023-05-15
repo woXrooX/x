@@ -1094,7 +1094,7 @@ export default class CSS{
         padding: 0px var(--f-padding);
         border-radius: var(--f-radius);
         border: none;
-        box-shadow: 0px 5px 10px 0px rgba(0 0 0 / 0.5);
+        box-shadow: 0px 5px 10px 0px rgba(0 0 0 / 0.3);
 
         filter: brightness(120%);
         transition: var(--transition-velocity) ease-in-out;
@@ -1112,7 +1112,7 @@ export default class CSS{
       button:not(:disabled):where(:active),
       input[type=submit]:not(:disabled):where(:active){
         transform: translateY(5px);
-        box-shadow: 0px 5px 10px -5px rgba(0 0 0 / 1);
+        box-shadow: 0px 5px 10px -5px rgba(0 0 0 / 0.3);
       }
 
       /* On Focus */
