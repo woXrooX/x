@@ -6,7 +6,7 @@ export default class Share extends HTMLElement{
   static {
     Share.#template.innerHTML = `
       <share>
-        <x-icon>share</x-icon>
+        <x-icon name="share"></x-icon>
         <section for="modal"></section>
       </share>
     `;
@@ -71,27 +71,27 @@ export default class Share extends HTMLElement{
           <x-modal trigger="auto">
 
             <a href="https://twitter.com/intent/tweet?url=${shareData.url}&text=${shareData.text}" target="_blank">
-              <x-icon>twitter_original</x-icon>
+              <x-icon name="twitter_original"></x-icon>
             </a>
 
             <a href="https://www.linkedin.com/sharing/share-offsite/?url=${shareData.url}&title=${shareData.title}&summary=${shareData.text}&source=${shareData.url}" target="_blank">
-              <x-icon>linkedin_original</x-icon>
+              <x-icon name="linkedin_original"></x-icon>
             </a>
 
             <a href="https://www.facebook.com/sharer.php?u=${shareData.url}&quote=${shareData.text}" target="_blank">
-              <x-icon>facebook_original</x-icon>
+              <x-icon name="facebook_original"></x-icon>
             </a>
 
             <a href="https://www.instagram.com/share?url=${shareData.url}&caption=${shareData.text}" target="_blank">
-              <x-icon>instagram_original</x-icon>
+              <x-icon name="instagram_original"></x-icon>
             </a>
 
             <a href="https://t.me/share/url?url=${shareData.url}&text=${shareData.text}" target="_blank">
-              <x-icon>telegram_original</x-icon>
+              <x-icon name="telegram_original"></x-icon>
             </a>
 
             <a href="https://www.reddit.com/submit?selftext=${shareData.text}&title=${shareData.title}&url=${shareData.url}" target="_blank">
-              <x-icon>reddit_original</x-icon>
+              <x-icon name="reddit_original"></x-icon>
             </a>
 
           </x-modal>

@@ -1,5 +1,3 @@
-// <x-icon>yzoken</x-icon>
-
 "use strict";
 
 export default class Copy extends HTMLElement{
@@ -8,7 +6,7 @@ export default class Copy extends HTMLElement{
   static {
     Copy.#template.innerHTML = `
       <copy>
-        <x-icon>copyContent</x-icon>
+        <x-icon name="copyContent"></x-icon>
       </copy>
     `;
   }
@@ -67,7 +65,7 @@ export default class Copy extends HTMLElement{
         this.copyElement.setAttribute("disabled", "");
 
         // Change The Copy Icon To Done
-        this.copyElement.innerHTML = "<x-icon color='var(--color-success)'>done</x-icon>";
+        this.copyElement.innerHTML = "<x-icon color='var(--color-success)' name='done'></x-icon>";
 
         // Show Toast
         window.Toast.new("info", "Copied");
@@ -78,7 +76,7 @@ export default class Copy extends HTMLElement{
           this.copyElement.removeAttribute("disabled");
 
           // Back To Copy Icon
-          this.copyElement.innerHTML = "<x-icon>copyContent</x-icon>";
+          this.copyElement.innerHTML = "<x-icon name='copyContent'></x-icon>";
 
           // State: Un-Clicked
           this.isClicked = false;

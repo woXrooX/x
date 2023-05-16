@@ -52,7 +52,7 @@ export default class Menu{
 
     // Create Color Mode Switcher Button According To Current Color Mode
     document.querySelector(`${Menu.selector} > header > div[for=colorModeSwitcher]`).innerHTML =
-      `<x-icon color="#ffffff">${CSS.currentColorMode === CSS.colorModes.DARK ? "light_mode" : "dark_mode"}</x-icon>`;
+      `<x-icon color="#ffffff" name="${CSS.currentColorMode === CSS.colorModes.DARK ? "light_mode" : "dark_mode"}"></x-icon>`;
 
     let menus = "";
 
@@ -65,11 +65,11 @@ export default class Menu{
 
             <section class="parentMenu">
               <a href="${window.CONF["pages"][menu["name"]]["endpoints"][0]}">
-                <x-icon color="#ffffff">${"logo" in menu ? menu["logo"] : menu["name"]}</x-icon>
+                <x-icon color="#ffffff" name="${"logo" in menu ? menu["logo"] : menu["name"]}"></x-icon>
                 ${window.Lang.use(menu["name"])}
               </a>
 
-              ${"subMenu" in menu ? `<x-icon for="toggleSubMenu" color="#ffffff">arrow_bottom_small</x-icon>` : ""}
+              ${"subMenu" in menu ? `<x-icon for="toggleSubMenu" color="#ffffff" name="arrow_bottom_small"></x-icon>` : ""}
             </section>
 
 
@@ -232,7 +232,7 @@ export default class Menu{
         Menu.#elementMenuHamburgerButton.style.visibility = "visible";
 
         // Change The Lock Logo To Open
-        toggler.innerHTML = "<x-icon color='#ffffff'>lockOpen</x-icon>";
+        toggler.innerHTML = "<x-icon color='#ffffff' name='lockOpen'></x-icon>";
 
         // Remove Background Color Inline Rule
         Menu.#elementMenu.style.removeProperty('background-color');
@@ -255,7 +255,7 @@ export default class Menu{
         Menu.#elementMenuHamburgerButton.style.visibility = "hidden";
 
         // Change The Lock Logo To Locked
-        toggler.innerHTML = "<x-icon color='#ffffff'>lockLocked</x-icon>";
+        toggler.innerHTML = "<x-icon color='#ffffff' name='lockLocked'></x-icon>";
 
         // Change Menu Background Color To Darker Brand Hue Based Color So It Will Look Nicer On Light Mode
         Menu.#elementMenu.style.backgroundColor = `hsla(${CSS.values.color.brand.hue}, 10%, 20%, 1)`;
@@ -282,12 +282,12 @@ export default class Menu{
     switcher.addEventListener("click", ()=>{
       // Dark Mode
       if(window.CSS.currentColorMode === window.CSS.colorModes.LIGHT){
-        switcher.innerHTML = "<x-icon color='#ffffff'>light_mode</x-icon>";
+        switcher.innerHTML = "<x-icon color='#ffffff' name='light_mode'></x-icon>";
         window.CSS.currentColorMode = window.CSS.colorModes.DARK;
       }
       // Light Mode
       else{
-        switcher.innerHTML = "<x-icon color='#ffffff'>dark_mode</x-icon>";
+        switcher.innerHTML = "<x-icon color='#ffffff' name='dark_mode'></x-icon>";
         window.CSS.currentColorMode = window.CSS.colorModes.LIGHT;
       }
 
@@ -319,7 +319,7 @@ export default class Menu{
       if(Menu.#menuGuard(subMenu["name"]) === true)
         subMenusHtml += `
           <a href="${window.CONF["pages"][subMenu["name"]]["endpoints"][0]}">
-            <x-icon color="#ffffff">${"logo" in subMenu ? subMenu["logo"] : subMenu["name"]}</x-icon>
+            <x-icon color="#ffffff" name="${"logo" in subMenu ? subMenu["logo"] : subMenu["name"]}"></x-icon>
             ${window.Lang.use(subMenu["name"])}
           </a>
         `;

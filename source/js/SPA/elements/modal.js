@@ -13,7 +13,7 @@ export default class Modal extends HTMLElement{
     Modal.#template.innerHTML = `
       <modal>
         <header>
-          <x-icon>x</x-icon>
+          <x-icon name="x"></x-icon>
         </header>
         <main></main>
       </modal>
@@ -152,10 +152,10 @@ export default class Modal extends HTMLElement{
 
           if(this.getAttribute("type") === "icon"){
             if(this.hasAttribute("button") === true)
-              this.shadow.querySelector("trigger").innerHTML = `<button><x-icon color="ffffff">${this.getAttribute("value")}</x-icon></button>`;
+              this.shadow.querySelector("trigger").innerHTML = `<button><x-icon color="ffffff" name="${this.getAttribute("value")}"></x-icon></button>`;
 
             else
-              this.shadow.querySelector("trigger").innerHTML = `<x-icon color="ffffff">${this.getAttribute("value")}</x-icon>`;
+              this.shadow.querySelector("trigger").innerHTML = `<x-icon color="ffffff" name="${this.getAttribute("value")}"></x-icon>`;
 
           }
 

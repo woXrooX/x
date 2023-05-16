@@ -1,4 +1,4 @@
-// <x-icon toggle="trash" disabled="false" color="red" icon-name="home"></x-icon>
+// <x-icon toggle="trash" disabled="false" color="red" name="home"></x-icon>
 // xIcon.setDisabled = false;
 
 // SVG shadow
@@ -69,7 +69,7 @@ export default class Icon extends HTMLElement{
     this.elementIcon = this.shadow.querySelector("icon");
 
     // Set The Initial Icon
-    this.#setIcon(this.getAttribute("icon-name"));
+    this.#setIcon(this.getAttribute("name"));
 
     // Disabled
     // Check If Parent Has Attribute Disabled Then Disable Icon
@@ -108,8 +108,8 @@ export default class Icon extends HTMLElement{
     // If No "toggle" Attribute Then Exit The Method
     if(this.hasAttribute("toggle") === false) return;
 
-    // Set Icon To "icon-name" Value
-    if(this.toggled === true) this.#setIcon(this.getAttribute("icon-name"));
+    // Set Icon To "name" Value
+    if(this.toggled === true) this.#setIcon(this.getAttribute("name"));
 
     // Set Icon To "toggle" Value
     else this.#setIcon(this.getAttribute("toggle"));
@@ -131,14 +131,14 @@ export default class Icon extends HTMLElement{
 
   ////////// Getters
   // Get Icon Name
-  get iconName(){
-    return this.getAttribute("icon-name");
+  get name(){
+    return this.getAttribute("name");
   }
 
   ////////// Setters
   // Set Icon Name
-  set iconName(value){
-    this.setAttribute("icon-name", value);
+  set name(value){
+    this.setAttribute("name", value);
   }
 
   set setDisabled(value){
@@ -159,8 +159,8 @@ export default class Icon extends HTMLElement{
   ////////// Observer
   // On Observed Atributes Change
   attributeChangedCallback(attributeName, oldValue, newValue){
-    // Update Icon On "icon-name" Change
-    if(attributeName === "icon-name" && oldValue !== newValue) this.#setIcon(newValue);
+    // Update Icon On "name" Change
+    if(attributeName === "name" && oldValue !== newValue) this.#setIcon(newValue);
 
     // Update "disabled" Status
     if(attributeName === "disabled" && oldValue !== newValue) this.setDisabled = newValue;
@@ -169,7 +169,7 @@ export default class Icon extends HTMLElement{
 
   // Attributes To Be Observed
   static get observedAttributes(){
-    return ["disabled", "icon-name"];
+    return ["disabled", "name"];
   }
 
 };
