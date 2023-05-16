@@ -1,5 +1,3 @@
-// https://web.dev/more-capable-form-controls/
-
 "use strict";
 
 export default class Select extends HTMLElement{
@@ -240,26 +238,7 @@ export default class Select extends HTMLElement{
 
     }
 
-
   }
-
-  ////// Form Methods/APIs
-  // Form controls usually expose a "value" property
-  // get value() { return this.value_; }
-  // set value(v) { this.value_ = v; }
-  //
-  // // The following properties and methods aren't strictly required,
-  // // but browser-level form controls provide them. Providing them helps
-  // // ensure consistency with browser-provided controls.
-  // get form() { return this.internals_.form; }
-  // get name() { return this.getAttribute('name'); }
-  // get type() { return this.localName; }
-  // get validity() {return this.internals_.validity; }
-  // get validationMessage() {return this.internals_.validationMessage; }
-  // get willValidate() {return this.internals_.willValidate; }
-  //
-  // checkValidity() { return this.internals_.checkValidity(); }
-  // reportValidity() {return this.internals_.reportValidity(); }
 
 };
 
