@@ -1,4 +1,6 @@
-// <x-icon>yzoken</x-icon>
+// <x-icon toggle="trash" disabled="false" color="red" icon-name="home"></x-icon>
+// xIcon.setDisabled = false;
+
 // SVG shadow
 // filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
 
@@ -20,11 +22,31 @@ export default class Icon extends HTMLElement{
     CSS: {
       const style = document.createElement('style');
       style.textContent = `
+
+        .disabled{
+          cursor: not-allowed !important;
+          transition: none !important;
+          transform: none !important;
+          opacity: 0.5 !important;
+        }
+
         icon{
-          cursor: ${this.parentElement.getAttribute("disabled") !== null ? 'not-allowed' : 'pointer'};
+          cursor: pointer;
+          user-select: none;
+
           display: block;
 
+          transition: 100ms ease-in-out;
+          transition-property: transform;
+
         }
+        icon:hover{
+          transform: scale(1.3);
+        }
+        icon:active{
+          transform: scale(0.5);
+        }
+
         icon > svg{
           user-select: none;
 
@@ -33,50 +55,121 @@ export default class Icon extends HTMLElement{
 
           fill: ${this.getAttribute("color") || "var(--color-text-primary)"};
 
-          filter: brightness(100%);
-
-          transition: 100ms ease-in-out;
-          transition-property: transform, filter;
-
         }
+
       `;
       this.shadow.appendChild(style);
+
     }
 
     // Clone And Append Template
     this.shadow.appendChild(Icon.#template.content.cloneNode(true));
 
+    // Element Icon
+    this.elementIcon = this.shadow.querySelector("icon");
 
-    // SVG
-    this.shadow.querySelector("icon").innerHTML = window.SVG.use(this.textContent);
+    // Set The Initial Icon
+    this.#setIcon(this.getAttribute("icon-name"));
 
-    this.svg = this.shadow.querySelector("icon>svg");
+    // Disabled
+    // Check If Parent Has Attribute Disabled Then Disable Icon
+    this.disabled = this.parentElement.hasAttribute("disabled") === true ? true : false;
+    // Initial Disabled?Enabled Status Update
+    this.disabled === true ? this.#disable() : this.#enable();
+
+    // Is Toggled?
+    this.toggled = false;
 
     Events: {
-      // Hover In
-      this.addEventListener("mouseover", ()=>{
-        this.svg.style.filter = "brightness(90%)";
-        this.svg.style.transform = "scale(1.1)";
+      // Click
+      this.addEventListener("click", ()=>{
+        this.#toggle();
       });
+    }
 
-      // Hover Out
-      this.addEventListener("mouseout", ()=>{
-        this.svg.style.filter = "brightness(100%)";
-        this.svg.style.transform = "scale(1)";
-      });
+  }
 
-      // Down
-      this.addEventListener("mousedown", ()=>{
-        this.svg.style.transform = "scale(0.5)";
-      });
+  ////////// Helpers
+  // Set Icon
+  #setIcon(iconName){
+    this.elementIcon.innerHTML = window.SVG.use(iconName);
 
-      // Up
-      this.addEventListener("mouseup", ()=>{
-        this.svg.style.transform = "scale(1)";
-      });
+    // Update SVG Variable After New SVG Element Inserted
+    this.svg = this.shadow.querySelector("icon>svg");
+
+  }
+
+  // Toggler
+  #toggle(){
+
+    // If Disabled Do Nothing
+    if(this.disabled === true) return;
+
+    // If No "toggle" Attribute Then Exit The Method
+    if(this.hasAttribute("toggle") === false) return;
+
+    // Set Icon To "icon-name" Value
+    if(this.toggled === true) this.#setIcon(this.getAttribute("icon-name"));
+
+    // Set Icon To "toggle" Value
+    else this.#setIcon(this.getAttribute("toggle"));
+
+    // Update The Value
+    this.toggled = !this.toggled;
+
+  }
+
+  // Disabler Method
+  #disable(){
+    this.elementIcon.classList.add("disabled");
+  }
+
+  // Enabler Method
+  #enable(){
+    this.elementIcon.classList.remove("disabled");
+  }
+
+  ////////// Getters
+  // Get Icon Name
+  get iconName(){
+    return this.getAttribute("icon-name");
+  }
+
+  ////////// Setters
+  // Set Icon Name
+  set iconName(value){
+    this.setAttribute("icon-name", value);
+  }
+
+  set setDisabled(value){
+    // Disable
+    if(value === "false" || value === false){
+      this.disabled = false;
+      this.#enable();
+
+    // Enable
+    }else{
+      this.disabled = true;
+      this.#disable();
 
     }
 
+  }
+
+  ////////// Observer
+  // On Observed Atributes Change
+  attributeChangedCallback(attributeName, oldValue, newValue){
+    // Update Icon On "icon-name" Change
+    if(attributeName === "icon-name" && oldValue !== newValue) this.#setIcon(newValue);
+
+    // Update "disabled" Status
+    if(attributeName === "disabled" && oldValue !== newValue) this.setDisabled = newValue;
+
+  }
+
+  // Attributes To Be Observed
+  static get observedAttributes(){
+    return ["disabled", "icon-name"];
   }
 
 };
