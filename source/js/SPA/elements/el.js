@@ -1,6 +1,15 @@
+// Useful Links
+
+// Native Form Behaviour
+// https://web.dev/more-capable-form-controls/
+
 "use strict";
 
 export default class El extends HTMLElement{
+  //// Native Form Behaviour
+  // Identify the element as a form-associated custom element
+  static formAssociated = true;
+
   static #template = document.createElement("template");
 
   static {
@@ -12,6 +21,12 @@ export default class El extends HTMLElement{
   constructor(){
     super();
 
+    //// Native Form Behaviour
+    // Get access to the internal form control APIs
+    this.internals_ = this.attachInternals();
+    // internal value for this control
+    this.value_ = null;
+
     // Closed
     this.shadow = this.attachShadow({mode: 'closed'});
 
@@ -19,9 +34,6 @@ export default class El extends HTMLElement{
     // this.attachShadow({mode: 'open'});
     // this.shadowRoot.appendChild(Node);
     // this.shadowRoot.querySelector("toast>main>icon").innerHTML = "HTML";
-
-    // Clone And Append Template
-    this.shadow.appendChild(El.#template.content.cloneNode(true));
 
     DOM: {
       // const content = JSON.parse(this.textContent);
@@ -37,6 +49,19 @@ export default class El extends HTMLElement{
     //     style.textContent = ``;
     //     // shadow.appendChild(style);
     // }
+
+    // Clone And Append Template
+    this.shadow.appendChild(El.#template.content.cloneNode(true));
+
+
+    //// Native Form Behaviour
+    // Create FormData
+    const entries = new FormData();
+    // Add To Form Entry
+    entries.append("name", "value");
+    // Add To Form Data
+    this.internals_.setFormValue(entries);
+
   }
 
   connectedCallback(){
@@ -61,6 +86,25 @@ export default class El extends HTMLElement{
   attributeChangedCallback(attributeName, oldValue, newValue){
     console.log("attributeChangedCallback");
   }
+
+  ////// Form Methods/APIs
+  // Form controls usually expose a "value" property
+  // get value() { return this.value_; }
+  // set value(v) { this.value_ = v; }
+  //
+  // // The following properties and methods aren't strictly required,
+  // // but browser-level form controls provide them. Providing them helps
+  // // ensure consistency with browser-provided controls.
+  // get form() { return this.internals_.form; }
+  // get name() { return this.getAttribute('name'); }
+  // get type() { return this.localName; }
+  // get validity() {return this.internals_.validity; }
+  // get validationMessage() {return this.internals_.validationMessage; }
+  // get willValidate() {return this.internals_.willValidate; }
+  //
+  // checkValidity() { return this.internals_.checkValidity(); }
+  // reportValidity() {return this.internals_.reportValidity(); }
+
 
 };
 
