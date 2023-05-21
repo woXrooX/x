@@ -354,6 +354,11 @@ export default class CSS{
         src:url("/fonts/Marcellus-Regular.ttf");
       }
 
+      @font-face{
+        font-family: SpecialElite;
+        src:url("/fonts/SpecialElite-Regular.ttf");
+      }
+
       /*********************** FONTS END ***********************/
     `;
 

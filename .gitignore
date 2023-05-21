@@ -20,6 +20,7 @@ source/fonts/*
 !source/fonts/Macondo-Regular.ttf
 !source/fonts/Philosopher-Regular.ttf
 !source/fonts/Marcellus-Regular.ttf
+!source/fonts/SpecialElite-Regular.ttf
 
 ################ JavaScripts
 source/js/modules/*

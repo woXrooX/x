@@ -535,6 +535,11 @@ const fonts = `
             <td><span style="font-family: Marcellus;">When Creativity Meets Technology<span></td>
           </tr>
 
+          <tr>
+            <td>SpecialElite</td>
+            <td><span style="font-family: SpecialElite;">When Creativity Meets Technology<span></td>
+          </tr>
+
         </tbody>
 
       </table>
