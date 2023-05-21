@@ -84,7 +84,7 @@ export default class Tooltip extends HTMLElement{
             width: 30px;
 
             color: var(--color-${this.type});
-            font-size: 1em;
+            font-size: 1rem;
             font-weight: bold;
             text-align: center;
 
@@ -109,10 +109,11 @@ export default class Tooltip extends HTMLElement{
 
             display: block;
 
-            background-color: var(--color-main);
             color: white;
-
+            font-size: 0.7rem;
+            background-color: hsla(${CSS.values.color.brand.hue}, 10%, 10%, 1);     
             opacity: 0;
+            
 
             padding: calc(var(--padding) * 2);
             border-radius: var(--radius);
@@ -192,7 +193,7 @@ export default class Tooltip extends HTMLElement{
             margin-left: -5px;
             border-width: 5px;
             border-style: solid;
-            border-color: var(--color-main) transparent transparent transparent;
+            border-color: hsla(${CSS.values.color.brand.hue}, 10%, 10%, 1) transparent transparent transparent;
 
           }
 
