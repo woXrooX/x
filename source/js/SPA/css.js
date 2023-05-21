@@ -934,6 +934,7 @@ export default class CSS{
 
       /************ label START ************/
       form label{
+        width: 100%;
       }
       /************ label START ************/
 
@@ -1257,30 +1258,20 @@ export default class CSS{
 
       row, column{
         display: flex;
-        /* gap: ${CSS.values.gap.default}; */
 
       }
 
       row{
-        /* border: 1px red solid; */
-
-        /* background-color: ${CSS.values.color.surface["3"]}; */
         width: 100%;
-
         flex-direction: row;
         justify-content: center;
-        /* align-items: center; */
 
       }
 
       column{
-        /* border: 1px pink solid; */
-
-        /* background-color: ${CSS.values.color.surface["4"]}; */
         width: auto;
 
         flex-direction: column;
-        /* justify-content: center; */
         align-items: center;
 
       }
