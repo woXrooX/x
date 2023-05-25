@@ -124,9 +124,9 @@ def signUp():
             # On Success Redirect & Update Front-End Session
             return response(
                 type="success",
-                message="success",
+                message="eMailConfirmationCodeHasBeenSent",
                 setSessionUser=True,
-                toast={"type":"info","content":"eMailConfirmationCodeHasBeenSent"},
+                toast=True,
                 redirect="eMailConfirmation",
                 domChange=["menu"]
             )

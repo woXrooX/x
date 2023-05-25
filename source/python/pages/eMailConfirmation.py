@@ -63,7 +63,7 @@ def eMailConfirmation():
 
             return response(
                 type="success",
-                message="success",
-                toast={"type":"success", "content":"eMailVerificationSuccess"},
+                message="eMailVerificationSuccess",
+                toast=True,
                 redirect="home"
             )
