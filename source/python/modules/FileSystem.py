@@ -448,7 +448,7 @@ export default function content(){
                 # Files (For all kinds of files. For example: .zip or .exe ...)
                 os.makedirs(f'{path}files', mode=0o777, exist_ok=True)
 
-                # Documents (.pdf, .doc, .docx, .txt ...)
+                # Documents (All kinds of files used as a document. For example it can be .png file but the image contex is some kind certificate)
                 os.makedirs(f'{path}documents', mode=0o777, exist_ok=True)
 
                 Log.success(f"User Folders Created @: {path}")
