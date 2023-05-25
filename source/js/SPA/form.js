@@ -123,7 +123,13 @@ export default class Form{
       }
 
       // Toast
-      if("toast" in response["actions"]) window.Toast.new(response["actions"]["toast"]["type"], response["actions"]["toast"]["content"]);
+      if("toast" in response["actions"] && response["actions"]["toast"] === true)
+        Form.#response({
+          form: form,
+          type: response["type"],
+          message: response["message"],
+          toast: true
+        });
 
       // Dom Update
       if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));

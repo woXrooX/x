@@ -22,7 +22,7 @@ if __name__ != "__main__":
         updateConf=False,
         setSessionUser=False,
         deleteSessionUser=False,
-        toast={},
+        toast=False,
         domChange=[],
         redirect=False,
         reload=False,
@@ -71,7 +71,8 @@ if __name__ != "__main__":
         if deleteSessionUser is True: actionsDict["deleteSessionUser"] = 0
 
         ## toast
-        if toast: actionsDict["toast"] = toast
+        if toast is True: actionsDict["toast"] = True
+        else: actionsDict["toast"] = False
 
         ## domChange
         if domChange: actionsDict["domChange"] = domChange
