@@ -105,9 +105,20 @@ if __name__ != "__main__":
         # Initiate System Files And Folders
         @staticmethod
         def init():
+            ################################ CleanUp
+            Log.center("Clean Up", '=')
+            
+            ################ Pages (Back-End)
+            Log.center("Pages (Back-End)", '-')
+            FileSystem.cleanExternalCopiedPagesBack()
+            
+            ################ Pages (Front-End)
+            Log.center("Pages (Front-End)", '-')
+            FileSystem.cleanExternalCopiedPagesFront()
+
             ################################ Creating
             ################ Folders
-            Log.center("Creating Folders", '-')
+            Log.center("Creating Folders", '=')
 
             ## x/source/assets
             FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/assets/')
@@ -135,7 +146,7 @@ if __name__ != "__main__":
             Log.line()
 
             ################ Files
-            Log.center("Creating Files", '-')
+            Log.center("Creating Files", '=')
 
             # styles.css
             FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css")
@@ -147,11 +158,10 @@ if __name__ != "__main__":
             FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py",
 '''from main import app, request, render_template
 from python.modules.tools import pageGuard
-from python.modules.response import response
 from python.modules.Globals import Globals
 
-@app.route("/", methods=["GET", "POST"])
-@app.route("/home", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
+@app.route("/home", methods=["GET"])
 @pageGuard("home")
 def home():
     if request.method == "GET":
@@ -176,9 +186,8 @@ export default function content(){
 
             Log.line()
 
-            ################################ Reading
-            ################ Loading Files
-            Log.center("Loading Files", '-')
+            ################################ Loading/Reading Files
+            Log.center("Loading Files", '=')
 
             ######### Internals
             # config.yaml
@@ -210,6 +219,8 @@ export default function content(){
             Log.line()
 
             ################################ Copying
+            Log.center("Copying Files", '=')
+
             ## Fonts
             Log.center("Copying FONTS", '-')
             FileSystem.copyFonts()
@@ -233,7 +244,54 @@ export default function content(){
 
             Log.line()
 
+        ####### CleanUp
+        # Pages (Back-End)
+        @staticmethod
+        def cleanExternalCopiedPagesBack():
+            path = f"{Globals.X_RUNNING_FROM}/python/pages/"
+            
+            files = os.listdir(path)
+
+            for file_name in files:
+                # File name and path
+                file_path = os.path.join(path, file_name)
+
+                if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["pages"]["back"]:
+                    FileSystem.deleteFile(file_path)
+            
+        # Pages (Front-End)
+        @staticmethod
+        def cleanExternalCopiedPagesFront():
+            path = f"{Globals.X_RUNNING_FROM}/js/pages/"
+            
+            files = os.listdir(path)
+
+            for file_name in files:
+                # File name and path
+                file_path = os.path.join(path, file_name)
+
+                if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["pages"]["front"]:
+                    FileSystem.deleteFile(file_path)            
+
         ####### Copy
+        # Copy Fonts
+        @staticmethod
+        def copyFonts():
+            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{str(Globals.X_RUNNING_FROM)}/fonts") is True:
+                Log.success("Fonts Are Copied")
+
+            else: Log.error("Could Not Copy The Fonts")
+
+        # Copy JavaScripts
+        @staticmethod
+        def copyJavaScripts():
+            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{str(Globals.X_RUNNING_FROM)}/js/modules") is True:
+                Log.success("JavaScripts Are Copied")
+
+            else:
+                Log.error("Could Not Copy The JavaScripts")
+                sys.exit()
+
         # Copy Pages (Back-End)
         @staticmethod
         def copyPagesBackEnd():
@@ -254,16 +312,6 @@ export default function content(){
                 Log.error("Could Not Copy The Pages (Front-End)")
                 sys.exit()
 
-        # Copy JavaScripts
-        @staticmethod
-        def copyJavaScripts():
-            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{str(Globals.X_RUNNING_FROM)}/js/modules") is True:
-                Log.success("JavaScripts Are Copied")
-
-            else:
-                Log.error("Could Not Copy The JavaScripts")
-                sys.exit()
-
         # Copy Pythons (Care! Pythons inside your folders xD)
         @staticmethod
         def copyPythons():
@@ -273,14 +321,6 @@ export default function content(){
             else:
                 Log.error("Could Not Copy The Pythons")
                 sys.exit()
-
-        # Copy Fonts
-        @staticmethod
-        def copyFonts():
-            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{str(Globals.X_RUNNING_FROM)}/fonts") is True:
-                Log.success("Fonts Are Copied")
-
-            else: Log.error("Could Not Copy The Fonts")
 
         ####### Load
         #### Internals
@@ -405,6 +445,7 @@ export default function content(){
             Globals.PUBLIC_CONF["password"] = Globals.CONF["password"]
             Globals.PUBLIC_CONF["phoneNumber"] = Globals.CONF["phoneNumber"]
 
+        @staticmethod
         def mergeLanguageDictionaries():
             # Override The LANG_DICT w/ The PROJECT_LANG_DICT
             Globals.LANG_DICT.update(Globals.PROJECT_LANG_DICT)
