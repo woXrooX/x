@@ -19,6 +19,33 @@ if __name__ != "__main__":
         USER_AUTHENTICITY_STATUSES = {}
         USER_ROLES = {}
 
+        BUILT_IN_FILES = {
+            "pages": {
+                "back": [
+                    "__init__.py",
+                    "api.py",
+                    "app_is_down.py",
+                    "demo.py",
+                    "eMailConfirmation.py",
+                    "languagesLibrary.py",
+                    "logIn.py",
+                    "logOut.py",
+                    "page_not_found.py",
+                    "signUp.py"
+                ],
+                "front": [
+                    "404.js",
+                    "appIsDown.js",
+                    "demo.js",
+                    "eMailConfirmation.js",
+                    "languagesLibrary.js",
+                    "logIn.js",
+                    "logOut.js",
+                    "signUp.js"
+                ]                
+            }
+        }
+
         #### Project
         PROJECT = {}
         PROJECT_CSS = None
