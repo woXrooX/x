@@ -46,10 +46,10 @@ eMail:
 
 ######### Site Defaults
 default:
-  currency: "USD"
-  title: "X"
   language: "en"
+  title: "X"
   charset: "utf-8"
+  currency: "USD"
 
   # To Control App's State (Offline, Under Development etc.)
   # appIsDown:
