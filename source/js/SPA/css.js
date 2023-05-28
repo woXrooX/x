@@ -124,6 +124,8 @@ export default class CSS{
 
     CSS.detectColorMode();
 
+    CSS.#onColorModeChange();
+
   }
 
   ///// Color Mode
@@ -144,17 +146,23 @@ export default class CSS{
 
     // Get System Color Mode
     else if(window.matchMedia){
-      // System Default: Dark
-      if(window.matchMedia('(prefers-color-scheme: dark)').matches) CSS.currentColorMode = CSS.colorModes.DARK;
-
       // System Default: Light
-      else CSS.currentColorMode = CSS.colorModes.LIGHT;
+      if(window.matchMedia('(prefers-color-scheme: light)').matches) CSS.currentColorMode = CSS.colorModes.LIGHT;
+
+      // System Default: Dark
+      else CSS.currentColorMode = CSS.colorModes.DARK;
 
     }
 
     // Update The Colors According To Color Mode
     CSS.colorModeSwitcher();
 
+  }
+
+  // On System Color Mode Changes
+  static #onColorModeChange(){
+    // Listen To Color Mode Changes
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", CSS.detectColorMode);
   }
 
   // Color Mode Switcher
