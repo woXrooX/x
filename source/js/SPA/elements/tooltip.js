@@ -74,6 +74,7 @@ export default class Tooltip extends HTMLElement{
 
         style.textContent = `
           tooltip{
+            display: inline-block;
             position: relative;
 
           }
