@@ -89,6 +89,11 @@
     "ru":"Связаться с нами",
     "uz":"Aloqa"
   },
+  "couldNotDeleteFile":{
+    "en":"Could not delete the file!",
+    "ru":"Не удалось удалить файл!",
+    "uz":"Faylni oʻchirib boʻlmadi!"
+  },
   "couldNotSaveFile":{
     "en":"Could not save the file!",
     "ru":"Не удалось сохранить файл!",
