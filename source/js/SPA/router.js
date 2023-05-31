@@ -62,6 +62,7 @@ export default class Router{
 
     }catch(error){
       console.log(error);
+      console.log(error.stack);
 
       // Set Title To Error
       window.Title.set("error");
@@ -69,9 +70,13 @@ export default class Router{
       // Render The Error
       window.DOM.render(`
         <container>
+          
           <row class="m-t-5 box-default p-5 w-50">
-            <error>${error}</error>
-          </row>
+            <column>
+              <error>${error.name}</error>
+              <info>${error.stack}</info>
+            </column>
+          </row>        
         </container>
       `);
 
