@@ -75,7 +75,7 @@ export default class Form{
       let response = await window.bridge(form.action, formData, form.enctype);
 
       // Data From Back-End
-      console.log(response);
+      Log.success(response);
 
       // Flash Above Input Field
       if("field" in response)

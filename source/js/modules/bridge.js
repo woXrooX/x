@@ -10,7 +10,7 @@ export default async function bridge(url='', data=null, contentType = null){
   if(!!contentType === false) contentType = "application/json";
 
   let tmp_url = new URL(url, window.location.origin);
-  console.log(tmp_url.href);
+  window.Log.info(`bridge request to: ${tmp_url.href}`);
 
   try{
     const response = await fetch(tmp_url, {

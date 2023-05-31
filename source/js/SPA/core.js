@@ -1,7 +1,12 @@
 //////////////// SPA - Single Page Application
 "use strict";
 
-///////////////////////////// Brideg / Fetch
+///////////////////////////// Modules
+// Logger / Log
+// Brige Uses Logger So It Is Being Imported First
+import Logger from "../modules/logger.js";
+
+// Brideg / Fetch
 import bridge from "../modules/bridge.js";
 
 // import CSS from "./css.js";
@@ -63,7 +68,7 @@ export default class Core{
   static async #getInitialData(){
       let response = await window.bridge("api", {for:"initialData"});
 
-      // console.log(response);
+      Log.success(response);
 
       window.CONF = response["CONF"];
       window.session = response["session"];
@@ -78,7 +83,7 @@ export default class Core{
 
   /////// Event Handlers
   static #firstLoad(){
-    console.log("firstLoad");
+    Log.info("firstLoad");
 
     CSS.init();
 
@@ -100,7 +105,7 @@ export default class Core{
       // if(event.target.readyState === 'complete');
 
       // window.dispatchEvent(new Event('load'));
-      console.log("onLoad");
+      Log.info("onLoad");
 
       Router.handle();
 
@@ -112,7 +117,7 @@ export default class Core{
   static #onUrlChange(){
     window.addEventListener('locationchange', ()=>{
       // window.dispatchEvent(new Event('locationchange'));
-      // console.log("onUrlChange");
+      Log.info("onUrlChange");
 
       Router.handle();
 
@@ -124,7 +129,7 @@ export default class Core{
   static #onHashChange(){
     window.addEventListener('hashchange', ()=>{
       // window.dispatchEvent(new Event('hashchange'));
-      // console.log("onHashChange");
+      Log.info("onHashChange");
 
       // Nav.setActive();
 
@@ -134,7 +139,8 @@ export default class Core{
   static #onHistoryButtonClicked(){
     window.addEventListener('popstate', ()=>{
       // window.dispatchEvent(new Event('popstate'));
-      // console.log("onHistoryButtonClicked");
+      Log.info("onHistoryButtonClicked");
+      
 
       Router.handle();
 
@@ -145,40 +151,42 @@ export default class Core{
     window.addEventListener('domChange', ()=>{
       // window.dispatchEvent(new CustomEvent('domChange'));
       // window.dispatchEvent(new CustomEvent("domChange", {detail:"menu"}));
-      // console.log("onDomChange");
+      Log.info("onDomChange");
 
       //// This all should be done inside Dom class
       //// DOM.update() or something
       // Dom Change For body > target
       if(!!event.detail === true)
+
+        // Loop Through All Targets event.detail = ["menu", "main"...]
         for(const target of event.detail)
           switch(target){
             case "menu":
-              console.log("Menu");
+              Log.info(`onDomChange.target: ${target}`);
               Menu.build();
               break;
 
             case "header":
-              console.log("Header");
+              Log.info(`onDomChange.target: ${target}`);
               break;
 
             case "main":
-            console.log("main");
+              Log.info(`onDomChange.target: ${target}`);
               DOM.lifeCycle();
               break;
 
             case "footer":
-              console.log("Footer");
+              Log.info(`onDomChange.target: ${target}`);
               break;
 
             case "all":
-              console.log("All");
+              Log.info(`onDomChange.target: ${target}`);
               Menu.build();
               DOM.lifeCycle();
               break;
 
             default:
-              console.log("Unknown Target For Dom Change: ", target);
+              Log.warning(`Unknown Target For Dom Change: ${target}`);
 
           }
 
