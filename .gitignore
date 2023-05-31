@@ -25,6 +25,7 @@ source/fonts/*
 ################ JavaScripts
 source/js/modules/*
 !source/js/modules/bridge.js
+!source/js/modules/logger.js
 !source/js/modules/tools.js
 
 ################ Python
