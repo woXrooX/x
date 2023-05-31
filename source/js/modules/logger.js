@@ -3,7 +3,7 @@
 export default class Logger{
     static line(){
         // Check If Debugging Mode Is Enabled Else Exit
-        if(window.CONF.default.debug === false) return;
+        if("CONF" in window && window.CONF.default.debug === false && force === false) return;
 
         console.log("==========================================");
     }
@@ -23,7 +23,7 @@ export default class Logger{
 
     static #log(text, type, force = false){
         // Check If Debugging Mode Is Enabled And Force Is False Else Exit
-        if(window.CONF.default.debug === false && force === false) return;
+        if("CONF" in window && window.CONF.default.debug === false && force === false) return;
 
         // Setting Type Color
         const color = `color: ${CSS.values.color[type] || 'white'}`;
