@@ -64,6 +64,9 @@ default:
       saturation: 13  # %
       lightness: 9    # %
 
+  # Enables All "print"s And "console.log"s
+  debug: false
+
 
 ######### Menu
 menu:
