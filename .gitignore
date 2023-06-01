@@ -37,6 +37,7 @@ source/python/modules/*
 !source/python/modules/MongoDB.py
 !source/python/modules/MySQL.py
 !source/python/modules/OpenAI.py
+!source/python/modules/PDF.py
 !source/python/modules/response.py
 !source/python/modules/SendGrid.py
 !source/python/modules/tools.py
