@@ -75,6 +75,7 @@ if __name__ != "__main__":
             if "user" not in session: return None
 
             publicData = {
+                "id": session["user"]["id"],
                 "username": session["user"]["username"],
                 "firstname": session["user"]["firstname"],
                 "lastname": session["user"]["lastname"],
