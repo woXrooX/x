@@ -24,6 +24,7 @@ source/fonts/*
 
 ################ Images
 source/images/*
+!source/images/favicon
 
 ################ JavaScripts
 source/js/modules/*

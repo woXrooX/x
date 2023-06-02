@@ -9,10 +9,12 @@
 
   <title>{{Globals.CONF["default"]["title"]}}</title>
 
-  <link rel="apple-touch-icon"        sizes="180x180"   href="images/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png"   sizes="32x32"     href="images/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png"   sizes="16x16"     href="images/favicon/favicon-16x16.png">
-  <link rel="manifest"                                  href="images/favicon/site.webmanifest">
+  <link
+    rel="icon"
+    type="{{Globals.CONF["default"]["icon"]["favicon"]["type"]}}"
+    sizes="{{Globals.CONF["default"]["icon"]["favicon"]["sizes"]}}"
+    href="images/{{Globals.CONF["default"]["icon"]["favicon"]["dark"]}}"
+  >
 
   <script>
     const ICONS = {
