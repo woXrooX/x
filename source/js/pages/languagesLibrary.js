@@ -31,7 +31,7 @@ export default function content(){
 
   <row>
     <column class="w-95 box-default p-5 m-t-5">
-      <table>
+      <table style="font-size: 0.7rem;">
         <thead>
           <tr>
             <th>Keyword</th>
