@@ -116,6 +116,8 @@ if __name__ != "__main__":
             Log.center("Pages (Front-End)", '-')
             FileSystem.cleanExternalCopiedPagesFront()
 
+            Log.line()
+
             ################################ Creating
             ################ Folders
             Log.center("Creating Folders", '=')
@@ -128,6 +130,9 @@ if __name__ != "__main__":
 
             ## fonts
             FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/fonts/')
+
+            ## images
+            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/images/')
 
             ## JS
             FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/JS/')
@@ -222,25 +227,23 @@ export default function content(){
             Log.center("Copying Files", '=')
 
             ## Fonts
-            Log.center("Copying FONTS", '-')
             FileSystem.copyFonts()
 
+            ## Images
+            FileSystem.copyImages()
+
             ## JS
-            Log.center("Copying JavaScripts", '-')
             FileSystem.copyJavaScripts()
 
-            ## Pythons
-            Log.center("Copying Pythons", '-')
-            FileSystem.copyPythons()
-
             ## Pages
-            Log.center("Copying Pages", '-')
-
             # Pages (Back-End)
             FileSystem.copyPagesBackEnd()
 
             # Pages (Front-End)
             FileSystem.copyPagesFrontEnd()
+
+            ## Pythons
+            FileSystem.copyPythons()
 
             Log.line()
 
@@ -277,7 +280,19 @@ export default function content(){
         # Copy Fonts
         @staticmethod
         def copyFonts():
+            Log.center("Copying FONTS", '-')
+
             if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{str(Globals.X_RUNNING_FROM)}/fonts") is True:
+                Log.success("Fonts Are Copied")
+
+            else: Log.error("Could Not Copy The Fonts")
+
+        # Copy Fonts
+        @staticmethod
+        def copyImages():
+            Log.center("Copying Images", '-')
+
+            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{str(Globals.X_RUNNING_FROM)}/images") is True:
                 Log.success("Fonts Are Copied")
 
             else: Log.error("Could Not Copy The Fonts")
@@ -285,6 +300,8 @@ export default function content(){
         # Copy JavaScripts
         @staticmethod
         def copyJavaScripts():
+            Log.center("Copying JavaScripts", '-')
+            
             if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{str(Globals.X_RUNNING_FROM)}/js/modules") is True:
                 Log.success("JavaScripts Are Copied")
 
@@ -295,6 +312,8 @@ export default function content(){
         # Copy Pages (Back-End)
         @staticmethod
         def copyPagesBackEnd():
+            Log.center("Copying Pages (Back-End)", '-')
+      
             if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{str(Globals.X_RUNNING_FROM)}/python/pages") is True:
                 Log.success("Pages Are Copied (Back-End)")
 
@@ -302,9 +321,11 @@ export default function content(){
                 Log.error("Could Not Copy The Pages (Back-End)")
                 sys.exit()
 
-        # Copy Pages (Back-End)
+        # Copy Pages (Front-End)
         @staticmethod
         def copyPagesFrontEnd():
+            Log.center("Copying Pages (Front-End)", '-')
+            
             if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{str(Globals.X_RUNNING_FROM)}/js/pages") is True:
                 Log.success("Pages Are Copied (Front-End)")
 
@@ -315,6 +336,8 @@ export default function content(){
         # Copy Pythons (Care! Pythons inside your folders xD)
         @staticmethod
         def copyPythons():
+            Log.center("Copying Pythons", '-')
+
             if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/python", f"{str(Globals.X_RUNNING_FROM)}/python/modules") is True:
                 Log.success("Pythons Are Copied")
 
