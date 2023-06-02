@@ -64,12 +64,18 @@ if __name__ != "__main__":
 
         # Will Copy All The Files In A Folder With A Given Extension
         @staticmethod
-        def copyFiles(fromPath, toPath, extension = None, strict = True):
+        def copyFiles(fromPath, toPath, extensions = [], strict = True):
             try:
                 files = os.listdir(fromPath)
 
                 for file in files:
-                    # Add Check Here If Extension Passed Copy Files Only With That Given Extension
+                    # Check If Extension Passed Then Copy Files Only With That Given Extension
+                    if(
+                        extensions != [] and
+                        os.path.splitext(file)[1] not in extensions
+                    ):
+                        Log.warning(f"Not Matching File Extension: {file}")        
+                        continue
 
                     FileSystem.copyFile(fromPath, toPath, file)
 
@@ -292,8 +298,8 @@ export default function content(){
         def copyImages():
             Log.center("Copying Images", '-')
 
-            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{str(Globals.X_RUNNING_FROM)}/images") is True:
-                Log.success("Fonts Are Copied")
+            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{str(Globals.X_RUNNING_FROM)}/images", [".png", ".jpg", ".jpeg"], False) is True:
+                Log.success("Images Are Copied")
 
             else: Log.error("Could Not Copy The Fonts")
 
