@@ -22,6 +22,9 @@ source/fonts/*
 !source/fonts/Marcellus-Regular.ttf
 !source/fonts/SpecialElite-Regular.ttf
 
+################ Images
+source/images/*
+
 ################ JavaScripts
 source/js/modules/*
 !source/js/modules/bridge.js
