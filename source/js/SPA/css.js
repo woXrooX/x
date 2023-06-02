@@ -392,14 +392,16 @@ export default class CSS{
       }
     `;
 
-    CSS.rules.scrollbar = `
+    CSS.rules.defaultScrollbar = `
       /* Removing Default Scroll Bar START */
       *{
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
       }
+
+      /* Chrome, Safari, Opera */
       *::-webkit-scrollbar{
-        display:none;
+        display: none;
       }
       /* Removing Default Scroll Bar END */
     `;
@@ -872,7 +874,7 @@ export default class CSS{
 
     return `
       ${CSS.rules.selectorsDefaults}
-      ${CSS.rules.scrollbar}
+      ${CSS.rules.defaultScrollbar}
       ${CSS.rules.root}
       ${CSS.rules.skeleton}
       ${CSS.rules.elementsDefaults}
@@ -1145,7 +1147,9 @@ export default class CSS{
         /* make table cells with same */
         table-layout: auto;
 
+        display: block;
         width: 100%;
+
         border: 1px solid var(--color-main);
         border-radius: var(--radius);
         padding: var(--padding);
@@ -1211,9 +1215,54 @@ export default class CSS{
       /************ tfoot END ************/
     `;
 
+    console.log(CSS.values.color.brand.lightness);
+
+    CSS.rules.customScrollbar = `
+      /************ Common START ************/
+      .scrollbar-x,
+      .scrollbar-y{
+        overflow: hidden;      
+      }
+      .scrollbar-x{
+        overflow-x: scroll;
+        
+      }
+      .scrollbar-y{
+        overflow-y: scroll;
+      }      
+      /************ Common END ************/
+
+
+      /************ Firefox START ************/
+      :where(.scrollbar-x, .scrollbar-y){
+        scrollbar-width: auto;
+        scrollbar-color: var(--color-brand) transparent;    
+      }
+      /************ Firefox END ************/
+
+      /************ All Other Browsers START ************/
+      :where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar{   
+        display: unset;     
+        width: 5px;
+        height: 5px;
+      }
+      :where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-track{        
+        background-color: transparent;
+      }
+      :where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-thumb{        
+        background-color: hsla(${CSS.values.color.brand.hue}deg, ${CSS.values.color.brand.saturation}%, ${CSS.values.color.brand.lightness}%, 0.5);
+        border-radius: 5px;
+      }
+      :where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-thumb:hover{        
+        background-color: hsla(${CSS.values.color.brand.hue}deg, ${CSS.values.color.brand.saturation}%, ${CSS.values.color.brand.lightness}%, 1);
+      }
+      /************ All Other Browsers END ************/
+    `;
+
     return `
       ${CSS.rules.form}
       ${CSS.rules.table}
+      ${CSS.rules.customScrollbar}
     `;
 
   }
@@ -1266,6 +1315,7 @@ export default class CSS{
 
       row, column{
         display: flex;
+        max-width: 100vw;
 
       }
 
