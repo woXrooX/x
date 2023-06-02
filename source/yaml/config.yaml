@@ -53,7 +53,7 @@ default:
 
   # To Control App's State (Offline, Under Development etc.)
   # appIsDown:
-  #   reason: "Under Development"
+  #   title: "Under Development"
   #   explanation: "Long text that describes the 'reason'"
   #   logo: "SVG Logo To Be Shown"
 
@@ -63,24 +63,17 @@ default:
       hue: 230        # deg
       saturation: 13  # %
       lightness: 9    # %
+  
+  # App Icon Settings
+  icon:
+    favicon:
+      sizes: "32x32"
+      type: "image/png"
+      dark: "favicon/favicon-32x32-dark.png"
+      light: "favicon/favicon-32x32-light.png"
 
   # Enables All "print"s And "console.log"s
   debug: false
-
-
-######### Menu
-menu:
-  enabled: true
-  menus:
-    - name: "home"
-    - name: "signUp"
-    - name: "logIn"
-    - name: "logOut"
-    - name: "demo"
-      logo: "laboratory"
-    - name: "languagesLibrary"
-      logo: "openBook"
-
 
 ######### Pages
 pages:
@@ -138,6 +131,20 @@ pages:
     enabled: true
     endpoints:
       - "/languagesLibrary"
+
+
+######### Menu
+menu:
+  enabled: true
+  menus:
+    - name: "home"
+    - name: "signUp"
+    - name: "logIn"
+    - name: "logOut"
+    - name: "demo"
+      logo: "laboratory"
+    - name: "languagesLibrary"
+      logo: "openBook"
 
 
 ######### Username
