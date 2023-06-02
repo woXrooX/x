@@ -1215,8 +1215,6 @@ export default class CSS{
       /************ tfoot END ************/
     `;
 
-    console.log(CSS.values.color.brand.lightness);
-
     CSS.rules.customScrollbar = `
       /************ Common START ************/
       .scrollbar-x,
