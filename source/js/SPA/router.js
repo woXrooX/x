@@ -1,8 +1,10 @@
 "use strict";
 
 export default class Router{
-  // Init Current Page With Initial Pathname
-  static currentPage = window.location.pathname;
+  static #currentPage = {
+    "name": null,
+    "endpoint": null
+  }
 
   static async handle(){
     // Check If App Is Down If So Stop Handling Set appIsDown As Current Page
@@ -11,9 +13,7 @@ export default class Router{
       return;
     }
 
-    let endpoint = null;
-
-    // We have much efficient way of detecting if page exists if we give up on alias system
+    // We have much efficient way of detecting if page exists if we give up on endpoints system
     // Loop Through Pages
     loopPages:
     for(const page in window.CONF["pages"]){
@@ -22,32 +22,44 @@ export default class Router{
       // Pass The Page To routeGuard Tests
       if(Router.routeGuard(page) === false) continue;
 
-      // Aliases
-      loopAliases:
-      for(const alias of window.CONF["pages"][page]["endpoints"])
+      // Endpoints
+      loopEndpoints:
+      for(const endpoint of window.CONF["pages"][page]["endpoints"])
 
-        // Check If Page Alias Equals To Currnt Endpoint
-        if(alias == window.location.pathname){
-          endpoint = '/'+page;
-
-          // Check If Page Is Not Current Loaded Page
+        // Check If Page Endpoint Equals To Currnt Endpoint
+        if(endpoint == window.location.pathname){
+          
+          //// Check If Page Is Not Current Loaded Page
+          // If yes then exit this method
+          // NOTE: endpoint should be unique.
+          // Page a and page b can not have same endpoint.
+          // It may seem working but there will be bug.
+          // It will make return false the expression below in rare cases.
           if(
-            '/'+Router.currentPage == window.location.pathname ||
-            Router.currentPage === "home" &&
-            window.location.pathname === '/'
+            Router.#currentPage.endpoint == window.location.pathname ||
+            Router.#currentPage.endpoint === "home" && window.location.pathname === '/'
           ) return;
 
-          Router.currentPage = page;
+          Router.#currentPage.name = page;
+          Router.#currentPage.endpoint = endpoint;
 
-          // Break Out Of The Loops
+          // Break Out The Loops
           break loopPages;
 
         }
 
     }
 
-    // If Still No Alias Matched Then Set It To "/404"
-    if(endpoint === null) endpoint = "/404";
+    // If Still No Endpoint Matched Then Set It To "404"
+    if(Router.#currentPage.name === null) Router.#currentPage.name = "404";
+
+    // Load Page File
+    Router.#loadPageFile();
+
+  }
+
+  static async #loadPageFile(){
+    window.Log.info(`Page file is loading: ${Router.#currentPage.name}.js`)
 
     try{
       // Start Loading Effect
@@ -58,19 +70,19 @@ export default class Router{
       // if(endpoint === "/404") window.history.pushState("", "", URL+"404");
 
       // Load The Page
-      window.DOM.setPage(await import(`../pages${endpoint}.js`));
+      window.DOM.setPage(await import(`../pages/${Router.#currentPage.name}.js`));
 
     }catch(error){
-      console.log(error);
-      console.log(error.stack);
+      // console.log(error);
+      // console.log(error.name);
+      // console.log(error.stack);
 
       // Set Title To Error
       window.Title.set("error");
 
       // Render The Error
       window.DOM.render(`
-        <container>
-          
+        <container>      
           <row class="m-t-5 box-default p-5 w-50">
             <column>
               <error>${error.name}</error>
@@ -85,7 +97,7 @@ export default class Router{
       window.Loading.end();
 
     }
-
+    
   }
 
   static routeGuard(page){
