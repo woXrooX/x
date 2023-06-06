@@ -952,8 +952,7 @@ export default class CSS{
       form label > p{
         font-size: 0.8rem;
         min-height: 1rem;
-        display: flex;
-        flex-direction: row;
+        display: inline-block;
         padding: var(--padding);
       }
       /************ label > p START ************/
