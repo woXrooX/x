@@ -191,7 +191,7 @@ export default class CSS{
 
     }
 
-    // After Color Mode Selection Update The Rules
+    // After Color Mode Selection Update The CSS Rules
     CSS.#update();
 
   }
@@ -281,7 +281,6 @@ export default class CSS{
         ${CSS.values.color.brand.saturation}%,
         ${CSS.values.color.brand.lightness}%, 1);
     `;
-
 
     CSS.values.color.text = {
       primary: `hsla(${CSS.values.color.brand.hue}deg, ${CSS.values.color.brand.saturation}%, 10%, 1)`,
