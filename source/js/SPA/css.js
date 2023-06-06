@@ -1389,7 +1389,8 @@ export default class CSS{
     `;
 
     CSS.rules.backgroundColor = `
-      /* Background Colors START */
+      .color-surface-brand{background-color: var(--color-brand);}
+      
       .color-surface-1{background-color: var(--color-surface-1);}
       .color-surface-2{background-color: var(--color-surface-2);}
       .color-surface-3{background-color: var(--color-surface-3);}
@@ -1409,10 +1410,11 @@ export default class CSS{
       .color-surface-gradient-left  {background-image: linear-gradient(to left, var(--color-surface-2), var(--color-surface-6));}
       .color-surface-gradient-right {background-image: linear-gradient(to right, var(--color-surface-2), var(--color-surface-6));}
       .color-surface-gradient-45    {background-image: linear-gradient(45deg, var(--color-surface-2), var(--color-surface-6) 80%);}
-      /* Background Colors END */
     `;
 
     CSS.rules.text = `
+      .color-text-brand{color: var(--color-brand);}
+
       .color-text-primary{color: var(--color-text-primary);}
       .color-text-secondary{color: var(--color-text-secondary);}
       .color-text-accent{color: var(--color-text-accent);}
