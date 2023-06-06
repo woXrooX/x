@@ -7,96 +7,6 @@ setTimeout(()=>{window.Toast.new("warning", "warning");}, 3000);
 setTimeout(()=>{window.Toast.new("error", "error");}, 4000);
 
 
-///// Class .bc-x & --color-surface-x
-const classBCcolorSurfaceX = `
-<container class="m-t-5">
-
-  <row><h1>Background Color (class: .bc-x, variable: --color-surface-x)</h1></row>
-
-  <row class="w-90 box-default p-5">
-
-    <div class="bc-1 p-2">.bc-1 <br> --color-surface-1</div>
-    <div class="bc-2 p-2">.bc-2 <br> --color-surface-2</div>
-    <div class="bc-3 p-2">.bc-3 <br> --color-surface-3</div>
-    <div class="bc-4 p-2">.bc-4 <br> --color-surface-4</div>
-    <div class="bc-5 p-2">.bc-5 <br> --color-surface-5</div>
-    <div class="bc-6 p-2">.bc-6 <br> --color-surface-6</div>
-    <div class="bc-7 p-2">.bc-7 <br> --color-surface-7</div>
-    <div class="bc-8 p-2">.bc-8 <br> --color-surface-8</div>
-    <div class="bc-9 p-2">.bc-9 <br> --color-surface-9</div>
-    <div class="bc-10 p-2">.bc-10 <br> --color-surface-10</div>
-
-  </row>
-
-
-  <row><h3>Gradient Background Colors (.box-gradient)</h3></row>
-
-  <row class="g-1">
-    <column class="box-default bc-g-45 p-5">bc-g-45</column>
-    <column class="box-default bc-g-right p-5">bc-g-right</column>
-    <column class="box-default bc-g-left p-5">bc-g-left</column>
-  </row>
-
-</container>
-`;
-
-
-///// --color-text-x
-const colorTextX = `
-<container class="m-t-5">
-
-  <row><h1>Text Color (window.CSS.values.color.text.x)</h1></row>
-
-  <row class="w-90 box-default p-5">
-
-    <div style="color:${window.CSS.values.color.text.primary}" class="bc-1 p-5">
-      <b>window.CSS.values.color.text.primary</b>
-    </div>
-
-    <div style="color:${window.CSS.values.color.text.secondary}" class="bc-5 p-5">
-      <b>window.CSS.values.color.text.secondary</b>
-    </div>
-
-    <div style="color:${window.CSS.values.color.text.accent}"  class="bc-10 p-5">
-      <b>window.CSS.values.color.text.accent</b>
-    </div>
-
-  </row>
-
-</container>
-`;
-
-
-///// --color-x
-const situationalColors = `
-<container class="m-t-5">
-
-  <row><h1>Situational Colors</h1></row>
-
-  <row class="w-90 box-default p-5">
-
-    <div style="background-color:${window.CSS.values.color.success}" class="p-5">
-      <b>window.CSS.values.color.success<br>var(--color-success)</b>
-    </div>
-
-    <div style="background-color:${window.CSS.values.color.info}" class="p-5">
-      <b>window.CSS.values.color.info<br>var(--color-info)</b>
-    </div>
-
-    <div style="background-color:${window.CSS.values.color.warning}" class="p-5">
-      <b>window.CSS.values.color.warning<br>var(--color-warning)</b>
-    </div>
-
-    <div style="background-color:${window.CSS.values.color.error}" class="p-5">
-      <b>window.CSS.values.color.error<br>var(--color-error)</b>
-    </div>
-
-  </row>
-
-</container>
-`;
-
-
 ///// box-x
 const themedBoxes = `
 <container class="m-t-5 p-5">
@@ -330,8 +240,6 @@ export const TITLE = window.Lang.use("demo");
 // Can Be Set Async
 export default function content(){
   let dom = `
-    ${classBCcolorSurfaceX}
-    ${colorTextX}
     ${situationalColors}
     ${themedBoxes}
     ${tooltips}
