@@ -1351,12 +1351,14 @@ export default class CSS{
       .flex-row{flex-direction: row;}
       .flex-column{flex-direction: column;}
 
+      /* X */
       .justify-content-start{justify-content: flex-start;}
       .justify-content-end{justify-content: flex-end;}
       .justify-content-center{justify-content: center;}
       .justify-content-between{justify-content: space-between;}
       .justify-content-around{justify-content: space-around;}
 
+      /* Y */
       .align-items-start{align-items: flex-start;}
       .align-items-end{align-items: flex-end;}
       .align-items-center{align-items: center;}
@@ -1397,23 +1399,28 @@ export default class CSS{
       .color-surface-7{background-color: var(--color-surface-7);}
       .color-surface-8{background-color: var(--color-surface-8);}
       .color-surface-9{background-color: var(--color-surface-9);}
-      .color-surface-10{background-color: var(--color-surface-10)};}
+      .color-surface-10{background-color: var(--color-surface-10);}
 
-      .color-surface-gradient-right{background-image: linear-gradient(to right, var(--color-surface-2) , var(--color-surface-6));}
-      .color-surface-gradient-left{background-image: linear-gradient(to left, var(--color-surface-2) , var(--color-surface-6));}
-      .color-surface-gradient-45{background-image: linear-gradient(45deg, var(--color-surface-2), var(--color-surface-6)) 80%);}
+      .color-surface-success  {background-color: var(--color-success);}
+      .color-surface-info     {background-color: var(--color-info);}
+      .color-surface-warning  {background-color: var(--color-warning);}
+      .color-surface-error    {background-color: var(--color-error);}
+
+      .color-surface-gradient-left  {background-image: linear-gradient(to left, var(--color-surface-2), var(--color-surface-6));}
+      .color-surface-gradient-right {background-image: linear-gradient(to right, var(--color-surface-2), var(--color-surface-6));}
+      .color-surface-gradient-45    {background-image: linear-gradient(45deg, var(--color-surface-2), var(--color-surface-6) 80%);}
       /* Background Colors END */
     `;
 
     CSS.rules.text = `
-      .color-text-primary{color: var(--text-color-primary);}
-      .color-text-secondary{color: var(--text-color-secondary);}
-      .color-text-accent{color: var(--text-color-accent);}
+      .color-text-primary{color: var(--color-text-primary);}
+      .color-text-secondary{color: var(--color-text-secondary);}
+      .color-text-accent{color: var(--color-text-accent);}
       
-      .color-text-success{color: var(--color-text-success);}
-      .color-text-info{color: var(--color-text-info);}
-      .color-text-warning{color: var(--color-text-warning);}
-      .color-text-error{color: var(--color-text-error);}
+      .color-text-success{color: var(--color-success);}
+      .color-text-info{color: var(--color-info);}
+      .color-text-warning{color: var(--color-warning);}
+      .color-text-error{color: var(--color-error);}
 
       .text-left{text-align: left;}
       .text-center{text-align: center;}
@@ -1446,6 +1453,8 @@ export default class CSS{
       .w-90{width: 90%;}
       .w-95{width: 95%;}
       .w-100{width: 100%;}
+      
+      .w-auto{width: auto;}
 
       /* Widths END */    
     `;
