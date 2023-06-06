@@ -72,6 +72,10 @@ export default class CSS{
     padding: {
       default: "5px"
     },
+    
+    margin: {
+      default: "5px"
+    },
 
     gap: {
       default: "20px"
@@ -225,7 +229,7 @@ export default class CSS{
       ${CSS.common()}
       ${CSS.master()}
       ${CSS.styles()}
-      ${CSS.layouts()}
+      ${CSS.XUI()}
     `;
 
     window.document.querySelector("style[for=X_CSS]").innerText = CSS.rules.all;
@@ -435,6 +439,7 @@ export default class CSS{
 
 
         --padding: ${CSS.values.padding.default};
+        --padding: ${CSS.values.margin.default};
         --gap: ${CSS.values.gap.default};
         --radius: ${CSS.values.radius.default};
         --blur: ${CSS.values.blur.default};
@@ -1264,7 +1269,7 @@ export default class CSS{
 
   }
 
-  static layouts(){
+  static XUI(){
     CSS.rules.boxes = `
       /*********************** Themed Boxes START ***********************/
       /* Default */
@@ -1285,14 +1290,6 @@ export default class CSS{
         border-top: 1px solid ${CSS.values.color.surface["4"]};
         border-right: 1px solid ${CSS.values.color.surface["4"]};
         border-bottom: 1px solid ${CSS.values.color.surface["2"]};
-
-      }
-
-      /* round */
-      .box-round{
-        background-color: ${CSS.values.color.surface["3"]};
-        border-radius: calc(${CSS.values.radius.default} * 6);
-        box-shadow: 0px 19px 15px -10px rgba(0, 0, 0, 0.3);
 
       }
       /*********************** Themed Boxes END ***********************/
@@ -1341,8 +1338,95 @@ export default class CSS{
         }
 
       }
+      /*********************** Layout System END ***********************/    
+    `;
 
+    CSS.rules.display = `
+      .d-block{display: block;}
+      .d-inline-block{display: inline-block;}
+
+
+
+      .d-flex{display: flex;}
+      .flex-row{flex-direction: row;}
+      .flex-column{flex-direction: column;}
+
+      .justify-content-start{justify-content: flex-start;}
+      .justify-content-end{justify-content: flex-end;}
+      .justify-content-center{justify-content: center;}
+      .justify-content-between{justify-content: space-between;}
+      .justify-content-around{justify-content: space-around;}
+
+      .align-items-start{align-items: flex-start;}
+      .align-items-end{align-items: flex-end;}
+      .align-items-center{align-items: center;}
+      .align-items-baseline{align-items: baseline;}
+      .align-items-stretch{align-items: stretch;}
+
+      .align-self-start{align-self: flex-start;}
+      .align-self-end{align-self: flex-end;}
+      .align-self-center{align-self: center;}
+      .align-self-baseline{align-self: baseline;}
+      .align-self-stretch{align-self: stretch;}
+
+      .flex-nowrap{flex-wrap: nowrap;}
+      .flex-wrap{flex-wrap: wrap;}
+      .flex-wrap-reverse{flex-wrap: wrap-reverse;}
+
+
+      /***** Gap START *****/
+
+      .gap-1{gap: var(--gap);}
+      .gap-2{gap: calc(var(--gap) * 2);}
+      .gap-3{gap: calc(var(--gap) * 3);}
+      .gap-4{gap: calc(var(--gap) * 4);}
+      .gap-5{gap: calc(var(--gap) * 5);}
+  
+      /***** Gap END *****/
+
+    `;
+
+    CSS.rules.backgroundColor = `
+      /* Background Colors START */
+      .color-surface-1{background-color: var(--color-surface-1);}
+      .color-surface-2{background-color: var(--color-surface-2);}
+      .color-surface-3{background-color: var(--color-surface-3);}
+      .color-surface-4{background-color: var(--color-surface-4);}
+      .color-surface-5{background-color: var(--color-surface-5);}
+      .color-surface-6{background-color: var(--color-surface-6);}
+      .color-surface-7{background-color: var(--color-surface-7);}
+      .color-surface-8{background-color: var(--color-surface-8);}
+      .color-surface-9{background-color: var(--color-surface-9);}
+      .color-surface-10{background-color: var(--color-surface-10)};}
+
+      .color-surface-gradient-right{background-image: linear-gradient(to right, var(--color-surface-2) , var(--color-surface-6));}
+      .color-surface-gradient-left{background-image: linear-gradient(to left, var(--color-surface-2) , var(--color-surface-6));}
+      .color-surface-gradient-45{background-image: linear-gradient(45deg, var(--color-surface-2), var(--color-surface-6)) 80%);}
+      /* Background Colors END */
+    `;
+
+    CSS.rules.text = `
+      .color-text-primary{color: var(--text-color-primary);}
+      .color-text-secondary{color: var(--text-color-secondary);}
+      .color-text-accent{color: var(--text-color-accent);}
+      
+      .color-text-success{color: var(--color-text-success);}
+      .color-text-info{color: var(--color-text-info);}
+      .color-text-warning{color: var(--color-text-warning);}
+      .color-text-error{color: var(--color-text-error);}
+
+      .text-left{text-align: left;}
+      .text-center{text-align: center;}
+      .text-right{text-align: right;}
+
+      .text-bold{font-weight: bold;}
+      .text-italic{font-style: italic;}
+
+    `;
+
+    CSS.rules.width = `
       /* Widths START */
+
       .w-10{width: 10%;}
       .w-15{width: 15%;}
       .w-20{width: 20%;}
@@ -1362,151 +1446,202 @@ export default class CSS{
       .w-90{width: 90%;}
       .w-95{width: 95%;}
       .w-100{width: 100%;}
-      /* Widths END */
 
+      /* Widths END */    
+    `;
+
+    CSS.rules.padding = `
       /***** Paddings START *****/
 
-      .p-1{padding: ${CSS.values.padding.default};}
-      .p-2{padding: calc(${CSS.values.padding.default} * 2);}
-      .p-3{padding: calc(${CSS.values.padding.default} * 3);}
-      .p-4{padding: calc(${CSS.values.padding.default} * 4);}
-      .p-5{padding: calc(${CSS.values.padding.default} * 5);}
+      .p-1{padding: var(--padding);}
+      .p-2{padding: calc(var(--padding) * 2);}
+      .p-3{padding: calc(var(--padding) * 3);}
+      .p-4{padding: calc(var(--padding) * 4);}
+      .p-5{padding: calc(var(--padding) * 5);}
 
       /* Top */
-      .p-t-1{padding-top: ${CSS.values.padding.default};}
-      .p-t-2{padding-top: calc(${CSS.values.padding.default} * 2);}
-      .p-t-3{padding-top: calc(${CSS.values.padding.default} * 3);}
-      .p-t-4{padding-top: calc(${CSS.values.padding.default} * 4);}
-      .p-t-5{padding-top: calc(${CSS.values.padding.default} * 5);}
+      .pt-1{padding-top: var(--padding);}
+      .pt-2{padding-top: calc(var(--padding) * 2);}
+      .pt-3{padding-top: calc(var(--padding) * 3);}
+      .pt-4{padding-top: calc(var(--padding) * 4);}
+      .pt-5{padding-top: calc(var(--padding) * 5);}
 
       /* Right */
-      .p-r-1{padding-right: ${CSS.values.padding.default};}
-      .p-r-2{padding-right: calc(${CSS.values.padding.default} * 2);}
-      .p-r-3{padding-right: calc(${CSS.values.padding.default} * 3);}
-      .p-r-4{padding-right: calc(${CSS.values.padding.default} * 4);}
-      .p-r-5{padding-right: calc(${CSS.values.padding.default} * 5);}
+      .pr-1{padding-right: var(--padding);}
+      .pr-2{padding-right: calc(var(--padding) * 2);}
+      .pr-3{padding-right: calc(var(--padding) * 3);}
+      .pr-4{padding-right: calc(var(--padding) * 4);}
+      .pr-5{padding-right: calc(var(--padding) * 5);}
 
       /* Bottom */
-      .p-b-1{padding-bottom: ${CSS.values.padding.default};}
-      .p-b-2{padding-bottom: calc(${CSS.values.padding.default} * 2);}
-      .p-b-3{padding-bottom: calc(${CSS.values.padding.default} * 3);}
-      .p-b-4{padding-bottom: calc(${CSS.values.padding.default} * 4);}
-      .p-b-5{padding-bottom: calc(${CSS.values.padding.default} * 5);}
+      .pb-1{padding-bottom: var(--padding);}
+      .pb-2{padding-bottom: calc(var(--padding) * 2);}
+      .pb-3{padding-bottom: calc(var(--padding) * 3);}
+      .pb-4{padding-bottom: calc(var(--padding) * 4);}
+      .pb-5{padding-bottom: calc(var(--padding) * 5);}
 
       /* Left */
-      .p-l-1{padding-left: ${CSS.values.padding.default};}
-      .p-l-2{padding-left: calc(${CSS.values.padding.default} * 2);}
-      .p-l-3{padding-left: calc(${CSS.values.padding.default} * 3);}
-      .p-l-4{padding-left: calc(${CSS.values.padding.default} * 4);}
-      .p-l-5{padding-left: calc(${CSS.values.padding.default} * 5);}
+      .pl-1{padding-left: var(--padding);}
+      .pl-2{padding-left: calc(var(--padding) * 2);}
+      .pl-3{padding-left: calc(var(--padding) * 3);}
+      .pl-4{padding-left: calc(var(--padding) * 4);}
+      .pl-5{padding-left: calc(var(--padding) * 5);}
 
-      /***** Paddings END *****/
+      /* X, Left To Right */
+      .px-1{
+        padding-left: var(--padding);
+        padding-right: var(--padding);
+      }
+      .px-2{
+        padding-left: calc(var(--padding) * 2);
+        padding-right: calc(var(--padding) * 2);
+      }
+      .px-3{
+        padding-left: calc(var(--padding) * 3);
+        padding-right: calc(var(--padding) * 3);
+      }
+      .px-4{
+        padding-left: calc(var(--padding) * 4);
+        padding-right: calc(var(--padding) * 4);
+      }
+      .px-5{
+        padding-left: calc(var(--padding) * 5);
+        padding-right: calc(var(--padding) * 5);
+      }
 
+      /* Y, Top To Bottom */
+      .py-1{
+        padding-top: var(--padding);
+        padding-bottom: var(--padding);
+      }
+      .py-2{
+        padding-top: calc(var(--padding) * 2);
+        padding-bottom: calc(var(--padding) * 2);
+      }
+      .py-3{
+        padding-top: calc(var(--padding) * 3);
+        padding-bottom: calc(var(--padding) * 3);
+      }
+      .py-4{
+        padding-top: calc(var(--padding) * 4);
+        padding-bottom: calc(var(--padding) * 4);
+      }
+      .py-5{
+        padding-top: calc(var(--padding) * 5);
+        padding-bottom: calc(var(--padding) * 5);
+      }
+
+      /***** Paddings END *****/    
+    `;
+
+    CSS.rules.margin = `
       /***** Margings START *****/
 
-      .m-1{margin: ${CSS.values.padding.default};}
-      .m-2{margin: calc(${CSS.values.padding.default} * 2);}
-      .m-3{margin: calc(${CSS.values.padding.default} * 3);}
-      .m-4{margin: calc(${CSS.values.padding.default} * 4);}
-      .m-5{margin: calc(${CSS.values.padding.default} * 5);}
+      .m-1{margin: var(--margin);}
+      .m-2{margin: calc(var(--margin) * 2);}
+      .m-3{margin: calc(var(--margin) * 3);}
+      .m-4{margin: calc(var(--margin) * 4);}
+      .m-5{margin: calc(var(--margin) * 5);}
 
       /* Top */
-      .m-t-1{margin-top: ${CSS.values.padding.default};}
-      .m-t-2{margin-top: calc(${CSS.values.padding.default} * 2);}
-      .m-t-3{margin-top: calc(${CSS.values.padding.default} * 3);}
-      .m-t-4{margin-top: calc(${CSS.values.padding.default} * 4);}
-      .m-t-5{margin-top: calc(${CSS.values.padding.default} * 5);}
+      .mt-1{margin-top: var(--margin);}
+      .mt-2{margin-top: calc(var(--margin) * 2);}
+      .mt-3{margin-top: calc(var(--margin) * 3);}
+      .mt-4{margin-top: calc(var(--margin) * 4);}
+      .mt-5{margin-top: calc(var(--margin) * 5);}
 
       /* Right */
-      .m-r-1{margin-right: ${CSS.values.padding.default};}
-      .m-r-2{margin-right: calc(${CSS.values.padding.default} * 2);}
-      .m-r-3{margin-right: calc(${CSS.values.padding.default} * 3);}
-      .m-r-4{margin-right: calc(${CSS.values.padding.default} * 4);}
-      .m-r-5{margin-right: calc(${CSS.values.padding.default} * 5);}
+      .mr-1{margin-right: var(--margin);}
+      .mr-2{margin-right: calc(var(--margin) * 2);}
+      .mr-3{margin-right: calc(var(--margin) * 3);}
+      .mr-4{margin-right: calc(var(--margin) * 4);}
+      .mr-5{margin-right: calc(var(--margin) * 5);}
 
       /* Bottom */
-      .m-b-1{margin-bottom: ${CSS.values.padding.default};}
-      .m-b-2{margin-bottom: calc(${CSS.values.padding.default} * 2);}
-      .m-b-3{margin-bottom: calc(${CSS.values.padding.default} * 3);}
-      .m-b-4{margin-bottom: calc(${CSS.values.padding.default} * 4);}
-      .m-b-5{margin-bottom: calc(${CSS.values.padding.default} * 5);}
+      .mb-1{margin-bottom: var(--margin);}
+      .mb-2{margin-bottom: calc(var(--margin) * 2);}
+      .mb-3{margin-bottom: calc(var(--margin) * 3);}
+      .mb-4{margin-bottom: calc(var(--margin) * 4);}
+      .mb-5{margin-bottom: calc(var(--margin) * 5);}
 
       /* Left */
-      .m-l-1{margin-left: ${CSS.values.padding.default};}
-      .m-l-2{margin-left: calc(${CSS.values.padding.default} * 2);}
-      .m-l-3{margin-left: calc(${CSS.values.padding.default} * 3);}
-      .m-l-4{margin-left: calc(${CSS.values.padding.default} * 4);}
-      .m-l-5{margin-left: calc(${CSS.values.padding.default} * 5);}
+      .ml-1{margin-left: var(--margin);}
+      .ml-2{margin-left: calc(var(--margin) * 2);}
+      .ml-3{margin-left: calc(var(--margin) * 3);}
+      .ml-4{margin-left: calc(var(--margin) * 4);}
+      .ml-5{margin-left: calc(var(--margin) * 5);}
 
-      /***** Margings END *****/
-
-      /***** Gap START *****/
-
-      .g-1{gap: ${CSS.values.gap.default};}
-      .g-2{gap: calc(${CSS.values.gap.default} * 2);}
-      .g-3{gap: calc(${CSS.values.gap.default} * 3);}
-      .g-4{gap: calc(${CSS.values.gap.default} * 4);}
-      .g-5{gap: calc(${CSS.values.gap.default} * 5);}
-
-      /***** Gap END *****/
-
-      /* Placing START */
-      .right{
-        text-align: right;
-        align-items: flex-end;
-        place-items: right;
-        justify-content: flex-end;
-
+      /* X, Left To Right */
+      .mx-1{
+        margin-left: var(--margin);
+        margin-right: var(--margin);
+      }
+      .mx-2{
+        margin-left: calc(var(--margin) * 2);
+        margin-right: calc(var(--margin) * 2);
+      }
+      .mx-3{
+        margin-left: calc(var(--margin) * 3);
+        margin-right: calc(var(--margin) * 3);
+      }
+      .mx-4{
+        margin-left: calc(var(--margin) * 4);
+        margin-right: calc(var(--margin) * 4);
+      }
+      .mx-5{
+        margin-left: calc(var(--margin) * 5);
+        margin-right: calc(var(--margin) * 5);
       }
 
-      .center{
-        text-align: center;
-        align-items: center;
-        place-items: center;
-        justify-content: center;
-
+      /* Y, Top To Bottom */
+      .my-1{
+        margin-top: var(--margin);
+        margin-bottom: var(--margin);
+      }
+      .my-2{
+        margin-top: calc(var(--margin) * 2);
+        margin-bottom: calc(var(--margin) * 2);
+      }
+      .my-3{
+        margin-top: calc(var(--margin) * 3);
+        margin-bottom: calc(var(--margin) * 3);
+      }
+      .my-4{
+        margin-top: calc(var(--margin) * 4);
+        margin-bottom: calc(var(--margin) * 4);
+      }
+      .my-5{
+        margin-top: calc(var(--margin) * 5);
+        margin-bottom: calc(var(--margin) * 5);
       }
 
-      .left{
-        text-align: left;
-        align-items: flex-start;
-        place-items: left;
-        justify-content: flex-start;
+      /***** Margings END *****/        
+    `;
 
-      }
-      /* Placing END */
-
+    CSS.rules.radius = `
       /* Radiuses START */
-      .radius{border-radius: ${CSS.values.radius.default};}
+      .radius{border-radius: var(--radius);}
+      .radius-circle{border-radius: 50%;}
       /* Radiuses END */
+    `;
 
+    CSS.rules.shadow = `
       /* Background Shadow START */
-      .bs{box-shadow: ${CSS.values.shadow.default};}
+      .bs{box-shadow: var(--shadow-default);}
       /* Background Shadow END */
-
-      /* Background Colors START */
-      .bc-1{background-color: ${CSS.values.color.surface["1"]};}
-      .bc-2{background-color: ${CSS.values.color.surface["2"]};}
-      .bc-3{background-color: ${CSS.values.color.surface["3"]};}
-      .bc-4{background-color: ${CSS.values.color.surface["4"]};}
-      .bc-5{background-color: ${CSS.values.color.surface["5"]};}
-      .bc-6{background-color: ${CSS.values.color.surface["6"]};}
-      .bc-7{background-color: ${CSS.values.color.surface["7"]};}
-      .bc-8{background-color: ${CSS.values.color.surface["8"]};}
-      .bc-9{background-color: ${CSS.values.color.surface["9"]};}
-      .bc-10{background-color: ${CSS.values.color.surface["10"]};}
-
-      .bc-g-right{background-image: linear-gradient(to right, ${CSS.values.color.surface["2"]} , ${CSS.values.color.surface["6"]});}
-      .bc-g-left{background-image: linear-gradient(to left, ${CSS.values.color.surface["2"]} , ${CSS.values.color.surface["6"]});}
-      .bc-g-45{background-image: linear-gradient(45deg, ${CSS.values.color.surface["2"]}, ${CSS.values.color.surface["6"]} 80%);}
-      /* Background Colors END */
-
-      /*********************** Layout System END ***********************/
     `;
 
     return `
       ${CSS.rules.boxes}
       ${CSS.rules.layoutSystem}
+      ${CSS.rules.display}
+      ${CSS.rules.backgroundColor}
+      ${CSS.rules.text}
+      ${CSS.rules.width}
+      ${CSS.rules.padding}
+      ${CSS.rules.margin}
+      ${CSS.rules.radius}
+      ${CSS.rules.shadow}
     `;
 
   }
