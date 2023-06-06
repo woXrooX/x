@@ -962,10 +962,10 @@ export default class CSS{
       }
       /************ label > p START ************/
 
-      /************ select, textarea, imput -> type = [text, password, eMail, number, color, file, date, tel] START ************/
+      /************ select, textarea, imput -> type = [text, password, eMail, number, color, file, date, tel, range] START ************/
       select,
       textarea,
-      input:where([type=text], [type=eMail], [type=password], [type=number], [type=color], [type=file], [type=date], [type=tel]){
+      input:where([type=text], [type=eMail], [type=password], [type=number], [type=color], [type=file], [type=date], [type=tel], [type=range]){
         background-color: var(--color-surface-3);
         width: var(--f-width);
         height: var(--f-height);
@@ -978,7 +978,7 @@ export default class CSS{
         transition-property: var(--f-transition-property);
 
       }
-      /************ select, textarea, imput -> type = [text, password, eMail, number, color, file, date, tel] END ************/
+      /************ select, textarea, imput -> type = [text, password, eMail, number, color, file, date, tel, range] END ************/
 
       /************ :hover & :focus -> inputs & textarea & select START ************/
       select:not(:disabled):where(:hover, :focus),
