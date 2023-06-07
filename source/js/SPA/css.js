@@ -440,7 +440,7 @@ export default class CSS{
 
 
         --padding: ${CSS.values.padding.default};
-        --padding: ${CSS.values.margin.default};
+        --margin: ${CSS.values.margin.default};
         --gap: ${CSS.values.gap.default};
         --radius: ${CSS.values.radius.default};
         --blur: ${CSS.values.blur.default};
