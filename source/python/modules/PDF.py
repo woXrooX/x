@@ -7,6 +7,6 @@ if __name__ != "__main__":
 
     class PDF:
         @staticmethod
-        def generate(content, pathToSave, fileNameToSave):
+        def generate(content, pathToSave, fileNameToSave, options = {}):
             # Returns True If Creation Successful Else False
-            return pdfkit.from_string(content, f"{pathToSave}/{fileNameToSave}.pdf")        
+            return pdfkit.from_string(content, f"{pathToSave}/{fileNameToSave}.pdf", options=options)        
