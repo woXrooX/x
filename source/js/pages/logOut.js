@@ -13,8 +13,8 @@ export default function content(){
     <column class="w-50 box-default p-5">
       <form action="logOut" for="logOut">
         <label>
-            <p for='logOut'>${window.Lang.use("areYouSure")}</p>
-            <input type='submit' name='logOut' value='${window.Lang.use("logOut")}'>
+          <input type='submit' name='logOut' value='${window.Lang.use("logOut")}'>
+          <p for='logOut'>${window.Lang.use("areYouSure")}</p>
         </label>
       </form>
     </column>

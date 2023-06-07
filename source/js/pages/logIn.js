@@ -29,8 +29,8 @@ export default function logIn(){
           </label>
 
           <label>
-              <p for='logIn'></p>
-              <input type='submit' name='logIn' value='${window.Lang.use("logIn")}'>
+            <input type='submit' name='logIn' value='${window.Lang.use("logIn")}'>
+            <p for='logIn'></p>
           </label>
 
         </form>

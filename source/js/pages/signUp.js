@@ -15,18 +15,18 @@ export default function content() {
         <form action="signUp" for='signUp'>
 
           <label>
-              <p for='eMail'>${window.Lang.use("eMail")}</p>
-              <input type='eMail' name='eMail'>
+            <p for='eMail'>${window.Lang.use("eMail")}</p>
+            <input type='eMail' name='eMail'>
           </label>
 
           <label>
-              <p for='password'>${window.Lang.use("password")}</p>
-              <input type='password' name='password' minlength='${window.CONF["password"]["min_length"]}' maxlength='${window.CONF["password"]["max_length"]}'><br>
+            <p for='password'>${window.Lang.use("password")}</p>
+            <input type='password' name='password' minlength='${window.CONF["password"]["min_length"]}' maxlength='${window.CONF["password"]["max_length"]}'><br>
           </label>
 
           <label>
-              <p for='signUp'></p>
-              <input type='submit' name='signUp' value='${window.Lang.use("signUp")}'>
+            <input type='submit' name='signUp' value='${window.Lang.use("signUp")}'>
+            <p for='signUp'></p>
           </label>
 
         </form>
