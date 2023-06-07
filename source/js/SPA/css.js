@@ -1,3 +1,5 @@
+// document.documentElement.style.setProperty('--color-main-hue', event.target.value);
+
 // OG Importing Way Of The CSS Files
 // <link rel="preload" href="{{url_for('static', filename='css/master.css')}}" as="style">
 // <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/master.css')}}">
@@ -446,9 +448,14 @@ export default class CSS{
         --shadow-default: ${CSS.values.shadow.default};
 
 
-        --color-main: ${CSS.values.color.main};
+        --color-main-hue: ${CSS.values.color.brand.hue}deg;
+        --color-main-saturation: ${CSS.values.color.brand.saturation}%;
+        --color-main-lightness: ${CSS.values.color.brand.lightness}%;
+
+        --color-main: hsla(var(--color-main-hue), var(--color-main-saturation), var(--color-main-lightness), 1);
         --color-brand: var(--color-main);
 
+        
         --color-success: ${CSS.values.color.success};
         --color-info: ${CSS.values.color.info};
         --color-warning: ${CSS.values.color.warning};
