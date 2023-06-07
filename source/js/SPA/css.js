@@ -418,6 +418,11 @@ export default class CSS{
         color-scheme: ${CSS.values.color.scheme};
         accent-color: ${CSS.values.color.main};
 
+        --screen-size-phone: ${CSS.values.screenSize.phone};
+        --screen-size-tablet: ${CSS.values.screenSize.tablet};
+        --screen-size-desktop: ${CSS.values.screenSize.desktop};
+        --screen-size-tv: ${CSS.values.screenSize.tv};    
+
         --document-Height: ${CSS.values.document.height};
 
         --z-minus: ${CSS.values.zIndex.minus};
@@ -1302,7 +1307,6 @@ export default class CSS{
     `;
 
     CSS.rules.layoutSystem = `
-      /*********************** Layout System START ***********************/
       container{
         /* border: 1px green solid; */
 
@@ -1344,7 +1348,6 @@ export default class CSS{
         }
 
       }
-      /*********************** Layout System END ***********************/    
     `;
 
     CSS.rules.display = `
