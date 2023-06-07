@@ -418,6 +418,7 @@ export default class CSS{
         color-scheme: ${CSS.values.color.scheme};
         accent-color: ${CSS.values.color.main};
 
+        /* var()s can not be used in media queries  */
         --screen-size-phone: ${CSS.values.screenSize.phone};
         --screen-size-tablet: ${CSS.values.screenSize.tablet};
         --screen-size-desktop: ${CSS.values.screenSize.desktop};
