@@ -1361,25 +1361,27 @@ export default class CSS{
       .flex-row{flex-direction: row;}
       .flex-column{flex-direction: column;}
 
-      /* X */
-      .justify-content-start{justify-content: flex-start;}
-      .justify-content-end{justify-content: flex-end;}
-      .justify-content-center{justify-content: center;}
-      .justify-content-between{justify-content: space-between;}
-      .justify-content-around{justify-content: space-around;}
+      /* X - justify-content */
+      .flex-x-start{justify-content: flex-start;}
+      .flex-x-end{justify-content: flex-end;}
+      .flex-x-center{justify-content: center;}
+      .flex-x-between{justify-content: space-between;}
+      .flex-x-around{justify-content: space-around;}
 
-      /* Y */
-      .align-items-start{align-items: flex-start;}
-      .align-items-end{align-items: flex-end;}
-      .align-items-center{align-items: center;}
-      .align-items-baseline{align-items: baseline;}
-      .align-items-stretch{align-items: stretch;}
+      /* Y - align-items */
+      .flex-y-start{align-items: flex-start;}
+      .flex-y-end{align-items: flex-end;}
+      .flex-y-center{align-items: center;}
+      .flex-y-baseline{align-items: baseline;}
+      .flex-y-stretch{align-items: stretch;}
 
-      .align-self-start{align-self: flex-start;}
-      .align-self-end{align-self: flex-end;}
-      .align-self-center{align-self: center;}
-      .align-self-baseline{align-self: baseline;}
-      .align-self-stretch{align-self: stretch;}
+      /* XY */ 
+      .flex-center{
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Needs to be done here: align-self */
 
       .flex-nowrap{flex-wrap: nowrap;}
       .flex-wrap{flex-wrap: wrap;}
