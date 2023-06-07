@@ -26,3 +26,6 @@ export function observe(
   for(const element of elements) observer.observe(element);
 
 }
+
+// Make observe() Usable W/O Importing It
+window.observe = observe;

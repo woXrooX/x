@@ -9,6 +9,9 @@ import Logger from "../modules/logger.js";
 // Brideg / Fetch
 import bridge from "../modules/bridge.js";
 
+// Observer -> observe()
+import {observe} from "../modules/tools.js";
+
 // import CSS from "./css.js";
 // document.head.innerHTML += `<style>${CSS}</style>`;
 
