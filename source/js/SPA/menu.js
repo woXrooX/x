@@ -65,7 +65,7 @@ export default class Menu{
 
             <section class="parentMenu">
               <a href="${window.CONF["pages"][menu["name"]]["endpoints"][0]}">
-                <x-icon color="#ffffff" name="${"logo" in menu ? menu["logo"] : menu["name"]}"></x-icon>
+                <x-icon color="#ffffff" name="${"icon" in menu ? menu["icon"] : menu["name"]}"></x-icon>
                 ${window.Lang.use(menu["name"])}
               </a>
 
@@ -231,7 +231,7 @@ export default class Menu{
         // Show Hamburger Button
         Menu.#elementMenuHamburgerButton.style.visibility = "visible";
 
-        // Change The Lock Logo To Open
+        // Change The Lock Icon To Open
         toggler.innerHTML = "<x-icon color='#ffffff' name='lockOpen'></x-icon>";
 
         // Remove Background Color Inline Rule
@@ -254,7 +254,7 @@ export default class Menu{
         // Hide Hamburger Button
         Menu.#elementMenuHamburgerButton.style.visibility = "hidden";
 
-        // Change The Lock Logo To Locked
+        // Change The Lock Icon To Locked
         toggler.innerHTML = "<x-icon color='#ffffff' name='lockLocked'></x-icon>";
 
         // Change Menu Background Color To Darker Brand Hue Based Color So It Will Look Nicer On Light Mode
@@ -319,7 +319,7 @@ export default class Menu{
       if(Menu.#menuGuard(subMenu["name"]) === true)
         subMenusHtml += `
           <a href="${window.CONF["pages"][subMenu["name"]]["endpoints"][0]}">
-            <x-icon color="#ffffff" name="${"logo" in subMenu ? subMenu["logo"] : subMenu["name"]}"></x-icon>
+            <x-icon color="#ffffff" name="${"icon" in subMenu ? subMenu["icon"] : subMenu["name"]}"></x-icon>
             ${window.Lang.use(subMenu["name"])}
           </a>
         `;

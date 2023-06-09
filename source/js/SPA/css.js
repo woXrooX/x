@@ -702,6 +702,11 @@ export default class CSS{
         border: 1px solid white;
 
       }
+      body > menu > main > section > section.subMenu > a > x-icon{
+        height: 25px;
+        width: 25px;        
+        
+      }
 
       body > menu > footer{}
 
