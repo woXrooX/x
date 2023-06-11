@@ -1,4 +1,5 @@
 \! clear
+\! echo "--------------- X ---------------";
 \W
 
 DROP DATABASE IF EXISTS x;
