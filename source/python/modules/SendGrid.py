@@ -12,8 +12,8 @@ if __name__ != "__main__":
 
         @staticmethod
         def send(from_email, to_email, content, subject = ""):
-            # Check If SendGrid Is In CONF["eMail"]
-            if "SendGrid" not in Globals.CONF["eMail"]: return False
+            # Check If SendGrid Is Enabled
+            if "enabled" in Globals.CONF["eMail"]["SendGrid"] and Globals.CONF["eMail"]["SendGrid"]["enabled"] is False: return False
 
             # Check If to_email Is Valid
             if not to_email: return False
