@@ -1,7 +1,7 @@
 import re, random
 from main import app, request, render_template, session
 
-# from python.modules.GMail import GMail
+from python.modules.GMail import GMail
 from python.modules.SendGrid import SendGrid
 from python.modules.FileSystem import FileSystem
 from python.modules.response import response
@@ -70,14 +70,6 @@ def signUp():
         # Generate Randome Verification Code
         eMailVerificationCode = random.randint(100000, 999999)
 
-        #### Check If Verification Code Sent Successfully
-        # GMail
-        # if GMail(request.form["eMail"], eMailVerificationCode) == False:
-        #     return response(type="error", message="couldNotSendEMailVerificationCode")
-
-        # SendGrid
-        if SendGrid.send("yahya", request.form["eMail"], eMailVerificationCode, "Sign Up") == False:
-            return response(type="error", message="couldNotSendEMailVerificationCode")
 
         # Insert To Database
         with MySQL(False) as db:
@@ -121,12 +113,21 @@ def signUp():
                 pass
 
 
-            # On Success Redirect & Update Front-End Session
-            return response(
-                type="success",
-                message="eMailConfirmationCodeHasBeenSent",
-                setSessionUser=True,
-                toast=True,
-                redirect="eMailConfirmation",
-                domChange=["menu"]
-            )
+        #### Check If Verification Code Sent Successfully
+        emailVerificationSentSuccessfully = False
+        
+        # Gmail
+        if GMail(request.form["eMail"], eMailVerificationCode) is True: emailVerificationSentSuccessfully = True
+        
+        # SendGrid
+        if SendGrid.send("noreply", request.form["eMail"], eMailVerificationCode, "Sign Up") is True: emailVerificationSentSuccessfully = True
+
+        # Success
+        return response(
+            type="success" if emailVerificationSentSuccessfully is True else "info",
+            message="eMailConfirmationCodeHasBeenSent" if emailVerificationSentSuccessfully is True else "Signed Up Without Email Verification!",
+            setSessionUser=True,
+            toast=True,
+            redirect="eMailConfirmation",
+            domChange=["menu"]
+        )
