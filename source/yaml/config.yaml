@@ -93,15 +93,6 @@ pages:
       - "/signUp"
 
 
-  eMailConfirmation:
-    enabled: true
-    authenticity_statuses:
-      - "unauthorized"
-
-    endpoints:
-      - "/eMailConfirmation"
-
-
   logIn:
     enabled: true
     authenticity_statuses:
@@ -109,6 +100,15 @@ pages:
 
     endpoints:
       - "/logIn"
+
+
+  eMailConfirmation:
+    enabled: true
+    authenticity_statuses:
+      - "unauthorized"
+
+    endpoints:
+      - "/eMailConfirmation"
 
 
   logOut:
