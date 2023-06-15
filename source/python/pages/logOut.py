@@ -1,5 +1,5 @@
 from main import app, request, render_template, session
-from python.modules.tools import pageGuard
+from python.modules.pageGuard import pageGuard
 from python.modules.response import response
 from python.modules.Globals import Globals
 

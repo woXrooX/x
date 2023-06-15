@@ -5,7 +5,7 @@ from python.modules.GMail import GMail
 from python.modules.SendGrid import SendGrid
 from python.modules.FileSystem import FileSystem
 from python.modules.response import response
-from python.modules.tools import pageGuard
+from python.modules.pageGuard import pageGuard
 from python.modules.Globals import Globals
 from python.modules.User import User
 from python.modules.MySQL import MySQL

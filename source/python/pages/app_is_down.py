@@ -1,5 +1,5 @@
 from main import app, request, render_template
-from python.modules.tools import pageGuard
+from python.modules.pageGuard import pageGuard
 from python.modules.Globals import Globals
 
 #################################################### App Is Down
