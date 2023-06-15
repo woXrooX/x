@@ -74,7 +74,7 @@ default:
       light: "favicon/favicon-32x32-light.png"
 
   # Enables All "print"s And "console.log"s
-  debug: false
+  debug: true
 
 ######### Pages
 pages:
