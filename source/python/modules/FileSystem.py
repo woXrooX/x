@@ -168,15 +168,14 @@ if __name__ != "__main__":
             # pages/back/home.py
             FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py",
 '''from main import app, request, render_template
-from python.modules.tools import pageGuard
+from python.modules.pageGuard import pageGuard
 from python.modules.Globals import Globals
 
 @app.route("/", methods=["GET"])
 @app.route("/home", methods=["GET"])
 @pageGuard("home")
 def home():
-    if request.method == "GET":
-        return render_template("index.html", **globals())'''
+    if request.method == "GET": return render_template("index.html", **globals())'''
             )
 
             # pages/front/home.js
