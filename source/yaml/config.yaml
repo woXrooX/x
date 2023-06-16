@@ -20,13 +20,20 @@ URL:
 # By default database is disabled
 # database:
 #   enabled: false
-#   name: "template"
-#   user: "template"
-#   password: "password_template"
-#   host: "127.0.0.1"
-#   port: "33060"
-#   charset: "utf8mb4"
-#   collate: "utf8mb4_0900_ai_ci"
+#   MySQL:
+#     enabled: false
+#     name: "x"
+#     user: "x"
+#     password: "password_x"
+#     host: "127.0.0.1"
+#     port: "33060"
+#     charset: "utf8mb4"
+#     collate: "utf8mb4_0900_ai_ci"
+
+#   MongoDB:
+#     enabled: false
+#     name: "x"
+#     host: "mongodb://127.0.0.1:27017"
 
 
 ######### eMail
