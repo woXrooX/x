@@ -17,6 +17,8 @@ if __name__ != "__main__":
             "warning": "\033[93m", # bright_yellow
             "error": "\033[91m", # bright_red
 
+            "custom": "\033[35m", # magenta
+
             "black": "\033[30m",
             "red": "\033[31m",
             "green": "\033[32m",
@@ -40,22 +42,34 @@ if __name__ != "__main__":
 
         ######### APIs / Log Types
         @staticmethod
-        def success(text, force = False): Logger.log(text, "success", force)
+        def success(text, force = False): Logger.log("success", text, force)
 
         @staticmethod
-        def info(text, force = False): Logger.log(text, "info", force)
+        def info(text, force = False): Logger.log("info", text, force)
 
         @staticmethod
-        def warning(text, force = False): Logger.log(text, "warning", force)
+        def warning(text, force = False): Logger.log("warning", text, force)
 
         @staticmethod
-        def error(text, force = False): Logger.log(text, "error", force)
+        def error(text, force = False): Logger.log("error", text, force)
+
+        @staticmethod
+        def custom(type, text, force = False): Logger.log(type, text, force)
 
         @staticmethod
         def raw(data): print(data)
 
         @staticmethod
-        def center(text, fillChar = ' '): print(Logger.centeredText(text, fillChar))
+        def center(text, fillChar = ' '):
+            # Calculate The With OF The Terminal
+            padding = (Logger.columns - 2 - len(text)) // 2
+
+            # If Empty Text Passed Then Draw Full Line
+            if text == "": print(fillChar * Logger.columns)
+            
+            # Else Normal Line With Space In The Center
+            else: print(fillChar * padding +' '+ text +' '+ fillChar * padding)
+
 
         @staticmethod
         def line(char = "\u2588"): print(Logger.coloredText("bright_cyan", char) * Logger.lineLength)
@@ -74,13 +88,13 @@ if __name__ != "__main__":
 
         ######### Helpers - Supposed To Be "Private"
         @staticmethod
-        def log(text, type, force = False):
+        def log(type, text, force = False):
             # Check If Debugging Mode Is Enabled
             if(
                 force is True or
                 "default" not in Globals.CONF or
                 "default" in Globals.CONF and Globals.CONF["default"]["debug"] is not False
-            ): print(Logger.coloredText(type, f"[{Logger.timestamp()}] [{type.upper()}]"), text)
+            ): print(f"{Logger.colors.get(type, Logger.colors['custom'])}[{Logger.timestamp()}] [{type.upper()}]\033[0m {text}")
 
 
         @staticmethod
@@ -88,11 +102,6 @@ if __name__ != "__main__":
 
         @staticmethod
         def coloredText(color, text): return f"{Logger.colors[color]}{text}{Logger.colors['reset']}"
-
-        @staticmethod
-        def centeredText(text, fillChar = ' '):
-            padding = (Logger.columns - 2 - len(text)) // 2
-            return fillChar * padding +' '+ text +' '+ fillChar * padding
 
         @staticmethod
         def timestamp(): return datetime.now().strftime('%Y.%m.%d %H:%M:%S')
