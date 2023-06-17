@@ -37,15 +37,13 @@ def logIn():
                 )
             )
 
-            if db.hasError():
-                return response(type="error", message="databaseError")
+            if db.hasError(): return response(type="error", message="databaseError")
 
             dataFetched = db.fetchOne()
 
 
             # No Match
-            if dataFetched is None:
-                return response(type="error", message="usernameOrPasswordWrong")
+            if dataFetched is None: return response(type="error", message="usernameOrPasswordWrong")
 
             # Set Session User Data
             session["user"] = dataFetched
