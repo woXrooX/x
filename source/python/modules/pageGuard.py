@@ -5,6 +5,7 @@ if __name__ != "__main__":
     from python.modules.Globals import Globals
     from python.modules.MySQL import MySQL
     from python.modules.Logger import Log
+    from python.modules.response import response
 
     ######################################### Page Guard
     """
@@ -21,54 +22,18 @@ if __name__ != "__main__":
         def decorator(func):
             @wraps(func)
             def wrapper(*args, **kwargs):
-
-                # For Debugging
-                # Log.line()
-                # Log.center("pageGuard START", '-')
-                # print("\n----- Request")
-                # print(request)
-                # print("\n----- Headers")
-                # print(request.headers)
-                # print("\n----- Method")
-                # print(request.method)
-                # print("\n----- Content Type")
-                # print(request.content_type)
-                # print("\n----- Form")
-                # print(request.form)
-                # print("\n----- Files")
-                # print(request.files)
-                # print("\n----- JSON")
-                # print(request.get_json)
-                #
-                # print("\n----- page")
-                # print(page)
-                # Log.center("pageGuard END", '-')
-                # Log.line()
-
                 ##################### POST
                 if request.method == "POST":
-                    # Check If "endpoint" In Request
-                    # if "endpoint" not in request.get_json():
-                    #     return make_response(json.dumps({
-                    #         "type": "warning",
-                    #         "message": "unknownError"
-                    #     }), 200)
-
-                    # Check If "endpoint" Is For This Page | Route
-                    # if "endpoint" in request.get_json() and request.get_json()["endpoint"] != page:
-                    #     return make_response(json.dumps({
-                    #         "type": "warning",
-                    #         "message": "unknownError"
-                    #     }), 200)
-
                     ### App Is Down
                     if "appIsDown" in Globals.CONF["default"]:
+                        Log.warning("App Is Down")
                         return response(type="warning", message="appIsDown")
 
                     ### "application/json"
                     # Check If "for" In Request
                     if request.content_type == "application/json" and "for" not in request.get_json():
-                        return response(type="warning", message="unknownError")
+                        Log.error("Missing 'for' In Request JSON")
+                        return response(type="warning", message="invalidRequest")
 
 
                     ### "multipart/form-data"
@@ -77,19 +42,8 @@ if __name__ != "__main__":
                     # Ex. "multipart/form-data; boundary=----WebKitFormBoundaryqZq6yAWEgk6aywYg"
                     # Check If "for" In Request
                     if "multipart/form-data" in request.content_type.split(';') and "for" not in request.form:
-                        return response(type="warning", message="unknownError")
-
-                    # if(
-                    #     # Form
-                    #     "for" not in request.form and
-                    #
-                    #     # JSON
-                    #     "for" not in request.get_json()
-                    # ):
-                    #     return make_response(json.dumps({
-                    #         "type": "warning",
-                    #         "message": "unknownError"
-                    #     }), 200)
+                        Log.error("Missing 'for' In Request Form Data")
+                        return response(type="warning", message="invalidRequest")
 
 
                 ##################### GET

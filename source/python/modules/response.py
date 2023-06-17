@@ -72,7 +72,6 @@ if __name__ != "__main__":
 
         ## toast
         if toast is True: actionsDict["toast"] = True
-        else: actionsDict["toast"] = False
 
         ## domChange
         if domChange: actionsDict["domChange"] = domChange
