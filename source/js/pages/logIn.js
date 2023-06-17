@@ -19,13 +19,13 @@ export default function logIn(){
         <form action="logIn" for="logIn">
 
           <label>
-              <p for='eMail'>${window.Lang.use("eMail")}</p>
-              <input type='email' name='eMail'>
+            <p for='eMail'>${window.Lang.use("eMail")}</p>
+            <input type='email' name='eMail'>
           </label>
 
           <label>
-              <p for='password'>${window.Lang.use("password")}</p>
-              <input type='password' name='password' minlength='${window.CONF["password_min_length"]}' maxlength='${window.CONF["password_max_length"]}'><br>
+            <p for='password'>${window.Lang.use("password")}</p>
+            <input type='password' name='password' minlength='${window.CONF["password_min_length"]}' maxlength='${window.CONF["password_max_length"]}'><br>
           </label>
 
           <label>
