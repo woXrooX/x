@@ -58,7 +58,12 @@ if __name__ != "__main__":
 
         elif request.content_type == "application/json":
             Log.center(f"Contet-Type: {request.content_type}", '-')
-            for key, value in request.get_json().items(): print(f"{key}: {value}")
+            
+            if isinstance(request.get_json(), dict):
+                for key, value in request.get_json().items(): Log.raw(f"{key}: {value}")
+            
+            else: Log.raw(request.get_json())
+
 
             Log.center('', '-')        
 
