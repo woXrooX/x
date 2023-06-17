@@ -8,20 +8,22 @@ Log.clear()
 Log.brand()
 
 
-#################################################### Globals
-from python.modules.Globals import Globals
-
-
 #################################################### Initializing File Structure
 from python.modules.FileSystem import FileSystem
 FileSystem.init()
 
 
+#################################################### Globals
+from python.modules.Globals import Globals
+
+
 #################################################### Setting Up MySQL
 from python.modules.MySQL import MySQL
 ######## If Database Enabled
-if "database" in Globals.CONF and Globals.CONF["database"]["enabled"] == True:
-
+if (
+    Globals.CONF.get("database", {}).get("enabled") is True and 
+    Globals.CONF.get("database", {}).get("MySQL", {}).get("enabled") is True
+):
     ######## Set Up Connection
     MySQL.setUp(
         Globals.CONF["database"]["MySQL"]["user"],
@@ -51,14 +53,20 @@ app = Flask(
 app.secret_key = Globals.CONF["flask"]["secret_key"]
 
 
+#################################################### routeGuard
+from python.modules.routeGuard import routeGuard, routeLogs
+
+
 #################################################### Decorations
 # @app.before_first_request
 # def app_init():
 #     return None
 
-# @app.before_request
-# def before_request():
-#     pass
+@app.before_request
+def before_request():
+    routeLogs()
+    # routeGuard()
+
 
 # @app.after_request
 # def after_request(response):
