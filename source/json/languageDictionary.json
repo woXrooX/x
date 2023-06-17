@@ -315,10 +315,15 @@
     "uz":"Noto'g'ri kalit so'z!"
   },
   "invalidPrompt":{
-    "en":"Invalid Prompt",
+    "en":"Invalid prompt",
     "ru":"Неверная подсказка",
     "uz":"Noto'g'ri buyruq"
   },
+  "invalidRequest":{
+    "en":"Invalid request",
+    "ru":"Неверная запрос",
+    "uz":"Noto'g'ri so'rov"
+  },  
   "invalidValue":{
     "en":"Invalid value",
     "ru":"Неверное значение",
