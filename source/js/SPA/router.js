@@ -22,30 +22,36 @@ export default class Router{
       // Pass The Page To routeGuard Tests
       if(Router.routeGuard(page) === false) continue;
 
+      // Window Path Name
+      let pathname = window.location.pathname;
+
+      // If Url Args Exists In This Page Drop Url Arguments From The Path Name
+      if(window.CONF.pages[page]?.urlArgs)
+        pathname = pathname.split('/').slice(0, -window.CONF.pages[page].urlArgs.length).join('/');
+
       // Endpoints
       loopEndpoints:
       for(const endpoint of window.CONF["pages"][page]["endpoints"])
-
         // Check If Page Endpoint Equals To Currnt Endpoint
-        if(endpoint == window.location.pathname){
+        if(endpoint == pathname){
           
           //// Check If Page Is Not Current Loaded Page
           // If yes then exit this method
           // NOTE: endpoint should be unique.
           // Page a and page b can not have same endpoint.
-          // It may seem working but there will be bug.
+          // It may seem working but there will be bugs.
           // It will make return false the expression below in rare cases.
           if(
-            Router.#currentPage.endpoint == window.location.pathname ||
-            Router.#currentPage.endpoint === "home" && window.location.pathname === '/'
+            Router.#currentPage.endpoint == pathname ||
+            Router.#currentPage.endpoint === "home" && pathname === '/'
           ) return;
-
+  
           Router.#currentPage.name = page;
           Router.#currentPage.endpoint = endpoint;
-
+  
           // Break Out The Loops
           break loopPages;
-
+  
         }
 
     }
