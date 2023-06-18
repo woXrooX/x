@@ -1165,6 +1165,8 @@ export default class CSS{
       table{
         --table-radius: 3px;
 
+        font-size: 0.7rem;
+
         /* make table cells with same */
         table-layout: auto;
 
