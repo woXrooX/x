@@ -1293,22 +1293,22 @@ export default class CSS{
       /*********************** Themed Boxes START ***********************/
       /* Default */
       .box-default{
-        background-color: ${CSS.values.color.surface["3"]};
+        background-color: var(--color-surface-3);
 
-        border-radius: ${CSS.values.radius.default};
-        box-shadow: ${CSS.values.shadow.default};
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-default);
 
       }
 
       /* 2D */
       .box-2D{
-        background-color: ${CSS.values.color.surface["3"]};
+        background-color: var(--color-surface-3);
 
         border-radius: 0px;
-        border-left: 1px solid ${CSS.values.color.surface["2"]};
-        border-top: 1px solid ${CSS.values.color.surface["4"]};
-        border-right: 1px solid ${CSS.values.color.surface["4"]};
-        border-bottom: 1px solid ${CSS.values.color.surface["2"]};
+        border-left: 1px solid var(--color-surface-2);
+        border-top: 1px solid var(--color-surface-4);
+        border-right: 1px solid var(--color-surface-4);
+        border-bottom: 1px solid var(--color-surface-2);
 
       }
       /*********************** Themed Boxes END ***********************/
