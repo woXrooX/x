@@ -1,9 +1,10 @@
 "use strict";
 
 export default class Router{
-  static #currentPage = {
+  static currentPage = {
     "name": null,
-    "endpoint": null
+    "endpoint": null,
+    "urlArgs": null
   }
 
   static async handle(){
@@ -26,8 +27,17 @@ export default class Router{
       let pathname = window.location.pathname;
 
       // If Url Args Exists In This Page Drop Url Arguments From The Path Name
-      if(window.CONF.pages[page]?.urlArgs)
+      // If Url Args Exists In This Page Extract Url Arguments From The Path Name
+      if(window.CONF.pages[page]?.urlArgs){
+        //// NOTE: Order Matters In This Scope
+        
+        // Current Page Arguments
+        Router.currentPage.urlArgs = pathname.split('/').splice(-window.CONF.pages[page].urlArgs.length);
+        
+        // Modified Path Name
         pathname = pathname.split('/').slice(0, -window.CONF.pages[page].urlArgs.length).join('/');
+
+      }
 
       // Endpoints
       loopEndpoints:
@@ -42,12 +52,12 @@ export default class Router{
           // It may seem working but there will be bugs.
           // It will make return false the expression below in rare cases.
           if(
-            Router.#currentPage.endpoint == pathname ||
-            Router.#currentPage.endpoint === "home" && pathname === '/'
+            Router.currentPage.endpoint == pathname ||
+            Router.currentPage.endpoint === "home" && pathname === '/'
           ) return;
   
-          Router.#currentPage.name = page;
-          Router.#currentPage.endpoint = endpoint;
+          Router.currentPage.name = page;
+          Router.currentPage.endpoint = endpoint;
   
           // Break Out The Loops
           break loopPages;
@@ -57,7 +67,7 @@ export default class Router{
     }
 
     // If Still No Endpoint Matched Then Set It To "404"
-    if(Router.#currentPage.name === null) Router.#currentPage.name = "404";
+    if(Router.currentPage.name === null) Router.currentPage.name = "404";
 
     // Load Page File
     Router.#loadPageFile();
@@ -65,7 +75,7 @@ export default class Router{
   }
 
   static async #loadPageFile(){
-    window.Log.info(`Page file is loading: ${Router.#currentPage.name}.js`)
+    window.Log.info(`Page file is loading: ${Router.currentPage.name}.js`)
 
     try{
       // Start Loading Effect
@@ -76,7 +86,7 @@ export default class Router{
       // if(endpoint === "/404") window.history.pushState("", "", URL+"404");
 
       // Load The Page
-      window.DOM.setPage(await import(`../pages/${Router.#currentPage.name}.js`));
+      window.DOM.setPage(await import(`../pages/${Router.currentPage.name}.js`));
 
     }catch(error){
       // console.log(error);

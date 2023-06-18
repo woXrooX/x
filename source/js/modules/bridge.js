@@ -3,8 +3,8 @@
 ///////////////////////////// FETCH - Bridge
 // export default async function bridge(url='', data={}, contentType = null){
 export default async function bridge(url='', data=null, contentType = null){
-  // Check If url Is Not Falsy
-  if(!!url === false) return;
+  // Url Is Falsy, Set Url "To window.location.href"
+  if(!!url === false) url = window.location.href;
 
   // Default Content Type Is "application/json"
   if(!!contentType === false) contentType = "application/json";
