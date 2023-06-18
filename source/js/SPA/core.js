@@ -33,13 +33,12 @@ import DOM from "./dom.js";
 import Cover from "./cover.js";
 import Loading from "./loading.js";
 import Menu from "./menu.js";
-// import Nav from "./nav.js";
-
 import Form from "./form.js";
 
 //// Custom Elements
 import Icon from "./elements/icon.js";
 import Modal from "./elements/modal.js";
+import Nav from "./elements/nav.js";
 import Copy from "./elements/copy.js";
 import Share from "./elements/share.js";
 import Toast from "./elements/toast.js";
@@ -133,8 +132,6 @@ export default class Core{
     window.addEventListener('hashchange', ()=>{
       // window.dispatchEvent(new Event('hashchange'));
       Log.info("onHashChange");
-
-      // Nav.setActive();
 
     });
   }
