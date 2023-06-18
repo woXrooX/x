@@ -58,7 +58,7 @@ export default class Nav extends HTMLElement{
             this.shadow.appendChild(style);
 
             // Set Nav Class
-            this.shadow.querySelector("nav").setAttribute("class", this.getAttribute("class") || "");   
+            this.shadow.querySelector("nav").setAttribute("class", this.getAttribute("class") || "box-default");   
 
         }
         
