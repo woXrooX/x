@@ -45,11 +45,11 @@ if __name__ != "__main__":
         elif "multipart/form-data;" in request.content_type:
             Log.center(f"Contet-Type: {request.content_type}", '-')
             
-            for key, value in request.form.items(): print(f"{key}: {value}")
+            for key, value in request.form.items(): 
+                print(f"{key}: {request.form.getlist(key) if len(request.form.getlist(key)) > 1 else value}")
 
             if len(request.files) > 0:
                 for key, value in request.files.items(): print(f"{key}: {value}")
-
             
             Log.center('', '-')
             
