@@ -1,3 +1,14 @@
+// <x-select name="customSelect" max="5" placeholder="Custom Select">
+//   [
+//     {"value": "one", "placeholder": "One", "selected": true},
+//     {"value": "two", "placeholder": "Two"},
+//     {"value": "three", "placeholder": "Three"},
+//     {"value": "longText", "placeholder": "Looooooooooooooooong Text"}
+//   ]
+// </x-select>
+
+
+
 "use strict";
 
 export default class Select extends HTMLElement{
@@ -10,11 +21,11 @@ export default class Select extends HTMLElement{
     Select.#template.innerHTML = `
       <button>Select</button>
       <main>
-        <section id="optionsSelected"></section>
+        <section id="optionsSelected" class="scrollbar-y"></section>
         <!-- <section id="search">
           <input type="text" placeholder="Search...">
         </section> -->
-        <section id="optionsToSelect"></section>
+        <section id="optionsToSelect" class="scrollbar-y"></section>
       </main>
     `;
   }
@@ -32,6 +43,7 @@ export default class Select extends HTMLElement{
     CSS: {
       const style = document.createElement('style');
       style.textContent = `
+        ${CSS.rules.defaultScrollbar}
         ${window.CSS.rules.scrollbar}
         ${window.CSS.rules.form}
 
@@ -119,12 +131,20 @@ export default class Select extends HTMLElement{
     // Clone And Append Template
     this.shadow.appendChild(Select.#template.content.cloneNode(true));
 
-    GenerateOptions: {
-      // Options
-      this.options = JSON.parse(this.innerHTML).constructor === Array ? JSON.parse(this.innerHTML) : [];
+    // Show And Hide The "x-select > main"
+    Toggle: {
+      const button = this.shadow.querySelector("button");
+      button.innerHTML = this.hasAttribute("placeholder") ? window.Lang.use(this.getAttribute('placeholder')) : window.Lang.use("select");
 
-      let optionsHtml = "";
+      // On Click
+      button.addEventListener("click", ()=>{
+        this.shadow.querySelector("main").classList.toggle("show");
 
+      });
+
+    }    
+
+    MAX: {
       //// Max Number Of Options That Can Be Selected
       // Default/Fallback Is 1
       this.MAX = 1;
@@ -141,41 +161,56 @@ export default class Select extends HTMLElement{
         this.MAX = parseInt(this.getAttribute('max'));
 
       else this.MAX = this.options.length || this.MAX;
+    }
+
+    GenerateOptions: {
+      // Options
+      this.options = JSON.parse(this.innerHTML).constructor === Array ? JSON.parse(this.innerHTML) : [];
+
+      let optionsHtml = "";
 
       for(const option of this.options)
         optionsHtml += `<div value="${option["value"]}">${option.placeholder}</div>`;
 
 
-      this.shadow.querySelector("main > section#optionsSelected").innerHTML = `
-        ${optionsHtml}
-      `;
+      this.shadow.querySelector("main > section#optionsSelected").innerHTML = `${optionsHtml}`;
 
-      this.shadow.querySelector("main > section#optionsToSelect").innerHTML = `
-        ${optionsHtml}
-      `;
-
-    }
-
-    // Show And Hide The "main"
-    Toggle: {
-      const button = this.shadow.querySelector("button");
-      button.innerHTML = this.hasAttribute("placeholder") ? window.Lang.use(this.getAttribute('placeholder')) : window.Lang.use("select");
-
-      // On Click
-      button.addEventListener("click", ()=>{
-        this.shadow.querySelector("main").classList.toggle("show");
-
-      });
+      this.shadow.querySelector("main > section#optionsToSelect").innerHTML = `${optionsHtml}`;
 
     }
 
     SelectDeselect: {
       // Create FormData
       const entries = new FormData();
-
+      
       let options = this.shadow.querySelectorAll("main > section#optionsToSelect > div");
       let optionsSelected = this.shadow.querySelectorAll("main > section#optionsSelected > div");
       let count = 0;
+
+      //// Pre-Selected Options
+      // if "selected" key exists then add option to selected
+      // NOTE: Value of "selected" doesn't have to be a particular type!
+      for(const option of this.options)
+        if("selected" in option && count < this.MAX){
+          this.shadow.querySelector(`main > section#optionsToSelect > div[value=${option.value}]`).style.display = "none";
+          this.shadow.querySelector(`main > section#optionsSelected > div[value=${option.value}]`).style.display = "block";
+
+          // Show "optionsSelected"
+          this.shadow.querySelector("main > section#optionsSelected").classList.add("show");
+
+          // Increment The Count
+          count++;
+
+          // Add To Form Entry
+          entries.append(this.getAttribute('name'), option.value);
+
+          // Add To Form Data
+          this.internals_.setFormValue(entries);
+
+        }
+
+
+
 
       // Select
       for(const option of options)
@@ -193,7 +228,7 @@ export default class Select extends HTMLElement{
           // Show "optionsSelected"
           if(count === 1) this.shadow.querySelector("main > section#optionsSelected").classList.add("show");
 
-          // Hide Section 'optionsToSelect' Only Once When count Equals To MAX
+          // Hide Section 'optionsToSelect' Only Once When Count Equals To MAX
           if(count === this.options.length) this.shadow.querySelector("main > section#optionsToSelect").classList.add("hide");
 
           // Hide Option From "optionsToSelect"
