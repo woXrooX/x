@@ -71,6 +71,10 @@ export default class Form{
       // Append for To FormData
       formData.append("for", form.getAttribute("for"));
 
+      // Log FormData
+      for(const [key, value] of formData.entries())
+        console.log(`${key}: ${value}`);
+
       // Send The Request
       let response = await window.bridge(form.action, formData, form.enctype);
 
