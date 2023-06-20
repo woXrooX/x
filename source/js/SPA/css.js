@@ -310,8 +310,6 @@ export default class CSS{
   //////////// CSS
   static common(){
     CSS.rules.fonts = `
-      /*********************** FONTS START ***********************/
-
       @font-face{
         font-family: Quicksand;
         src:url("/fonts/Quicksand-Regular.ttf");
@@ -371,8 +369,6 @@ export default class CSS{
         font-family: SpecialElite;
         src:url("/fonts/SpecialElite-Regular.ttf");
       }
-
-      /*********************** FONTS END ***********************/
     `;
 
     return `
@@ -496,284 +492,318 @@ export default class CSS{
         height: 100vh;
         padding-top: var(--header-height);
 
+
+        & > loading{
+          background-color: var(--color-surface-1);
+
+          width: 100vw;
+          height: 100vh;
+
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          z-index: var(--z-loading);
+
+          transition: var(--transition-velocity) opacity ease-in-out;
+
+          &::after{
+            content: '';
+            background-color: transparent;
+            height: 20vh;
+            width: 20vh;
+            border-radius: 100%;
+            border: 0px solid transparent;
+            border-right: 2px solid var(--color-text-primary);
+
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transform-origin: center;
+
+            animation: loading 1000ms infinite linear;
+
+          }
+
+        }
+
+        & > toasts{
+          height: auto;
+          max-height: 100vh;
+          width: 400px;
+          padding: var(--padding);
+          padding-bottom: calc(var(--padding) * 4);
+
+          overflow-x: hidden;
+          overflow-y: scroll;
+
+          display: flex;
+          flex-direction: column-reverse;
+          gap: var(--gap);
+
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          z-index: var(--z-toasts);
+
+          &:empty{
+            padding: 0px;
+          }
+
+        }
+
+        & > menu{
+          background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.1);
+          backdrop-filter: blur(100px);
+          height: 100vh;
+          width: auto;
+
+          overflow-y: scroll;
+
+          display: grid;
+          grid-template-rows: auto 2fr auto;
+          justify-items: start;
+          gap: var(--gap);
+
+          position: fixed;
+          z-index: var(--z-menu);
+          top: 0;
+          left: 0;
+          transform: translate(-100%, 0);
+          transition-duration: var(--transition-velocity);
+          transition-timing-function: ease;
+          transition-property: all;
+
+          & > header{
+            width: 100%;
+
+            padding: calc(var(--padding) * 2);
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            & > div{
+              width: 30px;
+              height: 30px;
+            }
+
+          }
+
+          & > main{
+            width: 100%;
+            padding: calc(var(--padding) * 2);
+
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--gap) / 2);
+
+            & > section{
+              & > section{
+                &.parentMenu{
+                  display: grid;
+                  grid-template-columns: 2fr auto;
+                  place-items: center;
+
+                  border: 1px solid transparent;
+                  border-radius: var(--radius);
+                  padding: var(--padding) calc(var(--padding) * 2);
+
+                  transition: var(--transition-velocity) ease-in-out;
+                  transition-property: background-color, border;
+
+                  &:where([active], :hover){
+                    background-color: hsla(var(--color-main-hue), 10%, 25%, 0.3);
+
+                  }
+
+                  &:where([active]){
+                    border: 1px solid white;
+
+                  }
+
+                  & > a{
+                    width: 100%;
+
+                    color: white;
+                    font-size: 1rem;
+
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: var(--gap);
+
+                    & > x-icon{
+                      height: 30px;
+                      width: 30px;
+              
+                    }
+
+                  }
+
+                  & > x-icon{
+                    &[for=toggleSubMenu]{
+                      height: 30px;
+                      width: 30px;
+              
+                      transition: var(--transition-velocity) ease-in-out transform;
+              
+                    }
+
+                    &[for=toggleSubMenu].open{
+                      transform: scaleY(-1);
+                    }
+
+                  }
+                
+                }
+
+              }
+
+              & > section{
+                &.subMenu{
+                  background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.3);
+          
+                  margin-top: 5px;
+                  padding: calc(var(--padding) * 2);
+                  border-radius: var(--radius);
+          
+                  display: none;
+                  flex-direction: column;
+                  gap: calc(var(--gap) / 2);
+
+                  &.show{
+                    display: flex;
+                  }
+
+                  &:empty{
+                    display: none;
+                  }
+
+                  & > a{
+                    width: 100%;
+            
+                    color: white;
+                    font-size: 0.8rem;
+            
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 7px;
+            
+                    border: 1px solid transparent;
+                    border-radius: var(--radius);
+                    padding: var(--padding) calc(var(--padding) * 2);
+            
+                    transition: var(--transition-velocity) ease-in-out;
+                    transition-property: background-color, border;
+
+                    &:where([active], :hover){
+                      background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.3);
+              
+                    }
+
+                    &:where([active]){
+                      border: 1px solid white;
+              
+                    }
+
+                    & > x-icon{
+                      height: 25px;
+                      width: 25px;        
+                      
+                    }
+            
+                  }
+          
+                }
+
+              }
+
+            }
+
+          }
+
+          & > footer{}
+
+        }
+
+        & > cover{
+          pointer-events:auto;
+  
+          background: var(--color-cover);
+          backdrop-filter: blur(var(--blur));
+          opacity: 0;
+          width: 100vw;
+          height: 100vh;
+  
+          position: fixed;
+          top: 0px;
+          left: 0px;
+          z-index: var(--z-minus);
+  
+          transition: var(--transition-velocity) opacity;
+  
+        }
+
+        & > header{
+          background-color: var(--color-main);
+          color: white;
+  
+          width: 100%;
+          height: var(--header-height);
+          padding: var(--padding);
+  
+          position: fixed;
+          top: 0px;
+          left: 0px;
+          z-index: var(--z-header);
+  
+          display: grid;
+          grid-template-columns: auto 3fr;
+  
+          place-items: center;
+  
+          & > x-icon{
+            &[for=menu]{
+              height: calc(var(--header-height) - var(--padding) * 2);
+              width: calc(var(--header-height) - var(--padding) * 2);
+
+            }
+    
+          }
+
+        }
+
+        & > main{
+          width: 100vw;
+          min-height: calc(100vh - var(--header-height));
+  
+        }
+
+        & > footer{
+          background-color: var(--color-surface-2);
+          color: var(--color-text-primary);
+  
+          width: 100%;
+          height: var(--footer-height);
+          padding: var(--padding);
+  
+          display: grid;
+          place-items: center;
+
+          &.hide{
+            display: none;
+          }
+  
+        }
+
       }
 
-      body > loading{
-        background-color: var(--color-surface-1);
-
-        width: 100vw;
-        height: 100vh;
-
-        position: fixed;
-        left: 0px;
-        top: 0px;
-        z-index: var(--z-loading);
-
-        transition: var(--transition-velocity) opacity ease-in-out;
-
-      }
-      body > loading::after{
-        content: '';
-        background-color: transparent;
-        height: 20vh;
-        width: 20vh;
-        border-radius: 100%;
-        border: 0px solid transparent;
-        border-right: 2px solid var(--color-text-primary);
-
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        transform-origin: center;
-
-        animation: loading 1000ms infinite linear;
-
-      }
       @keyframes loading{
         0%{transform: translate(-50%, -50%) rotate(0deg);}
         100%{transform: translate(-50%, -50%) rotate(720deg);}
 
-      }
-
-      body > toasts{
-        height: auto;
-        max-height: 100vh;
-        width: 400px;
-        padding: var(--padding);
-        padding-bottom: calc(var(--padding) * 4);
-
-        overflow-x: hidden;
-        overflow-y: scroll;
-
-        display: flex;
-        flex-direction: column-reverse;
-        gap: var(--gap);
-
-        position: fixed;
-        top: 0px;
-        right: 0px;
-        z-index: var(--z-toasts);
-
-      }
-      body > toasts:empty{
-        padding: 0px;
-      }
-
-      body > menu{
-        background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.1);
-        backdrop-filter: blur(100px);
-        height: 100vh;
-        width: auto;
-
-        overflow-y: scroll;
-
-        display: grid;
-        grid-template-rows: auto 2fr auto;
-        justify-items: start;
-        gap: var(--gap);
-
-        position: fixed;
-        z-index: var(--z-menu);
-        top: 0;
-        left: 0;
-        transform: translate(-100%, 0);
-        transition-duration: var(--transition-velocity);
-        transition-timing-function: ease;
-        transition-property: all;
-
-      }
-
-      body > menu > header{
-        width: 100%;
-
-        padding: calc(var(--padding) * 2);
-
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-
-      }
-      body > menu > header > div{
-        width: 30px;
-        height: 30px;
-      }
-      body > menu > main{
-        width: 100%;
-        padding: calc(var(--padding) * 2);
-
-        display: flex;
-        flex-direction: column;
-        gap: calc(var(--gap) / 2);
-
-      }
-      body > menu > main > section > section.parentMenu{
-        display: grid;
-        grid-template-columns: 2fr auto;
-        place-items: center;
-
-        border: 1px solid transparent;
-        border-radius: var(--radius);
-        padding: var(--padding) calc(var(--padding) * 2);
-
-        transition: var(--transition-velocity) ease-in-out;
-        transition-property: background-color, border;
-
-      }
-      body > menu > main > section > section.parentMenu > a{
-        width: 100%;
-
-        color: white;
-        font-size: 1rem;
-
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: var(--gap);
-
-      }
-      body > menu > main > section > section.parentMenu:where([active], :hover){
-        background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.3);
-
-      }
-      body > menu > main > section > section.parentMenu:where([active]){
-        border: 1px solid white;
-
-      }
-      body > menu > main > section > section.parentMenu > a > x-icon{
-        height: 30px;
-        width: 30px;
-
-      }
-
-      body > menu > main > section > section.parentMenu > x-icon[for=toggleSubMenu]{
-        height: 30px;
-        width: 30px;
-
-        transition: var(--transition-velocity) ease-in-out transform;
-
-      }
-      body > menu > main > section > section.parentMenu > x-icon[for=toggleSubMenu].open{
-        transform: scaleY(-1);
-      }
-
-      body > menu > main > section > section.subMenu{
-        background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.3);
-
-        margin-top: 5px;
-        padding: calc(var(--padding) * 2);
-        border-radius: var(--radius);
-
-        display: none;
-        flex-direction: column;
-        gap: calc(var(--gap) / 2);
-
-      }
-      body > menu > main > section > section.subMenu.show{
-        display: flex;
-      }
-      body > menu > main > section > section.subMenu:empty{
-        display: none;
-      }
-      body > menu > main > section > section.subMenu > a{
-        width: 100%;
-
-        color: white;
-        font-size: 0.8rem;
-
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 7px;
-
-        border: 1px solid transparent;
-        border-radius: var(--radius);
-        padding: var(--padding) calc(var(--padding) * 2);
-
-        transition: var(--transition-velocity) ease-in-out;
-        transition-property: background-color, border;
-
-      }
-      body > menu > main > section > section.subMenu > a:where([active], :hover){
-        background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.3);
-
-      }
-      body > menu > main > section > section.subMenu > a:where([active]){
-        border: 1px solid white;
-
-      }
-      body > menu > main > section > section.subMenu > a > x-icon{
-        height: 25px;
-        width: 25px;        
-        
-      }
-
-      body > menu > footer{}
-
-      body > cover{
-        pointer-events:auto;
-
-        background: var(--color-cover);
-        backdrop-filter: blur(var(--blur));
-        opacity: 0;
-        width: 100vw;
-        height: 100vh;
-
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        z-index: var(--z-minus);
-
-        transition: var(--transition-velocity) opacity;
-
-      }
-
-      body > header{
-        background-color: var(--color-main);
-        color: white;
-
-        width: 100%;
-        height: var(--header-height);
-        padding: var(--padding);
-
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        z-index: var(--z-header);
-
-        display: grid;
-        grid-template-columns: auto 3fr;
-
-        place-items: center;
-
-      }
-      body > header > x-icon[for=menu]{
-        height: calc(var(--header-height) - var(--padding) * 2);
-        width: calc(var(--header-height) - var(--padding) * 2);
-
-      }
-
-
-      body > main{
-        width: 100vw;
-        min-height: calc(100vh - var(--header-height));
-
-      }
-
-      body > footer{
-        background-color: var(--color-surface-2);
-        color: var(--color-text-primary);
-
-        width: 100%;
-        height: var(--footer-height);
-        padding: var(--padding);
-
-        display: grid;
-        place-items: center;
-
-      }
-      body > footer.hide{
-        display: none;
       }
 
       @media only screen and (max-width: ${CSS.values.screenSize.phone}) {
@@ -788,25 +818,27 @@ export default class CSS{
 
         }
 
-        body > toasts{
-          width: 100vw;
-          gap: 5px;
-        }
+        body{
+          & > toasts{
+            width: 100vw;
+            gap: 5px;
+          }
 
-        body > main {
-          width: 100vw;
-          height: calc(${CSS.values.document.height} - var(--header-height));
-          overflow: hidden;
-          overflow-y: scroll;
+          & > main {
+            width: 100vw;
+            height: calc(${CSS.values.document.height} - var(--header-height));
+            overflow: hidden;
+            overflow-y: scroll;
+  
+          }
 
-        }
+          & > footer{
+            display: none;
+          }
 
-        body > footer{
-          display: none;
         }
 
       }
-
     `;
 
     CSS.rules.elementsDefaults = `
