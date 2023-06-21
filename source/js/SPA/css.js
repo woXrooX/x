@@ -378,7 +378,7 @@ export default class CSS{
   }
 
   static master(){
-    CSS.rules.selectorsDefaults = `
+    CSS.rules.defaults = `
       :root, html, body, *, *::before, *::after{
         margin: 0;
         padding: 0;
@@ -391,6 +391,34 @@ export default class CSS{
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Mobile link click effect disabling */
         /* -webkit-tap-highlight-color: transparent; */
       }
+
+      *{
+        &[disabled], [disabled]::file-selector-button, [type=submit]:disabled{
+          cursor: not-allowed;
+          opacity: 0.5;
+        }
+
+      }      
+
+      hr{
+        border:none;
+        border-top:1px solid var(--color-text-secondary);
+      }
+
+      a{
+        cursor: pointer;
+        color: var(--color-text-secondary);
+
+        &:where(:active, :focus, :hover){
+          color: var(--color-text-primary);
+        }
+
+      }
+
+      li{
+        margin-left: 20px;
+      }
+
     `;
 
     CSS.rules.defaultScrollbar = `
@@ -842,92 +870,59 @@ export default class CSS{
     `;
 
     CSS.rules.elementsDefaults = `
-      /****************************** SVG START ******************************/
-      svg{
-        cursor: pointer;
-      }
-      /****************************** SVG END ******************************/
-
-      /****************************** hr START ******************************/
-      hr{
-        border:none;
-        border-top:1px solid ${CSS.values.color.text.secondary};
-      }
-      /****************************** hr END ******************************/
-
-      /****************************** a START ******************************/
-      a{
-        color: ${CSS.values.color.text.secondary};
-        cursor: pointer;
-      }
-      a:where(:active, :focus, :hover){
-        color: ${CSS.values.color.text.primary};
-      }
-      /****************************** a END ******************************/
-
-      /****************************** LI START ******************************/
-      li{
-        margin-left: 20px;
-      }
-      /****************************** LI END ******************************/
-
       /****************************** Info, Success, Warning, Error START ******************************/
       success{
-        color: ${CSS.values.color.success};
-      }
-      success::before{
-        content:"\\2713";
+        color: var(--color-success);
+
+        &::before{
+          content:"\\2713";
+        }
+
       }
 
       info{
-        color: ${CSS.values.color.info};
-      }
-      info::before{
-        content:"\\2139";
+        color: var(--color-info);
+
+        &::before{
+          content:"\\2139";
+        }
+
       }
 
       warning{
-        color: ${CSS.values.color.warning};
-      }
-      warning::before{
-        content:"\\26A0";
+        color: var(--color-warning);
+
+        &::before{
+          content:"\\26A0";
+        }
+
       }
 
       error{
-        color: ${CSS.values.color.error};
-      }
-      error::before{
-        content: "\\2715";
+        color: var(--color-error);
+
+        &::before{
+          content: "\\2715";
+        }
+
       }
 
-      info::before,
-      success::before,
-      warning::before,
-      error::before{
-        margin-right:5px;
-      }
+      info, success, warning, error{
+        &::before{
+          margin-right:5px;
+        }
 
-      success:empty,
-      warning:empty,
-      error:empty{
-        display:none;
+        &:empty{
+          display:none;
+        }
+
       }
 
       /****************************** Info, Success, Warning, Error END ******************************/
-
-      /****************************** Disabled START ******************************/
-      *:disabled,
-      input[type=submit]:disabled,
-      input[type=file]:disabled::file-selector-button{
-        cursor: not-allowed;
-        opacity: 0.5;
-
-      }
-      /****************************** Disabled END ******************************/
     `;
 
     return `
-      ${CSS.rules.selectorsDefaults}
+      ${CSS.rules.defaults}
       ${CSS.rules.defaultScrollbar}
       ${CSS.rules.root}
       ${CSS.rules.skeleton}
@@ -1343,6 +1338,10 @@ export default class CSS{
         border-bottom: 1px solid var(--color-surface-2);
 
       }
+      /* Success */
+      /* Info */
+      /* Warning */
+      /* Error */
       /*********************** Themed Boxes END ***********************/
     `;
 
