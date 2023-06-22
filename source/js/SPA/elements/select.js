@@ -142,7 +142,23 @@ export default class Select extends HTMLElement{
 
       });
 
-    }    
+    }
+
+    GenerateOptions: {
+      // Options
+      this.options = JSON.parse(this.innerHTML).constructor === Array ? JSON.parse(this.innerHTML) : [];
+
+      let optionsHtml = "";
+
+      for(const option of this.options)
+        optionsHtml += `<div value="${option["value"]}">${option.placeholder}</div>`;
+
+
+      this.shadow.querySelector("main > section#optionsSelected").innerHTML = `${optionsHtml}`;
+
+      this.shadow.querySelector("main > section#optionsToSelect").innerHTML = `${optionsHtml}`;
+
+    }
 
     MAX: {
       //// Max Number Of Options That Can Be Selected
@@ -163,26 +179,10 @@ export default class Select extends HTMLElement{
       else this.MAX = this.options.length || this.MAX;
     }
 
-    GenerateOptions: {
-      // Options
-      this.options = JSON.parse(this.innerHTML).constructor === Array ? JSON.parse(this.innerHTML) : [];
-
-      let optionsHtml = "";
-
-      for(const option of this.options)
-        optionsHtml += `<div value="${option["value"]}">${option.placeholder}</div>`;
-
-
-      this.shadow.querySelector("main > section#optionsSelected").innerHTML = `${optionsHtml}`;
-
-      this.shadow.querySelector("main > section#optionsToSelect").innerHTML = `${optionsHtml}`;
-
-    }
-
     SelectDeselect: {
       // Create FormData
       const entries = new FormData();
-      
+
       let options = this.shadow.querySelectorAll("main > section#optionsToSelect > div");
       let optionsSelected = this.shadow.querySelectorAll("main > section#optionsSelected > div");
       let count = 0;
