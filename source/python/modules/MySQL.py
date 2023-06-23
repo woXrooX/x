@@ -53,6 +53,9 @@ if __name__ != "__main__":
         def cursor(self):
             return self._curs
 
+        def lastQuery(self):
+            return self.cursor.statement
+
         def execute(self, sql, params=None, multi=False):
             try:
                 self.cursor.execute(sql, params or (), multi)
