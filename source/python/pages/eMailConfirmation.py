@@ -28,38 +28,36 @@ def eMailConfirmation():
 
         # Check If Verification Code Does Not Match Then Increment The Counter
         if int(request.form["verificationCode"]) != session["user"]["eMail_verification_code"]:
-            with MySQL(False) as db:
-                db.execute(
-                    ("UPDATE users SET eMail_verification_attempts_count=%s WHERE id=%s"),
-                    ((session["user"]["eMail_verification_attempts_count"] + 1), session["user"]["id"])
-                )
-                db.commit()
+            data = MySQL.execute(
+                sql="UPDATE users SET eMail_verification_attempts_count=%s WHERE id=%s",
+                params=((session["user"]["eMail_verification_attempts_count"] + 1), session["user"]["id"]),
+                commit=True
+            )
 
-                if db.hasError(): return response(type="error", message="databaseError")
+            if data == False: return response(type="error", message="databaseError")
 
-                # Update The session["user"] After The Changes To The Database
-                updateSessionUser()
+            # Update The session["user"] After The Changes To The Database
+            updateSessionUser()
 
             return response(type="warning", message="eMailConfirmationCodeDidNotMatch", field="verificationCode")
 
 
         # Success | Match
         if int(request.form["verificationCode"]) == session["user"]["eMail_verification_code"]:
-            with MySQL(False) as db:
-                db.execute(
-                    ("UPDATE users SET eMail_verification_attempts_count=%s, type=%s  WHERE id=%s"),
-                    (
-                        (session["user"]["eMail_verification_attempts_count"] + 1),
-                        Globals.USER_TYPES["authorized"]["id"],
-                        session["user"]["id"],
-                    )
-                )
-                db.commit()
+            data = MySQL.execute(
+                sql="UPDATE users SET eMail_verification_attempts_count=%s, type=%s  WHERE id=%s",
+                params=(
+                    (session["user"]["eMail_verification_attempts_count"] + 1),
+                    Globals.USER_TYPES["authorized"]["id"],
+                    session["user"]["id"],
+                ),
+                commit=True
+            )
 
-                if db.hasError(): return response(type="error", message="databaseError")
+            if data == False: return response(type="error", message="databaseError")
 
-                # Update The session["user"] After The Changes To The Database
-                User.updateSession()
+            # Update The session["user"] After The Changes To The Database
+            User.updateSession()
 
             return response(
                 type="success",

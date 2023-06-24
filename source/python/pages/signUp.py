@@ -53,72 +53,65 @@ def signUp():
 
         ######## eMail and Password In Use
         # eMailInUse
-        with MySQL(False) as db:
-            db.execute("SELECT id FROM users WHERE eMail=%s", (request.form["eMail"], ))
-            dataFetched  = db.fetchOne()
-            if dataFetched:
-                return response(type="error", message="eMailInUse", field="eMail")
+        data = MySQL.execute(sql="SELECT id FROM users WHERE eMail=%s", params=(request.form["eMail"], ), fetchOne=True)
+        if data: return response(type="error", message="eMailInUse", field="eMail")
 
         # passwordInUse
-        with MySQL(False) as db:
-            db.execute("SELECT id FROM users WHERE password=%s", (request.form["password"], ))
-            dataFetched = db.fetchOne()
-            if dataFetched:
-                return response(type="error", message="passwordInUse", field="password")
+        data = MySQL.execute(sql="SELECT id FROM users WHERE password=%s", params=(request.form["password"], ), fetchOne=True)
+        if data: return response(type="error", message="passwordInUse", field="password")
 
         ######## Success
         # Generate Randome Verification Code
         eMailVerificationCode = random.randint(100000, 999999)
 
-
         # Insert To Database
-        with MySQL(False) as db:
-            db.execute(
-                ("INSERT INTO users (password, eMail, eMail_verification_code, authenticity_status) VALUES (%s, %s, %s, %s)"),
-                (
-                    request.form["password"],
-                    request.form["eMail"],
-                    eMailVerificationCode,
-                    Globals.USER_AUTHENTICITY_STATUSES["unauthorized"]["id"]
-                )
-            )
-            db.commit()
+        data = MySQL.execute(
+            sql="INSERT INTO users (password, eMail, eMail_verification_code, authenticity_status) VALUES (%s, %s, %s, %s)",
+            params=(
+                request.form["password"],
+                request.form["eMail"],
+                eMailVerificationCode,
+                Globals.USER_AUTHENTICITY_STATUSES["unauthorized"]["id"]
+            ),
+            commit=True
+        )
 
-            if db.hasError():
-                return response(type="error", message="databaseError")
+        if data == False:
+            return response(type="error", message="databaseError")
 
-            # Get User Data
-            with MySQL(False) as db:
-                db.execute(
-                    ("SELECT id FROM users WHERE eMail=%s AND password=%s"),
-                    (
-                        request.form["eMail"],
-                        request.form["password"]
-                    )
-                )
+        # Get User Data
+        data = MySQL.execute(
+            sql="SELECT id FROM users WHERE eMail=%s AND password=%s",
+            params=(
+                request.form["eMail"],
+                request.form["password"]
+            ),
+            fetchOne=True
+        )
 
-                if db.hasError():
-                    return response(type="error", message="databaseError")
+        if data is None:
+            return response(type="error", message="databaseError")
 
 
-                # Set Session User Data
-                session["user"] = db.fetchOne()
-                # Handle The Session Update Error
-                if not User.updateSession():
-                    pass
+        # Set Session User Data
+        session["user"] = data
 
-            # Setup Dirs
-            if FileSystem.initUserFolders() == False:
-                # Handle Folder Creation Errors
-                pass
+        # Handle The Session Update Error
+        if not User.updateSession():
+            pass
+
+        # Setup Dirs
+        if FileSystem.initUserFolders() == False:
+            # Handle Folder Creation Errors
+            pass
 
 
         #### Check If Verification Code Sent Successfully
         emailVerificationSentSuccessfully = False
-        
+
         # Gmail
         if GMail(request.form["eMail"], eMailVerificationCode) is True: emailVerificationSentSuccessfully = True
-        
+
         # SendGrid
         if SendGrid.send("noreply", request.form["eMail"], eMailVerificationCode, "Sign Up") is True: emailVerificationSentSuccessfully = True
 

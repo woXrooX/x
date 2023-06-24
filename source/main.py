@@ -19,13 +19,13 @@ from python.modules.Globals import Globals
 
 #################################################### Setting Up MySQL
 from python.modules.MySQL import MySQL
-######## If Database Enabled
-if (
-    Globals.CONF.get("database", {}).get("enabled") is True and 
+######## If Database Is Enabled
+if(
+    Globals.CONF.get("database", {}).get("enabled") is True and
     Globals.CONF.get("database", {}).get("MySQL", {}).get("enabled") is True
 ):
     ######## Set Up Connection
-    MySQL.setUp(
+    MySQL.init(
         Globals.CONF["database"]["MySQL"]["user"],
         Globals.CONF["database"]["MySQL"]["password"],
         Globals.CONF["database"]["MySQL"]["host"],

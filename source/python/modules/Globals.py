@@ -42,7 +42,7 @@ if __name__ != "__main__":
                     "logIn.js",
                     "logOut.js",
                     "signUp.js"
-                ]                
+                ]
             }
         }
 
@@ -57,39 +57,33 @@ if __name__ != "__main__":
 
         @staticmethod
         def getUserAuthenticityStatuses():
-            with MySQL(False) as db:
-                db.execute("SELECT * FROM user_authenticity_statuses")
-                dataFetched = db.fetchAll()
+            data = MySQL.execute("SELECT * FROM user_authenticity_statuses")
 
-                # Making USER_AUTHENTICITY_STATUSES accessible by name
-                for user_authenticity_status in dataFetched:
-                    Globals.USER_AUTHENTICITY_STATUSES[user_authenticity_status["name"]] = user_authenticity_status
+            for user_authenticity_status in data:
+                Globals.USER_AUTHENTICITY_STATUSES[user_authenticity_status["name"]] = user_authenticity_status
 
         @staticmethod
         def getUserRoles():
-            with MySQL(False) as db:
-                db.execute("SELECT * FROM user_roles")
-                dataFetched = db.fetchAll()
+            data = MySQL.execute("SELECT * FROM user_roles")
 
-                # Making USER_TYPES accessible by keyword like "root" or "dev"
-                for user_role in dataFetched:
-                    Globals.USER_ROLES[user_role["name"]] = user_role
+            # Making USER_ROLES accessible by keyword like "root" or "dev"
+            for user_role in data:
+                Globals.USER_ROLES[user_role["name"]] = user_role
 
         @staticmethod
         def getUserAssignedRoles():
             if "user" in session:
-                with MySQL(False) as db:
-                    db.execute(
-                        ("""
-                            SELECT user_roles.name
-                            FROM user_roles
-                            RIGHT JOIN users_roles
-                            ON user_roles.id = users_roles.role AND users_roles.user = %s
-                        """),
-                        (session["user"]["id"],)
-                    )
+                data = MySQL.execute(
+                    sql="""
+                        SELECT user_roles.name
+                        FROM user_roles
+                        RIGHT JOIN users_roles
+                        ON user_roles.id = users_roles.role AND users_roles.user = %s;
+                    """,
+                    params=(session["user"]["id"],)
+                )
 
-                    session["user"]["roles"] = []
+                session["user"]["roles"] = []
 
-                    # Extracting IDs From Response
-                    for role in db.fetchAll(): session["user"]["roles"].append(role["name"])
+                # Extracting IDs From Response
+                for role in data: session["user"]["roles"].append(role["name"])

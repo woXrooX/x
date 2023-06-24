@@ -5,46 +5,25 @@ if __name__ != "__main__":
 
     class User:
         @staticmethod
-        def getAuthenticityStatuses():
-            with MySQL(False) as db:
-                db.execute("SELECT * FROM user_authenticity_statuses")
-                dataFetched = db.fetchAll()
-
-                # Making USER_AUTHENTICITY_STATUSES accessible by name
-                for user_authenticity_status in dataFetched:
-                    Globals.USER_AUTHENTICITY_STATUSES[user_authenticity_status["name"]] = user_authenticity_status
-
-        @staticmethod
-        def getRoles():
-            with MySQL(False) as db:
-                db.execute("SELECT * FROM user_roles")
-                dataFetched = db.fetchAll()
-
-                # Making USER_TYPES accessible by keyword like "root" or "dev"
-                for user_role in dataFetched:
-                    Globals.USER_ROLES[user_role["name"]] = user_role
-
-        @staticmethod
         def getAssignedRoles():
             if "user" not in session: return False
 
-            with MySQL(False) as db:
-                db.execute(
-                    ("""
+            data = MySQL.execute(
+                    sql="""
                         SELECT user_roles.name
                         FROM user_roles
                         INNER JOIN users_roles
                         ON user_roles.id = users_roles.role AND users_roles.user = %s
-                    """),
-                    (session["user"]["id"],)
+                    """,
+                    params=(session["user"]["id"],)
                 )
 
-                session["user"]["roles"] = []
+            session["user"]["roles"] = []
 
-                # Extracting IDs From Response
-                for role in db.fetchAll(): session["user"]["roles"].append(role["name"])
+            # Extracting IDs From Response
+            for role in data: session["user"]["roles"].append(role["name"])
 
-                return True
+            return True
 
         @staticmethod
         def updateSession():
@@ -52,18 +31,20 @@ if __name__ != "__main__":
             if "user" not in session: return False
 
             # Get User Data
-            with MySQL(False) as db:
-                db.execute(("SELECT * FROM users WHERE id=%s"), (session["user"]["id"], ))
+            data = MySQL.execute(
+                sql="SELECT * FROM users WHERE id=%s LIMIT 1;",
+                params=(session["user"]["id"],),
+                fetchOne=True
+            )
 
-                # Error
-                if db.hasError():
-                    return False
+            # Error
+            if data is False: return False
 
-                session["user"] = db.fetchOne()
+            session["user"] = data
 
-                # Handle The Error
-                if not User.getAssignedRoles():
-                    pass
+            # Handle The Error
+            if not User.getAssignedRoles():
+                pass
 
             # Success
             return True

@@ -28,34 +28,29 @@ def logIn():
             return response(type="error", message="passwordEmpty", field="password")
 
         ######## Check If eMail And Password matching User Exist
-        with MySQL(False) as db:
-            db.execute(
-                ("SELECT id FROM users WHERE eMail=%s AND password=%s"),
-                (
-                    request.form["eMail"],
-                    request.form["password"],
-                )
-            )
+        data = MySQL.execute(
+            sql="SELECT id FROM users WHERE eMail=%s AND password=%s LIMIT 1;",
+            params=(request.form["eMail"], request.form["password"]),
+            fetchOne=True
+        )
 
-            if db.hasError(): return response(type="error", message="databaseError")
+        if data is False: return response(type="error", message="databaseError")
 
-            dataFetched = db.fetchOne()
+        # No Match
+        if data is None: return response(type="error", message="usernameOrPasswordWrong")
 
+        # Set Session User ID
+        session["user"] = data
 
-            # No Match
-            if dataFetched is None: return response(type="error", message="usernameOrPasswordWrong")
+        # Handle The Session Update Error
+        if not User.updateSession():
+            pass
 
-            # Set Session User Data
-            session["user"] = dataFetched
-            # Handle The Session Update Error
-            if not User.updateSession():
-                pass
-
-            # On Success Redirect & Update Front-End Session
-            return response(
-                type="success",
-                message="success",
-                setSessionUser=True,
-                redirect="home",
-                domChange=["menu"]
-            )
+        # On Success Redirect & Update Front-End Session
+        return response(
+            type="success",
+            message="success",
+            setSessionUser=True,
+            redirect="home",
+            domChange=["menu"]
+        )
