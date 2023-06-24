@@ -13,8 +13,7 @@ def logOut():
 
     elif request.method == "POST":
         # unknownError
-        if request.form["for"] != "logOut":
-            return response(type="warning", message="unknownError")
+        if request.form["for"] != "logOut": return response(type="warning", message="unknownError")
 
         # Remove User From Session
         session.pop('user')

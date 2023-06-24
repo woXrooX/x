@@ -76,8 +76,7 @@ def signUp():
             commit=True
         )
 
-        if data == False:
-            return response(type="error", message="databaseError")
+        if not data: return response(type="error", message="databaseError")
 
         # Get User Data
         data = MySQL.execute(
@@ -89,8 +88,7 @@ def signUp():
             fetchOne=True
         )
 
-        if data is None:
-            return response(type="error", message="databaseError")
+        if not data: return response(type="error", message="databaseError")
 
 
         # Set Session User Data

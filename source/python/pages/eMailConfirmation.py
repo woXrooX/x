@@ -34,7 +34,7 @@ def eMailConfirmation():
                 commit=True
             )
 
-            if data == False: return response(type="error", message="databaseError")
+            if not data: return response(type="error", message="databaseError")
 
             # Update The session["user"] After The Changes To The Database
             updateSessionUser()
@@ -54,7 +54,7 @@ def eMailConfirmation():
                 commit=True
             )
 
-            if data == False: return response(type="error", message="databaseError")
+            if not data: return response(type="error", message="databaseError")
 
             # Update The session["user"] After The Changes To The Database
             User.updateSession()

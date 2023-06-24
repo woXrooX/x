@@ -37,7 +37,7 @@ def logIn():
         if data is False: return response(type="error", message="databaseError")
 
         # No Match
-        if data is None: return response(type="error", message="usernameOrPasswordWrong")
+        if not data: return response(type="error", message="usernameOrPasswordWrong")
 
         # Set Session User ID
         session["user"] = data
