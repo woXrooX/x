@@ -1,4 +1,4 @@
-// <x-nav class="box-default">
+// <x-nav class="box-default" selector="selector">
 //   [
 //     {"link": "overview"},
 //     {"link": "details"},
