@@ -11,19 +11,22 @@
 
 export default class Nav extends HTMLElement{
     static #template = document.createElement("template");
-  
+
     static {
         Nav.#template.innerHTML = `<nav></nav>`;
     }
 
     constructor(){
         super();
-        
+
         this.shadow = this.attachShadow({mode: 'closed'});
 
+        // Selectir
+        this.selector = this.getAttribute("selector");
+
         // Clone And Append Template
-        this.shadow.appendChild(Nav.#template.content.cloneNode(true));        
-        
+        this.shadow.appendChild(Nav.#template.content.cloneNode(true));
+
         // background-color: var(--color-surface-4) !important;
         CSS: {
             const style = document.createElement('style');
@@ -54,30 +57,30 @@ export default class Nav extends HTMLElement{
                   background-color: var(--color-surface-7);
                 }
             `;
-    
+
             this.shadow.appendChild(style);
 
             // Set Nav Class
-            this.shadow.querySelector("nav").setAttribute("class", this.getAttribute("class") || "box-default");   
+            this.shadow.querySelector("nav").setAttribute("class", this.getAttribute("class") || "box-default");
 
         }
-        
+
         BuildButtons: {
             this.buttonsHTML = "";
             this.buttons = JSON.parse(this.innerHTML).constructor === Array ? JSON.parse(this.innerHTML) : [];
 
             for(const button of this.buttons)
                 this.buttonsHTML += `<a href="#${button.link}">${window.Lang.use("name" in button ? button.name : button.link)}</a>`;
-            
+
         }
 
         // Content
         this.shadow.querySelector("nav").innerHTML = this.buttonsHTML;
-    
+
         Listeners: {
             // Init Active Nav Button
             this.#setActive();
-            
+
             // On Hash Change Trigger
             window.onhashchange = this.#setActive;
 
@@ -92,18 +95,51 @@ export default class Nav extends HTMLElement{
         for(const a of hyperlinks)
             if(a.getAttribute("href") === window.location.hash){
                 a.classList.add("active");
+
                 isHashValid = true;
-            
+
             }else a.classList.remove("active");
 
         // If Still No Valid Hash Found
         if(isHashValid === false){
             hyperlinks[0].classList.add("active");
+
             window.location.hash = hyperlinks[0].getAttribute("href");
+
         }
 
+
+
     };
-    
+
+    connectedCallback(){
+        // CSS Rules For Child Elements Animation
+        const style = document.createElement('style');
+        style.setAttribute("for", "x-nav");
+        style.innerText = `
+            ${this.selector} > *[id]{
+                scroll-margin-top: calc(var(--header-height) + (var(--padding) * 10));
+
+                &:not(:target){
+                    display: none;
+                }
+
+                &:target{
+                    display: block;
+                }
+
+            }
+        `;
+        document.head.appendChild(style);
+
+    }
+
+    disconnectedCallback(){
+        document.head.removeChild(
+            document.querySelector("style[for=x-nav]")
+        );
+
+    }
 
 };
 
