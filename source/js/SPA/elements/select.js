@@ -180,11 +180,11 @@ export default class Select extends HTMLElement{
     }
 
     SelectDeselect: {
-      // Create FormData
-      const entries = new FormData();
-
+      // Elements
       let options = this.shadow.querySelectorAll("main > section#optionsToSelect > div");
       let optionsSelected = this.shadow.querySelectorAll("main > section#optionsSelected > div");
+
+      // Counter For Selected Options
       let count = 0;
 
       //// Pre-Selected Options
@@ -201,16 +201,10 @@ export default class Select extends HTMLElement{
           // Increment The Count
           count++;
 
-          // Add To Form Entry
-          entries.append(this.getAttribute('name'), option.value);
-
-          // Add To Form Data
-          this.internals_.setFormValue(entries);
+          // Update Form Data
+          this.#updateFormData();
 
         }
-
-
-
 
       // Select
       for(const option of options)
@@ -237,11 +231,8 @@ export default class Select extends HTMLElement{
           // Show Option On "optionsSelected"
           this.shadow.querySelector(`main > section#optionsSelected > div[value="${option.getAttribute("value")}"]`).style.display = "block";
 
-          // Add To Form Entry
-          entries.append(this.getAttribute('name'), option.getAttribute("value"));
-
-          // Add To Form Data
-          this.internals_.setFormValue(entries);
+          // Update Form Data
+          this.#updateFormData();
 
         });
 
@@ -263,17 +254,30 @@ export default class Select extends HTMLElement{
           // Show Option On "optionsToSelect"
           this.shadow.querySelector(`main > section#optionsToSelect > div[value="${option.getAttribute("value")}"]`).style.display = "block";
 
-          // Delete Form Entry
-          entries.delete(this.getAttribute('name'), option.getAttribute("value"));
-
-          // Add To Form Data
-          this.internals_.setFormValue(entries);
+          // Update Form Data
+          this.#updateFormData();
 
         });
 
     }
 
   }
+
+  #updateFormData = ()=>{
+      // Create FormData
+      const formData = new FormData();
+
+      // Select All Options With Attribute style="display: block;" And Add To FormData Entries
+      for(const option of this.shadow.querySelectorAll("main > section#optionsSelected > div"))
+        if(option.hasAttribute("style") && option.getAttribute("style") === "display: block;")
+          formData.append(this.getAttribute('name'), option.innerText);
+
+      // Add Data To Custom Element FormData
+      this.internals_.setFormValue(formData);
+
+      // formData.delete(this.getAttribute('name'), option.getAttribute("value"));
+
+  };
 
 };
 
