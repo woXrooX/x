@@ -71,6 +71,9 @@ if __name__ != "__main__":
                 # Execute SQL statements within the transaction
                 if commit is True: MySQL.connection.start_transaction()
 
+                # Check If params Evaluated To True
+                params = params or ()
+
                 # Default execution
                 if(
                     # When many and multi is False
