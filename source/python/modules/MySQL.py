@@ -44,7 +44,7 @@ if __name__ != "__main__":
         @staticmethod
         def execute(
             sql,
-            params = [],
+            params = None,
 
             # Enables multiple queries in a single request
             multi = False,
