@@ -114,15 +114,20 @@
     "ru":"Валюта",
     "uz":"Valyuta"
   },
+  "default":{
+    "en":"Default",
+    "ru":"По умолчанию",
+    "uz":"Odatiy"
+  },
   "databaseError":{
     "en":"Database error",
     "ru":"Ошибка базы данных",
     "uz":"Ma'lumotlar bazasida xatolik"
   },
-  "default":{
-    "en":"Default",
-    "ru":"По умолчанию",
-    "uz":"Odatiy"
+  "deletedSuccessfully":{
+    "en":"Successfully deleted",
+    "ru":"Успешно удалено",
+    "uz":"Muvaffaqiyatli oʻchirildi"
   },
   "demo":{
     "en":"Demo",
@@ -323,7 +328,7 @@
     "en":"Invalid request",
     "ru":"Неверная запрос",
     "uz":"Noto'g'ri so'rov"
-  },  
+  },
   "invalidValue":{
     "en":"Invalid value",
     "ru":"Неверное значение",
