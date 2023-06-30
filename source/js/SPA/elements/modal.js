@@ -2,6 +2,8 @@
 // <x-modal trigger="auto">Auto</x-modal>
 // <x-modal trigger="click" type="icon" value="avatar">Click + Icon</x-modal>
 // <x-modal trigger="click" type="text" value="Click Me">Click + Text</x-modal>
+// <x-modal trigger="click" type="icon" value="idea" button>Button + Icon + Click</x-modal>
+// <x-modal trigger="click" type="text" value="Click Me" button>Button + Text + Click</x-modal>
 
 "use strict";
 
