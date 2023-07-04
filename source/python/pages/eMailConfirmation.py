@@ -13,8 +13,7 @@ def eMailConfirmation():
 
     if request.method == "POST":
         # Check If "for" Meant To Go To Here
-        if request.form["for"] != "eMailConfirmation":
-            return response(type="warning", message="unknownError")
+        if request.form["for"] != "eMailConfirmation": return response(type="warning", message="unknownError")
 
         # Check For Existentance Of "verificationCode"
         if(
@@ -23,8 +22,8 @@ def eMailConfirmation():
 
             # Check If Verification Code Is Empty
             "verificationCode" in request.form and request.form["verificationCode"] == ''
-        ):
-            return response(type="warning", message="eMailConfirmationCodeEmpty", field="verificationCode")
+
+        ): return response(type="warning", message="eMailConfirmationCodeEmpty", field="verificationCode")
 
         # Check If Verification Code Does Not Match Then Increment The Counter
         if int(request.form["verificationCode"]) != session["user"]["eMail_verification_code"]:
@@ -34,7 +33,7 @@ def eMailConfirmation():
                 commit=True
             )
 
-            if not data: return response(type="error", message="databaseError")
+            if data is False: return response(type="error", message="databaseError")
 
             # Update The session["user"] After The Changes To The Database
             updateSessionUser()
@@ -54,7 +53,7 @@ def eMailConfirmation():
                 commit=True
             )
 
-            if not data: return response(type="error", message="databaseError")
+            if data is False: return response(type="error", message="databaseError")
 
             # Update The session["user"] After The Changes To The Database
             User.updateSession()
