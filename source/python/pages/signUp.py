@@ -76,7 +76,7 @@ def signUp():
             commit=True
         )
 
-        if not data: return response(type="error", message="databaseError")
+        if data is False: return response(type="error", message="databaseError")
 
         # Get User Data
         data = MySQL.execute(
