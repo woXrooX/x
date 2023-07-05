@@ -74,7 +74,7 @@ export default class CSS{
     padding: {
       default: "5px"
     },
-    
+
     margin: {
       default: "5px"
     },
@@ -398,7 +398,7 @@ export default class CSS{
           opacity: 0.5;
         }
 
-      }      
+      }
 
       hr{
         border:none;
@@ -446,7 +446,7 @@ export default class CSS{
         --screen-size-phone: ${CSS.values.screenSize.phone};
         --screen-size-tablet: ${CSS.values.screenSize.tablet};
         --screen-size-desktop: ${CSS.values.screenSize.desktop};
-        --screen-size-tv: ${CSS.values.screenSize.tv};    
+        --screen-size-tv: ${CSS.values.screenSize.tv};
 
         --document-Height: ${CSS.values.document.height};
 
@@ -485,7 +485,7 @@ export default class CSS{
         --color-main: hsla(var(--color-main-hue), var(--color-main-saturation), var(--color-main-lightness), 1);
         --color-brand: var(--color-main);
 
-        
+
         --color-success: ${CSS.values.color.success};
         --color-info: ${CSS.values.color.info};
         --color-warning: ${CSS.values.color.warning};
@@ -664,7 +664,7 @@ export default class CSS{
                     & > x-icon{
                       height: 30px;
                       width: 30px;
-              
+
                     }
 
                   }
@@ -673,9 +673,9 @@ export default class CSS{
                     &[for=toggleSubMenu]{
                       height: 30px;
                       width: 30px;
-              
+
                       transition: var(--transition-velocity) ease-in-out transform;
-              
+
                     }
 
                     &[for=toggleSubMenu].open{
@@ -683,7 +683,7 @@ export default class CSS{
                     }
 
                   }
-                
+
                 }
 
               }
@@ -691,11 +691,11 @@ export default class CSS{
               & > section{
                 &.subMenu{
                   background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.3);
-          
+
                   margin-top: 5px;
                   padding: calc(var(--padding) * 2);
                   border-radius: var(--radius);
-          
+
                   display: none;
                   flex-direction: column;
                   gap: calc(var(--gap) / 2);
@@ -710,40 +710,40 @@ export default class CSS{
 
                   & > a{
                     width: 100%;
-            
+
                     color: white;
                     font-size: 0.8rem;
-            
+
                     display: flex;
                     justify-content: flex-start;
                     align-items: center;
                     gap: 7px;
-            
+
                     border: 1px solid transparent;
                     border-radius: var(--radius);
                     padding: var(--padding) calc(var(--padding) * 2);
-            
+
                     transition: var(--transition-velocity) ease-in-out;
                     transition-property: background-color, border;
 
                     &:where([active], :hover){
                       background-color: hsla(${CSS.values.color.brand.hue}, 10%, 25%, 0.3);
-              
+
                     }
 
                     &:where([active]){
                       border: 1px solid white;
-              
+
                     }
 
                     & > x-icon{
                       height: 25px;
-                      width: 25px;        
-                      
+                      width: 25px;
+
                     }
-            
+
                   }
-          
+
                 }
 
               }
@@ -758,47 +758,47 @@ export default class CSS{
 
         & > cover{
           pointer-events:auto;
-  
+
           background: var(--color-cover);
           backdrop-filter: blur(var(--blur));
           opacity: 0;
           width: 100vw;
           height: 100vh;
-  
+
           position: fixed;
           top: 0px;
           left: 0px;
           z-index: var(--z-minus);
-  
+
           transition: var(--transition-velocity) opacity;
-  
+
         }
 
         & > header{
           background-color: var(--color-main);
           color: white;
-  
+
           width: 100%;
           height: var(--header-height);
           padding: var(--padding);
-  
+
           position: fixed;
           top: 0px;
           left: 0px;
           z-index: var(--z-header);
-  
+
           display: grid;
           grid-template-columns: auto 3fr;
-  
+
           place-items: center;
-  
+
           & > x-icon{
             &[for=menu]{
               height: calc(var(--header-height) - var(--padding) * 2);
               width: calc(var(--header-height) - var(--padding) * 2);
 
             }
-    
+
           }
 
         }
@@ -806,24 +806,24 @@ export default class CSS{
         & > main{
           width: 100vw;
           min-height: calc(100vh - var(--header-height));
-  
+
         }
 
         & > footer{
           background-color: var(--color-surface-2);
           color: var(--color-text-primary);
-  
+
           width: 100%;
           height: var(--footer-height);
           padding: var(--padding);
-  
+
           display: grid;
           place-items: center;
 
           &.hide{
             display: none;
           }
-  
+
         }
 
       }
@@ -857,7 +857,7 @@ export default class CSS{
             height: calc(${CSS.values.document.height} - var(--header-height));
             overflow: hidden;
             overflow-y: scroll;
-  
+
           }
 
           & > footer{
@@ -1269,39 +1269,39 @@ export default class CSS{
       /************ Common START ************/
       .scrollbar-x,
       .scrollbar-y{
-        overflow: hidden;      
+        overflow: hidden;
       }
       .scrollbar-x{
         overflow-x: scroll;
-        
+
       }
       .scrollbar-y{
         overflow-y: scroll;
-      }      
+      }
       /************ Common END ************/
 
 
       /************ Firefox START ************/
       :where(.scrollbar-x, .scrollbar-y){
         scrollbar-width: auto;
-        scrollbar-color: var(--color-brand) transparent;    
+        scrollbar-color: var(--color-brand) transparent;
       }
       /************ Firefox END ************/
 
       /************ All Other Browsers START ************/
-      :where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar{   
-        display: unset;     
+      :where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar{
+        display: unset;
         width: 5px;
         height: 5px;
       }
-      :where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-track{        
+      :where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-track{
         background-color: transparent;
       }
-      :where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-thumb{        
+      :where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-thumb{
         background-color: hsla(${CSS.values.color.brand.hue}deg, ${CSS.values.color.brand.saturation}%, ${CSS.values.color.brand.lightness}%, 0.5);
         border-radius: 5px;
       }
-      :where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-thumb:hover{        
+      :where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-thumb:hover{
         background-color: hsla(${CSS.values.color.brand.hue}deg, ${CSS.values.color.brand.saturation}%, ${CSS.values.color.brand.lightness}%, 1);
       }
       /************ All Other Browsers END ************/
@@ -1413,7 +1413,7 @@ export default class CSS{
       .flex-y-baseline{align-items: baseline;}
       .flex-y-stretch{align-items: stretch;}
 
-      /* XY */ 
+      /* XY */
       .flex-center{
         justify-content: center;
         align-items: center;
@@ -1433,14 +1433,14 @@ export default class CSS{
       .gap-3{gap: calc(var(--gap) * 3);}
       .gap-4{gap: calc(var(--gap) * 4);}
       .gap-5{gap: calc(var(--gap) * 5);}
-  
+
       /***** Gap END *****/
 
     `;
 
     CSS.rules.backgroundColor = `
       .color-surface-brand{background-color: var(--color-brand);}
-      
+
       .color-surface-1{background-color: var(--color-surface-1);}
       .color-surface-2{background-color: var(--color-surface-2);}
       .color-surface-3{background-color: var(--color-surface-3);}
@@ -1468,7 +1468,7 @@ export default class CSS{
       .color-text-primary{color: var(--color-text-primary);}
       .color-text-secondary{color: var(--color-text-secondary);}
       .color-text-accent{color: var(--color-text-accent);}
-      
+
       .color-text-success{color: var(--color-success);}
       .color-text-info{color: var(--color-info);}
       .color-text-warning{color: var(--color-warning);}
@@ -1480,6 +1480,36 @@ export default class CSS{
 
       .text-bold{font-weight: bold;}
       .text-italic{font-style: italic;}
+
+      .text-size-0-1{font-size: 0.1rem;}
+      .text-size-0-2{font-size: 0.2rem;}
+      .text-size-0-3{font-size: 0.3rem;}
+      .text-size-0-4{font-size: 0.4rem;}
+      .text-size-0-5{font-size: 0.5rem;}
+      .text-size-0-6{font-size: 0.6rem;}
+      .text-size-0-7{font-size: 0.7rem;}
+      .text-size-0-8{font-size: 0.8rem;}
+      .text-size-0-9{font-size: 0.9rem;}
+
+      .text-size-1{font-size: 1rem;}
+      .text-size-1-1{font-size: 1.1rem;}
+      .text-size-1-2{font-size: 1.2rem;}
+      .text-size-1-3{font-size: 1.3rem;}
+      .text-size-1-4{font-size: 1.4rem;}
+      .text-size-1-5{font-size: 1.5rem;}
+      .text-size-1-6{font-size: 1.6rem;}
+      .text-size-1-7{font-size: 1.7rem;}
+      .text-size-1-8{font-size: 1.8rem;}
+      .text-size-1-9{font-size: 1.9rem;}
+
+      .text-size-2{font-size: 2rem;}
+      .text-size-2-5{font-size: 2.5rem;}
+
+      .text-size-3{font-size: 3rem;}
+
+      .text-size-4{font-size: 4rem;}
+
+      .text-size-5{font-size: 5rem;}
 
     `;
 
@@ -1505,10 +1535,10 @@ export default class CSS{
       .w-90{width: 90%;}
       .w-95{width: 95%;}
       .w-100{width: 100%;}
-      
+
       .w-auto{width: auto;}
 
-      /* Widths END */    
+      /* Widths END */
     `;
 
     CSS.rules.padding = `
@@ -1592,7 +1622,7 @@ export default class CSS{
         padding-bottom: calc(var(--padding) * 5);
       }
 
-      /***** Paddings END *****/    
+      /***** Paddings END *****/
     `;
 
     CSS.rules.margin = `
@@ -1676,7 +1706,7 @@ export default class CSS{
         margin-bottom: calc(var(--margin) * 5);
       }
 
-      /***** Margings END *****/        
+      /***** Margings END *****/
     `;
 
     CSS.rules.radius = `
@@ -1692,6 +1722,13 @@ export default class CSS{
       /* Background Shadow END */
     `;
 
+    CSS.rules.hr = `
+      hr.v-2D{
+        border-top:1px solid var(--color-surface-4);
+        border-bottom:1px solid var(--color-surface-2);
+      }
+    `;
+
     return `
       ${CSS.rules.boxes}
       ${CSS.rules.layoutSystem}
@@ -1703,6 +1740,7 @@ export default class CSS{
       ${CSS.rules.margin}
       ${CSS.rules.radius}
       ${CSS.rules.shadow}
+      ${CSS.rules.hr}
     `;
 
   }
