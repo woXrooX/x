@@ -74,7 +74,7 @@ if __name__ != "__main__":
                         extensions != [] and
                         os.path.splitext(file)[1] not in extensions
                     ):
-                        Log.warning(f"Not Matching File Extension: {file}")        
+                        Log.warning(f"Not Matching File Extension: {file}")
                         continue
 
                     FileSystem.copyFile(fromPath, toPath, file)
@@ -113,11 +113,11 @@ if __name__ != "__main__":
         def init():
             ################################ CleanUp
             Log.center("Clean Up", '=')
-            
+
             ################ Pages (Back-End)
             Log.center("Pages (Back-End)", '-')
             FileSystem.cleanExternalCopiedPagesBack()
-            
+
             ################ Pages (Front-End)
             Log.center("Pages (Front-End)", '-')
             FileSystem.cleanExternalCopiedPagesFront()
@@ -257,7 +257,7 @@ export default function content(){
         @staticmethod
         def cleanExternalCopiedPagesBack():
             path = f"{Globals.X_RUNNING_FROM}/python/pages/"
-            
+
             files = os.listdir(path)
 
             for file_name in files:
@@ -266,12 +266,12 @@ export default function content(){
 
                 if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["pages"]["back"]:
                     FileSystem.deleteFile(file_path)
-            
+
         # Pages (Front-End)
         @staticmethod
         def cleanExternalCopiedPagesFront():
             path = f"{Globals.X_RUNNING_FROM}/js/pages/"
-            
+
             files = os.listdir(path)
 
             for file_name in files:
@@ -279,7 +279,7 @@ export default function content(){
                 file_path = os.path.join(path, file_name)
 
                 if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["pages"]["front"]:
-                    FileSystem.deleteFile(file_path)            
+                    FileSystem.deleteFile(file_path)
 
         ####### Copy
         # Copy Fonts
@@ -306,7 +306,7 @@ export default function content(){
         @staticmethod
         def copyJavaScripts():
             Log.center("Copying JavaScripts", '-')
-            
+
             if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{str(Globals.X_RUNNING_FROM)}/js/modules") is True:
                 Log.success("JavaScripts Are Copied")
 
@@ -318,7 +318,7 @@ export default function content(){
         @staticmethod
         def copyPagesBackEnd():
             Log.center("Copying Pages (Back-End)", '-')
-      
+
             if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{str(Globals.X_RUNNING_FROM)}/python/pages") is True:
                 Log.success("Pages Are Copied (Back-End)")
 
@@ -330,7 +330,7 @@ export default function content(){
         @staticmethod
         def copyPagesFrontEnd():
             Log.center("Copying Pages (Front-End)", '-')
-            
+
             if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{str(Globals.X_RUNNING_FROM)}/js/pages") is True:
                 Log.success("Pages Are Copied (Front-End)")
 
