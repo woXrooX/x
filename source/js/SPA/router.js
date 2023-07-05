@@ -11,6 +11,10 @@ export default class Router{
     // Check If App Is Down If So Stop Handling Set appIsDown As Current Page
     if("appIsDown" in window.CONF["default"]){
       window.DOM.setPage(await import(`../pages/appIsDown.js`));
+
+      // Force-End Loading Effect
+      window.Loading.end();
+
       return;
     }
 
@@ -30,10 +34,10 @@ export default class Router{
       // If Url Args Exists In This Page Extract Url Arguments From The Path Name
       if(window.CONF.pages[page]?.urlArgs){
         //// NOTE: Order Matters In This Scope
-        
+
         // Current Page Arguments
         Router.currentPage.urlArgs = pathname.split('/').splice(-window.CONF.pages[page].urlArgs.length);
-        
+
         // Modified Path Name
         pathname = pathname.split('/').slice(0, -window.CONF.pages[page].urlArgs.length).join('/');
 
@@ -44,7 +48,7 @@ export default class Router{
       for(const endpoint of window.CONF["pages"][page]["endpoints"])
         // Check If Page Endpoint Equals To Currnt Endpoint
         if(endpoint == pathname){
-          
+
           //// Check If Page Is Not Current Loaded Page
           // If yes then exit this method
           // NOTE: endpoint should be unique.
@@ -55,13 +59,13 @@ export default class Router{
             Router.currentPage.endpoint == pathname ||
             Router.currentPage.endpoint === "home" && pathname === '/'
           ) return;
-  
+
           Router.currentPage.name = page;
           Router.currentPage.endpoint = endpoint;
-  
+
           // Break Out The Loops
           break loopPages;
-  
+
         }
 
     }
@@ -98,13 +102,13 @@ export default class Router{
 
       // Render The Error
       window.DOM.render(`
-        <container>      
+        <container>
           <row class="m-t-5 box-default p-5 w-50">
             <column>
               <error>${error.name}</error>
               <info>${error.stack}</info>
             </column>
-          </row>        
+          </row>
         </container>
       `);
 
@@ -113,7 +117,7 @@ export default class Router{
       window.Loading.end();
 
     }
-    
+
   }
 
   static routeGuard(page){
