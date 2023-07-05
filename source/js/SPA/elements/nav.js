@@ -125,7 +125,7 @@ export default class Nav extends HTMLElement{
                 }
 
                 &:target{
-                    display: block;
+                    display: auto;
                 }
 
             }
