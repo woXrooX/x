@@ -114,7 +114,9 @@ if __name__ != "__main__":
                 else: MySQL.lastFetchedData = MySQL.cursor.fetchall()
 
             except Exception as e:
+                print("------------- MySQL Execute -------------")
                 print(f"ERROR: {e}")
+                print("-----------------------------------------")
                 return False
 
             # Close The Connection
@@ -172,8 +174,9 @@ if __name__ != "__main__":
                 return True
 
             except Exception as e:
+                print("------------- MySQL Connect -------------")
                 print(f"ERROR: {e}")
-
+                print("-----------------------------------------")
                 return False
 
         # Disconnect

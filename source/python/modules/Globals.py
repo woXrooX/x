@@ -59,12 +59,24 @@ if __name__ != "__main__":
         def getUserAuthenticityStatuses():
             data = MySQL.execute("SELECT * FROM user_authenticity_statuses")
 
+            if data is False:
+                print("------------- FileSystem -------------")
+                print("Could Not Fetch 'user_authenticity_statuses'")
+                print("--------------------------------------")
+                return
+
             for user_authenticity_status in data:
                 Globals.USER_AUTHENTICITY_STATUSES[user_authenticity_status["name"]] = user_authenticity_status
 
         @staticmethod
         def getUserRoles():
             data = MySQL.execute("SELECT * FROM user_roles")
+
+            if data is False:
+                print("------------- FileSystem -------------")
+                print("Could Not Fetch 'user_roles'")
+                print("--------------------------------------")
+                return
 
             # Making USER_ROLES accessible by keyword like "root" or "dev"
             for user_role in data:
@@ -84,6 +96,12 @@ if __name__ != "__main__":
                 )
 
                 session["user"]["roles"] = []
+
+                if data is False:
+                    print("------------- FileSystem -------------")
+                    print("Could Not Fetch 'user_roles'")
+                    print("--------------------------------------")
+                    return
 
                 # Extracting IDs From Response
                 for role in data: session["user"]["roles"].append(role["name"])
