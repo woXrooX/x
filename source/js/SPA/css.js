@@ -1666,67 +1666,165 @@ export default class CSS{
         border-radius: var(--radius);
         padding: var(--padding);
 
-        & > thead{
-          background-color: var(--color-surface-10);
+        &.x-default{
+          & > thead{
+            background-color: var(--color-surface-10);
 
-          & > tr{
-            & > th{
-              color: var(--color-text-accent);
-              font-weight: bold;
+            & > tr{
+              & > th{
+                color: var(--color-text-accent);
+                font-weight: bold;
 
-              border-radius: var(--table-radius);
-              padding: var(--padding);
+                border-radius: var(--table-radius);
+                padding: var(--padding);
+              }
+            }
+          }
+
+          & > tbody{
+            & > tr{
+              transition: var(--transition-velocity) ease-in-out background-color;
+
+              &:nth-child(odd){
+                background-color: var(--color-surface-4);
+              }
+
+              &:nth-child(even){
+                background-color: var(--color-surface-5);
+              }
+
+              &:hover{
+                background-color: var(--color-surface-7);
+              }
+
+              & > td{
+                border-radius: var(--table-radius);
+                padding: var(--padding);
+              }
+            }
+          }
+
+          & > tfoot{
+            background-color: var(--color-surface-9);
+
+            & > tr{
+              & > td{
+                color: var(--color-text-accent);
+
+                border-radius: var(--table-radius);
+                padding: var(--padding);
+              }
+            }
+          }
+        }
+
+        &.x-skeleton{
+          border-collapse: collapse;
+
+          & > thead{
+            & > tr{
+              & > th{
+                color: var(--color-text-primary);
+                font-weight: bold;
+
+                padding: var(--padding);
+
+              }
 
             }
 
           }
 
-        }
+          & > tbody{
+            & > tr{
+              transition: var(--transition-velocity) ease-in-out background-color;
 
-        & > tbody{
-          & > tr{
-            transition: var(--transition-velocity) ease-in-out background-color;
+              &:hover{
+                background-color: var(--color-surface-4);
+              }
 
-            &:nth-child(odd){
-              background-color: var(--color-surface-4);
-
+              & > td{
+                border: 1px solid var(--color-main);
+                padding: var(--padding);
+              }
             }
+          }
 
-            &:nth-child(even){
-              background-color: var(--color-surface-5);
+          & > tfoot{
+            & > tr{
+              & > td{
+                color: var(--color-text-secondary);
 
+                border-radius: var(--table-radius);
+                padding: var(--padding);
+              }
             }
-
-            &:hover{
-              background-color: var(--color-surface-7);
-            }
-
-            & > td{
-              border-radius: var(--table-radius);
-              padding: var(--padding);
-
-            }
-
           }
 
         }
 
-        & > tfoot{
-          background-color: var(--color-surface-9);
 
-          & > tr{
-            & > td{
-              color: var(--color-text-accent);
+        &.x-clean{
+          border-collapse: collapse;
 
-              border-radius: var(--table-radius);
-              padding: var(--padding);
+          & > thead{
+            background-color: var(--color-surface-1);
 
+            & > tr{
+              & > th{
+                color: var(--color-text-primary);
+                font-weight: bold;
+
+                padding: var(--padding);
+
+                &:first-child{
+                  border-top-left-radius: var(--radius);
+                }
+
+                &:last-child{
+                  border-top-right-radius: var(--radius);
+                }
+              }
             }
-
           }
 
-        }
+          & > tbody{
+            background-color: var(--color-surface-2);
 
+            & > tr{
+              transition: var(--transition-velocity) ease-in-out background-color;
+
+              &:hover{
+                background-color: var(--color-surface-4);
+              }
+
+              & > td{
+                padding: var(--padding);
+              }
+            }
+          }
+
+          & > tfoot{
+            background-color: var(--color-surface-1);
+            border-block-start: 1px solid var(--color-surface-3);
+
+            & > tr{
+              & > td{
+                color: var(--color-text-secondary);
+
+                padding: var(--padding);
+
+                &:first-child{
+                  border-bottom-left-radius: var(--radius);
+                }
+
+                &:last-child{
+                  border-bottom-right-radius: var(--radius);
+                }
+              }
+            }
+          }
+        }
       }
     `;
 
