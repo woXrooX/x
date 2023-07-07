@@ -1728,11 +1728,8 @@ export default class CSS{
                 font-weight: bold;
 
                 padding: var(--padding);
-
               }
-
             }
-
           }
 
           & > tbody{
