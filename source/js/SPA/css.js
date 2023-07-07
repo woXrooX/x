@@ -1187,84 +1187,6 @@ export default class CSS{
       /************ input[type=submit] & button END ************/
     `;
 
-    CSS.rules.table = `
-      /************ Table START ************/
-      table{
-        --table-radius: 3px;
-
-        font-size: 0.7rem;
-
-        /* make table cells with same */
-        table-layout: auto;
-
-        display: block;
-        width: 100%;
-
-        border: 1px solid var(--color-main);
-        border-radius: var(--radius);
-        padding: var(--padding);
-
-      }
-      /************ Table END ************/
-
-      /************ thead START ************/
-      table > thead{
-        background-color: var(--color-surface-10);
-      }
-
-      table > thead > tr > th{
-        color: var(--color-text-accent);
-        font-weight: bold;
-
-        border-radius: var(--table-radius);
-        padding: var(--padding);
-
-      }
-      /************ thead END ************/
-
-      /************ tbody START ************/
-      table > tbody > tr:nth-child(odd){
-        background-color: var(--color-surface-4);
-
-      }
-      table > tbody > tr:nth-child(even){
-        background-color: var(--color-surface-5);
-
-      }
-
-      table > tbody > tr > td{
-        border-radius: var(--table-radius);
-        padding: var(--padding);
-
-      }
-
-      /* tr:hover START */
-      table > tbody > tr{
-        transition: var(--transition-velocity) ease-in-out background-color;
-      }
-
-      table > tbody > tr:hover{
-        background-color: var(--color-surface-7);
-      }
-      /* tr:hover END */
-
-      /************ tbody END ************/
-
-      /************ tfead START ************/
-      table > tfoot{
-        background-color: var(--color-surface-9);
-      }
-
-      table > tfoot > tr > td{
-        color: var(--color-text-accent);
-
-        border-radius: var(--table-radius);
-        padding: var(--padding);
-
-      }
-      /************ tfoot END ************/
-    `;
-
     CSS.rules.customScrollbar = `
       /************ Common START ************/
       .scrollbar-x,
@@ -1309,7 +1231,6 @@ export default class CSS{
 
     return `
       ${CSS.rules.form}
-      ${CSS.rules.table}
       ${CSS.rules.customScrollbar}
     `;
 
@@ -1729,6 +1650,86 @@ export default class CSS{
       }
     `;
 
+    CSS.rules.table = `
+      table{
+        --table-radius: 3px;
+
+        font-size: 0.7rem;
+
+        /* make table cells with same */
+        table-layout: auto;
+
+        display: block;
+        width: 100%;
+
+        border: 1px solid var(--color-main);
+        border-radius: var(--radius);
+        padding: var(--padding);
+
+        & > thead{
+          background-color: var(--color-surface-10);
+
+          & > tr{
+            & > th{
+              color: var(--color-text-accent);
+              font-weight: bold;
+
+              border-radius: var(--table-radius);
+              padding: var(--padding);
+
+            }
+
+          }
+
+        }
+
+        & > tbody{
+          & > tr{
+            transition: var(--transition-velocity) ease-in-out background-color;
+
+            &:nth-child(odd){
+              background-color: var(--color-surface-4);
+
+            }
+
+            &:nth-child(even){
+              background-color: var(--color-surface-5);
+
+            }
+
+            &:hover{
+              background-color: var(--color-surface-7);
+            }
+
+            & > td{
+              border-radius: var(--table-radius);
+              padding: var(--padding);
+
+            }
+
+          }
+
+        }
+
+        & > tfoot{
+          background-color: var(--color-surface-9);
+
+          & > tr{
+            & > td{
+              color: var(--color-text-accent);
+
+              border-radius: var(--table-radius);
+              padding: var(--padding);
+
+            }
+
+          }
+
+        }
+
+      }
+    `;
+
     return `
       ${CSS.rules.boxes}
       ${CSS.rules.layoutSystem}
@@ -1741,6 +1742,7 @@ export default class CSS{
       ${CSS.rules.radius}
       ${CSS.rules.shadow}
       ${CSS.rules.hr}
+      ${CSS.rules.table}
     `;
 
   }
