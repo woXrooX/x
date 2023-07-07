@@ -1801,6 +1801,22 @@ export default class CSS{
             }
           }
 
+          &:not(:has(tfoot)) tbody{
+            & > tr{
+              &:last-child{
+                & > td{
+                  &:first-child{
+                    border-bottom-left-radius: var(--radius);
+                  }
+
+                  &:last-child{
+                    border-bottom-right-radius: var(--radius);
+                  }
+                }
+              }
+            }
+          }
+
           & > tfoot{
             background-color: var(--color-surface-1);
             border-block-start: 1px solid var(--color-surface-3);
