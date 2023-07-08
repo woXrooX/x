@@ -1,12 +1,3 @@
-// <x-nav class="box-default" selector="selector">
-//   [
-//     {"link": "overview"},
-//     {"link": "details"},
-//     {"link": "variants"},
-//     {"link": "link", "name": "Name"}
-//   ]
-// </x-nav>
-
 "use strict";
 
 export default class Nav extends HTMLElement{
