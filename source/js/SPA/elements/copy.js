@@ -1,6 +1,3 @@
-// <x-copy selector="#selector"></x-copy>
-// <x-copy selector="#selector" />
-
 "use strict";
 
 export default class Copy extends HTMLElement{

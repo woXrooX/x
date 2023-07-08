@@ -1,6 +1,3 @@
-// <x-icon toggle="trash" disabled="false" color="red" name="home"></x-icon>
-// xIcon.setDisabled = false;
-
 // SVG shadow
 // filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
 
