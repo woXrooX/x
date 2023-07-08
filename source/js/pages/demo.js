@@ -25,21 +25,6 @@ const tooltips = `
 
 
 ///// x-tooltip
-const copy = `
-<container class="m-t-5">
-
-  <row><h1>Copy (x-copy)</h1></row>
-
-  <row class="box-default w-25 p-5" class="g-1">
-    <column><x-copy selector="#dataToBeCopied"></x-copy></column>
-    <column id="dataToBeCopied">Data To Be Copied!</column>
-  </row>
-
-</container>
-`;
-
-
-///// x-tooltip
 const share = `
 <container class="m-t-5">
 
@@ -95,7 +80,6 @@ export const TITLE = window.Lang.use("demo");
 export default function content(){
   let dom = `
     ${tooltips}
-    ${copy}
     ${share}
     ${modal}
     <br>
