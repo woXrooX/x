@@ -112,9 +112,9 @@ export default class Tooltip extends HTMLElement{
 
             color: white;
             font-size: 0.7rem;
-            background-color: hsla(${CSS.values.color.brand.hue}, 10%, 10%, 1);     
+            background-color: hsla(${CSS.values.color.brand.hue}, 10%, 10%, 1);
             opacity: 0;
-            
+
 
             padding: calc(var(--padding) * 2);
             border-radius: var(--radius);
@@ -214,11 +214,12 @@ export default class Tooltip extends HTMLElement{
   static new(type, content, parentSelector){
     if(!!type === false || !!content === false || !!parentSelector === false) return;
 
-
     document.querySelector(parentSelector).innerHTML += `<x-tooltip type="${type}">${content}</x-tooltip>`;
 
   }
-}
+
+};
+
 customElements.define('x-tooltip', Tooltip);
 
 // Make Tooltip Usable W/O Importing It
