@@ -1,8 +1,5 @@
 "use strict";
 
-// Raw HTML
-// <x-toast type="typeName">Content</x-toast>
-
 export default class Toast extends HTMLElement{
   static #selector = "body>toasts";
   static #autoDismissTimer = 5000;
@@ -39,12 +36,6 @@ export default class Toast extends HTMLElement{
     CSS: {
         const style = document.createElement('style');
 
-        // :host(:hover) {
-        //   opacity: 1;
-        // }
-        // :host{
-        //
-        // }
         style.textContent = `
         toast{
           overflow: hidden;
@@ -156,7 +147,6 @@ export default class Toast extends HTMLElement{
 
   static new(type, content){
     if(!!type === false || !!content === false) return;
-
 
     document.querySelector(Toast.#selector).innerHTML += `<x-toast type="${type}">${content}</x-toast>`;
 
