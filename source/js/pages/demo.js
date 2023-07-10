@@ -1,12 +1,5 @@
 "use strict";
 
-///// toast
-setTimeout(()=>{window.Toast.new("success", "success");}, 1000);
-setTimeout(()=>{window.Toast.new("info", "info");}, 2000);
-setTimeout(()=>{window.Toast.new("warning", "warning");}, 3000);
-setTimeout(()=>{window.Toast.new("error", "error");}, 4000);
-
-
 ///// x-tooltip
 const tooltips = `
 <container class="m-t-5">
@@ -45,7 +38,6 @@ export const TITLE = window.Lang.use("demo");
 export default function content(){
   let dom = `
     ${tooltips}
-    <br>
   `;
 
   return dom;
