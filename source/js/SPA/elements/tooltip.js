@@ -82,10 +82,10 @@ export default class Tooltip extends HTMLElement{
           tooltip > icon{
             cursor: help;
 
-            width: 30px;
+            width: 1.2em;
 
             color: var(--color-${this.type});
-            font-size: 1rem;
+            font-size: 1em;
             font-weight: bold;
             text-align: center;
 
