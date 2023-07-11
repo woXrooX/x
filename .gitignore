@@ -57,7 +57,6 @@ source/python/pages/*.py
 # Allow Default Pages
 !source/python/pages/__init__.py
 
-!source/python/pages/demo.py
 !source/python/pages/languagesLibrary.py
 
 !source/python/pages/signUp.py
@@ -76,7 +75,6 @@ source/python/pages/*.py
 source/js/pages/*.js
 
 # Allow Default Pages
-!source/js/pages/demo.js
 !source/js/pages/languagesLibrary.js
 
 !source/js/pages/signUp.js
