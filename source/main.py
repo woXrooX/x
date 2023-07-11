@@ -16,6 +16,11 @@ FileSystem.init()
 #################################################### Globals
 from python.modules.Globals import Globals
 
+# Prints latest tracked version
+Log.center('', '-')
+Log.center(Globals.CONF["version"], '-')
+Log.center('', '-')
+
 
 #################################################### Setting Up MySQL
 from python.modules.MySQL import MySQL
