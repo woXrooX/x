@@ -1,3 +1,6 @@
+######### Version
+version: "v0.92.0"
+
 ######### Flask
 flask:
   root_path: null
