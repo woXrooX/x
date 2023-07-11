@@ -1432,6 +1432,37 @@ export default class CSS{
 
       .text-size-5{font-size: 5rem;}
 
+      .text-lh-0-1{line-height: 0.1rem;}
+      .text-lh-0-2{line-height: 0.2rem;}
+      .text-lh-0-3{line-height: 0.3rem;}
+      .text-lh-0-4{line-height: 0.4rem;}
+      .text-lh-0-5{line-height: 0.5rem;}
+      .text-lh-0-6{line-height: 0.6rem;}
+      .text-lh-0-7{line-height: 0.7rem;}
+      .text-lh-0-8{line-height: 0.8rem;}
+      .text-lh-0-9{line-height: 0.9rem;}
+      .text-lh-1{line-height: 1rem;}
+      .text-lh-1-1{line-height: 1.1rem;}
+      .text-lh-1-2{line-height: 1.2rem;}
+      .text-lh-1-3{line-height: 1.3rem;}
+      .text-lh-1-4{line-height: 1.4rem;}
+      .text-lh-1-5{line-height: 1.5rem;}
+      .text-lh-1-6{line-height: 1.6rem;}
+      .text-lh-1-7{line-height: 1.7rem;}
+      .text-lh-1-8{line-height: 1.8rem;}
+      .text-lh-1-9{line-height: 1.9rem;}
+      .text-lh-2{line-height: 2rem;}
+      .text-lh-2-1{line-height: 2.1rem;}
+      .text-lh-2-2{line-height: 2.2rem;}
+      .text-lh-2-3{line-height: 2.3rem;}
+      .text-lh-2-4{line-height: 2.4rem;}
+      .text-lh-2-5{line-height: 2.5rem;}
+      .text-lh-2-6{line-height: 2.6rem;}
+      .text-lh-2-7{line-height: 2.7rem;}
+      .text-lh-2-8{line-height: 2.8rem;}
+      .text-lh-2-9{line-height: 2.9rem;}
+      .text-lh-3{line-height: 3rem;}
+
     `;
 
     CSS.rules.width = `
