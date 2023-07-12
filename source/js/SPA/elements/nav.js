@@ -1,12 +1,3 @@
-// <x-nav class="box-default" selector="selector">
-//   [
-//     {"link": "overview"},
-//     {"link": "details"},
-//     {"link": "variants"},
-//     {"link": "link", "name": "Name"}
-//   ]
-// </x-nav>
-
 "use strict";
 
 export default class Nav extends HTMLElement{
@@ -40,28 +31,58 @@ export default class Nav extends HTMLElement{
                   align-items: center;
                   gap: calc(var(--gap) / 2);
                   padding: var(--padding);
+
+                  & > a{
+                    background-color: var(--color-surface-1);
+
+                    color: var(--color-text-primary);
+                    text-align: center;
+                    font-size: 0.8rem;
+
+                    width: 100%;
+                    min-width: max-content;
+
+                    padding: var(--padding);
+                    border-radius: var(--radius);
+
+                    transition: var(--transition-velocity) ease-in-out;
+                    transition-property: background-color, box-shadow;
+
+                    &:hover{
+                      background-color: var(--color-surface-4);
+                      box-shadow: var(--shadow-default);
+                    }
+
+                    &.active{
+                      background-color: var(--color-surface-4);
+                      box-shadow: var(--shadow-default);
+                    }
+                  }
                 }
-                nav > a{
-                  background-color: var(--color-surface-5);
-                  color: var(--color-text-primary);
-                  text-align: center;
-                  width: 100%;
-                  padding: var(--padding);
-                  border-radius: var(--radius);
-                  transition: var(--transition-velocity) background-color ease-in-out;
+
+                @media only screen and (max-width: ${CSS.values.screenSize.phone}){
+                  nav{
+                    max-width: calc(100vw - var(--padding) * 2);
+
+                    flex-direction: row;
+                    gap: calc(var(--gap) / 4);
+
+                    & > a{
+                      box-shadow: none !important;
+                    }
+                  }
                 }
-                nav > a:hover{
-                  background-color: var(--color-surface-7);
-                }
-                nav > a.active{
-                  background-color: var(--color-surface-7);
-                }
+
             `;
 
             this.shadow.appendChild(style);
 
             // Set Nav Class
             this.shadow.querySelector("nav").setAttribute("class", this.getAttribute("class") || "box-default");
+
+            // Make scrollable on x axis when the media condition matches
+            this.#ifMobileMakeScrollable();
+            window.matchMedia(`(max-width: ${CSS.values.screenSize.phone})`).onchange = this.#ifMobileMakeScrollable;
 
         }
 
@@ -86,6 +107,13 @@ export default class Nav extends HTMLElement{
 
         }
 
+    }
+
+    #ifMobileMakeScrollable = ()=>{
+      if(window.matchMedia(`(max-width: ${CSS.values.screenSize.phone})`).matches)
+        this.shadow.querySelector("nav").classList.add("scrollbar-x");
+
+      else this.shadow.querySelector("nav").classList.remove("scrollbar-x");
     }
 
     #setActive = ()=>{
@@ -117,28 +145,25 @@ export default class Nav extends HTMLElement{
         const style = document.createElement('style');
         style.setAttribute("for", "x-nav");
         style.innerText = `
-            ${this.selector} > *[id]{
-                scroll-margin-top: calc(var(--header-height) + (var(--padding) * 10));
+          ${this.selector} > *[id]{
+            scroll-margin-top: calc(var(--header-height) + (var(--padding) * 10));
 
-                &:not(:target){
-                    display: none;
-                }
-
-                &:target{
-                    display: block;
-                }
-
+            &:not(:target){
+              display: none;
             }
+
+            &:target{
+              display: auto;
+            }
+          }
         `;
         document.head.appendChild(style);
-
     }
 
     disconnectedCallback(){
         document.head.removeChild(
             document.querySelector("style[for=x-nav]")
         );
-
     }
 
 };

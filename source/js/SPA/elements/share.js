@@ -57,15 +57,15 @@ export default class Share extends HTMLElement{
       if(!!navigator.share === true)
         try{
           await navigator.share(shareData);
-          console.log("MDN shared successfully");
+          window.Log.success("MDN shared successfully");
 
         }catch(err){
-          console.log(`Error: ${err}`);
+          window.Log.error(`Error: ${err}`);
 
         }
 
       else{
-        console.log("No Native Support For 'navigator.share' On Your Device!");
+        window.Log.warning("No Native Support For 'navigator.share' On Your Device!");
 
         this.shadow.querySelector("section").innerHTML = `
           <x-modal trigger="auto">
@@ -98,7 +98,6 @@ export default class Share extends HTMLElement{
         `;
 
       }
-
 
     };
 

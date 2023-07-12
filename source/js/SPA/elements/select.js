@@ -1,14 +1,3 @@
-// <x-select name="customSelect" max="5" placeholder="Custom Select">
-//   [
-//     {"value": "one", "placeholder": "One", "selected": true},
-//     {"value": "two", "placeholder": "Two"},
-//     {"value": "three", "placeholder": "Three"},
-//     {"value": "longText", "placeholder": "Looooooooooooooooong Text"}
-//   ]
-// </x-select>
-
-
-
 "use strict";
 
 export default class Select extends HTMLElement{

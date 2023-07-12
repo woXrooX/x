@@ -1,3 +1,6 @@
+######### Version
+version: "v0.94.0"
+
 ######### Flask
 flask:
   root_path: null
@@ -62,8 +65,8 @@ default:
   # To Control App's State (Offline, Under Development etc.)
   # appIsDown:
   #   title: "Under Development"
-  #   explanation: "Long text that describes the 'reason'"
-  #   logo: "SVG Logo To Be Shown"
+  #   explanation: "Long text that describes the 'title'"
+  #   icon: "SVG Logo To Be Shown"
 
   # For External Color Configurations
   color:
@@ -71,7 +74,7 @@ default:
       hue: 230        # deg
       saturation: 13  # %
       lightness: 9    # %
-  
+
   # App Icon Settings
   icon:
     favicon:
@@ -82,6 +85,7 @@ default:
 
   # Enables All "print"s And "console.log"s
   debug: true
+
 
 ######### Pages
 pages:
@@ -129,12 +133,6 @@ pages:
       - "/logOut"
 
 
-  demo:
-    enabled: true
-    endpoints:
-      - "/demo"
-
-
   languagesLibrary:
     enabled: true
     endpoints:
@@ -149,7 +147,6 @@ menu:
     - name: "signUp"
     - name: "logIn"
     - name: "logOut"
-    - name: "demo"
       logo: "laboratory"
     - name: "languagesLibrary"
       logo: "openBook"
