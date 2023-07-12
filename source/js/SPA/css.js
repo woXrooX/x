@@ -1346,17 +1346,23 @@ export default class CSS{
       .flex-wrap{flex-wrap: wrap;}
       .flex-wrap-reverse{flex-wrap: wrap-reverse;}
 
+    `;
 
-      /***** Gap START *****/
-
+    CSS.rules.gap = `
+      .gap-0-1{gap: calc(var(--gap) * 0.1);}
+      .gap-0-2{gap: calc(var(--gap) * 0.2);}
+      .gap-0-3{gap: calc(var(--gap) * 0.3);}
+      .gap-0-4{gap: calc(var(--gap) * 0.4);}
+      .gap-0-5{gap: calc(var(--gap) * 0.5);}
+      .gap-0-6{gap: calc(var(--gap) * 0.6);}
+      .gap-0-7{gap: calc(var(--gap) * 0.7);}
+      .gap-0-8{gap: calc(var(--gap) * 0.8);}
+      .gap-0-9{gap: calc(var(--gap) * 0.9);}
       .gap-1{gap: var(--gap);}
       .gap-2{gap: calc(var(--gap) * 2);}
       .gap-3{gap: calc(var(--gap) * 3);}
       .gap-4{gap: calc(var(--gap) * 4);}
       .gap-5{gap: calc(var(--gap) * 5);}
-
-      /***** Gap END *****/
-
     `;
 
     CSS.rules.backgroundColor = `
@@ -1876,6 +1882,7 @@ export default class CSS{
       ${CSS.rules.boxes}
       ${CSS.rules.layoutSystem}
       ${CSS.rules.display}
+      ${CSS.rules.gap}
       ${CSS.rules.backgroundColor}
       ${CSS.rules.text}
       ${CSS.rules.width}
