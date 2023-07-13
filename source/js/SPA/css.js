@@ -247,7 +247,7 @@ export default class CSS{
       hsla(
         ${CSS.values.color.brand.hue}deg,
         ${CSS.values.color.brand.saturation}%,
-        ${CSS.values.color.brand.lightness}%, 1);
+        ${CSS.values.color.brand.lightness}%, 1)
     `;
 
     CSS.values.color.text = {
@@ -281,7 +281,7 @@ export default class CSS{
       hsla(
         ${CSS.values.color.brand.hue}deg,
         ${CSS.values.color.brand.saturation}%,
-        ${CSS.values.color.brand.lightness}%, 1);
+        ${CSS.values.color.brand.lightness}%, 1)
     `;
 
     CSS.values.color.text = {
