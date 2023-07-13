@@ -12,7 +12,7 @@ export default class Nav extends HTMLElement{
 
         this.shadow = this.attachShadow({mode: 'closed'});
 
-        // Selectir
+        // Selector
         this.selector = this.getAttribute("selector");
 
         // Clone And Append Template
