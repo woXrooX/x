@@ -45,8 +45,7 @@ import Toast from "./elements/toast.js";
 import Tooltip from "./elements/tooltip.js";
 import Select from "./elements/select.js";
 import El from "./elements/el.js";
-import BarChart from "./elements/chart.js";
-// import Form from "./elements/form.js";
+import BarChart from "./elements/chartBar.js";
 
 export default class Core{
 
@@ -141,7 +140,7 @@ export default class Core{
     window.addEventListener('popstate', ()=>{
       // window.dispatchEvent(new Event('popstate'));
       Log.info("onHistoryButtonClicked");
-      
+
 
       Router.handle();
 
