@@ -1,12 +1,11 @@
 ######### Version
-version: "v0.94.0"
+version: "v0.96.0"
 
 ######### Flask
 flask:
   root_path: null
   template_folder: "html/"
   static_folder: "/"
-  secret_key: b'W\xac\x81*\x04\xd3\xd4\n\xbf\xb9\t\x18\xd7\xd9%\x9c\xff\xf9\x89 S\x81\xc9_'
 
 
 ######### URL
@@ -17,26 +16,6 @@ URL:
   domain_name: "localhost"
   domain_extension: "com"
   port: "5000"
-
-
-######### Database
-# By default database is disabled
-# database:
-#   enabled: false
-#   MySQL:
-#     enabled: false
-#     name: "x"
-#     user: "x"
-#     password: "password_x"
-#     host: "127.0.0.1"
-#     port: "33060"
-#     charset: "utf8mb4"
-#     collate: "utf8mb4_0900_ai_ci"
-
-#   MongoDB:
-#     enabled: false
-#     name: "x"
-#     host: "mongodb://127.0.0.1:27017"
 
 
 ######### eMail
@@ -147,7 +126,7 @@ menu:
     - name: "signUp"
     - name: "logIn"
     - name: "logOut"
-      logo: "laboratory"
+
     - name: "languagesLibrary"
       logo: "openBook"
 
@@ -170,5 +149,3 @@ password:
 phoneNumber:
   regEx: "^[+]{1,1}[0-9]{11,11}$"
 
-
-######## Stripe payment

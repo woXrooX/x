@@ -55,7 +55,9 @@ app = Flask(
     static_folder = Globals.CONF["flask"]["static_folder"]
 )
 
-app.secret_key = Globals.CONF["flask"]["secret_key"]
+# Geberates new "secret_key" every time when server is restarted
+import os
+app.secret_key = os.urandom(24)
 
 
 #################################################### routeGuard
