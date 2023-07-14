@@ -45,7 +45,7 @@ import Toast from "./elements/toast.js";
 import Tooltip from "./elements/tooltip.js";
 import Select from "./elements/select.js";
 import El from "./elements/el.js";
-import BarChart from "./elements/chartBar.js";
+import BarChart from "./elements/barChart.js";
 
 export default class Core{
 

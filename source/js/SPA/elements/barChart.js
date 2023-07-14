@@ -1,10 +1,6 @@
 "use strict";
 
-export default class ChartBar extends HTMLElement{
-  static #template = document.createElement("template");
-  static {
-    ChartBar.#template.innerHTML = `<canvas></canvas>`;
-  }
+export default class BarChart extends HTMLElement{
   constructor(){
     super();
 
@@ -17,8 +13,8 @@ export default class ChartBar extends HTMLElement{
         ${CSS.rules.all}
 
         canvas{
-          width: 1000px;
-          height: 500px;
+          width: auto;
+          height: auto;
 
           border-radius: var(--radius);
           box-shadow: var(--shadow-default);
@@ -27,9 +23,6 @@ export default class ChartBar extends HTMLElement{
       this.shadow.appendChild(style);
     }
 
-    // Clone And Append Template
-    this.shadow.appendChild(ChartBar.#template.content.cloneNode(true));
-
     ///// Data
     this.data = JSON.parse(this.innerHTML);
     // Max Value
@@ -37,17 +30,25 @@ export default class ChartBar extends HTMLElement{
     for(const entry of this.data.data) if(entry["value"] > this.maxValue) this.maxValue = entry["value"];
 
     ///// Canvas
-    this.canvas = this.shadow.querySelector("canvas");
-    this.canvas.width = this.canvas.getBoundingClientRect().width;
-    this.canvas.height = this.canvas.getBoundingClientRect().height;
+    this.canvas = document.createElement("canvas");
+    this.shadow.appendChild(this.canvas);
+
+    console.log(this.parentNode.offsetWidth);
+
+    console.log(this.data["width"]);
+    console.log(this.data["height"]);
+
+    this.canvas.width = this.data["width"];
+    this.canvas.height = this.data["height"];
+
     // Context
     this.ctx = this.canvas.getContext("2d");
     // Canvas properties
     this.padding = 80;
     this.paddingLeft = this.padding * 1.5;
     this.paddingRight = this.padding * 0.5;
-    this.width = this.canvas.getBoundingClientRect().width;
-    this.height = this.canvas.getBoundingClientRect().height;
+    this.width = this.canvas.width;
+    this.height = this.canvas.height;
 
     ///// Main X,Y axes
     this.mainAxisLinesWidth = 2;
@@ -167,7 +168,7 @@ export default class ChartBar extends HTMLElement{
 
 }
 
-window.customElements.define('x-chart-bar', ChartBar);
+window.customElements.define('x-bar-chart', BarChart);
 
-// Make ChartBar Usable W/O Importing It
-window.ChartBar = ChartBar;
+// Make BarChart Usable W/O Importing It
+window.BarChart = BarChart;
