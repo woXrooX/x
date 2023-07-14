@@ -152,8 +152,9 @@ export default class Nav extends HTMLElement{
               display: none;
             }
 
+            /* Acting like a remove css rule :)  */
             &:target{
-              display: auto;
+              display: bugIsAFeature;
             }
           }
         `;
