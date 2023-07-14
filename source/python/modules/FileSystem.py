@@ -440,30 +440,22 @@ export default function content(){
         def mergeConfigurations():
             #### Merge
             # Database
-            if "database" in Globals.PROJECT:
-                if "database" in Globals.CONF: Globals.CONF["database"].update(Globals.PROJECT["database"])
-                else: Globals.CONF["database"] = Globals.PROJECT["database"]
+            if "database" in Globals.PROJECT: Globals.CONF["database"] = Globals.PROJECT["database"]
 
             # eMail
-            if "eMail" in Globals.PROJECT:
-                Globals.CONF["eMail"].update(Globals.PROJECT["eMail"])
+            if "eMail" in Globals.PROJECT: Globals.CONF["eMail"].update(Globals.PROJECT["eMail"])
 
             # Defaults
-            if "default" in Globals.PROJECT:
-                if "default" in Globals.CONF: Globals.CONF["default"].update(Globals.PROJECT["default"])
-                else: Globals.CONF["default"] = Globals.PROJECT["default"]
-
-            # Menu
-            if "menu" in Globals.PROJECT:
-                Globals.CONF["menu"] = Globals.PROJECT["menu"]
+            if "default" in Globals.PROJECT: Globals.CONF["default"].update(Globals.PROJECT["default"])
 
             # Pages
-            if "pages" in Globals.PROJECT:
-                Globals.CONF["pages"] = Globals.PROJECT["pages"]
+            if "pages" in Globals.PROJECT: Globals.CONF["pages"] = Globals.PROJECT["pages"]
+
+            # Menu
+            if "menu" in Globals.PROJECT: Globals.CONF["menu"] = Globals.PROJECT["menu"]
 
             # OpenAI
-            if "OpenAI" in Globals.PROJECT:
-                Globals.CONF["OpenAI"] = Globals.PROJECT["OpenAI"]
+            if "OpenAI" in Globals.PROJECT: Globals.CONF["OpenAI"] = Globals.PROJECT["OpenAI"]
 
             #### Public Configurations
             Globals.PUBLIC_CONF["default"] = Globals.CONF["default"]
