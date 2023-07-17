@@ -30,7 +30,7 @@ if __name__ != "__main__":
         onFormGotResponse=False,
 
         # Function to use for converting non-serializable objects to a serializable JSON format.
-        nonJsonToJsonFunction = None,
+        nonJsonToJsonFunction=None,
 
         # HTTP Response Status Code
         HTTP_response_status_code=200
