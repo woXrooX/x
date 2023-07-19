@@ -57,7 +57,10 @@ app = Flask(
 
 # Geberates new "secret_key" every time when server is restarted
 import os
-app.secret_key = os.urandom(24)
+
+# Disable random secret_key assignment on each server restart when debug is True
+if Globals.CONF.get("default", {}).get("debug") is True: app.secret_key = b'12345'
+else: app.secret_key = os.urandom(24)
 
 
 #################################################### routeGuard
