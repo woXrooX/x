@@ -33,11 +33,6 @@ export default class BarChart extends HTMLElement{
     this.canvas = document.createElement("canvas");
     this.shadow.appendChild(this.canvas);
 
-    console.log(this.parentNode.offsetWidth);
-
-    console.log(this.data["width"]);
-    console.log(this.data["height"]);
-
     this.canvas.width = this.data["width"];
     this.canvas.height = this.data["height"];
 
@@ -52,6 +47,7 @@ export default class BarChart extends HTMLElement{
 
     ///// Main X,Y axes
     this.mainAxisLinesWidth = 2;
+    this.gridLinesWidth = 0.5;
 
     ///// Title
     this.titleFontSize = "2rem";
@@ -86,7 +82,7 @@ export default class BarChart extends HTMLElement{
       this.ctx.beginPath();
       this.ctx.moveTo(this.paddingLeft - 10, this.height - this.padding - (this.xLinesGap * i));
       this.ctx.lineTo(this.width - this.paddingRight, this.height - this.padding - (this.xLinesGap * i));
-      this.ctx.lineWidth = 0.5;
+      this.ctx.lineWidth = this.gridLinesWidth;
       this.ctx.strokeStyle = window.CSS.values.color.main;
       this.ctx.stroke();
 
