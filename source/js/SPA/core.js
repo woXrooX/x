@@ -46,6 +46,7 @@ import Tooltip from "./elements/tooltip.js";
 import Select from "./elements/select.js";
 import El from "./elements/el.js";
 import BarChart from "./elements/barChart.js";
+import LineChart from "./elements/lineChart.js";
 
 export default class Core{
 
