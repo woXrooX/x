@@ -27,8 +27,20 @@ export default class El extends HTMLElement{
     // internal value for this control
     this.value_ = null;
 
+    //// Shadow DOM
+    // If you don't set this.attachShadow({mode: 'open'}) or this.attachShadow({mode: 'closed'}) in your web component constructor,
+    // the default behavior will be to not use Shadow DOM at all.
+    // This means that the component's internal structure will not be encapsulated, and it will behave like a regular DOM element.
+    this.innerHTML = "Some html";
+
     // Closed
     this.shadow = this.attachShadow({mode: 'closed'});
+    this.shadow.innerHTML = "Some html";
+
+    // Open
+    // sets and returns 'this.shadowRoot'
+    this.attachShadow({mode: "open"});
+    this.shadowRoot.innerHTML = "Some html";
 
     // Open
     // this.attachShadow({mode: 'open'});
