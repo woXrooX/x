@@ -4,7 +4,98 @@ export default class Select extends HTMLElement{
   // Identify the element as a form-associated custom element
   static formAssociated = true;
 
+  static #ID = 0;
+
   static #template = document.createElement("template");
+
+  static #CSS = `
+    x-select{
+      & > button{
+        width: 100%;
+        margin-bottom: calc(var(--padding) * 2);
+      }
+
+      & > main{
+        background-color: var(--color-surface-1);
+        width: 100%;
+        padding: var(--padding);
+        border-radius: var(--radius);
+
+        display: none;
+        flex-direction: column;
+        gap: calc(var(--gap) / 2);
+
+        &.show{
+          display: flex;
+        }
+
+        & > section{
+          background-color: var(--color-surface-2);
+          padding: var(--padding);
+          border-radius: var(--radius);
+
+          &#optionsSelected{
+            display: none;
+            flex-wrap: wrap;
+            flex-direction: row;
+            gap: calc(var(--gap) / 2);
+
+            &.show{
+              display: flex;
+            }
+
+            & > div{
+              cursor: pointer;
+              display: none;
+              background-color: var(--color-surface-3);
+              width: auto;
+              height: auto;
+              padding: var(--padding);
+              border-radius: var(--radius);
+              transition: var(--transition-velocity) ease-in-out background-color;
+
+              &:hover{
+                user-select: none;
+                background-color: var(--color-surface-4);
+              }
+            }
+          }
+
+          &#search{
+          }
+
+          &#optionsToSelect{
+            max-height: 250px;
+            overflow: scroll;
+
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--gap) / 2);
+
+            &.hide{
+              display: none;
+            }
+
+            & > div{
+              cursor: pointer;
+              background-color: var(--color-surface-3);
+              width: auto;
+              height: auto;
+              padding: var(--padding);
+              border-radius: var(--radius);
+              transition: var(--transition-velocity) ease-in-out background-color;
+
+              &:hover{
+                user-select: none;
+                background-color: var(--color-surface-4);
+              }
+            }
+          }
+        }
+      }
+    }
+
+  `;
 
   static {
     Select.#template.innerHTML = `
@@ -27,107 +118,23 @@ export default class Select extends HTMLElement{
     // internal value for this control
     this.value_ = null;
 
-    this.shadow = this.attachShadow({mode: 'closed'});
+    // Save the JSON data
+    this.JSON = this.innerHTML;
 
-    CSS: {
-      const style = document.createElement('style');
-      style.textContent = `
-        ${CSS.rules.defaultScrollbar}
-        ${window.CSS.rules.scrollbar}
-        ${window.CSS.rules.form}
-
-        *{
-          box-sizing: border-box;
-        }
-
-        button{
-          width: 100%;
-          margin-bottom: calc(var(--padding) * 2);
-        }
-
-        main{
-          background-color: var(--color-surface-1);
-          width: 100%;
-          padding: var(--padding);
-          border-radius: var(--radius);
-
-          display: none;
-          flex-direction: column;
-          gap: calc(var(--gap) / 2);
-        }
-        main.show{
-          display: flex;
-        }
-
-        main > section{
-          background-color: var(--color-surface-2);
-          padding: var(--padding);
-          border-radius: var(--radius);
-        }
-
-        main > section#optionsSelected{
-          display: none;
-          flex-wrap: wrap;
-          flex-direction: row;
-          gap: calc(var(--gap) / 2);
-
-        }
-        main > section#optionsSelected.show{
-          display: flex;
-        }
-
-        main > section#optionsSelected > div{
-          display: none;
-        }
-
-        main > section#search{
-        }
-
-        main > section#optionsToSelect{
-          max-height: 250px;
-          overflow: scroll;
-
-          display: flex;
-          flex-direction: column;
-          gap: calc(var(--gap) / 2);
-
-        }
-        main > section#optionsToSelect.hide{
-          display: none;
-        }
-
-        main > section#optionsSelected > div,
-        main > section#optionsToSelect > div{
-          cursor: pointer;
-          background-color: var(--color-surface-3);
-          width: auto;
-          height: auto;
-          padding: var(--padding);
-          border-radius: var(--radius);
-          transition: var(--transition-velocity) ease-in-out background-color;
-        }
-
-        main > section#optionsSelected > div:hover,
-        main > section#optionsToSelect > div:hover{
-          user-select: none;
-          background-color: var(--color-surface-4);
-        }
-
-      `;
-      this.shadow.appendChild(style);
-    }
+    // Clean the inner data
+    this.innerHTML = "";
 
     // Clone And Append Template
-    this.shadow.appendChild(Select.#template.content.cloneNode(true));
+    this.appendChild(Select.#template.content.cloneNode(true));
 
     // Show And Hide The "x-select > main"
     Toggle: {
-      const button = this.shadow.querySelector("button");
+      const button = this.querySelector("button");
       button.innerHTML = this.hasAttribute("placeholder") ? window.Lang.use(this.getAttribute('placeholder')) : window.Lang.use("select");
 
       // On Click
       button.addEventListener("click", ()=>{
-        this.shadow.querySelector("main").classList.toggle("show");
+        this.querySelector("main").classList.toggle("show");
 
       });
 
@@ -135,7 +142,7 @@ export default class Select extends HTMLElement{
 
     GenerateOptions: {
       // Options
-      this.options = JSON.parse(this.innerHTML).constructor === Array ? JSON.parse(this.innerHTML) : [];
+      this.options = JSON.parse(this.JSON).constructor === Array ? JSON.parse(this.JSON) : [];
 
       let optionsHtml = "";
 
@@ -143,9 +150,9 @@ export default class Select extends HTMLElement{
         optionsHtml += `<div value="${option["value"]}">${option.placeholder}</div>`;
 
 
-      this.shadow.querySelector("main > section#optionsSelected").innerHTML = `${optionsHtml}`;
+      this.querySelector("main > section#optionsSelected").innerHTML = `${optionsHtml}`;
 
-      this.shadow.querySelector("main > section#optionsToSelect").innerHTML = `${optionsHtml}`;
+      this.querySelector("main > section#optionsToSelect").innerHTML = `${optionsHtml}`;
 
     }
 
@@ -170,8 +177,8 @@ export default class Select extends HTMLElement{
 
     SelectDeselect: {
       // Elements
-      let options = this.shadow.querySelectorAll("main > section#optionsToSelect > div");
-      let optionsSelected = this.shadow.querySelectorAll("main > section#optionsSelected > div");
+      let options = this.querySelectorAll("main > section#optionsToSelect > div");
+      let optionsSelected = this.querySelectorAll("main > section#optionsSelected > div");
 
       // Counter For Selected Options
       let count = 0;
@@ -181,11 +188,11 @@ export default class Select extends HTMLElement{
       // NOTE: Value of "selected" doesn't have to be a particular type!
       for(const option of this.options)
         if("selected" in option && count < this.MAX){
-          this.shadow.querySelector(`main > section#optionsToSelect > div[value=${option.value}]`).style.display = "none";
-          this.shadow.querySelector(`main > section#optionsSelected > div[value=${option.value}]`).style.display = "block";
+          this.querySelector(`main > section#optionsToSelect > div[value=${option.value}]`).style.display = "none";
+          this.querySelector(`main > section#optionsSelected > div[value=${option.value}]`).style.display = "block";
 
           // Show "optionsSelected"
-          this.shadow.querySelector("main > section#optionsSelected").classList.add("show");
+          this.querySelector("main > section#optionsSelected").classList.add("show");
 
           // Increment The Count
           count++;
@@ -209,16 +216,16 @@ export default class Select extends HTMLElement{
           count++;
 
           // Show "optionsSelected"
-          if(count === 1) this.shadow.querySelector("main > section#optionsSelected").classList.add("show");
+          if(count === 1) this.querySelector("main > section#optionsSelected").classList.add("show");
 
           // Hide Section 'optionsToSelect' Only Once When Count Equals To MAX
-          if(count === this.options.length) this.shadow.querySelector("main > section#optionsToSelect").classList.add("hide");
+          if(count === this.options.length) this.querySelector("main > section#optionsToSelect").classList.add("hide");
 
           // Hide Option From "optionsToSelect"
           option.style.display = "none";
 
           // Show Option On "optionsSelected"
-          this.shadow.querySelector(`main > section#optionsSelected > div[value="${option.getAttribute("value")}"]`).style.display = "block";
+          this.querySelector(`main > section#optionsSelected > div[value="${option.getAttribute("value")}"]`).style.display = "block";
 
           // Update Form Data
           this.#updateFormData();
@@ -232,16 +239,16 @@ export default class Select extends HTMLElement{
           count--;
 
           // Hide "optionsSelected"
-          if(count === 0) this.shadow.querySelector("main > section#optionsSelected").classList.remove("show");
+          if(count === 0) this.querySelector("main > section#optionsSelected").classList.remove("show");
 
           // Show Section 'optionsToSelect' Only Once When count Equals To MAX
-          if(count === this.options.length - 1) this.shadow.querySelector("main > section#optionsToSelect").classList.remove("hide");
+          if(count === this.options.length - 1) this.querySelector("main > section#optionsToSelect").classList.remove("hide");
 
           // Hide Option From "optionsSelected"
           option.style.display = "none";
 
           // Show Option On "optionsToSelect"
-          this.shadow.querySelector(`main > section#optionsToSelect > div[value="${option.getAttribute("value")}"]`).style.display = "block";
+          this.querySelector(`main > section#optionsToSelect > div[value="${option.getAttribute("value")}"]`).style.display = "block";
 
           // Update Form Data
           this.#updateFormData();
@@ -257,7 +264,7 @@ export default class Select extends HTMLElement{
       const formData = new FormData();
 
       // Select All Options With Attribute style="display: block;" And Add To FormData Entries
-      for(const option of this.shadow.querySelectorAll("main > section#optionsSelected > div"))
+      for(const option of this.querySelectorAll("main > section#optionsSelected > div"))
         if(option.hasAttribute("style") && option.getAttribute("style") === "display: block;")
           formData.append(this.getAttribute('name'), option.innerText);
 
@@ -267,6 +274,31 @@ export default class Select extends HTMLElement{
       // formData.delete(this.getAttribute('name'), option.getAttribute("value"));
 
   };
+
+
+  connectedCallback(){
+    // Increment the ID
+    Select.#ID++;
+
+    // Check if style is already has been created
+    if(Select.#ID > 1) return;
+
+    const style = document.createElement('style');
+    style.setAttribute("media", `all`);
+    style.setAttribute("for", `x-select`);
+    style.textContent = Select.#CSS;
+    document.head.appendChild(style);
+  }
+
+  disconnectedCallback(){
+    // Decrement the ID
+    Select.#ID--;
+
+    const style = document.querySelector("style[for=x-select]");
+
+    // Remove style element from the head
+    if(Select.#ID === 0 && !!style === true) document.head.removeChild(style);
+  }
 
 };
 
