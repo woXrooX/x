@@ -71,7 +71,7 @@ export default class Share extends HTMLElement{
           <x-modal trigger="auto">
 
             <a href="https://twitter.com/intent/tweet?url=${shareData.url}&text=${shareData.text}" target="_blank">
-              <x-icon name="twitter_original"></x-icon>
+              <x-icon name="twitter_bird_original"></x-icon>
             </a>
 
             <a href="https://www.linkedin.com/sharing/share-offsite/?url=${shareData.url}&title=${shareData.title}&summary=${shareData.text}&source=${shareData.url}" target="_blank">
