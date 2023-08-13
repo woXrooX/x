@@ -40,6 +40,7 @@ import Icon from "./elements/icon.js";
 import Modal from "./elements/modal.js";
 import Nav from "./elements/nav.js";
 import Copy from "./elements/copy.js";
+import Code from "./elements/code/code.js";
 import Share from "./elements/share.js";
 import Toast from "./elements/toast.js";
 import Tooltip from "./elements/tooltip.js";
