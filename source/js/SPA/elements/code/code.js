@@ -40,6 +40,27 @@ export default class Code extends HTMLElement{
             font-size: 0.7rem;
 
             overflow-x: scroll;
+            scrollbar-width: auto;
+            scrollbar-color: var(--color-brand) transparent;
+
+            &::-webkit-scrollbar{
+              display: unset;
+              width: 5px;
+              height: 5px;
+            }
+
+            &::-webkit-scrollbar-track{
+              background-color: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb{
+              background-color: hsla(230, 13%, 25%, 0.5);
+              border-radius: 5px;
+            }
+
+            &::-webkit-scrollbar-thumb:hover{
+              background-color: hsla(230, 13%, 40%, 0.5);
+            }
 
             & > code{
               color: white;
