@@ -36,13 +36,15 @@ export default class Code extends HTMLElement{
             height: auto;
             border-radius: 5px;
             box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.5);
+            padding: 0px 15px;
+            font-size: 0.7rem;
+
 
             & > code{
               color: white;
               width: 100%;
               height: 100%;
-              padding: 5px;
-              line-height: 150%;
+              line-height: 0.8rem;
 
             }
           }
