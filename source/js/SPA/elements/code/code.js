@@ -61,11 +61,10 @@ export default class Code extends HTMLElement{
       case "JavaScript":
         this.codeElement.innerHTML = JavaScript.handle(this.RAW);
         break;
-      case "HTML":
-        this.codeElement.innerText = this.RAW;
-        break;
+
       default:
-        console.log("No match");
+        this.codeElement.innerText = this.RAW;
+        console.warn("X-Code: No match");
     }
   }
 
