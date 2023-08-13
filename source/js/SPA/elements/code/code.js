@@ -25,7 +25,7 @@ export default class Code extends HTMLElement{
     this.RAW = this.textContent;
 
     // If language is not defined, then exit
-    if(!!this.hasAttribute("lang") === false) return;
+    if(!!this.hasAttribute("lang") === false) this.lang = undefined;
 
     CSS: {
         const style = document.createElement('style');
@@ -39,6 +39,7 @@ export default class Code extends HTMLElement{
             padding: 0px 15px;
             font-size: 0.7rem;
 
+            overflow-x: scroll;
 
             & > code{
               color: white;
@@ -64,7 +65,7 @@ export default class Code extends HTMLElement{
 
       default:
         this.codeElement.innerText = this.RAW;
-        console.warn("X-Code: No match");
+        console.warn("X-Code: Not supported language!");
     }
   }
 
