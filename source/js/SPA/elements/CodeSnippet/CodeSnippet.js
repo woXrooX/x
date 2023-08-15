@@ -2,7 +2,7 @@
 
 import JavaScript from "./languages/JavaScript.js";
 
-export default class Code extends HTMLElement{
+export default class CodeSnippet extends HTMLElement{
   //// Native Form Behaviour
   // Identify the element as a form-associated custom element
   static formAssociated = true;
@@ -10,7 +10,7 @@ export default class Code extends HTMLElement{
   static #template = document.createElement("template");
 
   static {
-    Code.#template.innerHTML = `
+    CodeSnippet.#template.innerHTML = `
       <pre>
         <code>
         </code>
@@ -75,7 +75,7 @@ export default class Code extends HTMLElement{
     }
 
     // Clone And Append Template
-    this.shadow.appendChild(Code.#template.content.cloneNode(true));
+    this.shadow.appendChild(CodeSnippet.#template.content.cloneNode(true));
 
     this.codeElement = this.shadow.querySelector("pre > code");
 
@@ -86,13 +86,13 @@ export default class Code extends HTMLElement{
 
       default:
         this.codeElement.innerText = this.RAW;
-        console.warn("X-Code: Not supported language!");
+        console.warn("Code-Snippet: Not supported language!");
     }
   }
 
 };
 
-window.customElements.define('x-code', Code);
+window.customElements.define('code-snippet', CodeSnippet);
 
-// Make Code Usable W/O Importing It
-window.Code = Code;
+// Make CodeSnippet Usable W/O Importing It
+window.CodeSnippet = CodeSnippet;
