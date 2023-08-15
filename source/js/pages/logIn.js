@@ -9,7 +9,7 @@ export default function logIn(){
   let dom = `
 <container class="p-5">
   <row>
-    <column class="w-50 box-default p-5">
+    <column class="w-50 surface-clean p-5">
 
       <row>
         <h1>${window.Lang.use("logIn")}</h1>

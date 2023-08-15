@@ -26,12 +26,12 @@ export default class Logger{
         if("CONF" in window && window.CONF.default.debug === false && force === false) return;
 
         // Setting Type Color
-        const color = `color: ${CSS.values.color[type] || 'white'}`;
+        const color = `color: ${CSS.getValue(`--color-${type}`) || 'white'}`;
 
         // Generating Timestamp
         const now = new Date();
         const timestamp = `${now.getDate()}.${now.getMonth()+1}.${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
-        
+
         // Final Output
         console.log(`%c[${timestamp}][${type.toUpperCase()}] `, color, text);
 

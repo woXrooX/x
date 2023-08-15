@@ -30,7 +30,7 @@ export default function content(){
   <row class="p-2"><p>This app supports ${window.pageData.count} keywords</p></row>
 
   <row>
-    <column class="w-95 box-default p-5 m-t-5">
+    <column class="w-95 surface-clean p-5 m-t-5">
       <table style="font-size: 0.7rem;">
         <thead>
           <tr>

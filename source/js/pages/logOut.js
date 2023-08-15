@@ -10,7 +10,7 @@ export default function content(){
   </row>
 
   <row>
-    <column class="w-50 box-default p-5">
+    <column class="w-50 surface-clean p-5">
       <form action="logOut" for="logOut">
         <label>
           <input type='submit' name='logOut' value='${window.Lang.use("logOut")}'>

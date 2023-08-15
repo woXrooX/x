@@ -6,7 +6,7 @@ export default function content(){
   return `
     <container class="p-5">
       <row>
-        <column class="w-50 box-default p-5">
+        <column class="w-50 surface-clean p-5">
           <x-icon name="${window.CONF["default"]["appIsDown"]["icon"]}"></x-icon>
           <h1>${window.CONF["default"]["appIsDown"]["title"]}</h1>
           <h3 class="color-text-secondary">${window.CONF["default"]["appIsDown"]["explanation"]}</h3>
