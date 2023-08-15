@@ -10,8 +10,6 @@ export default class LineChart extends HTMLElement{
     CSS: {
       const style = document.createElement('style');
       style.textContent = `
-        ${CSS.rules.all}
-
         canvas{
           width: auto;
           height: auto;
@@ -78,7 +76,7 @@ export default class LineChart extends HTMLElement{
 
   ///// Helpers
   #drawBackground(){
-    this.ctx.fillStyle = window.CSS.values.color.surface[9];
+    this.ctx.fillStyle = window.CSS.getValue("--color-surface-9");
     this.ctx.fillRect(0, 0, this.width, this.height);
   }
 
@@ -91,7 +89,7 @@ export default class LineChart extends HTMLElement{
       this.ctx.moveTo(this.paddingLeft - this.gridPointersToMainAxisLabelsLength, this.height - this.padding - (this.xLinesGap * i));
       this.ctx.lineTo(this.width - this.paddingRight, this.height - this.padding - (this.xLinesGap * i));
       this.ctx.lineWidth = this.gridLinesWidth;
-      this.ctx.strokeStyle = window.CSS.values.color.main;
+      this.ctx.strokeStyle = window.CSS.getValue("--color-main");
       this.ctx.stroke();
 
       // Percentage
@@ -104,7 +102,7 @@ export default class LineChart extends HTMLElement{
       this.ctx.font = "0.6rem";
       this.ctx.textBaseline = "middle";
       this.ctx.textAlign = "right";
-      this.ctx.fillStyle = window.CSS.values.color.main;
+      this.ctx.fillStyle = window.CSS.getValue("--color-main");
       this.ctx.fillText(
         `${stepGap * i}`,
         this.paddingLeft - this.mainAxisLabelsPadding,
@@ -122,14 +120,14 @@ export default class LineChart extends HTMLElement{
       this.ctx.moveTo(this.paddingLeft + (i * this.yLinesGap), this.padding);
       this.ctx.lineTo(this.paddingLeft + (i * this.yLinesGap), this.height - this.padding + this.gridPointersToMainAxisLabelsLength);
       this.ctx.lineWidth = this.gridLinesWidth;
-      this.ctx.strokeStyle = window.CSS.values.color.main;
+      this.ctx.strokeStyle = window.CSS.getValue("--color-main");
       this.ctx.stroke();
 
       // Draw Label Values
       this.ctx.font = "0.6rem";
       this.ctx.textBaseline = "middle";
       this.ctx.textAlign = "center";
-      this.ctx.fillStyle = window.CSS.values.color.main;
+      this.ctx.fillStyle = window.CSS.getValue("--color-main");
       this.ctx.fillText(
         this.data["xAxis"]["labels"][i] || "",
         this.paddingLeft + (i * this.yLinesGap),
@@ -189,7 +187,7 @@ export default class LineChart extends HTMLElement{
     this.ctx.lineTo(this.width - this.paddingRight, this.height - this.padding);
 
     this.ctx.lineWidth = this.mainAxisLinesWidth;
-    this.ctx.strokeStyle = window.CSS.values.color.main;
+    this.ctx.strokeStyle = window.CSS.getValue("--color-main");
     this.ctx.stroke();
   }
 
@@ -197,7 +195,7 @@ export default class LineChart extends HTMLElement{
     this.ctx.font = `${this.titleFontSize} ${this.titleFont}`;
     this.ctx.textBaseline = "middle";
     this.ctx.textAlign = "center";
-    this.ctx.fillStyle = window.CSS.values.color.main;
+    this.ctx.fillStyle = window.CSS.getValue("--color-main");
     this.ctx.fillText(this.data.title, this.width / 2, this.padding / 2);
   }
 

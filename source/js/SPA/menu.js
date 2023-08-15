@@ -258,7 +258,7 @@ export default class Menu{
         toggler.innerHTML = "<x-icon color='#ffffff' name='lockLocked'></x-icon>";
 
         // Change Menu Background Color To Darker Brand Hue Based Color So It Will Look Nicer On Light Mode
-        Menu.#elementMenu.style.backgroundColor = `hsla(${CSS.values.color.brand.hue}, 10%, 20%, 1)`;
+        Menu.#elementMenu.style.backgroundColor = `hsla(${CSS.getValue("--color-main-hue")}, 10%, 20%, 1)`;
 
         // Get Live Calculated Menu Width
         const menuWidth = Menu.#elementMenu.offsetWidth + "px";

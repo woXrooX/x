@@ -112,7 +112,7 @@ export default class Tooltip extends HTMLElement{
 
             color: white;
             font-size: 0.7rem;
-            background-color: hsla(${CSS.values.color.brand.hue}, 10%, 10%, 1);
+            background-color: hsla(var(--color-main-hue), 10%, 10%, 1);
             opacity: 0;
 
 
@@ -194,7 +194,7 @@ export default class Tooltip extends HTMLElement{
             margin-left: -5px;
             border-width: 5px;
             border-style: solid;
-            border-color: hsla(${CSS.values.color.brand.hue}, 10%, 10%, 1) transparent transparent transparent;
+            border-color: hsla(var(--color-main-hue), 10%, 10%, 1) transparent transparent transparent;
 
           }
 

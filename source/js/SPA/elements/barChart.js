@@ -10,8 +10,6 @@ export default class BarChart extends HTMLElement{
     CSS: {
       const style = document.createElement('style');
       style.textContent = `
-        ${CSS.rules.all}
-
         canvas{
           width: auto;
           height: auto;
@@ -72,7 +70,7 @@ export default class BarChart extends HTMLElement{
 
   ///// Helpers
   #drawBackground(){
-    this.ctx.fillStyle = window.CSS.values.color.surface[9];
+    this.ctx.fillStyle = window.CSS.getValue("--color-surface-9");
     this.ctx.fillRect(0, 0, this.width, this.height);
   }
 
@@ -83,7 +81,7 @@ export default class BarChart extends HTMLElement{
       this.ctx.moveTo(this.paddingLeft - 10, this.height - this.padding - (this.xLinesGap * i));
       this.ctx.lineTo(this.width - this.paddingRight, this.height - this.padding - (this.xLinesGap * i));
       this.ctx.lineWidth = this.gridLinesWidth;
-      this.ctx.strokeStyle = window.CSS.values.color.main;
+      this.ctx.strokeStyle = window.CSS.getValue("--color-main");
       this.ctx.stroke();
 
       ///// Draw Heigts
@@ -97,7 +95,7 @@ export default class BarChart extends HTMLElement{
       this.ctx.font = `${this.barValueFontSize} ${this.barValueFont}`;
       this.ctx.textBaseline = "middle";
       this.ctx.textAlign = "right";
-      this.ctx.fillStyle = window.CSS.values.color.main;
+      this.ctx.fillStyle = window.CSS.getValue("--color-main");
       this.ctx.fillText(
         `${maxValueByPercentage.toFixed(1)} (${percentageOfHeights.toFixed(1)}%)`,
         this.paddingLeft - 20,
@@ -113,7 +111,7 @@ export default class BarChart extends HTMLElement{
       const saturation = (((this.data.data[i]["value"] / this.maxValue) * (80 - 10)) + 10);
       const barStartsAtX = (this.barGap / 2) + this.paddingLeft + ((this.barGap + this.barWidth) * i);
 
-      this.ctx.fillStyle = this.data.data[i]["color"] || `hsl(${window.CSS.values.color.brand.hue}deg, ${saturation}%, 10%)`;
+      this.ctx.fillStyle = this.data.data[i]["color"] || `hsl(${window.CSS.getValue("--color-main-hue")}, ${saturation}%, 10%)`;
       this.ctx.fillRect(
         barStartsAtX,
         this.height - this.padding - barHeight,
@@ -125,7 +123,7 @@ export default class BarChart extends HTMLElement{
       this.ctx.font = `${this.barNameFontSize} ${this.barNameFont}`;
       this.ctx.textBaseline = "middle";
       this.ctx.textAlign = "center";
-      this.ctx.fillStyle = window.CSS.values.color.main;
+      this.ctx.fillStyle = window.CSS.getValue("--color-main");
       this.ctx.fillText(
         this.data.data[i]["name"] || "Unknown",
         barStartsAtX + (this.barWidth / 2),
@@ -142,7 +140,7 @@ export default class BarChart extends HTMLElement{
     this.ctx.lineTo(this.width - this.paddingRight, this.height - this.padding);
 
     this.ctx.lineWidth = this.mainAxisLinesWidth;
-    this.ctx.strokeStyle = window.CSS.values.color.main;
+    this.ctx.strokeStyle = window.CSS.getValue("--color-main");
     this.ctx.stroke();
   }
 
@@ -150,7 +148,7 @@ export default class BarChart extends HTMLElement{
     this.ctx.font = `${this.titleFontSize} ${this.titleFont}`;
     this.ctx.textBaseline = "middle";
     this.ctx.textAlign = "center";
-    this.ctx.fillStyle = window.CSS.values.color.main;
+    this.ctx.fillStyle = window.CSS.getValue("--color-main");
     this.ctx.fillText(this.data.title, this.width / 2, this.padding / 2);
   }
 

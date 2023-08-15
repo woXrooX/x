@@ -103,7 +103,7 @@ export default class Router{
       // Render The Error
       window.DOM.render(`
         <container>
-          <row class="m-t-5 box-default p-5 w-50">
+          <row class="m-t-5 surface-clean p-5 w-50">
             <column>
               <error>${error.name}</error>
               <info>${error.stack}</info>

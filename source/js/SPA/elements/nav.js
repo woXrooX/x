@@ -10,93 +10,36 @@ export default class Nav extends HTMLElement{
     constructor(){
         super();
 
-        this.shadow = this.attachShadow({mode: 'closed'});
+        // Save the JSON data
+        this.JSON = this.innerHTML;
+
+        // Clean the inner data
+        this.innerHTML = "";
 
         // Selector
         this.selector = this.getAttribute("selector");
 
         // Clone And Append Template
-        this.shadow.appendChild(Nav.#template.content.cloneNode(true));
+        this.appendChild(Nav.#template.content.cloneNode(true));
 
-        // background-color: var(--color-surface-4) !important;
-        CSS: {
-            const style = document.createElement('style');
-            style.textContent = `
-                ${window.CSS.rules.all}
+        // Set Nav Class
+        this.querySelector("nav").setAttribute("class", this.getAttribute("class") || "surface-clean");
 
-                nav{
-                  width: 100%;
-                  display: flex;
-                  flex-direction: column;
-                  align-items: center;
-                  gap: calc(var(--gap) / 2);
-                  padding: var(--padding);
-
-                  & > a{
-                    background-color: var(--color-surface-1);
-
-                    color: var(--color-text-primary);
-                    text-align: center;
-                    font-size: 0.8rem;
-
-                    width: 100%;
-                    min-width: max-content;
-
-                    padding: var(--padding);
-                    border-radius: var(--radius);
-
-                    transition: var(--transition-velocity) ease-in-out;
-                    transition-property: background-color, box-shadow;
-
-                    &:hover{
-                      background-color: var(--color-surface-4);
-                      box-shadow: var(--shadow-default);
-                    }
-
-                    &.active{
-                      background-color: var(--color-surface-4);
-                      box-shadow: var(--shadow-default);
-                    }
-                  }
-                }
-
-                @media only screen and (max-width: ${CSS.values.screenSize.phone}){
-                  nav{
-                    max-width: calc(100vw - var(--padding) * 2);
-
-                    flex-direction: row;
-                    gap: calc(var(--gap) / 4);
-
-                    & > a{
-                      box-shadow: none !important;
-                    }
-                  }
-                }
-
-            `;
-
-            this.shadow.appendChild(style);
-
-            // Set Nav Class
-            this.shadow.querySelector("nav").setAttribute("class", this.getAttribute("class") || "box-default");
-
-            // Make scrollable on x axis when the media condition matches
-            this.#ifMobileMakeScrollable();
-            window.matchMedia(`(max-width: ${CSS.values.screenSize.phone})`).onchange = this.#ifMobileMakeScrollable;
-
-        }
+        // Make scrollable on x axis when the media condition matches
+        this.#ifMobileMakeScrollable();
+        window.matchMedia(`(max-width: ${window.CSS.getValue("--screen-size-phone")})`).onchange = this.#ifMobileMakeScrollable;
 
         BuildButtons: {
             this.buttonsHTML = "";
-            this.buttons = JSON.parse(this.innerHTML).constructor === Array ? JSON.parse(this.innerHTML) : [];
+            this.buttons = JSON.parse(this.JSON).constructor === Array ? JSON.parse(this.JSON) : [];
 
             for(const button of this.buttons)
                 this.buttonsHTML += `<a href="#${button.link}">${window.Lang.use("name" in button ? button.name : button.link)}</a>`;
 
+            // Placing the buttons/links
+            this.querySelector("nav").innerHTML = this.buttonsHTML;
         }
 
-        // Content
-        this.shadow.querySelector("nav").innerHTML = this.buttonsHTML;
 
         Listeners: {
             // Init Active Nav Button
@@ -104,21 +47,20 @@ export default class Nav extends HTMLElement{
 
             // On Hash Change Trigger
             window.onhashchange = this.#setActive;
-
         }
 
     }
 
     #ifMobileMakeScrollable = ()=>{
-      if(window.matchMedia(`(max-width: ${CSS.values.screenSize.phone})`).matches)
-        this.shadow.querySelector("nav").classList.add("scrollbar-x");
+      if(window.matchMedia(`(max-width: ${CSS.getValue("--screen-size-phone")})`).matches)
+        this.querySelector("nav").classList.add("scrollbar-x");
 
-      else this.shadow.querySelector("nav").classList.remove("scrollbar-x");
+      else this.querySelector("nav").classList.remove("scrollbar-x");
     }
 
     #setActive = ()=>{
         let isHashValid = false;
-        const hyperlinks = this.shadow.querySelector("nav").getElementsByTagName("a");
+        const hyperlinks = this.querySelector("nav").getElementsByTagName("a");
 
         for(const a of hyperlinks)
             if(a.getAttribute("href") === window.location.hash){
@@ -157,7 +99,63 @@ export default class Nav extends HTMLElement{
               display: bugIsAFeature;
             }
           }
+
+          x-nav{
+            & > nav{
+              background-color: var(--color-surface-2);
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: calc(var(--gap) / 2);
+              padding: var(--padding);
+
+              & > a{
+                background-color: var(--color-surface-1);
+
+                color: var(--color-text-primary);
+                text-align: center;
+                font-size: 0.8rem;
+
+                width: 100%;
+                min-width: max-content;
+
+                padding: var(--padding);
+                border-radius: var(--radius);
+
+                transition: var(--transition-velocity) ease-in-out;
+                transition-property: background-color, box-shadow;
+
+                &:hover{
+                  background-color: var(--color-surface-4);
+                  box-shadow: var(--shadow-default);
+                }
+
+                &.active{
+                  background-color: var(--color-surface-4);
+                  box-shadow: var(--shadow-default);
+                }
+              }
+            }
+          }
+
+
+          @media only screen and (max-width: ${window.CSS.getValue("--screen-size-phone")}){
+            x-nav{
+              & > nav{
+                max-width: calc(100vw - var(--padding) * 2);
+
+                flex-direction: row;
+                gap: calc(var(--gap) / 4);
+
+                & > a{
+                  box-shadow: none !important;
+                }
+              }
+            }
+          }
         `;
+
         document.head.appendChild(style);
     }
 

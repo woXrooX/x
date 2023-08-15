@@ -14,7 +14,7 @@ export default class Cover{
     if(!!Cover.#elementCover === false) return;
 
     Cover.#elementCover.style.opacity = 1;
-    Cover.#elementCover.style.zIndex = window.CSS.values.zIndex.cover;
+    Cover.#elementCover.style.zIndex = window.CSS.getValue("--z-cover");
 
     // disable scrolling
     document.body.style = "overflow: hidden";
@@ -27,8 +27,8 @@ export default class Cover{
 
     Cover.#elementCover.style.opacity = 0;
     setTimeout(()=>{
-      Cover.#elementCover.style.zIndex = window.CSS.values.zIndex.minus;
-    }, parseInt(window.CSS.values.transition.velocity));
+      Cover.#elementCover.style.zIndex = window.CSS.getValue("--z-minus");
+    }, parseInt(window.CSS.getValue("--transition-velocity")));
 
     // enable scrolling
     document.body.removeAttribute("style");
@@ -38,7 +38,6 @@ export default class Cover{
   static onClickExecute(func){
     // Execute External Function
     document.querySelector(Cover.selector).addEventListener("click", func);
-
   }
 
 }

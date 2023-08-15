@@ -28,8 +28,6 @@ export default class Modal extends HTMLElement{
     CSS: {
       const style = document.createElement('style');
       style.textContent = `
-        ${window.CSS.rules.all}
-
         modal{
           pointer-events: none;
 
