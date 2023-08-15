@@ -1,0 +1,1080 @@
+/**************************** Root START ****************************/
+:root{
+  font-size: 22px;
+
+  --document-height: 100dvh;
+
+  /* Default color schema starts with dark mode */
+  --color-main-hue: 230deg;
+  --color-main-saturation: 13%;
+  --color-main-lightness: 9%;
+
+  --color-main: hsla(var(--color-main-hue), var(--color-main-saturation), var(--color-main-lightness), 1);
+
+  /* Aliases */
+  --color-brand: var(--color-main);
+
+  --color-success: hsla(120, 100%, 25%, 1);
+  --color-info: hsla(211.059, 100%, 50%, 1);
+  --color-warning: hsla(46.286, 100%, 48%, 1);
+  --color-error: hsla(357.303, 82%, 57%, 1);
+
+  --color-surface-1: hsla(var(--color-main-hue), 10%, 10%, 1);
+  --color-surface-2: hsla(var(--color-main-hue), 10%, 15%, 1);
+  --color-surface-3: hsla(var(--color-main-hue), 10%, 20%, 1);
+  --color-surface-4: hsla(var(--color-main-hue), 10%, 25%, 1);
+  --color-surface-5: hsla(var(--color-main-hue), 10%, 30%, 1);
+  --color-surface-6: hsla(var(--color-main-hue), 10%, 35%, 1);
+  --color-surface-7: hsla(var(--color-main-hue), 10%, 50%, 1);
+  --color-surface-8: hsla(var(--color-main-hue), 10%, 65%, 1);
+  --color-surface-9: hsla(var(--color-main-hue), 10%, 80%, 1);
+  --color-surface-10: hsla(var(--color-main-hue), 10%, 95%, 1);
+
+  --color-text-primary: hsla(var(--color-main-hue), 15%, 95%, 1);
+  --color-text-secondary: hsla(var(--color-main-hue), 5%, 75%, 1);
+  --color-text-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1);
+
+  color-scheme: dark;
+  accent-color: var(--color-main);
+
+  --padding: 5px;
+  --margin: 5px;
+  --gap: 20px;
+  --radius: 5px;
+  --blur: 10px;
+  --transition-velocity: 200ms;
+  --shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 50% 3% / 0.3);
+}
+/**************************** Root END ****************************/
+
+
+/**************************** Defaults START ****************************/
+/* Removing unnecessary spaces from all elements */
+:root, html, body, *, *::before, *::after{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  text-decoration: none;
+  /* user-select: none; /* Disable copy */
+  /* pointer-events: none; */
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Mobile link click effect disabling */
+  /* -webkit-tap-highlight-color: transparent; */
+}
+
+/* Add disabled effect to file selector button when disabled */
+*{
+  &[disabled], [disabled]::file-selector-button, [type=submit]:disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+/* Better <hr> UI */
+hr{
+  border:none;
+  border-top:1px solid var(--color-text-secondary);
+}
+
+/* <a> basic active & hover effects */
+a{
+  cursor: pointer;
+  color: var(--color-text-secondary);
+
+  &:where(:active, :focus, :hover){
+    color: var(--color-text-primary);
+  }
+
+}
+
+/* Fix li elemet going out from parent element */
+li{
+  margin-left: 20px;
+}
+
+/*** Removing default scrollbars START ***/
+*{
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Chrome, Safari, Opera */
+*::-webkit-scrollbar{
+  display: none;
+}
+/*** Removing default scrollbars END ***/
+
+/*** Body START ***/
+body{
+  background-color: var(--color-surface-1);
+  color: var(--color-text-primary);
+  font-size: 1rem;
+  height: var(--document-height);
+}
+/*** Body END ***/
+
+/*** Mobile Screen START ***/
+@media only screen and (max-width: 600px){
+  :root{
+    font-size: 16px;
+  }
+
+  html, body{
+    height: 100dvh;
+    overflow: hidden;
+  }
+}
+/*** Mobile Screen END ***/
+/**************************** Defaults END ****************************/
+
+
+/**************************** Info, Success, Warning, Error START ****************************/
+success{
+  color: var(--color-success);
+
+  &::before{
+    content:"\2713";
+  }
+
+}
+
+info{
+  color: var(--color-info);
+
+  &::before{
+    content:"\2139";
+  }
+
+}
+
+warning{
+  color: var(--color-warning);
+
+  &::before{
+    content:"\26A0";
+  }
+
+}
+
+error{
+  color: var(--color-error);
+
+  &::before{
+    content: "\2715";
+  }
+
+}
+
+info, success, warning, error{
+  &::before{
+    margin-right:5px;
+  }
+
+  &:empty{
+    display:none;
+  }
+
+}
+/**************************** Info, Success, Warning, Error END ****************************/
+
+
+/**************************** Forms START ****************************/
+/** Form Variables START **/
+:root{
+  --f-padding: 10px;
+  --f-radius: 5px;
+  --f-gap: 10px;
+  --f-height: 40px;
+  --f-width: 100%;
+  --f-font-size: 20px;
+  --f-border: 1px solid var(--color-text-secondary);
+  --f-transition: var(--transition-velocity) ease-in-out;
+  --f-transition-property: background-color, border;
+}
+/** Form Variables END **/
+form{
+  width: var(--f-width);
+
+  display: grid;
+  grid-gap: var(--f-gap);
+
+  & label{
+    width: 100%;
+
+    & > p{
+      font-size: 0.8rem;
+      min-height: 1rem;
+      display: inline-block;
+      padding: var(--padding);
+    }
+  }
+
+  & fieldset{
+    padding: var(--f-padding);
+    border-radius: var(--f-radius);
+    border: var(--f-border);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-gap);
+
+    & legend{
+      background-color: var(--color-text-primary);
+      color: var(--color-text-accent);
+      border-radius: var(--f-radius);
+      padding: 2px 5px;
+    }
+
+  }
+
+}
+
+/** select, textarea, imput -> type = [text, password, eMail, number, color, file, date, tel, range] START **/
+select,
+textarea,
+input:where([type=text], [type=eMail], [type=password], [type=number], [type=color], [type=file], [type=date], [type=tel], [type=range]){
+  background-color: var(--color-surface-3);
+  width: var(--f-width);
+  height: var(--f-height);
+  font-size: var(--f-font-size);
+  padding: 0 var(--f-padding);
+  border-radius: var(--f-radius);
+  border: var(--f-border);
+
+  transition: var(--f-transition);
+  transition-property: var(--f-transition-property);
+}
+/** select, textarea, imput -> type = [text, password, eMail, number, color, file, date, tel, range] END **/
+
+/** :hover & :focus -> inputs & textarea & select START **/
+select:not(:disabled):where(:hover, :focus),
+textarea:not(:disabled):where(:hover, :focus),
+input[type=number]:not(:disabled):where(:hover, :focus),
+input:not(:disabled):where(:hover, :focus){
+  background-color: var(--color-surface-5);
+  border: 1px solid var(--color-text-primary);
+
+}
+/** :hover & :focus -> inputs & textarea & select END **/
+
+/** Textarea START **/
+textarea{
+  height: unset;
+  font-size: calc(var(--f-font-size) / 1.5);
+  min-height: 150px;
+  resize: vertical;
+  padding: var(--f-padding);
+
+}
+/** Textarea END **/
+
+/** input[type=color] START **/
+
+/* Chrome X */
+input[type=color]::-webkit-color-swatch-wrapper{
+  padding: 5px;
+  width: var(--f-width);
+}
+
+/* Chrome Y */
+input[type=color]::-webkit-color-swatch{
+  border: none;
+  border-radius: var(--f-radius);
+  height: 100%;
+}
+
+/* Firefox X */
+input[type=color]::-moz-color-swatch-wrapper {
+  padding: 5px;
+  width: var(--f-width);
+}
+
+/* Firefox Y */
+input[type=color]::-moz-color-swatch{
+  border: none;
+  border-radius: var(--f-radius);
+  height: 100%;
+}
+/** input[type=color] END **/
+
+/** input[type=file] START **/
+/* Input */
+input[type=file]{
+  padding: var(--padding);
+  font-size: var(--f-font-size);
+}
+
+/* File Button */
+input[type=file]::file-selector-button{
+  background-color: var(--color-main);
+  color: white;
+  font-size: var(--f-font-size);
+
+  padding: 3px 10px;
+
+  border: none;
+  border-radius: var(--f-radius);
+
+  cursor: pointer;
+
+  filter: brightness(120%);
+  transition: var(--transition-velocity) filter;
+}
+
+/* File Button :hover */
+input[type=file]::file-selector-button:not(:disabled):hover{
+  filter: brightness(80%);
+}
+/** input[type=file] END **/
+
+/** input[type=number] Hide Arrow START **/
+/* Firefox */
+input[type=number]{-moz-appearance: textfield;}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{-webkit-appearance: none;}
+/** input[type=number] END **/
+
+/** input[type=radio] & input[type=checkbox] START **/
+input:where([type=radio], [type=checkbox]){
+  width: 20px;
+  height: auto;
+}
+/** input[type=radio] & input[type=checkbox] END **/
+
+/** select hide arrow START **/
+/* form :not(input:where([type=radio], [type=checkbox])), */
+select{
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+/** select hide arrow END **/
+
+/** input[type=submit] & button START **/
+button,
+input[type=submit]{
+  cursor: pointer;
+  user-select: none;
+
+  background-color: var(--color-main);
+  color: white;
+  text-transform: uppercase;
+
+  overflow: hidden;
+  width: auto;
+  height: var(--f-height);
+
+  padding: 0px var(--f-padding);
+  border-radius: var(--f-radius);
+  border: none;
+  box-shadow: 0px 5px 10px 0px rgba(0 0 0 / 0.3);
+
+  filter: brightness(120%);
+  transition: var(--transition-velocity) ease-in-out;
+  transition-property: filter transform box-shadow;
+}
+
+/* On Hover */
+button:not(:disabled):where(:hover),
+input[type=submit]:not(:disabled):where(:hover){
+  filter: brightness(80%);
+}
+
+/* On Active */
+button:not(:disabled):where(:active),
+input[type=submit]:not(:disabled):where(:active){
+  transform: translateY(5px);
+  box-shadow: 0px 5px 10px -5px rgba(0 0 0 / 0.3);
+}
+
+/* On Focus */
+button:not(:disabled):where(:focus),
+input[type=submit]:not(:disabled):where(:focus){
+}
+/** input[type=submit] & button END **/
+/**************************** Forms END ****************************/
+
+
+/**************************** Custom scrollbars START ****************************/
+/** Common START **/
+.scrollbar-x,
+.scrollbar-y{
+  overflow: hidden;
+}
+.scrollbar-x{
+  overflow-x: scroll;
+
+}
+.scrollbar-y{
+  overflow-y: scroll;
+}
+/** Common END **/
+
+/********************* v1 START *********************/
+/** Firefox START **/
+:where(.scrollbar-x, .scrollbar-y){
+  scrollbar-width: auto;
+  scrollbar-color: var(--color-main) transparent;
+}
+/** Firefox END **/
+
+/** All Other Browsers START **/
+:where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar{
+  display: unset;
+  width: 5px;
+  height: 5px;
+}
+:where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-track{
+  background-color: transparent;
+}
+:where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-thumb{
+  background-color: hsla(var(--color-main-hue), var(--color-main-saturation), var(--color-main-lightness), 0.5);
+  border-radius: 5px;
+}
+:where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-thumb:hover{
+  background-color: hsla(var(--color-main-hue), var(--color-main-saturation), var(--color-main-lightness), 1);
+}
+/** All Other Browsers END **/
+/********************* v1 END *********************/
+/**************************** Custom scrollbars END ****************************/
+
+
+/**************************** Boxes START ****************************/
+/* Clean */
+.surface-clean{
+  background-color: var(--color-surface-3);
+
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* 2D */
+.surface-2D{
+  background-color: var(--color-surface-3);
+
+  border-radius: 0px;
+  border-left: 1px solid var(--color-surface-2);
+  border-top: 1px solid var(--color-surface-4);
+  border-right: 1px solid var(--color-surface-4);
+  border-bottom: 1px solid var(--color-surface-2);
+}
+
+/* TO DO: */
+/* Success */
+/* Info */
+/* Warning */
+/* Error */
+/**************************** Boxes END ****************************/
+
+
+/**************************** Container, Row and Column START ****************************/
+container{
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+row, column{
+  display: flex;
+  max-width: 100vw;
+}
+
+row{
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+}
+
+column{
+  width: auto;
+
+  flex-direction: column;
+  align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+  row{
+    flex-direction: column;
+    width: 100% !important;
+  }
+  column{
+    width: 100% !important;
+  }
+}
+/**************************** Container, Row and Column END ****************************/
+
+
+/**************************** Display START ****************************/
+/* Block */
+.d-block{display: block;}
+
+/* Inline-Block */
+.d-inline-block{display: inline-block;}
+
+/* Flexx */
+.d-flex{display: flex;}
+.flex-row{flex-direction: row;}
+.flex-column{flex-direction: column;}
+
+/* X - justify-content */
+.flex-x-start{justify-content: flex-start;}
+.flex-x-end{justify-content: flex-end;}
+.flex-x-center{justify-content: center;}
+.flex-x-between{justify-content: space-between;}
+.flex-x-around{justify-content: space-around;}
+
+/* Y - align-items */
+.flex-y-start{align-items: flex-start;}
+.flex-y-end{align-items: flex-end;}
+.flex-y-center{align-items: center;}
+.flex-y-baseline{align-items: baseline;}
+.flex-y-stretch{align-items: stretch;}
+
+/* XY */
+.flex-center{
+  justify-content: center;
+  align-items: center;
+}
+
+/* Needs to be done here: align-self */
+
+.flex-nowrap{flex-wrap: nowrap;}
+.flex-wrap{flex-wrap: wrap;}
+.flex-wrap-reverse{flex-wrap: wrap-reverse;}
+/**************************** Display END ****************************/
+
+
+/**************************** Gap START ****************************/
+.gap-0-1{gap: calc(var(--gap) * 0.1);}
+.gap-0-2{gap: calc(var(--gap) * 0.2);}
+.gap-0-3{gap: calc(var(--gap) * 0.3);}
+.gap-0-4{gap: calc(var(--gap) * 0.4);}
+.gap-0-5{gap: calc(var(--gap) * 0.5);}
+.gap-0-6{gap: calc(var(--gap) * 0.6);}
+.gap-0-7{gap: calc(var(--gap) * 0.7);}
+.gap-0-8{gap: calc(var(--gap) * 0.8);}
+.gap-0-9{gap: calc(var(--gap) * 0.9);}
+.gap-1{gap: var(--gap);}
+.gap-2{gap: calc(var(--gap) * 2);}
+.gap-3{gap: calc(var(--gap) * 3);}
+.gap-4{gap: calc(var(--gap) * 4);}
+.gap-5{gap: calc(var(--gap) * 5);}
+/**************************** Gap END ****************************/
+
+
+/**************************** Background Colors START ****************************/
+/* Brand */
+.color-surface-brand{background-color: var(--color-brand);}
+
+/* Brand Color Shades */
+.color-surface-1{background-color: var(--color-surface-1);}
+.color-surface-2{background-color: var(--color-surface-2);}
+.color-surface-3{background-color: var(--color-surface-3);}
+.color-surface-4{background-color: var(--color-surface-4);}
+.color-surface-5{background-color: var(--color-surface-5);}
+.color-surface-6{background-color: var(--color-surface-6);}
+.color-surface-7{background-color: var(--color-surface-7);}
+.color-surface-8{background-color: var(--color-surface-8);}
+.color-surface-9{background-color: var(--color-surface-9);}
+.color-surface-10{background-color: var(--color-surface-10);}
+
+/* Situational */
+.color-surface-success  {background-color: var(--color-success);}
+.color-surface-info     {background-color: var(--color-info);}
+.color-surface-warning  {background-color: var(--color-warning);}
+.color-surface-error    {background-color: var(--color-error);}
+
+/* Gradient */
+.color-surface-gradient-left  {background-image: linear-gradient(to left, var(--color-surface-2), var(--color-surface-6));}
+.color-surface-gradient-right {background-image: linear-gradient(to right, var(--color-surface-2), var(--color-surface-6));}
+.color-surface-gradient-45    {background-image: linear-gradient(45deg, var(--color-surface-2), var(--color-surface-6) 80%);}
+/**************************** Background Colors END ****************************/
+
+
+/**************************** Text START ****************************/
+/** Colors **/
+.color-text-brand{color: var(--color-brand);}
+
+.color-text-primary{color: var(--color-text-primary);}
+.color-text-secondary{color: var(--color-text-secondary);}
+.color-text-accent{color: var(--color-text-accent);}
+
+.color-text-success{color: var(--color-success);}
+.color-text-info{color: var(--color-info);}
+.color-text-warning{color: var(--color-warning);}
+.color-text-error{color: var(--color-error);}
+
+/** Align **/
+.text-left{text-align: left;}
+.text-center{text-align: center;}
+.text-right{text-align: right;}
+
+/** Weight **/
+.text-bold{font-weight: bold;}
+.text-italic{font-style: italic;}
+
+/** Size **/
+.text-size-0-1{font-size: 0.1rem;}
+.text-size-0-2{font-size: 0.2rem;}
+.text-size-0-3{font-size: 0.3rem;}
+.text-size-0-4{font-size: 0.4rem;}
+.text-size-0-5{font-size: 0.5rem;}
+.text-size-0-6{font-size: 0.6rem;}
+.text-size-0-7{font-size: 0.7rem;}
+.text-size-0-8{font-size: 0.8rem;}
+.text-size-0-9{font-size: 0.9rem;}
+
+.text-size-1{font-size: 1rem;}
+.text-size-1-1{font-size: 1.1rem;}
+.text-size-1-2{font-size: 1.2rem;}
+.text-size-1-3{font-size: 1.3rem;}
+.text-size-1-4{font-size: 1.4rem;}
+.text-size-1-5{font-size: 1.5rem;}
+.text-size-1-6{font-size: 1.6rem;}
+.text-size-1-7{font-size: 1.7rem;}
+.text-size-1-8{font-size: 1.8rem;}
+.text-size-1-9{font-size: 1.9rem;}
+
+.text-size-2{font-size: 2rem;}
+.text-size-2-5{font-size: 2.5rem;}
+
+.text-size-3{font-size: 3rem;}
+
+.text-size-4{font-size: 4rem;}
+
+.text-size-5{font-size: 5rem;}
+
+/** Line Height **/
+.text-lh-0-1{line-height: 0.1rem;}
+.text-lh-0-2{line-height: 0.2rem;}
+.text-lh-0-3{line-height: 0.3rem;}
+.text-lh-0-4{line-height: 0.4rem;}
+.text-lh-0-5{line-height: 0.5rem;}
+.text-lh-0-6{line-height: 0.6rem;}
+.text-lh-0-7{line-height: 0.7rem;}
+.text-lh-0-8{line-height: 0.8rem;}
+.text-lh-0-9{line-height: 0.9rem;}
+.text-lh-1{line-height: 1rem;}
+.text-lh-1-1{line-height: 1.1rem;}
+.text-lh-1-2{line-height: 1.2rem;}
+.text-lh-1-3{line-height: 1.3rem;}
+.text-lh-1-4{line-height: 1.4rem;}
+.text-lh-1-5{line-height: 1.5rem;}
+.text-lh-1-6{line-height: 1.6rem;}
+.text-lh-1-7{line-height: 1.7rem;}
+.text-lh-1-8{line-height: 1.8rem;}
+.text-lh-1-9{line-height: 1.9rem;}
+.text-lh-2{line-height: 2rem;}
+.text-lh-2-1{line-height: 2.1rem;}
+.text-lh-2-2{line-height: 2.2rem;}
+.text-lh-2-3{line-height: 2.3rem;}
+.text-lh-2-4{line-height: 2.4rem;}
+.text-lh-2-5{line-height: 2.5rem;}
+.text-lh-2-6{line-height: 2.6rem;}
+.text-lh-2-7{line-height: 2.7rem;}
+.text-lh-2-8{line-height: 2.8rem;}
+.text-lh-2-9{line-height: 2.9rem;}
+.text-lh-3{line-height: 3rem;}
+/**************************** Text END ****************************/
+
+/**************************** Width START ****************************/
+.w-auto{width: auto;}
+
+.w-10{width: 10%;}
+.w-15{width: 15%;}
+.w-20{width: 20%;}
+.w-25{width: 25%;}
+.w-30{width: 30%;}
+.w-35{width: 35%;}
+.w-40{width: 40%;}
+.w-45{width: 45%;}
+.w-50{width: 50%;}
+.w-55{width: 55%;}
+.w-60{width: 60%;}
+.w-65{width: 65%;}
+.w-70{width: 70%;}
+.w-75{width: 75%;}
+.w-80{width: 80%;}
+.w-85{width: 85%;}
+.w-90{width: 90%;}
+.w-95{width: 95%;}
+.w-100{width: 100%;}
+/**************************** Width END ****************************/
+
+/**************************** Padding START ****************************/
+/* All sides */
+.p-1{padding: var(--padding);}
+.p-2{padding: calc(var(--padding) * 2);}
+.p-3{padding: calc(var(--padding) * 3);}
+.p-4{padding: calc(var(--padding) * 4);}
+.p-5{padding: calc(var(--padding) * 5);}
+
+/* Top */
+.pt-1{padding-top: var(--padding);}
+.pt-2{padding-top: calc(var(--padding) * 2);}
+.pt-3{padding-top: calc(var(--padding) * 3);}
+.pt-4{padding-top: calc(var(--padding) * 4);}
+.pt-5{padding-top: calc(var(--padding) * 5);}
+
+/* Right */
+.pr-1{padding-right: var(--padding);}
+.pr-2{padding-right: calc(var(--padding) * 2);}
+.pr-3{padding-right: calc(var(--padding) * 3);}
+.pr-4{padding-right: calc(var(--padding) * 4);}
+.pr-5{padding-right: calc(var(--padding) * 5);}
+
+/* Bottom */
+.pb-1{padding-bottom: var(--padding);}
+.pb-2{padding-bottom: calc(var(--padding) * 2);}
+.pb-3{padding-bottom: calc(var(--padding) * 3);}
+.pb-4{padding-bottom: calc(var(--padding) * 4);}
+.pb-5{padding-bottom: calc(var(--padding) * 5);}
+
+/* Left */
+.pl-1{padding-left: var(--padding);}
+.pl-2{padding-left: calc(var(--padding) * 2);}
+.pl-3{padding-left: calc(var(--padding) * 3);}
+.pl-4{padding-left: calc(var(--padding) * 4);}
+.pl-5{padding-left: calc(var(--padding) * 5);}
+
+/* X, Left To Right */
+.px-1{
+  padding-left: var(--padding);
+  padding-right: var(--padding);
+}
+.px-2{
+  padding-left: calc(var(--padding) * 2);
+  padding-right: calc(var(--padding) * 2);
+}
+.px-3{
+  padding-left: calc(var(--padding) * 3);
+  padding-right: calc(var(--padding) * 3);
+}
+.px-4{
+  padding-left: calc(var(--padding) * 4);
+  padding-right: calc(var(--padding) * 4);
+}
+.px-5{
+  padding-left: calc(var(--padding) * 5);
+  padding-right: calc(var(--padding) * 5);
+}
+
+/* Y, Top To Bottom */
+.py-1{
+  padding-top: var(--padding);
+  padding-bottom: var(--padding);
+}
+.py-2{
+  padding-top: calc(var(--padding) * 2);
+  padding-bottom: calc(var(--padding) * 2);
+}
+.py-3{
+  padding-top: calc(var(--padding) * 3);
+  padding-bottom: calc(var(--padding) * 3);
+}
+.py-4{
+  padding-top: calc(var(--padding) * 4);
+  padding-bottom: calc(var(--padding) * 4);
+}
+.py-5{
+  padding-top: calc(var(--padding) * 5);
+  padding-bottom: calc(var(--padding) * 5);
+}
+/**************************** Padding END ****************************/
+
+
+/**************************** Margin START ****************************/
+/* All sides */
+.m-1{margin: var(--margin);}
+.m-2{margin: calc(var(--margin) * 2);}
+.m-3{margin: calc(var(--margin) * 3);}
+.m-4{margin: calc(var(--margin) * 4);}
+.m-5{margin: calc(var(--margin) * 5);}
+
+/* Top */
+.mt-1{margin-top: var(--margin);}
+.mt-2{margin-top: calc(var(--margin) * 2);}
+.mt-3{margin-top: calc(var(--margin) * 3);}
+.mt-4{margin-top: calc(var(--margin) * 4);}
+.mt-5{margin-top: calc(var(--margin) * 5);}
+
+/* Right */
+.mr-1{margin-right: var(--margin);}
+.mr-2{margin-right: calc(var(--margin) * 2);}
+.mr-3{margin-right: calc(var(--margin) * 3);}
+.mr-4{margin-right: calc(var(--margin) * 4);}
+.mr-5{margin-right: calc(var(--margin) * 5);}
+
+/* Bottom */
+.mb-1{margin-bottom: var(--margin);}
+.mb-2{margin-bottom: calc(var(--margin) * 2);}
+.mb-3{margin-bottom: calc(var(--margin) * 3);}
+.mb-4{margin-bottom: calc(var(--margin) * 4);}
+.mb-5{margin-bottom: calc(var(--margin) * 5);}
+
+/* Left */
+.ml-1{margin-left: var(--margin);}
+.ml-2{margin-left: calc(var(--margin) * 2);}
+.ml-3{margin-left: calc(var(--margin) * 3);}
+.ml-4{margin-left: calc(var(--margin) * 4);}
+.ml-5{margin-left: calc(var(--margin) * 5);}
+
+/* X, Left To Right */
+.mx-1{
+  margin-left: var(--margin);
+  margin-right: var(--margin);
+}
+.mx-2{
+  margin-left: calc(var(--margin) * 2);
+  margin-right: calc(var(--margin) * 2);
+}
+.mx-3{
+  margin-left: calc(var(--margin) * 3);
+  margin-right: calc(var(--margin) * 3);
+}
+.mx-4{
+  margin-left: calc(var(--margin) * 4);
+  margin-right: calc(var(--margin) * 4);
+}
+.mx-5{
+  margin-left: calc(var(--margin) * 5);
+  margin-right: calc(var(--margin) * 5);
+}
+
+/* Y, Top To Bottom */
+.my-1{
+  margin-top: var(--margin);
+  margin-bottom: var(--margin);
+}
+.my-2{
+  margin-top: calc(var(--margin) * 2);
+  margin-bottom: calc(var(--margin) * 2);
+}
+.my-3{
+  margin-top: calc(var(--margin) * 3);
+  margin-bottom: calc(var(--margin) * 3);
+}
+.my-4{
+  margin-top: calc(var(--margin) * 4);
+  margin-bottom: calc(var(--margin) * 4);
+}
+.my-5{
+  margin-top: calc(var(--margin) * 5);
+  margin-bottom: calc(var(--margin) * 5);
+}
+/**************************** Margin END ****************************/
+
+
+/**************************** Radiues START ****************************/
+.radius-default{border-radius: var(--radius);}
+.radius-circle{border-radius: 50%;}
+/**************************** Radiues END ****************************/
+
+/**************************** Box Shadow START ****************************/
+.bs-default{box-shadow: var(--shadow);}
+/**************************** Box Shadow END ****************************/
+
+
+/**************************** HR START ****************************/
+/* 2D */
+hr.v-2D{
+  border-top:1px solid var(--color-surface-4);
+  border-bottom:1px solid var(--color-surface-2);
+}
+/**************************** HR END ****************************/
+
+
+/**************************** Table START ****************************/
+table{
+  --table-radius: 3px;
+
+  font-size: 0.7rem;
+
+  /* make table cells with same */
+  table-layout: auto;
+
+  display: block;
+  width: 100%;
+
+  border: 1px solid var(--color-main);
+  border-radius: var(--radius);
+  padding: var(--padding);
+
+  &.x-default{
+    & > thead{
+      background-color: var(--color-surface-10);
+
+      & > tr{
+        & > th{
+          color: var(--color-text-accent);
+          font-weight: bold;
+
+          border-radius: var(--table-radius);
+          padding: var(--padding);
+        }
+      }
+    }
+
+    & > tbody{
+      & > tr{
+        transition: var(--transition-velocity) ease-in-out background-color;
+
+        &:nth-child(odd){
+          background-color: var(--color-surface-4);
+        }
+
+        &:nth-child(even){
+          background-color: var(--color-surface-5);
+        }
+
+        &:hover{
+          background-color: var(--color-surface-7);
+        }
+
+        & > td{
+          border-radius: var(--table-radius);
+          padding: var(--padding);
+        }
+      }
+    }
+
+    & > tfoot{
+      background-color: var(--color-surface-9);
+
+      & > tr{
+        & > td{
+          color: var(--color-text-accent);
+
+          border-radius: var(--table-radius);
+          padding: var(--padding);
+        }
+      }
+    }
+  }
+
+  &.x-skeleton{
+    border-collapse: collapse;
+
+    & > thead{
+      & > tr{
+        & > th{
+          color: var(--color-text-primary);
+          font-weight: bold;
+
+          padding: var(--padding);
+        }
+      }
+    }
+
+    & > tbody{
+      & > tr{
+        transition: var(--transition-velocity) ease-in-out background-color;
+
+        &:hover{
+          background-color: var(--color-surface-4);
+        }
+
+        & > td{
+          border: 1px solid var(--color-main);
+          padding: var(--padding);
+        }
+      }
+    }
+
+    & > tfoot{
+      & > tr{
+        & > td{
+          color: var(--color-text-secondary);
+
+          border-radius: var(--table-radius);
+          padding: var(--padding);
+        }
+      }
+    }
+
+  }
+
+  &.x-clean{
+    border-collapse: collapse;
+
+    & > thead{
+      background-color: var(--color-surface-1);
+
+      & > tr{
+        & > th{
+          color: var(--color-text-primary);
+          font-weight: bold;
+
+          padding: var(--padding);
+
+          &:first-child{
+            border-top-left-radius: var(--radius);
+          }
+
+          &:last-child{
+            border-top-right-radius: var(--radius);
+          }
+        }
+      }
+    }
+
+    & > tbody{
+      background-color: var(--color-surface-2);
+
+      & > tr{
+        transition: var(--transition-velocity) ease-in-out background-color;
+
+        &:hover{
+          background-color: var(--color-surface-4);
+        }
+
+        & > td{
+          padding: var(--padding);
+        }
+      }
+    }
+
+    &:not(:has(tfoot)) tbody{
+      & > tr{
+        &:last-child{
+          & > td{
+            &:first-child{
+              border-bottom-left-radius: var(--radius);
+            }
+
+            &:last-child{
+              border-bottom-right-radius: var(--radius);
+            }
+          }
+        }
+      }
+    }
+
+    & > tfoot{
+      background-color: var(--color-surface-1);
+      border-block-start: 1px solid var(--color-surface-3);
+
+      & > tr{
+        & > td{
+          color: var(--color-text-secondary);
+
+          padding: var(--padding);
+
+          &:first-child{
+            border-bottom-left-radius: var(--radius);
+          }
+
+          &:last-child{
+            border-bottom-right-radius: var(--radius);
+          }
+        }
+      }
+    }
+  }
+}
+/**************************** Table END ****************************/
