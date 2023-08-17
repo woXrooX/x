@@ -2,8 +2,6 @@
 :root{
   font-size: 22px;
 
-  --document-height: 100dvh;
-
   /* Default color schema starts with dark mode */
   --color-main-hue: 230deg;
   --color-main-saturation: 13%;
@@ -110,7 +108,7 @@ body{
   background-color: var(--color-surface-1);
   color: var(--color-text-primary);
   font-size: 1rem;
-  height: var(--document-height);
+  height: 100dvh;
 }
 /*** Body END ***/
 
