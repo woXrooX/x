@@ -1,6 +1,7 @@
 "use strict";
 
 import JavaScript from "./languages/JavaScript.js";
+import HTML from "./languages/HTML.js";
 
 export default class CodeSnippet extends HTMLElement{
   //// Native Form Behaviour
@@ -22,7 +23,7 @@ export default class CodeSnippet extends HTMLElement{
     super();
 
     this.shadow = this.attachShadow({mode: 'closed'});
-    this.RAW = this.textContent;
+    this.RAW = this.innerHTML;
 
     // If language is not defined, then exit
     if(!!this.hasAttribute("lang") === false) this.lang = undefined;
@@ -82,6 +83,10 @@ export default class CodeSnippet extends HTMLElement{
     switch(this.lang){
       case "JavaScript":
         this.codeElement.innerHTML = JavaScript.handle(this.RAW);
+        break;
+
+      case "HTML":
+        this.codeElement.innerHTML = HTML.handle(this.RAW);
         break;
 
       default:

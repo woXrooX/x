@@ -26,7 +26,7 @@ export default class JavaScript{
 
       // Newline
       if(char == '\n'){
-        tokens.push({ type: 'newline', value: '\n' });
+        tokens.push({type: 'newline', value: '\n'});
 
         current++;
         continue;
@@ -40,7 +40,7 @@ export default class JavaScript{
 
         comment += '\n'
 
-        tokens.push({ type: 'comment', value: comment });
+        tokens.push({type: 'comment', value: comment});
 
         current++;
         continue;
@@ -48,7 +48,7 @@ export default class JavaScript{
 
       // Dot
       if(char === '.'){
-        tokens.push({ type: 'dot', value: '.' });
+        tokens.push({type: 'dot', value: '.'});
 
         current++;
         continue;
@@ -56,7 +56,7 @@ export default class JavaScript{
 
       // Semicolon
       if(char === ';'){
-        tokens.push({ type: 'semicolon', value: ';' });
+        tokens.push({type: 'semicolon', value: ';'});
 
         current++;
         continue;
@@ -68,7 +68,7 @@ export default class JavaScript{
 
         while(operators.includes(operator + code[current + 1])) operator += code[++current];
 
-        tokens.push({ type: 'operator', value: operator });
+        tokens.push({type: 'operator', value: operator});
 
         current++;
         continue;
@@ -80,26 +80,26 @@ export default class JavaScript{
 
         while(/[a-zA-Z0-9_]/.test(code[current + 1])) identifier += code[++current];
 
-        if(keywords.includes(identifier)) tokens.push({ type: 'keyword', value: identifier });
-        else tokens.push({ type: 'identifier', value: identifier });
+        if(keywords.includes(identifier)) tokens.push({type: 'keyword', value: identifier});
+        else tokens.push({type: 'identifier', value: identifier});
 
         current++;
         continue;
       }
 
-      // Handle numbers
+      // Numbers
       if(/[0-9]/.test(char)){
         let number = char;
 
         while(/[0-9.]/.test(code[current + 1])) number += code[++current];
 
-        tokens.push({ type: 'number', value: parseFloat(number) });
+        tokens.push({type: 'number', value: parseFloat(number)});
 
         current++;
         continue;
       }
 
-      // Handle strings
+      // String
       if(char === '"' || char === "'"){
         let string = `"`;
         let quote = char;
@@ -108,14 +108,14 @@ export default class JavaScript{
 
         string += `"`;
 
-        tokens.push({ type: 'string', value: string });
+        tokens.push({type: 'string', value: string});
 
         current++;
         continue;
       }
 
       // Handle unrecognized characters
-      tokens.push({ type: 'unknown', value: char });
+      tokens.push({type: 'unknown', value: char});
 
       current++;
     }
@@ -131,7 +131,7 @@ export default class JavaScript{
 
       switch(token.type){
         case 'comment':
-          tokenHtml = `<span style="color:gray;">${token.value}</span>`;
+          tokenHtml = `<span style="color: gray;">${token.value}</span>`;
           break;
 
         case 'dot':
