@@ -12,10 +12,10 @@ export default class CodeSnippet extends HTMLElement{
 
   static {
     CodeSnippet.#template.innerHTML = `
-      <pre>
+      <div>
         <code>
         </code>
-      </pre>
+      </div>
     `;
   }
 
@@ -23,7 +23,15 @@ export default class CodeSnippet extends HTMLElement{
     super();
 
     this.shadow = this.attachShadow({mode: 'closed'});
+
+    ////// RAW data
     this.RAW = this.innerHTML;
+
+    // Remove 1st new line
+    this.RAW = this.RAW.substring(1, this.RAW.length);
+
+    // Remove last new lines
+    this.RAW = this.RAW.substring(0, this.RAW.length-5);
 
     // If language is not defined, then exit
     if(!!this.hasAttribute("lang") === false) this.lang = "RAW";
@@ -31,71 +39,83 @@ export default class CodeSnippet extends HTMLElement{
     CSS: {
         const style = document.createElement('style');
         style.textContent = `
-          pre{
-            background-color: hsla(230, 13%, 9%, 1);
-            width: auto;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.5);
-            padding: 0px 15px;
-            font-size: 0.7rem;
+          :host(code-snippet){
+            display: block;
+          }
 
-            overflow-x: scroll;
-            scrollbar-width: auto;
-            scrollbar-color: var(--color-brand) transparent;
+          div{
+            position: relative;
 
-            &::-webkit-scrollbar{
-              display: unset;
-              width: 5px;
-              height: 5px;
+            &:hover::after{
+              opacity: 1;
             }
 
-            &::-webkit-scrollbar-track{
-              background-color: transparent;
-            }
+            &::after{
+              content: "${this.lang}";
+              opacity: 0.1;
 
-            &::-webkit-scrollbar-thumb{
-              background-color: hsla(230, 13%, 25%, 0.5);
-              border-radius: 5px;
-            }
+              background-color: white;
 
-            &::-webkit-scrollbar-thumb:hover{
-              background-color: hsla(230, 13%, 40%, 0.5);
+              color: hsla(230, 13%, 9%, 1);
+              font-size: 0.7rem;
+              font-family: Tahoma;
+
+              width: auto;
+              height: auto;
+              padding: 2px 4px 3px 5px;
+              border-radius: 3px;
+
+              position: absolute;
+              right: 5px;
+              top: 5px;
+
+              transition: 200ms ease-in-out opacity;
             }
 
             & > code{
               display: block;
+
+              background-color: hsla(230, 13%, 9%, 1);
+
               color: white;
-              width: 100%;
-              height: 100%;
+              font-size: 0.7rem;
               line-height: 0.8rem;
+              white-space: pre;
 
-              position: relative;
+              width: auto;
+              height: auto;
 
-              &:hover::after{
-                opacity: 1;
+              box-sizing: border-box;
+              border-radius: 5px;
+              padding: 10px;
+              padding-top: 15px;
+              box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.5);
+
+              overflow-x: scroll;
+              scrollbar-width: auto;
+              scrollbar-color: hsla(230, 13%, 40%, 0.5) transparent;
+
+              &::-webkit-scrollbar{
+                display: unset;
+                width: 5px;
+                height: 5px;
               }
 
-              &::after{
-                content: "${this.lang}";
-                opacity: 0.3;
+              &::-webkit-scrollbar-track{
+                background-color: transparent;
+              }
 
-                background-color: white;
-                color: hsla(230, 13%, 9%, 1);
+              &::-webkit-scrollbar-thumb{
+                background-color: hsla(230, 13%, 25%, 0.5);
+                border-radius: 5px;
+              }
 
-                width: auto;
-                height: auto;
-                padding: 2px 2px 0px 2px;
-                border-radius: 2px;
-
-                position: absolute;
-                right: 0px;
-                top: 0px;
-
-                transition: 200ms ease-in-out opacity;
+              &::-webkit-scrollbar-thumb:hover{
+                background-color: hsla(230, 13%, 40%, 0.5);
               }
             }
           }
+
         `;
         this.shadow.appendChild(style);
     }
@@ -103,7 +123,7 @@ export default class CodeSnippet extends HTMLElement{
     // Clone And Append Template
     this.shadow.appendChild(CodeSnippet.#template.content.cloneNode(true));
 
-    this.codeElement = this.shadow.querySelector("pre > code");
+    this.codeElement = this.shadow.querySelector("div > code");
 
     switch(this.lang){
       case "JavaScript":
