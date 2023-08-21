@@ -26,7 +26,7 @@ export default class CodeSnippet extends HTMLElement{
     this.RAW = this.innerHTML;
 
     // If language is not defined, then exit
-    if(!!this.hasAttribute("lang") === false) this.lang = undefined;
+    if(!!this.hasAttribute("lang") === false) this.lang = "RAW";
 
     CSS: {
         const style = document.createElement('style');
@@ -64,11 +64,36 @@ export default class CodeSnippet extends HTMLElement{
             }
 
             & > code{
+              display: block;
               color: white;
               width: 100%;
               height: 100%;
               line-height: 0.8rem;
 
+              position: relative;
+
+              &:hover::after{
+                opacity: 1;
+              }
+
+              &::after{
+                content: "${this.lang}";
+                opacity: 0.3;
+
+                background-color: white;
+                color: hsla(230, 13%, 9%, 1);
+
+                width: auto;
+                height: auto;
+                padding: 2px 2px 0px 2px;
+                border-radius: 2px;
+
+                position: absolute;
+                right: 0px;
+                top: 0px;
+
+                transition: 200ms ease-in-out opacity;
+              }
             }
           }
         `;
