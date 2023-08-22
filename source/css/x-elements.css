@@ -213,9 +213,12 @@ x-share{
   }
 }
 
-
 @media only screen and (max-width: 600px){
   x-nav{
+    position: fixed;
+    z-index: var(--z-nav);
+    top: calc(var(--header-height) + var(--padding));
+
     & > nav{
       max-width: calc(100vw - var(--padding) * 2);
 

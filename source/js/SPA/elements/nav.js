@@ -99,6 +99,12 @@ export default class Nav extends HTMLElement{
               display: bugIsAFeature;
             }
           }
+
+          @media only screen and (max-width: 600px){
+            ${this.selector}{
+              margin-top: calc(var(--header-height) + var(--padding));
+            }
+          }
         `;
 
         document.head.appendChild(style);
