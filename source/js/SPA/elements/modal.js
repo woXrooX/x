@@ -34,9 +34,6 @@ export default class Modal extends HTMLElement{
     // Content
     this.querySelector("modal>main").innerHTML = this.DOM;
 
-    // Manually Collecting Forms
-    window.Form.collect(this.querySelector("modal > main"));
-
     Trigger: {
       // Instant Pop-Up
       if(
