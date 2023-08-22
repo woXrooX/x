@@ -1,0 +1,224 @@
+x-select{
+  & > button{
+    width: 100%;
+    margin-bottom: calc(var(--padding) * 2);
+  }
+
+  & > main{
+    background-color: var(--color-surface-1);
+    width: 100%;
+    padding: var(--padding);
+    border-radius: var(--radius);
+
+    display: none;
+    flex-direction: column;
+    gap: calc(var(--gap) / 2);
+
+    &.show{
+      display: flex;
+    }
+
+    & > section{
+      background-color: var(--color-surface-2);
+      padding: var(--padding);
+      border-radius: var(--radius);
+
+      &#optionsSelected{
+        display: none;
+        flex-wrap: wrap;
+        flex-direction: row;
+        gap: calc(var(--gap) / 2);
+
+        &.show{
+          display: flex;
+        }
+
+        & > div{
+          cursor: pointer;
+          display: none;
+          background-color: var(--color-surface-3);
+          width: auto;
+          height: auto;
+          padding: var(--padding);
+          border-radius: var(--radius);
+          transition: var(--transition-velocity) ease-in-out background-color;
+
+          &:hover{
+            user-select: none;
+            background-color: var(--color-surface-4);
+          }
+        }
+      }
+
+      &#search{
+      }
+
+      &#optionsToSelect{
+        max-height: 250px;
+        overflow: scroll;
+
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--gap) / 2);
+
+        &.hide{
+          display: none;
+        }
+
+        & > div{
+          cursor: pointer;
+          background-color: var(--color-surface-3);
+          width: auto;
+          height: auto;
+          padding: var(--padding);
+          border-radius: var(--radius);
+          transition: var(--transition-velocity) ease-in-out background-color;
+
+          &:hover{
+            user-select: none;
+            background-color: var(--color-surface-4);
+          }
+        }
+      }
+    }
+  }
+}
+
+x-nav{
+  & > nav{
+    background-color: var(--color-surface-2);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(var(--gap) / 2);
+    padding: var(--padding);
+
+    & > a{
+      background-color: var(--color-surface-1);
+
+      color: var(--color-text-primary);
+      text-align: center;
+      font-size: 0.8rem;
+
+      width: 100%;
+      min-width: max-content;
+
+      padding: var(--padding);
+      border-radius: var(--radius);
+
+      transition: var(--transition-velocity) ease-in-out;
+      transition-property: background-color, box-shadow;
+
+      &:hover{
+        background-color: var(--color-surface-4);
+        box-shadow: var(--shadow-default);
+      }
+
+      &.active{
+        background-color: var(--color-surface-4);
+        box-shadow: var(--shadow-default);
+      }
+    }
+  }
+}
+
+x-modal{
+  & > modal{
+    pointer-events: none;
+
+    background-color: var(--color-surface-4);
+    opacity: 0;
+
+    display: block;
+
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-default);
+
+    position: fixed;
+    z-index: var(--z-modal);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+
+    transition: var(--transition-velocity) ease-in-out;
+    transition-property: transform, opacity;
+
+    &.show{
+      pointer-events: all;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    &.hide{
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -45%) scale(0.9);
+    }
+
+    & > header{
+      background: var(--color-surface-2);
+
+      width: 35px;
+      height: 35px;
+
+      padding: 5px;
+      border-radius: 50%;
+      box-shadow: var(--shadow-default);
+
+      position: absolute;
+      top: -15px;
+      right: -15px;
+
+      transition: var(--transition-velocity) ease-in-out transform;
+
+      &:hover{
+        transform: scale(1.1);
+      }
+
+    }
+
+    & > main{
+      width: auto;
+
+      width: auto;
+      max-width: 80vw;
+      height: auto;
+      max-height: 80vh;
+
+      overflow: hidden;
+      overflow-y: scroll;
+
+      padding: var(--padding);
+      padding-top: 25px;
+
+      display: grid;
+      place-items: center;
+    }
+  }
+
+  & > trigger{
+    cursor: pointer;
+
+    &:empty{
+      pointer-events: none;
+    }
+  }
+}
+
+
+
+@media only screen and (max-width: 600px){
+  x-nav{
+    & > nav{
+      max-width: calc(100vw - var(--padding) * 2);
+
+      flex-direction: row;
+      gap: calc(var(--gap) / 4);
+
+      & > a{
+        box-shadow: none !important;
+      }
+    }
+  }
+}
