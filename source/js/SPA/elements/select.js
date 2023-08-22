@@ -8,95 +8,6 @@ export default class Select extends HTMLElement{
 
   static #template = document.createElement("template");
 
-  static #CSS = `
-    x-select{
-      & > button{
-        width: 100%;
-        margin-bottom: calc(var(--padding) * 2);
-      }
-
-      & > main{
-        background-color: var(--color-surface-1);
-        width: 100%;
-        padding: var(--padding);
-        border-radius: var(--radius);
-
-        display: none;
-        flex-direction: column;
-        gap: calc(var(--gap) / 2);
-
-        &.show{
-          display: flex;
-        }
-
-        & > section{
-          background-color: var(--color-surface-2);
-          padding: var(--padding);
-          border-radius: var(--radius);
-
-          &#optionsSelected{
-            display: none;
-            flex-wrap: wrap;
-            flex-direction: row;
-            gap: calc(var(--gap) / 2);
-
-            &.show{
-              display: flex;
-            }
-
-            & > div{
-              cursor: pointer;
-              display: none;
-              background-color: var(--color-surface-3);
-              width: auto;
-              height: auto;
-              padding: var(--padding);
-              border-radius: var(--radius);
-              transition: var(--transition-velocity) ease-in-out background-color;
-
-              &:hover{
-                user-select: none;
-                background-color: var(--color-surface-4);
-              }
-            }
-          }
-
-          &#search{
-          }
-
-          &#optionsToSelect{
-            max-height: 250px;
-            overflow: scroll;
-
-            display: flex;
-            flex-direction: column;
-            gap: calc(var(--gap) / 2);
-
-            &.hide{
-              display: none;
-            }
-
-            & > div{
-              cursor: pointer;
-              background-color: var(--color-surface-3);
-              width: auto;
-              height: auto;
-              padding: var(--padding);
-              border-radius: var(--radius);
-              transition: var(--transition-velocity) ease-in-out background-color;
-
-              &:hover{
-                user-select: none;
-                background-color: var(--color-surface-4);
-              }
-            }
-          }
-        }
-      }
-    }
-
-  `;
-
   static {
     Select.#template.innerHTML = `
       <button>Select</button>
@@ -274,32 +185,6 @@ export default class Select extends HTMLElement{
       // formData.delete(this.getAttribute('name'), option.getAttribute("value"));
 
   };
-
-
-  connectedCallback(){
-    // Increment the ID
-    Select.#ID++;
-
-    // Check if style is already has been created
-    if(Select.#ID > 1) return;
-
-    const style = document.createElement('style');
-    style.setAttribute("media", `all`);
-    style.setAttribute("for", `x-select`);
-    style.textContent = Select.#CSS;
-    document.head.appendChild(style);
-  }
-
-  disconnectedCallback(){
-    // Decrement the ID
-    Select.#ID--;
-
-    const style = document.querySelector("style[for=x-select]");
-
-    // Remove style element from the head
-    if(Select.#ID === 0 && !!style === true) document.head.removeChild(style);
-  }
-
 };
 
 window.customElements.define('x-select', Select);

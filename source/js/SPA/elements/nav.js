@@ -99,70 +99,13 @@ export default class Nav extends HTMLElement{
               display: bugIsAFeature;
             }
           }
-
-          x-nav{
-            & > nav{
-              background-color: var(--color-surface-2);
-              width: 100%;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              gap: calc(var(--gap) / 2);
-              padding: var(--padding);
-
-              & > a{
-                background-color: var(--color-surface-1);
-
-                color: var(--color-text-primary);
-                text-align: center;
-                font-size: 0.8rem;
-
-                width: 100%;
-                min-width: max-content;
-
-                padding: var(--padding);
-                border-radius: var(--radius);
-
-                transition: var(--transition-velocity) ease-in-out;
-                transition-property: background-color, box-shadow;
-
-                &:hover{
-                  background-color: var(--color-surface-4);
-                  box-shadow: var(--shadow-default);
-                }
-
-                &.active{
-                  background-color: var(--color-surface-4);
-                  box-shadow: var(--shadow-default);
-                }
-              }
-            }
-          }
-
-
-          @media only screen and (max-width: ${window.CSS.getValue("--screen-size-phone")}){
-            x-nav{
-              & > nav{
-                max-width: calc(100vw - var(--padding) * 2);
-
-                flex-direction: row;
-                gap: calc(var(--gap) / 4);
-
-                & > a{
-                  box-shadow: none !important;
-                }
-              }
-            }
-          }
         `;
 
         document.head.appendChild(style);
     }
 
     disconnectedCallback(){
-        document.head.removeChild(
-            document.querySelector("style[for=x-nav]")
-        );
+        document.head.removeChild(document.querySelector("style[for=x-nav]"));
     }
 
 };
