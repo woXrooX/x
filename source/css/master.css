@@ -20,7 +20,7 @@
   --z-urgent: 13;
 
   --header-height: 40px;
-  --footer-height: 80px;
+  --footer-height: 40px;
 
   --color-cover: rgba(0, 0, 0, 0.6);
 }
@@ -283,6 +283,8 @@ body{
   }
 
   & > header{
+    --menu-icon-size: calc(var(--header-height) - var(--padding) * 2);
+
     background-color: var(--color-main);
     color: white;
 
@@ -296,24 +298,20 @@ body{
     z-index: var(--z-header);
 
     display: grid;
-    grid-template-columns: auto 3fr;
-
+    grid-template-columns: var(--menu-icon-size) 3fr var(--menu-icon-size);
     place-items: center;
 
     & > x-icon{
       &[for=menu]{
-        height: calc(var(--header-height) - var(--padding) * 2);
-        width: calc(var(--header-height) - var(--padding) * 2);
-
+        height: var(--menu-icon-size);
+        width: var(--menu-icon-size);
       }
-
     }
-
   }
 
   & > main{
     width: 100vw;
-    min-height: calc(100vh - var(--header-height));
+    min-height: calc(100dvh - var(--header-height));
   }
 
   & > footer{
@@ -354,8 +352,6 @@ body{
   }
 
   body{
-    overflow-y: scroll;
-
     & > toasts{
       width: 100vw;
       gap: 5px;
@@ -364,8 +360,7 @@ body{
     & > main {
       width: 100vw;
       height: calc(100dvh - var(--header-height));
-      overflow: hidden;
-      overflow-y: scroll;
+      overflow: scroll;
     }
   }
 
