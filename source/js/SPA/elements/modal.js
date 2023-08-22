@@ -20,115 +20,22 @@ export default class Modal extends HTMLElement{
   constructor(){
     super();
 
-    // Closed
-    this.shadow = this.attachShadow({mode: 'closed'});
+    // Save the DOM
+    this.DOM = this.innerHTML;
+
+    // Clean the innerHTML
+    this.innerHTML = "";
 
     this.shown = false;
 
-    CSS: {
-      const style = document.createElement('style');
-      style.textContent = `
-        modal{
-          pointer-events: none;
-
-          background-color: var(--color-surface-4);
-          opacity: 0;
-
-          display: block;
-
-          border-radius: var(--radius);
-          box-shadow: var(--shadow-default);
-
-          position: fixed;
-          z-index: var(--z-modal);
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%) scale(0.8);
-
-          transition: var(--transition-velocity) ease-in-out;
-          transition-property: transform, opacity;
-
-        }
-
-        modal.show{
-          pointer-events: all;
-
-          opacity: 1;
-
-          transform: translate(-50%, -50%) scale(1);
-
-        }
-
-        modal.hide{
-          pointer-events: none;
-
-          opacity: 0;
-
-          transform: translate(-50%, -45%) scale(0.9);
-
-        }
-
-        modal > header{
-          background: var(--color-surface-2);
-
-          width: 35px;
-          height: 35px;
-
-          padding: 5px;
-          border-radius: 50%;
-          box-shadow: var(--shadow-default);
-
-          position: absolute;
-          top: -15px;
-          right: -15px;
-
-          transition: var(--transition-velocity) ease-in-out transform;
-
-        }
-        modal > header:hover{
-          transform: scale(1.1);
-
-        }
-
-        modal > main{
-          width: auto;
-
-          width: auto;
-          max-width: 80vw;
-          height: auto;
-          max-height: 80vh;
-
-          overflow: hidden;
-          overflow-y: scroll;
-
-          padding: var(--padding);
-          padding-top: 25px;
-
-          display: grid;
-          place-items: center;
-
-        }
-
-        trigger{
-          cursor: pointer;
-        }
-
-        trigger:empty{
-          pointer-events: none;
-        }
-      `;
-
-      this.shadow.appendChild(style);
-    }
-
     // Clone And Append Template
-    this.shadow.appendChild(Modal.#template.content.cloneNode(true));
+    this.appendChild(Modal.#template.content.cloneNode(true));
 
     // Content
-    this.shadow.querySelector("modal>main").innerHTML = this.innerHTML;
+    this.querySelector("modal>main").innerHTML = this.DOM;
 
     // Manually Collecting Forms
-    window.Form.collect(this.shadow.querySelector("modal>main"));
+    window.Form.collect(this.querySelector("modal > main"));
 
     Trigger: {
       // Instant Pop-Up
@@ -145,20 +52,18 @@ export default class Modal extends HTMLElement{
 
           if(this.getAttribute("type") === "icon"){
             if(this.hasAttribute("button") === true)
-              this.shadow.querySelector("trigger").innerHTML = `<button><x-icon color="ffffff" name="${this.getAttribute("value")}"></x-icon></button>`;
+              this.querySelector("trigger").innerHTML = `<button><x-icon color="ffffff" name="${this.getAttribute("value")}"></x-icon></button>`;
 
             else
-              this.shadow.querySelector("trigger").innerHTML = `<x-icon color="ffffff" name="${this.getAttribute("value")}"></x-icon>`;
-
+              this.querySelector("trigger").innerHTML = `<x-icon color="ffffff" name="${this.getAttribute("value")}"></x-icon>`;
           }
-
 
           else if(this.getAttribute("type") === "text"){
             if(this.hasAttribute("button") === true)
-              this.shadow.querySelector("trigger").innerHTML = `<button>${this.getAttribute("value")}</button>`;
+              this.querySelector("trigger").innerHTML = `<button>${this.getAttribute("value")}</button>`;
 
             else
-              this.shadow.querySelector("trigger").innerHTML = `${this.getAttribute("value")}`;
+              this.querySelector("trigger").innerHTML = `${this.getAttribute("value")}`;
 
           }
 
@@ -166,14 +71,13 @@ export default class Modal extends HTMLElement{
 
 
       // Show On Click trigger
-      this.shadow.querySelector("trigger").onclick = this.#show;
+      this.querySelector("trigger").onclick = this.#show;
 
       // Close On Cover Click
       window.Cover.onClickExecute(this.#hide);
 
       // Close On X Click
-      this.shadow.querySelector("modal>header>x-icon").onclick = this.#hide;
-
+      this.querySelector("modal>header>x-icon").onclick = this.#hide;
     }
 
   }
@@ -185,11 +89,10 @@ export default class Modal extends HTMLElement{
 
     this.shown = true;
 
-    this.shadow.querySelector("modal").classList.remove("hide");
-    this.shadow.querySelector("modal").classList.add("show");
+    this.querySelector("modal").classList.remove("hide");
+    this.querySelector("modal").classList.add("show");
 
     window.Cover.show();
-
   }
 
   // Regular Function Missing The Context Of "this" When Passed To "window.Cover.onClickExecute"
@@ -200,11 +103,10 @@ export default class Modal extends HTMLElement{
 
     this.shown = false;
 
-    this.shadow.querySelector("modal").classList.remove("show");
-    this.shadow.querySelector("modal").classList.add("hide");
+    this.querySelector("modal").classList.remove("show");
+    this.querySelector("modal").classList.add("hide");
 
     window.Cover.hide();
-
   }
 
 };
