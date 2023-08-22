@@ -15,32 +15,16 @@ export default class Share extends HTMLElement{
   constructor(){
     super();
 
-    // Closed
-    this.shadow = this.attachShadow({mode: 'closed'});
-
     Text: {
       this.textToShare = null;
       if(!!this.getAttribute("selector") === true) this.textToShare = this.getAttribute("selector");
       else if(!!this.getAttribute("text") === true) this.textToShare = this.getAttribute("text");
-
-
-    }
-
-    CSS: {
-      const style = document.createElement('style');
-      style.textContent = `
-        share{
-          width: 50px;
-          height: 50px;
-        }
-      `;
-      this.shadow.appendChild(style);
     }
 
     // Clone And Append Template
-    this.shadow.appendChild(Share.#template.content.cloneNode(true));
+    this.appendChild(Share.#template.content.cloneNode(true));
 
-    this.shadow.querySelector("x-icon").onclick = async ()=>{
+    this.querySelector("x-icon").onclick = async ()=>{
 
       const shareData = {
         title: encodeURIComponent(this.getAttribute("title") || document.title),
@@ -58,16 +42,14 @@ export default class Share extends HTMLElement{
         try{
           await navigator.share(shareData);
           window.Log.success("MDN shared successfully");
-
         }catch(err){
           window.Log.error(`Error: ${err}`);
-
         }
 
       else{
         window.Log.warning("No Native Support For 'navigator.share' On Your Device!");
 
-        this.shadow.querySelector("section").innerHTML = `
+        this.querySelector("section").innerHTML = `
           <x-modal trigger="auto">
 
             <a href="https://twitter.com/intent/tweet?url=${shareData.url}&text=${shareData.text}" target="_blank">
@@ -98,11 +80,8 @@ export default class Share extends HTMLElement{
         `;
 
       }
-
     };
-
   }
-
 };
 
 window.customElements.define('x-share', Share);
