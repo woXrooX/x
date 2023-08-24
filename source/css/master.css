@@ -194,9 +194,6 @@ body{
 
           }
 
-        }
-
-        & > section{
           &.subMenu{
             background-color: hsla(var(--color-main-hue), 10%, 25%, 0.3);
 
@@ -254,10 +251,12 @@ body{
 
           }
 
+          /* If submenu is empty do not show arrow icon */
+          &:has(+ .subMenu:empty) > x-icon{
+            display: none;
+          }
         }
-
       }
-
     }
 
     & > footer{}
