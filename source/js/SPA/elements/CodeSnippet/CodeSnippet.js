@@ -81,7 +81,7 @@ export default class CodeSnippet extends HTMLElement{
 
               & > span{
                 color: white;
-                font-size: 1rem;
+                font-size: 10px;
                 font-family: Sans;
 
                 &::after{
