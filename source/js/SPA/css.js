@@ -154,13 +154,13 @@ export default class CSS{
     rootStyles.style.setProperty("--color-main-tint-9", `hsla(${hue}, 20%, 30%, 1)`);
     rootStyles.style.setProperty("--color-main-tint-10", `hsla(${hue}, 20%, 15%, 1)`);
 
-    rootStyles.style.setProperty("--color-text-primary", `hsla(${hue}deg, ${CSS.getValue("--color-main-saturation")}%, 10%, 1)`);
-    rootStyles.style.setProperty("--color-text-secondary", `hsla(${hue}deg, 30%, 30%, 1)`);
-    rootStyles.style.setProperty("--color-text-accent", `hsla(${hue}deg, 15%, 95%, 1)`);
+    rootStyles.style.setProperty("--color-text-primary", `hsla(${hue}, ${CSS.getValue("--color-main-saturation")}%, 10%, 1)`);
+    rootStyles.style.setProperty("--color-text-secondary", `hsla(${hue}, 30%, 30%, 1)`);
+    rootStyles.style.setProperty("--color-text-accent", `hsla(${hue}, 15%, 95%, 1)`);
 
     rootStyles.style.setProperty("color-scheme", "light");
 
-    rootStyles.style.setProperty("--shadow", `0px 10px 10px -5px hsla(${hue}deg 10% 2% / 0.2)`);
+    rootStyles.style.setProperty("--shadow", `0px 10px 10px -5px hsla(${hue} 10% 2% / 0.2)`);
   }
 }
 
