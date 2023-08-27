@@ -678,6 +678,9 @@ column{
 .text-lh-2-8{line-height: 2.8rem;}
 .text-lh-2-9{line-height: 2.9rem;}
 .text-lh-3{line-height: 3rem;}
+
+/* white-space */
+.text-nowrap{white-space: nowrap !important;}
 /**************************** Text END ****************************/
 
 /**************************** Width START ****************************/
