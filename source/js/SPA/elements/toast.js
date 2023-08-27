@@ -40,7 +40,7 @@ export default class Toast extends HTMLElement{
         toast{
           overflow: hidden;
 
-          background-color: var(--color-surface-1);
+          background-color: var(--color-main-tint-1);
           padding: var(--padding);
           margin: 0px;
           border-radius: var(--radius);
@@ -116,7 +116,7 @@ export default class Toast extends HTMLElement{
         }
 
         toast > dismiss:hover{
-          background-color: var(--color-surface-2);
+          background-color: var(--color-main-tint-2);
         }
         `;
 

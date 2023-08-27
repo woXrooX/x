@@ -119,16 +119,16 @@ export default class CSS{
     const rootStyles = document.querySelector(':root');
     const hue = getComputedStyle(rootStyles).getPropertyValue("--color-main-hue");
 
-    rootStyles.style.setProperty("--color-surface-1", `hsla(${hue}, 10%, 10%, 1)`);
-    rootStyles.style.setProperty("--color-surface-2", `hsla(${hue}, 10%, 15%, 1)`);
-    rootStyles.style.setProperty("--color-surface-3", `hsla(${hue}, 10%, 20%, 1)`);
-    rootStyles.style.setProperty("--color-surface-4", `hsla(${hue}, 10%, 25%, 1)`);
-    rootStyles.style.setProperty("--color-surface-5", `hsla(${hue}, 10%, 30%, 1)`);
-    rootStyles.style.setProperty("--color-surface-6", `hsla(${hue}, 10%, 35%, 1)`);
-    rootStyles.style.setProperty("--color-surface-7", `hsla(${hue}, 10%, 50%, 1)`);
-    rootStyles.style.setProperty("--color-surface-8", `hsla(${hue}, 10%, 65%, 1)`);
-    rootStyles.style.setProperty("--color-surface-9", `hsla(${hue}, 10%, 80%, 1)`);
-    rootStyles.style.setProperty("--color-surface-10", `hsla(${hue}, 10%, 95%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-1", `hsla(${hue}, 10%, 10%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-2", `hsla(${hue}, 10%, 15%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-3", `hsla(${hue}, 10%, 20%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-4", `hsla(${hue}, 10%, 25%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-5", `hsla(${hue}, 10%, 30%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-6", `hsla(${hue}, 10%, 35%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-7", `hsla(${hue}, 10%, 50%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-8", `hsla(${hue}, 10%, 65%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-9", `hsla(${hue}, 10%, 80%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-10", `hsla(${hue}, 10%, 95%, 1)`);
 
     rootStyles.style.setProperty("--color-text-primary", `hsla(${hue}, 15%, 95%, 1)`);
     rootStyles.style.setProperty("--color-text-secondary", `hsla(${hue}, 5%, 75%, 1)`);
@@ -143,16 +143,16 @@ export default class CSS{
     const rootStyles = document.querySelector(':root');
     const hue = getComputedStyle(rootStyles).getPropertyValue("--color-main-hue");
 
-    rootStyles.style.setProperty("--color-surface-1", `hsla(${hue}, 20%, 100%, 1)`);
-    rootStyles.style.setProperty("--color-surface-2", `hsla(${hue}, 20%, 95%, 1)`);
-    rootStyles.style.setProperty("--color-surface-3", `hsla(${hue}, 20%, 90%, 1)`);
-    rootStyles.style.setProperty("--color-surface-4", `hsla(${hue}, 20%, 85%, 1)`);
-    rootStyles.style.setProperty("--color-surface-5", `hsla(${hue}, 20%, 80%, 1)`);
-    rootStyles.style.setProperty("--color-surface-6", `hsla(${hue}, 20%, 75%, 1)`);
-    rootStyles.style.setProperty("--color-surface-7", `hsla(${hue}, 20%, 60%, 1)`);
-    rootStyles.style.setProperty("--color-surface-8", `hsla(${hue}, 20%, 45%, 1)`);
-    rootStyles.style.setProperty("--color-surface-9", `hsla(${hue}, 20%, 30%, 1)`);
-    rootStyles.style.setProperty("--color-surface-10", `hsla(${hue}, 20%, 15%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-1", `hsla(${hue}, 20%, 100%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-2", `hsla(${hue}, 20%, 95%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-3", `hsla(${hue}, 20%, 90%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-4", `hsla(${hue}, 20%, 85%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-5", `hsla(${hue}, 20%, 80%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-6", `hsla(${hue}, 20%, 75%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-7", `hsla(${hue}, 20%, 60%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-8", `hsla(${hue}, 20%, 45%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-9", `hsla(${hue}, 20%, 30%, 1)`);
+    rootStyles.style.setProperty("--color-main-tint-10", `hsla(${hue}, 20%, 15%, 1)`);
 
     rootStyles.style.setProperty("--color-text-primary", `hsla(${hue}deg, ${CSS.getValue("--color-main-saturation")}%, 10%, 1)`);
     rootStyles.style.setProperty("--color-text-secondary", `hsla(${hue}deg, 30%, 30%, 1)`);

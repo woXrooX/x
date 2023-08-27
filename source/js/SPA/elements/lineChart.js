@@ -76,7 +76,7 @@ export default class LineChart extends HTMLElement{
 
   ///// Helpers
   #drawBackground(){
-    this.ctx.fillStyle = window.CSS.getValue("--color-surface-9");
+    this.ctx.fillStyle = window.CSS.getValue("--color-main-tint-9");
     this.ctx.fillRect(0, 0, this.width, this.height);
   }
 

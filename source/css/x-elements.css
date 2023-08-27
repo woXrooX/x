@@ -5,7 +5,7 @@ x-select{
   }
 
   & > main{
-    background-color: var(--color-surface-1);
+    background-color: var(--color-main-tint-1);
     width: 100%;
     padding: var(--padding);
     border-radius: var(--radius);
@@ -19,7 +19,7 @@ x-select{
     }
 
     & > section{
-      background-color: var(--color-surface-2);
+      background-color: var(--color-main-tint-2);
       padding: var(--padding);
       border-radius: var(--radius);
 
@@ -36,7 +36,7 @@ x-select{
         & > div{
           cursor: pointer;
           display: none;
-          background-color: var(--color-surface-3);
+          background-color: var(--color-main-tint-3);
           width: auto;
           height: auto;
           padding: var(--padding);
@@ -45,7 +45,7 @@ x-select{
 
           &:hover{
             user-select: none;
-            background-color: var(--color-surface-4);
+            background-color: var(--color-main-tint-4);
           }
         }
       }
@@ -67,7 +67,7 @@ x-select{
 
         & > div{
           cursor: pointer;
-          background-color: var(--color-surface-3);
+          background-color: var(--color-main-tint-3);
           width: auto;
           height: auto;
           padding: var(--padding);
@@ -76,7 +76,7 @@ x-select{
 
           &:hover{
             user-select: none;
-            background-color: var(--color-surface-4);
+            background-color: var(--color-main-tint-4);
           }
         }
       }
@@ -86,7 +86,7 @@ x-select{
 
 x-nav{
   & > nav{
-    background-color: var(--color-surface-2);
+    background-color: var(--color-main-tint-2);
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -95,7 +95,7 @@ x-nav{
     padding: var(--padding);
 
     & > a{
-      background-color: var(--color-surface-1);
+      background-color: var(--color-main-tint-1);
 
       color: var(--color-text-primary);
       text-align: center;
@@ -111,12 +111,12 @@ x-nav{
       transition-property: background-color, box-shadow;
 
       &:hover{
-        background-color: var(--color-surface-4);
+        background-color: var(--color-main-tint-4);
         box-shadow: var(--shadow-default);
       }
 
       &.active{
-        background-color: var(--color-surface-4);
+        background-color: var(--color-main-tint-4);
         box-shadow: var(--shadow-default);
       }
     }
@@ -127,7 +127,7 @@ x-modal{
   & > modal{
     pointer-events: none;
 
-    background-color: var(--color-surface-4);
+    background-color: var(--color-main-tint-4);
     opacity: 0;
 
     display: block;
@@ -157,7 +157,7 @@ x-modal{
     }
 
     & > header{
-      background: var(--color-surface-2);
+      background: var(--color-main-tint-2);
 
       width: 35px;
       height: 35px;

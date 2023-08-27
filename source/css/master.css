@@ -30,7 +30,7 @@ body{
   padding-top: var(--header-height);
 
   & > loading{
-    background-color: var(--color-surface-1);
+    background-color: var(--color-main-tint-1);
 
     width: 100vw;
     height: 100vh;
@@ -314,7 +314,7 @@ body{
   }
 
   & > footer{
-    background-color: var(--color-surface-2);
+    background-color: var(--color-main-tint-2);
 
     color: var(--color-text-primary);
     font-size: 0.7rem;
