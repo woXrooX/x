@@ -34,12 +34,24 @@ eMail:
     api_key: null
 
 
-######### Site Defaults
+######### App Defaults
 default:
-  language: "en"
-  title: "X"
+  title: "x"
   charset: "utf-8"
   currency: "USD"
+
+  # In the initial attempt, the application seeks to retrieve the user's selected language in case of a logged-in session.
+  # Subsequently, on the second attempt, it endeavors to retrieve the cached language settings.
+  # As part of the third step, the application makes attempts to acquire the language code associated with the current geographical location.
+  # Finally, should all prior attempts prove unsuccessful, the application gracefully defaults to a fallback language.
+  # In the event that no matching language is found within the "languageDictionary.json" file, the application will once again resort to utilizing the fallback language.
+  # Even in the scenario where the fallback language yields no corresponding results within the "languageDictionary.json" file, the application will proceed to display the unprocessed keywords that were employed in the call to window.Language.use(KEYWORD).
+  language:
+    fallback: "en"
+
+    # Languages that will be displayed in the language switcher
+    languages:
+      - "en"
 
   # To Control App's State (Offline, Under Development etc.)
   # appIsDown:

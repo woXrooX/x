@@ -77,8 +77,8 @@ export default class Core{
 
       window.CONF = response["CONF"];
       window.session = response["session"];
-      window.LANG_CODE = response["LANG_CODE"];
-      window.LANG_DICT = response["LANG_DICT"];
+      window.Language.FALLBACK = response["LANG_FALLBACK_CODE"];
+      window.Language.DICT = response["LANG_DICT"];
       window.USER_AUTHENTICITY_STATUSES = response["USER_AUTHENTICITY_STATUSES"];
       window.USER_ROLES = response["USER_ROLES"];
 
