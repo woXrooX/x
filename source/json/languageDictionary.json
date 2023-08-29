@@ -1,4 +1,6 @@
 {
+  "x":{"en":"x"},
+
   "account":{
     "en":"Account",
     "ru":"Аккаунт",
@@ -553,6 +555,11 @@
     "en":"Test",
     "ru":"Тест",
     "uz":"Sinov"
+  },
+  "title":{
+    "en":"Title",
+    "ru":"Заголовок",
+    "uz":"Sarlavha"
   },
   "type":{
     "en":"Type",
