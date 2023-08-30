@@ -23,6 +23,32 @@ export default class Language{
 
   // Just Returns Text For The "keyword"
   static use(keyword){return Language.translate(keyword);}
+
+  static codeToFlag(code){
+    switch(code){
+      case "en": return "🇬🇧";
+      case "uz": return "🇺🇿";
+      case "ru": return "🇷🇺";
+      default: return "🏴‍☠️";
+    }
+  }
+
+  static switcher(){
+    let buttons = "";
+
+    for(const code of window.CONF.default.language.supported)
+      buttons += `
+        <button name="${code}">${Language.codeToFlag(code)}</button>
+      `;
+
+    return `
+      <x-modal trigger="click" type="text" value="${Language.codeToFlag(Language.CURRENT)}">
+        <form class="d-flex flex-row flex-warp">
+          ${buttons}
+        </form>
+      </x-modal>
+    `;
+  }
 }
 
 
