@@ -50,7 +50,7 @@ default:
     fallback: "en"
 
     # Languages that will be displayed in the language switcher
-    languages:
+    supported:
       - "en"
 
   # To Control App's State (Offline, Under Development etc.)
