@@ -88,18 +88,16 @@ export default class Core{
 
   /////// Event Handlers
   static #firstLoad(){
-    Log.info("firstLoad");
+    Log.info("Core.#firstLoad()");
 
     CSS.init();
 
     Menu.init();
-    Menu.setActive();
 
+    Header.init();
     Footer.init();
 
     Router.handle();
-
-
   }
 
   static #onLoad(){

@@ -35,12 +35,19 @@ export default class CSS{
   // Color Mode Default: Dark Mode
   static currentColorMode = CSS.colorModes.DARK;
 
+  static colorModeSwitcherIcon = null;
+
   //////////// APIs
   ///// Init
   static init(){
+    Log.info("CSS.init()");
+
+    CSS.colorModeSwitcherIcon = document.querySelector(`${Menu.selector} > header > x-icon[for=colorModeSwitcher]`);
+
     CSS.#loadColorBrand();
     CSS.detectColorMode();
     CSS.#onColorModeChange();
+    CSS.#handleColorModeToggle();
   }
 
   // Get CSS value
@@ -84,9 +91,12 @@ export default class CSS{
 
     }
 
+    // Set color mode switcher icon "name" and "toggle" values
+    CSS.colorModeSwitcherIcon.name = CSS.currentColorMode === CSS.colorModes.DARK ? "light_mode" : "dark_mode";
+    CSS.colorModeSwitcherIcon.toggle = CSS.currentColorMode === CSS.colorModes.DARK ? "dark_mode" : "light_mode";
+
     // Update The Colors According To Color Mode
     CSS.colorModeSwitcher();
-
   }
 
   // On System Color Mode Changes - Listen To Color Mode Changes
@@ -95,27 +105,28 @@ export default class CSS{
   // Color Mode Switcher
   static colorModeSwitcher(){
     switch(CSS.currentColorMode){
-      case CSS.colorModes.DARK:
-        Log.info("CSS.colorModeSwitcher: DARK");
-        CSS.#dark();
-        CSS.currentColorMode = CSS.colorModes.DARK;
-        break;
-
-      case CSS.colorModes.LIGHT:
-        Log.info("CSS.colorModeSwitcher: LIGHT");
-        CSS.#light();
-        CSS.currentColorMode = CSS.colorModes.LIGHT;
-        break;
-
-      default:
-        Log.info("CSS.colorModeSwitcher: DARK (Default)");
-        CSS.#dark();
-        CSS.currentColorMode = CSS.colorModes.DARK;
+      case CSS.colorModes.DARK: CSS.#dark(); break;
+      case CSS.colorModes.LIGHT:CSS.#light(); break;
+      default: CSS.#dark();
     }
+  }
+
+  // Handles color mode switching to dark and light modes using x-icon in menu
+  static #handleColorModeToggle(){
+    CSS.colorModeSwitcherIcon.addEventListener("click", ()=>{
+      // Dark Mode
+      if(window.CSS.currentColorMode === window.CSS.colorModes.LIGHT) CSS.#dark();
+
+      // Light Mode
+      else CSS.#light();
+    });
   }
 
   //////////// Modes
   static #dark(){
+    Log.info("CSS.#dark()");
+    CSS.currentColorMode = CSS.colorModes.DARK;
+
     const rootStyles = document.querySelector(':root');
     const hue = getComputedStyle(rootStyles).getPropertyValue("--color-main-hue");
 
@@ -140,6 +151,9 @@ export default class CSS{
   }
 
   static #light(){
+    Log.info("CSS.#light()");
+    CSS.currentColorMode = CSS.colorModes.LIGHT;
+
     const rootStyles = document.querySelector(':root');
     const hue = getComputedStyle(rootStyles).getPropertyValue("--color-main-hue");
 

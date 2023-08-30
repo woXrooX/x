@@ -10,12 +10,13 @@
     <toasts></toasts>
 
     {% if Globals.CONF["menu"]["enabled"] == True  %}
+      <x-icon for="menu" color="#ffffff" name="menu"></x-icon>
       {% include 'menu.html' %}
     {% endif %}
 
     <cover></cover>
 
-    {% include 'header.html' %}
+    <header></header>
 
     <main></main>
 

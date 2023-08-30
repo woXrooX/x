@@ -11,13 +11,14 @@
   --z-boxes: 4;
   --z-nav: 5;
   --z-header: 6;
-  --z-cover: 7;
-  --z-modal: 8;
-  --z-menu: 9;
-  --z-tooltip: 10;
-  --z-toasts: 11;
-  --z-loading: 12;
-  --z-urgent: 13;
+  --z-menuHamburgerButton: 7;
+  --z-cover: 8;
+  --z-modal: 9;
+  --z-menu: 10;
+  --z-tooltip: 11;
+  --z-toasts: 12;
+  --z-loading: 13;
+  --z-urgent: 14;
 
   --header-height: 40px;
   --footer-height: 40px;
@@ -88,6 +89,20 @@ body{
 
   }
 
+  & > x-icon{
+    &[for=menu]{
+      --menu-icon-size: calc(var(--header-height) - var(--padding) * 2);
+
+      height: var(--menu-icon-size);
+      width: var(--menu-icon-size);
+
+      position: fixed;
+      z-index: var(--z-menuHamburgerButton);
+      top: var(--padding);
+      left: var(--padding);
+    }
+  }
+
   & > menu{
     background-color: hsla(var(--color-main-hue), 10%, 25%, 0.1);
     backdrop-filter: blur(100px);
@@ -118,12 +133,6 @@ body{
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-
-      & > div{
-        width: 30px;
-        height: 30px;
-      }
-
     }
 
     & > main{
@@ -282,29 +291,34 @@ body{
   }
 
   & > header{
-    --menu-icon-size: calc(var(--header-height) - var(--padding) * 2);
-
     background-color: var(--color-main);
     color: white;
 
     width: 100%;
     height: var(--header-height);
     padding: var(--padding);
+    padding-left: var(--header-height);
 
     position: fixed;
     top: 0px;
     left: 0px;
     z-index: var(--z-header);
 
-    display: grid;
-    grid-template-columns: var(--menu-icon-size) 3fr var(--menu-icon-size);
-    place-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-    & > x-icon{
-      &[for=menu]{
-        height: var(--menu-icon-size);
-        width: var(--menu-icon-size);
-      }
+    &.hide{
+      display: none;
+    }
+  }
+
+  /* If header is empty */
+  &:has(header:empty){
+    padding-top: 0px;
+
+    & > header{
+      display: none;
     }
   }
 

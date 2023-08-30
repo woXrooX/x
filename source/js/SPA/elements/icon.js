@@ -80,7 +80,7 @@ export default class Icon extends HTMLElement{
     Events: {
       // Click
       this.addEventListener("click", ()=>{
-        this.#toggle();
+        this.#toggler();
       });
     }
 
@@ -97,8 +97,7 @@ export default class Icon extends HTMLElement{
   }
 
   // Toggler
-  #toggle(){
-
+  #toggler(){
     // If Disabled Do Nothing
     if(this.disabled === true) return;
 
@@ -113,7 +112,6 @@ export default class Icon extends HTMLElement{
 
     // Update The Value
     this.toggled = !this.toggled;
-
   }
 
   // Disabler Method
@@ -127,16 +125,18 @@ export default class Icon extends HTMLElement{
   }
 
   ////////// Getters
+  // Get toggle icon name
+  get toggle(){return this.getAttribute("toggle");}
+
   // Get Icon Name
-  get name(){
-    return this.getAttribute("name");
-  }
+  get name(){return this.getAttribute("name");}
 
   ////////// Setters
+  // Set toggle icon name
+  set toggle(value){return this.setAttribute("toggle", value);}
+
   // Set Icon Name
-  set name(value){
-    this.setAttribute("name", value);
-  }
+  set name(value){this.setAttribute("name", value);}
 
   set setDisabled(value){
     // Disable
@@ -148,9 +148,7 @@ export default class Icon extends HTMLElement{
     }else{
       this.disabled = true;
       this.#disable();
-
     }
-
   }
 
   ////////// Observer
@@ -161,13 +159,10 @@ export default class Icon extends HTMLElement{
 
     // Update "disabled" Status
     if(attributeName === "disabled" && oldValue !== newValue) this.setDisabled = newValue;
-
   }
 
   // Attributes To Be Observed
-  static get observedAttributes(){
-    return ["disabled", "name"];
-  }
+  static get observedAttributes(){return ["toggle", "disabled", "name"];}
 
 };
 

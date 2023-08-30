@@ -1,11 +1,3 @@
-// "demo": {
-//   "enabled": true,
-//   "allowed": ["everyone"],
-//   "aliases": ["/demo"],
-//   "footer": {"enabled": true} // Or False
-// },
-
-
 export default class Footer{
   static selector = "body > footer";
   static #element = null;

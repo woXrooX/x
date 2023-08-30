@@ -28,6 +28,9 @@ export default class Modal extends HTMLElement{
 
     this.shown = false;
 
+    // Parent z-index
+    this.zIndexOfParent = getComputedStyle(this.parentElement).getPropertyValue('z-index') || window.CSS.getValue("--z-cover");
+
     // Clone And Append Template
     this.appendChild(Modal.#template.content.cloneNode(true));
 
@@ -89,7 +92,7 @@ export default class Modal extends HTMLElement{
     this.querySelector("modal").classList.remove("hide");
     this.querySelector("modal").classList.add("show");
 
-    window.Cover.show();
+    window.Cover.show(this.zIndexOfParent);
   }
 
   // Regular Function Missing The Context Of "this" When Passed To "window.Cover.onClickExecute"

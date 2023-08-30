@@ -2,7 +2,7 @@
 
 export default class Menu{
   static selector = "body > menu";
-  static #selectorMenuButton = "body > header > x-icon[for=menu]";
+  static #selectorMenuButton = "body > x-icon[for=menu]";
   static #selectorParentMenuHyperlinks = `${Menu.selector} > main > section > section.parentMenu > a`;
   static #selectorSubMenuHyperlinks = `${Menu.selector} > main > section > section.subMenu > a`;
 
@@ -23,6 +23,8 @@ export default class Menu{
 
   /////////////////// Init
   static init(){
+    Log.info("Menu.init()");
+
     Menu.#elementMenuHamburgerButton = document.querySelector(Menu.#selectorMenuButton);
     Menu.#elementMenu = document.querySelector(Menu.selector);
 
@@ -32,17 +34,18 @@ export default class Menu{
     // Try To Build The Menu
     if(Menu.build() === false) return;
 
+    // Init active
+    Menu.setActive();
+
     // Listen To The Events
     Menu.#onClickMenuButtonShow();
     Menu.#onClickCoverHide();
     Menu.#toggleAlwaysOpenMode();
-    Menu.#colorModeSwitcher();
-
   }
 
   /////////////////// Create Menu | Re-Build
   static build(){
-    // console.log("Menu.build()");
+    Log.info("Menu.build()");
 
     // Check If CONF Has Menu
     if(!("menu" in window.CONF)) return false;
@@ -50,15 +53,10 @@ export default class Menu{
     // Check If Menu Is Enabled
     if(window.CONF["menu"]["enabled"] === false) return false;
 
-    // Create Color Mode Switcher Button According To Current Color Mode
-    document.querySelector(`${Menu.selector} > header > div[for=colorModeSwitcher]`).innerHTML =
-      `<x-icon color="#ffffff" name="${CSS.currentColorMode === CSS.colorModes.DARK ? "light_mode" : "dark_mode"}"></x-icon>`;
-
     let menus = "";
 
     for(const menu of window.CONF["menu"]["menus"])
       if(Menu.#menuGuard(menu["name"]) === true)
-
         // Hyperlink Blue Print
         menus += `
           <section>
@@ -72,7 +70,6 @@ export default class Menu{
               ${"subMenu" in menu ? `<x-icon for="toggleSubMenu" color="#ffffff" name="arrow_bottom_small"></x-icon>` : ""}
             </section>
 
-
             <section class="subMenu">${"subMenu" in menu ? Menu.#subMenuBuilder(menu["subMenu"]) : ""}</section>
 
           </section>
@@ -85,9 +82,7 @@ export default class Menu{
     // After Adding Hyperlinks To Dom Create Hide Event For Each Of The Hyperlinks
     Menu.#onClickHyperlinksHide();
 
-    //
     Menu.#showSubMenu();
-
   }
 
   /////////////////// On Click Events
@@ -158,7 +153,6 @@ export default class Menu{
     // Assign Hide Method To On Click Event
     for(const hyperlink of hyperlinksSubMenu)
       hyperlink.addEventListener("click", Menu.#hide);
-
   }
 
   // On Click Sub Menu Trigger Icon Extend The Sub Menu
@@ -170,8 +164,6 @@ export default class Menu{
         toggler.classList.toggle("open");
         toggler.parentElement.parentElement.querySelector("section.subMenu").classList.toggle("show");
       }
-
-
   }
 
   /////////////////// Tools
@@ -187,7 +179,6 @@ export default class Menu{
     window.Cover.show();
 
     Menu.#shown = true;
-
   }
 
   // Hide
@@ -208,19 +199,19 @@ export default class Menu{
     window.Cover.hide();
 
     Menu.#shown = false;
-
   }
 
   // toggleAlwaysOpenMode
   static #toggleAlwaysOpenMode(){
-    const toggler = document.querySelector(`${Menu.selector} > header > div[for=toggleAlwaysOpenMode]`);
+    Log.info("CSS.#toggleAlwaysOpenMode()");
+
+    const toggler = document.querySelector(`${Menu.selector} > header > x-icon[for=toggleAlwaysOpenMode]`);
 
     const header = document.querySelector(window.Header.selector);
     const main = document.querySelector(window.Main.selector);
     const footer = document.querySelector(window.Footer.selector);
 
     toggler.addEventListener("click", ()=>{
-
       // DEFAULT
       if(Menu.currentMode === Menu.#modes.ALWAYS_OPEN){
         // Mode Change To "DEFAULT"
@@ -230,9 +221,6 @@ export default class Menu{
 
         // Show Hamburger Button
         Menu.#elementMenuHamburgerButton.style.visibility = "visible";
-
-        // Change The Lock Icon To Open
-        toggler.innerHTML = "<x-icon color='#ffffff' name='lockOpen'></x-icon>";
 
         // Remove Background Color Inline Rule
         Menu.#elementMenu.style.removeProperty('background-color');
@@ -254,9 +242,6 @@ export default class Menu{
         // Hide Hamburger Button
         Menu.#elementMenuHamburgerButton.style.visibility = "hidden";
 
-        // Change The Lock Icon To Locked
-        toggler.innerHTML = "<x-icon color='#ffffff' name='lockLocked'></x-icon>";
-
         // Change Menu Background Color To Darker Brand Hue Based Color So It Will Look Nicer On Light Mode
         Menu.#elementMenu.style.backgroundColor = `hsla(${CSS.getValue("--color-main-hue")}, 10%, 20%, 1)`;
 
@@ -268,31 +253,7 @@ export default class Menu{
           element.style.width = `calc(100% - ${menuWidth})`;
           element.style.marginLeft = menuWidth;
         }
-
       }
-
-    });
-
-  }
-
-  // colorModeSwitcher
-  static #colorModeSwitcher(){
-    const switcher = document.querySelector(`${Menu.selector} > header > div[for=colorModeSwitcher]`);
-
-    switcher.addEventListener("click", ()=>{
-      // Dark Mode
-      if(window.CSS.currentColorMode === window.CSS.colorModes.LIGHT){
-        switcher.innerHTML = "<x-icon color='#ffffff' name='light_mode'></x-icon>";
-        window.CSS.currentColorMode = window.CSS.colorModes.DARK;
-      }
-      // Light Mode
-      else{
-        switcher.innerHTML = "<x-icon color='#ffffff' name='dark_mode'></x-icon>";
-        window.CSS.currentColorMode = window.CSS.colorModes.LIGHT;
-      }
-
-      window.CSS.colorModeSwitcher();
-
     });
   }
 
@@ -309,7 +270,6 @@ export default class Menu{
 
     // Use Route Guard To Check Menus
     return window.Router.routeGuard(menu);
-
   }
 
   // Sub Menu HTML Builder
@@ -327,7 +287,6 @@ export default class Menu{
     return subMenusHtml;
 
   }
-
 }
 
 // Make Menu Usable W/O Importing It

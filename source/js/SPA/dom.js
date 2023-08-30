@@ -62,6 +62,10 @@ export default class DOM{
       if(DOM.#page.before.constructor.name === 'AsyncFunction') await DOM.#page.before();
       else DOM.#page.before();
 
+    ////////// Header
+    // Let Header Class To Handle
+    window.Header.handle(DOM.#page.header);
+
     ///// Content - Render The Content
     // Check If Default Function Exists
     if(typeof DOM.#page.default === "function")
@@ -84,7 +88,6 @@ export default class DOM{
 
     // Delete The Page Data At The End Of Each Life Cycle
     delete window.pageData;
-
   }
 
   static render(dom){
