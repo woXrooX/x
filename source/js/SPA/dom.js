@@ -104,36 +104,36 @@ export default class DOM{
   }
 
   static update(targets = []){
-    Log.info("DOM.update()");
+    Log.info("DOM.update() - init");
 
     for(const target of targets)
       switch(target){
         case "menu":
-          Log.info(`onDomChange.target: ${target}`);
+          Log.info(`DOM.update() - target: ${target}`);
           Menu.build();
           break;
 
         case "header":
-          Log.info(`onDomChange.target: ${target}`);
+          Log.info(`DOM.update() - target: ${target}`);
           break;
 
         case "main":
-          Log.info(`onDomChange.target: ${target}`);
+          Log.info(`DOM.update() - target: ${target}`);
           DOM.lifeCycle();
           break;
 
         case "footer":
-          Log.info(`onDomChange.target: ${target}`);
+          Log.info(`DOM.update() - target: ${target}`);
           break;
 
         case "all":
-          Log.info(`onDomChange.target: ${target}`);
+          Log.info(`DOM.update() - target: ${target}`);
           Menu.build();
           DOM.lifeCycle();
           break;
 
         default:
-          Log.warning(`Unknown Target For Dom Change: ${target}`);
+          Log.warning(`DOM.update() - Unknown Target For Dom Change: ${target}`);
       }
   }
 
