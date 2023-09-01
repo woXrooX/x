@@ -14,7 +14,6 @@ def api():
             {
                 "CONF": Globals.PUBLIC_CONF,
                 "session": {"user": User.generatePublicSession()} if "user" in session else {},
-                "LANG_FALLBACK_CODE": Globals.CONF["default"]["language"]["fallback"],
                 "LANG_DICT": Globals.LANG_DICT,
                 "USER_AUTHENTICITY_STATUSES": Globals.USER_AUTHENTICITY_STATUSES,
                 "USER_ROLES": Globals.USER_ROLES,

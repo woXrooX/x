@@ -101,7 +101,40 @@ export default class DOM{
     else if(typeof dom === "string") window.Main.element.innerHTML = dom;
 
     window.dispatchEvent(new CustomEvent("domChange"));
+  }
 
+  static update(targets = []){
+    Log.info("DOM.update()");
+
+    for(const target of targets)
+      switch(target){
+        case "menu":
+          Log.info(`onDomChange.target: ${target}`);
+          Menu.build();
+          break;
+
+        case "header":
+          Log.info(`onDomChange.target: ${target}`);
+          break;
+
+        case "main":
+          Log.info(`onDomChange.target: ${target}`);
+          DOM.lifeCycle();
+          break;
+
+        case "footer":
+          Log.info(`onDomChange.target: ${target}`);
+          break;
+
+        case "all":
+          Log.info(`onDomChange.target: ${target}`);
+          Menu.build();
+          DOM.lifeCycle();
+          break;
+
+        default:
+          Log.warning(`Unknown Target For Dom Change: ${target}`);
+      }
   }
 
   static jsonToDom(object){

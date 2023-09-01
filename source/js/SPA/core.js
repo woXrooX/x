@@ -57,16 +57,13 @@ export default class Core{
     // Try To Get Initial Data Then Init The Methods
     Core.#getInitialData()
     .then(()=>{
-      Core.#firstLoad();
+      Core.#init();
       Core.#onLoad();
       Core.#onUrlChange();
       Core.#onHashChange();
       Core.#onHistoryButtonClicked();
       Core.#onDomChange();
-
     });
-
-
   }
 
   /////// Initial Data
@@ -77,8 +74,9 @@ export default class Core{
 
       window.CONF = response["CONF"];
       window.session = response["session"];
-      window.Language.FALLBACK = response["LANG_FALLBACK_CODE"];
+
       window.Language.DICT = response["LANG_DICT"];
+
       window.USER_AUTHENTICITY_STATUSES = response["USER_AUTHENTICITY_STATUSES"];
       window.USER_ROLES = response["USER_ROLES"];
 
@@ -86,9 +84,11 @@ export default class Core{
       window.SVG.set(response["PROJECT_SVG"]);
   }
 
-  /////// Event Handlers
-  static #firstLoad(){
-    Log.info("Core.#firstLoad()");
+  // Initialize all the initial methods
+  static #init(){
+    Log.info("Core.#init()");
+
+    Language.init();
 
     CSS.init();
 
@@ -100,6 +100,7 @@ export default class Core{
     Router.handle();
   }
 
+  /////// Event Handlers
   static #onLoad(){
     // Works On The First Visit
     document.addEventListener('readystatechange', ()=>{
@@ -113,7 +114,6 @@ export default class Core{
       Router.handle();
 
       Menu.setActive();
-
     });
   }
 
@@ -152,50 +152,15 @@ export default class Core{
     window.addEventListener('domChange', ()=>{
       // window.dispatchEvent(new CustomEvent('domChange'));
       // window.dispatchEvent(new CustomEvent("domChange", {detail:"menu"}));
-      Log.info("onDomChange");
+      Log.info("Core.#onDomChange()");
 
-      //// This all should be done inside Dom class
-      //// DOM.update() or something
-      // Dom Change For body > target
-      if(!!event.detail === true)
-
-        // Loop Through All Targets event.detail = ["menu", "main"...]
-        for(const target of event.detail)
-          switch(target){
-            case "menu":
-              Log.info(`onDomChange.target: ${target}`);
-              Menu.build();
-              break;
-
-            case "header":
-              Log.info(`onDomChange.target: ${target}`);
-              break;
-
-            case "main":
-              Log.info(`onDomChange.target: ${target}`);
-              DOM.lifeCycle();
-              break;
-
-            case "footer":
-              Log.info(`onDomChange.target: ${target}`);
-              break;
-
-            case "all":
-              Log.info(`onDomChange.target: ${target}`);
-              Menu.build();
-              DOM.lifeCycle();
-              break;
-
-            default:
-              Log.warning(`Unknown Target For Dom Change: ${target}`);
-
-          }
+      // Targets sample event.detail = ["menu", "main"...]
+      // If has target(s) then update the dom. body > target
+      if(!!event.detail === true) DOM.update(event.detail);
 
       // Globals
       Hyperlink.collect();
       Form.collect();
-
     });
   }
-
 };
