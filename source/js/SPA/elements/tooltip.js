@@ -18,6 +18,9 @@ export default class Tooltip extends HTMLElement{
     // If no trigger element exit
     if(!!this.trigger === false) return;
 
+    // Make trigger cursor pointer if event type is click
+    if(this.getAttribute("event") === "click") this.trigger.style.cursor = "pointer";
+
     // Event attribute
     if(this.hasAttribute("event") === false) this.event = "hover";
     else this.event = this.getAttribute("event");
