@@ -43,11 +43,17 @@ export default class Tooltip extends HTMLElement{
     this.content.classList.add("show");
     this.isShown = true;
 
+    // Hover
     this.#onHoverTrigger();
     this.#onHoverContent();
+
+    // Click
+    this.#hideOnClickOutsideContentEvent();
   }
 
   #hide = ()=>{
+    if(this.isShown === false) return;
+
     this.content.classList.remove("show");
     this.isTimerRunning = false;
     this.isShown = false;
@@ -118,6 +124,9 @@ export default class Tooltip extends HTMLElement{
   ////// On hover the content
   // Keep showing on hover the content
   #onHoverContent = ()=>{
+    // Check if event type is hover (mouseover)
+    if(this.eventType !== "mouseover") return;
+
     if(this.isShown == false) return;
 
     // Stop timer when mouse entered to the content
@@ -143,6 +152,28 @@ export default class Tooltip extends HTMLElement{
   #resetTimer = ()=>{
     this.#stopTimer();
     this.#startTimer();
+  }
+
+  ////// On click outside hide
+  #hideOnClickOutsideContentEvent = ()=>{
+    if(this.eventType !== "click") return;
+    if(this.isShown === false) return;
+
+    document.addEventListener("click", this.#hideOnClickOutsideContent);
+  }
+
+  #hideOnClickOutsideContent = ()=>{
+    // Do nothing when clicked the content
+    if(this.content.contains(event.target) === true) return;
+
+    // Do nothing when clicked the trigger
+    if(this.trigger.contains(event.target) === true) return;
+
+    // Hide when clicked outside the content and the trigger
+    this.#hide();
+
+    // Remove event listener
+    document.removeEventListener("click", this.#hideOnClickOutsideContent);
   }
 };
 
