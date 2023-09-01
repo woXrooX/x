@@ -19,7 +19,6 @@ export default class Language extends HTMLElement{
       try{return Language.DICT["unknown"][Language.#FALLBACK];}
       catch{return "Unknown keyword"}
 
-
     try{return Language.DICT[keyword][code];}
     catch(error){
       // Try to use fallback code
@@ -55,7 +54,7 @@ export default class Language extends HTMLElement{
     Language.#CURRENT = code;
 
     // Reload after language set
-    DOM.update(["all"]);
+    window.dispatchEvent(new CustomEvent("domChange", {detail: ["all"]}));
   }
 
   static #identifyCurrentCode(){
