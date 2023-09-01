@@ -53,7 +53,7 @@ export default class Language extends HTMLElement{
     // Update current language code
     Language.#CURRENT = code;
 
-    // Reload after language set
+    // Update the DOM
     window.dispatchEvent(new CustomEvent("domChange", {detail: ["all"]}));
   }
 
