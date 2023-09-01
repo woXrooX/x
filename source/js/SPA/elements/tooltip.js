@@ -1,223 +1,149 @@
 "use strict";
 
 export default class Tooltip extends HTMLElement{
-  static #template = document.createElement("template");
-
-  static {
-    Tooltip.#template.innerHTML = `
-      <tooltip>
-        <icon></icon>
-        <content></content>
-      </tooltip>
-    `;
-  }
-
   constructor(){
     super();
 
-    this.shadow = this.attachShadow({mode: 'closed'});
+    this.RAW = this.innerHTML;
 
-    Type: {
-      this.type = "warning";
+    // Clean up
+    this.innerHTML = "";
 
-      if(this.hasAttribute("type") === true) this.type = this.getAttribute("type").toLowerCase();
+    // Check if this has "selector" attribute
+    if(this.hasAttribute("selector") === false) return;
 
-      if(!!["success", "info", "warning", "error"].includes(this.type) === false){
-        this.type = "warning";
-        this.textContent = this.getAttribute("type");
+    // Load the trigger element
+    this.trigger = document.querySelector(this.getAttribute("selector"));
 
-      }
-    }
+    // If no trigger element exit
+    if(!!this.trigger === false) return;
 
-    // Clone And Append Template
-    this.shadow.appendChild(Tooltip.#template.content.cloneNode(true));
+    // Event attribute
+    if(this.hasAttribute("event") === false) this.event = "hover";
+    else this.event = this.getAttribute("event");
 
-    // If type === TRUE Append Type Specific Icon Else Append "warning" Icon
-    this.shadow.querySelector("tooltip>icon").innerHTML = !!ICONS[this.type] ? ICONS[this.type] : ICONS["warning"];
+    // Init the content
+    this.innerHTML += `<content><span></span>${this.RAW}</content>`;
+    this.pointer = this.querySelector("content > span");
+    this.content = this.querySelector("content");
 
-    // InnerHTML "textContent"
-    this.shadow.querySelector("tooltip>content").innerHTML = window.Lang.use(this.innerHTML);
+    //// Identify event type
+    // mouseover = hover = click on mobile
+    // default is mouseover (hover)
+    this.eventType = "mouseover";
+    if(this.getAttribute("event") === "click") this.eventType = "click";
 
-    // Left Persentage
-    const left = (this.getBoundingClientRect().x / window.innerWidth) * 100;
-
-    MouseEvents: {
-      const contentElement = this.shadow.querySelector("tooltip>content");
-
-      this.shadow.querySelector("tooltip>icon").onmouseover = ()=>{
-        const rect = this.shadow.querySelector("tooltip>content").getBoundingClientRect();
-
-        // Left Out
-        if(rect.left < 0) contentElement.classList.add("showOnRight");
-
-        // Top Out
-        if(rect.top - rect.height < 0) contentElement.classList.add("showOnBottom");
-
-        // Bottom Out
-        // if(rect.bottom > window.innerHeight) console.log("Bottom out");
-
-        // Right Out
-        if(rect.right > window.innerWidth) contentElement.classList.add("showOnLeft");
-
-        // Default
-        contentElement.classList.add("showOnTop");
-
-      };
-
-      // On Mouse Out Remove Class
-      this.shadow.querySelector("tooltip>icon").onmouseout = ()=>{contentElement.removeAttribute("class");};
-
-    }
-
-    CSS: {
-        const style = document.createElement('style');
-
-        style.textContent = `
-          tooltip{
-            display: inline-block;
-            position: relative;
-
-          }
-
-          tooltip > icon{
-            cursor: help;
-
-            width: 1.2em;
-
-            color: var(--color-${this.type});
-            font-size: 1em;
-            font-weight: bold;
-            text-align: center;
-
-            display: grid;
-            place-items: center;
-
-            margin: 0px 5px;
-            border: 1px solid transparent;
-            border-radius: 5px;
-
-            transition: var(--transition-velocity) ease-in-out;
-            transition-property: border;
-
-          }
-
-          icon:hover{
-            border: 1px solid var(--color-${this.type});
-          }
-
-          tooltip > content{
-            pointer-events: none;
-
-            display: block;
-
-            color: white;
-            font-size: 0.7rem;
-            background-color: hsla(var(--color-main-hue), 10%, 10%, 1);
-            opacity: 0;
-
-
-            padding: calc(var(--padding) * 2);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-default);
-
-            max-width: 40vw;
-            width: max-content;
-            height: max-content;
-
-            position: absolute;
-            z-index: var(--z-tooltip);
-            left: 50%;
-            top: 0%;
-            transform: translate(-50%, calc(-50% + 10px));
-            transform-origin: center;
-
-            transition: var(--transition-velocity) ease-in-out;
-            transition-property: opacity, transform;
-
-          }
-
-          tooltip > content.showOnTop{
-            transform: translate(-50%, calc(-100% - 12px));
-
-          }
-
-          tooltip > content.showOnTop::after{
-            top: 100%;
-            left: 50%;
-
-          }
-
-          tooltip > content.showOnBottom{
-            transform: translate(-50%, 30px);
-
-          }
-
-          tooltip > content.showOnBottom::after{
-            top: 0%;
-            left: 50%;
-            transform: rotate(180deg);
-            transform-origin: top;
-
-          }
-
-          tooltip > content.showOnRight{
-            transform: translate(calc(0% + 22px), calc(-50% + 10px));
-
-          }
-
-          tooltip > content.showOnRight::after{
-            top: 50%;
-            left: 0%;
-            transform: rotate(90deg);
-            transform-origin: top;
-
-          }
-
-          tooltip > content.showOnLeft{
-            transform: translate(calc(-100% - 42px), calc(-50% + 10px));
-
-          }
-
-          tooltip > content.showOnLeft::after{
-            top: 50%;
-            left: 100%;
-            transform: rotate(270deg);
-            transform-origin: top;
-
-          }
-
-          tooltip > content::after{
-            content: "";
-
-            position: absolute;
-
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: hsla(var(--color-main-hue), 10%, 10%, 1) transparent transparent transparent;
-
-          }
-
-          icon:hover + content{
-            opacity: 1;
-
-          }
-
-        `;
-
-        this.shadow.appendChild(style);
-
-    }
-
+    // Listen to the event to show the content
+    this.trigger.addEventListener(this.eventType, this.#show);
   }
 
-  static new(type, content, parentSelector){
-    if(!!type === false || !!content === false || !!parentSelector === false) return;
+  ////// Content UI/UX
+  #show = ()=>{
+    this.#setUpContentPositioning();
+    this.content.classList.add("show");
+    this.isShown = true;
 
-    document.querySelector(parentSelector).innerHTML += `<x-tooltip type="${type}">${content}</x-tooltip>`;
-
+    this.#onHoverTrigger();
+    this.#onHoverContent();
   }
 
+  #hide = ()=>{
+    this.content.classList.remove("show");
+    this.isTimerRunning = false;
+    this.isShown = false;
+  }
+
+  #setUpContentPositioning = ()=>{
+    // Gap between mouse and tooltip
+    const gap = 40;
+    const windowBorderPadding = 5;
+    let left = event.clientX + window.scrollX - this.content.offsetWidth/2;
+    let top = event.clientY + window.scrollY - this.content.offsetHeight/2 + gap;
+    this.arrowPosition = "top";
+
+    ////// Detect if an element's border is colliding or crossing the viewport
+    // If left out of window
+    if(event.clientX - this.content.offsetWidth <= 0)
+      left = windowBorderPadding;
+
+    // If right is out of window
+    if(event.clientX + this.content.offsetWidth >= window.innerWidth)
+      left = window.innerWidth - this.content.offsetWidth - windowBorderPadding;
+
+    // If bottom is out of window
+    if(event.clientY + this.content.offsetHeight + gap >= window.innerHeight){
+      this.arrowPosition = "bottom";
+      top = event.clientY + gap;
+    }
+
+    // Place tooltip relative to mouse position
+    this.content.style.left = left+"px";
+    this.content.style.top = top+"px";
+    this.#setUpPointer();
+  }
+
+  #setUpPointer = ()=>{
+    const size = 10;
+
+    // Default arrow position: y: top, x: center
+    const x = `-50%`;
+    let y = `calc(-100% - ${size-2}px)`;
+
+    if(this.arrowPosition === "bottom") y = `${size-2}px`;
+
+    this.pointer.style = `
+      width: ${size}px;
+      height: ${size}px;
+      background-color: inherit;
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      transform-origin: center;
+      transform: translate(${x}, ${y}) rotate(45deg);
+    `;
+  }
+
+  ////// On hover the trigger
+  #onHoverTrigger = ()=>{
+    // Check if event type is hover (mouseover)
+    if(this.eventType !== "mouseover") return;
+
+    this.#stopTimer();
+
+    this.trigger.addEventListener('mouseout', this.#resetTimer);
+  }
+
+  ////// On hover the content
+  // Keep showing on hover the content
+  #onHoverContent = ()=>{
+    if(this.isShown == false) return;
+
+    // Stop timer when mouse entered to the content
+    this.content.addEventListener('mouseover', this.#stopTimer);
+
+    // (Re)start timer when mouse goes out from the content
+    this.content.addEventListener('mouseout', this.#resetTimer);
+  }
+
+  ////// Timer
+  #startTimer = ()=>{
+    if(this.isTimerRunning === true) return;
+    this.timerID = setTimeout(this.#hide, 500);
+    this.isTimerRunning = true;
+  }
+
+  #stopTimer = ()=>{
+    if(this.isTimerRunning === false) return;
+    clearTimeout(this.timerID);
+    this.isTimerRunning = false;
+  }
+
+  #resetTimer = ()=>{
+    this.#stopTimer();
+    this.#startTimer();
+  }
 };
 
 customElements.define('x-tooltip', Tooltip);

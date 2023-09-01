@@ -112,12 +112,12 @@ x-nav{
 
       &:hover{
         background-color: var(--color-main-tint-4);
-        box-shadow: var(--shadow-default);
+        box-shadow: var(--shadow);
       }
 
       &.active{
         background-color: var(--color-main-tint-4);
-        box-shadow: var(--shadow-default);
+        box-shadow: var(--shadow);
       }
     }
   }
@@ -133,7 +133,7 @@ x-modal{
     display: block;
 
     border-radius: var(--radius);
-    box-shadow: var(--shadow-default);
+    box-shadow: var(--shadow);
 
     position: fixed;
     z-index: var(--z-modal);
@@ -164,7 +164,7 @@ x-modal{
 
       padding: 5px;
       border-radius: 50%;
-      box-shadow: var(--shadow-default);
+      box-shadow: var(--shadow);
 
       position: absolute;
       top: -15px;
@@ -210,6 +210,37 @@ x-share{
   & > share{
     width: 50px;
     height: 50px;
+  }
+}
+
+x-tooltip{
+  & > content{
+    pointer-events: none;
+
+    display: block;
+    opacity: 0;
+    background-color: hsla(var(--color-main-hue), 10%, 10%, 1);
+    color: white;
+    font-size: 0.7rem;
+
+    max-width: 40vw;
+    width: max-content;
+    height: max-content;
+
+    padding: var(--padding);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+
+    position: absolute;
+    z-index: var(--z-tooltip);
+
+    transition: var(--transition-velocity) ease-in-out;
+    transition-property: opacity;
+
+    &.show{
+      pointer-events: all;
+      opacity: 1;
+    }
   }
 }
 
