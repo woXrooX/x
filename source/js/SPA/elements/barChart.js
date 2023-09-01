@@ -15,7 +15,7 @@ export default class BarChart extends HTMLElement{
           height: auto;
 
           border-radius: var(--radius);
-          box-shadow: var(--shadow-default);
+          box-shadow: var(--shadow);
         }
       `;
       this.shadow.appendChild(style);

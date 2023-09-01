@@ -45,7 +45,7 @@ export default class Toast extends HTMLElement{
           margin: 0px;
           border-radius: var(--radius);
 
-          box-shadow: var(--shadow-default);
+          box-shadow: var(--shadow);
 
           display: grid;
           gap: 10px;
