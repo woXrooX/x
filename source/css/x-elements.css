@@ -85,39 +85,76 @@ x-select{
 }
 
 x-nav{
+  --icon-subNav-size: 30px;
+  --height: 100%;
+  --width: 100%;
+  --color-hsl: var(--color-main-hue) var(--color-main-saturation) var(--color-main-lightness);
+
+  width: var(--width);
+  height: var(--height);
+
   & > nav{
-    background-color: var(--color-main-tint-2);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: calc(var(--gap) / 2);
-    padding: var(--padding);
+    height: var(--height);
 
-    & > a{
-      background-color: var(--color-main-tint-1);
+    /* Removing the firts padding left on divs */
+    & > div{
+      padding-left: var(--padding) !important;
+    }
 
-      color: var(--color-text-primary);
-      text-align: center;
-      font-size: 0.8rem;
+    & div{
+      /* background-color: hsla(var(--color-hsl) / 0.1); */
+
+      & x-icon{
+        height: var(--icon-subNav-size);
+        width: var(--icon-subNav-size);
+
+        transform: rotate(-90deg);
+
+        transition: var(--transition-velocity) ease-in-out transform;
+
+        &.open{
+          transform: rotate(0deg);
+        }
+      }
+
+      & section{
+        &[for=link]{
+          display: grid;
+          grid-template-columns: var(--icon-subNav-size) 1fr;
+          align-items: center;
+        }
+
+        &[for=subNav]{
+          background-color: hsla(var(--color-hsl) / 0.2);
+          display: none;
+
+          &.show{
+            display: flex;
+          }
+        }
+      }
+    }
+
+    & a{
+      color: var(--color-text-secondary);
+      font-size: 0.7rem;
 
       width: 100%;
       min-width: max-content;
-
       padding: var(--padding);
       border-radius: var(--radius);
 
       transition: var(--transition-velocity) ease-in-out;
-      transition-property: background-color, box-shadow;
+      transition-property: background-color, color;
 
       &:hover{
-        background-color: var(--color-main-tint-4);
-        box-shadow: var(--shadow);
+        color: var(--color-text-primary);
+        background-color: hsla(var(--color-hsl) / 0.2);
       }
 
       &.active{
-        background-color: var(--color-main-tint-4);
-        box-shadow: var(--shadow);
+        color: var(--color-text-primary);
+        background-color: hsla(var(--color-hsl) / 0.2);
       }
     }
   }
