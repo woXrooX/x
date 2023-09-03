@@ -8,19 +8,6 @@
 // // Get computed value
 // console.log(computedRootStyles.getPropertyValue("--color-success"));
 
-// const buttonStyles = `
-//   background-color: blue;
-//   color: white;
-//   padding: 10px;
-//   border-radius: 5px;
-// `;
-//
-// const button = document.createElement('button');
-// button.style.cssText = buttonStyles;
-// button.textContent = 'Click me';
-// document.body.appendChild(button);
-
-
 // background -> middleground -> foreground
 
 "use strict";
@@ -38,7 +25,7 @@ export default class CSS{
   static colorModeSwitcherIcon = null;
 
   //////////// APIs
-  ///// Init
+  // Init
   static init(){
     Log.info("CSS.init()");
 
@@ -78,8 +65,13 @@ export default class CSS{
 
       // If "app_color_mode" Is In CSS.colorModes
       Object.values(CSS.colorModes).includes(window.session["user"]["app_color_mode"])
-    )
-      CSS.currentColorMode = window.session["user"]["app_color_mode"];
+
+    ) CSS.currentColorMode = window.session["user"]["app_color_mode"];
+
+    // Get saved color mode to the local storage
+    // NOTE: Prevents emulation of the color scheme via devtools
+    else if(localStorage.getItem("x.app_color_mode"))
+      CSS.currentColorMode = parseInt(localStorage.getItem("x.app_color_mode"));
 
     // Get System Color Mode
     else if(window.matchMedia){
@@ -88,44 +80,64 @@ export default class CSS{
 
       // System Default: Dark
       else CSS.currentColorMode = CSS.colorModes.DARK;
-
     }
 
+    // Switch the color mode
     // Set color mode switcher icon "name" and "toggle" values
-    CSS.colorModeSwitcherIcon.name = CSS.currentColorMode === CSS.colorModes.DARK ? "light_mode" : "dark_mode";
-    CSS.colorModeSwitcherIcon.toggle = CSS.currentColorMode === CSS.colorModes.DARK ? "dark_mode" : "light_mode";
+    switch(CSS.currentColorMode){
+      case CSS.colorModes.LIGHT:
+        CSS.#light();
+        CSS.colorModeSwitcherIcon.name = "dark_mode";
+        CSS.colorModeSwitcherIcon.toggle = "light_mode";
+        break;
 
-    // Update The Colors According To Color Mode
-    CSS.colorModeSwitcher();
+      // If we add more color modes we will uncommend the code below and add more cases
+      // case CSS.colorModes.DARK:
+      //     CSS.#dark();
+      //     CSS.colorModeSwitcherIcon.name = "light_mode";
+      //     CSS.colorModeSwitcherIcon.toggle = "dark_mode";
+      //     break;
+
+      default:
+        CSS.#dark();
+        CSS.colorModeSwitcherIcon.name = "light_mode";
+        CSS.colorModeSwitcherIcon.toggle = "dark_mode";
+    }
   }
 
   // On System Color Mode Changes - Listen To Color Mode Changes
   static #onColorModeChange(){window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", CSS.detectColorMode);}
 
-  // Color Mode Switcher
-  static colorModeSwitcher(){
-    switch(CSS.currentColorMode){
-      case CSS.colorModes.DARK: CSS.#dark(); break;
-      case CSS.colorModes.LIGHT:CSS.#light(); break;
-      default: CSS.#dark();
-    }
-  }
-
   // Handles color mode switching to dark and light modes using x-icon in menu
   static #handleColorModeToggle(){
-    CSS.colorModeSwitcherIcon.addEventListener("click", ()=>{
-      // Dark Mode
-      if(window.CSS.currentColorMode === window.CSS.colorModes.LIGHT) CSS.#dark();
+    // A Reminder to My Future Self :)
+    // We do not have to apply name and toggle values like we did in CSS.detectColorMode().
+    // Default toggler handles well icon changes since we are only using x-icon to toggle the color modes in this method
 
-      // Light Mode
-      else CSS.#light();
+    CSS.colorModeSwitcherIcon.addEventListener("click", ()=>{
+      switch(CSS.currentColorMode){
+        case CSS.colorModes.DARK: CSS.#light(); break;
+        // If we add more color modes we will uncommend the code below and add more cases
+        // case CSS.colorModes.LIGHT:CSS.#dark(); break;
+        default: CSS.#dark();
+      }
     });
+  }
+
+  // Save color mode to the database or to the local storage
+  static async #saveColorMode(){
+    if("user" in window.session)
+      await window.bridge("API", {for:"changeUserAppColorMode", colorMode: CSS.currentColorMode}, "application/json");
+
+    else localStorage.setItem('x.app_color_mode', CSS.currentColorMode);
   }
 
   //////////// Modes
   static #dark(){
     Log.info("CSS.#dark()");
+
     CSS.currentColorMode = CSS.colorModes.DARK;
+    CSS.#saveColorMode();
 
     const rootStyles = document.querySelector(':root');
     const hue = getComputedStyle(rootStyles).getPropertyValue("--color-main-hue");
@@ -152,7 +164,9 @@ export default class CSS{
 
   static #light(){
     Log.info("CSS.#light()");
+
     CSS.currentColorMode = CSS.colorModes.LIGHT;
+    CSS.#saveColorMode();
 
     const rootStyles = document.querySelector(':root');
     const hue = getComputedStyle(rootStyles).getPropertyValue("--color-main-hue");
