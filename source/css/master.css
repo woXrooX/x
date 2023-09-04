@@ -287,7 +287,6 @@ body{
     z-index: var(--z-minus);
 
     transition: var(--transition-velocity) opacity;
-
   }
 
   & > header{

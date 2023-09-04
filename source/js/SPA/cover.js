@@ -6,7 +6,6 @@ export default class Cover{
 
   static{
     Cover.#elementCover = document.querySelector(Cover.selector);
-
   }
 
   // Can be set the cover z-index if needed
@@ -29,6 +28,7 @@ export default class Cover{
     if(!!Cover.#elementCover === false) return;
 
     Cover.#elementCover.style.opacity = 0;
+
     setTimeout(()=>{
       Cover.#elementCover.style.zIndex = window.CSS.getValue("--z-minus");
     }, parseInt(window.CSS.getValue("--transition-velocity")));
