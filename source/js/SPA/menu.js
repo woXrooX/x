@@ -56,15 +56,15 @@ export default class Menu{
     let menus = "";
 
     for(const menu of window.CONF["menu"]["menus"])
-      if(Menu.#menuGuard(menu["name"]) === true)
+      if(Menu.#menuGuard(menu["link"]) === true)
         // Hyperlink Blue Print
         menus += `
           <section>
 
             <section class="parentMenu">
-              <a href="${window.CONF["pages"][menu["name"]]["endpoints"][0]}">
-                <x-icon color="#ffffff" name="${"icon" in menu ? menu["icon"] : menu["name"]}"></x-icon>
-                ${window.Lang.use(menu["name"])}
+              <a href="${window.CONF["pages"][menu["link"]]["endpoints"][0]}">
+                <x-icon color="#ffffff" name="${"icon" in menu ? menu["icon"] : menu["link"]}"></x-icon>
+                ${"name" in menu ? window.Lang.use(menu["name"]) : window.Lang.use(menu["link"])}
               </a>
 
               ${"subMenu" in menu ? `<x-icon for="toggleSubMenu" color="#ffffff" name="arrow_bottom_small"></x-icon>` : ""}
@@ -276,16 +276,15 @@ export default class Menu{
   static #subMenuBuilder(subMenus){
     let subMenusHtml = "";
     for(const subMenu of subMenus)
-      if(Menu.#menuGuard(subMenu["name"]) === true)
+      if(Menu.#menuGuard(subMenu["link"]) === true)
         subMenusHtml += `
-          <a href="${window.CONF["pages"][subMenu["name"]]["endpoints"][0]}">
+          <a href="${window.CONF["pages"][subMenu["link"]]["endpoints"][0]}">
             <x-icon color="#ffffff" name="${"icon" in subMenu ? subMenu["icon"] : subMenu["name"]}"></x-icon>
-            ${window.Lang.use(subMenu["name"])}
+            ${"name" in subMenu ? window.Lang.use(subMenu["name"]) : window.Lang.use(subMenu["link"])}
           </a>
         `;
 
     return subMenusHtml;
-
   }
 }
 
