@@ -102,8 +102,6 @@ x-nav{
     }
 
     & div{
-      /* background-color: hsla(var(--color-hsl) / 0.1); */
-
       & x-icon{
         height: var(--icon-subNav-size);
         width: var(--icon-subNav-size);
@@ -154,7 +152,7 @@ x-nav{
 
       &.active{
         color: var(--color-text-primary);
-        background-color: hsla(var(--color-hsl) / 0.2);
+        background-color: hsla(var(--color-hsl) / 0.5);
       }
     }
   }
