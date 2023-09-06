@@ -51,6 +51,7 @@ if __name__ != "__main__":
 
             # If True triggers executemany with many params
             many = False,
+
             commit = False,
             prepared = True,
             dictionary = True,
