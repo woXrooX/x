@@ -75,16 +75,16 @@ export default class DOM{
 
     else DOM.render("[DOM] Error: No Default Function Defined!");
 
+    ////////// Footer
+    // Let Footer Class To Handle
+    window.Footer.handle(DOM.#page.footer);
+
     ///// After
     // Check If after() Exists
     if(!!DOM.#page.after === true)
       // If Async Function Passed Or Normal One
       if(DOM.#page.after.constructor.name === 'AsyncFunction') await DOM.#page.after();
       else DOM.#page.after();
-
-    ////////// Footer
-    // Let Footer Class To Handle
-    window.Footer.handle(DOM.#page.footer);
 
     // Delete The Page Data At The End Of Each Life Cycle
     delete window.pageData;
