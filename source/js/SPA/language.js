@@ -14,17 +14,24 @@ export default class Language extends HTMLElement{
   //////// APIs
   // Can Be Used For Translations And Just For Normal Use Cases
   static translate(keyword, code = Language.#CURRENT){
-    // Check If keyword Is Valid
-    if(!!keyword === false || keyword === '')
-      try{return Language.DICT["unknown"][Language.#FALLBACK];}
-      catch{return "Unknown keyword"}
+    // Check if valid keyword was passed
+    if(!!keyword === false || keyword === '') keyword = "invalidKeyword";
 
-    try{return Language.DICT[keyword][code];}
-    catch(error){
-      // Try to use fallback code
-      try{return Language.DICT[keyword][Language.#FALLBACK];}
-      catch{return keyword;}
-    }finally{}
+    // Check if keyword is in Lang.DICT
+    if(!(keyword in Language.DICT)) return keyword;
+
+    // Check if code is in the list of supported langauges else set code it to fallback language
+    if(!window.CONF.default.language.supported.includes(code)) code = Language.#FALLBACK;
+
+    // In case FALLBACK language code also not in the DICT[keyword]
+    // then grab the first translation
+    if(!(code in Language.DICT[keyword])){
+      if(Object.entries(Lang.DICT[keyword])[0] === undefined) return "emptyLanguage";
+      else return Object.entries(Lang.DICT[keyword])[0][1];
+    }
+
+    // Finally
+    return Language.DICT[keyword][code];
   }
 
   // Just Returns Text For The "keyword"
