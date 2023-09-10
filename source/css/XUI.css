@@ -177,9 +177,7 @@ info, success, warning, error{
   }
 
   &:empty{
-    display:none;
   }
-
 }
 /**************************** Info, Success, Warning, Error END ****************************/
 
