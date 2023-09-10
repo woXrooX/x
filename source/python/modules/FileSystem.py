@@ -162,8 +162,11 @@ if __name__ != "__main__":
             # styles.css
             FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css")
 
+            # header.js
+            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/header.js", 'export default function header(){\n\treturn "Header";\n}')
+
             # footer.js
-            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/footer.js", 'export default function footer(){\n\treturn "The X";\n}')
+            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/footer.js", 'export default function footer(){\n\treturn "Footer";\n}')
 
             # pages/back/home.py
             FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py",
@@ -189,7 +192,7 @@ export default function content(){
             )
 
             # languageDictionary.json
-            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", '{"theX": {"en": "The X"}}')
+            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", '{"x": {"en": "x"}}')
 
             # project.json
             FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/project.json", "{}")
