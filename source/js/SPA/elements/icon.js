@@ -4,12 +4,6 @@
 "use strict";
 
 export default class Icon extends HTMLElement{
-  static #template = document.createElement("template");
-
-  static {
-    Icon.#template.innerHTML = `<icon></icon>`;
-  }
-
   constructor(){
     super();
 
@@ -19,48 +13,47 @@ export default class Icon extends HTMLElement{
     CSS: {
       const style = document.createElement('style');
       style.textContent = `
-
-        .disabled{
-          cursor: not-allowed !important;
-          transition: none !important;
-          transform: none !important;
-          opacity: 0.5 !important;
-        }
-
         icon{
           cursor: pointer;
           user-select: none;
 
-          display: block;
+          display: grid;
+          place-items: center;
 
           transition: 100ms ease-in-out;
           transition-property: transform;
 
+          &:hover{
+            transform: scale(1.3);
+          }
+
+          &:active{
+            transform: scale(0.5);
+          }
+
+          &.disabled{
+            cursor: not-allowed !important;
+            transition: none !important;
+            transform: none !important;
+            opacity: 0.5 !important;
+          }
+
+          & > svg{
+            user-select: none;
+
+            width: 100%;
+            height: 100%;
+
+            fill: ${this.getAttribute("color") || "var(--color-text-primary)"};
+          }
         }
-        icon:hover{
-          transform: scale(1.3);
-        }
-        icon:active{
-          transform: scale(0.5);
-        }
-
-        icon > svg{
-          user-select: none;
-
-          width: 100%;
-          height: 100%;
-
-          fill: ${this.getAttribute("color") || "var(--color-text-primary)"};
-
-        }
-
       `;
       this.shadow.appendChild(style);
 
     }
 
     // Clone And Append Template
-    this.shadow.appendChild(Icon.#template.content.cloneNode(true));
+    this.shadow.appendChild(document.createElement('icon'));
 
     // Element Icon
     this.elementIcon = this.shadow.querySelector("icon");
