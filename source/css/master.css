@@ -327,7 +327,7 @@ body{
   }
 
   & > footer{
-    background-color: var(--color-main-tint-2);
+    background-color: var(--color-main-tint-4);
 
     color: var(--color-text-primary);
     font-size: 0.7rem;
@@ -342,15 +342,12 @@ body{
     &.hide{
       display: none;
     }
-
   }
-
 }
 
 @keyframes loading{
   0%{transform: translate(-50%, -50%) rotate(0deg);}
   100%{transform: translate(-50%, -50%) rotate(720deg);}
-
 }
 
 @media only screen and (max-width: 600px) {
