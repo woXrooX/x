@@ -2,58 +2,94 @@
   font-family: Quicksand;
   src:url("/fonts/Quicksand-Regular.ttf");
 }
+.font-family-Quicksand{
+  font-family: Quicksand;
+}
 
 @font-face{
   font-family: AlegreyaSans;
   src:url("/fonts/AlegreyaSans-Regular.ttf");
+}
+.font-family-AlegreyaSans{
+  font-family: AlegreyaSans;
 }
 
 @font-face{
   font-family: Cardo;
   src:url("/fonts/Cardo-Regular.ttf");
 }
+.font-family-Cardo{
+  font-family: Cardo;
+}
 
 @font-face{
   font-family: Cinzel;
   src:url("/fonts/Cinzel-Regular.ttf");
+}
+.font-family-Cinzel{
+  font-family: Cinzel;
 }
 
 @font-face{
   font-family: Eczar;
   src:url("/fonts/Eczar-Regular.ttf");
 }
+.font-family-Eczar{
+  font-family: Eczar;
+}
 
 @font-face{
   font-family: Gruppo;
   src:url("/fonts/Gruppo-Regular.ttf");
+}
+.font-family-Gruppo{
+  font-family: Gruppo;
 }
 
 @font-face{
   font-family: JosefinSans;
   src:url("/fonts/JosefinSans-Regular.ttf");
 }
+.font-family-JosefinSans{
+  font-family: JosefinSans;
+}
 
 @font-face{
   font-family: JosefinSlab;
   src:url("/fonts/JosefinSlab-Regular.ttf");
+}
+.font-family-JosefinSlab{
+  font-family: JosefinSlab;
 }
 
 @font-face{
   font-family: Macondo;
   src:url("/fonts/Macondo-Regular.ttf");
 }
+.font-family-Macondo{
+  font-family: Macondo;
+}
 
 @font-face{
   font-family: Philosopher;
   src:url("/fonts/Philosopher-Regular.ttf");
+}
+.font-family-Philosopher{
+  font-family: Philosopher;
 }
 
 @font-face{
   font-family: Marcellus;
   src:url("/fonts/Marcellus-Regular.ttf");
 }
+.font-family-Marcellus{
+  font-family: Marcellus;
+}
 
 @font-face{
   font-family: SpecialElite;
   src:url("/fonts/SpecialElite-Regular.ttf");
+}
+.font-family-SpecialElite{
+  font-family: SpecialElite;
 }
