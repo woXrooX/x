@@ -739,6 +739,7 @@ column{
 /**************************** Width START ****************************/
 .w-auto{width: auto;}
 
+/* % */
 .w-10{width: 10%;}
 .w-15{width: 15%;}
 .w-20{width: 20%;}
@@ -758,7 +759,242 @@ column{
 .w-90{width: 90%;}
 .w-95{width: 95%;}
 .w-100{width: 100%;}
+
+/* vw */
+.vw-15{width: 15vw;}
+.vw-20{width: 20vw;}
+.vw-10{width: 10vw;}
+.vw-25{width: 25vw;}
+.vw-30{width: 30vw;}
+.vw-35{width: 35vw;}
+.vw-40{width: 40vw;}
+.vw-45{width: 45vw;}
+.vw-50{width: 50vw;}
+.vw-55{width: 55vw;}
+.vw-60{width: 60vw;}
+.vw-65{width: 65vw;}
+.vw-70{width: 70vw;}
+.vw-75{width: 75vw;}
+.vw-80{width: 80vw;}
+.vw-85{width: 85vw;}
+.vw-90{width: 90vw;}
+.vw-95{width: 95vw;}
+.vw-100{width: 100vw;}
+
+/* min-width % */
+.min-w-10{min-width: 10%;}
+.min-w-15{min-width: 15%;}
+.min-w-20{min-width: 20%;}
+.min-w-25{min-width: 25%;}
+.min-w-30{min-width: 30%;}
+.min-w-35{min-width: 35%;}
+.min-w-40{min-width: 40%;}
+.min-w-45{min-width: 45%;}
+.min-w-50{min-width: 50%;}
+.min-w-55{min-width: 55%;}
+.min-w-60{min-width: 60%;}
+.min-w-65{min-width: 65%;}
+.min-w-70{min-width: 70%;}
+.min-w-75{min-width: 75%;}
+.min-w-80{min-width: 80%;}
+.min-w-85{min-width: 85%;}
+.min-w-90{min-width: 90%;}
+.min-w-95{min-width: 95%;}
+.min-w-100{min-width: 100%;}
+
+/* min-width vw */
+.min-vw-15{min-width: 15vw;}
+.min-vw-20{min-width: 20vw;}
+.min-vw-10{min-width: 10vw;}
+.min-vw-25{min-width: 25vw;}
+.min-vw-30{min-width: 30vw;}
+.min-vw-35{min-width: 35vw;}
+.min-vw-40{min-width: 40vw;}
+.min-vw-45{min-width: 45vw;}
+.min-vw-50{min-width: 50vw;}
+.min-vw-55{min-width: 55vw;}
+.min-vw-60{min-width: 60vw;}
+.min-vw-65{min-width: 65vw;}
+.min-vw-70{min-width: 70vw;}
+.min-vw-75{min-width: 75vw;}
+.min-vw-80{min-width: 80vw;}
+.min-vw-85{min-width: 85vw;}
+.min-vw-90{min-width: 90vw;}
+.min-vw-95{min-width: 95vw;}
+.min-vw-100{min-width: 100vw;}
+
+/* max-width % */
+.max-w-10{max-width: 10%;}
+.max-w-15{max-width: 15%;}
+.max-w-20{max-width: 20%;}
+.max-w-25{max-width: 25%;}
+.max-w-30{max-width: 30%;}
+.max-w-35{max-width: 35%;}
+.max-w-40{max-width: 40%;}
+.max-w-45{max-width: 45%;}
+.max-w-50{max-width: 50%;}
+.max-w-55{max-width: 55%;}
+.max-w-60{max-width: 60%;}
+.max-w-65{max-width: 65%;}
+.max-w-70{max-width: 70%;}
+.max-w-75{max-width: 75%;}
+.max-w-80{max-width: 80%;}
+.max-w-85{max-width: 85%;}
+.max-w-90{max-width: 90%;}
+.max-w-95{max-width: 95%;}
+.max-w-100{max-width: 100%;}
+
+/* max-width vw */
+.max-vw-15{max-width: 15vw;}
+.max-vw-20{max-width: 20vw;}
+.max-vw-10{max-width: 10vw;}
+.max-vw-25{max-width: 25vw;}
+.max-vw-30{max-width: 30vw;}
+.max-vw-35{max-width: 35vw;}
+.max-vw-40{max-width: 40vw;}
+.max-vw-45{max-width: 45vw;}
+.max-vw-50{max-width: 50vw;}
+.max-vw-55{max-width: 55vw;}
+.max-vw-60{max-width: 60vw;}
+.max-vw-65{max-width: 65vw;}
+.max-vw-70{max-width: 70vw;}
+.max-vw-75{max-width: 75vw;}
+.max-vw-80{max-width: 80vw;}
+.max-vw-85{max-width: 85vw;}
+.max-vw-90{max-width: 90vw;}
+.max-vw-95{max-width: 95vw;}
+.max-vw-100{max-width: 100vw;}
 /**************************** Width END ****************************/
+
+/**************************** Height START ****************************/
+.h-auto{height: auto;}
+
+/* % */
+.h-10{height: 10%;}
+.h-15{height: 15%;}
+.h-20{height: 20%;}
+.h-25{height: 25%;}
+.h-30{height: 30%;}
+.h-35{height: 35%;}
+.h-40{height: 40%;}
+.h-45{height: 45%;}
+.h-50{height: 50%;}
+.h-55{height: 55%;}
+.h-60{height: 60%;}
+.h-65{height: 65%;}
+.h-70{height: 70%;}
+.h-75{height: 75%;}
+.h-80{height: 80%;}
+.h-85{height: 85%;}
+.h-90{height: 90%;}
+.h-95{height: 95%;}
+.h-100{height: 100%;}
+
+/* vh */
+.vh-15{height: 15vh;}
+.vh-20{height: 20vh;}
+.vh-10{height: 10vh;}
+.vh-25{height: 25vh;}
+.vh-30{height: 30vh;}
+.vh-35{height: 35vh;}
+.vh-40{height: 40vh;}
+.vh-45{height: 45vh;}
+.vh-50{height: 50vh;}
+.vh-55{height: 55vh;}
+.vh-60{height: 60vh;}
+.vh-65{height: 65vh;}
+.vh-70{height: 70vh;}
+.vh-75{height: 75vh;}
+.vh-80{height: 80vh;}
+.vh-85{height: 85vh;}
+.vh-90{height: 90vh;}
+.vh-95{height: 95vh;}
+.vh-100{height: 100vh;}
+
+/* min-height % */
+.min-h-10{min-height: 10%;}
+.min-h-15{min-height: 15%;}
+.min-h-20{min-height: 20%;}
+.min-h-25{min-height: 25%;}
+.min-h-30{min-height: 30%;}
+.min-h-35{min-height: 35%;}
+.min-h-40{min-height: 40%;}
+.min-h-45{min-height: 45%;}
+.min-h-50{min-height: 50%;}
+.min-h-55{min-height: 55%;}
+.min-h-60{min-height: 60%;}
+.min-h-65{min-height: 65%;}
+.min-h-70{min-height: 70%;}
+.min-h-75{min-height: 75%;}
+.min-h-80{min-height: 80%;}
+.min-h-85{min-height: 85%;}
+.min-h-90{min-height: 90%;}
+.min-h-95{min-height: 95%;}
+.min-h-100{min-height: 100%;}
+
+/* min-height vh */
+.min-vh-15{min-height: 15vh;}
+.min-vh-20{min-height: 20vh;}
+.min-vh-10{min-height: 10vh;}
+.min-vh-25{min-height: 25vh;}
+.min-vh-30{min-height: 30vh;}
+.min-vh-35{min-height: 35vh;}
+.min-vh-40{min-height: 40vh;}
+.min-vh-45{min-height: 45vh;}
+.min-vh-50{min-height: 50vh;}
+.min-vh-55{min-height: 55vh;}
+.min-vh-60{min-height: 60vh;}
+.min-vh-65{min-height: 65vh;}
+.min-vh-70{min-height: 70vh;}
+.min-vh-75{min-height: 75vh;}
+.min-vh-80{min-height: 80vh;}
+.min-vh-85{min-height: 85vh;}
+.min-vh-90{min-height: 90vh;}
+.min-vh-95{min-height: 95vh;}
+.min-vh-100{min-height: 100vh;}
+
+/* max-height % */
+.max-h-10{max-height: 10%;}
+.max-h-15{max-height: 15%;}
+.max-h-20{max-height: 20%;}
+.max-h-25{max-height: 25%;}
+.max-h-30{max-height: 30%;}
+.max-h-35{max-height: 35%;}
+.max-h-40{max-height: 40%;}
+.max-h-45{max-height: 45%;}
+.max-h-50{max-height: 50%;}
+.max-h-55{max-height: 55%;}
+.max-h-60{max-height: 60%;}
+.max-h-65{max-height: 65%;}
+.max-h-70{max-height: 70%;}
+.max-h-75{max-height: 75%;}
+.max-h-80{max-height: 80%;}
+.max-h-85{max-height: 85%;}
+.max-h-90{max-height: 90%;}
+.max-h-95{max-height: 95%;}
+.max-h-100{max-height: 100%;}
+
+/* max-height vh */
+.max-vh-15{max-height: 15vh;}
+.max-vh-20{max-height: 20vh;}
+.max-vh-10{max-height: 10vh;}
+.max-vh-25{max-height: 25vh;}
+.max-vh-30{max-height: 30vh;}
+.max-vh-35{max-height: 35vh;}
+.max-vh-40{max-height: 40vh;}
+.max-vh-45{max-height: 45vh;}
+.max-vh-50{max-height: 50vh;}
+.max-vh-55{max-height: 55vh;}
+.max-vh-60{max-height: 60vh;}
+.max-vh-65{max-height: 65vh;}
+.max-vh-70{max-height: 70vh;}
+.max-vh-75{max-height: 75vh;}
+.max-vh-80{max-height: 80vh;}
+.max-vh-85{max-height: 85vh;}
+.max-vh-90{max-height: 90vh;}
+.max-vh-95{max-height: 95vh;}
+.max-vh-100{max-height: 100vh;}
+/**************************** Height END ****************************/
 
 /**************************** Padding START ****************************/
 /* All sides */
