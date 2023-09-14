@@ -46,7 +46,6 @@ if(
     Globals.getUserRoles()
 
 
-
 #################################################### Flask APP
 app = Flask(
     __name__,
@@ -55,11 +54,14 @@ app = Flask(
     static_folder = Globals.CONF["flask"]["static_folder"]
 )
 
-# Geberates new "secret_key" every time when server is restarted
+
+#################################################### Secret Key
 import os
 
 # Disable random secret_key assignment on each server restart when debug is True
 if Globals.CONF.get("default", {}).get("debug") is True: app.secret_key = b'12345'
+
+# Generates new "secret_key" every time when server is started
 else: app.secret_key = os.urandom(24)
 
 
@@ -77,7 +79,6 @@ def before_request():
     routeLogs()
     # routeGuard()
 
-
 # @app.after_request
 # def after_request(response):
 #     return response
@@ -91,7 +92,7 @@ def before_request():
 from python.pages import *
 
 
-#################################################### RUN (For Development)
+#################################################### RUN using Flask (For Development)
 ### Flask server
 # if __name__ == "__main__":
     # No SSL
