@@ -43,6 +43,7 @@ source/python/modules/*
 !source/python/modules/OpenAI.py
 !source/python/modules/pageGuard.py
 !source/python/modules/PDF.py
+!source/python/modules/Random.py
 !source/python/modules/response.py
 !source/python/modules/routeGuard.py
 !source/python/modules/SendGrid.py
