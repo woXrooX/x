@@ -279,7 +279,7 @@ export default class Menu{
       if(Menu.#menuGuard(subMenu["page"]) === true)
         subMenusHtml += `
           <a href="${window.CONF["pages"][subMenu["page"]]["endpoints"][0]}">
-            <x-icon color="#ffffff" name="${"icon" in subMenu ? subMenu["icon"] : subMenu["name"]}"></x-icon>
+            <x-icon color="#ffffff" name="${"icon" in subMenu ? subMenu["icon"] : subMenu["page"]}"></x-icon>
             ${"name" in subMenu ? window.Lang.use(subMenu["name"]) : window.Lang.use(subMenu["page"])}
           </a>
         `;
