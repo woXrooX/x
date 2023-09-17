@@ -461,6 +461,11 @@
     "ru":"Товары",
     "uz":"Mahsulotlar"
   },
+  "random":{
+    "en":"Random",
+    "ru":"Случайный",
+    "uz":"Tasodifiy"
+  },
   "remove":{
     "en":"Remove",
     "ru":"Удалить",
