@@ -295,12 +295,12 @@ export default function content(){
 
             else: Log.error("Could Not Copy The Fonts")
 
-        # Copy Fonts
+        # Copy Images
         @staticmethod
         def copyImages():
             Log.center("Copying Images", '-')
 
-            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{str(Globals.X_RUNNING_FROM)}/images", [".png", ".jpg", ".jpeg"], False) is True:
+            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{str(Globals.X_RUNNING_FROM)}/images", [".png", ".jpg", ".jpeg", ".gif"], False) is True:
                 Log.success("Images Are Copied")
 
             else: Log.error("Could Not Copy The Fonts")
