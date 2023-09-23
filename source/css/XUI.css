@@ -400,6 +400,16 @@ input[type=submit]:not(:disabled):where(:focus){
 /** input[type=submit] & button END **/
 /**************************** Forms END ****************************/
 
+/**************************** Cursor START ****************************/
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.cursor-not-allowed{
+  cursor: not-allowed;
+}
+/**************************** Cursor END ****************************/
+
 
 /**************************** Custom scrollbars START ****************************/
 /** Common START **/
