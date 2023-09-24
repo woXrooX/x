@@ -1,21 +1,24 @@
 /*
-  {
-    "head": [
-      {"title": "ID", "sortable": true},
-      {"title": "First name", "sortable": true},
-      {"title": "Birth month", "sortable": true}
-    ],
-    "body": [
-      ["1", "Max", "August"],
-      ["489", "John", "January"],
-      ["2", "Alib", "July"],
-      ["28", "Tillo", "December"],
-      ["29", "James", "October"],
-      ["902", "Ali", "July"],
-      ["78", "Yzoken", "March"]
-    ],
-    "foot": ["foot_a", "foot_b", "foot_c"]
-  }
+  <x-table class="x-default">
+    {
+      "enableCounterColumn": true,
+      "head": [
+        {"title": "ID", "sortable": true},
+        {"title": "First name"},
+        {"title": "Birth month", "sortable": true}
+      ],
+      "body": [
+        ["1", "Max", "August"],
+        ["489", "John", "January"],
+        ["2", "Alib", "July"],
+        ["28", "Tillo", "December"],
+        ["29", "James", "October"],
+        ["902", "Ali", "July"],
+        ["78", "Yzoken", "March"]
+      ],
+      "foot": ["foot_a", "foot_b", "foot_c"]
+    }
+  </x-table>
 */
 
 export default class Table extends HTMLElement{
@@ -32,8 +35,8 @@ export default class Table extends HTMLElement{
     this.lastSortedColumnID = null;
     this.lastSortMode = null;
 
+    // Init table
     this.#buildTable();
-
 
     this.#listenToTheSortClicks();
   }
@@ -41,19 +44,21 @@ export default class Table extends HTMLElement{
   #buildTable = ()=>{
     this.innerHTML = `
       <table class="${this.getAttribute("class") || ""}">
-        <thead><tr>${this.#buildHead()}</tr></thead>
+        <thead><tr></tr></thead>
         <tbody></tbody>
-
-        ${this.#buildFoot()}
+        <tfoot><tr></tr></tfoot>
       </table>
     `;
 
+    this.#buildHead();
     this.#buildBody();
+    this.#buildFoot();
   }
 
   #buildHead = ()=>{
     if(!("head" in this.JSON)) return;
     let HTML = "";
+
     for (let index = 0; index < this.JSON["head"].length; index++){
       if(!("title" in this.JSON["head"][index])) return "Invalid head data";
 
@@ -77,7 +82,9 @@ export default class Table extends HTMLElement{
       else HTML += `<th>${this.JSON["head"][index]["title"]}</th>`;
     }
 
-    return HTML;
+    this.querySelector("table > thead > tr").innerHTML = HTML;
+
+    this.#buildCounterColumnHead();
   }
 
   #buildBody = ()=>{
@@ -90,21 +97,59 @@ export default class Table extends HTMLElement{
     }
 
     this.querySelector("table > tbody").innerHTML = HTML;
+
+    this.#buildCounterColumnBody();
   }
 
   #buildFoot = ()=>{
     if(!("foot" in this.JSON)) return;
-    let HTML = "<tfoot><tr>";
+    let HTML = "";
     for(const cell of this.JSON["foot"]) HTML += `<td>${cell}</td>`;
-    HTML += "</tr></tfoot>"
-    return HTML;
+
+    this.querySelector("table > tfoot > tr").innerHTML = HTML;
+
+    this.#buildCounterColumnFoot();
+  }
+
+  ///// Counter column
+  #buildCounterColumnHead = ()=>{
+    if(!!this.JSON?.enableCounterColumn === false) return;
+
+    const th = document.createElement("th");
+    th.innerHTML = '#';
+    this.querySelector("table > thead > tr").insertBefore(th, this.querySelector("table > thead > tr > th"));
+  }
+
+  #buildCounterColumnBody = ()=>{
+    if(!!this.JSON?.enableCounterColumn === false) return;
+
+    for(let i = 1; i <= this.JSON["body"].length; i++){
+      const td = document.createElement("td");
+      td.innerHTML = i;
+      this.querySelector(`table > tbody > tr:nth-child(${i})`).insertBefore(
+        td,
+        this.querySelector(`table > tbody > tr:nth-child(${i}) > td`)
+      );
+    }
+  }
+
+  #buildCounterColumnFoot = ()=>{
+    if(!!this.JSON?.enableCounterColumn === false) return;
+
+    const td = document.createElement("td");
+    this.querySelector("table > tfoot > tr").insertBefore(td, this.querySelector("table > tfoot > tr > td"));
   }
 
   ////////// Sort
   // Sort click listeners
   #listenToTheSortClicks = ()=>{
+    // CSS nth child statrs counting from 1 unlike arrays that's why default offset is 1
+    // If we add artifical counter column we need to skip the first column so offset becomes 2
+    let offset = 1;
+    if(!!this.JSON?.enableCounterColumn === true) offset = 2;
+
     for(const id of this.sortableColumnIDs){
-      this.querySelector(`table > thead > tr > th:nth-child(${id+1})`).onclick = ()=>{
+      this.querySelector(`table > thead > tr > th:nth-child(${id+offset})`).onclick = ()=>{
         // Update last sorted column ID with the current clicked column ID
         this.lastSortedColumnID = id;
 
