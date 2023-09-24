@@ -133,12 +133,22 @@ export default class Table extends HTMLElement{
   // Sort algo ASC
   #sortASC = ()=>{
     this.JSON["body"].sort((a, b)=>{
-      if(a[this.lastSortedColumnID] < b[this.lastSortedColumnID]) return -1;
+      if (!isNaN(a[this.lastSortedColumnID]) && !isNaN(b[this.lastSortedColumnID]))
+      // Numerical sorting
+      return a[this.lastSortedColumnID] - b[this.lastSortedColumnID]; 
 
-      if(a[this.lastSortedColumnID] > b[this.lastSortedColumnID]) return 1;
+      else 
+        // Alphabetical sorting
+        return a[this.lastSortedColumnID].localeCompare(b[this.lastSortedColumnID]);
 
-      return 0;
-    });
+    })
+
+    //   if(a[this.lastSortedColumnID] < b[this.lastSortedColumnID]) return -1;
+
+    //   if(a[this.lastSortedColumnID] > b[this.lastSortedColumnID]) return 1;
+
+    //   return 0;
+    // });
   }
 
   // Sort algo DESC
