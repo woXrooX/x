@@ -133,34 +133,18 @@ export default class Table extends HTMLElement{
   // Sort algo ASC
   #sortASC = ()=>{
     this.JSON["body"].sort((a, b)=>{
-      if (!isNaN(a[this.lastSortedColumnID]) && !isNaN(b[this.lastSortedColumnID]))
-      // Numerical sorting
-      return a[this.lastSortedColumnID] - b[this.lastSortedColumnID]; 
+      // Numerical comparison
+      if(!isNaN(a[this.lastSortedColumnID]) && !isNaN(b[this.lastSortedColumnID]))
+        return a[this.lastSortedColumnID] - b[this.lastSortedColumnID];
 
-      else 
-        // Alphabetical sorting
-        return a[this.lastSortedColumnID].localeCompare(b[this.lastSortedColumnID]);
-
-    })
-
-    //   if(a[this.lastSortedColumnID] < b[this.lastSortedColumnID]) return -1;
-
-    //   if(a[this.lastSortedColumnID] > b[this.lastSortedColumnID]) return 1;
-
-    //   return 0;
-    // });
+      // String comparison
+      else return a[this.lastSortedColumnID].localeCompare(b[this.lastSortedColumnID]);
+    });
   }
 
   // Sort algo DESC
-  #sortDESC = (id)=>{
-    this.JSON["body"].sort((a, b)=>{
-      if(a[this.lastSortedColumnID] < b[this.lastSortedColumnID]) return 1;
-
-      if(a[this.lastSortedColumnID] > b[this.lastSortedColumnID]) return -1;
-
-      return 0;
-    });
-  }
+  // Due to first sort mode is always ASC reverse works
+  #sortDESC = ()=> this.JSON["body"].reverse();
 };
 
 window.customElements.define('x-table', Table);
