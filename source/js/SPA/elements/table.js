@@ -22,174 +22,286 @@
 */
 
 export default class Table extends HTMLElement{
-  static sortModes = Object.freeze({ASC: 1, DESC: 2});
+  	static sortModes = Object.freeze({ASC: 1, DESC: 2});
 
-  constructor(){
-    super();
+	constructor(){
+		super();
 
-    // Save the JSON data
-    this.JSON = JSON.parse(this.innerHTML).constructor === Object ? JSON.parse(this.innerHTML) : {};
+		// Save the JSON data
+		this.JSON = JSON.parse(this.innerHTML).constructor === Object ? JSON.parse(this.innerHTML) : {};
 
-    // Sortable column IDs
-    this.sortableColumnIDs = [];
-    this.lastSortedColumnID = null;
-    this.lastSortMode = null;
+		// Check if body values exists
+		if(!("body" in this.JSON)) return;
+		this.bodyValues = this.JSON["body"];
+		this.bodyValuesInChunks = [];
 
-    // Init table
-    this.#buildTable();
 
-    this.#listenToTheSortClicks();
-  }
+		// Sortable column IDs
+		this.sortableColumnIDs = [];
+		this.lastSortedColumnID = null;
+		this.lastSortMode = null;
 
-  #buildTable = ()=>{
-    this.innerHTML = `
-      <table class="${this.getAttribute("class") || ""}">
-        <thead><tr></tr></thead>
-        <tbody></tbody>
-        <tfoot><tr></tr></tfoot>
-      </table>
-    `;
+		this.pageSizeCurrent = 10;
+		this.currentPage = 1;
 
-    this.#buildHead();
-    this.#buildBody();
-    this.#buildFoot();
-  }
+		// Init table
+		this.#build();
 
-  #buildHead = ()=>{
-    if(!("head" in this.JSON)) return;
-    let HTML = "";
+		this.#listenToTheSortClicks();
+	}
 
-    for (let index = 0; index < this.JSON["head"].length; index++){
-      if(!("title" in this.JSON["head"][index])) return "Invalid head data";
+	#build = ()=>{
+		this.innerHTML = `
+			<main class="d-flex flex-column gap-0-5">
 
-      // Check if sortable
-      if("sortable" in this.JSON["head"][index] && this.JSON["head"][index]["sortable"] === true){
-        // Save sortable column ID
-        this.sortableColumnIDs.push(index);
+				<row class="flex-y-center flex-x-between gap-0-5">
+					<select class="w-auto">
+						<option selected disabled>${this.pageSizeCurrent}</option>
+						<option value="10">10</option>
+						<option value="15">15</option>
+						<option value="20">20</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+						<option value="all">${window.Lang.use("all")}</option>
+					</select>
 
-        // Create sort icon
-        HTML += `
-          <th>
-            <row class="cursor-pointer gap-0-5 flex-y-center">
-              ${this.JSON["head"][index]["title"]}
-              <x-icon color="currentcolor" name="sort_ASC"></x-icon>
-            </row>
-          </th>
-        `;
-      }
+					${!!this.JSON?.searchable === true ? '<input type="text">' : ""}
+				</row>
 
-      // Just title
-      else HTML += `<th>${this.JSON["head"][index]["title"]}</th>`;
-    }
+				<div for="table"></div>
 
-    this.querySelector("table > thead > tr").innerHTML = HTML;
+				<row class="flex-x-end">
+				< 1 2 3 ... 78 >
+				</row>
 
-    this.#buildCounterColumnHead();
-  }
+			</main>
+		`;
 
-  #buildBody = ()=>{
-    if(!("body" in this.JSON)) return;
-    let HTML = "";
-    for(const row of this.JSON["body"]){
-      HTML += "<tr>";
-      for(const cell of row) HTML += `<td>${cell}</td>`;
-      HTML += "</tr>";
-    }
 
-    this.querySelector("table > tbody").innerHTML = HTML;
 
-    this.#buildCounterColumnBody();
-  }
+		this.#listenToPageSizeSelect();
 
-  #buildFoot = ()=>{
-    if(!("foot" in this.JSON)) return;
-    let HTML = "";
-    for(const cell of this.JSON["foot"]) HTML += `<td>${cell}</td>`;
+		this.#listenToSearchTyping();
 
-    this.querySelector("table > tfoot > tr").innerHTML = HTML;
+		// this.#buildSearchInput();
+		this.#buildTable();
+	}
 
-    this.#buildCounterColumnFoot();
-  }
+	///////////// Table
+	#buildTable = ()=>{
+		this.querySelector("main > div[for=table]").innerHTML = `
+			<table class="${this.getAttribute("class") || ""}">
+				<thead><tr></tr></thead>
+				<tbody></tbody>
+				<tfoot><tr></tr></tfoot>
+			</table>
+		`;
 
-  ///// Counter column
-  #buildCounterColumnHead = ()=>{
-    if(!!this.JSON?.enableCounterColumn === false) return;
+		this.#buildHead();
+		this.#buildBody();
+		this.#buildFoot();
+	}
 
-    const th = document.createElement("th");
-    th.innerHTML = '#';
-    this.querySelector("table > thead > tr").insertBefore(th, this.querySelector("table > thead > tr > th"));
-  }
+	#buildHead = ()=>{
+		if(!("head" in this.JSON)) return;
+		let HTML = "";
 
-  #buildCounterColumnBody = ()=>{
-    if(!!this.JSON?.enableCounterColumn === false) return;
+		for (let index = 0; index < this.JSON["head"].length; index++){
+			if(!("title" in this.JSON["head"][index])) return "Invalid head data";
 
-    for(let i = 1; i <= this.JSON["body"].length; i++){
-      const td = document.createElement("td");
-      td.innerHTML = i;
-      this.querySelector(`table > tbody > tr:nth-child(${i})`).insertBefore(
-        td,
-        this.querySelector(`table > tbody > tr:nth-child(${i}) > td`)
-      );
-    }
-  }
+			// Check if sortable
+			if("sortable" in this.JSON["head"][index] && this.JSON["head"][index]["sortable"] === true){
+				// Save sortable column ID
+				this.sortableColumnIDs.push(index);
 
-  #buildCounterColumnFoot = ()=>{
-    if(!!this.JSON?.enableCounterColumn === false) return;
+				// Create sort icon
+				HTML += `
+					<th>
+						<row class="cursor-pointer gap-0-5 flex-y-center">
+						${this.JSON["head"][index]["title"]}
+						<x-icon color="currentcolor" name="sort_ASC"></x-icon>
+						</row>
+					</th>
+				`;
+			}
 
-    const td = document.createElement("td");
-    this.querySelector("table > tfoot > tr").insertBefore(td, this.querySelector("table > tfoot > tr > td"));
-  }
+			// Just title
+			else HTML += `<th>${this.JSON["head"][index]["title"]}</th>`;
+		}
 
-  ////////// Sort
-  // Sort click listeners
-  #listenToTheSortClicks = ()=>{
-    // CSS nth child statrs counting from 1 unlike arrays that's why default offset is 1
-    // If we add artifical counter column we need to skip the first column so offset becomes 2
-    let offset = 1;
-    if(!!this.JSON?.enableCounterColumn === true) offset = 2;
+		this.querySelector("table > thead > tr").innerHTML = HTML;
 
-    for(const id of this.sortableColumnIDs){
-      this.querySelector(`table > thead > tr > th:nth-child(${id+offset})`).onclick = ()=>{
-        // Update last sorted column ID with the current clicked column ID
-        this.lastSortedColumnID = id;
+		this.#buildCounterColumnHead();
+	}
 
-        switch(this.lastSortMode){
-          case Table.sortModes.ASC:
-            this.#sortDESC();
-            this.lastSortMode = Table.sortModes.DESC;
-            break;
+	#buildBody = ()=>{
+		let HTML = "";
 
-          case Table.sortModes.DESC:
-            this.#sortASC();
-            this.lastSortMode = Table.sortModes.ASC;
-            break;
+		this.#divideDataIntoChunks();
 
-          default:
-            this.#sortASC();
-            this.lastSortMode = Table.sortModes.ASC;
-        }
+		if(this.bodyValuesInChunks.length === 0){
+			this.querySelector("table > tbody").innerHTML = `<tr><td>${window.Lang.use("noData")}</td></tr>`;
+			return;
+		}
 
-        // Update table view
-        this.#buildBody();
-      };
-    }
-  }
+		for(const row of this.bodyValuesInChunks[this.currentPage-1]){
+			HTML += "<tr>";
+			for(const cell of row) HTML += `<td>${cell}</td>`;
+			HTML += "</tr>";
+		}
 
-  // Sort algo ASC
-  #sortASC = ()=>{
-    this.JSON["body"].sort((a, b)=>{
-      // Numerical comparison
-      if(!isNaN(a[this.lastSortedColumnID]) && !isNaN(b[this.lastSortedColumnID]))
-        return a[this.lastSortedColumnID] - b[this.lastSortedColumnID];
+		this.querySelector("table > tbody").innerHTML = HTML;
 
-      // String comparison
-      else return a[this.lastSortedColumnID].localeCompare(b[this.lastSortedColumnID]);
-    });
-  }
+		this.#buildCounterColumnBody();
+	}
 
-  // Sort algo DESC
-  // Due to first sort mode is always ASC reverse works
-  #sortDESC = ()=> this.JSON["body"].reverse();
+	#buildFoot = ()=>{
+		if(!("foot" in this.JSON)) return;
+		let HTML = "";
+		for(const cell of this.JSON["foot"]) HTML += `<td>${cell}</td>`;
+
+		this.querySelector("table > tfoot > tr").innerHTML = HTML;
+
+		this.#buildCounterColumnFoot();
+	}
+
+	////////// Counter column
+	#buildCounterColumnHead = ()=>{
+		if(!!this.JSON?.enableCounterColumn === false) return;
+
+		const th = document.createElement("th");
+		th.innerHTML = '#';
+		this.querySelector("table > thead > tr").insertBefore(th, this.querySelector("table > thead > tr > th"));
+	}
+
+	#buildCounterColumnBody = ()=>{
+		if(!!this.JSON?.enableCounterColumn === false) return;
+
+		for(let i = 1; i <= this.bodyValuesInChunks[this.currentPage-1].length; i++){
+			const td = document.createElement("td");
+			td.innerHTML = i;
+			this.querySelector(`table > tbody > tr:nth-child(${i})`).insertBefore(
+				td,
+				this.querySelector(`table > tbody > tr:nth-child(${i}) > td`)
+			);
+		}
+	}
+
+	#buildCounterColumnFoot = ()=>{
+		if(!!this.JSON?.enableCounterColumn === false) return;
+
+		const td = document.createElement("td");
+		this.querySelector("table > tfoot > tr").insertBefore(td, this.querySelector("table > tfoot > tr > td"));
+	}
+
+	////////// Sort
+	// Sort click listeners
+	#listenToTheSortClicks = ()=>{
+		// CSS nth child statrs counting from 1 unlike arrays that's why default offset is 1
+		// If we add artifical counter column we need to skip the first column so offset becomes 2
+		let offset = 1;
+		if(!!this.JSON?.enableCounterColumn === true) offset = 2;
+
+		for(const id of this.sortableColumnIDs){
+			this.querySelector(`table > thead > tr > th:nth-child(${id+offset})`).onclick = ()=>{
+				// Update last sorted column ID with the current clicked column ID
+				this.lastSortedColumnID = id;
+
+				switch(this.lastSortMode){
+				case Table.sortModes.ASC:
+					this.#sortDESC();
+					this.lastSortMode = Table.sortModes.DESC;
+					break;
+
+				case Table.sortModes.DESC:
+					this.#sortASC();
+					this.lastSortMode = Table.sortModes.ASC;
+					break;
+
+				default:
+					this.#sortASC();
+					this.lastSortMode = Table.sortModes.ASC;
+				}
+
+				// Update table view
+				this.#buildBody();
+			};
+		}
+	}
+
+	// Sort algo ASC
+	#sortASC = ()=>{
+		this.bodyValues.sort((a, b)=>{
+			// Numerical comparison
+			if(!isNaN(a[this.lastSortedColumnID]) && !isNaN(b[this.lastSortedColumnID]))
+			return a[this.lastSortedColumnID] - b[this.lastSortedColumnID];
+
+			// String comparison
+			else return a[this.lastSortedColumnID].localeCompare(b[this.lastSortedColumnID]);
+		});
+	}
+
+  	// Sort algo DESC
+	#sortDESC = ()=>{
+		this.bodyValues.sort((a, b)=>{
+			// Numerical comparison
+			if(!isNaN(a[this.lastSortedColumnID]) && !isNaN(b[this.lastSortedColumnID]))
+				return b[this.lastSortedColumnID] - a[this.lastSortedColumnID];
+
+			// String comparison
+			else return b[this.lastSortedColumnID].localeCompare(a[this.lastSortedColumnID]);
+		});
+	}
+
+	#sortByValue = (value)=>{
+		this.bodyValues = [];
+
+		for(const row of this.JSON["body"])
+			for(const cell of row)
+				if(cell.toLowerCase().includes(value.toLowerCase()))
+					this.bodyValues.push(row);
+
+		if(this.bodyValues.length === 0) this.bodyValues = [[window.Lang.use("noMatches")]];
+	}
+
+	// Divide data to chunks aka pages
+	#divideDataIntoChunks = ()=>{
+		// Empty the chunks
+		this.bodyValuesInChunks = [];
+
+		for(let i = 0; i < this.bodyValues.length; i += this.pageSizeCurrent)
+			this.bodyValuesInChunks.push(this.bodyValues.slice(i, i + this.pageSizeCurrent));
+	}
+
+	///////////// Search input
+	#listenToSearchTyping = ()=>{
+		this.querySelector("main > row > input").oninput = ()=>{
+			if(event.target.value == ""){
+				this.bodyValues = this.JSON["body"];
+				this.#buildBody();
+				return;
+			}
+			this.#sortByValue(event.target.value);
+			this.#buildBody();
+		}
+	}
+
+	///////////// Pagination
+	#listenToPageSizeSelect = ()=>{
+		this.querySelector("main > row > select").onchange = ()=>{
+			const selectedPageSize = event.target.value;
+
+			// If not a number then show all
+			if(isNaN(selectedPageSize)) this.pageSizeCurrent = this.JSON["body"].length;
+
+			// Else set page size to the selected
+			else this.pageSizeCurrent = selectedPageSize;
+
+			// Update and build the body
+			this.#buildBody();
+		}
+	}
 };
 
 window.customElements.define('x-table', Table);
