@@ -1373,6 +1373,15 @@
 		.radius-circle{border-radius: 50%;}
 		/**************************** Radiues END ****************************/
 
+		/**************************** Disabled START ****************************/
+		.disabled, [disabled]{
+			pointer-events: none;
+			/* Has no effect since no pointer events is none */
+			cursor: not-allowed;
+			opacity: 0.5;
+		}
+		/**************************** Disabled END ****************************/
+
 		/**************************** Box Shadow START ****************************/
 		.bs-default{box-shadow: var(--shadow);}
 		/**************************** Box Shadow END ****************************/
