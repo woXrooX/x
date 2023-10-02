@@ -672,10 +672,13 @@
 	}
 
 	@layer display{
-		/* Block */
+		/* none */
+		.d-none{display: none;}
+
+		/* block */
 		.d-block{display: block;}
 
-		/* Inline-Block */
+		/* inline-block */
 		.d-inline-block{display: inline-block;}
 
 		@layer flex{
