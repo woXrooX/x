@@ -267,6 +267,10 @@
 
 		/* white-space */
 		.text-nowrap{white-space: nowrap !important;}
+
+		/* text-decoration */
+		.text-d-underline{text-decoration: underline;}
+
 	}
 
 	@layer custom_scrollbars{
