@@ -1292,6 +1292,8 @@
 			cursor: pointer;
 			user-select: none;
 
+			min-width: fit-content;
+
 			background-color: var(--color-main);
 			color: white;
 			text-transform: uppercase;
