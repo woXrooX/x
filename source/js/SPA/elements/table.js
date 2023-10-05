@@ -41,7 +41,7 @@ export default class Table extends HTMLElement{
 		this.lastSortedColumnID = null;
 		this.lastSortMode = null;
 
-		this.pageSizeCurrent = 10;
+		this.pageSize = 10;
 		this.currentPage = 1;
 
 		// Init table
@@ -55,37 +55,39 @@ export default class Table extends HTMLElement{
 			<main class="d-flex flex-column gap-0-5">
 
 				<row class="flex-y-center flex-x-between gap-0-5">
-					<select class="w-auto">
-						<option selected disabled>${this.pageSizeCurrent}</option>
-						<option value="10">10</option>
-						<option value="15">15</option>
-						<option value="20">20</option>
-						<option value="25">25</option>
-						<option value="50">50</option>
-						<option value="100">100</option>
-						<option value="all">${window.Lang.use("all")}</option>
-					</select>
-
-					${!!this.JSON?.searchable === true ? '<input type="text">' : ""}
+					<column class="w-auto">
+						<select>
+							<option selected disabled>${this.pageSize}</option>
+							<option value="10">10</option>
+							<option value="15">15</option>
+							<option value="20">20</option>
+							<option value="25">25</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+							<option value="all">${window.Lang.use("all")}</option>
+						</select>
+					</column>
+					<column class="w-100">${!!this.JSON?.searchable === true ? '<input type="text">' : ""}</column>
 				</row>
 
 				<div for="table"></div>
 
-				<row class="flex-x-end">
-				< 1 2 3 ... 78 >
+				<row class="flex-x-between">
+					<row for="showingCounter" class="flex-y-center text-left text-size-0-8"></row>
+					<row for="pagination" class="gap-0-2"></row>
 				</row>
 
 			</main>
 		`;
 
 
-
 		this.#listenToPageSizeSelect();
 
 		this.#listenToSearchTyping();
 
-		// this.#buildSearchInput();
 		this.#buildTable();
+
+		this.#buildPageButtons();
 	}
 
 	///////////// Table
@@ -131,8 +133,6 @@ export default class Table extends HTMLElement{
 		}
 
 		this.querySelector("table > thead > tr").innerHTML = HTML;
-
-		this.#buildCounterColumnHead();
 	}
 
 	#buildBody = ()=>{
@@ -152,8 +152,6 @@ export default class Table extends HTMLElement{
 		}
 
 		this.querySelector("table > tbody").innerHTML = HTML;
-
-		this.#buildCounterColumnBody();
 	}
 
 	#buildFoot = ()=>{
@@ -162,49 +160,13 @@ export default class Table extends HTMLElement{
 		for(const cell of this.JSON["foot"]) HTML += `<td>${cell}</td>`;
 
 		this.querySelector("table > tfoot > tr").innerHTML = HTML;
-
-		this.#buildCounterColumnFoot();
-	}
-
-	////////// Counter column
-	#buildCounterColumnHead = ()=>{
-		if(!!this.JSON?.enableCounterColumn === false) return;
-
-		const th = document.createElement("th");
-		th.innerHTML = '#';
-		this.querySelector("table > thead > tr").insertBefore(th, this.querySelector("table > thead > tr > th"));
-	}
-
-	#buildCounterColumnBody = ()=>{
-		if(!!this.JSON?.enableCounterColumn === false) return;
-
-		for(let i = 1; i <= this.bodyValuesInChunks[this.currentPage-1].length; i++){
-			const td = document.createElement("td");
-			td.innerHTML = i;
-			this.querySelector(`table > tbody > tr:nth-child(${i})`).insertBefore(
-				td,
-				this.querySelector(`table > tbody > tr:nth-child(${i}) > td`)
-			);
-		}
-	}
-
-	#buildCounterColumnFoot = ()=>{
-		if(!!this.JSON?.enableCounterColumn === false) return;
-
-		const td = document.createElement("td");
-		this.querySelector("table > tfoot > tr").insertBefore(td, this.querySelector("table > tfoot > tr > td"));
 	}
 
 	////////// Sort
 	// Sort click listeners
 	#listenToTheSortClicks = ()=>{
-		// CSS nth child statrs counting from 1 unlike arrays that's why default offset is 1
-		// If we add artifical counter column we need to skip the first column so offset becomes 2
-		let offset = 1;
-		if(!!this.JSON?.enableCounterColumn === true) offset = 2;
-
 		for(const id of this.sortableColumnIDs){
-			this.querySelector(`table > thead > tr > th:nth-child(${id+offset})`).onclick = ()=>{
+			this.querySelector(`table > thead > tr > th:nth-child(${id+1})`).onclick = ()=>{
 				// Update last sorted column ID with the current clicked column ID
 				this.lastSortedColumnID = id;
 
@@ -270,13 +232,13 @@ export default class Table extends HTMLElement{
 		// Empty the chunks
 		this.bodyValuesInChunks = [];
 
-		for(let i = 0; i < this.bodyValues.length; i += this.pageSizeCurrent)
-			this.bodyValuesInChunks.push(this.bodyValues.slice(i, i + this.pageSizeCurrent));
+		for(let i = 0; i < this.bodyValues.length; i += this.pageSize)
+			this.bodyValuesInChunks.push(this.bodyValues.slice(i, i + this.pageSize));
 	}
 
 	///////////// Search input
 	#listenToSearchTyping = ()=>{
-		this.querySelector("main > row > input").oninput = ()=>{
+		this.querySelector("main > row > column > input").oninput = ()=>{
 			if(event.target.value == ""){
 				this.bodyValues = this.JSON["body"];
 				this.#buildBody();
@@ -289,18 +251,120 @@ export default class Table extends HTMLElement{
 
 	///////////// Pagination
 	#listenToPageSizeSelect = ()=>{
-		this.querySelector("main > row > select").onchange = ()=>{
+		this.querySelector("main > row > column > select").onchange = ()=>{
 			const selectedPageSize = event.target.value;
 
 			// If not a number then show all
-			if(isNaN(selectedPageSize)) this.pageSizeCurrent = this.JSON["body"].length;
+			if(isNaN(selectedPageSize)) this.pageSize = this.JSON["body"].length;
 
 			// Else set page size to the selected
-			else this.pageSizeCurrent = selectedPageSize;
+			else this.pageSize = parseInt(selectedPageSize);
+
+			// Reset "currentPage" to 1
+			this.currentPage = 1;
 
 			// Update and build the body
 			this.#buildBody();
+
+			// Update and build the page buttons
+			this.#buildPageButtons();
 		}
+	}
+
+	#buildShowingCounter = ()=>{
+		this.querySelector("main > row:last-child > row[for=showingCounter]").innerHTML = `
+			Page ${this.currentPage} of ${this.bodyValuesInChunks.length}
+		`;
+	}
+
+	#buildPageButtons = ()=>{
+		this.#buildShowingCounter();
+
+		let buttonsHTML = "";
+
+		for(let i = 1; i <= this.bodyValuesInChunks.length; i++) buttonsHTML += `<button class="d-none" name="${i}">${i}</button>`;
+
+		this.querySelector("main > row:last-child > row[for=pagination]").innerHTML = `
+			<button name="first">${window.Lang.use("first")}</button>
+			<button name="previous"><x-icon name="arrow_back" color="white"></x-icon></button>
+			<section class="d-flex flex-row gap-0-2">${buttonsHTML}</section>
+			<button name="next"><x-icon name="arrow_forward" color="white"></x-icon></button>
+			<button name="last">${window.Lang.use("last")}</button>
+		`;
+
+		this.firstButton = this.querySelector(`main > row:last-child > row[for="pagination"] > button[name=first]`);
+		this.previousButton = this.querySelector(`main > row:last-child > row[for="pagination"] > button[name=previous]`);
+		this.nextButton = this.querySelector(`main > row:last-child > row[for=pagination] > button[name=next]`);
+		this.lastButton = this.querySelector(`main > row:last-child > row[for="pagination"] > button[name=last]`);
+
+		this.#updateButtons(this.currentPage);
+		this.#listenToPageButtonsClicks();
+	}
+
+	#hideButtons = ()=>{
+		const buttons = this.querySelectorAll("main > row:last-child > row[for=pagination] > section > button");
+
+		for(const button of buttons) button.classList.add("d-none");
+	}
+
+	#updateButtons = (id)=>{
+		// First hide buttons
+		this.#hideButtons();
+
+		//// Enable/Disable main buttons
+		// Enable/Disable "first" button
+		if(id == 1) this.firstButton.disabled = true;
+		else this.firstButton.disabled = false;
+
+		// Enable/Disable "previous" button
+		if(id > 1) this.previousButton.disabled = false;
+		else this.previousButton.disabled = true;
+
+		// Enable/Disable "next" button
+		if(id == this.bodyValuesInChunks.length) this.nextButton.disabled = true;
+		else this.nextButton.disabled = false;
+
+		// Enable/Disable "last" button
+		if(id == this.bodyValuesInChunks.length) this.lastButton.disabled = true;
+		else this.lastButton.disabled = false;
+
+
+		const buttons = [
+			this.querySelector(`main > row:last-child > row[for=pagination] > section > button:nth-child(${id-1})`),
+			this.querySelector(`main > row:last-child > row[for=pagination] > section > button:nth-child(${id})`),
+			this.querySelector(`main > row:last-child > row[for=pagination] > section > button:nth-child(${id+1})`)
+		];
+
+		for(const button of buttons) button?.removeAttribute("class");
+
+		// Current
+		buttons[1]?.classList.add("disabled");
+		buttons[1]?.classList.add("text-d-underline");
+
+		// Update body after current page changes
+		this.#buildBody();
+
+		// Update showing counter
+		this.#buildShowingCounter();
+	}
+
+	#listenToPageButtonsClicks = ()=>{
+		// first
+		this.firstButton.onclick = ()=> this.#updateButtons((this.currentPage = 1));
+
+		// previous
+		this.previousButton.onclick = ()=> this.#updateButtons(--this.currentPage);
+
+		// next
+		this.nextButton.onclick = ()=> this.#updateButtons(++this.currentPage);
+
+		// last
+		this.lastButton.onclick = ()=> this.#updateButtons((this.currentPage = this.bodyValuesInChunks.length));
+
+		// 1 to this.bodyValuesInChunks.length
+		const buttons = this.querySelectorAll("main > row:last-child > row[for=pagination] > section > button");
+
+		for(const button of buttons) button.onclick = ()=> this.#updateButtons((this.currentPage = parseInt(button.name)));
 	}
 };
 
