@@ -376,6 +376,21 @@
     "ru":"Моя страница",
     "uz":"Mening sahifam"
   },
+  "noData":{
+    "en":"No data",
+    "ru":"Нет данных",
+    "uz":"Maʼlumot yoʻq"
+  },
+  "noFound":{
+    "en":"No found",
+    "ru":"Не найдено",
+    "uz":"Topilmadi"
+  },
+  "noMatches":{
+    "en":"No matches",
+    "ru":"Нет совпадений",
+    "uz":"Mos kelmadi"
+  },
   "notSpecified":{
     "en":"Not specified",
     "ru":"Не указан",
