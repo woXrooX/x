@@ -1,26 +1,3 @@
-/*
-  <x-table class="x-default">
-    {
-      "enableCounterColumn": true,
-      "head": [
-        {"title": "ID", "sortable": true},
-        {"title": "First name"},
-        {"title": "Birth month", "sortable": true}
-      ],
-      "body": [
-        ["1", "Max", "August"],
-        ["489", "John", "January"],
-        ["2", "Alib", "July"],
-        ["28", "Tillo", "December"],
-        ["29", "James", "October"],
-        ["902", "Ali", "July"],
-        ["78", "Yzoken", "March"]
-      ],
-      "foot": ["foot_a", "foot_b", "foot_c"]
-    }
-  </x-table>
-*/
-
 export default class Table extends HTMLElement{
   	static sortModes = Object.freeze({ASC: 1, DESC: 2});
 
