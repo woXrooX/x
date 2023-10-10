@@ -271,6 +271,12 @@
 		/* text-decoration */
 		.text-d-underline{text-decoration: underline;}
 
+		/* Selection */
+		*::selection{
+			color: var(--color-text-primary);
+			background-color: var(--color-brand);
+		}
+
 	}
 
 	@layer custom_scrollbars{
