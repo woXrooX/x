@@ -159,86 +159,106 @@ x-nav{
 }
 
 x-modal{
-  & > modal{
-    pointer-events: none;
+	& > dialog{
+		pointer-events: none;
 
-    background-color: var(--color-main-tint-4);
-    opacity: 0;
+		overflow: visible;
+		opacity: 0;
 
-    display: block;
+		background-color: var(--color-main-tint-4);
 
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+		border: 0px;
+		border-radius: var(--radius);
+		box-shadow: var(--shadow);
 
-    position: fixed;
-    z-index: var(--z-modal);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) scale(0.8);
 
-    transition: var(--transition-velocity) ease-in-out;
-    transition-property: transform, opacity;
+		transition: var(--transition-velocity) ease-in-out;
+		transition-property: transform, opacity;
 
-    &.show{
-      pointer-events: all;
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
+		&::backdrop{
+			/* No access to css variables inside ::backdrop */
+			transition: 200ms ease-in-out;
+			transition-property: opacity;
 
-    &.hide{
-      pointer-events: none;
-      opacity: 0;
-      transform: translate(-50%, -45%) scale(0.9);
-    }
+			opacity: 0;
+			background-color: rgba(0, 0, 0, 0.6);
+			backdrop-filter: blur(10px);
+		}
 
-    & > header{
-      background: var(--color-main-tint-2);
+		&[opening]{
+			pointer-events: all;
 
-      width: 35px;
-      height: 35px;
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1);
 
-      padding: 5px;
-      border-radius: 50%;
-      box-shadow: var(--shadow);
+			&::backdrop{
+				opacity: 1;
+			}
+		}
 
-      position: absolute;
-      top: -15px;
-      right: -15px;
+		& > header{
+			width: 100%;
+			height: auto;
 
-      transition: var(--transition-velocity) ease-in-out transform;
+			box-shadow: var(--shadow);
 
-      &:hover{
-        transform: scale(1.1);
-      }
+			& > div{
+				text-align: left;
 
-    }
+				width: 100%;
+				height: 100%;
 
-    & > main{
-      width: auto;
+				background-color: var(--color-main-tint-2);
+				border-radius: var(--radius) var(--radius) 0px 0px;
+				padding: 5px;
 
-      width: auto;
-      max-width: 80vw;
-      height: auto;
-      max-height: 80vh;
+				&:empty{
+					background-color: transparent;
+				}
+			}
 
-      overflow: hidden;
-      overflow-y: scroll;
+			& > button{
+				width: 35px !important;
+				height: 35px !important;
 
-      padding: var(--padding);
-      padding-top: 25px;
+				padding: 5px;
 
-      display: grid;
-      place-items: center;
-    }
-  }
+				border-radius: 50%;
+				position: absolute;
+				top: -15px;
+				right: -15px;
+			}
+		}
 
-  & > trigger{
-    cursor: pointer;
+		& > main{
+			width: auto;
+			max-width: 80vw;
 
-    &:empty{
-      pointer-events: none;
-    }
-  }
+			height: auto;
+			max-height: 80vh;
+
+			overflow: hidden;
+			overflow-y: scroll;
+
+			padding: var(--padding);
+			padding-top: 25px;
+
+			display: grid;
+			place-items: center;
+		}
+	}
+
+	& > trigger{
+		cursor: pointer;
+
+		&:empty{
+			pointer-events: none;
+		}
+	}
 }
 
 x-share{

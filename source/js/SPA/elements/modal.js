@@ -1,114 +1,94 @@
 "use strict";
 
 export default class Modal extends HTMLElement{
-  static #template = document.createElement("template");
-  static #inUse = false;
+	constructor(){
+		super();
 
-  static {
-    Modal.#template.innerHTML = `
-      <modal>
-        <header>
-          <x-icon name="x"></x-icon>
-        </header>
-        <main></main>
-      </modal>
-      <trigger></trigger>
-    `;
+		// Save the DOM
+		this.DOM = this.innerHTML;
 
-  }
+		// Clean the innerHTML
+		this.innerHTML = `
+			<dialog inert>
+				<header>
+					<div>${this.getAttribute("title") || ""}</div>
+					<button><x-icon name="x"></x-icon></button>
+				</header>
+				<main>${this.DOM}</main>
+			</dialog>
+			<trigger></trigger>
+		`;
 
-  constructor(){
-    super();
+		this.dialog = this.querySelector("dialog");
+		this.trigger = this.querySelector("trigger");
 
-    // Save the DOM
-    this.DOM = this.innerHTML;
+		// Parent z-index
+		this.zIndexOfParent = getComputedStyle(this.parentElement).getPropertyValue('z-index');
 
-    // Clean the innerHTML
-    this.innerHTML = "";
+		Trigger: {
+			const trigger = this.getAttribute("trigger");
+			const type = this.getAttribute("type");
+			const value = this.getAttribute("value");
+			const isButton = this.hasAttribute("button");
 
-    this.shown = false;
+			// Instant Pop-Up
+			if(!trigger || trigger === "auto") setTimeout(this.#show, 500);
 
-    // Parent z-index
-    this.zIndexOfParent = getComputedStyle(this.parentElement).getPropertyValue('z-index') || window.CSS.getValue("--z-cover");
+			// Create Click Event
+			else if(trigger === "click" && type && value){
+				let content;
+				switch(type){
+					case 'icon':
+						content = `<x-icon color="ffffff" name="${value}"></x-icon>`;
+						break;
+					case 'text':
+						content = value;
+						break;
+					default:
+						Log.error(`Invalid type: ${type}`);
+						return;
+				}
 
-    // Clone And Append Template
-    this.appendChild(Modal.#template.content.cloneNode(true));
+				this.trigger.innerHTML = isButton ? `<button>${content}</button>` : content;
+			}
 
-    // Content
-    this.querySelector("modal>main").innerHTML = this.DOM;
+			// Show On Click trigger
+			this.trigger.onclick = this.#show;
 
-    Trigger: {
-      // Instant Pop-Up
-      if(
-        !!this.hasAttribute("trigger") === false ||
-        !!this.hasAttribute("trigger") === true &&
-        this.getAttribute("trigger") === "auto"
-      ) setTimeout(this.#show, 500);
+			// Close On X Click
+			this.querySelector("dialog > header > button").onclick = this.#hide;
 
-      // Create Click Event
-      else if(this.getAttribute("trigger") === "click")
+			// Close on click the ::backdrop
+			this.dialog.addEventListener("click", ()=>{if(event.target === this.dialog) this.#hide();});
+		}
 
-        if(!!this.hasAttribute("type") === true && !!this.hasAttribute("value") === true){
+	}
 
-          if(this.getAttribute("type") === "icon"){
-            if(this.hasAttribute("button") === true)
-              this.querySelector("trigger").innerHTML = `<button><x-icon color="ffffff" name="${this.getAttribute("value")}"></x-icon></button>`;
+	#show = ()=> {
+		this.dialog.showModal();
+		this.dialog.removeAttribute("inert");
+		this.#animationIn();
 
-            else
-              this.querySelector("trigger").innerHTML = `<x-icon color="ffffff" name="${this.getAttribute("value")}"></x-icon>`;
-          }
+		// disable scrolling
+		document.body.style = "overflow: hidden";
+	}
 
-          else if(this.getAttribute("type") === "text"){
-            if(this.hasAttribute("button") === true)
-              this.querySelector("trigger").innerHTML = `<button>${this.getAttribute("value")}</button>`;
+	#hide = ()=> {
+		this.dialog.setAttribute("inert", "");
+		this.#animationOut();
 
-            else
-              this.querySelector("trigger").innerHTML = `${this.getAttribute("value")}`;
+		// enable scrolling
+		document.body.removeAttribute("style");
+	}
 
-          }
+	#animationIn = ()=>{
+		this.dialog.setAttribute("opening", "");
+	}
 
-        }
-
-
-      // Show On Click trigger
-      this.querySelector("trigger").onclick = this.#show;
-
-      // Close On Cover Click
-      window.Cover.onClickExecute(this.#hide);
-
-      // Close On X Click
-      this.querySelector("modal>header>x-icon").onclick = this.#hide;
-    }
-
-  }
-
-  #show = ()=>{
-    if(this.shown === true || Modal.#inUse === true) return;
-
-    Modal.#inUse = true;
-
-    this.shown = true;
-
-    this.querySelector("modal").classList.remove("hide");
-    this.querySelector("modal").classList.add("show");
-
-    window.Cover.show(this.zIndexOfParent);
-  }
-
-  // Regular Function Missing The Context Of "this" When Passed To "window.Cover.onClickExecute"
-  #hide = ()=>{
-    if(this.shown === false) return;
-
-    Modal.#inUse = false;
-
-    this.shown = false;
-
-    this.querySelector("modal").classList.remove("show");
-    this.querySelector("modal").classList.add("hide");
-
-    window.Cover.hide();
-  }
-
+	#animationOut = ()=>{
+		this.dialog.removeAttribute("opening");
+		setTimeout(()=> this.dialog.close(), parseInt(CSS.getValue("--transition-velocity")));
+	}
 };
 
 window.customElements.define('x-modal', Modal);
