@@ -245,7 +245,7 @@ x-modal{
 			overflow-y: scroll;
 
 			padding: var(--padding);
-			padding-top: 25px;
+			padding-top: 15px;
 
 			display: grid;
 			place-items: center;
