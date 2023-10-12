@@ -561,6 +561,11 @@
     "ru":"Стиль",
     "uz":"Uslub"
   },
+  "table":{
+    "en":"Table",
+    "ru":"Таблица",
+    "uz":"Jadval"
+  },
   "tel":{
     "en":"Tel:",
     "ru":"Тел:",
