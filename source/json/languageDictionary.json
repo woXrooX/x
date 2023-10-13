@@ -296,6 +296,11 @@
     "ru":"Чтобы использовать наш сервис, включите JavaScript",
     "uz":"Bizning xizmatimizdan foydalanish uchun JavaScript-ni yoqing"
   },
+  "introduction":{
+    "en":"Introduction",
+    "ru":"Интродукция",
+    "uz":"Kirish"
+  },
   "invalidAgeWasProvided":{
     "en":"Invalid age was provided",
     "ru":"Указан неверный возраст",
@@ -476,6 +481,11 @@
     "ru":"Товары",
     "uz":"Mahsulotlar"
   },
+  "quickStart":{
+    "en":"Quick start",
+    "ru":"Быстрый старт",
+    "uz":"Tez boshlash"
+  },
   "random":{
     "en":"Random",
     "ru":"Случайный",
@@ -580,6 +590,11 @@
     "en":"Test",
     "ru":"Тест",
     "uz":"Sinov"
+  },
+  "text":{
+    "en":"Text",
+    "ru":"Текст",
+    "uz":"Matn"
   },
   "title":{
     "en":"Title",
