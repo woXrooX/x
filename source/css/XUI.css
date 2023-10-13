@@ -654,7 +654,6 @@
 
 		row, column{
 			display: flex;
-			max-width: 100vw;
 		}
 
 		row{
@@ -664,8 +663,6 @@
 		}
 
 		column{
-			width: auto;
-
 			flex-direction: column;
 			align-items: center;
 		}
