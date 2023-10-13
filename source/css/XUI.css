@@ -140,7 +140,6 @@
 	@layer text{
 		/** Colors **/
 		.text-color-brand{color: var(--color-brand);}
-		.text-color-brand{color: var(--color-brand);}
 
 		.text-color-primary{color: var(--color-text-primary);}
 		.text-color-secondary{color: var(--color-text-secondary);}
@@ -151,7 +150,7 @@
 		.text-color-warning{color: var(--color-warning);}
 		.text-color-error{color: var(--color-error);}
 
-		/** Align **/
+		/** Alignment **/
 		.text-left{text-align: left;}
 		.text-center{text-align: center;}
 		.text-right{text-align: right;}
@@ -321,6 +320,33 @@
 		/********************* v1 END *********************/
 	}
 
+	@layer surfaces{
+		/* Clean */
+		.surface-clean{
+			background-color: var(--color-main-tint-3);
+
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+		}
+
+		/* 2D */
+		.surface-2D{
+			background-color: var(--color-main-tint-3);
+
+			border-radius: 0px;
+			border-left: 1px solid var(--color-main-tint-2);
+			border-top: 1px solid var(--color-main-tint-4);
+			border-right: 1px solid var(--color-main-tint-4);
+			border-bottom: 1px solid var(--color-main-tint-2);
+		}
+
+		/* TO DO: */
+		/* Success */
+		/* Info */
+		/* Warning */
+		/* Error */
+	}
+
 	@layer backgrounds{
 		/* Brand */
 		.bg-brand{background-color: var(--color-brand);}
@@ -354,31 +380,39 @@
 		.bg-gradient-45    {background-image: linear-gradient(45deg, var(--color-main-tint-2), var(--color-main-tint-6) 80%);}
 	}
 
-	@layer surfaces{
-		/* Clean */
-		.surface-clean{
-			background-color: var(--color-main-tint-3);
+	@layer layout{
+		container{
+			display: grid;
+			place-items: center;
 
-			border-radius: var(--radius);
-			box-shadow: var(--shadow);
+			width: 100%;
+			height: 100%;
 		}
 
-		/* 2D */
-		.surface-2D{
-			background-color: var(--color-main-tint-3);
-
-			border-radius: 0px;
-			border-left: 1px solid var(--color-main-tint-2);
-			border-top: 1px solid var(--color-main-tint-4);
-			border-right: 1px solid var(--color-main-tint-4);
-			border-bottom: 1px solid var(--color-main-tint-2);
+		row, column{
+			display: flex;
 		}
 
-		/* TO DO: */
-		/* Success */
-		/* Info */
-		/* Warning */
-		/* Error */
+		row{
+			width: 100%;
+			flex-direction: row;
+			justify-content: center;
+		}
+
+		column{
+			flex-direction: column;
+			align-items: center;
+		}
+
+		@media only screen and (max-width: 600px) {
+			row{
+				flex-direction: column;
+				width: 100% !important;
+			}
+			column{
+				width: 100% !important;
+			}
+		}
 	}
 
 	@layer sizing{
@@ -640,41 +674,6 @@
 			.max-vh-90{max-height: 90vh;}
 			.max-vh-95{max-height: 95vh;}
 			.max-vh-100{max-height: 100vh;}
-		}
-	}
-
-	@layer layout{
-		container{
-			display: grid;
-			place-items: center;
-
-			width: 100%;
-			height: 100%;
-		}
-
-		row, column{
-			display: flex;
-		}
-
-		row{
-			width: 100%;
-			flex-direction: row;
-			justify-content: center;
-		}
-
-		column{
-			flex-direction: column;
-			align-items: center;
-		}
-
-		@media only screen and (max-width: 600px) {
-			row{
-				flex-direction: column;
-				width: 100% !important;
-			}
-			column{
-				width: 100% !important;
-			}
 		}
 	}
 
