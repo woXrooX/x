@@ -250,6 +250,18 @@ x-modal{
 			display: grid;
 			place-items: center;
 		}
+
+		/* @media only screen and (max-width: 600px){
+			width: 95vw;
+			min-height: 50vh;
+			max-height: 90vh;
+
+			transform: translate(-50%, 100%) scale(1);
+
+			&[opening]{
+				transform: translate(-50%, calc(50vh - calc(100% + 20px))) scale(1);
+			}
+		} */
 	}
 
 	& > trigger{
