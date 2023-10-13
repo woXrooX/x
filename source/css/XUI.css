@@ -320,6 +320,413 @@
 		/********************* v1 END *********************/
 	}
 
+	@layer form{
+		/** Form Variables START **/
+		:root{
+		--f-padding: 10px;
+		--f-radius: 5px;
+		--f-gap: 10px;
+		--f-height: 40px;
+		--f-width: 100%;
+		--f-font-size: 20px;
+		--f-border: 1px solid var(--color-text-secondary);
+		--f-transition: var(--transition-velocity) ease-in-out;
+		--f-transition-property: background-color, border;
+		}
+		/** Form Variables END **/
+
+		form{
+			width: var(--f-width);
+
+			display: grid;
+			grid-gap: var(--f-gap);
+
+			& label{
+				width: 100%;
+
+				& > p{
+					font-size: 0.8rem;
+					min-height: 1rem;
+					display: inline-block;
+					padding: var(--padding);
+				}
+			}
+
+			& fieldset{
+				padding: var(--f-padding);
+				border-radius: var(--f-radius);
+				border: var(--f-border);
+
+				display: flex;
+				flex-direction: column;
+				gap: var(--f-gap);
+
+				& legend{
+					background-color: var(--color-text-primary);
+					color: var(--color-text-accent);
+					border-radius: var(--f-radius);
+					padding: 2px 5px;
+				}
+
+			}
+		}
+
+		/** select, textarea, imput -> type = [text, password, eMail, number, color, file, date, tel, range] START **/
+		select,
+		textarea,
+		input:where([type=text], [type=eMail], [type=password], [type=number], [type=color], [type=file], [type=date], [type=tel], [type=range]){
+			background-color: var(--color-main-tint-3);
+			width: var(--f-width);
+			height: var(--f-height);
+			font-size: var(--f-font-size);
+			padding: 0 var(--f-padding);
+			border-radius: var(--f-radius);
+			border: var(--f-border);
+
+			transition: var(--f-transition);
+			transition-property: var(--f-transition-property);
+		}
+		/** select, textarea, imput -> type = [text, password, eMail, number, color, file, date, tel, range] END **/
+
+		/** :hover & :focus -> inputs & textarea & select START **/
+		select:not(:disabled):where(:hover, :focus),
+		textarea:not(:disabled):where(:hover, :focus),
+		input[type=number]:not(:disabled):where(:hover, :focus),
+		input:not(:disabled):where(:hover, :focus){
+			background-color: var(--color-main-tint-5);
+			border: 1px solid var(--color-text-primary);
+		}
+		/** :hover & :focus -> inputs & textarea & select END **/
+
+		/** Textarea START **/
+		textarea{
+			height: unset;
+			font-size: calc(var(--f-font-size) / 1.5);
+			min-height: 150px;
+			resize: vertical;
+			padding: var(--f-padding);
+		}
+		/** Textarea END **/
+
+		/** input[type=color] START **/
+		/* Chrome X */
+		input[type=color]::-webkit-color-swatch-wrapper{
+			padding: 5px;
+			width: var(--f-width);
+		}
+
+		/* Chrome Y */
+		input[type=color]::-webkit-color-swatch{
+			border: none;
+			border-radius: var(--f-radius);
+			height: 100%;
+		}
+
+		/* Firefox X */
+		input[type=color]::-moz-color-swatch-wrapper {
+			padding: 5px;
+			width: var(--f-width);
+		}
+
+		/* Firefox Y */
+		input[type=color]::-moz-color-swatch{
+			border: none;
+			border-radius: var(--f-radius);
+			height: 100%;
+		}
+		/** input[type=color] END **/
+
+		/** input[type=file] START **/
+		/* Input */
+		input[type=file]{
+			padding: var(--padding);
+			font-size: var(--f-font-size);
+		}
+
+		/* File Button */
+		input[type=file]::file-selector-button{
+			background-color: var(--color-main);
+			color: white;
+			font-size: var(--f-font-size);
+
+			padding: 3px 10px;
+
+			border: none;
+			border-radius: var(--f-radius);
+
+			cursor: pointer;
+
+			filter: brightness(120%);
+			transition: var(--transition-velocity) filter;
+		}
+
+		/* File Button :hover */
+		input[type=file]::file-selector-button:not(:disabled):hover{
+			filter: brightness(80%);
+		}
+		/** input[type=file] END **/
+
+		/** input[type=number] Hide Arrow START **/
+		/* Firefox */
+		input[type=number]{-moz-appearance: textfield;}
+
+		/* Chrome, Safari, Edge, Opera */
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button{-webkit-appearance: none;}
+		/** input[type=number] END **/
+
+		/** input[type=radio] & input[type=checkbox] START **/
+		input:where([type=radio], [type=checkbox]){
+			width: 20px;
+			height: auto;
+		}
+		/** input[type=radio] & input[type=checkbox] END **/
+
+		/** select hide arrow START **/
+		/* form :not(input:where([type=radio], [type=checkbox])), */
+		select{
+			appearance: none;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+		}
+		/** select hide arrow END **/
+
+		/** input[type=submit] & button START **/
+		button,
+		input[type=submit]{
+			cursor: pointer;
+			user-select: none;
+
+			min-width: fit-content;
+
+			background-color: var(--color-main);
+			color: white;
+			text-transform: uppercase;
+
+			overflow: hidden;
+			width: auto;
+			height: var(--f-height);
+
+			padding: 0px var(--f-padding);
+			border-radius: var(--f-radius);
+			border: none;
+			box-shadow: 0px 5px 10px 0px rgba(0 0 0 / 0.3);
+
+			filter: brightness(120%);
+			transition: var(--transition-velocity) ease-in-out;
+			transition-property: filter transform box-shadow;
+		}
+
+		/* On Hover */
+		button:not(:disabled):where(:hover),
+		input[type=submit]:not(:disabled):where(:hover){
+			filter: brightness(80%);
+		}
+
+		/* On Active */
+		button:not(:disabled):where(:active),
+		input[type=submit]:not(:disabled):where(:active){
+			transform: translateY(5px);
+			box-shadow: 0px 5px 10px -5px rgba(0 0 0 / 0.3);
+		}
+
+		/* On Focus */
+		button:not(:disabled):where(:focus),
+		input[type=submit]:not(:disabled):where(:focus){
+		}
+		/** input[type=submit] & button END **/
+	}
+
+	@layer table{
+		table{
+			--table-radius: 3px;
+
+			font-size: 0.7rem;
+
+			/* make table cells with same */
+			table-layout: auto;
+
+			display: block;
+			width: 100%;
+
+			border: 1px solid var(--color-main);
+			border-radius: var(--radius);
+			padding: var(--padding);
+
+			&.x-default{
+				& > thead{
+					background-color: var(--color-main-tint-10);
+
+					& > tr{
+						& > th{
+							color: var(--color-text-accent);
+							font-weight: bold;
+
+							border-radius: var(--table-radius);
+							padding: var(--padding);
+						}
+					}
+				}
+
+				& > tbody{
+					& > tr{
+						transition: var(--transition-velocity) ease-in-out background-color;
+
+						&:nth-child(odd){
+							background-color: var(--color-main-tint-4);
+						}
+
+						&:nth-child(even){
+							background-color: var(--color-main-tint-5);
+						}
+
+						&:hover{
+							background-color: var(--color-main-tint-7);
+						}
+
+						& > td{
+							border-radius: var(--table-radius);
+							padding: var(--padding);
+						}
+					}
+				}
+
+				& > tfoot{
+					background-color: var(--color-main-tint-9);
+
+					& > tr{
+						& > td{
+							color: var(--color-text-accent);
+
+							border-radius: var(--table-radius);
+							padding: var(--padding);
+						}
+					}
+				}
+			}
+
+			&.x-skeleton{
+				border-collapse: collapse;
+
+				& > thead{
+					& > tr{
+						& > th{
+							color: var(--color-text-primary);
+							font-weight: bold;
+
+							padding: var(--padding);
+						}
+					}
+				}
+
+				& > tbody{
+					& > tr{
+						transition: var(--transition-velocity) ease-in-out background-color;
+
+						&:hover{
+							background-color: var(--color-main-tint-4);
+						}
+
+						& > td{
+							border: 1px solid var(--color-main);
+							padding: var(--padding);
+						}
+					}
+				}
+
+				& > tfoot{
+					& > tr{
+						& > td{
+							color: var(--color-text-secondary);
+
+							border-radius: var(--table-radius);
+							padding: var(--padding);
+						}
+					}
+				}
+
+			}
+
+			&.x-clean{
+				border-collapse: collapse;
+
+				& > thead{
+					background-color: var(--color-main-tint-1);
+
+					& > tr{
+						& > th{
+							color: var(--color-text-primary);
+							font-weight: bold;
+
+							padding: var(--padding);
+
+							&:first-child{
+								border-top-left-radius: var(--radius);
+							}
+
+							&:last-child{
+								border-top-right-radius: var(--radius);
+							}
+						}
+					}
+				}
+
+				& > tbody{
+					background-color: var(--color-main-tint-2);
+
+					& > tr{
+						transition: var(--transition-velocity) ease-in-out background-color;
+
+						&:hover{
+							background-color: var(--color-main-tint-4);
+						}
+
+						& > td{
+							padding: var(--padding);
+						}
+					}
+				}
+
+				&:not(:has(tfoot)) tbody{
+					& > tr{
+						&:last-child{
+							& > td{
+								&:first-child{
+									border-bottom-left-radius: var(--radius);
+								}
+
+								&:last-child{
+									border-bottom-right-radius: var(--radius);
+								}
+							}
+						}
+					}
+				}
+
+				& > tfoot{
+					background-color: var(--color-main-tint-1);
+					border-block-start: 1px solid var(--color-main-tint-3);
+
+					& > tr{
+						& > td{
+							color: var(--color-text-secondary);
+
+							padding: var(--padding);
+
+							&:first-child{
+								border-bottom-left-radius: var(--radius);
+							}
+
+							&:last-child{
+								border-bottom-right-radius: var(--radius);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	@layer surfaces{
 		/* Clean */
 		.surface-clean{
@@ -925,413 +1332,6 @@
 			.gap-4{gap: calc(var(--gap) * 4);}
 			.gap-5{gap: calc(var(--gap) * 5);}
 		}
-	}
-
-	@layer table{
-		table{
-			--table-radius: 3px;
-
-			font-size: 0.7rem;
-
-			/* make table cells with same */
-			table-layout: auto;
-
-			display: block;
-			width: 100%;
-
-			border: 1px solid var(--color-main);
-			border-radius: var(--radius);
-			padding: var(--padding);
-
-			&.x-default{
-				& > thead{
-					background-color: var(--color-main-tint-10);
-
-					& > tr{
-						& > th{
-							color: var(--color-text-accent);
-							font-weight: bold;
-
-							border-radius: var(--table-radius);
-							padding: var(--padding);
-						}
-					}
-				}
-
-				& > tbody{
-					& > tr{
-						transition: var(--transition-velocity) ease-in-out background-color;
-
-						&:nth-child(odd){
-							background-color: var(--color-main-tint-4);
-						}
-
-						&:nth-child(even){
-							background-color: var(--color-main-tint-5);
-						}
-
-						&:hover{
-							background-color: var(--color-main-tint-7);
-						}
-
-						& > td{
-							border-radius: var(--table-radius);
-							padding: var(--padding);
-						}
-					}
-				}
-
-				& > tfoot{
-					background-color: var(--color-main-tint-9);
-
-					& > tr{
-						& > td{
-							color: var(--color-text-accent);
-
-							border-radius: var(--table-radius);
-							padding: var(--padding);
-						}
-					}
-				}
-			}
-
-			&.x-skeleton{
-				border-collapse: collapse;
-
-				& > thead{
-					& > tr{
-						& > th{
-							color: var(--color-text-primary);
-							font-weight: bold;
-
-							padding: var(--padding);
-						}
-					}
-				}
-
-				& > tbody{
-					& > tr{
-						transition: var(--transition-velocity) ease-in-out background-color;
-
-						&:hover{
-							background-color: var(--color-main-tint-4);
-						}
-
-						& > td{
-							border: 1px solid var(--color-main);
-							padding: var(--padding);
-						}
-					}
-				}
-
-				& > tfoot{
-					& > tr{
-						& > td{
-							color: var(--color-text-secondary);
-
-							border-radius: var(--table-radius);
-							padding: var(--padding);
-						}
-					}
-				}
-
-			}
-
-			&.x-clean{
-				border-collapse: collapse;
-
-				& > thead{
-					background-color: var(--color-main-tint-1);
-
-					& > tr{
-						& > th{
-							color: var(--color-text-primary);
-							font-weight: bold;
-
-							padding: var(--padding);
-
-							&:first-child{
-								border-top-left-radius: var(--radius);
-							}
-
-							&:last-child{
-								border-top-right-radius: var(--radius);
-							}
-						}
-					}
-				}
-
-				& > tbody{
-					background-color: var(--color-main-tint-2);
-
-					& > tr{
-						transition: var(--transition-velocity) ease-in-out background-color;
-
-						&:hover{
-							background-color: var(--color-main-tint-4);
-						}
-
-						& > td{
-							padding: var(--padding);
-						}
-					}
-				}
-
-				&:not(:has(tfoot)) tbody{
-					& > tr{
-						&:last-child{
-							& > td{
-								&:first-child{
-									border-bottom-left-radius: var(--radius);
-								}
-
-								&:last-child{
-									border-bottom-right-radius: var(--radius);
-								}
-							}
-						}
-					}
-				}
-
-				& > tfoot{
-					background-color: var(--color-main-tint-1);
-					border-block-start: 1px solid var(--color-main-tint-3);
-
-					& > tr{
-						& > td{
-							color: var(--color-text-secondary);
-
-							padding: var(--padding);
-
-							&:first-child{
-								border-bottom-left-radius: var(--radius);
-							}
-
-							&:last-child{
-								border-bottom-right-radius: var(--radius);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	@layer form{
-		/** Form Variables START **/
-		:root{
-		--f-padding: 10px;
-		--f-radius: 5px;
-		--f-gap: 10px;
-		--f-height: 40px;
-		--f-width: 100%;
-		--f-font-size: 20px;
-		--f-border: 1px solid var(--color-text-secondary);
-		--f-transition: var(--transition-velocity) ease-in-out;
-		--f-transition-property: background-color, border;
-		}
-		/** Form Variables END **/
-
-		form{
-			width: var(--f-width);
-
-			display: grid;
-			grid-gap: var(--f-gap);
-
-			& label{
-				width: 100%;
-
-				& > p{
-					font-size: 0.8rem;
-					min-height: 1rem;
-					display: inline-block;
-					padding: var(--padding);
-				}
-			}
-
-			& fieldset{
-				padding: var(--f-padding);
-				border-radius: var(--f-radius);
-				border: var(--f-border);
-
-				display: flex;
-				flex-direction: column;
-				gap: var(--f-gap);
-
-				& legend{
-					background-color: var(--color-text-primary);
-					color: var(--color-text-accent);
-					border-radius: var(--f-radius);
-					padding: 2px 5px;
-				}
-
-			}
-		}
-
-		/** select, textarea, imput -> type = [text, password, eMail, number, color, file, date, tel, range] START **/
-		select,
-		textarea,
-		input:where([type=text], [type=eMail], [type=password], [type=number], [type=color], [type=file], [type=date], [type=tel], [type=range]){
-			background-color: var(--color-main-tint-3);
-			width: var(--f-width);
-			height: var(--f-height);
-			font-size: var(--f-font-size);
-			padding: 0 var(--f-padding);
-			border-radius: var(--f-radius);
-			border: var(--f-border);
-
-			transition: var(--f-transition);
-			transition-property: var(--f-transition-property);
-		}
-		/** select, textarea, imput -> type = [text, password, eMail, number, color, file, date, tel, range] END **/
-
-		/** :hover & :focus -> inputs & textarea & select START **/
-		select:not(:disabled):where(:hover, :focus),
-		textarea:not(:disabled):where(:hover, :focus),
-		input[type=number]:not(:disabled):where(:hover, :focus),
-		input:not(:disabled):where(:hover, :focus){
-			background-color: var(--color-main-tint-5);
-			border: 1px solid var(--color-text-primary);
-		}
-		/** :hover & :focus -> inputs & textarea & select END **/
-
-		/** Textarea START **/
-		textarea{
-			height: unset;
-			font-size: calc(var(--f-font-size) / 1.5);
-			min-height: 150px;
-			resize: vertical;
-			padding: var(--f-padding);
-		}
-		/** Textarea END **/
-
-		/** input[type=color] START **/
-		/* Chrome X */
-		input[type=color]::-webkit-color-swatch-wrapper{
-			padding: 5px;
-			width: var(--f-width);
-		}
-
-		/* Chrome Y */
-		input[type=color]::-webkit-color-swatch{
-			border: none;
-			border-radius: var(--f-radius);
-			height: 100%;
-		}
-
-		/* Firefox X */
-		input[type=color]::-moz-color-swatch-wrapper {
-			padding: 5px;
-			width: var(--f-width);
-		}
-
-		/* Firefox Y */
-		input[type=color]::-moz-color-swatch{
-			border: none;
-			border-radius: var(--f-radius);
-			height: 100%;
-		}
-		/** input[type=color] END **/
-
-		/** input[type=file] START **/
-		/* Input */
-		input[type=file]{
-			padding: var(--padding);
-			font-size: var(--f-font-size);
-		}
-
-		/* File Button */
-		input[type=file]::file-selector-button{
-			background-color: var(--color-main);
-			color: white;
-			font-size: var(--f-font-size);
-
-			padding: 3px 10px;
-
-			border: none;
-			border-radius: var(--f-radius);
-
-			cursor: pointer;
-
-			filter: brightness(120%);
-			transition: var(--transition-velocity) filter;
-		}
-
-		/* File Button :hover */
-		input[type=file]::file-selector-button:not(:disabled):hover{
-			filter: brightness(80%);
-		}
-		/** input[type=file] END **/
-
-		/** input[type=number] Hide Arrow START **/
-		/* Firefox */
-		input[type=number]{-moz-appearance: textfield;}
-
-		/* Chrome, Safari, Edge, Opera */
-		input::-webkit-outer-spin-button,
-		input::-webkit-inner-spin-button{-webkit-appearance: none;}
-		/** input[type=number] END **/
-
-		/** input[type=radio] & input[type=checkbox] START **/
-		input:where([type=radio], [type=checkbox]){
-			width: 20px;
-			height: auto;
-		}
-		/** input[type=radio] & input[type=checkbox] END **/
-
-		/** select hide arrow START **/
-		/* form :not(input:where([type=radio], [type=checkbox])), */
-		select{
-			appearance: none;
-			-webkit-appearance: none;
-			-moz-appearance: none;
-		}
-		/** select hide arrow END **/
-
-		/** input[type=submit] & button START **/
-		button,
-		input[type=submit]{
-			cursor: pointer;
-			user-select: none;
-
-			min-width: fit-content;
-
-			background-color: var(--color-main);
-			color: white;
-			text-transform: uppercase;
-
-			overflow: hidden;
-			width: auto;
-			height: var(--f-height);
-
-			padding: 0px var(--f-padding);
-			border-radius: var(--f-radius);
-			border: none;
-			box-shadow: 0px 5px 10px 0px rgba(0 0 0 / 0.3);
-
-			filter: brightness(120%);
-			transition: var(--transition-velocity) ease-in-out;
-			transition-property: filter transform box-shadow;
-		}
-
-		/* On Hover */
-		button:not(:disabled):where(:hover),
-		input[type=submit]:not(:disabled):where(:hover){
-			filter: brightness(80%);
-		}
-
-		/* On Active */
-		button:not(:disabled):where(:active),
-		input[type=submit]:not(:disabled):where(:active){
-			transform: translateY(5px);
-			box-shadow: 0px 5px 10px -5px rgba(0 0 0 / 0.3);
-		}
-
-		/* On Focus */
-		button:not(:disabled):where(:focus),
-		input[type=submit]:not(:disabled):where(:focus){
-		}
-		/** input[type=submit] & button END **/
 	}
 
 	/* Everything with no specific layer or could not name or too small to have own section/layer goes under other */
