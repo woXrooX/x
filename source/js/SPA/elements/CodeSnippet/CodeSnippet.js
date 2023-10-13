@@ -35,7 +35,7 @@ export default class CodeSnippet extends HTMLElement{
     this.RAW = this.RAW.substring(1, this.RAW.length);
 
     // Remove last new lines
-    this.RAW = this.RAW.substring(0, this.RAW.length-5);
+    this.RAW = this.RAW.substring(0, this.RAW.length-4);
 
     // If language is not defined, then exit
     if(!!this.hasAttribute("lang") === false) this.lang = "RAW";
