@@ -9,7 +9,7 @@
   "accountType":{
     "en":"Account type",
     "ru":"Тип аккаунта",
-    "uz":"Foydalanuvchi turi"
+    "uz":"Akkaunt turi"
   },
   "add":{
     "en":"Add",
@@ -45,11 +45,6 @@
     "en":"By clicking Sign up, you agree to our <a href='/termsOfUse'>Terms of use</a> and that you have read our <a href='/privacyPolicy'>Privacy Policy</a> , Including our <a href='/cookieTerms'>Cookie Use</a>",
     "ru":"Нажимая «Зарегистрироваться», вы соглашаетесь с нашими <a href='/termsOfUse'>Условиями использования</a> и с нашей <a href='/privacyPolicy'>Политикой конфиденциальности</a>, включая <a href = '/cookieTerms'>Использование файлов cookie</a>",
     "uz":"Ro'yxatdan o'tishni bosish orqali siz <a href='/termsOfUse'>Foydalanish shartlari</a>, <a href='/privacyPolicy'>Maxfiylik siyosati</a> va <a href='/cookieTerms'>Cookie-fayllardan foydalanish</a> shartlarmizni o'qiganligingizni va rozi bo'lganingizni bildirasiz"
-  },
-  "ceo":{
-    "en":"CEO",
-    "ru":"Генеральный директор",
-    "uz":"Bosh ijrochi direktor"
   },
   "change":{
     "en":"Change",
@@ -130,11 +125,6 @@
     "en":"Successfully deleted",
     "ru":"Успешно удалено",
     "uz":"Muvaffaqiyatli oʻchirildi"
-  },
-  "demo":{
-    "en":"Demo",
-    "ru":"Демо",
-    "uz":"Namoyish"
   },
   "didNotReceiveCode":{
     "en":"Did not receive a code?",
