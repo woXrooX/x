@@ -10,10 +10,7 @@ export default class Modal extends HTMLElement{
 		// Clean the innerHTML
 		this.innerHTML = `
 			<dialog inert>
-				<header>
-					<div>${this.getAttribute("title") || ""}</div>
-					<button><x-icon name="x"></x-icon></button>
-				</header>
+				<button><x-icon name="x"></x-icon></button>
 				<main>${this.DOM}</main>
 			</dialog>
 			<trigger></trigger>
@@ -56,7 +53,7 @@ export default class Modal extends HTMLElement{
 			this.trigger.onclick = this.#show;
 
 			// Close On X Click
-			this.querySelector("dialog > header > button").onclick = this.#hide;
+			this.querySelector("dialog > button").onclick = this.#hide;
 
 			// Close on click the ::backdrop
 			this.dialog.addEventListener("click", ()=>{if(event.target === this.dialog) this.#hide();});

@@ -162,11 +162,11 @@ x-modal{
 	& > dialog{
 		pointer-events: none;
 
-		overflow: visible;
 		opacity: 0;
 
 		background-color: var(--color-main-tint-4);
 
+		min-width: 300px;
 		border: 0px;
 		border-radius: var(--radius);
 		box-shadow: var(--shadow);
@@ -200,43 +200,20 @@ x-modal{
 			}
 		}
 
-		& > header{
-			width: 100%;
-			height: auto;
+		& > button{
+			width: 30px;
+			height: 30px;
 
-			box-shadow: var(--shadow);
+			padding: 2px;
 
-			& > div{
-				text-align: left;
-
-				width: 100%;
-				height: 100%;
-
-				background-color: var(--color-main-tint-2);
-				border-radius: var(--radius) var(--radius) 0px 0px;
-				padding: 5px;
-
-				&:empty{
-					background-color: transparent;
-				}
-			}
-
-			& > button{
-				width: 35px !important;
-				height: 35px !important;
-
-				padding: 5px;
-
-				border-radius: 50%;
-				position: absolute;
-				top: -15px;
-				right: -15px;
-			}
+			position: fixed;
+			top: 5px;
+			right: 5px;
 		}
 
 		& > main{
 			width: auto;
-			max-width: 100vw;
+			max-width: 80vw;
 
 			height: auto;
 			max-height: 80vh;
@@ -245,29 +222,16 @@ x-modal{
 			overflow-y: scroll;
 
 			padding: var(--padding);
-			padding-top: 15px;
+			padding-top: 40px;
 
 			display: grid;
 			place-items: center;
 
-
-      @media only screen and (max-width: 600px){
-        min-height: 50vh;
-      }
-		}
-    
-		@media only screen and (max-width: 600px){
-			width: 95vw;
-			min-height: 50vh;
-			max-height: 95vh;
-
-			transform: translate(-50%, 100%) scale(1);
-
-			&[opening]{
-				transform: translate(-50%, calc(50vh - calc(100% + 10px))) scale(1);
+			@media only screen and (max-width: 600px){
+				max-width: 90dvw;
+				max-height: 90dvh;
 			}
 		}
-
 	}
 
 	& > trigger{
