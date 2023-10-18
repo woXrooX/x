@@ -10,7 +10,7 @@ export default class Modal extends HTMLElement{
 		// Clean the innerHTML
 		this.innerHTML = `
 			<dialog inert>
-				<button><x-icon name="x"></x-icon></button>
+				<button><x-icon name="x" color="ffffff"></x-icon></button>
 				<main>${this.DOM}</main>
 			</dialog>
 			<trigger></trigger>
