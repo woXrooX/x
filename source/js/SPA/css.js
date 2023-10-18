@@ -139,27 +139,8 @@ export default class CSS{
     CSS.currentColorMode = CSS.colorModes.DARK;
     CSS.#saveColorMode();
 
-    const rootStyles = document.querySelector(':root');
-    const hue = getComputedStyle(rootStyles).getPropertyValue("--color-main-hue");
-
-    rootStyles.style.setProperty("--color-main-tint-1", `hsla(${hue}, 10%, 10%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-2", `hsla(${hue}, 10%, 15%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-3", `hsla(${hue}, 10%, 20%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-4", `hsla(${hue}, 10%, 25%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-5", `hsla(${hue}, 10%, 30%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-6", `hsla(${hue}, 10%, 35%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-7", `hsla(${hue}, 10%, 50%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-8", `hsla(${hue}, 10%, 65%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-9", `hsla(${hue}, 10%, 80%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-10", `hsla(${hue}, 10%, 95%, 1)`);
-
-    rootStyles.style.setProperty("--color-text-primary", `hsla(${hue}, 15%, 95%, 1)`);
-    rootStyles.style.setProperty("--color-text-secondary", `hsla(${hue}, 5%, 75%, 1)`);
-    rootStyles.style.setProperty("--color-text-accent", `hsla(${hue}, ${CSS.getValue("--color-main-saturation")}, 5%, 1)`);
-
-    rootStyles.style.setProperty("color-scheme", "dark");
-
-    rootStyles.style.setProperty("--shadow", `0px 10px 10px -5px hsla(${hue} 50% 3% / 0.3)`);
+	document.documentElement.classList.add("dark");
+	document.documentElement.classList.remove("light");
   }
 
   static #light(){
@@ -168,27 +149,8 @@ export default class CSS{
     CSS.currentColorMode = CSS.colorModes.LIGHT;
     CSS.#saveColorMode();
 
-    const rootStyles = document.querySelector(':root');
-    const hue = getComputedStyle(rootStyles).getPropertyValue("--color-main-hue");
-
-    rootStyles.style.setProperty("--color-main-tint-1", `hsla(${hue}, 20%, 100%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-2", `hsla(${hue}, 20%, 95%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-3", `hsla(${hue}, 20%, 90%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-4", `hsla(${hue}, 20%, 85%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-5", `hsla(${hue}, 20%, 80%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-6", `hsla(${hue}, 20%, 75%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-7", `hsla(${hue}, 20%, 60%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-8", `hsla(${hue}, 20%, 45%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-9", `hsla(${hue}, 20%, 30%, 1)`);
-    rootStyles.style.setProperty("--color-main-tint-10", `hsla(${hue}, 20%, 15%, 1)`);
-
-    rootStyles.style.setProperty("--color-text-primary", `hsla(${hue}, ${CSS.getValue("--color-main-saturation")}%, 10%, 1)`);
-    rootStyles.style.setProperty("--color-text-secondary", `hsla(${hue}, 30%, 30%, 1)`);
-    rootStyles.style.setProperty("--color-text-accent", `hsla(${hue}, 15%, 95%, 1)`);
-
-    rootStyles.style.setProperty("color-scheme", "light");
-
-    rootStyles.style.setProperty("--shadow", `0px 10px 10px -5px hsla(${hue} 10% 2% / 0.2)`);
+	document.documentElement.classList.add("light");
+	document.documentElement.classList.remove("dark");
   }
 }
 
