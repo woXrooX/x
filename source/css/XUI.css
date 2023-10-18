@@ -1,55 +1,103 @@
 @layer XUI{
 	@layer root{
-		:root{
-			font-size: 22px;
+		html{
+			&:root{
+				font-size: 22px;
 
-			/* Default color schema starts with dark mode */
-			--color-main-hue: 230deg;
-			--color-main-saturation: 13%;
-			--color-main-lightness: 9%;
+				/* Default color schema starts with dark mode */
+				--color-main-hue: 230deg;
+				--color-main-saturation: 13%;
+				--color-main-lightness: 9%;
 
-			--color-main: hsla(var(--color-main-hue), var(--color-main-saturation), var(--color-main-lightness), 1);
+				--color-main: hsla(var(--color-main-hue), var(--color-main-saturation), var(--color-main-lightness), 1);
 
-			/* Aliases */
-			--color-brand: var(--color-main);
+				/* Aliases */
+				--color-brand: var(--color-main);
 
-			/*
-				- Tint, shade and tone
-				In color theory, a tint is a mixture of a color with white, which increases lightness, while a shade is a mixture with black, which increases darkness.
-				Both processes affect the resulting color mixture's relative saturation.
-				A tone is produced either by mixing a color with gray, or by both tinting and shading.
-			*/
-			--color-main-tint-1: hsla(var(--color-main-hue), 10%, 10%, 1);
-			--color-main-tint-2: hsla(var(--color-main-hue), 10%, 15%, 1);
-			--color-main-tint-3: hsla(var(--color-main-hue), 10%, 20%, 1);
-			--color-main-tint-4: hsla(var(--color-main-hue), 10%, 25%, 1);
-			--color-main-tint-5: hsla(var(--color-main-hue), 10%, 30%, 1);
-			--color-main-tint-6: hsla(var(--color-main-hue), 10%, 35%, 1);
-			--color-main-tint-7: hsla(var(--color-main-hue), 10%, 50%, 1);
-			--color-main-tint-8: hsla(var(--color-main-hue), 10%, 65%, 1);
-			--color-main-tint-9: hsla(var(--color-main-hue), 10%, 80%, 1);
-			--color-main-tint-10: hsla(var(--color-main-hue), 10%, 95%, 1);
+				/*
+					- Tint, shade and tone
+					In color theory, a tint is a mixture of a color with white, which increases lightness, while a shade is a mixture with black, which increases darkness.
+					Both processes affect the resulting color mixture's relative saturation.
+					A tone is produced either by mixing a color with gray, or by both tinting and shading.
+				*/
+				--color-main-tint-1: hsla(var(--color-main-hue), 10%, 10%, 1);
+				--color-main-tint-2: hsla(var(--color-main-hue), 10%, 15%, 1);
+				--color-main-tint-3: hsla(var(--color-main-hue), 10%, 20%, 1);
+				--color-main-tint-4: hsla(var(--color-main-hue), 10%, 25%, 1);
+				--color-main-tint-5: hsla(var(--color-main-hue), 10%, 30%, 1);
+				--color-main-tint-6: hsla(var(--color-main-hue), 10%, 35%, 1);
+				--color-main-tint-7: hsla(var(--color-main-hue), 10%, 50%, 1);
+				--color-main-tint-8: hsla(var(--color-main-hue), 10%, 65%, 1);
+				--color-main-tint-9: hsla(var(--color-main-hue), 10%, 80%, 1);
+				--color-main-tint-10: hsla(var(--color-main-hue), 10%, 95%, 1);
 
-			--color-text-primary: hsla(var(--color-main-hue), 15%, 95%, 1);
-			--color-text-secondary: hsla(var(--color-main-hue), 5%, 75%, 1);
-			--color-text-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1);
+				--color-text-primary: hsla(var(--color-main-hue), 15%, 95%, 1);
+				--color-text-secondary: hsla(var(--color-main-hue), 5%, 75%, 1);
+				--color-text-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1);
 
-			/* Situational */
-			--color-success: hsla(120, 100%, 25%, 1);
-			--color-info: hsla(211.059, 100%, 50%, 1);
-			--color-warning: hsla(46.286, 100%, 48%, 1);
-			--color-error: hsla(357.303, 82%, 57%, 1);
+				/* Situational */
+				--color-success: hsla(120, 100%, 25%, 1);
+				--color-info: hsla(211.059, 100%, 50%, 1);
+				--color-warning: hsla(46.286, 100%, 48%, 1);
+				--color-error: hsla(357.303, 82%, 57%, 1);
 
-			color-scheme: dark;
-			accent-color: var(--color-main);
+				color-scheme: dark;
+				accent-color: var(--color-main);
 
-			--padding: 5px;
-			--margin: 5px;
-			--gap: 20px;
-			--radius: 5px;
-			--blur: 10px;
-			--transition-velocity: 200ms;
-			--shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 50% 3% / 0.3);
+				--padding: 5px;
+				--margin: 5px;
+				--gap: 20px;
+				--radius: 5px;
+				--blur: 10px;
+				--transition-velocity: 200ms;
+				--shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 50% 3% / 0.3);
+			}
+
+			&.dark{
+				&:root{
+					color-scheme: dark;
+
+					--color-main-tint-1: hsla(var(--color-main-hue), 10%, 10%, 1);
+					--color-main-tint-2: hsla(var(--color-main-hue), 10%, 15%, 1);
+					--color-main-tint-3: hsla(var(--color-main-hue), 10%, 20%, 1);
+					--color-main-tint-4: hsla(var(--color-main-hue), 10%, 25%, 1);
+					--color-main-tint-5: hsla(var(--color-main-hue), 10%, 30%, 1);
+					--color-main-tint-6: hsla(var(--color-main-hue), 10%, 35%, 1);
+					--color-main-tint-7: hsla(var(--color-main-hue), 10%, 50%, 1);
+					--color-main-tint-8: hsla(var(--color-main-hue), 10%, 65%, 1);
+					--color-main-tint-9: hsla(var(--color-main-hue), 10%, 80%, 1);
+					--color-main-tint-10: hsla(var(--color-main-hue), 10%, 95%, 1);
+
+					--color-text-primary: hsla(var(--color-main-hue), 15%, 95%, 1);
+					--color-text-secondary: hsla(var(--color-main-hue), 5%, 75%, 1);
+					--color-text-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1);
+
+					--shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 50% 3% / 0.3);
+				}
+			}
+
+			&.light{
+				&:root{
+					color-scheme: light;
+
+					--color-main-tint-1: hsla(var(--color-main-hue), 20%, 100%, 1);
+					--color-main-tint-2: hsla(var(--color-main-hue), 20%, 95%, 1);
+					--color-main-tint-3: hsla(var(--color-main-hue), 20%, 90%, 1);
+					--color-main-tint-4: hsla(var(--color-main-hue), 20%, 85%, 1);
+					--color-main-tint-5: hsla(var(--color-main-hue), 20%, 80%, 1);
+					--color-main-tint-6: hsla(var(--color-main-hue), 20%, 75%, 1);
+					--color-main-tint-7: hsla(var(--color-main-hue), 20%, 60%, 1);
+					--color-main-tint-8: hsla(var(--color-main-hue), 20%, 45%, 1);
+					--color-main-tint-9: hsla(var(--color-main-hue), 20%, 30%, 1);
+					--color-main-tint-10: hsla(var(--color-main-hue), 20%, 15%, 1);
+
+					--color-text-primary: hsla(var(--color-main-hue), var(--color-main-saturation), 10%, 1);
+					--color-text-secondary: hsla(var(--color-main-hue), 30%, 30%, 1);
+					--color-text-accent: hsla(var(--color-main-hue), 15%, 95%, 1);
+
+					--shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 10% 2% / 0.2);
+				}
+			}
 		}
 	}
 
