@@ -142,7 +142,7 @@ body{
       display: flex;
       flex-direction: column;
       gap: calc(var(--gap) / 2);
-      
+
       & > section{
         & > section{
           &.parentMenu{
@@ -272,12 +272,11 @@ body{
 
     @media only screen and (max-width: 600px){
       width: 100vw;
-      
+
       & > header{
         & > x-icon[for=toggleAlwaysOpenMode]{
           display: none;
         }
-
       }
     }
 
