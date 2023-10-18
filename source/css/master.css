@@ -127,12 +127,12 @@ body{
 
     & > header{
       width: 100%;
-
       padding: calc(var(--padding) * 2);
 
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+
     }
 
     & > main{
@@ -143,11 +143,6 @@ body{
       flex-direction: column;
       gap: calc(var(--gap) / 2);
       
-      @media only screen and (max-width: 600px){
-        width: 100vw;
-      }
-  
-
       & > section{
         & > section{
           &.parentMenu{
@@ -274,6 +269,17 @@ body{
     }
 
     & > footer{}
+
+    @media only screen and (max-width: 600px){
+      width: 100vw;
+      
+      & > header{
+        & > x-icon[for=toggleAlwaysOpenMode]{
+          display: none;
+        }
+
+      }
+    }
 
   }
 
