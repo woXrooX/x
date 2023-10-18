@@ -6,21 +6,22 @@ export default class Menu{
   static #selectorParentMenuHyperlinks = `${Menu.selector} > main > section > section.parentMenu > a`;
   static #selectorSubMenuHyperlinks = `${Menu.selector} > main > section > section.subMenu > a`;
 
+  static #isMobile = window.matchMedia("(max-width: 600px)");
+
   static #elementMenuHamburgerButton = null;
   static #elementMenu = null;
 
   static #shown = false;
-
   // Modes
   static #modes = Object.freeze({
     DEFAULT: 0,
     ALWAYS_OPEN: 1,
     ICON_ONLY: 2
   });
-
+  
   static currentMode = Menu.#modes.DEFAULT;
-
-
+  
+  
   /////////////////// Init
   static init(){
     Log.info("Menu.init()");
@@ -41,6 +42,8 @@ export default class Menu{
     Menu.#onClickMenuButtonShow();
     Menu.#onClickCoverHide();
     Menu.#toggleAlwaysOpenMode();
+
+    if(Menu.#isMobile.matches) document.querySelector(`${Menu.selector} > header > x-icon[for=toggleAlwaysOpenMode]`).remove()
   }
 
   /////////////////// Create Menu | Re-Build

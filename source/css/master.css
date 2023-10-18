@@ -142,6 +142,11 @@ body{
       display: flex;
       flex-direction: column;
       gap: calc(var(--gap) / 2);
+      
+      @media only screen and (max-width: 600px){
+        width: 100vw;
+      }
+  
 
       & > section{
         & > section{
