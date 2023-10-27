@@ -7,7 +7,7 @@ export default class Modal extends HTMLElement{
 		// Save the DOM
 		this.DOM = this.innerHTML;
 
-		// Clean the innerHTML
+		// Structure
 		this.innerHTML = `
 			<dialog inert>
 				<button><x-icon name="x" color="ffffff"></x-icon></button>
@@ -18,9 +18,6 @@ export default class Modal extends HTMLElement{
 
 		this.dialog = this.querySelector("dialog");
 		this.trigger = this.querySelector("trigger");
-
-		// Parent z-index
-		this.zIndexOfParent = getComputedStyle(this.parentElement).getPropertyValue('z-index');
 
 		Trigger: {
 			const trigger = this.getAttribute("trigger");
@@ -36,7 +33,7 @@ export default class Modal extends HTMLElement{
 				let content;
 				switch(type){
 					case 'icon':
-						content = `<x-icon color="ffffff" name="${value}"></x-icon>`;
+						content = `<x-icon name="${value}"></x-icon>`;
 						break;
 					case 'text':
 						content = value;
@@ -58,7 +55,6 @@ export default class Modal extends HTMLElement{
 			// Close on click the ::backdrop
 			this.dialog.addEventListener("click", ()=>{if(event.target === this.dialog) this.#hide();});
 		}
-
 	}
 
 	#show = ()=> {
