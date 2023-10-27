@@ -103,184 +103,123 @@ body{
     }
   }
 
-  & > menu{
-    background-color: hsla(var(--color-main-hue), 10%, 25%, 0.1);
-    backdrop-filter: blur(100px);
-    height: 100vh;
-    width: auto;
+	& > menu{
+		background-color: hsla(var(--color-main-hue), 10%, 25%, 0.1);
+		backdrop-filter: blur(100px);
+		height: 100vh;
+		width: auto;
 
-    overflow-y: scroll;
+		overflow-y: scroll;
 
-    display: grid;
-    grid-template-rows: auto 2fr auto;
-    justify-items: start;
-    gap: var(--gap);
+		display: grid;
+		grid-template-rows: auto 2fr auto;
+		justify-items: start;
+		gap: var(--gap);
 
-    position: fixed;
-    z-index: var(--z-menu);
-    top: 0;
-    left: 0;
-    transform: translate(-100%, 0);
-    transition-duration: var(--transition-velocity);
-    transition-timing-function: ease;
-    transition-property: all;
+		position: fixed;
+		z-index: var(--z-menu);
+		top: 0;
+		left: 0;
+		transform: translate(-100%, 0);
+		transition-duration: var(--transition-velocity);
+		transition-timing-function: ease;
+		transition-property: all;
 
-    & > header{
-      width: 100%;
-      padding: calc(var(--padding) * 2);
+		& > header{
+			width: 100%;
+			padding: calc(var(--padding) * 2);
 
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+		}
 
-    }
+		& > main{
+			width: 100%;
+			padding: calc(var(--padding) * 2);
 
-    & > main{
-      width: 100%;
-      padding: calc(var(--padding) * 2);
+			display: flex;
+			flex-direction: column;
+			gap: calc(var(--gap) / 2);
 
-      display: flex;
-      flex-direction: column;
-      gap: calc(var(--gap) / 2);
+			& section{
+				&.container{
+					display: flex;
+					flex-direction: column;
 
-      & > section{
-        & > section{
-          &.parentMenu{
-            display: grid;
-            grid-template-columns: 2fr auto;
-            place-items: center;
+					& > section{
+						&.parentMenu{
+							display: flex;
+							flex-direction: row;
+							justify-content: space-between;
 
-            border: 1px solid transparent;
-            border-radius: var(--radius);
-            padding: var(--padding) calc(var(--padding) * 2);
+							border: 1px solid transparent;
+							border-radius: var(--radius);
+							padding: var(--padding) calc(var(--padding) * 2);
 
-            transition: var(--transition-velocity) ease-in-out;
-            transition-property: background-color, border;
+							transition: var(--transition-velocity) ease-in-out;
+							transition-property: background-color, border;
 
-            &:where([active], :hover){
-              background-color: hsla(var(--color-main-hue), 10%, 25%, 0.3);
+							&:where([active], :hover){background-color: hsla(var(--color-main-hue), 10%, 25%, 0.3);}
 
-            }
+							&:where([active]){border: 1px solid white;}
 
-            &:where([active]){
-              border: 1px solid white;
+							& > a{
+								width: 100%;
+								display: flex;
+								flex-direction: row;
+								align-items: center;
+								gap: var(--gap);
 
-            }
+								color: white;
+								font-size: 1rem;
+							}
 
-            & > a{
-              width: 100%;
+							& > x-icon{
+								&[for=toggleSubMenu]{
+									height: 30px;
+									width: 30px;
 
-              color: white;
-              font-size: 1rem;
+									transition: var(--transition-velocity) ease-in-out transform;
 
-              display: flex;
-              justify-content: flex-start;
-              align-items: center;
-              gap: var(--gap);
+									transform: rotate(90deg);
 
-              & > x-icon{
-                height: 30px;
-                width: 30px;
+									&.open{transform: rotate(0deg);}
+								}
+							}
+						}
 
-              }
+						&.subMenu{
+							display: none;
 
-            }
+							background-color: hsla(var(--color-main-hue), 10%, 25%, 0.2);
 
-            & > x-icon{
-              &[for=toggleSubMenu]{
-                height: 30px;
-                width: 30px;
+							margin-top: 5px;
+							padding: calc(var(--padding) * 2);
+							border-radius: var(--radius);
 
-                transition: var(--transition-velocity) ease-in-out transform;
+							&:empty{display: none;}
 
-              }
+							&.show{display: block;}
+						}
 
-              &[for=toggleSubMenu].open{
-                transform: scaleY(-1);
-              }
+						/* If submenu is empty do not show arrow icon */
+						&:has(+ .subMenu:empty) > x-icon[for=toggleSubMenu]{display: none;}
+					}
+				}
+			}
+		}
 
-            }
+		& > footer{}
 
-          }
+		@media only screen and (max-width: 600px){
+			width: 100vw;
 
-          &.subMenu{
-            background-color: hsla(var(--color-main-hue), 10%, 25%, 0.3);
-
-            margin-top: 5px;
-            padding: calc(var(--padding) * 2);
-            border-radius: var(--radius);
-
-            display: none;
-            flex-direction: column;
-            gap: calc(var(--gap) / 2);
-
-            &.show{
-              display: flex;
-            }
-
-            &:empty{
-              display: none;
-            }
-
-            & > a{
-              width: 100%;
-
-              color: white;
-              font-size: 0.8rem;
-
-              display: flex;
-              justify-content: flex-start;
-              align-items: center;
-              gap: 7px;
-
-              border: 1px solid transparent;
-              border-radius: var(--radius);
-              padding: var(--padding) calc(var(--padding) * 2);
-
-              transition: var(--transition-velocity) ease-in-out;
-              transition-property: background-color, border;
-
-              &:where([active], :hover){
-                background-color: hsla(var(--color-main-hue), 10%, 25%, 0.3);
-
-              }
-
-              &:where([active]){
-                border: 1px solid white;
-
-              }
-
-              & > x-icon{
-                height: 25px;
-                width: 25px;
-
-              }
-
-            }
-
-          }
-
-          /* If submenu is empty do not show arrow icon */
-          &:has(+ .subMenu:empty) > x-icon{
-            display: none;
-          }
-        }
-      }
-    }
-
-    & > footer{}
-
-    @media only screen and (max-width: 600px){
-      width: 100vw;
-
-      & > header{
-        & > x-icon[for=toggleAlwaysOpenMode]{
-          display: none;
-        }
-      }
-    }
-
-  }
+			& > header{
+				& > x-icon[for=toggleAlwaysOpenMode]{display: none;}
+			}
+		}
+	}
 
   & > cover{
     pointer-events:auto;
