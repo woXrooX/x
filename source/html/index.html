@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="{{Globals.CONF["default"]["language"]["fallback"]}}" dir="ltr">
 
-  {% include 'head.html' %}
+	{% include 'head.html' %}
 
-  <body>
+	<body>
 
-    <loading></loading>
+		<main></main>
 
-    <toasts></toasts>
+		{% include 'footer.html' %}
 
-    {% if Globals.CONF["menu"]["enabled"] == True  %}
-      <x-icon for="menu" color="#ffffff" name="menu"></x-icon>
-      {% include 'menu.html' %}
-    {% endif %}
+		<header></header>
 
-    <cover></cover>
+		{% if Globals.CONF["menu"]["enabled"] == True  %}
+			<x-icon for="menu" color="#ffffff" name="menu"></x-icon>
+			{% include 'menu.html' %}
+		{% endif %}
 
-    <header></header>
+		<cover></cover>
 
-    <main></main>
+		<modal>
+			<button><x-icon name="x" color="ffffff"></x-icon></button>
+			<main></main>
+		</modal>
 
-    {% include 'footer.html' %}
+		<toasts></toasts>
 
-  </body>
+		<loading></loading>
+
+	</body>
+
 </html>
