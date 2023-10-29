@@ -158,7 +158,7 @@ x-nav{
   }
 }
 
-x-modal{
+x-urgent{
 	& > dialog{
 		pointer-events: none;
 
