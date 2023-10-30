@@ -181,10 +181,14 @@ body{
 		z-index: var(--z-menu);
 		top: 0;
 		left: 0;
-		transform: translate(-100%, 0);
+		transform: translate(-100%, 0px);
 		transition-duration: var(--transition-velocity);
 		transition-timing-function: ease;
 		transition-property: all;
+
+		&.show{
+			transform: translate(0px, 0px);
+		}
 
 		& > header{
 			width: 100%;

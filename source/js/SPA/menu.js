@@ -5,7 +5,7 @@ export default class Menu{
 	static #selectorMenuButton = "body > x-icon[for=menu]";
 	static #selectorMenuHyperlinks = `${Menu.selector} > main a`;
 
-	static #elementMenu = null;
+	static #element = null;
 	static #elementMenuButton = null;
 
 	static #shown = false;
@@ -23,11 +23,11 @@ export default class Menu{
 	static init(){
 		Log.info("Menu.init()");
 
-		Menu.#elementMenu = document.querySelector(Menu.selector);
+		Menu.#element = document.querySelector(Menu.selector);
 		Menu.#elementMenuButton = document.querySelector(Menu.#selectorMenuButton);
 
 		// Check If "body > menu" Exists
-		if(!!Menu.#elementMenu === false) return;
+		if(!!Menu.#element === false) return;
 
 		// Try To Build The Menu
 		if(Menu.build() === false) return;
@@ -52,7 +52,7 @@ export default class Menu{
 		if(window.CONF["menu"]["enabled"] === false) return false;
 
 		// Add created menus into "menu > main"
-		Menu.#elementMenu.querySelector("main").innerHTML = Menu.#recursiveBuilder(window.CONF["menu"]["menus"]);
+		Menu.#element.querySelector("main").innerHTML = Menu.#recursiveBuilder(window.CONF["menu"]["menus"]);
 
 		// After adding hyperlinks to DOM create hide event for each of the hyperlinks
 		Menu.#onClickHyperlinksHide();
@@ -138,21 +138,20 @@ export default class Menu{
 	}
 
 	/////////////////// Tools
-	// Show
 	static #show(){
 		// Check If Already Shown
 		if(Menu.#shown) return;
 
 		// Check if body > menu exists
-		if(!!Menu.#elementMenu === false) return;
+		if(!!Menu.#element === false) return;
 
-		Menu.#elementMenu.style.transform = "translate(0px, 0px)";
+		Menu.#element.classList.add("show");
+
 		window.Cover.show();
 
 		Menu.#shown = true;
 	}
 
-	// Hide
 	static #hide(){
 		// Check If Already Hidden
 		if(Menu.#shown === false) return;
@@ -161,12 +160,10 @@ export default class Menu{
 		if(Menu.currentMode === Menu.#modes.ALWAYS_OPEN) return;
 
 		// Check if body > menu exists
-		if(!!Menu.#elementMenu === false) return;
+		if(!!Menu.#element === false) return;
 
-		// Remove The Styles
-		Menu.#elementMenu.removeAttribute("style");
+		Menu.#element.classList.remove("show");
 
-		// Hide The Cover
 		window.Cover.hide();
 
 		Menu.#shown = false;
@@ -193,7 +190,7 @@ export default class Menu{
 				Menu.#elementMenuButton.style.visibility = "visible";
 
 				// Remove Background Color Inline Rule
-				Menu.#elementMenu.style.removeProperty('background-color');
+				Menu.#element.style.removeProperty('background-color');
 
 				// Header, Main, Footer Maximize
 				// Remove Only What Was Added Not Entire Style Atribute Values
@@ -213,10 +210,10 @@ export default class Menu{
 				Menu.#elementMenuButton.style.visibility = "hidden";
 
 				// Change Menu Background Color To Darker Brand Hue Based Color So It Will Look Nicer On Light Mode
-				Menu.#elementMenu.style.backgroundColor = `hsla(${CSS.getValue("--color-main-hue")}, 10%, 20%, 1)`;
+				Menu.#element.style.backgroundColor = `hsla(${CSS.getValue("--color-main-hue")}, 10%, 20%, 1)`;
 
 				// Get Live Calculated Menu Width
-				const menuWidth = Menu.#elementMenu.offsetWidth + "px";
+				const menuWidth = Menu.#element.offsetWidth + "px";
 
 				// Header, Main, Footer Minimize
 				for(const element of [header, main, footer]){
