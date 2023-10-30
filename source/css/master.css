@@ -15,7 +15,7 @@
   --z-cover: 8;
   --z-modal: 9; /* Obsolete Moved to top layer */
   --z-menu: 10;
-  --z-tooltip: 11;
+  --z-tooltip: 11; /* Will move to css anchor positioning */
   --z-toasts: 12;
   --z-loading: 13;
   --z-urgent: 14;
@@ -30,78 +30,139 @@ body{
   font-family: Quicksand;
   padding-top: var(--header-height);
 
-  & > loading{
-    background-color: var(--color-main-tint-1);
+	& > loading{
+		background-color: var(--color-main-tint-1);
 
-    width: 100vw;
-    height: 100vh;
+		width: 100vw;
+		height: 100vh;
 
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    z-index: var(--z-loading);
+		position: fixed;
+		left: 0px;
+		top: 0px;
+		z-index: var(--z-loading);
 
-    transition: var(--transition-velocity) opacity ease-in-out;
+		transition: var(--transition-velocity) opacity ease-in-out;
 
-    &::after{
-      content: '';
-      background-color: transparent;
-      height: 20vh;
-      width: 20vh;
-      border-radius: 100%;
-      border: 0px solid transparent;
-      border-right: 2px solid var(--color-text-primary);
+		&::after{
+		content: '';
+		background-color: transparent;
+		height: 20vh;
+		width: 20vh;
+		border-radius: 100%;
+		border: 0px solid transparent;
+		border-right: 2px solid var(--color-text-primary);
 
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      transform-origin: center;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		transform-origin: center;
 
-      animation: loading 1000ms infinite linear;
+		animation: loading 1000ms infinite linear;
 
-    }
+		}
 
-  }
+	}
 
-  & > toasts{
-    height: auto;
-    max-height: 100vh;
-    width: 400px;
-    padding: var(--padding);
-    padding-bottom: calc(var(--padding) * 4);
+	& > toasts{
+		height: auto;
+		max-height: 100vh;
+		width: 400px;
+		padding: var(--padding);
+		padding-bottom: calc(var(--padding) * 4);
 
-    overflow-x: hidden;
-    overflow-y: scroll;
+		overflow-x: hidden;
+		overflow-y: scroll;
 
-    display: flex;
-    flex-direction: column-reverse;
-    gap: var(--gap);
+		display: flex;
+		flex-direction: column-reverse;
+		gap: var(--gap);
 
-    position: fixed;
-    top: 0px;
-    right: 0px;
-    z-index: var(--z-toasts);
+		position: fixed;
+		top: 0px;
+		right: 0px;
+		z-index: var(--z-toasts);
 
-    &:empty{
-      padding: 0px;
-    }
+		&:empty{
+		padding: 0px;
+		}
 
-  }
+	}
 
-  & > x-icon{
-    &[for=menu]{
-      --menu-icon-size: calc(var(--header-height) - var(--padding) * 2);
+	& > modal{
+		pointer-events: none;
 
-      height: var(--menu-icon-size);
-      width: var(--menu-icon-size);
+		opacity: 0;
 
-      position: fixed;
-      z-index: var(--z-menuHamburgerButton);
-      top: var(--padding);
-      left: var(--padding);
-    }
-  }
+		background-color: var(--color-main-tint-4);
+
+		min-width: 40px;
+		border: 0px;
+		border-radius: var(--radius);
+		box-shadow: var(--shadow);
+
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) scale(0.8);
+		z-index: var(--z-modal);
+
+		transition: var(--transition-velocity) ease-in-out;
+		transition-property: transform, opacity;
+
+		&.show{
+			pointer-events: all;
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1);
+		}
+
+		& > button{
+			width: 30px;
+			height: 30px;
+
+			padding: 2px;
+
+			position: fixed;
+			top: 5px;
+			right: 5px;
+		}
+
+		& > main{
+			width: auto;
+			max-width: 80vw;
+
+			height: auto;
+			max-height: 80vh;
+
+			overflow: hidden;
+			overflow-y: scroll;
+
+			padding: var(--padding);
+			padding-top: 40px;
+
+			display: grid;
+			place-items: center;
+
+			@media only screen and (max-width: 600px){
+				max-width: 90dvw;
+				max-height: 90dvh;
+			}
+		}
+	}
+
+	& > x-icon{
+		&[for=menu]{
+		--menu-icon-size: calc(var(--header-height) - var(--padding) * 2);
+
+		height: var(--menu-icon-size);
+		width: var(--menu-icon-size);
+
+		position: fixed;
+		z-index: var(--z-menuHamburgerButton);
+		top: var(--padding);
+		left: var(--padding);
+		}
+	}
 
 	& > menu{
 		background-color: hsla(var(--color-main-hue), 10%, 25%, 0.1);

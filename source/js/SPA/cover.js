@@ -2,22 +2,22 @@
 
 export default class Cover{
 	static selector = "body > cover";
-	static #elementCover = null;
+	static #element = null;
 
-	static{
-		Cover.#elementCover = document.querySelector(Cover.selector);
+	static {
+		Cover.#element = document.querySelector(Cover.selector);
 	}
 
 	// Can be set the cover z-index if needed
 	static show(zIndex = window.CSS.getValue("--z-cover")){
 		// Check if body > cover exists
-		if(!!Cover.#elementCover === false) return;
+		if(!!Cover.#element === false) return;
 
 		// If "auto" was passed set to default zIndex
 		if(zIndex === "auto") zIndex = window.CSS.getValue("--z-cover");
 
-		Cover.#elementCover.style.opacity = 1;
-		Cover.#elementCover.style.zIndex = zIndex;
+		Cover.#element.style.opacity = 1;
+		Cover.#element.style.zIndex = zIndex;
 
 		// disable scrolling
 		document.body.style = "overflow: hidden";
@@ -25,13 +25,14 @@ export default class Cover{
 
 	static hide(){
 		// Check if body > cover exists
-		if(!!Cover.#elementCover === false) return;
+		if(!!Cover.#element === false) return;
 
-		Cover.#elementCover.style.opacity = 0;
+		Cover.#element.style.opacity = 0;
 
-		setTimeout(()=>{
-			Cover.#elementCover.style.zIndex = window.CSS.getValue("--z-minus");
-		}, parseInt(window.CSS.getValue("--transition-velocity")));
+		Cover.#element.ontransitionend = ()=>{
+			Cover.#element.style.zIndex = window.CSS.getValue("--z-minus");
+			Cover.#element.ontransitionend = null;
+		};
 
 		// enable scrolling
 		document.body.removeAttribute("style");
