@@ -1,22 +1,30 @@
 "use strict";
 
 export default class Modal extends HTMLElement{
+	static #selector = "body > modal";
+	static #element = null;
+	static #elementMain = null;
+	static #shown = false;
+
+	static {
+		Modal.#element = document.querySelector(Modal.#selector);
+		Modal.#elementMain = Modal.#element.querySelector("main");
+
+		// Hide on click close button
+		Modal.#element.querySelector("button").onclick = Modal.#hide;
+
+		// Close on click the cover
+		Cover.onClickExecute(Modal.#hide);
+	}
+
 	constructor(){
 		super();
 
 		// Save the DOM
 		this.DOM = this.innerHTML;
 
-		// Structure
-		this.innerHTML = `
-			<dialog inert>
-				<button><x-icon name="x" color="ffffff"></x-icon></button>
-				<main>${this.DOM}</main>
-			</dialog>
-			<trigger></trigger>
-		`;
+		this.innerHTML = `<trigger class="cursor-pointer"></trigger>`;
 
-		this.dialog = this.querySelector("dialog");
 		this.trigger = this.querySelector("trigger");
 
 		Trigger: {
@@ -47,40 +55,36 @@ export default class Modal extends HTMLElement{
 			}
 
 			// Show On Click trigger
-			this.trigger.onclick = this.#show;
-
-			// Close On X Click
-			this.querySelector("dialog > button").onclick = this.#hide;
-
-			// Close on click the ::backdrop
-			this.dialog.addEventListener("click", ()=>{if(event.target === this.dialog) this.#hide();});
+			this.trigger.onclick = ()=>{Modal.#show(this.DOM);};
 		}
 	}
 
-	#show = ()=> {
-		this.dialog.showModal();
-		this.dialog.removeAttribute("inert");
-		this.#animationIn();
+	static #show(DOM){
+		if(Modal.#shown === true) return;
 
-		// disable scrolling
-		document.body.style = "overflow: hidden";
+		Modal.#shown = true;
+
+		Modal.#element.classList.add("show");
+		Modal.#elementMain.innerHTML = DOM;
+
+		Form.collect(Modal.#element);
+
+		Cover.show();
 	}
 
-	#hide = ()=> {
-		this.dialog.setAttribute("inert", "");
-		this.#animationOut();
+	static #hide(){
+		if(Modal.#shown === false) return;
 
-		// enable scrolling
-		document.body.removeAttribute("style");
-	}
+		Modal.#shown = false;
 
-	#animationIn = ()=>{
-		this.dialog.setAttribute("opening", "");
-	}
+		Modal.#element.classList.remove("show");
 
-	#animationOut = ()=>{
-		this.dialog.removeAttribute("opening");
-		setTimeout(()=> this.dialog.close(), parseInt(CSS.getValue("--transition-velocity")));
+		Modal.#elementMain.ontransitionend = ()=>{
+			Modal.#elementMain.innerHTML = "";
+			Modal.#elementMain.ontransitionend = null;
+		};
+
+		Cover.hide();
 	}
 };
 

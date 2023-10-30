@@ -13,7 +13,7 @@
   --z-header: 6;
   --z-menuHamburgerButton: 7;
   --z-cover: 8;
-  --z-modal: 9; /* Obsolete Moved to top layer */
+  --z-modal: 9;
   --z-menu: 10;
   --z-tooltip: 11; /* Will move to css anchor positioning */
   --z-toasts: 12;
