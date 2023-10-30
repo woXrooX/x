@@ -79,9 +79,9 @@ export default class Modal extends HTMLElement{
 
 		Modal.#element.classList.remove("show");
 
-		Modal.#elementMain.ontransitionend = ()=>{
+		Modal.#element.ontransitionend = ()=>{
 			Modal.#elementMain.innerHTML = "";
-			Modal.#elementMain.ontransitionend = null;
+			Modal.#element.ontransitionend = null;
 		};
 
 		Cover.hide();
