@@ -124,6 +124,16 @@ pages:
       - "/logOut"
 
 
+  logOutInstant:
+    enabled: true
+    authenticity_statuses:
+      - "unauthorized"
+      - "authorized"
+
+    endpoints:
+      - "/logOutInstant"
+
+
   languagesLibrary:
     enabled: true
     endpoints:
@@ -134,13 +144,13 @@ pages:
 menu:
   enabled: true
   menus:
-    - name: "home"
-    - name: "signUp"
-    - name: "logIn"
-    - name: "logOut"
+    - page: "home"
+    - page: "signUp"
+    - page: "logIn"
+    - page: "logOut"
 
-    - name: "languagesLibrary"
-      logo: "openBook"
+    - page: "languagesLibrary"
+      icon: "openBook"
 
 
 ######### Username

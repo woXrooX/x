@@ -5,25 +5,15 @@ from python.modules.Globals import Globals
 
 
 #################################################### Log Out
-@app.route("/logOut", methods=["GET", "POST"])
-@pageGuard("logOut")
+@app.route("/logOutInstant", methods=["POST"])
+@pageGuard("logOutInstant")
 def logOutInstant():
-    if request.method == "GET": return render_template("index.html", **globals())
+	if request.method != "POST": return response(type="error", message="invalidRequest")
 
+	if request.get_json()["for"] != "logOutInstant": return response(type="error", message="invalidRequest")
 
-    elif request.method == "POST":
-        # unknownError
-        if request.form["for"] != "logOut": return response(type="warning", message="unknownError")
+	# Remove User From Session
+	session.pop('user')
 
-        # Remove User From Session
-        session.pop('user')
-
-
-        # Redirect To Home
-        return response(
-            type="success",
-            message="success",
-            deleteSessionUser=True,
-            redirect="home",
-            domChange=["menu"]
-        )
+	# Redirect To Home
+	return response(type="success");

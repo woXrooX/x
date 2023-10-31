@@ -30,6 +30,7 @@ if __name__ != "__main__":
                     "languagesLibrary.py",
                     "logIn.py",
                     "logOut.py",
+                    "logOutInstant.py",
                     "page_not_found.py",
                     "signUp.py"
                 ],
@@ -41,6 +42,7 @@ if __name__ != "__main__":
                     "languagesLibrary.js",
                     "logIn.js",
                     "logOut.js",
+                    "logOutInstant.js",
                     "signUp.js"
                 ]
             }
