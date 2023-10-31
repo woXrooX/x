@@ -12,8 +12,6 @@ def logOutInstant():
 
 	if request.get_json()["for"] != "logOutInstant": return response(type="error", message="invalidRequest")
 
-	# Remove User From Session
 	session.pop('user')
 
-	# Redirect To Home
 	return response(type="success");
