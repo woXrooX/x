@@ -58,8 +58,6 @@ source/python/pages/*.py
 # Allow Default Pages
 !source/python/pages/__init__.py
 
-!source/python/pages/languagesLibrary.py
-
 !source/python/pages/signUp.py
 !source/python/pages/eMailConfirmation.py
 !source/python/pages/logIn.py
@@ -77,8 +75,6 @@ source/python/pages/*.py
 source/js/pages/*.js
 
 # Allow Default Pages
-!source/js/pages/languagesLibrary.js
-
 !source/js/pages/signUp.js
 !source/js/pages/eMailConfirmation.js
 !source/js/pages/logIn.js
