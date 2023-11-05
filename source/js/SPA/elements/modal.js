@@ -28,16 +28,12 @@ export default class Modal extends HTMLElement{
 		this.trigger = this.querySelector("trigger");
 
 		Trigger: {
-			const trigger = this.getAttribute("trigger");
 			const type = this.getAttribute("type");
 			const value = this.getAttribute("value");
 			const isButton = this.hasAttribute("button");
 
-			// Instant Pop-Up
-			if(!trigger || trigger === "auto") setTimeout(this.#show, 500);
-
 			// Create Click Event
-			else if(trigger === "click" && type && value){
+			if(type && value){
 				let content;
 				switch(type){
 					case 'icon':
