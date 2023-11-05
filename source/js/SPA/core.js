@@ -38,7 +38,6 @@ import Form from "./form.js";
 //// Custom Elements
 import Icon from "./elements/icon.js";
 import Modal from "./elements/modal.js";
-import Nav from "./elements/nav.js";
 import Copy from "./elements/copy.js";
 import Share from "./elements/share.js";
 import Table from "./elements/table.js";
