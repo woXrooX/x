@@ -1,6 +1,10 @@
 // SVG shadow
 // filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
 
+// TO be added to docs
+// icon.forceToggle()
+// setAttribute observers removed. too many ways doing the same stuff
+
 "use strict";
 
 export default class Icon extends HTMLElement{
@@ -59,9 +63,9 @@ export default class Icon extends HTMLElement{
     this.elementIcon = this.shadow.querySelector("icon");
 
     // Set The Initial Icon
-    this.#setIcon(this.getAttribute("name"));
+    this.#setIconName(this.getAttribute("name"));
 
-    // Disabled
+    //// Disabled
     // Check If Parent Has Attribute Disabled Then Disable Icon
     this.disabled = this.parentElement.hasAttribute("disabled") === true ? true : false;
     // Initial Disabled?Enabled Status Update
@@ -70,93 +74,75 @@ export default class Icon extends HTMLElement{
     // Is Toggled?
     this.toggled = false;
 
-    Events: {
-      // Click
-      this.addEventListener("click", ()=>{
-        this.#toggler();
-      });
-    }
-
+	// On click toggle
+	this.addEventListener("click", this.#toggler);
   }
 
-  ////////// Helpers
-  // Set Icon
-  #setIcon(iconName){
-    this.elementIcon.innerHTML = window.SVG.use(iconName);
+	////////// Helpers
+	// Set Icon
+	#setIconName(name){
+		this.elementIcon.innerHTML = window.SVG.use(name);
 
-    // Update SVG Variable After New SVG Element Inserted
-    this.svg = this.shadow.querySelector("icon>svg");
+		// Update SVG Variable After New SVG Element Inserted
+		this.svg = this.shadow.querySelector("icon > svg");
+	}
 
-  }
+	#toggler(){
+		// If Disabled Do Nothing
+		if(this.disabled === true) return;
 
-  // Toggler
-  #toggler(){
-    // If Disabled Do Nothing
-    if(this.disabled === true) return;
+		// If No "toggle" Attribute Then Exit The Method
+		if(this.hasAttribute("toggle") === false) return;
 
-    // If No "toggle" Attribute Then Exit The Method
-    if(this.hasAttribute("toggle") === false) return;
+		// Set Icon To "name" Value
+		if(this.toggled === true) this.#setIconName(this.getAttribute("name"));
 
-    // Set Icon To "name" Value
-    if(this.toggled === true) this.#setIcon(this.getAttribute("name"));
+		// Set Icon To "toggle" Value
+		else this.#setIconName(this.getAttribute("toggle"));
 
-    // Set Icon To "toggle" Value
-    else this.#setIcon(this.getAttribute("toggle"));
+		// Update The Value
+		this.toggled = !this.toggled;
+	}
 
-    // Update The Value
-    this.toggled = !this.toggled;
-  }
+	// Disabler Method
+	#disable(){this.elementIcon.classList.add("disabled");}
 
-  // Disabler Method
-  #disable(){
-    this.elementIcon.classList.add("disabled");
-  }
+	// Enabler Method
+	#enable(){this.elementIcon.classList.remove("disabled");}
 
-  // Enabler Method
-  #enable(){
-    this.elementIcon.classList.remove("disabled");
-  }
+	////////// APIs
+	forceToggle = this.#toggler;
 
-  ////////// Getters
-  // Get toggle icon name
-  get toggle(){return this.getAttribute("toggle");}
+	////////// Getters
+	// Get Icon Name
+	get name(){return this.getAttribute("name");}
 
-  // Get Icon Name
-  get name(){return this.getAttribute("name");}
+	// Get toggle icon name
+	get toggle(){return this.getAttribute("toggle");}
 
-  ////////// Setters
-  // Set toggle icon name
-  set toggle(value){return this.setAttribute("toggle", value);}
+	// Get disabled status
+	get disable(){return this.getAttribute("disabled");}
 
-  // Set Icon Name
-  set name(value){this.setAttribute("name", value);}
+	////////// Setters
+  	// Set Icon Name
+	set name(value){this.#setIconName(value);}
 
-  set setDisabled(value){
-    // Disable
-    if(value === "false" || value === false){
-      this.disabled = false;
-      this.#enable();
+	// Set toggle icon name
+	set toggle(value){return this.setAttribute("toggle", value);}
 
-    // Enable
-    }else{
-      this.disabled = true;
-      this.#disable();
-    }
-  }
+	// Sets disabled status
+	set disable(value){
+		// Disable
+		if(value === "false" || value === false){
+			this.disabled = false;
+			this.#enable();
 
-  ////////// Observer
-  // On Observed Atributes Change
-  attributeChangedCallback(attributeName, oldValue, newValue){
-    // Update Icon On "name" Change
-    if(attributeName === "name" && oldValue !== newValue) this.#setIcon(newValue);
-
-    // Update "disabled" Status
-    if(attributeName === "disabled" && oldValue !== newValue) this.setDisabled = newValue;
-  }
-
-  // Attributes To Be Observed
-  static get observedAttributes(){return ["toggle", "disabled", "name"];}
-
+		// Enable
+		}else{
+			this.disabled = true;
+			this.#disable();
+		}
+	}
 };
 
 window.customElements.define('x-icon', Icon);
