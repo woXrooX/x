@@ -456,6 +456,31 @@
     "ru":"Пароль в порядке",
     "uz":"Parol yaxshi"
   },
+  "phone":{
+    "en":"Phone",
+    "ru":"Телефон",
+    "uz":"Telefon"
+  },
+  "phoneNumber":{
+    "en":"Phone number",
+    "ru":"Номер телефона",
+    "uz":"Telefon raqami"
+  },
+  "phoneNumberEmpty":{
+    "en":"Phone number empty",
+    "ru":"Номер телефона пустой",
+    "uz":"Telefon raqami bo'sh"
+  },
+  "phoneNumberInUse":{
+    "en":"Phone number is in use",
+    "ru":"Номер телефона используется",
+    "uz":"Telefon raqami band"
+  },
+  "phoneNumberInvalid":{
+    "en":"Phone number invalid",
+    "ru":"Номер телефона недействителен",
+    "uz":"Telefon raqami yaroqsiz"
+  },
   "plzW8":{
     "en":"Please wait",
     "ru":"Пожалуйста, подождите",
