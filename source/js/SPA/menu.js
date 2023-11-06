@@ -37,6 +37,7 @@ export default class Menu{
 
 		// Listen To The Events
 		Menu.#onClickMenuButtonShow();
+		Menu.#onClickCloseMenuInMobile();
 		Menu.#toggleAlwaysOpenMode();
 		Cover.onClickExecute(Menu.#hide);
 	}
@@ -117,6 +118,9 @@ export default class Menu{
 
 	// On Click Menu Button Show The Menu
 	static #onClickMenuButtonShow(){Menu.#elementMenuButton.onclick = Menu.#show;}
+	
+	// On Click Menu Button Close In Mobile
+	static #onClickCloseMenuInMobile(){document.querySelector(`${Menu.selector} > header > x-icon[for=closeMenuInMobile]`).addEventListener("click", ()=>{Menu.#hide();})}
 
 	// On click hperlinks hide the Menu
 	static #onClickHyperlinksHide(){

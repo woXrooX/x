@@ -197,6 +197,20 @@ body{
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
+
+			& > x-icon{
+				&[for=closeMenuInMobile]{
+					display: none;
+				}
+			}
+
+			@media only screen and (max-width: 600px){
+				& > x-icon{
+					&[for=closeMenuInMobile]{
+						display: block;
+					}
+				}	
+			}
 		}
 
 		& > main{
