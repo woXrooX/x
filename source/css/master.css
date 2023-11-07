@@ -201,15 +201,11 @@ body{
 			& > x-icon{
 				&[for=closeMenuInMobile]{
 					display: none;
-				}
-			}
 
-			@media only screen and (max-width: 600px){
-				& > x-icon{
-					&[for=closeMenuInMobile]{
+					@media only screen and (max-width: 600px){
 						display: block;
 					}
-				}	
+				}
 			}
 		}
 
