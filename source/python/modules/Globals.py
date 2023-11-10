@@ -25,22 +25,20 @@ if __name__ != "__main__":
                     "__init__.py",
                     "api.py",
                     "app_is_down.py",
-                    "demo.py",
                     "eMailConfirmation.py",
                     "logIn.py",
                     "logOut.py",
                     "logOutInstant.py",
-                    "page_not_found.py",
+                    "pageNotFound.py",
                     "signUp.py"
                 ],
                 "front": [
-                    "404.js",
                     "appIsDown.js",
-                    "demo.js",
                     "eMailConfirmation.js",
                     "logIn.js",
                     "logOut.js",
                     "logOutInstant.js",
+                    "pageNotFound.js",
                     "signUp.js"
                 ]
             }

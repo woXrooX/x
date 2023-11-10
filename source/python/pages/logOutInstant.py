@@ -1,13 +1,11 @@
-from main import app, request, render_template, session
-from python.modules.pageGuard import pageGuard
+from main import session
+from python.modules.Page import Page
 from python.modules.response import response
 from python.modules.Globals import Globals
 
-
-#################################################### Log Out
-@app.route("/logOutInstant", methods=["POST"])
-@pageGuard("logOutInstant")
-def logOutInstant():
+# Allow only POST methods
+@Page.build()
+def logOutInstant(request):
 	if request.method != "POST": return response(type="error", message="invalidRequest")
 
 	if request.get_json()["for"] != "logOutInstant": return response(type="error", message="invalidRequest")

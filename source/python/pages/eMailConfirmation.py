@@ -1,16 +1,12 @@
-from main import app, request, render_template, session
-from python.modules.pageGuard import pageGuard
+from main import session
+from python.modules.Page import Page
 from python.modules.response import response
 from python.modules.Globals import Globals
 from python.modules.User import User
 from python.modules.MySQL import MySQL
 
-#################################################### Demo
-@app.route("/eMailConfirmation", methods=["GET", "POST"])
-@pageGuard("eMailConfirmation")
-def eMailConfirmation():
-    if request.method == "GET": return render_template("index.html", **globals())
-
+@Page.build()
+def eMailConfirmation(request):
     if request.method == "POST":
         # Check If "for" Meant To Go To Here
         if request.form["for"] != "eMailConfirmation": return response(type="warning", message="unknownError")

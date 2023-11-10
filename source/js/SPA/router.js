@@ -70,8 +70,8 @@ export default class Router{
 
     }
 
-    // If Still No Endpoint Matched Then Set It To "404"
-    if(Router.currentPage.name === null) Router.currentPage.name = "404";
+    // If Still No Endpoint Matched Then Set It To "pageNotFound" AKA 404
+    if(Router.currentPage.name === null) Router.currentPage.name = "pageNotFound";
 
     // Load Page File
     Router.#loadPageFile();
@@ -102,11 +102,11 @@ export default class Router{
 
       // Render The Error
       window.DOM.render(`
-        <container>
+        <container class="p-5">
           <row class="m-t-5 surface-clean p-5 w-50">
             <column>
               <error>${error.name}</error>
-              <info>${error.stack}</info>
+              <info class="text-size-0-7">${error.stack}</info>
             </column>
           </row>
         </container>

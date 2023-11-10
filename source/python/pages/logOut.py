@@ -1,17 +1,11 @@
-from main import app, request, render_template, session
-from python.modules.pageGuard import pageGuard
+from main import session
+from python.modules.Page import Page
 from python.modules.response import response
 from python.modules.Globals import Globals
 
-
-#################################################### Log Out
-@app.route("/logOut", methods=["GET", "POST"])
-@pageGuard("logOut")
-def logOut():
-    if request.method == "GET": return render_template("index.html", **globals())
-
-
-    elif request.method == "POST":
+@Page.build()
+def logOut(request):
+    if request.method == "POST":
         # unknownError
         if request.form["for"] != "logOut": return response(type="warning", message="unknownError")
 

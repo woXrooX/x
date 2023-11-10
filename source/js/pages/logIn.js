@@ -29,7 +29,7 @@ export default function logIn(){
 
 				</form>
 
-				<a class="text-size-0-7" href="/signUp">${window.Lang.use("dontHaveAccountGoToSignUp")}</a>
+				<a href="/signUp" class="text-size-0-7">${window.Lang.use("dontHaveAccountGoToSignUp")}</a>
 
 			</column>
 		</container>
