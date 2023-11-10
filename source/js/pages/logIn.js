@@ -1,51 +1,37 @@
 "use strict";
 
-export const TITLE = "Log In";
-
-export const CSS = ``;
+export const TITLE = window.Lang.use("logIn");
 
 export default function logIn(){
 
-  let dom = `
-<container class="p-5">
-  <row>
-    <column class="w-50 surface-clean p-5">
+	return `
+		<container class="p-5">
+			<column class="w-50 surface-clean p-5 gap-1">
 
-      <row>
-        <h1>${window.Lang.use("logIn")}</h1>
-      </row>
+				<h2>${window.Lang.use("logIn")}</h2>
 
-      <row>
-        <form action="logIn" for="logIn">
+				<form action="logIn" for="logIn">
 
-          <label>
-            <p for='eMail'>${window.Lang.use("eMail")}</p>
-            <input type='email' name='eMail'>
-          </label>
+					<label>
+						<p for='eMail'>${window.Lang.use("eMail")}</p>
+						<input type='email' name='eMail'>
+					</label>
 
-          <label>
-            <p for='password'>${window.Lang.use("password")}</p>
-            <input type='password' name='password' minlength='${window.CONF["password_min_length"]}' maxlength='${window.CONF["password_max_length"]}'><br>
-          </label>
+					<label>
+						<p for='password'>${window.Lang.use("password")}</p>
+						<input type='password' name='password' minlength='${window.CONF["password_min_length"]}' maxlength='${window.CONF["password_max_length"]}'><br>
+					</label>
 
-          <label>
-            <input type='submit' name='logIn' value='${window.Lang.use("logIn")}'>
-            <p for='logIn'></p>
-          </label>
+					<label>
+						<input type='submit' name='logIn' value='${window.Lang.use("logIn")}'>
+						<p for='logIn'></p>
+					</label>
 
-        </form>
-      </row>
+				</form>
 
-      <row>
-        <a href="/signUp">${window.Lang.use("dontHaveAccountGoToSignUp")}</a>
-      </row>
+				<a class="text-size-0-7" href="/signUp">${window.Lang.use("dontHaveAccountGoToSignUp")}</a>
 
-    </column>
-
-  </row>
-</container>
-  `;
-
-  return dom;
-
+			</column>
+		</container>
+	`;
 }
