@@ -11,6 +11,11 @@
     "ru":"Тип аккаунта",
     "uz":"Akkaunt turi"
   },
+  "action":{
+    "en":"Action",
+    "ru":"Действие",
+    "uz":"Harakat"
+  },
   "add":{
     "en":"Add",
     "ru":"Добавлять",
