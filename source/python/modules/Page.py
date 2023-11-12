@@ -11,7 +11,7 @@ if __name__ != "__main__":
 	"""
 
 
-	from main import app, request, render_template, redirect, url_for,session
+	from main import app, request, render_template, redirect, url_for, session
 	from python.modules.Globals import Globals
 
 	class Page():
