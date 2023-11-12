@@ -77,6 +77,7 @@ export default class CSS{
 	///// Color Mode
 	// Detect Color Mode
 	static detectColorMode(){
+		Log.info("CSS.detectColorMode()");
 		// Get User Preferred Color Mode
 		if(
 			// If User Is In Session
@@ -142,15 +143,23 @@ export default class CSS{
 				// case CSS.colorModes.LIGHT:CSS.#dark(); break;
 				default: CSS.#dark();
 			}
+
+			CSS.#saveColorMode();
 		});
 	}
 
 	// Save color mode to the database or to the local storage
 	static async #saveColorMode(){
 		// If user is logged in, update user color mode on database
-		if("user" in window.session) await window.bridge("api", {for:"changeUserAppColorMode", colorMode: CSS.currentColorMode}, "application/json");
-
-		else localStorage.setItem('x.app_color_mode', CSS.currentColorMode);
+		if("user" in window.session){
+			const req = await window.bridge("api", {for:"changeUserAppColorMode", colorMode: CSS.currentColorMode}, "application/json");
+			// Update the session
+			if("type" in req && req["type"] === "success"){
+				window.session["user"]["app_color_mode"] = CSS.currentColorMode;
+				localStorage.setItem('x.app_color_mode', CSS.currentColorMode);
+				Log.success(`CSS.#saveColorMode(): session.user.app_color_mode = ${CSS.currentColorMode}`);
+			}
+		}else localStorage.setItem('x.app_color_mode', CSS.currentColorMode);
 	}
 
 	//////////// Modes
@@ -158,7 +167,6 @@ export default class CSS{
 		Log.info("CSS.#dark()");
 
 		CSS.currentColorMode = CSS.colorModes.DARK;
-		CSS.#saveColorMode();
 
 		document.documentElement.classList.add("dark");
 		document.documentElement.classList.remove("light");
@@ -168,7 +176,6 @@ export default class CSS{
 		Log.info("CSS.#light()");
 
 		CSS.currentColorMode = CSS.colorModes.LIGHT;
-		CSS.#saveColorMode();
 
 		document.documentElement.classList.add("light");
 		document.documentElement.classList.remove("dark");
