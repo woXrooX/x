@@ -42,7 +42,6 @@ source/python/modules/*
 !source/python/modules/MySQL.py
 !source/python/modules/OpenAI.py
 !source/python/modules/Page.py
-!source/python/modules/pageGuard.py
 !source/python/modules/PDF.py
 !source/python/modules/Random.py
 !source/python/modules/response.py
