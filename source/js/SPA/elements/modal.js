@@ -37,7 +37,8 @@ export default class Modal extends HTMLElement{
 				let content;
 				switch(type){
 					case 'icon':
-						content = `<x-icon name="${value}"></x-icon>`;
+						const color = this.hasAttribute("icon-color") ? `color="${this.getAttribute("icon-color")}"` : "";
+						content = `<x-icon ${color} name="${value}"></x-icon>`;
 						break;
 					case 'text':
 						content = value;
