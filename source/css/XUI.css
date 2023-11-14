@@ -225,9 +225,6 @@
 		.text-weight-800{font-weight: 800;}
 		.text-weight-900{font-weight: 900;}
 
-		/** Style **/
-		.text-italic{font-style: italic;}
-
 		/** Size **/
 		.text-size-0-1{font-size: 0.1rem;}
 		.text-size-0-2{font-size: 0.2rem;}
@@ -332,6 +329,11 @@
 		.text-ls-2-8{letter-spacing: 2.8rem;}
 		.text-ls-2-9{letter-spacing: 2.9rem;}
 		.text-ls-3{letter-spacing: 3rem;}
+
+
+		/****** Other ******/
+		/** Style **/
+		.text-italic{font-style: italic;}
 
 		/* white-space */
 		.text-nowrap{white-space: nowrap !important;}
