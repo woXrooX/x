@@ -11,188 +11,189 @@
 # For example, ('abc') is evaluated as a scalar while ('abc',) is evaluated as a tuple.
 
 if __name__ != "__main__":
-    import mysql.connector
+	import mysql.connector
 
-    class MySQL:
-        user = password = host = database = charset = collate = None
+	class MySQL:
+		user = password = host = database = charset = collate = None
 
-        connection = None
-        cursor = None
+		connection = None
+		cursor = None
 
-        lastQuery = None
-        rowCount = None
-        lastInsertedRowID = None
-        lastFetchedData = None
+		lastQuery = None
+		rowCount = None
+		lastInsertedRowID = None
+		lastFetchedData = None
 
-        enabled = False
-        hasError = False
+		enabled = False
+		hasError = False
 
-        ######### APIs / Methods
-        # Init MySQL
-        @staticmethod
-        def init(user, password, host, database, charset, collate):
-            MySQL.enabled = True
+		######### APIs / Methods
+		# Init MySQL
+		@staticmethod
+		def init(user, password, host, database, charset, collate):
+			MySQL.enabled = True
 
-            MySQL.user = user
-            MySQL.password = password
-            MySQL.host = host
-            MySQL.database = database
-            MySQL.charset = charset
-            MySQL.collate = collate
+			MySQL.user = user
+			MySQL.password = password
+			MySQL.host = host
+			MySQL.database = database
+			MySQL.charset = charset
+			MySQL.collate = collate
 
-        # Execute
-        @staticmethod
-        def execute(
-            sql,
-            params = None,
+		# Execute
+		@staticmethod
+		def execute(
+			sql,
+			params = None,
 
-            # Enables multiple queries in a single request
-            multi = False,
+			# Enables multi-statement queries
+			multi = False,
 
-            # If True triggers executemany with many params
-            many = False,
+			# If True triggers executemany with many params
+			many = False,
 
-            commit = False,
-            prepared = True,
-            dictionary = True,
-            fetchOne = False
-        ):
-            # Check If MySQL Is Enabled
-            if MySQL.enabled is False: return False
+			commit = False,
+			prepared = True,
+			dictionary = True,
+			fetchOne = False
+		):
+			# Many and multi can not work together
+			if multi is True and many is True: return False
 
-            # Clean Up Variables
-            MySQL.clean()
+			# Check If MySQL Is Enabled
+			if MySQL.enabled is False: return False
 
-            # Check If Connected Successfully
-            if MySQL.connect(prepared, dictionary) is False: return False
+			# Clean Up Variables
+			MySQL.clean()
 
-            # Execute
-            try:
-                #### Start Transaction
-                # Execute SQL statements within the transaction
-                if commit is True: MySQL.connection.start_transaction()
+			# Check If Connected Successfully
+			if MySQL.connect(prepared, dictionary) is False: return False
 
-                # Check If params Evaluated To True
-                params = params or ()
+			# Execute
+			multi_execute_result = None
+			try:
+				#### Start Transaction
+				# Execute SQL statements within the transaction
+				if commit is True: MySQL.connection.start_transaction()
 
-                # Default execution
-                if(
-                    # When many and multi is False
-                    multi is False and
-                    many is False or
+				# Check If params Evaluated To True
+				params = params or ()
 
-                    # many and multi can not work together
-                    multi is True and
-                    many is True
+				# Many execution
+				if many is True: MySQL.cursor.executemany(sql, params)
 
-                ): MySQL.cursor.execute(sql, params)
+				# Multi execution
+				elif multi is True: multi_execute_result = MySQL.cursor.execute(sql, params, multi=True)
 
-                # Many execution
-                elif many is True: MySQL.cursor.executemany(sql, params)
+				# Default execution
+				else: MySQL.cursor.execute(sql, params)
 
-                # Multi execution
-                elif multi is True:
-                    for res in MySQL.cursor.execute(sql, params, multi): pass
+				#### Commit the transaction to make the changes permanent
+				if commit is True: MySQL.connection.commit()
 
-                # Invalid Funtion Arguments Combination Was Used
-                else: return False
+				#### Save Execution Information Before MySQL.disconnect() Cleans Them Up
+				# Save Last Query For Later Use
+				MySQL.lastQuery = MySQL.cursor.statement
 
-                #### Commit the transaction to make the changes permanent
-                if commit is True: MySQL.connection.commit()
+				# Save Affected Rows Count For Later Use
+				MySQL.rowCount = MySQL.cursor.rowcount
 
-                #### Save Execution Information Before MySQL.disconnect() Cleans Them Up
-                # Save Last Query For Later Use
-                MySQL.lastQuery = MySQL.cursor.statement
+				# Save Affected Rows Count For Later Use
+				MySQL.lastInsertedRowID = MySQL.cursor.lastrowid
 
-                # Save Affected Rows Count For Later Use
-                MySQL.rowCount = MySQL.cursor.rowcount
+				#### Data
+				# Multi
+				if multi is True:
+					data = []
+					for cur in multi_execute_result: data.extend(cur.fetchall())
+					MySQL.lastFetchedData = data
 
-                # Save Affected Rows Count For Later Use
-                MySQL.lastInsertedRowID = MySQL.cursor.lastrowid
+				# "fetchone" enabled
+				# NOTE: In case multi=True and fetchOne=True will execute the code above.
+				elif fetchOne is True: MySQL.lastFetchedData = MySQL.cursor.fetchone()
 
-                # Data
-                if fetchOne is True: MySQL.lastFetchedData = MySQL.cursor.fetchone()
-                else: MySQL.lastFetchedData = MySQL.cursor.fetchall()
+				# Default "fetchall"
+				else: MySQL.lastFetchedData = MySQL.cursor.fetchall()
 
-            except Exception as e:
-                print("------------- MySQL Execute -------------")
-                print(f"ERROR: {e}")
-                print("-----------------------------------------")
-                return False
+			except Exception as e:
+				print("------------- MySQL Execute -------------")
+				print(f"ERROR: {e}")
+				print("-----------------------------------------")
+				return False
 
-            # Close The Connection
-            MySQL.disconnect()
+			# Close The Connection
+			MySQL.disconnect()
 
-            # Data / Success
-            return MySQL.lastFetchedData
+			# Data / Success
+			return MySQL.lastFetchedData
 
-        ######### Getters
-        @staticmethod
-        def getLastQuery(): return MySQL.lastQuery
+		######### Getters
+		@staticmethod
+		def getLastQuery(): return MySQL.lastQuery
 
-        # The cursor.rowcount attribute returns the number of rows affected by the last executed SQL statement.
-        @staticmethod
-        def getLastAffectedRowsCount(): return MySQL.rowCount
+		# The cursor.rowcount attribute returns the number of rows affected by the last executed SQL statement.
+		@staticmethod
+		def getLastAffectedRowsCount(): return MySQL.rowCount
 
-        # the cursor.lastrowid attribute provides the ID of the last row
-        # that was inserted into a table with an auto-increment primary key.
-        @staticmethod
-        def getLastInsertedRowID(): return MySQL.lastInsertedRowID
+		# the cursor.lastrowid attribute provides the ID of the last row
+		# that was inserted into a table with an auto-increment primary key.
+		@staticmethod
+		def getLastInsertedRowID(): return MySQL.lastInsertedRowID
 
-        @staticmethod
-        def getLastFetchedData(): return MySQL.lastFetchedData
+		@staticmethod
+		def getLastFetchedData(): return MySQL.lastFetchedData
 
-        ######### Helpers
-        # Connect
-        @staticmethod
-        def connect(
-            prepared = True,
-            dictionary = True
-        ):
-            try:
-                MySQL.connection = mysql.connector.connect(
-                    user=MySQL.user,
-                    password=MySQL.password,
-                    host=MySQL.host,
-                    database=MySQL.database,
+		######### Helpers
+		# Connect
+		@staticmethod
+		def connect(
+			prepared = True,
+			dictionary = True
+		):
+			try:
+				MySQL.connection = mysql.connector.connect(
+					user=MySQL.user,
+					password=MySQL.password,
+					host=MySQL.host,
+					database=MySQL.database,
 
-                    # When use_pure = True, it enforces the use of pure Python implementation of the MySQL protocol,
-                    # whereas use_pure = False uses the C Extension implementation.
-                    use_pure=False
-                )
+					# When use_pure = True, it enforces the use of pure Python implementation of the MySQL protocol,
+					# whereas use_pure = False uses the C Extension implementation.
+					use_pure=False
+				)
 
-                MySQL.connection.set_charset_collation(
-                    charset=MySQL.charset,
-                    collation=MySQL.collate
-                )
+				MySQL.connection.set_charset_collation(
+					charset=MySQL.charset,
+					collation=MySQL.collate
+				)
 
-                # Create Cursor
-                MySQL.cursor = MySQL.connection.cursor(
-                    # prepared=prepared,
-                    dictionary=dictionary
-                )
+				# Create Cursor
+				MySQL.cursor = MySQL.connection.cursor(
+					# prepared=prepared,
+					dictionary=dictionary
+				)
 
-                return True
+				return True
 
-            except Exception as e:
-                print("------------- MySQL Connect -------------")
-                print(f"ERROR: {e}")
-                print("-----------------------------------------")
-                return False
+			except Exception as e:
+				print("------------- MySQL Connect -------------")
+				print(f"ERROR: {e}")
+				print("-----------------------------------------")
+				return False
 
-        # Disconnect
-        @staticmethod
-        def disconnect():
-            MySQL.connection.close()
-            MySQL.cursor.close()
+		# Disconnect
+		@staticmethod
+		def disconnect():
+			MySQL.connection.close()
+			MySQL.cursor.close()
 
-        # Clean Static Variables
-        @staticmethod
-        def clean():
-            MySQL.lastQuery = None
-            MySQL.rowCount = None
-            MySQL.lastInsertedRowID = None
-            MySQL.lastFetchedData = None
+		# Clean Static Variables
+		@staticmethod
+		def clean():
+			MySQL.lastQuery = None
+			MySQL.rowCount = None
+			MySQL.lastInsertedRowID = None
+			MySQL.lastFetchedData = None
 
 
 
