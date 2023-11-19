@@ -109,25 +109,14 @@
 		  box-sizing: border-box;
 		  outline: none;
 		  text-decoration: none;
-		  /* user-select: none; /* Disable copy */
-		  /* pointer-events: none; */
 
 		  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Mobile link click effect disabling */
-		  /* -webkit-tap-highlight-color: transparent; */
 		}
 
 		/* Selection */
 		*::selection{
 			color: var(--color-text-primary);
 			background-color: var(--color-brand);
-		}
-
-		/* Add disabled effect to file selector button when disabled */
-		*{
-		  &[disabled], [disabled]::file-selector-button, [type=submit]:disabled{
-			cursor: not-allowed;
-			opacity: 0.5;
-		  }
 		}
 
 		/* <a> basic active & hover effects */
@@ -390,18 +379,18 @@
 		/********************* v1 END *********************/
 	}
 
-	@layer form{
+	@layer forms{
 		/** Form Variables START **/
 		:root{
-		--f-padding: 10px;
-		--f-radius: 5px;
-		--f-gap: 10px;
-		--f-height: 40px;
-		--f-width: 100%;
-		--f-font-size: 20px;
-		--f-border: 1px solid var(--color-text-secondary);
-		--f-transition: var(--transition-velocity) ease-in-out;
-		--f-transition-property: background-color, border;
+			--f-padding: 10px;
+			--f-radius: 5px;
+			--f-gap: 10px;
+			--f-height: 40px;
+			--f-width: 100%;
+			--f-font-size: 20px;
+			--f-border: 1px solid var(--color-text-secondary);
+			--f-transition: var(--transition-velocity) ease-in-out;
+			--f-transition-property: background-color, border;
 		}
 		/** Form Variables END **/
 
@@ -441,7 +430,8 @@
 			}
 		}
 
-		/** select, textarea, imput -> type = [text, password, eMail, number, color, file, date, tel, range] START **/
+		/** select, textarea, imput[types] START **/
+		/* Defaults */
 		select,
 		textarea,
 		input:where([type=text], [type=eMail], [type=password], [type=number], [type=color], [type=file], [type=date], [type=tel], [type=range]){
@@ -455,20 +445,87 @@
 
 			transition: var(--f-transition);
 			transition-property: var(--f-transition-property);
-		}
-		/** select, textarea, imput -> type = [text, password, eMail, number, color, file, date, tel, range] END **/
 
-		/** :hover & :focus -> inputs & textarea & select START **/
-		select:not(:disabled):where(:hover, :focus),
-		textarea:not(:disabled):where(:hover, :focus),
-		input[type=number]:not(:disabled):where(:hover, :focus),
-		input:not(:disabled):where(:hover, :focus){
-			background-color: var(--color-main-tint-5);
-			border: 1px solid var(--color-text-primary);
+			&:hover, &:focus, &:active{
+				&:not(:disabled){
+					background-color: var(--color-main-tint-5);
+					border: 1px solid var(--color-text-primary);
+				}
+			}
 		}
-		/** :hover & :focus -> inputs & textarea & select END **/
+		/** select, textarea, imput[types] END **/
 
-		/** Textarea START **/
+		input{
+			&[type=color]{
+				/* Chrome X */
+				&::-webkit-color-swatch-wrapper{
+					padding: 5px;
+					width: var(--f-width);
+				}
+
+				/* Chrome Y */
+				&::-webkit-color-swatch{
+					border: none;
+					border-radius: var(--f-radius);
+					height: 100%;
+				}
+
+				/* Firefox X */
+				::-moz-color-swatch-wrapper {
+					padding: 5px;
+					width: var(--f-width);
+				}
+
+				/* Firefox Y */
+				::-moz-color-swatch{
+					border: none;
+					border-radius: var(--f-radius);
+					height: 100%;
+				}
+			}
+
+			&[type=file]{
+				padding: var(--padding);
+				font-size: var(--f-font-size);
+
+				/* Button */
+				&::file-selector-button{
+					background-color: var(--color-main);
+					color: white;
+					font-size: var(--f-font-size);
+
+					padding: 3px 10px;
+
+					border: none;
+					border-radius: var(--f-radius);
+
+					cursor: pointer;
+				}
+			}
+
+			&[type=number]{
+				/*** Hide arrows ***/
+				/* Firefox */
+				-moz-appearance: textfield;
+
+				/* Chrome, Safari, Edge, Opera */
+				&::-webkit-outer-spin-button, &::-webkit-inner-spin-button{
+					-webkit-appearance: none;
+				}
+			}
+
+			&[type=radio], &[type=checkbox]{
+				width: 20px;
+				height: auto;
+			}
+		}
+
+		select{
+			appearance: none;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+		}
+
 		textarea{
 			height: unset;
 			font-size: calc(var(--f-font-size) / 1.5);
@@ -476,94 +533,9 @@
 			resize: vertical;
 			padding: var(--f-padding);
 		}
-		/** Textarea END **/
 
-		/** input[type=color] START **/
-		/* Chrome X */
-		input[type=color]::-webkit-color-swatch-wrapper{
-			padding: 5px;
-			width: var(--f-width);
-		}
-
-		/* Chrome Y */
-		input[type=color]::-webkit-color-swatch{
-			border: none;
-			border-radius: var(--f-radius);
-			height: 100%;
-		}
-
-		/* Firefox X */
-		input[type=color]::-moz-color-swatch-wrapper {
-			padding: 5px;
-			width: var(--f-width);
-		}
-
-		/* Firefox Y */
-		input[type=color]::-moz-color-swatch{
-			border: none;
-			border-radius: var(--f-radius);
-			height: 100%;
-		}
-		/** input[type=color] END **/
-
-		/** input[type=file] START **/
-		/* Input */
-		input[type=file]{
-			padding: var(--padding);
-			font-size: var(--f-font-size);
-		}
-
-		/* File Button */
-		input[type=file]::file-selector-button{
-			background-color: var(--color-main);
-			color: white;
-			font-size: var(--f-font-size);
-
-			padding: 3px 10px;
-
-			border: none;
-			border-radius: var(--f-radius);
-
-			cursor: pointer;
-
-			filter: brightness(120%);
-			transition: var(--transition-velocity) filter;
-		}
-
-		/* File Button :hover */
-		input[type=file]::file-selector-button:not(:disabled):hover{
-			filter: brightness(80%);
-		}
-		/** input[type=file] END **/
-
-		/** input[type=number] Hide Arrow START **/
-		/* Firefox */
-		input[type=number]{-moz-appearance: textfield;}
-
-		/* Chrome, Safari, Edge, Opera */
-		input::-webkit-outer-spin-button,
-		input::-webkit-inner-spin-button{-webkit-appearance: none;}
-		/** input[type=number] END **/
-
-		/** input[type=radio] & input[type=checkbox] START **/
-		input:where([type=radio], [type=checkbox]){
-			width: 20px;
-			height: auto;
-		}
-		/** input[type=radio] & input[type=checkbox] END **/
-
-		/** select hide arrow START **/
-		/* form :not(input:where([type=radio], [type=checkbox])), */
-		select{
-			appearance: none;
-			-webkit-appearance: none;
-			-moz-appearance: none;
-		}
-		/** select hide arrow END **/
-
-		/** input[type=submit] & button START **/
-		button,
-		input[type=submit]{
+		/** Button START **/
+		button, input[type=submit]{
 			cursor: pointer;
 			user-select: none;
 
@@ -585,26 +557,19 @@
 			filter: brightness(120%);
 			transition: var(--transition-velocity) ease-in-out;
 			transition-property: filter transform box-shadow;
-		}
 
-		/* On Hover */
-		button:not(:disabled):where(:hover),
-		input[type=submit]:not(:disabled):where(:hover){
-			filter: brightness(80%);
-		}
+			&:not(:disabled){
+				&:hover, &:focus, &:active{
+					filter: brightness(80%);
+				}
 
-		/* On Active */
-		button:not(:disabled):where(:active),
-		input[type=submit]:not(:disabled):where(:active){
-			transform: translateY(5px);
-			box-shadow: 0px 5px 10px -5px rgba(0 0 0 / 0.3);
+				&:active{
+					transform: translateY(5px);
+					box-shadow: 0px 5px 10px -5px rgba(0 0 0 / 0.3);
+				}
+			}
 		}
-
-		/* On Focus */
-		button:not(:disabled):where(:focus),
-		input[type=submit]:not(:disabled):where(:focus){
-		}
-		/** input[type=submit] & button END **/
+		/** Button END **/
 	}
 
 	@layer table{
@@ -1455,13 +1420,25 @@
 		/**************************** Radiues END ****************************/
 
 		/**************************** Disabled START ****************************/
-		.disabled, [disabled]{
-			pointer-events: none;
-			/* Has no effect since no pointer events is none */
-			cursor: not-allowed;
-			opacity: 0.5;
+		*{
+			&.disabled, [disabled], :disabled{
+				pointer-events: none !important;
+				/* Has no effect since no pointer events is none */
+				cursor: not-allowed !important;
+				opacity: 0.5 !important;
+
+				&:hover, :active, :focus, ::before, ::after{
+					pointer-events: none !important;
+				}
+			}
 		}
 		/**************************** Disabled END ****************************/
+
+		/**************************** Disable selecting START ****************************/
+		.no-select{
+			user-select: none;
+		}
+		/**************************** Disable selecting END ****************************/
 
 		/**************************** Box Shadow START ****************************/
 		.bs-default{box-shadow: var(--shadow);}
