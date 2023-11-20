@@ -10,7 +10,7 @@ export default class Select extends HTMLElement{
 
   static {
     Select.#template.innerHTML = `
-      <button>Select</button>
+      <button class="btn btn-primary">Select</button>
       <main>
         <section id="optionsSelected" class="scrollbar-y"></section>
         <!-- <section id="search">
