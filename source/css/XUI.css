@@ -197,6 +197,10 @@
 		.text-color-secondary{color: var(--color-text-secondary);}
 		.text-color-accent{color: var(--color-text-accent);}
 
+		.text-color-black{color: black;}
+		.text-color-white{color: white;}
+		.text-color-transparent{color: transparent;}
+
 		.text-color-success{color: var(--color-success);}
 		.text-color-info{color: var(--color-info);}
 		.text-color-warning{color: var(--color-warning);}
@@ -989,7 +993,8 @@
 		.bg-9{background-color: var(--color-main-tint-9);}
 		.bg-10{background-color: var(--color-main-tint-10);}
 
-		/* Other */
+		/* Basics */
+		.bg-black{background-color: black;}
 		.bg-white{background-color: white;}
 		.bg-transparent{background-color: transparent;}
 
