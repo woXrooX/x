@@ -978,8 +978,8 @@
 
 	@layer backgrounds{
 		/* Brand */
-		.bg-brand{background-color: var(--color-brand);}
 		.bg-main{background-color: var(--color-main);}
+		.bg-brand{background-color: var(--color-brand);}
 
 		/* Brand Color Shades */
 		.bg-1{background-color: var(--color-main-tint-1);}
