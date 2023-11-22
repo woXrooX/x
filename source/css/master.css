@@ -116,7 +116,7 @@ body{
 			transform: translate(-50%, -50%) scale(1);
 		}
 
-		& > button{
+		& > x-icon{
 			width: 30px;
 			height: 30px;
 

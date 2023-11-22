@@ -259,14 +259,14 @@ export default class Table extends HTMLElement{
 
 		let buttonsHTML = "";
 
-		for(let i = 1; i <= this.bodyValuesInChunks.length; i++) buttonsHTML += `<button class="d-none" name="${i}">${i}</button>`;
+		for(let i = 1; i <= this.bodyValuesInChunks.length; i++) buttonsHTML += `<button class="btn btn-primary d-none" name="${i}">${i}</button>`;
 
 		this.querySelector("main > row:last-child > row[for=pagination]").innerHTML = `
-			<button name="first">${window.Lang.use("first")}</button>
-			<button name="previous"><x-icon name="arrow_back" color="white"></x-icon></button>
+			<button class="btn btn-primary" name="first">${window.Lang.use("first")}</button>
+			<button class="btn btn-primary" name="previous"><x-icon name="arrow_back" color="white"></x-icon></button>
 			<section class="d-flex flex-row gap-0-2">${buttonsHTML}</section>
-			<button name="next"><x-icon name="arrow_forward" color="white"></x-icon></button>
-			<button name="last">${window.Lang.use("last")}</button>
+			<button class="btn btn-primary" name="next"><x-icon name="arrow_forward" color="white"></x-icon></button>
+			<button class="btn btn-primary" name="last">${window.Lang.use("last")}</button>
 		`;
 
 		this.firstButton = this.querySelector(`main > row:last-child > row[for="pagination"] > button[name=first]`);
@@ -312,11 +312,11 @@ export default class Table extends HTMLElement{
 			this.querySelector(`main > row:last-child > row[for=pagination] > section > button:nth-child(${id+1})`)
 		];
 
-		for(const button of buttons) button?.removeAttribute("class");
+		for(const button of buttons) button?.classList.remove("d-none", "disabled", "text-decoration-underline");
 
 		// Current
 		buttons[1]?.classList.add("disabled");
-		buttons[1]?.classList.add("text-d-underline");
+		buttons[1]?.classList.add("text-decoration-underline");
 
 		// Update body after current page changes
 		this.#buildBody();

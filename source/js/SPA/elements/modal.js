@@ -11,7 +11,7 @@ export default class Modal extends HTMLElement{
 		Modal.#elementMain = Modal.#element.querySelector("main");
 
 		// Hide on click close button
-		Modal.#element.querySelector("button").onclick = Modal.#hide;
+		Modal.#element.querySelector("x-icon[for=modal_close]").onclick = Modal.#hide;
 
 		// Close on click the cover
 		Cover.onClickExecute(Modal.#hide);
@@ -48,7 +48,7 @@ export default class Modal extends HTMLElement{
 						return;
 				}
 
-				this.trigger.innerHTML = isButton ? `<button>${content}</button>` : content;
+				this.trigger.innerHTML = isButton ? `<button class="btn btn-primary">${content}</button>` : content;
 			}
 
 			// Show On Click trigger
