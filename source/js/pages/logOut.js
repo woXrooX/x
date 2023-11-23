@@ -10,8 +10,8 @@ export default function content(){
 
 			<form action="logOut" for="logOut" class="w-50 surface-clean p-5">
 				<label>
-				<input type='submit' name='logOut' value='${window.Lang.use("logOut")}'>
-				<p for='logOut'>${window.Lang.use("areYouSure")}</p>
+					<input  class="btn btn-primary" type='submit' name='logOut' value='${window.Lang.use("logOut")}'>
+					<p for='logOut'>${window.Lang.use("areYouSure")}</p>
 				</label>
 			</form>
 		</container>

@@ -18,7 +18,7 @@ export default function content(){
 
         <label>
           <p for='eMailConfirmation'></p>
-          <input type='submit' name='verify' value='${window.Lang.use("verifyEmail")}'>
+          <input class="btn btn-primary" type='submit' name='verify' value='${window.Lang.use("verifyEmail")}'>
         </label>
 
       </form>

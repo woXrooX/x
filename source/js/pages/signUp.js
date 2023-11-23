@@ -22,7 +22,7 @@ export default function content() {
 					</label>
 
 					<label>
-						<input type='submit' name='signUp' value='${window.Lang.use("signUp")}'>
+						<input  class="btn btn-primary" type='submit' name='signUp' value='${window.Lang.use("signUp")}'>
 						<p for='signUp'></p>
 					</label>
 
