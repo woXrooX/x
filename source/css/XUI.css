@@ -1611,6 +1611,19 @@
 		/**************************** Radiues START ****************************/
 		.radius-default{border-radius: var(--radius);}
 		.radius-circle{border-radius: 50%;}
+
+		.radius-10{border-radius: 10px;}
+		.radius-20{border-radius: 20px;}
+		.radius-30{border-radius: 30px;}
+		.radius-40{border-radius: 40px;}
+		.radius-50{border-radius: 50px;}
+		.radius-60{border-radius: 60px;}
+		.radius-70{border-radius: 70px;}
+		.radius-80{border-radius: 80px;}
+		.radius-90{border-radius: 90px;}
+		.radius-100{border-radius: 100px;}
+
+		.radius-200{border-radius: 200px;}
 		/**************************** Radiues END ****************************/
 
 		/**************************** Disabled START ****************************/
