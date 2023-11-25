@@ -11,6 +11,7 @@ from python.modules.User import User
 from python.modules.MySQL import MySQL
 
 
+@Page.build()
 def signUp(request):
 	if request.method == "POST":
 		# unknownError
