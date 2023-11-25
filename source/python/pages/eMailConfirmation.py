@@ -40,10 +40,10 @@ def eMailConfirmation(request):
         # Success | Match
         if int(request.form["verificationCode"]) == session["user"]["eMail_verification_code"]:
             data = MySQL.execute(
-                sql="UPDATE users SET eMail_verification_attempts_count=%s, type=%s  WHERE id=%s",
+                sql="UPDATE users SET eMail_verification_attempts_count=%s, authenticity_status=%s  WHERE id=%s",
                 params=(
                     (session["user"]["eMail_verification_attempts_count"] + 1),
-                    Globals.USER_TYPES["authorized"]["id"],
+                    Globals.USER_AUTHENTICITY_STATUSES["authorized"]["id"],
                     session["user"]["id"],
                 ),
                 commit=True
@@ -58,5 +58,7 @@ def eMailConfirmation(request):
                 type="success",
                 message="eMailVerificationSuccess",
                 toast=True,
+				setSessionUser=True,
+				domChange=["menu"],
                 redirect="home"
             )
