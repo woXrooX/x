@@ -3,33 +3,33 @@
 export const TITLE = window.Lang.use(["eMailConfirmation"]);
 
 export default function content(){
-  const dom = `
-<container class="p-5">
-  <row>
-    <column class="w-50 surface-clean p-5">
-      <form action="eMailConfirmation" for="eMailConfirmation">
+	return `
+	<container class="p-5">
+		<column class="w-50 surface-clean p-5 gap-1">
 
-        <p>${window.Lang.use("eMailConfirmationCodeHasBeenSent")}</p>
+			<p class="text-center">${window.Lang.use("eMailConfirmationCodeHasBeenSent")}</p>
 
-        <label>
-          <p for='verificationCode'></p>
-          <input type='number' name='verificationCode'>
-        </label>
+			<form action="eMailConfirmation" for="eMailConfirmation">
 
-        <label>
-          <p for='eMailConfirmation'></p>
-          <input class="btn btn-primary" type='submit' name='verify' value='${window.Lang.use("verifyEmail")}'>
-        </label>
 
-      </form>
+				<label>
+					<p for='verificationCode'></p>
+					<input type='number' name='verificationCode'>
+				</label>
 
-      <p>${window.Lang.use("didNotReceiveCode")} <a href="/home">${window.Lang.use("resendAgain")}</a></p>
+				<label>
+					<input class="btn btn-primary" type='submit' name='verify' value='${window.Lang.use("verifyEmail")}'>
+					<p for='eMailConfirmation'></p>
+				</label>
 
-    </column>
-  </row>
-</container>
-  `;
+			</form>
 
-  return dom;
+			<p class="text-center text-size-0-7">
+				<warning>Warning:</warning>
+				Kindly ensure to review your spam folders too.
+			</p>
 
+		</column>
+	</container>
+	`;
 }
