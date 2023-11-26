@@ -49,106 +49,103 @@ export default class Form{
 	}
 
 	static #onSubmit(form){
-	form.onsubmit = async (event)=>{
-		event.preventDefault();
+		form.onsubmit = async (event)=>{
+			event.preventDefault();
 
-		// The Submitter
-		const submitter = event.submitter;
+			// The Submitter
+			const submitter = event.submitter;
 
-		// Disable Submitter Button
-		submitter.disabled = true;
+			// Disable Submitter Button
+			submitter.disabled = true;
 
-		// After Submitting Form PLZW8
-		Form.#response({
-		form: form,
-		type: "info",
-		message: "plzW8",
-		field: form.getAttribute("for")
-		});
+			// After Submitting Form PLZW8
+			Form.#response({
+				form: form,
+				type: "info",
+				message: "plzW8",
+				field: form.getAttribute("for")
+			});
 
-		// Get FormData
-		let formData = new FormData(event.target);
+			// Get FormData
+			let formData = new FormData(event.target);
 
-		// Append for To FormData
-		formData.append("for", form.getAttribute("for"));
+			// Append for To FormData
+			formData.append("for", form.getAttribute("for"));
 
-		// Log FormData
-		for(const [key, value] of formData.entries())
-		console.log(`${key}: ${value}`);
+			// Log FormData
+			for(const [key, value] of formData.entries())
+			console.log(`${key}: ${value}`);
 
-		// Send The Request
-		let response = await window.bridge(form.action, formData, form.enctype);
+			// Send The Request
+			let response = await window.bridge(form.action, formData, form.enctype);
 
-		// Data From Back-End
-		Log.success(response);
+			// Data From Back-End
+			Log.success(response);
 
-		// Flash Above Input Field
-		if("field" in response)
-		Form.#response({
-			form: form,
-			type: response["type"],
-			message: null,
-			field: response["field"],
-			flash: true
-		});
+			// Flash Above Input Field
+			if("field" in response)
+				Form.#response({
+					form: form,
+					type: response["type"],
+					message: null,
+					field: response["field"],
+					flash: true
+				});
 
-		// Text Above Submit Field
-		Form.#response({
-		form: form,
-		type: response["type"],
-		message: response["message"],
-		field: form.getAttribute("for")
-		});
+			// Text Above Submit Field
+			Form.#response({
+				form: form,
+				type: response["type"],
+				message: response["message"],
+				field: form.getAttribute("for")
+			});
 
-		// Enable Submitter Button
-		submitter.disabled = false;
+			// Enable Submitter Button
+			submitter.disabled = false;
 
-		////////// Check If Response Includes Actions
-		if("actions" in response === false) return;
+			////////// Check If Response Includes Actions
+			if("actions" in response === false) return;
 
-		// Update window.conf
-		if("updateConf" in response["actions"]) window.conf = response["actions"]["updateConf"];
+			// Update window.conf
+			if("updateConf" in response["actions"]) window.conf = response["actions"]["updateConf"];
 
-		// Set window.session["user"]
-		if("setSessionUser" in response["actions"]){
-		window.session["user"] = response["actions"]["setSessionUser"];
+			// Set window.session["user"]
+			if("setSessionUser" in response["actions"]){
+				window.session["user"] = response["actions"]["setSessionUser"];
 
-		// Update Color Mode: User Dependent
-		CSS.detectColorMode();
+				// Update Color Mode: User Dependent
+				CSS.detectColorMode();
+			}
 
-		}
+			// Delete window.session["user"]
+			if("deleteSessionUser" in response["actions"]){
+				delete window.session["user"];
 
-		// Delete window.session["user"]
-		if("deleteSessionUser" in response["actions"]){
-		delete window.session["user"];
+				// Update Color Mode: User Independent
+				CSS.detectColorMode();
+			}
 
-		// Update Color Mode: User Independent
-		CSS.detectColorMode();
+			// Toast
+			if("toast" in response["actions"] && response["actions"]["toast"] === true)
+				Form.#response({
+					form: form,
+					type: response["type"],
+					message: response["message"],
+					toast: true
+				});
 
-		}
+			// Dom Update
+			if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));
 
-		// Toast
-		if("toast" in response["actions"] && response["actions"]["toast"] === true)
-		Form.#response({
-			form: form,
-			type: response["type"],
-			message: response["message"],
-			toast: true
-		});
+			// Redirect
+			if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
 
-		// Dom Update
-		if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));
+			// Reload
+			if("reload" in response["actions"]) window.location.reload();
 
-		// Redirect
-		if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
-
-		// Reload
-		if("reload" in response["actions"]) window.location.reload();
-
-		// Execute Function On Form Got Response
-		if("onFormGotResponse" in response["actions"]) window.DOM.executeOnFormGotResponse(response);
-
-	};
+			// Execute Function On Form Got Response
+			if("onFormGotResponse" in response["actions"]) window.DOM.executeOnFormGotResponse(response);
+		};
 	}
 
 	// static #response(type, message, field, flash = false, toast = false){
