@@ -5,10 +5,18 @@ if __name__ != "__main__":
 	from python.modules.Logger import Log
 
 	class User:
+		# NOTE: Designed for use as a decorator
+		# If user is not in session, returns False
 		@staticmethod
-		def getAssignedRoles():
-			if "user" not in session: return False
+		def checkIfUserInSession(func):
+			def wrapper(*args, **kwargs):
+				if "user" not in session: return False
+				return func(*args, **kwargs)
+			return wrapper
 
+		@staticmethod
+		@checkIfUserInSession
+		def getAssignedRoles():
 			data = MySQL.execute(
 					sql="""
 						SELECT user_roles.name
@@ -28,11 +36,9 @@ if __name__ != "__main__":
 
 		# Sanitized Session Data For Front
 		@staticmethod
+		@checkIfUserInSession
 		def generatePublicSession():
-			# Check If User In Session
-			if "user" not in session: return None
-
-			publicData = {
+			return {
 				"id": session["user"]["id"],
 				"username": session["user"]["username"],
 				"firstname": session["user"]["firstname"],
@@ -42,13 +48,9 @@ if __name__ != "__main__":
 				"roles": session["user"]["roles"],
 			}
 
-			return publicData
-
 		@staticmethod
+		@checkIfUserInSession
 		def updateSession():
-			# Check If User In Session | Error
-			if "user" not in session: return False
-
 			# Get User Data
 			data = MySQL.execute(
 				sql="SELECT * FROM users WHERE id=%s LIMIT 1;",
@@ -68,9 +70,8 @@ if __name__ != "__main__":
 			return True
 
 		@staticmethod
+		@checkIfUserInSession
 		def setAppColorMode(color_mode):
-			if "user" not in session: return False
-
 			# Replace the [1, 2] with the data retrived from the database "app_color_modes"
 			if color_mode not in [1, 2]: return False
 
@@ -89,3 +90,4 @@ if __name__ != "__main__":
 			if User.updateSession() is False: pass
 
 			return True
+
