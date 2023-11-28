@@ -40,6 +40,7 @@ source/python/modules/*
 !source/python/modules/Logger.py
 !source/python/modules/MongoDB.py
 !source/python/modules/MySQL.py
+!source/python/modules/Notifications.py
 !source/python/modules/OpenAI.py
 !source/python/modules/Page.py
 !source/python/modules/PDF.py
