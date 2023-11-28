@@ -26,32 +26,35 @@ Log.center('', '-')
 from python.modules.MySQL import MySQL
 ######## If Database Is Enabled
 if(
-    Globals.CONF.get("database", {}).get("enabled") is True and
-    Globals.CONF.get("database", {}).get("MySQL", {}).get("enabled") is True
+	Globals.CONF.get("database", {}).get("enabled") is True and
+	Globals.CONF.get("database", {}).get("MySQL", {}).get("enabled") is True
 ):
-    ######## Set Up Connection
-    MySQL.init(
-        Globals.CONF["database"]["MySQL"]["user"],
-        Globals.CONF["database"]["MySQL"]["password"],
-        Globals.CONF["database"]["MySQL"]["host"],
-        Globals.CONF["database"]["MySQL"]["name"],
-        Globals.CONF["database"]["MySQL"]["charset"],
-        Globals.CONF["database"]["MySQL"]["collate"]
-    )
+	######## Set Up Connection
+	MySQL.init(
+		Globals.CONF["database"]["MySQL"]["user"],
+		Globals.CONF["database"]["MySQL"]["password"],
+		Globals.CONF["database"]["MySQL"]["host"],
+		Globals.CONF["database"]["MySQL"]["name"],
+		Globals.CONF["database"]["MySQL"]["charset"],
+		Globals.CONF["database"]["MySQL"]["collate"]
+	)
 
-    ######## GLOBAL USER_AUTHENTICITY_STATUSES
-    Globals.getUserAuthenticityStatuses()
+	######## GLOBAL USER_AUTHENTICITY_STATUSES
+	Globals.getUserAuthenticityStatuses()
 
-    ######## GLOBAL USER_ROLES
-    Globals.getUserRoles()
+	######## GLOBAL USER_ROLES
+	Globals.getUserRoles()
+
+	######## GLOBAL NOTIFICATION_TYPES
+	Globals.getNotificationTypes()
 
 
 #################################################### Flask APP
 app = Flask(
-    __name__,
-    root_path = Globals.CONF["flask"]["root_path"],
-    template_folder = Globals.CONF["flask"]["template_folder"],
-    static_folder = Globals.CONF["flask"]["static_folder"]
+	__name__,
+	root_path = Globals.CONF["flask"]["root_path"],
+	template_folder = Globals.CONF["flask"]["template_folder"],
+	static_folder = Globals.CONF["flask"]["static_folder"]
 )
 
 
@@ -72,20 +75,20 @@ from python.modules.routeGuard import routeGuard, routeLogs
 #################################################### Decorations
 # @app.before_first_request
 # def app_init():
-#     return None
+	# return None
 
 @app.before_request
 def before_request():
-    routeLogs()
-    # routeGuard()
+	routeLogs()
+	# routeGuard()
 
 # @app.after_request
 # def after_request(response):
-#     return response
+	# return response
 
 # @app.teardown_request
 # def teardown_request_func(error=None):
-#     return None
+	# return None
 
 
 #################################################### Dynamically Imprting All Pages
@@ -95,8 +98,8 @@ from python.pages import *
 #################################################### RUN using Flask (For Development)
 ### Flask server
 # if __name__ == "__main__":
-    # No SSL
-    # app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True)
+	# No SSL
+	# app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True)
 
-    # OpenSSL
-    # app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True, ssl_context=('SSL/cert.pem', 'SSL/key.pem'))
+	# OpenSSL
+	# app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True, ssl_context=('SSL/cert.pem', 'SSL/key.pem'))
