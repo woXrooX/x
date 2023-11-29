@@ -12,6 +12,7 @@
 
 if __name__ != "__main__":
 	import mysql.connector
+	from python.modules.Logger import Log
 
 	class MySQL:
 		user = password = host = database = charset = collate = None
@@ -19,13 +20,7 @@ if __name__ != "__main__":
 		connection = None
 		cursor = None
 
-		lastQuery = None
-		rowCount = None
-		lastInsertedRowID = None
-		lastFetchedData = None
-
 		enabled = False
-		hasError = False
 
 		######### APIs / Methods
 		# Init MySQL
@@ -55,22 +50,23 @@ if __name__ != "__main__":
 			commit = False,
 			prepared = True,
 			dictionary = True,
-			fetchOne = False
-		):
-			# Many and multi can not work together
-			if multi is True and many is True: return False
+			fetchOne = False,
+			includeMySQLData = False
 
+		):
 			# Check If MySQL Is Enabled
 			if MySQL.enabled is False: return False
 
-			# Clean Up Variables
-			MySQL.clean()
+			# Many and multi can not work together
+			if multi is True and many is True: return False
 
 			# Check If Connected Successfully
 			if MySQL.connect(prepared, dictionary) is False: return False
 
-			# Execute
+			# Variable for the results of multi execution
 			multi_execute_result = None
+
+			# Execute
 			try:
 				#### Start Transaction
 				# Execute SQL statements within the transaction
@@ -91,57 +87,48 @@ if __name__ != "__main__":
 				#### Commit the transaction to make the changes permanent
 				if commit is True: MySQL.connection.commit()
 
-				#### Save Execution Information Before MySQL.disconnect() Cleans Them Up
-				# Save Last Query For Later Use
-				MySQL.lastQuery = MySQL.cursor.statement
-
-				# Save Affected Rows Count For Later Use
-				MySQL.rowCount = MySQL.cursor.rowcount
-
-				# Save Affected Rows Count For Later Use
-				MySQL.lastInsertedRowID = MySQL.cursor.lastrowid
-
 				#### Data
+				# by default None
+				data = None
+
 				# Multi
 				if multi is True:
 					data = []
 					for cur in multi_execute_result: data.extend(cur.fetchall())
-					MySQL.lastFetchedData = data
 
 				# "fetchone" enabled
 				# NOTE: In case multi=True and fetchOne=True will execute the code above.
-				elif fetchOne is True: MySQL.lastFetchedData = MySQL.cursor.fetchone()
+				elif fetchOne is True: data = MySQL.cursor.fetchone()
 
 				# Default "fetchall"
-				else: MySQL.lastFetchedData = MySQL.cursor.fetchall()
+				else: data = MySQL.cursor.fetchall()
 
 			except Exception as e:
-				print("------------- MySQL Execute -------------")
-				print(f"ERROR: {e}")
-				print("-----------------------------------------")
+				Log.fieldset(f"ERROR: {e}", "MySQL.execute()")
 				return False
+
+			#### Save execution information before MySQL.disconnect() cleans them up
+			# Construct the result
+			if includeMySQLData is True:
+				result = {
+					"data": data,
+					"query": MySQL.cursor.statement,
+
+					# This read-only property returns the number of rows returned for SELECT statements,
+					# or the number of rows affected by DML statements such as INSERT or UPDATE.
+					"rowCount": MySQL.cursor.rowcount,
+
+					# This read-only property returns the value generated for an AUTO_INCREMENT column by
+					# the previous INSERT or UPDATE statement or None when there is no such value available.
+					"lastRowID": MySQL.cursor.lastrowid
+				}
+
+			else: result = data
 
 			# Close The Connection
 			MySQL.disconnect()
 
-			# Data / Success
-			return MySQL.lastFetchedData
-
-		######### Getters
-		@staticmethod
-		def getLastQuery(): return MySQL.lastQuery
-
-		# The cursor.rowcount attribute returns the number of rows affected by the last executed SQL statement.
-		@staticmethod
-		def getLastAffectedRowsCount(): return MySQL.rowCount
-
-		# the cursor.lastrowid attribute provides the ID of the last row
-		# that was inserted into a table with an auto-increment primary key.
-		@staticmethod
-		def getLastInsertedRowID(): return MySQL.lastInsertedRowID
-
-		@staticmethod
-		def getLastFetchedData(): return MySQL.lastFetchedData
+			return result
 
 		######### Helpers
 		# Connect
@@ -173,12 +160,12 @@ if __name__ != "__main__":
 					dictionary=dictionary
 				)
 
+				Log.fieldset(f"Connection ID: {MySQL.connection.connection_id}", "MySQL.connect()")
+
 				return True
 
 			except Exception as e:
-				print("------------- MySQL Connect -------------")
-				print(f"ERROR: {e}")
-				print("-----------------------------------------")
+				Log.fieldset(f"ERROR: {e}", "MySQL.connect()")
 				return False
 
 		# Disconnect
@@ -186,15 +173,3 @@ if __name__ != "__main__":
 		def disconnect():
 			MySQL.connection.close()
 			MySQL.cursor.close()
-
-		# Clean Static Variables
-		@staticmethod
-		def clean():
-			MySQL.lastQuery = None
-			MySQL.rowCount = None
-			MySQL.lastInsertedRowID = None
-			MySQL.lastFetchedData = None
-
-
-
-
