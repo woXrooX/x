@@ -3,8 +3,8 @@ if __name__ != "__main__":
 	import os # PROJECT_RUNNING_FROM
 	import main # X_RUNNING_FROM
 
-	from main import session
 	from python.modules.MySQL import MySQL
+	from python.modules.Logger import Log
 
 	class Globals():
 		#### Paths
@@ -59,9 +59,7 @@ if __name__ != "__main__":
 			data = MySQL.execute("SELECT * FROM user_authenticity_statuses")
 
 			if data is False:
-				print("------------- Globals -------------")
-				print("Could Not Fetch 'user_authenticity_statuses'")
-				print("-----------------------------------")
+				Log.fieldset("Could Not Fetch 'user_authenticity_statuses'", "Globals.getUserAuthenticityStatuses()")
 				return
 
 			for user_authenticity_status in data:
@@ -72,9 +70,7 @@ if __name__ != "__main__":
 			data = MySQL.execute("SELECT * FROM user_roles")
 
 			if data is False:
-				print("------------- Globals -------------")
-				print("Could Not Fetch 'user_roles'")
-				print("-----------------------------------")
+				Log.fieldset("Could Not Fetch 'user_roles'", "Globals.getUserRoles()")
 				return
 
 			# Making USER_ROLES accessible by keyword like "root" or "dev"
@@ -86,9 +82,7 @@ if __name__ != "__main__":
 			data = MySQL.execute("SELECT * FROM notification_types")
 
 			if data is False:
-				print("------------- Globals -------------")
-				print("Could Not Fetch 'notification_types'")
-				print("-----------------------------------")
+				Log.fieldset("Could Not Fetch 'notification_types'", "Globals.getNotificationTypes()")
 				return
 
 			# Making NOTIFICATION_TYPES accessible by keyword like "success" or "error"
