@@ -5,7 +5,6 @@ from flask import Flask, render_template, request, session, redirect, url_for, m
 #################################################### Draw "The X"
 from python.modules.Logger import Log
 Log.clear()
-Log.brand()
 
 
 #################################################### Initializing File Structure
@@ -20,6 +19,10 @@ from python.modules.Globals import Globals
 Log.center('', '-')
 Log.center(Globals.CONF["version"], '-')
 Log.center('', '-')
+
+
+#################################################### Update Logger enabled/disabled after project.json has been loaded
+Log.enabled = True if Globals.CONF.get("default", {}).get("debug") is True else False
 
 
 #################################################### Setting Up MySQL
