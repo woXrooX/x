@@ -215,7 +215,7 @@ INSERT INTO notification_types (name)
 -- -------------------------- notifications
 CREATE TABLE IF NOT EXISTS `notifications` (
 	`id` INT NOT NULL UNIQUE auto_increment,
-	`user` INT NOT NULL,
+	`owner` INT NOT NULL,
 	`content` TEXT NOT NULL,
 	`seen` BOOLEAN NOT NULL DEFAULT false,
 	`type` INT NOT NULL,
@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 	`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-	FOREIGN KEY (`user`) REFERENCES users(`id`) ON DELETE CASCADE,
+	FOREIGN KEY (`owner`) REFERENCES users(`id`) ON DELETE CASCADE,
 	FOREIGN KEY (`type`) REFERENCES notification_types(`id`) ON DELETE CASCADE,
 
 	PRIMARY KEY (`id`)
