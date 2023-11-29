@@ -1,142 +1,116 @@
 if __name__ != "__main__":
-    import shutil
-    from datetime import datetime
-    import random
+	import shutil
+	from datetime import datetime
+	import random
 
-    from python.modules.Globals import Globals
+	class Logger:
+		#### Variables
+		enabled = True
+		columns, lines = shutil.get_terminal_size()
+		lineLength = columns - 1
 
-    class Logger:
+		colors = {
+			"success": "\033[92m", # bright_green
+			"info": "\033[96m", # bright_cyan
+			"warning": "\033[93m", # bright_yellow
+			"error": "\033[91m", # bright_red
 
-        #### Variables
-        columns, lines = shutil.get_terminal_size()
-        lineLength = columns - 1
+			"custom": "\033[35m", # magenta
 
-        colors = {
-            "success": "\033[92m", # bright_green
-            "info": "\033[96m", # bright_cyan
-            "warning": "\033[93m", # bright_yellow
-            "error": "\033[91m", # bright_red
+			"black": "\033[30m",
+			"red": "\033[31m",
+			"green": "\033[32m",
+			"yellow": "\033[33m",
+			"blue": "\033[34m",
+			"magenta": "\033[35m",
+			"cyan": "\033[36m",
+			"white": "\033[37m",
+			"bright_black": "\033[90m",
+			"bright_red": "\033[91m",
+			"bright_green": "\033[92m",
+			"bright_yellow": "\033[93m",
+			"bright_blue": "\033[94m",
+			"bright_magenta": "\033[95m",
+			"bright_cyan": "\033[96m",
+			"bright_white": "\033[97m",
 
-            "custom": "\033[35m", # magenta
+			"reset": "\033[0m"
+		}
 
-            "black": "\033[30m",
-            "red": "\033[31m",
-            "green": "\033[32m",
-            "yellow": "\033[33m",
-            "blue": "\033[34m",
-            "magenta": "\033[35m",
-            "cyan": "\033[36m",
-            "white": "\033[37m",
-            "bright_black": "\033[90m",
-            "bright_red": "\033[91m",
-            "bright_green": "\033[92m",
-            "bright_yellow": "\033[93m",
-            "bright_blue": "\033[94m",
-            "bright_magenta": "\033[95m",
-            "bright_cyan": "\033[96m",
-            "bright_white": "\033[97m",
-
-            "reset": "\033[0m"
-        }
-
-
-        ######### APIs / Log Types
-        @staticmethod
-        def success(text, force = False): Logger.log("success", text, force)
-
-        @staticmethod
-        def info(text, force = False): Logger.log("info", text, force)
-
-        @staticmethod
-        def warning(text, force = False): Logger.log("warning", text, force)
-
-        @staticmethod
-        def error(text, force = False): Logger.log("error", text, force)
-
-        @staticmethod
-        def custom(type, text, force = False): Logger.log(type, text, force)
-
-        @staticmethod
-        def raw(data): print(data)
-
-        @staticmethod
-        def center(text, fillChar = ' '):
-            # Calculate The With OF The Terminal
-            padding = (Logger.columns - 2 - len(text)) // 2
-
-            # If Empty Text Passed Then Draw Full Line
-            if text == "": print(fillChar * Logger.columns)
-            
-            # Else Normal Line With Space In The Center
-            else: print(fillChar * padding +' '+ text +' '+ fillChar * padding)
+		# NOTE: Designed for use as a decorator
+		# NOTE: Only for internal usage
+		@staticmethod
+		def guard(func):
+			def wrapper(*args, **kwargs):
+				force = kwargs.get('force', False)
+				if force is False and Logger.enabled is False: return
+				return func(*args, **kwargs)
+			return wrapper
 
 
-        @staticmethod
-        def line(char = "\u2588"): print(Logger.coloredText("bright_cyan", char) * Logger.lineLength)
+		######### APIs / Log Types
+		@staticmethod
+		def success(text, force = False): Logger.log("success", text, force)
 
-        @staticmethod
-        def brand():
-            # Randomly Get One Of The ASCII Text
-            brand = brands[random.randrange(0, len(brands))]
+		@staticmethod
+		def info(text, force = False): Logger.log("info", text, force)
 
-            Logger.line()
+		@staticmethod
+		def warning(text, force = False): Logger.log("warning", text, force)
 
-            print(Logger.coloredText("bright_cyan", brand))
+		@staticmethod
+		def error(text, force = False): Logger.log("error", text, force)
 
-            Logger.line()
-        
+		@staticmethod
+		def custom(type, text, force = False): Logger.log(type, text, force)
 
-        ######### Helpers - Supposed To Be "Private"
-        @staticmethod
-        def log(type, text, force = False):
-            # Check If Debugging Mode Is Enabled
-            if(
-                force is True or
-                "default" not in Globals.CONF or
-                "default" in Globals.CONF and Globals.CONF["default"]["debug"] is not False
-            ): print(f"{Logger.colors.get(type, Logger.colors['custom'])}[{Logger.timestamp()}] [{type.upper()}]\033[0m {text}")
+		@staticmethod
+		@guard
+		def raw(data, force = False): print(data)
+
+		@staticmethod
+		@guard
+		def center(text, fillChar = ' ', force = False):
+			# Calculate The With OF The Terminal
+			padding = (Logger.columns - 2 - len(text)) // 2
+
+			# If Empty Text Passed Then Draw Full Line
+			if text == "": print(fillChar * Logger.columns)
+
+			# Else Normal Line With Space In The Center
+			else: print(fillChar * padding +' '+ text +' '+ fillChar * padding)
+
+		@staticmethod
+		def fieldset(content, legend="", type="success", fillChar = '-', force = False):
+			if not content: return
+
+			Logger.center(legend, fillChar)
+			Logger.raw(content)
+			Logger.center('', fillChar)
 
 
-        @staticmethod
-        def clear(): print("\033[H\033[J")
-
-        @staticmethod
-        def coloredText(color, text): return f"{Logger.colors[color]}{text}{Logger.colors['reset']}"
-
-        @staticmethod
-        def timestamp(): return datetime.now().strftime('%Y.%m.%d %H:%M:%S')
+		@staticmethod
+		@guard
+		def line(char = "\u2588"): print(Logger.coloredText("bright_cyan", char) * Logger.lineLength)
 
 
-    brands = [
-        """
-████████╗██╗  ██╗███████╗    ██╗  ██╗
-╚══██╔══╝██║  ██║██╔════╝    ╚██╗██╔╝
-   ██║   ███████║█████╗       ╚███╔╝
-   ██║   ██╔══██║██╔══╝       ██╔██╗
-   ██║   ██║  ██║███████╗    ██╔╝ ██╗
-   ╚═╝   ╚═╝  ╚═╝╚══════╝    ╚═╝  ╚═╝
-        """,
+		######### Helpers
+		# NOTE: Helpers only for internal usage
+		@staticmethod
+		@guard
+		def log(type, text, force = False):
+			print(f"{Logger.colors.get(type, Logger.colors['custom'])}[{Logger.timestamp()}] [{type.upper()}]\033[0m {text}")
 
-        """
-TTTTTTTTTTTTTTTTTTTTTTThhhhhhh                                      XXXXXXX       XXXXXXX
-T:::::::::::::::::::::Th:::::h                                      X:::::X       X:::::X
-T:::::::::::::::::::::Th:::::h                                      X:::::X       X:::::X
-T:::::TT:::::::TT:::::Th:::::h                                      X::::::X     X::::::X
-TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee         XXX:::::X   X:::::XXX
-        T:::::T         h::::hh:::::hhh      ee::::::::::::ee          X:::::X X:::::X
-        T:::::T         h::::::::::::::hh   e::::::eeeee:::::ee         X:::::X:::::X
-        T:::::T         h:::::::hhh::::::h e::::::e     e:::::e          X:::::::::X
-        T:::::T         h::::::h   h::::::he:::::::eeeee::::::e          X:::::::::X
-        T:::::T         h:::::h     h:::::he:::::::::::::::::e          X:::::X:::::X
-        T:::::T         h:::::h     h:::::he::::::eeeeeeeeeee          X:::::X X:::::X
-        T:::::T         h:::::h     h:::::he:::::::e                XXX:::::X   X:::::XXX
-      TT:::::::TT       h:::::h     h:::::he::::::::e               X::::::X     X::::::X
-      T:::::::::T       h:::::h     h:::::h e::::::::eeeeeeee       X:::::X       X:::::X
-      T:::::::::T       h:::::h     h:::::h  ee:::::::::::::e       X:::::X       X:::::X
-      TTTTTTTTTTT       hhhhhhh     hhhhhhh    eeeeeeeeeeeeee       XXXXXXX       XXXXXXX
-        """
 
-    ]
+		@staticmethod
+		@guard
+		def clear(): print("\033[H\033[J")
 
-    # Log Is Alias To Logger
-    Log = Logger
+		@staticmethod
+		def coloredText(color, text): return f"{Logger.colors[color]}{text}{Logger.colors['reset']}"
+
+		@staticmethod
+		def timestamp(): return datetime.now().strftime('%Y.%m.%d %H:%M:%S')
+
+	# Log Is Alias To Logger
+	Log = Logger
