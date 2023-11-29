@@ -32,7 +32,7 @@ def eMailConfirmation(request):
             if data is False: return response(type="error", message="databaseError")
 
             # Update The session["user"] After The Changes To The Database
-            updateSessionUser()
+            User.updateSession()
 
             return response(type="warning", message="eMailConfirmationCodeDidNotMatch", field="verificationCode")
 
