@@ -51,8 +51,8 @@ if __name__ != "__main__":
 			prepared = True,
 			dictionary = True,
 			fetchOne = False,
-			includeMySQLData = False
 
+			includeMySQLData = False
 		):
 			# Check If MySQL Is Enabled
 			if MySQL.enabled is False: return False
