@@ -11,10 +11,10 @@ export default class Modal extends HTMLElement{
 		Modal.#elementMain = Modal.#element.querySelector("main");
 
 		// Hide on click close button
-		Modal.#element.querySelector("x-icon[for=modal_close]").onclick = Modal.#hide;
+		Modal.#element.querySelector("x-icon[for=modal_close]").onclick = Modal.hide;
 
 		// Close on click the cover
-		Cover.onClickExecute(Modal.#hide);
+		Cover.onClickExecute(Modal.hide);
 	}
 
 	constructor(){
@@ -69,7 +69,7 @@ export default class Modal extends HTMLElement{
 		Cover.show();
 	}
 
-	static #hide(){
+	static hide(){
 		if(Modal.#shown === false) return;
 
 		Modal.#shown = false;
