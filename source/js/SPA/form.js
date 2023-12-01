@@ -80,7 +80,22 @@ export default class Form{
 			let response = await window.bridge(form.action, formData, form.enctype);
 
 			// Data From Back-End
-			Log.success(response);
+			Log.info(response);
+
+			// On invalid response
+			if(Form.#responseGuard(response) === false){
+				Form.#response({
+					form: form,
+					type: "error",
+					message: window.Lang.use("invalidResponse"),
+					field: form.getAttribute("for")
+				});
+
+				// Enable Submitter Button
+				submitter.disabled = false;
+
+				return;
+			}
 
 			// Flash Above Input Field
 			if("field" in response)
@@ -103,59 +118,65 @@ export default class Form{
 			// Enable Submitter Button
 			submitter.disabled = false;
 
-			////////// Check If Response Includes Actions
-			if("actions" in response === false) return;
-
-			// Update window.conf
-			if("updateConf" in response["actions"]) window.conf = response["actions"]["updateConf"];
-
-			// Set window.session["user"]
-			if("setSessionUser" in response["actions"]){
-				window.session["user"] = response["actions"]["setSessionUser"];
-
-				// Update Color Mode: User Dependent
-				CSS.detectColorMode();
+			////////// x-modal
+			if(form.hasAttribute("x-modal-action")){
+				// Hide
+				if(response["type"] === "success" && form.getAttribute("x-modal-action") === "hide") window.Modal.hide();
 			}
 
-			// Delete window.session["user"]
-			if("deleteSessionUser" in response["actions"]){
-				delete window.session["user"];
+			////////// response["actions"]
+			if("actions" in response){
+				// Update window.conf
+				if("updateConf" in response["actions"]) window.conf = response["actions"]["updateConf"];
 
-				// Update Color Mode: User Independent
-				CSS.detectColorMode();
+				// Set window.session["user"]
+				if("setSessionUser" in response["actions"]){
+					window.session["user"] = response["actions"]["setSessionUser"];
+
+					// Update Color Mode: User Dependent
+					CSS.detectColorMode();
+				}
+
+				// Delete window.session["user"]
+				if("deleteSessionUser" in response["actions"]){
+					delete window.session["user"];
+
+					// Update Color Mode: User Independent
+					CSS.detectColorMode();
+				}
+
+				// Toast
+				if("toast" in response["actions"] && response["actions"]["toast"] === true)
+					Form.#response({
+						form: form,
+						type: response["type"],
+						message: response["message"],
+						toast: true
+					});
+
+				// Dom Update
+				if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));
+
+				// Redirect
+				if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
+
+				// Reload
+				if("reload" in response["actions"]) window.location.reload();
+
+				// Execute Function On Form Got Response
+				if("onFormGotResponse" in response["actions"]) window.DOM.executeOnFormGotResponse(response);
 			}
-
-			// Toast
-			if("toast" in response["actions"] && response["actions"]["toast"] === true)
-				Form.#response({
-					form: form,
-					type: response["type"],
-					message: response["message"],
-					toast: true
-				});
-
-			// Dom Update
-			if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));
-
-			// Redirect
-			if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
-
-			// Reload
-			if("reload" in response["actions"]) window.location.reload();
-
-			// Execute Function On Form Got Response
-			if("onFormGotResponse" in response["actions"]) window.DOM.executeOnFormGotResponse(response);
 		};
 	}
 
 	// static #response(type, message, field, flash = false, toast = false){
 	static #response({
-	form = null,
-	type,
-	message,
-	field,
-	flash = false,
-	toast = false
+		form = null,
+		type,
+		message,
+		field,
+		flash = false,
+		toast = false
 	}){
 	// Check If Form Element Passed
 	if(!!form === false) return;
@@ -174,7 +195,6 @@ export default class Form{
 
 		// Flash Border Color
 		if(flash === true) Form.#flash(type, element);
-
 	}
 
 	// If Toast Is Enabled
@@ -192,23 +212,28 @@ export default class Form{
 	}
 
 	static #formGuard(form){
-	// form Value Is Falsy
-	if(!!form === false) return false;
+		// form Value Is Falsy
+		if(!!form === false) return false;
 
-	// Check If "form" has "action" Attribute
-	if(form.hasAttribute("action") === false) return false;
+		// Check If "form" has "action" Attribute
+		if(form.hasAttribute("action") === false) return false;
 
-	// Check If "form" Attribute "action" has Falsy Value
-	if(!!form.action === false) return false;
+		// Check If "form" Attribute "action" has Falsy Value
+		if(!!form.action === false) return false;
 
-	// Check If "form" has "for" Attribute
-	if(form.hasAttribute("for") === false) return false;
+		// Check If "form" has "for" Attribute
+		if(form.hasAttribute("for") === false) return false;
 
-	// Check If "form" Attribute "for" has Falsy Value
-	if(!!form.getAttribute("for") === false) return false;
+		// Check If "form" Attribute "for" has Falsy Value
+		if(!!form.getAttribute("for") === false) return false;
 
-	return true;
+		return true;
+	}
 
+	static #responseGuard(response){
+		if(!("type" in response)) return false;
+
+		return true;
 	}
 }
 

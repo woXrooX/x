@@ -336,6 +336,11 @@
     "ru":"Неверная запрос",
     "uz":"Noto'g'ri so'rov"
   },
+  "invalidResponse":{
+    "en":"Invalid response",
+    "ru":"Неверный ответ",
+    "uz":"Noto'g'ri javob"
+  },
   "invalidValue":{
     "en":"Invalid value",
     "ru":"Неверное значение",
