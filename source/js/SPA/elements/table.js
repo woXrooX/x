@@ -50,8 +50,8 @@ export default class Table extends HTMLElement{
 				<div for="table"></div>
 
 				<row class="flex-x-between">
-					<row for="showingCounter" class="flex-y-center text-left text-size-0-8"></row>
-					<row for="pagination" class="gap-0-2"></row>
+					<row for="showingCounter" class="flex-x-start flex-y-center text-size-0-8"></row>
+					<row for="pagination" class="flex-x-end gap-0-2"></row>
 				</row>
 
 			</main>
@@ -262,11 +262,11 @@ export default class Table extends HTMLElement{
 		for(let i = 1; i <= this.bodyValuesInChunks.length; i++) buttonsHTML += `<button class="btn btn-primary d-none" name="${i}">${i}</button>`;
 
 		this.querySelector("main > row:last-child > row[for=pagination]").innerHTML = `
-			<button class="btn btn-primary" name="first">${window.Lang.use("first")}</button>
+			<button class="btn btn-primary text-transform-uppercase" name="first">${window.Lang.use("first")}</button>
 			<button class="btn btn-primary" name="previous"><x-icon name="arrow_back" color="white"></x-icon></button>
 			<section class="d-flex flex-row gap-0-2">${buttonsHTML}</section>
 			<button class="btn btn-primary" name="next"><x-icon name="arrow_forward" color="white"></x-icon></button>
-			<button class="btn btn-primary" name="last">${window.Lang.use("last")}</button>
+			<button class="btn btn-primary text-transform-uppercase" name="last">${window.Lang.use("last")}</button>
 		`;
 
 		this.firstButton = this.querySelector(`main > row:last-child > row[for="pagination"] > button[name=first]`);
