@@ -41,10 +41,25 @@
 				--color-text-accent: var(--color-main-accent);
 
 				/* Situational */
-				--color-success: hsla(120, 100%, 25%, 1);
-				--color-info: hsla(211.059, 100%, 50%, 1);
-				--color-warning: hsla(46.286, 100%, 48%, 1);
-				--color-error: hsla(357.303, 82%, 57%, 1);
+				--color-success-hue: 120deg;
+				--color-success-saturation: 100%;
+				--color-success-lightness: 25%;
+				--color-success: hsla(var(--color-success-hue), var(--color-success-saturation), var(--color-success-lightness), 1);
+
+				--color-info-hue: 211.059deg;
+				--color-info-saturation: 100%;
+				--color-info-lightness: 50%;
+				--color-info: hsla(var(--color-info-hue), var(--color-info-saturation), var(--color-info-lightness), 1);
+
+				--color-warning-hue: 46.286deg;
+				--color-warning-saturation: 100%;
+				--color-warning-lightness: 48%;
+				--color-warning: hsla(var(--color-warning-hue), var(--color-warning-saturation), var(--color-warning-lightness), 1);
+
+				--color-error-hue: 357.303deg;
+				--color-error-saturation: 82%;
+				--color-error-lightness: 57%;
+				--color-error: hsla(var(--color-error-hue), var(--color-error-saturation), var(--color-error-lightness), 1);
 
 				color-scheme: dark;
 				accent-color: var(--color-main);
@@ -971,32 +986,28 @@
 		/*** Situational ***/
 		/* Success */
 		.surface-success{
-			background-color: hsla(120, 15%, 25%, 1);
-			color: white;
+			background-color: hsla(var(--color-success-hue), var(--color-success-saturation), var(--color-success-lightness), 0.1);
 			border-left: solid 5px var(--color-success);
 			box-shadow: var(--shadow);
 		}
 
 		/* Info */
 		.surface-info{
-			background-color: hsla(211.059, 15%, 25%, 1);
-			color: white;
+			background-color: hsla(var(--color-info-hue), var(--color-info-saturation), var(--color-info-lightness), 0.1);
 			border-left: solid 5px var(--color-info);
 			box-shadow: var(--shadow);
 		}
 
 		/* Warning */
 		.surface-warning{
-			background-color: hsla(46.286, 15%, 25%, 1);
-			color: white;
+			background-color: hsla(var(--color-warning-hue), var(--color-warning-saturation), var(--color-warning-lightness), 0.1);
 			border-left: solid 5px var(--color-warning);
 			box-shadow: var(--shadow);
 		}
 
 		/* Error */
 		.surface-error{
-			background-color: hsla(357.303, 15%, 25%, 1);
-			color: white;
+			background-color: hsla(var(--color-error-hue), var(--color-error-saturation), var(--color-error-lightness), 0.1);
 			border-left: solid 5px var(--color-error);
 			box-shadow: var(--shadow);
 		}
