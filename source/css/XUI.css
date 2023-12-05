@@ -968,11 +968,38 @@
 			border-bottom: 1px solid var(--color-main-tint-2);
 		}
 
-		/* TO DO: */
+		/*** Situational ***/
 		/* Success */
+		.surface-success{
+			background-color: hsla(120, 15%, 25%, 1);
+			color: white;
+			border-left: solid 5px var(--color-success);
+			box-shadow: var(--shadow);
+		}
+
 		/* Info */
+		.surface-info{
+			background-color: hsla(211.059, 15%, 25%, 1);
+			color: white;
+			border-left: solid 5px var(--color-info);
+			box-shadow: var(--shadow);
+		}
+
 		/* Warning */
+		.surface-warning{
+			background-color: hsla(46.286, 15%, 25%, 1);
+			color: white;
+			border-left: solid 5px var(--color-warning);
+			box-shadow: var(--shadow);
+		}
+
 		/* Error */
+		.surface-error{
+			background-color: hsla(357.303, 15%, 25%, 1);
+			color: white;
+			border-left: solid 5px var(--color-error);
+			box-shadow: var(--shadow);
+		}
 	}
 
 	@layer backgrounds{
