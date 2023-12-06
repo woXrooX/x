@@ -124,11 +124,21 @@ export default class Toast extends HTMLElement{
 
     }
 
+    ICONS: {
+		this.ICONS = {
+			"success": "&#10003;",
+			"info": "&#8505;",
+			"warning": "&#9888;",
+			"error": "&#10005;",
+			"close": "&#10005;"
+		}
+	}
+
     // Clone And Append Template
     this.shadow.appendChild(Toast.#template.content.cloneNode(true));
 
     // If typeName === TRUE Append Type Specific Icon Else Append "warning" Icon
-    this.shadow.querySelector("toast>main>icon").innerHTML = !!ICONS[this.typeName] ? ICONS[this.typeName] : ICONS["warning"];
+    this.shadow.querySelector("toast>main>icon").innerHTML = !!this.ICONS[this.typeName] ? this.ICONS[this.typeName] : this.ICONS["warning"];
 
     // InnerHTML "typeName"
     this.shadow.querySelector("toast>main>type").innerHTML = window.Lang.use(this.typeName);
@@ -137,7 +147,7 @@ export default class Toast extends HTMLElement{
     this.shadow.querySelector("toast>main>content").innerHTML = window.Lang.use(this.textContent);
 
     // InnerHTML Close Button Icon
-    this.shadow.querySelector("toast>dismiss").innerHTML = ICONS["close"];
+    this.shadow.querySelector("toast>dismiss").innerHTML = this.ICONS["close"];
 
     // Remove Toast On Click Dismiss
     // dismiss.onclick = ()=> this.remove(); // Bug w/ N sec removal
