@@ -1,96 +1,79 @@
 <head>
-  <meta charset="{{Globals.CONF["default"]["charset"]}}">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="color-schema" content="dark light">
-  <meta name="theme-color" content="#273d48">
+	<meta charset="{{Globals.CONF["default"]["charset"]}}">
+	<meta name="robots" content="noindex, nofollow">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-schema" content="dark">
+	<meta name="theme-color" content="#14151A">
+  	<meta name="description" content="{{Globals.CONF["default"]["title"]}}">
 
-  <meta name="description" content="{{Globals.CONF["default"]["title"]}}">
+  	<title>{{Globals.CONF["default"]["title"]}}</title>
 
-  <title>{{Globals.CONF["default"]["title"]}}</title>
+	<link
+		rel="icon"
+		type="{{Globals.CONF["default"]["icon"]["favicon"]["type"]}}"
+		sizes="{{Globals.CONF["default"]["icon"]["favicon"]["sizes"]}}"
+		href="/images/{{Globals.CONF["default"]["icon"]["favicon"]["dark"]}}"
+	>
 
-  <link
-    rel="icon"
-    type="{{Globals.CONF["default"]["icon"]["favicon"]["type"]}}"
-    sizes="{{Globals.CONF["default"]["icon"]["favicon"]["sizes"]}}"
-    href="/images/{{Globals.CONF["default"]["icon"]["favicon"]["dark"]}}"
-  >
+	<style media="all" for="X_CSS">
+		body{
+			& > menu{
+				display: none;
+			}
 
-  <style media="all" for="X_CSS">
-    body > menu{
-      display: none;
-    }
+			& > loading{
+				background-color: black;
 
-    body > loading{
-      background-color: black;
+				width: 100vw;
+				height: 100vh;
 
-      width: 100vw;
-      height: 100vh;
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				z-index: 100;
 
-      position: fixed;
-      top: 0px;
-      left: 0px;
-      z-index: 100;
+				&::after{
+					content: '';
+					background-color: transparent;
+					height: 20vh;
+					width: 20vh;
+					border-radius: 100%;
+					border: 0px solid transparent;
+					border-right: 0px solid red;
 
-    }
-    body > loading::after{
-      content: '';
-      background-color: transparent;
-      height: 20vh;
-      width: 20vh;
-      border-radius: 100%;
-      border: 0px solid transparent;
-      border-right: 0px solid red;
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%, -50%);
+					transform-origin: center;
 
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      transform-origin: center;
+					animation: loading 1000ms infinite linear;
+				}
+			}
+		}
+		@keyframes loading{
+			0%{
+				transform: translate(-50%, -50%) rotate(0deg);
+				border-right: 0px solid red;
+			}
+			50%{
+				border-right: 25px solid red;
+			}
+			100%{
+				transform: translate(-50%, -50%) rotate(720deg);
+				border-right: 0px solid red;
+			}
+		}
+	</style>
 
-      animation: loading 1000ms infinite linear;
+	<link rel="preload stylesheet" href="{{url_for('static', filename='css/XUI.css')}}" as="style">
+	<link rel="preload stylesheet" href="{{url_for('static', filename='css/master.css')}}" as="style">
+	<link rel="preload stylesheet" href="{{url_for('static', filename='css/fonts.css')}}" as="style">
+	<link rel="preload stylesheet" href="{{url_for('static', filename='css/x-elements.css')}}" as="style">
 
-    }
-    @keyframes loading{
-      0%{
-        transform: translate(-50%, -50%) rotate(0deg);
-        border-right: 0px solid red;
-      }
-      50%{
-        border-right: 25px solid red;
-      }
-      100%{
-        transform: translate(-50%, -50%) rotate(720deg);
-        border-right: 0px solid red;
-      }
+	<script type="module" src="{{url_for('static', filename='js/main.js')}}"></script>
 
-    }
-  </style>
-
-  <link rel="preload" href="{{url_for('static', filename='css/XUI.css')}}" as="style">
-  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/XUI.css')}}">
-
-  <link rel="preload" href="{{url_for('static', filename='css/master.css')}}" as="style">
-  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/master.css')}}">
-
-  <link rel="preload" href="{{url_for('static', filename='css/fonts.css')}}" as="style">
-  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/fonts.css')}}">
-
-  <link rel="preload" href="{{url_for('static', filename='css/x-elements.css')}}" as="style">
-  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/x-elements.css')}}">
-
-  <script>
-    const ICONS = {
-      "success": "&#10003;",
-      "info": "&#8505;",
-      "warning": "&#9888;",
-      "error": "&#10005;",
-      "close": "&#10005;"
-    }
-  </script>
-
-  <script type="module" src="{{url_for('static', filename='js/main.js')}}"></script>
-
-  <style media="all" for="PROJECT_CSS">{{Globals.PROJECT_CSS|safe}}</style>
+	<style media="all" for="PROJECT_CSS">{{Globals.PROJECT_CSS|safe}}</style>
 
 </head>
