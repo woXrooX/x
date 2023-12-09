@@ -42,6 +42,32 @@ if __name__ != "__main__":
 					"pageNotFound.js",
 					"signUp.js"
 				]
+			},
+			"modules":{
+				"Python": [
+					"Backup.py",
+					"FileSystem.py",
+					"Globals.py",
+					"GMail.py",
+					"Logger.py",
+					"MongoDB.py",
+					"MySQL.py",
+					"Notifications.py",
+					"OpenAI.py",
+					"Page.py",
+					"PDF.py",
+					"Random.py",
+					"response.py",
+					"routeGuard.py",
+					"SendGrid.py",
+					"tools.py",
+					"User.py"
+				],
+				"JavaScript": [
+					"bridge.js",
+					"logger.js",
+					"tools.js"
+				]
 			}
 		}
 
