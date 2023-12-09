@@ -34,6 +34,7 @@ source/js/modules/*
 
 ################ Python
 source/python/modules/*
+!source/python/modules/Backup.py
 !source/python/modules/FileSystem.py
 !source/python/modules/Globals.py
 !source/python/modules/GMail.py
