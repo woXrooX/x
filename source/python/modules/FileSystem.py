@@ -1,534 +1,537 @@
 if __name__ != "__main__":
-    import os
-    import sys
-    import shutil
-    import json
-    import yaml
-    from main import session
-    from python.modules.Logger import Log
-    from python.modules.Globals import Globals
+	import os
+	import sys
+	import shutil
+	import json
+	import yaml
+	from main import session
+	from python.modules.Logger import Log
+	from python.modules.Globals import Globals
 
-    class FileSystem:
-        ####### Helpers
-        # Helpers With Strict Mode True Will Exists The Script (Stop The Server) On Fail
+	class FileSystem:
+		################# Helpers
+		# Helpers With Strict Mode True Will Exists The Script (Stop The Server) On Fail
 
-        @staticmethod
-        def createFolder(path, strict = True):
-            try:
-                Log.info(f"Folder: {path}")
+		@staticmethod
+		def createFolder(path, strict = True):
+			try:
+				Log.info(f"Folder: {path}")
 
-                os.makedirs(f'{path}', mode=0o777, exist_ok=True)
+				os.makedirs(f'{path}', mode=0o777, exist_ok=True)
 
-                return True
+				return True
 
-            except:
-                Log.error(f"Could Not Create The Folder: {path}")
+			except:
+				Log.error(f"Could Not Create The Folder: {path}")
 
-                if strict is True: sys.exit()
+				if strict is True: sys.exit()
 
-                return False
+				return False
 
-        @staticmethod
-        def createFile(pathNameExtension, content = "", strict = True):
-            if not os.path.exists(f"{pathNameExtension}"):
-                try:
-                    Log.info(f"File: {pathNameExtension}")
+		@staticmethod
+		def createFile(pathNameExtension, content = "", strict = True):
+			if not os.path.exists(f"{pathNameExtension}"):
+				try:
+					Log.info(f"File: {pathNameExtension}")
 
-                    with open(f'{pathNameExtension}', 'w') as f:
-                        f.write(f"{content}")
+					with open(f'{pathNameExtension}', 'w') as f:
+						f.write(f"{content}")
 
-                    return True
+					return True
 
-                except:
-                    Log.error(f"Could Not Create The File: {path}")
+				except:
+					Log.error(f"Could Not Create The File: {path}")
 
-                    if strict is True: sys.exit()
+					if strict is True: sys.exit()
 
-                    return False
+					return False
 
-        @staticmethod
-        def copyFile(fromPath, toPath, file, strict = True):
-            try:
-                shutil.copy(f"{fromPath}/{file}", toPath)
+		@staticmethod
+		def copyFile(fromPath, toPath, file, strict = True):
+			try:
+				shutil.copy(f"{fromPath}/{file}", toPath)
 
-                Log.info(f"File Copied: {file}")
+				Log.info(f"File Copied: {file}")
 
-                return True
+				return True
 
-            except:
-                Log.error(f"Could Not Copy The File: {file}")
+			except:
+				Log.error(f"Could Not Copy The File: {file}")
 
-                if strict is True: sys.exit()
+				if strict is True: sys.exit()
 
-                return False
+				return False
 
-        # Will Copy All The Files In A Folder With A Given Extension
-        @staticmethod
-        def copyFiles(fromPath, toPath, extensions = [], strict = True):
-            try:
-                files = os.listdir(fromPath)
+		# Will Copy All The Files In A Folder With A Given Extension
+		@staticmethod
+		def copyFiles(fromPath, toPath, extensions = [], strict = True):
+			try:
+				files = os.listdir(fromPath)
 
-                for file in files:
-                    # Check If Extension Passed Then Copy Files Only With That Given Extension
-                    if(
-                        extensions != [] and
-                        os.path.splitext(file)[1] not in extensions
-                    ):
-                        Log.warning(f"Not Matching File Extension: {file}")
-                        continue
+				for file in files:
+					# Check If Extension Passed Then Copy Files Only With That Given Extension
+					if(
+						extensions != [] and
+						os.path.splitext(file)[1] not in extensions
+					):
+						Log.warning(f"Not Matching File Extension: {file}")
+						continue
 
-                    FileSystem.copyFile(fromPath, toPath, file)
+					FileSystem.copyFile(fromPath, toPath, file)
 
-                Log.success(f"Files Are Copied To: {toPath}")
+				Log.success(f"Files Are Copied To: {toPath}")
 
-                return True
+				return True
 
-            except:
-                Log.error(f"Could Not Copy The Files @: {fromPath}")
+			except:
+				Log.error(f"Could Not Copy The Files @: {fromPath}")
 
-                if strict is True: sys.exit()
+				if strict is True: sys.exit()
 
-                return False
+				return False
 
-        @staticmethod
-        def deleteFile(pathAndFile, strict = True):
-            try:
-                os.remove(f"{pathAndFile}")
+		@staticmethod
+		def deleteFile(pathAndFile, strict = True):
+			try:
+				os.remove(f"{pathAndFile}")
 
-                Log.success(f"File Deleted Successfully: {pathAndFile}")
+				Log.success(f"File Deleted Successfully: {pathAndFile}")
 
-                return True
+				return True
 
-            except:
-                Log.error(f"Could Not Delete The Files @: {pathAndFile}")
+			except:
+				Log.error(f"Could Not Delete The Files @: {pathAndFile}")
 
-                if strict is True: sys.exit()
+				if strict is True: sys.exit()
 
-                return False
+				return False
 
 
-        ############## System
-        # Initiate System Files And Folders
-        @staticmethod
-        def init():
-            ################################ CleanUp
-            Log.center("Clean Up", '=')
 
-            ################ Pages (Back-End)
-            Log.center("Pages (Back-End)", '-')
-            FileSystem.cleanExternalCopiedPagesBack()
+		################# System
+		# Initiate System Files And Folders
+		@staticmethod
+		def init():
+			################################ CleanUp
+			Log.center("Clean Up", '=')
 
-            ################ Pages (Front-End)
-            Log.center("Pages (Front-End)", '-')
-            FileSystem.cleanExternalCopiedPagesFront()
 
-            Log.line()
+			################ Pages (Back-End)
+			Log.center("Pages (Back-End)", '-')
+			FileSystem.cleanExternalCopiedPagesBack()
 
-            ################################ Creating
-            ################ Folders
-            Log.center("Creating Folders", '=')
+			################ Pages (Front-End)
+			Log.center("Pages (Front-End)", '-')
+			FileSystem.cleanExternalCopiedPagesFront()
 
-            ## x/source/assets
-            FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/assets/')
+			################ Python (Modules)
+			Log.center("Python (Modules)", '-')
+			FileSystem.cleanExternalCopiedPythonModules()
 
-            ## CSS
-            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/CSS/')
+			################ JavaScript (Modules)
+			Log.center("JavaScript (Modules)", '-')
+			FileSystem.cleanExternalCopiedJavaScriptModules()
 
-            ## fonts
-            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/fonts/')
 
-            ## images
-            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/images/')
+			################################ Creating
+			################ Folders
+			Log.center("Creating Folders", '=')
 
-            ## JS
-            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/JS/')
+			## x/source/assets
+			FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/assets/')
 
-            ## pages
-            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/pages/')
-            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/pages/back')
-            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/pages/front')
+			project_folders = ["Backups", "CSS", "fonts", "images", "JS", "pages", "pages/back", "pages/front", "python", "SVG"]
 
-            # python
-            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/python/')
+			for folder in project_folders:
+				FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/{folder}/')
 
-            ## SVG
-            FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/SVG/')
+			################ Files
+			Log.center("Creating Files", '=')
 
-            Log.line()
+			# styles.css
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css")
 
-            ################ Files
-            Log.center("Creating Files", '=')
+			# header.js
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/header.js", 'export default function header(){\n\treturn "Header";\n}')
 
-            # styles.css
-            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css")
+			# footer.js
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/footer.js", 'export default function footer(){\n\treturn "Footer";\n}')
 
-            # header.js
-            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/header.js", 'export default function header(){\n\treturn "Header";\n}')
+			# pages/back/home.py
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py", 'from python.modules.Page import Page\n\n@Page.build()\ndef home(): pass')
 
-            # footer.js
-            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/footer.js", 'export default function footer(){\n\treturn "Footer";\n}')
+			# pages/front/home.js
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/front/home.js", 'export const TITLE = window.Lang.use("home");\n\nexport default function content(){\n\treturn "Home";\n}')
 
-            # pages/back/home.py
-            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py",
-'''from python.modules.Page import Page
+			# languageDictionary.json
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", '{"x": {"en": "x"}}')
 
-@Page.build()
-def home(): pass'''
-            )
+			# project.json
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/project.json", "{}")
 
-            # pages/front/home.js
-            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/front/home.js",
-'''export const TITLE = window.Lang.use("home");
 
-export default function content(){
+			################################ Loading/Reading Files
+			Log.center("Loading Files", '=')
 
-	return "Home";
-}'''
-            )
+			######### Internals
+			# config.yaml
+			FileSystem.loadDefaultConfigurations()
 
-            # languageDictionary.json
-            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", '{"x": {"en": "x"}}')
+			# Internal languageDictionary.json
+			FileSystem.loadInternalLanguageDictionary()
 
-            # project.json
-            FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/project.json", "{}")
+			######### Externals
+			# project.json
+			FileSystem.loadProjectConfigurations()
 
-            Log.line()
+			# CSS
+			FileSystem.loadExternalCSS()
 
-            ################################ Loading/Reading Files
-            Log.center("Loading Files", '=')
+			# SVG
+			FileSystem.loadExternalSVG()
 
-            ######### Internals
-            # config.yaml
-            FileSystem.loadDefaultConfigurations()
+			# External languageDictionary.json
+			FileSystem.loadExternalLanguageDictionary()
 
-            # Internal languageDictionary.json
-            FileSystem.loadInternalLanguageDictionary()
+			######### Merge
+			# Merge Configurations
+			FileSystem.mergeConfigurations()
 
-            ######### Externals
-            # project.json
-            FileSystem.loadProjectConfigurations()
+			# Merge Configurations
+			FileSystem.mergeLanguageDictionaries()
 
-            # CSS
-            FileSystem.loadExternalCSS()
 
-            # SVG
-            FileSystem.loadExternalSVG()
+			################################ Copying
+			Log.center("Copying Files", '=')
 
-            # External languageDictionary.json
-            FileSystem.loadExternalLanguageDictionary()
+			## Fonts
+			FileSystem.copyFonts()
 
-            ######### Merge
-            # Merge Configurations
-            FileSystem.mergeConfigurations()
+			## Images
+			FileSystem.copyImages()
 
-            # Merge Configurations
-            FileSystem.mergeLanguageDictionaries()
+			## JS
+			FileSystem.copyJavaScripts()
 
-            Log.line()
+			## Pages
+			# Pages (Back-End)
+			FileSystem.copyPagesBackEnd()
 
-            ################################ Copying
-            Log.center("Copying Files", '=')
+			# Pages (Front-End)
+			FileSystem.copyPagesFrontEnd()
 
-            ## Fonts
-            FileSystem.copyFonts()
+			## Pythons
+			FileSystem.copyPythons()
 
-            ## Images
-            FileSystem.copyImages()
 
-            ## JS
-            FileSystem.copyJavaScripts()
 
-            ## Pages
-            # Pages (Back-End)
-            FileSystem.copyPagesBackEnd()
+		################# Methods for FileSystem.init()
+		####### CleanUp
+		# Pages (Back-End)
+		@staticmethod
+		def cleanExternalCopiedPagesBack():
+			path = f"{Globals.X_RUNNING_FROM}/python/pages/"
 
-            # Pages (Front-End)
-            FileSystem.copyPagesFrontEnd()
+			files = os.listdir(path)
 
-            ## Pythons
-            FileSystem.copyPythons()
+			for file_name in files:
+				# File name and path
+				file_path = os.path.join(path, file_name)
 
-            Log.line()
+				if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["pages"]["back"]:
+					FileSystem.deleteFile(file_path)
 
-        ####### CleanUp
-        # Pages (Back-End)
-        @staticmethod
-        def cleanExternalCopiedPagesBack():
-            path = f"{Globals.X_RUNNING_FROM}/python/pages/"
+		# Pages (Front-End)
+		@staticmethod
+		def cleanExternalCopiedPagesFront():
+			path = f"{Globals.X_RUNNING_FROM}/js/pages/"
 
-            files = os.listdir(path)
+			files = os.listdir(path)
 
-            for file_name in files:
-                # File name and path
-                file_path = os.path.join(path, file_name)
+			for file_name in files:
+				# File name and path
+				file_path = os.path.join(path, file_name)
 
-                if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["pages"]["back"]:
-                    FileSystem.deleteFile(file_path)
+				if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["pages"]["front"]:
+					FileSystem.deleteFile(file_path)
 
-        # Pages (Front-End)
-        @staticmethod
-        def cleanExternalCopiedPagesFront():
-            path = f"{Globals.X_RUNNING_FROM}/js/pages/"
+		# Python (Modules)
+		@staticmethod
+		def cleanExternalCopiedPythonModules():
+			path = f"{Globals.X_RUNNING_FROM}/python/modules/"
 
-            files = os.listdir(path)
+			files = os.listdir(path)
 
-            for file_name in files:
-                # File name and path
-                file_path = os.path.join(path, file_name)
+			for file_name in files:
+				# File name and path
+				file_path = os.path.join(path, file_name)
 
-                if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["pages"]["front"]:
-                    FileSystem.deleteFile(file_path)
+				if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["modules"]["Python"]:
+					FileSystem.deleteFile(file_path)
 
-        ####### Copy
-        # Copy Fonts
-        @staticmethod
-        def copyFonts():
-            Log.center("Copying FONTS", '-')
+		# JavaScript (Modules)
+		@staticmethod
+		def cleanExternalCopiedJavaScriptModules():
+			path = f"{Globals.X_RUNNING_FROM}/js/modules/"
 
-            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{str(Globals.X_RUNNING_FROM)}/fonts") is True:
-                Log.success("Fonts Are Copied")
+			files = os.listdir(path)
 
-            else: Log.error("Could Not Copy The Fonts")
+			for file_name in files:
+				# File name and path
+				file_path = os.path.join(path, file_name)
 
-        # Copy Images
-        @staticmethod
-        def copyImages():
-            Log.center("Copying Images", '-')
+				if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["modules"]["JavaScript"]:
+					FileSystem.deleteFile(file_path)
 
-            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{str(Globals.X_RUNNING_FROM)}/images", [".png", ".jpg", ".jpeg", ".gif"], False) is True:
-                Log.success("Images Are Copied")
+		####### Copy
+		# Copy Fonts
+		@staticmethod
+		def copyFonts():
+			Log.center("Copying FONTS", '-')
 
-            else: Log.error("Could Not Copy The Fonts")
+			if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{str(Globals.X_RUNNING_FROM)}/fonts") is True:
+				Log.success("Fonts Are Copied")
 
-        # Copy JavaScripts
-        @staticmethod
-        def copyJavaScripts():
-            Log.center("Copying JavaScripts", '-')
+			else: Log.error("Could Not Copy The Fonts")
 
-            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{str(Globals.X_RUNNING_FROM)}/js/modules") is True:
-                Log.success("JavaScripts Are Copied")
+		# Copy Images
+		@staticmethod
+		def copyImages():
+			Log.center("Copying Images", '-')
 
-            else:
-                Log.error("Could Not Copy The JavaScripts")
-                sys.exit()
+			if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{str(Globals.X_RUNNING_FROM)}/images", [".png", ".jpg", ".jpeg", ".gif"], False) is True:
+				Log.success("Images Are Copied")
 
-        # Copy Pages (Back-End)
-        @staticmethod
-        def copyPagesBackEnd():
-            Log.center("Copying Pages (Back-End)", '-')
+			else: Log.error("Could Not Copy The Fonts")
 
-            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{str(Globals.X_RUNNING_FROM)}/python/pages") is True:
-                Log.success("Pages Are Copied (Back-End)")
+		# Copy JavaScripts
+		@staticmethod
+		def copyJavaScripts():
+			Log.center("Copying JavaScripts", '-')
 
-            else:
-                Log.error("Could Not Copy The Pages (Back-End)")
-                sys.exit()
+			if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{str(Globals.X_RUNNING_FROM)}/js/modules") is True:
+				Log.success("JavaScripts Are Copied")
 
-        # Copy Pages (Front-End)
-        @staticmethod
-        def copyPagesFrontEnd():
-            Log.center("Copying Pages (Front-End)", '-')
+			else:
+				Log.error("Could Not Copy The JavaScripts")
+				sys.exit()
 
-            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{str(Globals.X_RUNNING_FROM)}/js/pages") is True:
-                Log.success("Pages Are Copied (Front-End)")
+		# Copy Pages (Back-End)
+		@staticmethod
+		def copyPagesBackEnd():
+			Log.center("Copying Pages (Back-End)", '-')
 
-            else:
-                Log.error("Could Not Copy The Pages (Front-End)")
-                sys.exit()
+			if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{str(Globals.X_RUNNING_FROM)}/python/pages") is True:
+				Log.success("Pages Are Copied (Back-End)")
 
-        # Copy Pythons (Care! Pythons inside your folders xD)
-        @staticmethod
-        def copyPythons():
-            Log.center("Copying Pythons", '-')
+			else:
+				Log.error("Could Not Copy The Pages (Back-End)")
+				sys.exit()
 
-            if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/python", f"{str(Globals.X_RUNNING_FROM)}/python/modules") is True:
-                Log.success("Pythons Are Copied")
+		# Copy Pages (Front-End)
+		@staticmethod
+		def copyPagesFrontEnd():
+			Log.center("Copying Pages (Front-End)", '-')
 
-            else:
-                Log.error("Could Not Copy The Pythons")
-                sys.exit()
+			if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{str(Globals.X_RUNNING_FROM)}/js/pages") is True:
+				Log.success("Pages Are Copied (Front-End)")
 
-        ####### Load
-        #### Internals
-        # Configurations - config.yaml
-        @staticmethod
-        def loadDefaultConfigurations():
-            # global CONF
+			else:
+				Log.error("Could Not Copy The Pages (Front-End)")
+				sys.exit()
 
-            try:
-                with open(f"{Globals.X_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
-                    Globals.CONF = yaml.safe_load(file)
+		# Copy Pythons (Care! Pythons inside your folders xD)
+		@staticmethod
+		def copyPythons():
+			Log.center("Copying Pythons", '-')
 
-                Log.success("Loaded: config.yaml")
+			if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/python", f"{str(Globals.X_RUNNING_FROM)}/python/modules") is True:
+				Log.success("Pythons Are Copied")
 
-            except:
-                Log.error("Could Not Load The config.yaml")
-                sys.exit()
+			else:
+				Log.error("Could Not Copy The Pythons")
+				sys.exit()
 
-        # Language Dictionary
-        @staticmethod
-        def loadInternalLanguageDictionary():
-            try:
-                with open(f'{Globals.X_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") as file:
-                    Globals.LANG_DICT = json.load(file)
+		####### Load
+		#### Internals
+		# Configurations - config.yaml
+		@staticmethod
+		def loadDefaultConfigurations():
+			try:
+				with open(f"{Globals.X_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
+					Globals.CONF = yaml.safe_load(file)
 
-                Log.success("Internal languageDictionary.json Is Loaded")
+				Log.success("Loaded: config.yaml")
 
-            except:
-                Log.error("Could Not Read The Internal languageDictionary.json")
+			except:
+				Log.error("Could Not Load The config.yaml")
+				sys.exit()
 
-        #### Externals
-        # Project Configurations - project.json
-        @staticmethod
-        def loadProjectConfigurations():
-            try:
-                with open(f"{Globals.PROJECT_RUNNING_FROM}/project.json", 'r') as file:
-                    Globals.PROJECT = json.load(file)
+		# Language Dictionary
+		@staticmethod
+		def loadInternalLanguageDictionary():
+			try:
+				with open(f'{Globals.X_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") as file:
+					Globals.LANG_DICT = json.load(file)
 
-                Log.success("Loaded: project.json")
+				Log.success("Internal languageDictionary.json Is Loaded")
 
-            except:
-                Log.error("Could Not Load The project.json")
-                sys.exit()
+			except:
+				Log.error("Could Not Read The Internal languageDictionary.json")
 
-        # Load External CSS
-        @staticmethod
-        def loadExternalCSS():
-            try:
-                with open(f'{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css', "r") as css:
-                    Globals.PROJECT_CSS = css.read()
+		#### Externals
+		# Project Configurations - project.json
+		@staticmethod
+		def loadProjectConfigurations():
+			try:
+				with open(f"{Globals.PROJECT_RUNNING_FROM}/project.json", 'r') as file:
+					Globals.PROJECT = json.load(file)
 
-                Log.success("External CSS Files Are Loaded")
+				Log.success("Loaded: project.json")
 
-            except:
-                Log.warning("Could Not Read The External CSS")
+			except:
+				Log.error("Could Not Load The project.json")
+				sys.exit()
 
-        # Load External SVG
-        @staticmethod
-        def loadExternalSVG():
-            for file in os.listdir(f'{Globals.PROJECT_RUNNING_FROM}/SVG'):
-                # Check If File Is A SVG File
-                if not file.endswith(".svg"): continue
+		# Load External CSS
+		@staticmethod
+		def loadExternalCSS():
+			try:
+				with open(f'{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css', "r") as css:
+					Globals.PROJECT_CSS = css.read()
 
-                try:
-                    with open(f'{Globals.PROJECT_RUNNING_FROM}/SVG/{file}', "r") as svg:
-                        Globals.PROJECT_SVG[os.path.splitext(file)[0]] = svg.read()
+				Log.success("External CSS Files Are Loaded")
 
-                    Log.success(f"SVG Loaded: {file}")
+			except:
+				Log.warning("Could Not Read The External CSS")
 
-                except:
-                    Log.warning(f"Could Not Load The SVG: {file}")
+		# Load External SVG
+		@staticmethod
+		def loadExternalSVG():
+			for file in os.listdir(f'{Globals.PROJECT_RUNNING_FROM}/SVG'):
+				# Check If File Is A SVG File
+				if not file.endswith(".svg"): continue
 
-        @staticmethod
-        def loadExternalLanguageDictionary():
-            try:
-                with open(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", 'r') as file:
-                    Globals.PROJECT_LANG_DICT = json.load(file)
+				try:
+					with open(f'{Globals.PROJECT_RUNNING_FROM}/SVG/{file}', "r") as svg:
+						Globals.PROJECT_SVG[os.path.splitext(file)[0]] = svg.read()
 
-                Log.success("External languageDictionary.json Is Loaded")
+					Log.success(f"SVG Loaded: {file}")
 
-            except:
-                Log.error("Could Not Read The External languageDictionary.json")
+				except:
+					Log.warning(f"Could Not Load The SVG: {file}")
 
+		@staticmethod
+		def loadExternalLanguageDictionary():
+			try:
+				with open(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", 'r') as file:
+					Globals.PROJECT_LANG_DICT = json.load(file)
 
-        #### Merge
-        # Merge config.yaml And project.json
-        # Merge Project Dependent Configurations To Default Configurations. Override Defaults
-        @staticmethod
-        def mergeConfigurations():
-            #### Merge
-            # Database
-            if "database" in Globals.PROJECT: Globals.CONF["database"] = Globals.PROJECT["database"]
+				Log.success("External languageDictionary.json Is Loaded")
 
-            # eMail
-            if "eMail" in Globals.PROJECT: Globals.CONF["eMail"].update(Globals.PROJECT["eMail"])
+			except:
+				Log.error("Could Not Read The External languageDictionary.json")
 
-            # Defaults
-            if "default" in Globals.PROJECT: Globals.CONF["default"].update(Globals.PROJECT["default"])
 
-            # Pages
-            if "pages" in Globals.PROJECT: Globals.CONF["pages"] = Globals.PROJECT["pages"]
+		#### Merge
+		# Merge config.yaml And project.json
+		# Merge Project Dependent Configurations To Default Configurations. Override Defaults
+		@staticmethod
+		def mergeConfigurations():
+			#### Merge
+			# Database
+			if "database" in Globals.PROJECT: Globals.CONF["database"] = Globals.PROJECT["database"]
 
-            # Menu
-            if "menu" in Globals.PROJECT: Globals.CONF["menu"] = Globals.PROJECT["menu"]
+			# eMail
+			if "eMail" in Globals.PROJECT: Globals.CONF["eMail"].update(Globals.PROJECT["eMail"])
 
-            # OpenAI
-            if "OpenAI" in Globals.PROJECT: Globals.CONF["OpenAI"] = Globals.PROJECT["OpenAI"]
+			# Defaults
+			if "default" in Globals.PROJECT: Globals.CONF["default"].update(Globals.PROJECT["default"])
 
-            #### Public Configurations
-            Globals.PUBLIC_CONF["default"] = Globals.CONF["default"]
-            Globals.PUBLIC_CONF["menu"] = Globals.CONF["menu"]
-            Globals.PUBLIC_CONF["pages"] = Globals.CONF["pages"]
-            Globals.PUBLIC_CONF["username"] = Globals.CONF["username"]
-            Globals.PUBLIC_CONF["password"] = Globals.CONF["password"]
-            Globals.PUBLIC_CONF["phoneNumber"] = Globals.CONF["phoneNumber"]
+			# Pages
+			if "pages" in Globals.PROJECT: Globals.CONF["pages"] = Globals.PROJECT["pages"]
 
-        @staticmethod
-        def mergeLanguageDictionaries():
-            # Override The LANG_DICT w/ The PROJECT_LANG_DICT
-            Globals.LANG_DICT.update(Globals.PROJECT_LANG_DICT)
+			# Menu
+			if "menu" in Globals.PROJECT: Globals.CONF["menu"] = Globals.PROJECT["menu"]
 
+			# OpenAI
+			if "OpenAI" in Globals.PROJECT: Globals.CONF["OpenAI"] = Globals.PROJECT["OpenAI"]
 
-        ############## User
-        @staticmethod
-        def initUserFolders(id = None):
-            ID = None
+			#### Public Configurations
+			Globals.PUBLIC_CONF["default"] = Globals.CONF["default"]
+			Globals.PUBLIC_CONF["menu"] = Globals.CONF["menu"]
+			Globals.PUBLIC_CONF["pages"] = Globals.CONF["pages"]
+			Globals.PUBLIC_CONF["username"] = Globals.CONF["username"]
+			Globals.PUBLIC_CONF["password"] = Globals.CONF["password"]
+			Globals.PUBLIC_CONF["phoneNumber"] = Globals.CONF["phoneNumber"]
 
-            if id is not None:
-                if isinstance(id, int) and id > 0: ID = id
-                else:
-                    Log.warning(f"Invalid Argument Passed To The Method @ FileSystem.initUserFolders(): {id}. Due To That Could Not Initiate User Folders")
+		@staticmethod
+		def mergeLanguageDictionaries():
+			# Override The LANG_DICT w/ The PROJECT_LANG_DICT
+			Globals.LANG_DICT.update(Globals.PROJECT_LANG_DICT)
 
-                    return False
 
-            elif "user" in session: ID = session["user"]["id"]
 
-            else: return False
+		################# User
+		@staticmethod
+		def initUserFolders(id = None):
+			ID = None
 
+			if id is not None:
+				if isinstance(id, int) and id > 0: ID = id
+				else:
+					Log.warning(f"Invalid Argument Passed To The Method @ FileSystem.initUserFolders(): {id}. Due To That Could Not Initiate User Folders")
 
-            # Must Match With The Path In .gitignore
-            # source/users/id/...
-            path = f'{Globals.X_RUNNING_FROM}/users/{ID}/'
+					return False
 
-            # Try To Create User Folders
-            try:
-                # ID
-                os.makedirs(f'{path}', mode=0o777, exist_ok=True)
+			elif "user" in session: ID = session["user"]["id"]
 
-                # Images
-                os.makedirs(f'{path}images', mode=0o777, exist_ok=True)
+			else: return False
 
-                # Videos
-                os.makedirs(f'{path}videos', mode=0o777, exist_ok=True)
 
-                # Audios
-                os.makedirs(f'{path}audios', mode=0o777, exist_ok=True)
+			# Must Match With The Path In .gitignore
+			# source/users/id/...
+			path = f'{Globals.X_RUNNING_FROM}/users/{ID}/'
 
-                # Files (For all kinds of files. For example: .zip or .exe ...)
-                os.makedirs(f'{path}files', mode=0o777, exist_ok=True)
+			# Try To Create User Folders
+			try:
+				# ID
+				os.makedirs(f'{path}', mode=0o777, exist_ok=True)
 
-                # Documents (All kinds of files used as a document. For example it can be .png file but the image contex is some kind certificate)
-                os.makedirs(f'{path}documents', mode=0o777, exist_ok=True)
+				# Images
+				os.makedirs(f'{path}images', mode=0o777, exist_ok=True)
 
-                Log.success(f"User Folders Created @: {path}")
+				# Videos
+				os.makedirs(f'{path}videos', mode=0o777, exist_ok=True)
 
-                return True
+				# Audios
+				os.makedirs(f'{path}audios', mode=0o777, exist_ok=True)
 
-            except:
-                Log.error(f"Could Not Create User Folder(s) @: {path}")
+				# Files (For all kinds of files. For example: .zip or .exe ...)
+				os.makedirs(f'{path}files', mode=0o777, exist_ok=True)
 
-                return False
+				# Documents (All kinds of files used as a document. For example it can be .png file but the image contex is some kind certificate)
+				os.makedirs(f'{path}documents', mode=0o777, exist_ok=True)
 
-        @staticmethod
-        def deleteUserFiles(id):
-            try:
-                shutil.rmtree(f'{Globals.X_RUNNING_FROM}/users/{id}/')
+				Log.success(f"User Folders Created @: {path}")
 
-                Log.success(f"User Files Deleted. User ID: {id}")
+				return True
 
-                return True
+			except:
+				Log.error(f"Could Not Create User Folder(s) @: {path}")
 
-            except:
-                Log.error(f"Could Not Delete User Files. User ID: {id}")
+				return False
 
-                return False
+		@staticmethod
+		def deleteUserFiles(id):
+			try:
+				shutil.rmtree(f'{Globals.X_RUNNING_FROM}/users/{id}/')
+
+				Log.success(f"User Files Deleted. User ID: {id}")
+
+				return True
+
+			except:
+				Log.error(f"Could Not Delete User Files. User ID: {id}")
+
+				return False
