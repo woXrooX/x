@@ -1,4 +1,7 @@
 if __name__ != "__main__":
+	from python.modules.Logger import Log
+	from python.modules.Globals import Globals
+
 	class Backup():
 		@staticmethod
 		def all():
@@ -16,4 +19,9 @@ if __name__ != "__main__":
 		# Users folder
 		@staticmethod
 		def users():
+			pass
+
+
+		@staticmethod
+		def generateTimestampFolder():
 			pass
