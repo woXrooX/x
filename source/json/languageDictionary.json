@@ -421,6 +421,11 @@
     "ru":"Обзор",
     "uz":"Qisqacha"
   },
+  "pageNotFound":{
+    "en":"Page not found",
+    "ru":"Страница не найдена",
+    "uz":"Sahifa topilmadi"
+  },
   "paymentSettings":{
     "en":"Payment settings",
     "ru":"Настройки оплаты",
