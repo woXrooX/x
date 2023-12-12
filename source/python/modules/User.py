@@ -1,4 +1,7 @@
 if __name__ != "__main__":
+	import os
+	import shutil
+
 	from main import session
 	from python.modules.MySQL import MySQL
 	from python.modules.Globals import Globals
@@ -91,3 +94,65 @@ if __name__ != "__main__":
 
 			return True
 
+		@staticmethod
+		def initFolders(id = None):
+			ID = None
+
+			if id is not None:
+				if isinstance(id, int) and id > 0: ID = id
+				else:
+					Log.warning(f"Invalid argument passed to the method @ user.initFolders(): {id}. Due to invalid ID, could not initiate user folders.")
+
+					return False
+
+			elif "user" in session: ID = session["user"]["id"]
+
+			else: return False
+
+
+			# Must match w/ the path in .gitignore
+			# source/users/...
+			path = f'{Globals.X_RUNNING_FROM}/users/{ID}/'
+
+			# Try to create user folders
+			try:
+				# ID
+				os.makedirs(f'{path}', mode=0o777, exist_ok=True)
+
+				# Images
+				os.makedirs(f'{path}images', mode=0o777, exist_ok=True)
+
+				# Videos
+				os.makedirs(f'{path}videos', mode=0o777, exist_ok=True)
+
+				# Audios
+				os.makedirs(f'{path}audios', mode=0o777, exist_ok=True)
+
+				# Files (For all kinds of files. For example: .zip or .exe ...)
+				os.makedirs(f'{path}files', mode=0o777, exist_ok=True)
+
+				# Documents (All kinds of files used as a document. For example it can be .png file but the image contex is some kind certificate)
+				os.makedirs(f'{path}documents', mode=0o777, exist_ok=True)
+
+				Log.success(f"User folders created @: {path}")
+
+				return True
+
+			except:
+				Log.error(f"Could not create user folder(s) @: {path}")
+
+				return False
+
+		@staticmethod
+		def deleteFiles(id):
+			try:
+				shutil.rmtree(f'{Globals.X_RUNNING_FROM}/users/{id}/')
+
+				Log.success(f"User files deleted. User ID: {id}")
+
+				return True
+
+			except:
+				Log.error(f"Could not delete user files. User ID: {id}")
+
+				return False
