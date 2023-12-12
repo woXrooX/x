@@ -4,7 +4,6 @@ from python.modules.Page import Page
 
 from python.modules.GMail import GMail
 from python.modules.SendGrid import SendGrid
-from python.modules.FileSystem import FileSystem
 from python.modules.response import response
 from python.modules.Globals import Globals
 from python.modules.User import User
@@ -92,7 +91,7 @@ def signUp(request):
 			pass
 
 		# Setup Dirs
-		if FileSystem.initUserFolders() == False:
+		if User.initFolders() == False:
 			# Handle Folder Creation Errors
 			pass
 
