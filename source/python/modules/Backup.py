@@ -1,6 +1,9 @@
 if __name__ != "__main__":
+	import datetime
+
 	from python.modules.Logger import Log
 	from python.modules.Globals import Globals
+	from python.modules.FileSystem import FileSystem
 
 	class Backup():
 		@staticmethod
@@ -24,4 +27,5 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def generateTimestampFolder():
-			pass
+			timestamp = str(datetime.datetime.now().replace(microsecond=0))
+			FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/Backups/{timestamp}/')
