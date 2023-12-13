@@ -74,6 +74,18 @@ default:
       dark: "favicon/favicon-32x32-dark.png"
       light: "favicon/favicon-32x32-light.png"
 
+  #### Open Graph Protocol
+  # https://ogp.me/
+  # og:
+  #   site_name: "If your object is part of a larger web site, the name which should be displayed for the overall site. e.g., 'IMDb'."
+  #   title: "The title of your object as it should appear within the graph, e.g., 'The Rock'."
+  #   description: "A one to two sentence description of your object."
+  #   image: "An image URL which should represent your object within the graph."
+
+  #   url: "The canonical URL of your object that will be used as its permanent ID in the graph, e.g."
+  #   type: "The type of your object, e.g., 'video.movie'. Depending on the type you specify, other properties may also be required."
+
+
   # Enables All "print"s And "console.log"s
   debug: true
 
@@ -91,7 +103,9 @@ pages:
     enabled: true
     authenticity_statuses:
       - "unauthenticated"
-
+    methods:
+      - "GET"
+      - "POST"
     endpoints:
       - "/signUp"
 
@@ -100,7 +114,9 @@ pages:
     enabled: true
     authenticity_statuses:
       - "unauthenticated"
-
+    methods:
+      - "GET"
+      - "POST"
     endpoints:
       - "/logIn"
 
@@ -109,7 +125,9 @@ pages:
     enabled: true
     authenticity_statuses:
       - "unauthorized"
-
+    methods:
+      - "GET"
+      - "POST"
     endpoints:
       - "/eMailConfirmation"
 
@@ -119,7 +137,9 @@ pages:
     authenticity_statuses:
       - "unauthorized"
       - "authorized"
-
+    methods:
+      - "GET"
+      - "POST"
     endpoints:
       - "/logOut"
 
@@ -129,7 +149,9 @@ pages:
     authenticity_statuses:
       - "unauthorized"
       - "authorized"
-
+    methods:
+      - "GET"
+      - "POST"
     endpoints:
       - "/logOutInstant"
 
