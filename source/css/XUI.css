@@ -181,7 +181,7 @@
 		/*** Body END ***/
 
 		/*** Mobile Screen START ***/
-		@media only screen and (max-width: 600px){
+		@media (width <= 600px){
 		  :root{
 			font-size: 16px;
 		  }
@@ -1071,7 +1071,7 @@
 			align-items: center;
 		}
 
-		@media only screen and (max-width: 600px) {
+		@media (width <= 600px) {
 			row{
 				flex-direction: column;
 				width: 100% !important;
