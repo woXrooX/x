@@ -296,45 +296,46 @@ body{
 		}
 	}
 
-  & > cover{
-    pointer-events:auto;
+	& > cover{
+		pointer-events:auto;
 
-    background: var(--color-cover);
-    backdrop-filter: blur(var(--blur));
-    opacity: 0;
-    width: 100vw;
-    height: 100vh;
+		background: var(--color-cover);
+		backdrop-filter: blur(var(--blur));
+		opacity: 0;
+		width: 100vw;
+		height: 100vh;
 
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    z-index: var(--z-minus);
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		z-index: var(--z-minus);
 
-    transition: var(--transition-velocity) opacity;
-  }
+		transition: var(--transition-velocity) opacity;
+	}
 
-  & > header{
-    background-color: var(--color-main);
-    color: white;
+	& > header{
+		background-color: var(--color-main);
+		color: white;
+		/* NOTE: We need to make header text color dynamic. We use contrast-color(). This feature is coming soon. */
 
-    width: 100%;
-    height: var(--header-height);
-    padding: var(--padding);
-    padding-left: var(--header-height);
+		width: 100%;
+		height: var(--header-height);
+		padding: var(--padding);
+		padding-left: var(--header-height);
 
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    z-index: var(--z-header);
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		z-index: var(--z-header);
 
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
 
-    &.hide{
-      display: none;
-    }
-  }
+		&.hide{
+			display: none;
+		}
+	}
 
   /* If header is empty */
   &:has(header:empty){
