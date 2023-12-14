@@ -153,7 +153,7 @@ x-urgent{
 			display: grid;
 			place-items: center;
 
-			@media only screen and (max-width: 600px){
+			@media (width <= 600px){
 				max-width: 90dvw;
 				max-height: 90dvh;
 			}
