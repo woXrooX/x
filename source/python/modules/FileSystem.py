@@ -47,6 +47,22 @@ if __name__ != "__main__":
 					return False
 
 		@staticmethod
+		def copyFolder(source, destination, strict = True):
+			try:
+				Log.info(f"FileSystem.copyFolder(): Source: {source} | Destination: {destination}")
+
+				shutil.copytree(source, destination, dirs_exist_ok=True)
+
+				return True
+
+			except:
+				Log.error(f"FileSystem.copyFolder(): Could not copy the folder: {source}")
+
+				if strict is True: sys.exit()
+
+				return False
+
+		@staticmethod
 		def copyFile(fromPath, toPath, file, strict = True):
 			try:
 				shutil.copy(f"{fromPath}/{file}", toPath)
@@ -137,13 +153,13 @@ if __name__ != "__main__":
 			################ Folders
 			Log.center("Creating Folders", '=')
 
-			## x/source/assets
-			FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/assets/')
+			# x/source/[folder]
+			x_folders = ["assets", "users"]
+			for folder in x_folders: FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/{folder}/')
 
+			# project/[folder]
 			project_folders = ["Backups", "CSS", "fonts", "images", "JS", "pages", "pages/back", "pages/front", "python", "SVG"]
-
-			for folder in project_folders:
-				FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/{folder}/')
+			for folder in project_folders: FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/{folder}/')
 
 			################ Files
 			Log.center("Creating Files", '=')
