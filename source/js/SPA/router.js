@@ -4,7 +4,7 @@ export default class Router{
 	static currentPage = {
 		"name": null,
 		"endpoint": null,
-		"urlArgs": null
+		"urlArgs": {}
 	}
 
 	static async handle(){
@@ -28,15 +28,16 @@ export default class Router{
 			// Window Path Name
 			let pathname = window.location.pathname;
 
-			// If Url Args Exists In This Page Drop Url Arguments From The Path Name
-			// If Url Args Exists In This Page Extract Url Arguments From The Path Name
-			if(window.CONF.pages[page]?.urlArgs){
+			if("urlArgs" in window.CONF.pages[page]){
 				//// NOTE: Order Matters In This Scope
 
-				// Current Page Arguments
-				Router.currentPage.urlArgs = pathname.split('/').splice(-window.CONF.pages[page].urlArgs.length);
+				// Create array of URL arguments from the "pathname"
+				const args = pathname.split('/').splice(-window.CONF.pages[page].urlArgs.length);
 
-				// Modified Path Name
+				// Assign key value pairs of URL arguments inside "Router.currentPage.urlArgs"
+				for(let index = 0; index < args.length; index++) Router.currentPage.urlArgs[window.CONF.pages[page].urlArgs[index]] = args[index];
+
+				// Extract URL arguments from the "pathname"
 				pathname = pathname.split('/').slice(0, -window.CONF.pages[page].urlArgs.length).join('/');
 			}
 
