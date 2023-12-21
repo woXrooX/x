@@ -66,10 +66,15 @@ if __name__ != "__main__":
 			# Variable for the results of multi execution
 			multi_execute_result = None
 
+			# MySQL response data
+			data = None
+
+			# MySQL.execute results
+			result = None
+
 			# Execute
 			try:
-				#### Start Transaction
-				# Execute SQL statements within the transaction
+				# Start Transaction: Execute SQL statements within the transaction
 				if commit is True: MySQL.connection.start_transaction()
 
 				# Check If params Evaluated To True
@@ -84,13 +89,6 @@ if __name__ != "__main__":
 				# Default execution
 				else: MySQL.cursor.execute(sql, params)
 
-				#### Commit the transaction to make the changes permanent
-				if commit is True: MySQL.connection.commit()
-
-				#### Data
-				# by default None
-				data = None
-
 				# Multi
 				if multi is True:
 					data = []
@@ -103,30 +101,34 @@ if __name__ != "__main__":
 				# Default "fetchall"
 				else: data = MySQL.cursor.fetchall()
 
+				#### Save execution information before MySQL.disconnect() cleans them up
+				# Construct the result
+				if includeMySQLData is True:
+					result = {
+						"data": data,
+						"query": MySQL.cursor.statement,
+
+						# This read-only property returns the number of rows returned for SELECT statements,
+						# or the number of rows affected by DML statements such as INSERT or UPDATE.
+						"rowCount": MySQL.cursor.rowcount,
+
+						# This read-only property returns the value generated for an AUTO_INCREMENT column by
+						# the previous INSERT or UPDATE statement or None when there is no such value available.
+						"lastRowID": MySQL.cursor.lastrowid
+					}
+
+				else: result = data
+
 			except Exception as e:
 				Log.fieldset(f"ERROR: {e}", "MySQL.execute()")
 				return False
 
-			#### Save execution information before MySQL.disconnect() cleans them up
-			# Construct the result
-			if includeMySQLData is True:
-				result = {
-					"data": data,
-					"query": MySQL.cursor.statement,
+			finally:
+				# Commit the transaction to make the changes permanent
+				if commit is True: MySQL.connection.commit()
 
-					# This read-only property returns the number of rows returned for SELECT statements,
-					# or the number of rows affected by DML statements such as INSERT or UPDATE.
-					"rowCount": MySQL.cursor.rowcount,
-
-					# This read-only property returns the value generated for an AUTO_INCREMENT column by
-					# the previous INSERT or UPDATE statement or None when there is no such value available.
-					"lastRowID": MySQL.cursor.lastrowid
-				}
-
-			else: result = data
-
-			# Close The Connection
-			MySQL.disconnect()
+				# Close The Connection
+				MySQL.disconnect()
 
 			return result
 
