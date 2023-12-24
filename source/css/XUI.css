@@ -1600,6 +1600,52 @@
 		}
 	}
 
+	@layer box_shadow{
+		.bs-none{box-shadow: none;}
+
+		.bs-default{box-shadow: var(--shadow);}
+
+		.bs-2D{
+			box-shadow: -2px 2px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.7);
+
+			transition: var(--transition-velocity) ease-in-out box-shadow;
+
+			&:hover{
+				box-shadow: -4px 4px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.5);
+			}
+		}
+
+		.bs-2D-multi-layer{
+			box-shadow:
+				5px 5px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.4),
+				10px 10px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.3),
+				15px 15px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.2),
+				20px 20px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.1);
+		}
+	}
+
+	@layer border{
+		@layer radius{
+			.radius-unset{border-radius: unset;}
+
+			.radius-default{border-radius: var(--radius);}
+			.radius-circle{border-radius: 50%;}
+
+			.radius-10px{border-radius: 10px;}
+			.radius-20px{border-radius: 20px;}
+			.radius-30px{border-radius: 30px;}
+			.radius-40px{border-radius: 40px;}
+			.radius-50px{border-radius: 50px;}
+			.radius-60px{border-radius: 60px;}
+			.radius-70px{border-radius: 70px;}
+			.radius-80px{border-radius: 80px;}
+			.radius-90px{border-radius: 90px;}
+			.radius-100px{border-radius: 100px;}
+
+			.radius-200px{border-radius: 200px;}
+		}
+	}
+
 	/* Everything with no specific layer or could not name or too small to have own section/layer goes under other */
 	@layer other{
 		/**************************** Info, Success, Warning, Error START ****************************/
@@ -1645,24 +1691,6 @@
 		}
 		/**************************** Info, Success, Warning, Error END ****************************/
 
-		/**************************** Radiues START ****************************/
-		.radius-default{border-radius: var(--radius);}
-		.radius-circle{border-radius: 50%;}
-
-		.radius-10{border-radius: 10px;}
-		.radius-20{border-radius: 20px;}
-		.radius-30{border-radius: 30px;}
-		.radius-40{border-radius: 40px;}
-		.radius-50{border-radius: 50px;}
-		.radius-60{border-radius: 60px;}
-		.radius-70{border-radius: 70px;}
-		.radius-80{border-radius: 80px;}
-		.radius-90{border-radius: 90px;}
-		.radius-100{border-radius: 100px;}
-
-		.radius-200{border-radius: 200px;}
-		/**************************** Radiues END ****************************/
-
 		/**************************** Disabled START ****************************/
 		*{
 			&.disabled, [disabled], :disabled{
@@ -1683,10 +1711,6 @@
 			user-select: none;
 		}
 		/**************************** Disable selecting END ****************************/
-
-		/**************************** Box Shadow START ****************************/
-		.bs-default{box-shadow: var(--shadow);}
-		/**************************** Box Shadow END ****************************/
 
 		/**************************** HR START ****************************/
 		hr{
