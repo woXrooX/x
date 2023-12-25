@@ -74,11 +74,12 @@ export default class Router{
 	}
 
 	static async #loadPageFile(){
-		window.Log.info(`Page file is loading: ${Router.currentPage.name}.js`)
+		window.Log.info(`Page file is loading: ${Router.currentPage.name}.js`);
 
 		try{
-			// Start Loading Effect
+			// Start Loading Effects
 			window.Loading.start();
+			window.Main.animationStart();
 
 			// Change URL To /404 In Case endpoint Is /404
 			// Currntly causing infintive back and forth page looping
@@ -104,8 +105,9 @@ export default class Router{
 				</container>
 			`);
 		}finally{
-			// End Loading Effect
+			// End Loading Effects
 			window.Loading.end();
+			window.Main.animationEnd();
 		}
 	}
 
