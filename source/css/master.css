@@ -27,8 +27,8 @@
 }
 
 body{
-  font-family: Quicksand;
-  padding-top: var(--header-height);
+	font-family: Quicksand;
+	padding-top: var(--header-height);
 
 	& > loading{
 		background-color: var(--color-main-tint-1);
@@ -215,12 +215,12 @@ body{
 
 			display: flex;
 			flex-direction: column;
-			gap: calc(var(--gap) / 2);
 
 			& section{
 				&.container{
 					display: flex;
 					flex-direction: column;
+					margin-top: var(--padding);
 
 					& > section{
 						&.parentMenu{
