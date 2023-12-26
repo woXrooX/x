@@ -1,36 +1,9 @@
 # Py Cache
 __pycache__/
 
-################ Assets
 source/assets/*
-
-################ Users
 source/users/*
-
-################ Fonts
-source/fonts/*
-!source/fonts/Quicksand-Regular.ttf
-!source/fonts/AlegreyaSans-Regular.ttf
-!source/fonts/Cardo-Regular.ttf
-!source/fonts/Cinzel-Regular.ttf
-!source/fonts/Eczar-Regular.ttf
-!source/fonts/Gruppo-Regular.ttf
-!source/fonts/JosefinSans-Regular.ttf
-!source/fonts/JosefinSlab-Regular.ttf
-!source/fonts/Macondo-Regular.ttf
-!source/fonts/Philosopher-Regular.ttf
-!source/fonts/Marcellus-Regular.ttf
-!source/fonts/SpecialElite-Regular.ttf
-
-################ Images
-source/images/*
-!source/images/favicon
-
-################ JavaScripts
-source/js/modules/*
-!source/js/modules/bridge.js
-!source/js/modules/logger.js
-!source/js/modules/tools.js
+source/www/*
 
 ################ Python
 source/python/modules/*
@@ -68,15 +41,3 @@ source/python/pages/*.py
 !source/python/pages/pageNotFound.py
 !source/python/pages/signUp.py
 
-#### Front
-# User Made Pages
-source/js/pages/*.js
-
-# Allow Default Pages
-!source/js/pages/appIsDown.js
-!source/js/pages/eMailConfirmation.js
-!source/js/pages/logIn.js
-!source/js/pages/logOut.js
-!source/js/pages/logOutInstant.js
-!source/js/pages/pageNotFound.js
-!source/js/pages/signUp.js

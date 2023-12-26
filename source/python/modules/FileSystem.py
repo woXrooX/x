@@ -129,32 +129,21 @@ if __name__ != "__main__":
 		@staticmethod
 		def init():
 			################################ CleanUp
-			Log.center("Clean Up", '=')
+			Log.center("Clean up", '=')
 
-
-			################ Pages (Back-End)
 			Log.center("Pages (Back-End)", '-')
 			FileSystem.cleanExternalCopiedPagesBack()
 
-			################ Pages (Front-End)
-			Log.center("Pages (Front-End)", '-')
-			FileSystem.cleanExternalCopiedPagesFront()
-
-			################ Python (Modules)
 			Log.center("Python (Modules)", '-')
 			FileSystem.cleanExternalCopiedPythonModules()
-
-			################ JavaScript (Modules)
-			Log.center("JavaScript (Modules)", '-')
-			FileSystem.cleanExternalCopiedJavaScriptModules()
 
 
 			################################ Creating
 			################ Folders
-			Log.center("Creating Folders", '=')
+			Log.center("Creating folders", '=')
 
 			# x/source/[folder]
-			x_folders = ["assets", "users"]
+			x_folders = ["assets", "users", "www", "www/html", "www/static"]
 			for folder in x_folders: FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/{folder}/')
 
 			# project/[folder]
@@ -162,32 +151,17 @@ if __name__ != "__main__":
 			for folder in project_folders: FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/{folder}/')
 
 			################ Files
-			Log.center("Creating Files", '=')
-
-			# styles.css
+			Log.center("Creating files", '=')
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css")
-
-			# header.js
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/header.js", 'export default function header(){\n\treturn "Header";\n}')
-
-			# footer.js
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/footer.js", 'export default function footer(){\n\treturn "Footer";\n}')
-
-			# pages/back/home.py
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py", 'from python.modules.Page import Page\n\n@Page.build()\ndef home(): pass')
-
-			# pages/front/home.js
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/front/home.js", 'export const TITLE = window.Lang.use("home");\n\nexport default function content(){\n\treturn "Home";\n}')
-
-			# languageDictionary.json
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", '{"x": {"en": "x"}}')
-
-			# project.json
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/project.json", "{}")
 
-
 			################################ Loading/Reading Files
-			Log.center("Loading Files", '=')
+			Log.center("Loading files", '=')
 
 			######### Internals
 			# config.yaml
@@ -206,7 +180,7 @@ if __name__ != "__main__":
 			# SVG
 			FileSystem.loadExternalSVG()
 
-			# External languageDictionary.json
+			# languageDictionary.json
 			FileSystem.loadExternalLanguageDictionary()
 
 			######### Merge
@@ -217,29 +191,19 @@ if __name__ != "__main__":
 			FileSystem.mergeLanguageDictionaries()
 
 
-			################################ Copying
-			Log.center("Copying Files", '=')
+			################################ Copying "x" folders/files
+			Log.center('Copying "x" folders', '=')
+			FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/html", f"{Globals.X_RUNNING_FROM}/www/html")
+			for folder in ["css", "fonts", "js", "images"]: FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/{folder}", f"{Globals.X_RUNNING_FROM}/www/static/{folder}")
 
-			## Fonts
-			FileSystem.copyFonts()
-
-			## Images
-			FileSystem.copyImages()
-
-			## JS
-			FileSystem.copyJavaScripts()
-
-			## Pages
-			# Pages (Back-End)
-			FileSystem.copyPagesBackEnd()
-
-			# Pages (Front-End)
-			FileSystem.copyPagesFrontEnd()
-
-			## Pythons
-			FileSystem.copyPythons()
-
-
+			################################ Copying "project" folders/files
+			Log.center('Copying "project" files', '=')
+			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_RUNNING_FROM}/www/static/fonts")
+			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_RUNNING_FROM}/www/static/images", [".png", ".jpg", ".jpeg", ".gif"], False)
+			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{Globals.X_RUNNING_FROM}/www/static/js/modules")
+			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{Globals.X_RUNNING_FROM}/python/pages")
+			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{Globals.X_RUNNING_FROM}/www/static/js/pages")
+			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/python", f"{Globals.X_RUNNING_FROM}/python/modules")
 
 		################# Methods for FileSystem.init()
 		####### CleanUp
@@ -257,20 +221,6 @@ if __name__ != "__main__":
 				if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["pages"]["back"]:
 					FileSystem.deleteFile(file_path)
 
-		# Pages (Front-End)
-		@staticmethod
-		def cleanExternalCopiedPagesFront():
-			path = f"{Globals.X_RUNNING_FROM}/js/pages/"
-
-			files = os.listdir(path)
-
-			for file_name in files:
-				# File name and path
-				file_path = os.path.join(path, file_name)
-
-				if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["pages"]["front"]:
-					FileSystem.deleteFile(file_path)
-
 		# Python (Modules)
 		@staticmethod
 		def cleanExternalCopiedPythonModules():
@@ -284,89 +234,6 @@ if __name__ != "__main__":
 
 				if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["modules"]["Python"]:
 					FileSystem.deleteFile(file_path)
-
-		# JavaScript (Modules)
-		@staticmethod
-		def cleanExternalCopiedJavaScriptModules():
-			path = f"{Globals.X_RUNNING_FROM}/js/modules/"
-
-			files = os.listdir(path)
-
-			for file_name in files:
-				# File name and path
-				file_path = os.path.join(path, file_name)
-
-				if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["modules"]["JavaScript"]:
-					FileSystem.deleteFile(file_path)
-
-		####### Copy
-		# Copy Fonts
-		@staticmethod
-		def copyFonts():
-			Log.center("Copying FONTS", '-')
-
-			if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{str(Globals.X_RUNNING_FROM)}/fonts") is True:
-				Log.success("Fonts Are Copied")
-
-			else: Log.error("Could Not Copy The Fonts")
-
-		# Copy Images
-		@staticmethod
-		def copyImages():
-			Log.center("Copying Images", '-')
-
-			if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{str(Globals.X_RUNNING_FROM)}/images", [".png", ".jpg", ".jpeg", ".gif"], False) is True:
-				Log.success("Images Are Copied")
-
-			else: Log.error("Could Not Copy The Fonts")
-
-		# Copy JavaScripts
-		@staticmethod
-		def copyJavaScripts():
-			Log.center("Copying JavaScripts", '-')
-
-			if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{str(Globals.X_RUNNING_FROM)}/js/modules") is True:
-				Log.success("JavaScripts Are Copied")
-
-			else:
-				Log.error("Could Not Copy The JavaScripts")
-				sys.exit()
-
-		# Copy Pages (Back-End)
-		@staticmethod
-		def copyPagesBackEnd():
-			Log.center("Copying Pages (Back-End)", '-')
-
-			if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{str(Globals.X_RUNNING_FROM)}/python/pages") is True:
-				Log.success("Pages Are Copied (Back-End)")
-
-			else:
-				Log.error("Could Not Copy The Pages (Back-End)")
-				sys.exit()
-
-		# Copy Pages (Front-End)
-		@staticmethod
-		def copyPagesFrontEnd():
-			Log.center("Copying Pages (Front-End)", '-')
-
-			if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{str(Globals.X_RUNNING_FROM)}/js/pages") is True:
-				Log.success("Pages Are Copied (Front-End)")
-
-			else:
-				Log.error("Could Not Copy The Pages (Front-End)")
-				sys.exit()
-
-		# Copy Pythons (Care! Pythons inside your folders xD)
-		@staticmethod
-		def copyPythons():
-			Log.center("Copying Pythons", '-')
-
-			if FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/python", f"{str(Globals.X_RUNNING_FROM)}/python/modules") is True:
-				Log.success("Pythons Are Copied")
-
-			else:
-				Log.error("Could Not Copy The Pythons")
-				sys.exit()
 
 		####### Load
 		#### Internals

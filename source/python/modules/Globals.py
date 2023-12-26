@@ -32,15 +32,6 @@ if __name__ != "__main__":
 					"logOutInstant.py",
 					"pageNotFound.py",
 					"signUp.py"
-				],
-				"front": [
-					"appIsDown.js",
-					"eMailConfirmation.js",
-					"logIn.js",
-					"logOut.js",
-					"logOutInstant.js",
-					"pageNotFound.js",
-					"signUp.js"
 				]
 			},
 			"modules":{
@@ -62,11 +53,6 @@ if __name__ != "__main__":
 					"SendGrid.py",
 					"tools.py",
 					"User.py"
-				],
-				"JavaScript": [
-					"bridge.js",
-					"logger.js",
-					"tools.js"
 				]
 			}
 		}

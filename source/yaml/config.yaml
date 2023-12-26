@@ -4,8 +4,9 @@ version: "0.147.1"
 ######### Flask
 flask:
   root_path: null
-  template_folder: "html/"
-  static_folder: "/"
+  template_folder: "www/html"
+  static_folder: "www/static"
+  static_url_path: "/"
 
 
 ######### URL

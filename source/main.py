@@ -57,7 +57,8 @@ app = Flask(
 	__name__,
 	root_path = Globals.CONF["flask"]["root_path"],
 	template_folder = Globals.CONF["flask"]["template_folder"],
-	static_folder = Globals.CONF["flask"]["static_folder"]
+	static_folder = Globals.CONF["flask"]["static_folder"],
+	static_url_path = Globals.CONF["flask"]["static_url_path"]
 )
 
 
