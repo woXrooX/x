@@ -1,19 +1,112 @@
 <!DOCTYPE html>
+
 <html lang="{{Globals.CONF["default"]["language"]["fallback"]}}" dir="ltr">
 
-	{% include 'head.html' %}
+	<head>
+
+		<meta charset="{{Globals.CONF["default"]["charset"]}}">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="color-schema" content="dark">
+		<meta name="theme-color" content="#14151A">
+
+		<meta name="robots" content="noindex, nofollow">
+		<meta name="description" content="{{Globals.CONF["default"]["title"]}}">
+
+		<title>{{Globals.CONF["default"]["title"]}}</title>
+
+		<link
+			rel="icon"
+			type="{{Globals.CONF["default"]["icon"]["favicon"]["type"]}}"
+			sizes="{{Globals.CONF["default"]["icon"]["favicon"]["sizes"]}}"
+			href="/images/{{Globals.CONF["default"]["icon"]["favicon"]["dark"]}}"
+		>
+
+		<style media="all" for="X_CSS">
+			body{
+				& > menu{
+					display: none;
+				}
+
+				& > loading{
+					background-color: black;
+
+					width: 100vw;
+					height: 100vh;
+
+					position: fixed;
+					top: 0px;
+					left: 0px;
+					z-index: 100;
+
+					&::after{
+						content: '';
+						background-color: transparent;
+						height: 20vh;
+						width: 20vh;
+						border-radius: 100%;
+						border: 0px solid transparent;
+						border-right: 0px solid red;
+
+						position: absolute;
+						left: 50%;
+						top: 50%;
+						transform: translate(-50%, -50%);
+						transform-origin: center;
+
+						animation: loading 1000ms infinite linear;
+					}
+				}
+			}
+			@keyframes loading{
+				0%{
+					transform: translate(-50%, -50%) rotate(0deg);
+					border-right: 0px solid red;
+				}
+				50%{
+					border-right: 25px solid red;
+				}
+				100%{
+					transform: translate(-50%, -50%) rotate(720deg);
+					border-right: 0px solid red;
+				}
+			}
+		</style>
+
+		<link rel="preload stylesheet" href="{{url_for('static', filename='css/XUI.css')}}" as="style">
+		<link rel="preload stylesheet" href="{{url_for('static', filename='css/master.css')}}" as="style">
+		<link rel="preload stylesheet" href="{{url_for('static', filename='css/fonts.css')}}" as="style">
+		<link rel="preload stylesheet" href="{{url_for('static', filename='css/x-elements.css')}}" as="style">
+
+		<script type="module" src="{{url_for('static', filename='js/main.js')}}"></script>
+
+		<style for="PROJECT_CSS">{{Globals.PROJECT_CSS|safe}}</style>
+
+	</head>
+
 
 	<body>
 
 		<main></main>
 
-		{% include 'footer.html' %}
+		<footer></footer>
 
 		<header></header>
 
 		{% if Globals.CONF["menu"]["enabled"] == True  %}
 			<x-icon for="menu" color="#ffffff" name="menu"></x-icon>
-			{% include 'menu.html' %}
+
+			<menu>
+				<header>
+					<x-icon for="colorModeSwitcher" color="#ffffff" name="light_mode" toggle="dark_mode"></x-icon>
+					<x-icon for="toggleAlwaysOpenMode" color="#ffffff" name="lockOpen" toggle="lockLocked"></x-icon>
+					<x-icon for="closeMenuInMobile" color="#ffffff" name="x"></x-icon>
+				</header>
+
+				<main></main>
+
+				<footer></footer>
+			</menu>
 		{% endif %}
 
 		<cover></cover>
