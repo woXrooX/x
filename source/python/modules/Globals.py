@@ -31,7 +31,8 @@ if __name__ != "__main__":
 					"logOut.py",
 					"logOutInstant.py",
 					"pageNotFound.py",
-					"signUp.py"
+					"signUp.py",
+					"user_files.py"
 				]
 			},
 			"modules":{

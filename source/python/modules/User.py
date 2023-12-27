@@ -118,21 +118,17 @@ if __name__ != "__main__":
 			try:
 				# ID
 				os.makedirs(f'{path}', mode=0o777, exist_ok=True)
-
-				# Images
-				os.makedirs(f'{path}images', mode=0o777, exist_ok=True)
-
-				# Videos
-				os.makedirs(f'{path}videos', mode=0o777, exist_ok=True)
-
-				# Audios
-				os.makedirs(f'{path}audios', mode=0o777, exist_ok=True)
+				os.makedirs(f'{path}private', mode=0o777, exist_ok=True)
+				os.makedirs(f'{path}public', mode=0o777, exist_ok=True)
 
 				# Files (For all kinds of files. For example: .zip or .exe ...)
-				os.makedirs(f'{path}files', mode=0o777, exist_ok=True)
-
 				# Documents (All kinds of files used as a document. For example it can be .png file but the image contex is some kind certificate)
-				os.makedirs(f'{path}documents', mode=0o777, exist_ok=True)
+				folders = ["images", "videos", "audios", "files", "documents"]
+
+				for folder in folders:
+					os.makedirs(f'{path}private/{folder}', mode=0o777, exist_ok=True)
+					os.makedirs(f'{path}public/{folder}', mode=0o777, exist_ok=True)
+
 
 				Log.success(f"User folders created @: {path}")
 
