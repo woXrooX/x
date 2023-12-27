@@ -14,6 +14,7 @@ export default class Router{
 
 			// Force-End Loading Effect
 			window.Loading.end();
+			window.Main.animationEnd();
 
 			return;
 		}
