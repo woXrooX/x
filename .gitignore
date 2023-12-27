@@ -40,4 +40,5 @@ source/python/pages/*.py
 !source/python/pages/logOutInstant.py
 !source/python/pages/pageNotFound.py
 !source/python/pages/signUp.py
+!source/python/pages/user_files.py
 
