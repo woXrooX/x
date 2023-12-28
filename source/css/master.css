@@ -1,29 +1,29 @@
 :root{
-  --screen-size-phone: 600px;
-  --screen-size-tablet: 768px;
-  --screen-size-desktop: 992px;
-  --screen-size-tv: 1200px;
+	--screen-size-phone: 600px;
+	--screen-size-tablet: 768px;
+	--screen-size-desktop: 992px;
+	--screen-size-tv: 1200px;
 
-  --z-minus: -1;
-  --z-body: 1;
-  --z-footer: 2;
-  --z-main: 3;
-  --z-boxes: 4;
-  --z-nav: 5;
-  --z-header: 6;
-  --z-menuHamburgerButton: 7;
-  --z-cover: 8;
-  --z-modal: 9;
-  --z-menu: 10;
-  --z-tooltip: 11; /* Will move to css anchor positioning */
-  --z-toasts: 12;
-  --z-loading: 13;
-  --z-urgent: 14;
+	--z-minus: -1;
+	--z-body: 1;
+	--z-footer: 2;
+	--z-main: 3;
+	--z-boxes: 4;
+	--z-nav: 5;
+	--z-header: 6;
+	--z-menuHamburgerButton: 7;
+	--z-cover: 8;
+	--z-modal: 9;
+	--z-menu: 10;
+	--z-tooltip: 11; /* Will move to css anchor positioning */
+	--z-toasts: 12;
+	--z-loading: 13;
+	--z-urgent: 14;
 
-  --header-height: 40px;
-  --footer-height: 40px;
+	--header-height: 40px;
+	--footer-height: 40px;
 
-  --color-cover: rgba(0, 0, 0, 0.6);
+	--color-cover: rgba(0, 0, 0, 0.6);
 }
 
 body{
@@ -382,7 +382,7 @@ body{
 		place-items: center;
 
 		&.hide{
-		display: none;
+			display: none;
 		}
 	}
 }
@@ -400,7 +400,6 @@ body{
 		}
 
 		& > main {
-			width: 100vw;
 			height: calc(100dvh - var(--header-height));
 			overflow: scroll;
 		}
