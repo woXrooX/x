@@ -167,7 +167,7 @@ body{
 	& > menu{
 		background-color: hsla(var(--color-main-hue), 10%, 25%, 0.1);
 		backdrop-filter: blur(100px);
-		height: 100vh;
+		height: 100dvh;
 		width: auto;
 
 		overflow-y: scroll;
@@ -175,7 +175,6 @@ body{
 		display: grid;
 		grid-template-rows: auto 2fr auto;
 		justify-items: start;
-		gap: var(--gap);
 
 		position: fixed;
 		z-index: var(--z-menu);
@@ -212,6 +211,7 @@ body{
 		& > main{
 			width: 100%;
 			padding: calc(var(--padding) * 2);
+			overflow-y: scroll;
 
 			display: flex;
 			flex-direction: column;
