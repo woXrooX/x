@@ -122,6 +122,23 @@ if __name__ != "__main__":
 
 				return False
 
+		@staticmethod
+		def removeFolder(path, strict = True):
+			try:
+				shutil.rmtree(path)
+
+				Log.success(f"Folder removed successfully: {path}")
+
+				return True
+
+			except:
+				Log.error(f"Could not remove the folder @: {path}")
+
+				if strict is True: sys.exit()
+
+				return False
+
+
 
 
 		################# System
@@ -137,17 +154,20 @@ if __name__ != "__main__":
 			Log.center("Python (Modules)", '-')
 			FileSystem.cleanExternalCopiedPythonModules()
 
+			Log.center("Removing: x/source/www", '-')
+			FileSystem.removeFolder(f'{Globals.X_RUNNING_FROM}/www/')
+
 
 			################################ Creating
 			################ Folders
 			Log.center("Creating folders", '=')
 
 			# x/source/[folder]
-			x_folders = ["assets", "users", "www", "www/html", "www/static"]
+			x_folders = ["users", "www", "www/html", "www/static"]
 			for folder in x_folders: FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/{folder}/')
 
 			# project/[folder]
-			project_folders = ["Backups", "CSS", "fonts", "images", "JS", "pages", "pages/back", "pages/front", "python", "SVG"]
+			project_folders = ["assets", "Backups", "CSS", "fonts", "images", "JS", "pages", "pages/back", "pages/front", "python", "SVG"]
 			for folder in project_folders: FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/{folder}/')
 
 			################ Files
@@ -191,13 +211,14 @@ if __name__ != "__main__":
 			FileSystem.mergeLanguageDictionaries()
 
 
-			################################ Copying "x" folders/files
+			################################ Copying "x" folders
 			Log.center('Copying "x" folders', '=')
 			FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/html", f"{Globals.X_RUNNING_FROM}/www/html")
 			for folder in ["css", "fonts", "js", "images"]: FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/{folder}", f"{Globals.X_RUNNING_FROM}/www/static/{folder}")
 
 			################################ Copying "project" folders/files
-			Log.center('Copying "project" files', '=')
+			Log.center('Copying "project" folders/files', '=')
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/assets", f"{Globals.X_RUNNING_FROM}/www/static/assets")
 			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_RUNNING_FROM}/www/static/fonts")
 			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_RUNNING_FROM}/www/static/images", [".png", ".jpg", ".jpeg", ".gif"], False)
 			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{Globals.X_RUNNING_FROM}/www/static/js/modules")
