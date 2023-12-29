@@ -1152,7 +1152,7 @@
 			.min-w-100{min-width: 100%;}
 
 			/* min-width vw */
-			.min-vw-15{min-width: 10vw;}
+			.min-vw-10{min-width: 10vw;}
 			.min-vw-15{min-width: 15vw;}
 			.min-vw-20{min-width: 20vw;}
 			.min-vw-10{min-width: 10vw;}
@@ -1195,7 +1195,7 @@
 			.max-w-100{max-width: 100%;}
 
 			/* max-width vw */
-			.max-vw-15{max-width: 10vw;}
+			.max-vw-10{max-width: 10vw;}
 			.max-vw-15{max-width: 15vw;}
 			.max-vw-20{max-width: 20vw;}
 			.max-vw-10{max-width: 10vw;}
