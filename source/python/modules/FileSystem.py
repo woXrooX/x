@@ -163,11 +163,11 @@ if __name__ != "__main__":
 			Log.center("Creating folders", '=')
 
 			# x/source/[folder]
-			x_folders = ["users", "www", "www/html", "www/static"]
+			x_folders = ["assets", "users", "www", "www/html", "www/static"]
 			for folder in x_folders: FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/{folder}/')
 
 			# project/[folder]
-			project_folders = ["assets", "Backups", "CSS", "fonts", "images", "JS", "pages", "pages/back", "pages/front", "python", "SVG"]
+			project_folders = ["Backups", "CSS", "fonts", "images", "JS", "pages", "pages/back", "pages/front", "python", "SVG"]
 			for folder in project_folders: FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/{folder}/')
 
 			################ Files
@@ -214,11 +214,10 @@ if __name__ != "__main__":
 			################################ Copying "x" folders
 			Log.center('Copying "x" folders', '=')
 			FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/html", f"{Globals.X_RUNNING_FROM}/www/html")
-			for folder in ["css", "fonts", "js", "images"]: FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/{folder}", f"{Globals.X_RUNNING_FROM}/www/static/{folder}")
+			for folder in ["assets", "css", "fonts", "js", "images"]: FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/{folder}", f"{Globals.X_RUNNING_FROM}/www/static/{folder}")
 
 			################################ Copying "project" folders/files
 			Log.center('Copying "project" folders/files', '=')
-			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/assets", f"{Globals.X_RUNNING_FROM}/www/static/assets")
 			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_RUNNING_FROM}/www/static/fonts")
 			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_RUNNING_FROM}/www/static/images", [".png", ".jpg", ".jpeg", ".gif"], False)
 			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{Globals.X_RUNNING_FROM}/www/static/js/modules")
