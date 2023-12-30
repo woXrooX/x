@@ -163,7 +163,7 @@ if __name__ != "__main__":
 			Log.center("Creating folders", '=')
 
 			# x/source/[folder]
-			x_folders = ["assets", "users", "www", "www/html", "www/static"]
+			x_folders = ["assets", "assets/private", "assets/public", "users", "www", "www/html", "www/static"]
 			for folder in x_folders: FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/{folder}/')
 
 			# project/[folder]
@@ -214,7 +214,7 @@ if __name__ != "__main__":
 			################################ Copying "x" folders
 			Log.center('Copying "x" folders', '=')
 			FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/html", f"{Globals.X_RUNNING_FROM}/www/html")
-			for folder in ["assets", "css", "fonts", "js", "images"]: FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/{folder}", f"{Globals.X_RUNNING_FROM}/www/static/{folder}")
+			for folder in ["css", "fonts", "js", "images"]: FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/{folder}", f"{Globals.X_RUNNING_FROM}/www/static/{folder}")
 
 			################################ Copying "project" folders/files
 			Log.center('Copying "project" folders/files', '=')
