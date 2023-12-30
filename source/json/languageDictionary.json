@@ -401,6 +401,11 @@
     "ru":"Нет совпадений",
     "uz":"Mos kelmadi"
   },
+  "notFound":{
+    "en":"Not found",
+    "ru":"Не найдена",
+    "uz":"Topilmadi"
+  },
   "notSpecified":{
     "en":"Not specified",
     "ru":"Не указан",
