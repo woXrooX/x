@@ -28,11 +28,12 @@ if __name__ != "__main__":
 					"app_is_down.py",
 					"eMailConfirmation.py",
 					"error_handlers.py",
+					"files_assets.py",
+					"files_users.py",
 					"logIn.py",
 					"logOut.py",
 					"logOutInstant.py",
-					"signUp.py",
-					"user_files.py"
+					"signUp.py"
 				]
 			},
 			"modules":{

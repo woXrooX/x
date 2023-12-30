@@ -1,10 +1,10 @@
-# URL: /user_files/user_id/public_or_private/path_and_file
+# URL: /files/users/user_id/public_or_private/path_and_file
 
 from main import app, session, send_from_directory, abort
 from python.modules.Globals import Globals
 
-@app.route("/user_files/<int:ID>/<PRIVATE_PUBLIC>/<path:PATH_AND_FILE>", methods=["GET"])
-def user_files(ID, PRIVATE_PUBLIC, PATH_AND_FILE):
+@app.route("/files/users/<int:ID>/<PRIVATE_PUBLIC>/<path:PATH_AND_FILE>", methods=["GET"])
+def files_users(ID, PRIVATE_PUBLIC, PATH_AND_FILE):
 	if PRIVATE_PUBLIC == "private":
 		if "user" in session and session["user"]["id"] == ID:
 
