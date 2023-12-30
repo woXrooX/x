@@ -155,7 +155,7 @@ if __name__ != "__main__":
 			FileSystem.cleanExternalCopiedPythonModules()
 
 			Log.center("Removing: x/source/www", '-')
-			FileSystem.removeFolder(f'{Globals.X_RUNNING_FROM}/www/')
+			FileSystem.removeFolder(f'{Globals.X_RUNNING_FROM}/www/', strict=False)
 
 
 			################################ Creating
