@@ -27,10 +27,10 @@ if __name__ != "__main__":
 					"api.py",
 					"app_is_down.py",
 					"eMailConfirmation.py",
+					"error_handlers.py",
 					"logIn.py",
 					"logOut.py",
 					"logOutInstant.py",
-					"pageNotFound.py",
 					"signUp.py",
 					"user_files.py"
 				]

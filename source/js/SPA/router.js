@@ -19,6 +19,24 @@ export default class Router{
 			return;
 		}
 
+		// Error handlers
+		switch(window.location.pathname){
+			case "/400":
+				Router.currentPage.name = "400";
+				Router.#loadPageFile();
+				return;
+
+			case "/403":
+				Router.currentPage.name = "403";
+				Router.#loadPageFile();
+				return;
+
+			case "/404":
+				Router.currentPage.name = "404";
+				Router.#loadPageFile();
+				return;
+		}
+
 		// NOTE: We have much efficient way of detecting "if page exists" if we give up on endpoints system
 		// Loop Through Pages
 		loopPages:
@@ -66,8 +84,8 @@ export default class Router{
 				}
 		}
 
-		// If Still No Endpoint Matched Then Set It To "pageNotFound" AKA 404
-		if(Router.currentPage.name === null) Router.currentPage.name = "pageNotFound";
+		// If Still No Endpoint Matched Then Set It To "404"
+		if(Router.currentPage.name === null) Router.currentPage.name = "404";
 
 		// Load Page File
 		Router.#loadPageFile();

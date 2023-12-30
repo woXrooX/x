@@ -35,10 +35,10 @@ source/python/pages/*.py
 
 !source/python/pages/api.py
 !source/python/pages/eMailConfirmation.py
+!source/python/pages/error_handlers.py
 !source/python/pages/logIn.py
 !source/python/pages/logOut.py
 !source/python/pages/logOutInstant.py
-!source/python/pages/pageNotFound.py
 !source/python/pages/signUp.py
 !source/python/pages/user_files.py
 
