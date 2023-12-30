@@ -10,31 +10,15 @@ export default class Router{
 	static async handle(){
 		// Check If App Is Down If So Stop Handling Set appIsDown As Current Page
 		if("appIsDown" in window.CONF["default"]){
-			window.DOM.setPage(await import(`../pages/appIsDown.js`));
-
-			// Force-End Loading Effect
-			window.Loading.end();
-			window.Main.animationEnd();
-
+			Router.currentPage.name = "appIsDown";
+			Router.#loadPageFile();
 			return;
 		}
 
-		// Error handlers
-		switch(window.location.pathname){
-			case "/400":
-				Router.currentPage.name = "400";
-				Router.#loadPageFile();
-				return;
-
-			case "/403":
-				Router.currentPage.name = "403";
-				Router.#loadPageFile();
-				return;
-
-			case "/404":
-				Router.currentPage.name = "404";
-				Router.#loadPageFile();
-				return;
+		// Check the "window.location.pathname" for the error URLs
+		if(Router.errorHandlers() === true){
+			Router.#loadPageFile();
+			return;
 		}
 
 		// NOTE: We have much efficient way of detecting "if page exists" if we give up on endpoints system
@@ -127,6 +111,24 @@ export default class Router{
 			// End Loading Effects
 			window.Loading.end();
 			window.Main.animationEnd();
+		}
+	}
+
+	static errorHandlers(){
+		switch(window.location.pathname){
+			case "/400":
+				Router.currentPage.name = "400";
+				return true;
+
+			case "/403":
+				Router.currentPage.name = "403";
+				return;
+
+			case "/404":
+				Router.currentPage.name = "404";
+				return true;
+
+			default: return false;
 		}
 	}
 
