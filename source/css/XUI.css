@@ -784,7 +784,7 @@
 			table-layout: auto;
 
 			display: block;
-			width: auto;
+			width: 100%;
 
 			padding: var(--padding);
 			border: 1px solid var(--color-main);
