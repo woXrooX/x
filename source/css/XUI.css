@@ -783,7 +783,8 @@
 			/* make table cells with same */
 			table-layout: auto;
 
-			width: 100%;
+			display: block;
+			width: auto;
 
 			padding: var(--padding);
 			border: 1px solid var(--color-main);
@@ -793,7 +794,7 @@
 				& > tr{
 					& > th{
 						font-weight: bold;
-						padding: var(--padding);
+						padding: calc(var(--padding) * 2);
 					}
 				}
 			}
@@ -811,19 +812,17 @@
 			& > tfoot{
 				& > tr{
 					& > td{
-						padding: var(--padding);
+						padding: calc(var(--padding) * 2);
 					}
 				}
 			}
 
 			&.x-default{
 				& > thead{
-					background-color: var(--color-main-tint-10);
-
 					& > tr{
 						& > th{
+							background-color: var(--color-main-tint-10);
 							color: var(--color-text-accent);
-
 							border-radius: var(--table-radius);
 						}
 					}
@@ -831,7 +830,6 @@
 
 				& > tbody{
 					& > tr{
-
 						&:nth-child(odd){
 							background-color: var(--color-main-tint-4);
 						}
@@ -851,9 +849,9 @@
 				}
 
 				& > tfoot{
-					background-color: var(--color-main-tint-9);
 
 					& > tr{
+						background-color: var(--color-main-tint-9);
 						& > td{
 							color: var(--color-text-accent);
 
@@ -864,6 +862,8 @@
 			}
 
 			&.x-clean{
+				border-collapse: collapse;
+
 				& > thead{
 					background-color: var(--color-main-tint-1);
 
@@ -932,6 +932,8 @@
 			}
 
 			&.x-skeleton{
+				border-collapse: collapse;
+
 				& > thead{
 					& > tr{
 						& > th{
