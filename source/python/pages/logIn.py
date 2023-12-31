@@ -47,6 +47,6 @@ def logIn(request):
 			type="success",
 			message="success",
 			setSessionUser=True,
-			redirect="home",
+			redirect="/home",
 			domChange=["menu"]
 		)
