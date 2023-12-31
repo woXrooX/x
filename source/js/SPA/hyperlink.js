@@ -1,50 +1,57 @@
 "use strict";
 
 export default class Hyperlink{
+	static collect(){
+		const links = document.getElementsByTagName("a");
 
-  static collect(){
-    const links = document.getElementsByTagName("a");
+		for(const a of links){
+			a.onclick = ()=>{
+				// Check IF Has Href
+				if(!!a.hasAttribute("href") === false) return;
 
-    for(const a of links){
-      a.onclick = ()=>{
+				// Check IF Href Is Hash.
+				if(a.getAttribute("href").charAt(0) == '#') return;
 
-        // Check IF Has Href
-        if(!!a.hasAttribute("href") === false) return;
+				// Check IF Href Is for File.
+				// For Now Bulk Checking Using '.'
+				if(a.getAttribute("href").includes('.')) return;
 
-        // Check IF Href Is Hash.
-        if(a.getAttribute("href").charAt(0) == '#') return;
+				// Check If Href Is For External Webistes
+				// Previous Check Is Already Doing This Job By Checking If Href Has '.' example.com always Has '.'
+				if(a.getAttribute("href").includes('http://') || a.getAttribute("href").includes('https://')) return;
 
-        // Check IF Href Is for File.
-        // For Now Bulk Checking Using '.'
-        if(a.getAttribute("href").includes('.')) return;
+				event.preventDefault();
 
-        // Check If Href Is For External Webistes
-        // Previous Check Is Already Doing This Job By Checking If Href Has '.' example.com always Has '.'
-        if(a.getAttribute("href").includes('http://') || a.getAttribute("href").includes('https://')) return;
+				Hyperlink.locate(a.getAttribute("href"));
+			}
+		}
+	}
 
-        // Remove Forward Slash From Href
-        let href = a.getAttribute("href").substring(1, a.getAttribute("href").length);
+	// locate | load | open
+	// Force full page reload: No
+	static locate(path = "", raw = false){
+		// Check if current page is already equal to requesting page
+		if(window.location.href == path) return;
 
-        event.preventDefault();
+		const URL = raw === false ? `${window.location.origin}${path}` : path;
 
-        Hyperlink.locate(href);
+		// Add To History
+		window.history.pushState("", "", URL);
 
-      }
-    }
-  }
+		// Firing Event "locationchange" After Changing URL
+		window.dispatchEvent(new Event('locationchange'));
+	}
 
-  // locate | load | open
-  static locate(path = ""){
-    // Check If Current Page Is Already Equal To Requesting Page
-    if(window.location.href == path) return;
+	// Like Hyperlink.locate, users cannot navigate back to the original page using the browser's back button.
+	// Force full page reload: Yes
+	static replace(path = "", raw = false){
+		// Check if current page is already equal to requesting page
+		if(window.location.href == path) return;
 
-    //// Change Url / Add To History
-    window.history.pushState("", "", window.location.origin + '/' + path);
+		const URL = raw === false ? `${window.location.origin}${path}` : path;
 
-    // Firing Event "locationchange" After Changing URL
-    window.dispatchEvent(new Event('locationchange'));
-
-  }
+		window.location.replace(URL);
+	}
 }
 
 // Make Hyperlink Usable W/O Importing It
