@@ -25,6 +25,9 @@ if __name__ != "__main__":
 
 			return True
 
+		#### Helpers
+		# Meant to be provate methods all below
+
 		@staticmethod
 		def database():
 			# Check if database is not enabled
