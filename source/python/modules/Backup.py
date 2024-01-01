@@ -12,12 +12,16 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def now():
+			Log.center("Backup START", '+')
+
 			if Backup.generateTimestampFolder() is not True: return False
 			if Backup.database() is not True: return False
 			if Backup.assets() is not True: return False
 			if Backup.users() is not True: return False
 
 			Backup.timestamp = None
+
+			Log.center("Backup EBD", '+')
 
 			return True
 
