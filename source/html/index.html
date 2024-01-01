@@ -73,14 +73,14 @@
 			}
 		</style>
 
-		<link rel="preload stylesheet" href="{{url_for('static', filename='css/XUI.css')}}" as="style">
-		<link rel="preload stylesheet" href="{{url_for('static', filename='css/master.css')}}" as="style">
-		<link rel="preload stylesheet" href="{{url_for('static', filename='css/fonts.css')}}" as="style">
-		<link rel="preload stylesheet" href="{{url_for('static', filename='css/x-elements.css')}}" as="style">
+		<link rel="preload stylesheet" href="/css/XUI.css" as="style">
+		<link rel="preload stylesheet" href="/css/master.css" as="style">
+		<link rel="preload stylesheet" href="/css/fonts.css" as="style">
+		<link rel="preload stylesheet" href="/css/x-elements.css" as="style">
 
-		<script type="module" src="{{url_for('static', filename='js/main.js')}}"></script>
+		<script type="module" src="/js/main.js"></script>
 
-		<style for="PROJECT_CSS">{{Globals.PROJECT_CSS|safe}}</style>
+		<link rel="preload stylesheet" href="/css/styles.css" as="style">
 
 	</head>
 

@@ -61,7 +61,6 @@ if __name__ != "__main__":
 
 		#### Project
 		PROJECT = {}
-		PROJECT_CSS = None
 		PROJECT_SVG = {}
 		PROJECT_LANG_DICT = {}
 

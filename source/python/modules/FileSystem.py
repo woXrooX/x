@@ -194,9 +194,6 @@ if __name__ != "__main__":
 			# project.json
 			FileSystem.loadProjectConfigurations()
 
-			# CSS
-			FileSystem.loadExternalCSS()
-
 			# SVG
 			FileSystem.loadExternalSVG()
 
@@ -218,6 +215,7 @@ if __name__ != "__main__":
 
 			################################ Copying "project" folders/files
 			Log.center('Copying "project" folders/files', '=')
+			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/CSS", f"{Globals.X_RUNNING_FROM}/www/static/css")
 			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_RUNNING_FROM}/www/static/fonts")
 			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_RUNNING_FROM}/www/static/images", [".png", ".jpg", ".jpeg", ".gif"], False)
 			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{Globals.X_RUNNING_FROM}/www/static/js/modules")
@@ -295,18 +293,6 @@ if __name__ != "__main__":
 			except:
 				Log.error("Could Not Load The project.json")
 				sys.exit()
-
-		# Load External CSS
-		@staticmethod
-		def loadExternalCSS():
-			try:
-				with open(f'{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css', "r") as css:
-					Globals.PROJECT_CSS = css.read()
-
-				Log.success("External CSS Files Are Loaded")
-
-			except:
-				Log.warning("Could Not Read The External CSS")
 
 		# Load External SVG
 		@staticmethod
