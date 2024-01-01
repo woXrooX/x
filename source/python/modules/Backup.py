@@ -11,7 +11,7 @@ if __name__ != "__main__":
 		timestamp = None
 
 		@staticmethod
-		def create():
+		def now():
 			if Backup.generateTimestampFolder() is not True: return False
 			if Backup.database() is not True: return False
 			if Backup.assets() is not True: return False
@@ -28,29 +28,9 @@ if __name__ != "__main__":
 
 			if FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/database', strict = False) is not True: return False
 
-			# try:
-
-			# command = f"mysqldump -u {Globals.CONF['database']['MySQL']['user']} -p {Globals.CONF['database']['MySQL']['name']} > '{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/database/all.sql'"
-			# process = subprocess.run(command, shell=True, capture_output=True, input=Globals.CONF['database']['MySQL']['password'].encode())
-			# print(process)
-
-			# process = subprocess.Popen(command, shell=True)
-			# process.stdin.write(Globals.CONF['database']['MySQL']['password'].encode())
-			# process.stdin.flush()
-			# output, error = process.communicate()
-			# print(process)
-
-
-			# Log.info(f"FileSystem.database(): Output: {output.decode()} | Error: {error.decode()}")
+			# MySQL clone logic...
 
 			return True
-
-			# except:
-			# 	Log.error(f"Backup.database(): The mysqldump failed")
-
-			# 	return False
-
-
 
 		# Assets folder
 		@staticmethod
