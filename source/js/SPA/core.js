@@ -45,7 +45,7 @@ import El from "./elements/el.js";
 import BarChart from "./elements/barChart.js";
 import LineChart from "./elements/lineChart.js";
 
-import CodeSnippet from "./elements/CodeSnippet/CodeSnippet.js";
+import CodeSnippet from "../lib/CodeSnippet/CodeSnippet.js";
 
 export default class Core{
 
