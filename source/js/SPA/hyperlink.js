@@ -29,28 +29,28 @@ export default class Hyperlink{
 
 	// locate | load | open
 	// Force full page reload: No
-	static locate(path = "", raw = false){
+	static locate(url = ""){
 		// Check if current page is already equal to requesting page
-		if(window.location.href == path) return;
+		if(window.location.href == url) return;
 
-		const URL = raw === false ? `${window.location.origin}${path}` : path;
+		const completed_url = new URL(url, window.location.origin);
 
 		// Add To History
-		window.history.pushState("", "", URL);
+		window.history.pushState("", "", completed_url);
 
 		// Firing Event "locationchange" After Changing URL
 		window.dispatchEvent(new Event('locationchange'));
 	}
 
-	// Like Hyperlink.locate, users cannot navigate back to the original page using the browser's back button.
+	// Unlike Hyperlink.locate, users cannot navigate back to the original page using the browser's back button.
 	// Force full page reload: Yes
-	static replace(path = "", raw = false){
+	static replace(url = ""){
 		// Check if current page is already equal to requesting page
-		if(window.location.href == path) return;
+		if(window.location.href == url) return;
 
-		const URL = raw === false ? `${window.location.origin}${path}` : path;
+		const completed_url = new URL(url, window.location.origin);
 
-		window.location.replace(URL);
+		window.location.replace(completed_url);
 	}
 }
 
