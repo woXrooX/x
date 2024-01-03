@@ -1,20 +1,20 @@
 "use strict";
 
 ///////////////////////////// FETCH - Bridge
-// export default async function bridge(url='', data={}, contentType = null){
-export default async function bridge(url='', data=null, contentType = null){
-	// Url Is Falsy, Set Url "To window.location.href"
+export default async function bridge(url='', data=null, contentType = null, method="POST"){
+	// Set the default URL
 	if(!!url === false) url = window.location.href;
 
 	// Default Content Type Is "application/json"
 	if(!!contentType === false) contentType = "application/json";
 
-	let tmp_url = new URL(url, window.location.origin);
-	window.Log.info(`bridge request to: ${tmp_url.href}`);
+	const completed_url = new URL(url, window.location.origin);
+
+	window.Log.info(`bridge request to: ${completed_url.href}`);
 
 	try{
-		const response = await fetch(tmp_url, {
-			method: 'POST',
+		const response = await fetch(completed_url, {
+			method: method,
 			mode: 'same-origin',
 			cache: 'force-cache',
 			credentials: 'include',
@@ -29,10 +29,8 @@ export default async function bridge(url='', data=null, contentType = null){
 			body: (contentType == "application/json") ? JSON.stringify(data) : data
 		});
 
-		if(response.ok){
-			const data = await response.json();
-			return data;
-		}else{
+		if(response.ok) return await response.json();
+		else{
 			console.warn(`[Bridge] Response Error:\n\t- Status Code: ${response.status}\n\t- Status Text: ${response.statusText}\n\t- URL: ${response.url}`);
 			return {"type": "error", "message": response.statusText}
 		}
