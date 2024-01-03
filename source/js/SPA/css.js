@@ -26,6 +26,9 @@
 // });
 // mq.dispatchEvent(new Event('change'));
 
+// OG
+// import CSS from "./css.js";
+// document.head.innerHTML += `<style>${CSS}</style>`;
 
 ///////////////////////////// CSS
 // import styles from '../css/styles.css' assert {type: 'css'};

@@ -12,9 +12,6 @@ import bridge from "../modules/bridge.js";
 // Observer -> observe()
 // import {observe} from "../modules/tools.js";
 
-// import CSS from "./css.js";
-// document.head.innerHTML += `<style>${CSS}</style>`;
-
 //// Core Classes
 import Language from "./language.js";
 
