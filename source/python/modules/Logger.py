@@ -1,6 +1,7 @@
 if __name__ != "__main__":
-	import shutil
+	from functools import wraps # For page.guard() Wrapper
 	from datetime import datetime
+	import shutil
 	import random
 
 	class Logger:
@@ -41,6 +42,7 @@ if __name__ != "__main__":
 		# NOTE: Only for internal usage
 		@staticmethod
 		def guard(func):
+			@wraps(func)
 			def wrapper(*args, **kwargs):
 				force = kwargs.get('force', False)
 				if force is False and Logger.enabled is False: return
