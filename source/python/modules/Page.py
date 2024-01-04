@@ -13,6 +13,8 @@ if __name__ != "__main__":
 
 	from main import app, request, render_template, redirect, url_for, session
 	from python.modules.Globals import Globals
+	from python.modules.Logger import Log
+	from python.modules.response import response
 
 	class Page():
 		@staticmethod
@@ -60,10 +62,16 @@ if __name__ != "__main__":
 					return response(type="warning", message="appIsDown")
 
 				### "application/json"
-				# Check If "for" In Request
-				if request.content_type == "application/json" and "for" not in request.get_json():
-					Log.error("Missing 'for' in request JSON")
-					return response(type="warning", message="invalidRequest")
+				if request.content_type == "application/json":
+					# Invalid JSON
+					if request.get_json() is None:
+						Log.warning("Invalid JSON request")
+						return response(type="warning", message="invalidRequest")
+
+					# Check if "for" in request
+					if "for" not in request.get_json():
+						Log.warning("Missing 'for' in request JSON")
+						return response(type="warning", message="invalidRequest")
 
 
 				### "multipart/form-data"
@@ -71,9 +79,10 @@ if __name__ != "__main__":
 				# That's why we need to extract "multipart/form-data" then compare it
 				# Ex. "multipart/form-data; boundary=----WebKitFormBoundaryqZq6yAWEgk6aywYg"
 				# Check If "for" In Request
-				if "multipart/form-data" in request.content_type.split(';') and "for" not in request.form:
-					Log.error("Missing 'for' in request form data")
-					return response(type="warning", message="invalidRequest")
+				if "multipart/form-data" in request.content_type.split(';'):
+					if "for" not in request.form:
+						Log.warning("Missing 'for' in request form data")
+						return response(type="warning", message="invalidRequest")
 
 
 			##################### GET
