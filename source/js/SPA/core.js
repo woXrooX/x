@@ -2,12 +2,10 @@
 "use strict";
 
 ///////////////////////////// Modules
-// Logger / Log
-// Brige Uses Logger So It Is Being Imported First
+// Order matters
 import Logger from "../modules/logger.js";
-
-// Brideg / Fetch
 import bridge from "../modules/bridge.js";
+import XRequest from "../modules/XRequest.js";
 
 // Observer -> observe()
 // import {observe} from "../modules/tools.js";
@@ -31,8 +29,6 @@ import Cover from "./cover.js";
 import Loading from "./loading.js";
 import Menu from "./menu.js";
 import Form from "./form.js";
-
-import XRequest from "./XRequest.js";
 
 //// Custom Elements
 import Icon from "./elements/icon.js";
