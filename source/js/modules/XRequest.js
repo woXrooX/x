@@ -1,10 +1,3 @@
-// <button x-post="/home" x-for="test" x-data='{"test": "asd"}' x-trigger="click" x-target="#dummy" x-action="innerHTML" class="btn btn-info btn-xl">
-
-// x-post 			"/pathname"
-// x-data 			'{"key": "value"}'
-// x-trigger 		'click'
-
-// x-target 		'css_selector'
 // x-target-attr	"string_name"
 // x-action 		innerHTML outerHTML replaceWith | if x-target-attr then sets key or value
 
