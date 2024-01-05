@@ -65,7 +65,11 @@ if __name__ != "__main__":
 		@staticmethod
 		def copyFile(fromPath, toPath, file, strict = True):
 			try:
-				shutil.copy(f"{fromPath}/{file}", toPath)
+				# shutil.copy vs shutil.copyfile
+				# shutil.copyfile copies the contents of the source file to the destination file.
+				# Metadata such as permissions, execution bits, and the file's timestamp are not copied.
+				# Only the data inside the file is copied.
+				shutil.copyfile(f"{fromPath}/{file}", f"{toPath}/{file}")
 
 				Log.info(f"File Copied: {file}")
 
@@ -214,14 +218,14 @@ if __name__ != "__main__":
 			for folder in ["css", "fonts", "js", "images"]: FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/{folder}", f"{Globals.X_RUNNING_FROM}/www/static/{folder}")
 
 			################################ Copying "project" folders/files
-			Log.center('Copying "project" folders/files', '=')
-			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/CSS", f"{Globals.X_RUNNING_FROM}/www/static/css")
-			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_RUNNING_FROM}/www/static/fonts")
-			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_RUNNING_FROM}/www/static/images", [".png", ".jpg", ".jpeg", ".gif"], False)
-			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{Globals.X_RUNNING_FROM}/www/static/js/modules")
-			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{Globals.X_RUNNING_FROM}/python/pages")
-			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{Globals.X_RUNNING_FROM}/www/static/js/pages")
-			FileSystem.copyFiles(f"{Globals.PROJECT_RUNNING_FROM}/python", f"{Globals.X_RUNNING_FROM}/python/modules")
+			Log.center('Copying "project" folders', '=')
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/CSS", f"{Globals.X_RUNNING_FROM}/www/static/css")
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_RUNNING_FROM}/www/static/fonts")
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_RUNNING_FROM}/www/static/images")
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{Globals.X_RUNNING_FROM}/www/static/js/modules")
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{Globals.X_RUNNING_FROM}/python/pages")
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{Globals.X_RUNNING_FROM}/www/static/js/pages")
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/python", f"{Globals.X_RUNNING_FROM}/python/modules")
 
 		################# Methods for FileSystem.init()
 		####### CleanUp
