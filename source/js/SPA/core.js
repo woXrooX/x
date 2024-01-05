@@ -32,6 +32,8 @@ import Loading from "./loading.js";
 import Menu from "./menu.js";
 import Form from "./form.js";
 
+import XRequest from "./XRequest.js";
+
 //// Custom Elements
 import Icon from "./elements/icon.js";
 import Modal from "./elements/modal.js";
@@ -45,7 +47,7 @@ import El from "./elements/el.js";
 import BarChart from "./elements/barChart.js";
 import LineChart from "./elements/lineChart.js";
 
-import XRequest from "../lib/x-attributes/source/XRequest/XRequest.js";
+// External libs
 import CodeSnippet from "../lib/CodeSnippet/CodeSnippet.js";
 
 export default class Core{
@@ -61,6 +63,7 @@ export default class Core{
 			Core.#onHashChange();
 			Core.#onHistoryButtonClicked();
 			Core.#onDomChange();
+			Core.#observeMutations();
 		});
 	}
 
@@ -156,5 +159,29 @@ export default class Core{
 			Hyperlink.collect();
 			Form.collect();
 		});
+	}
+
+	static #observeMutations(){
+		// Callback function to execute when mutations are observed
+		const callback = (mutationList, observer)=>{
+			// Ensure that any methods requiring execution upon a DOM change are encapsulated within the for loop provided below.
+			for(const mutation of mutationList){
+				// A child node has been added or removed.
+				if(mutation.type === "childList"){}
+
+				// The ${mutation.attributeName} attribute was modified.
+				else if(mutation.type === "attributes"){}
+
+
+				XRequest.collect();
+			}
+		};
+
+		// Create an observer instance linked to the callback function
+		const observer = new MutationObserver(callback);
+
+		observer.observe(document.body, {attributes: true, childList: true, subtree: true});
+
+		// observer.disconnect();
 	}
 };
