@@ -171,14 +171,14 @@ if __name__ != "__main__":
 			for folder in x_folders: FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/{folder}/')
 
 			# project/[folder]
-			project_folders = ["Backups", "CSS", "fonts", "images", "JS", "pages", "pages/back", "pages/front", "python", "SVG"]
+			project_folders = ["Backups", "CSS", "fonts", "images", "JavaScript", "JavaScript/JSON", "JavaScript/lib", "JavaScript/modules", "pages", "pages/back", "pages/front", "Python", "SVG"]
 			for folder in project_folders: FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/{folder}/')
 
 			################ Files
 			Log.center("Creating files", '=')
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css")
-			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/header.js", 'export default function header(){\n\treturn "Header";\n}')
-			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JS/footer.js", 'export default function footer(){\n\treturn "Footer";\n}')
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/header.js", 'export default function header(){\n\treturn "Header";\n}')
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/footer.js", 'export default function footer(){\n\treturn "Footer";\n}')
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py", 'from python.modules.Page import Page\n\n@Page.build()\ndef home(): pass')
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/front/home.js", 'export const TITLE = window.Lang.use("home");\n\nexport default function content(){\n\treturn "Home";\n}')
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", '{"x": {"en": "x"}}')
@@ -222,10 +222,10 @@ if __name__ != "__main__":
 			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/CSS", f"{Globals.X_RUNNING_FROM}/www/static/css")
 			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_RUNNING_FROM}/www/static/fonts")
 			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_RUNNING_FROM}/www/static/images")
-			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/JS", f"{Globals.X_RUNNING_FROM}/www/static/js/modules")
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript", f"{Globals.X_RUNNING_FROM}/www/static/js")
 			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{Globals.X_RUNNING_FROM}/python/pages")
 			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{Globals.X_RUNNING_FROM}/www/static/js/pages")
-			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/python", f"{Globals.X_RUNNING_FROM}/python/modules")
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/Python", f"{Globals.X_RUNNING_FROM}/python/modules")
 
 		################# Methods for FileSystem.init()
 		####### CleanUp
