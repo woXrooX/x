@@ -15,7 +15,7 @@ SET NAMES utf8mb4;
 -- -----------------------------------------------------------
 -- -----------------------------------------------------------
 
--- -------------------------- genders
+\! echo "-------------------------- genders";
 CREATE TABLE IF NOT EXISTS `genders` (
   `id` INT NOT NULL UNIQUE auto_increment,
   `name` VARCHAR(10) NOT NULL UNIQUE,
@@ -28,7 +28,7 @@ INSERT INTO genders (name)
     ("female")
 ;
 
--- -------------------------- user_authenticity_status
+\! echo "-------------------------- user_authenticity_status";
 CREATE TABLE IF NOT EXISTS `user_authenticity_statuses` (
   `id` INT NOT NULL UNIQUE auto_increment,
   `name` VARCHAR(20) NOT NULL UNIQUE,
@@ -41,7 +41,7 @@ INSERT INTO user_authenticity_statuses (name)
     ("authorized")
 ;
 
--- -------------------------- user_roles
+\! echo "-------------------------- user_roles";
 CREATE TABLE IF NOT EXISTS `user_roles` (
   `id` INT NOT NULL UNIQUE auto_increment,
   `name` VARCHAR(20) NOT NULL UNIQUE,
@@ -54,7 +54,7 @@ INSERT INTO user_roles (name)
     ("admin")
 ;
 
--- -------------------------- user_states
+\! echo "-------------------------- user_states";
 CREATE TABLE IF NOT EXISTS `user_states` (
   `id` INT NOT NULL UNIQUE auto_increment,
   `name` VARCHAR(10) NOT NULL UNIQUE,
@@ -68,7 +68,7 @@ INSERT INTO user_states (name)
     ("suspended")
 ;
 
--- -------------------------- user_plans
+\! echo "-------------------------- user_plans";
 CREATE TABLE IF NOT EXISTS `user_plans` (
   `id` INT NOT NULL UNIQUE auto_increment,
   `name` VARCHAR(10) NOT NULL UNIQUE,
@@ -81,7 +81,7 @@ INSERT INTO user_plans (name)
     ("business")
 ;
 
--- -------------------------- currencies
+\! echo "-------------------------- currencies";
 -- https://en.wikipedia.org/wiki/List_of_circulating_currencies
 -- decimal_digits is The number of digits after the decimal separator (By wikipedia)
 -- UZS https://en.wikipedia.org/wiki/Uzbekistani_so%CA%BBm
@@ -103,7 +103,7 @@ INSERT INTO currencies (code, decimal_digits, fractional_unit, symbol, native_na
     ("RUB", 2, "Копейка", "₽", "Российский рубль")
 ;
 
--- -------------------------- languages
+\! echo "-------------------------- languages";
 CREATE TABLE IF NOT EXISTS `languages` (
   `id` INT NOT NULL UNIQUE auto_increment,
   `code` VARCHAR(3) NOT NULL UNIQUE,
@@ -118,7 +118,7 @@ INSERT INTO languages (code, native_name)
     ("ja", "日本語 (にほんご／にっぽんご)")
 ;
 
--- -------------------------- app_color_mode
+\! echo "-------------------------- app_color_mode";
 -- 1 Is For Dark Mode
 -- 2 Is For Light Mode
 
@@ -133,7 +133,7 @@ INSERT INTO app_color_modes (name)
     ("light")
 ;
 
--- -------------------------- users
+\! echo "-------------------------- users";
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT NOT NULL UNIQUE auto_increment,
   `username` VARCHAR(100) NULL UNIQUE,
@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 );
 
--- -------------------------- users_roles
+\! echo "-------------------------- users_roles";
 CREATE TABLE IF NOT EXISTS `users_roles` (
   `id` INT NOT NULL UNIQUE auto_increment,
   `user` INT NOT NULL,
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `users_roles` (
   PRIMARY KEY (`id`)
 );
 
--- -------------------------- notification_types
+\! echo "-------------------------- notification_types";
 CREATE TABLE IF NOT EXISTS `notification_types` (
 	`id` INT NOT NULL UNIQUE auto_increment,
 	`name` VARCHAR(20) NOT NULL UNIQUE,
@@ -213,6 +213,7 @@ INSERT INTO notification_types (name)
 ;
 
 -- -------------------------- notifications
+\! echo "-------------------------- notifications";
 CREATE TABLE IF NOT EXISTS `notifications` (
 	`id` INT NOT NULL UNIQUE auto_increment,
 	`owner` INT NOT NULL,
