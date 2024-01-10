@@ -1,5 +1,8 @@
+// v0.1.0.1
+// Uses XUI
+
 export default class Table extends HTMLElement{
-  	static sortModes = Object.freeze({ASC: 1, DESC: 2});
+	static sortModes = Object.freeze({ASC: 1, DESC: 2});
 
 	constructor(){
 		super();
@@ -49,10 +52,10 @@ export default class Table extends HTMLElement{
 
 				<div for="table"></div>
 
-				<row class="flex-x-between">
-					<row for="showingCounter" class="flex-x-start flex-y-center text-size-0-8"></row>
-					<row for="pagination" class="flex-x-end gap-0-2"></row>
-				</row>
+				<div for="paginationContainer" class="d-flex flex-row flex-x-between">
+					<div for="showingCounter" class="d-flex flex-row flex-x-start flex-y-center text-size-0-8"></div>
+					<div for="pagination" class="d-flex flex-row flex-x-end gap-0-2"></div>
+				</div>
 
 			</main>
 		`;
@@ -98,8 +101,8 @@ export default class Table extends HTMLElement{
 				HTML += `
 					<th>
 						<row class="cursor-pointer gap-0-5 flex-y-center">
-						${this.JSON["head"][index]["title"]}
-						<x-icon color="currentcolor" name="sort_ASC"></x-icon>
+							${this.JSON["head"][index]["title"]}
+							<x-icon color="currentcolor" name="sort_ASC"></x-icon>
 						</row>
 					</th>
 				`;
@@ -249,7 +252,7 @@ export default class Table extends HTMLElement{
 	}
 
 	#buildShowingCounter = ()=>{
-		this.querySelector("main > row:last-child > row[for=showingCounter]").innerHTML = `
+		this.querySelector("main > div[for=paginationContainer]:last-child > div[for=showingCounter]").innerHTML = `
 			Page ${this.currentPage} of ${this.bodyValuesInChunks.length}
 		`;
 	}
@@ -261,7 +264,7 @@ export default class Table extends HTMLElement{
 
 		for(let i = 1; i <= this.bodyValuesInChunks.length; i++) buttonsHTML += `<button class="btn btn-primary d-none" name="${i}">${i}</button>`;
 
-		this.querySelector("main > row:last-child > row[for=pagination]").innerHTML = `
+		this.querySelector("main > div[for=paginationContainer]:last-child > div[for=pagination]").innerHTML = `
 			<button class="btn btn-primary text-transform-uppercase" name="first">${window.Lang.use("first")}</button>
 			<button class="btn btn-primary" name="previous"><x-icon name="arrow_back" color="white"></x-icon></button>
 			<section class="d-flex flex-row gap-0-2">${buttonsHTML}</section>
@@ -269,17 +272,17 @@ export default class Table extends HTMLElement{
 			<button class="btn btn-primary text-transform-uppercase" name="last">${window.Lang.use("last")}</button>
 		`;
 
-		this.firstButton = this.querySelector(`main > row:last-child > row[for="pagination"] > button[name=first]`);
-		this.previousButton = this.querySelector(`main > row:last-child > row[for="pagination"] > button[name=previous]`);
-		this.nextButton = this.querySelector(`main > row:last-child > row[for=pagination] > button[name=next]`);
-		this.lastButton = this.querySelector(`main > row:last-child > row[for="pagination"] > button[name=last]`);
+		this.firstButton = this.querySelector(`main > div[for=paginationContainer]:last-child > div[for="pagination"] > button[name=first]`);
+		this.previousButton = this.querySelector(`main > div[for=paginationContainer]:last-child > div[for="pagination"] > button[name=previous]`);
+		this.nextButton = this.querySelector(`main > div[for=paginationContainer]:last-child > div[for=pagination] > button[name=next]`);
+		this.lastButton = this.querySelector(`main > div[for=paginationContainer]:last-child > div[for="pagination"] > button[name=last]`);
 
 		this.#updateButtons(this.currentPage);
 		this.#listenToPageButtonsClicks();
 	}
 
 	#hideButtons = ()=>{
-		const buttons = this.querySelectorAll("main > row:last-child > row[for=pagination] > section > button");
+		const buttons = this.querySelectorAll("main > div[for=paginationContainer]:last-child > div[for=pagination] > section > button");
 
 		for(const button of buttons) button.classList.add("d-none");
 	}
@@ -307,9 +310,9 @@ export default class Table extends HTMLElement{
 
 
 		const buttons = [
-			this.querySelector(`main > row:last-child > row[for=pagination] > section > button:nth-child(${id-1})`),
-			this.querySelector(`main > row:last-child > row[for=pagination] > section > button:nth-child(${id})`),
-			this.querySelector(`main > row:last-child > row[for=pagination] > section > button:nth-child(${id+1})`)
+			this.querySelector(`main > div[for=paginationContainer]:last-child > div[for=pagination] > section > button:nth-child(${id-1})`),
+			this.querySelector(`main > div[for=paginationContainer]:last-child > div[for=pagination] > section > button:nth-child(${id})`),
+			this.querySelector(`main > div[for=paginationContainer]:last-child > div[for=pagination] > section > button:nth-child(${id+1})`)
 		];
 
 		for(const button of buttons) button?.classList.remove("d-none", "disabled", "text-decoration-underline");
@@ -339,7 +342,7 @@ export default class Table extends HTMLElement{
 		this.lastButton.onclick = ()=> this.#updateButtons((this.currentPage = this.bodyValuesInChunks.length));
 
 		// 1 to this.bodyValuesInChunks.length
-		const buttons = this.querySelectorAll("main > row:last-child > row[for=pagination] > section > button");
+		const buttons = this.querySelectorAll("main > div[for=paginationContainer]:last-child > div[for=pagination] > section > button");
 
 		for(const button of buttons) button.onclick = ()=> this.#updateButtons((this.currentPage = parseInt(button.name)));
 	}
