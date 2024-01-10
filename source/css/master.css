@@ -117,11 +117,6 @@ body{
 		}
 
 		& > x-icon{
-			width: 30px;
-			height: 30px;
-
-			padding: 2px;
-
 			position: fixed;
 			top: 5px;
 			right: 5px;
@@ -138,7 +133,7 @@ body{
 			overflow-y: scroll;
 
 			padding: var(--padding);
-			padding-top: 40px;
+			padding-top: 2rem;
 
 			display: grid;
 			place-items: center;
@@ -152,15 +147,10 @@ body{
 
 	& > x-icon{
 		&[for=menu]{
-		--menu-icon-size: calc(var(--header-height) - var(--padding) * 2);
-
-		height: var(--menu-icon-size);
-		width: var(--menu-icon-size);
-
-		position: fixed;
-		z-index: var(--z-menuHamburgerButton);
-		top: var(--padding);
-		left: var(--padding);
+			position: fixed;
+			z-index: var(--z-menuHamburgerButton);
+			top: var(--padding);
+			left: var(--padding);
 		}
 	}
 
@@ -252,13 +242,8 @@ body{
 
 							& > x-icon{
 								&[for=toggleSubMenu]{
-									height: 30px;
-									width: 30px;
-
 									transition: var(--transition-velocity) ease-in-out transform;
-
 									transform: rotate(90deg);
-
 									&.open{transform: rotate(0deg);}
 								}
 							}
