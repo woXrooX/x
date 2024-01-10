@@ -8,75 +8,74 @@
 "use strict";
 
 export default class Icon extends HTMLElement{
-  constructor(){
-    super();
+constructor(){
+	super();
 
-    // Closed
-    this.shadow = this.attachShadow({mode: 'closed'});
+	// Closed
+	this.shadow = this.attachShadow({mode: 'closed'});
 
-    CSS: {
-      const style = document.createElement('style');
-      style.textContent = `
-        icon{
-          cursor: pointer;
-          user-select: none;
+	CSS: {
+		const style = document.createElement('style');
+		style.textContent = `
+			icon{
+				cursor: pointer;
+				user-select: none;
 
-          display: grid;
-          place-items: center;
+				display: grid;
+				place-items: center;
 
-          transition: 100ms ease-in-out;
-          transition-property: transform;
+				transition: 100ms ease-in-out;
+				transition-property: transform;
 
-          &:hover{
-            transform: scale(1.3);
-          }
+				&:hover{
+					transform: scale(1.3);
+				}
 
-          &:active{
-            transform: scale(0.5);
-          }
+				&:active{
+					transform: scale(0.5);
+				}
 
-          &.disabled{
-            cursor: not-allowed !important;
-            transition: none !important;
-            transform: none !important;
-            opacity: 0.5 !important;
-          }
+				&.disabled{
+					cursor: not-allowed !important;
+					transition: none !important;
+					transform: none !important;
+					opacity: 0.5 !important;
+				}
 
-          & > svg{
-            user-select: none;
+				& > svg{
+					user-select: none;
 
-            width: 100%;
-            height: 100%;
+					width: 1.2em;
+					height: 1.2em;
 
-            fill: ${this.getAttribute("color") || "var(--color-text-primary)"};
-          }
-        }
-      `;
-      this.shadow.appendChild(style);
+					fill: ${this.getAttribute("color") || "var(--color-text-primary)"};
+				}
+			}
+		`;
+		this.shadow.appendChild(style);
+	}
 
-    }
+	// Clone And Append Template
+	this.shadow.appendChild(document.createElement('icon'));
 
-    // Clone And Append Template
-    this.shadow.appendChild(document.createElement('icon'));
+	// Element Icon
+	this.elementIcon = this.shadow.querySelector("icon");
 
-    // Element Icon
-    this.elementIcon = this.shadow.querySelector("icon");
+	// Set The Initial Icon
+	this.#setIconName(this.getAttribute("name"));
 
-    // Set The Initial Icon
-    this.#setIconName(this.getAttribute("name"));
+	//// Disabled
+	// Check If Parent Has Attribute Disabled Then Disable Icon
+	this.disabled = this.parentElement.hasAttribute("disabled") === true ? true : false;
+	// Initial Disabled?Enabled Status Update
+	this.disabled === true ? this.#disable() : this.#enable();
 
-    //// Disabled
-    // Check If Parent Has Attribute Disabled Then Disable Icon
-    this.disabled = this.parentElement.hasAttribute("disabled") === true ? true : false;
-    // Initial Disabled?Enabled Status Update
-    this.disabled === true ? this.#disable() : this.#enable();
-
-    // Is Toggled?
-    this.toggled = false;
+	// Is Toggled?
+	this.toggled = false;
 
 	// On click toggle
 	this.addEventListener("click", this.#toggler);
-  }
+}
 
 	////////// Helpers
 	// Set Icon
@@ -124,7 +123,7 @@ export default class Icon extends HTMLElement{
 	get disable(){return this.getAttribute("disabled");}
 
 	////////// Setters
-  	// Set Icon Name
+	// Set Icon Name
 	set name(value){this.#setIconName(value);}
 
 	// Set toggle icon name
@@ -136,9 +135,10 @@ export default class Icon extends HTMLElement{
 		if(value === "false" || value === false){
 			this.disabled = false;
 			this.#enable();
+		}
 
 		// Enable
-		}else{
+		else{
 			this.disabled = true;
 			this.#disable();
 		}
