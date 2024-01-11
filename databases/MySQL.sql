@@ -212,7 +212,6 @@ INSERT INTO notification_types (name)
 		("error")
 ;
 
--- -------------------------- notifications
 \! echo "-------------------------- notifications";
 CREATE TABLE IF NOT EXISTS `notifications` (
 	`id` INT NOT NULL UNIQUE auto_increment,
