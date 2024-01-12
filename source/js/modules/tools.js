@@ -6,7 +6,7 @@ export function observe(
 	selector,
 	onObservedAddClassName,
 	onOutOfObservingRemoveClass = false,
-	options={
+	options = {
 		threshhold: 0,
 		rootMargin: "0px"
 	}
