@@ -1,3 +1,5 @@
+/* v0.1.0.1 */
+
 @layer XUI{
 	@layer root{
 		html{
@@ -1499,6 +1501,12 @@
 			.p-3{padding: calc(var(--padding) * 3);}
 			.p-4{padding: calc(var(--padding) * 4);}
 			.p-5{padding: calc(var(--padding) * 5);}
+			.p-6{padding: calc(var(--padding) * 6);}
+			.p-7{padding: calc(var(--padding) * 7);}
+			.p-8{padding: calc(var(--padding) * 8);}
+			.p-9{padding: calc(var(--padding) * 9);}
+			.p-10{padding: calc(var(--padding) * 10);}
+			.p-20{padding: calc(var(--padding) * 20);}
 
 			/* Top */
 			.pt-0{padding-top: 0px;}
@@ -1507,6 +1515,12 @@
 			.pt-3{padding-top: calc(var(--padding) * 3);}
 			.pt-4{padding-top: calc(var(--padding) * 4);}
 			.pt-5{padding-top: calc(var(--padding) * 5);}
+			.pt-6{padding-top: calc(var(--padding) * 6);}
+			.pt-7{padding-top: calc(var(--padding) * 7);}
+			.pt-8{padding-top: calc(var(--padding) * 8);}
+			.pt-9{padding-top: calc(var(--padding) * 9);}
+			.pt-10{padding-top: calc(var(--padding) * 10);}
+			.pt-20{padding-top: calc(var(--padding) * 20);}
 
 			/* Right */
 			.pr-0{padding-right: 0px;}
@@ -1515,6 +1529,12 @@
 			.pr-3{padding-right: calc(var(--padding) * 3);}
 			.pr-4{padding-right: calc(var(--padding) * 4);}
 			.pr-5{padding-right: calc(var(--padding) * 5);}
+			.pr-6{padding-right: calc(var(--padding) * 6);}
+			.pr-7{padding-right: calc(var(--padding) * 7);}
+			.pr-8{padding-right: calc(var(--padding) * 8);}
+			.pr-9{padding-right: calc(var(--padding) * 9);}
+			.pr-10{padding-right: calc(var(--padding) * 10);}
+			.pr-20{padding-right: calc(var(--padding) * 20);}
 
 			/* Bottom */
 			.pb-0{padding-bottom: 0px;}
@@ -1523,6 +1543,12 @@
 			.pb-3{padding-bottom: calc(var(--padding) * 3);}
 			.pb-4{padding-bottom: calc(var(--padding) * 4);}
 			.pb-5{padding-bottom: calc(var(--padding) * 5);}
+			.pb-6{padding-bottom: calc(var(--padding) * 6);}
+			.pb-7{padding-bottom: calc(var(--padding) * 7);}
+			.pb-8{padding-bottom: calc(var(--padding) * 8);}
+			.pb-9{padding-bottom: calc(var(--padding) * 9);}
+			.pb-10{padding-bottom: calc(var(--padding) * 10);}
+			.pb-20{padding-bottom: calc(var(--padding) * 20);}
 
 			/* Left */
 			.pl-0{padding-left: 0px;}
@@ -1531,6 +1557,12 @@
 			.pl-3{padding-left: calc(var(--padding) * 3);}
 			.pl-4{padding-left: calc(var(--padding) * 4);}
 			.pl-5{padding-left: calc(var(--padding) * 5);}
+			.pl-6{padding-left: calc(var(--padding) * 6);}
+			.pl-7{padding-left: calc(var(--padding) * 7);}
+			.pl-8{padding-left: calc(var(--padding) * 8);}
+			.pl-9{padding-left: calc(var(--padding) * 9);}
+			.pl-10{padding-left: calc(var(--padding) * 10);}
+			.pl-20{padding-left: calc(var(--padding) * 20);}
 
 			/* X, Left To Right */
 			.px-0{
@@ -1557,6 +1589,31 @@
 				padding-left: calc(var(--padding) * 5);
 				padding-right: calc(var(--padding) * 5);
 			}
+			.px-6{
+				padding-left: calc(var(--padding) * 6);
+				padding-right: calc(var(--padding) * 6);
+			}
+			.px-7{
+				padding-left: calc(var(--padding) * 7);
+				padding-right: calc(var(--padding) * 7);
+			}
+			.px-8{
+				padding-left: calc(var(--padding) * 8);
+				padding-right: calc(var(--padding) * 8);
+			}
+			.px-9{
+				padding-left: calc(var(--padding) * 9);
+				padding-right: calc(var(--padding) * 9);
+			}
+			.px-10{
+				padding-left: calc(var(--padding) * 10);
+				padding-right: calc(var(--padding) * 10);
+			}
+			.px-20{
+				padding-left: calc(var(--padding) * 20);
+				padding-right: calc(var(--padding) * 20);
+			}
+
 
 			/* Y, Top To Bottom */
 			.py-0{
@@ -1582,6 +1639,30 @@
 			.py-5{
 				padding-top: calc(var(--padding) * 5);
 				padding-bottom: calc(var(--padding) * 5);
+			}
+			.py-6{
+				padding-top: calc(var(--padding) * 6);
+				padding-bottom: calc(var(--padding) * 6);
+			}
+			.py-7{
+				padding-top: calc(var(--padding) * 7);
+				padding-bottom: calc(var(--padding) * 7);
+			}
+			.py-8{
+				padding-top: calc(var(--padding) * 8);
+				padding-bottom: calc(var(--padding) * 8);
+			}
+			.py-9{
+				padding-top: calc(var(--padding) * 9);
+				padding-bottom: calc(var(--padding) * 9);
+			}
+			.py-10{
+				padding-top: calc(var(--padding) * 10);
+				padding-bottom: calc(var(--padding) * 10);
+			}
+			.py-20{
+				padding-top: calc(var(--padding) * 20);
+				padding-bottom: calc(var(--padding) * 20);
 			}
 		}
 
