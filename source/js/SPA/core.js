@@ -7,9 +7,6 @@ import Logger from "../modules/logger.js";
 import bridge from "../modules/bridge.js";
 import XRequest from "../modules/XRequest.js";
 
-// Observer -> observe()
-// import {observe} from "../modules/tools.js";
-
 //// Core Classes
 import Language from "./language.js";
 
@@ -30,12 +27,13 @@ import Loading from "./loading.js";
 import Menu from "./menu.js";
 import Form from "./form.js";
 
-//// Custom Elements
+//// Custom Elements (In docs we call these Built-In X-Elements)
 import Icon from "./elements/icon.js";
-import Modal from "./elements/modal.js";
-import Share from "./elements/share.js";
-import Table from "./elements/table.js";
+import Modal from "./elements/modal.js"; // Modal should be built-in
 import Toast from "./elements/toast.js";
+import Share from "./elements/share.js"; // Share depends on modal
+
+import Table from "./elements/table.js";
 import Tooltip from "./elements/tooltip.js";
 import Select from "./elements/select.js";
 import El from "./elements/el.js";
