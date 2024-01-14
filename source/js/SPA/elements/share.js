@@ -21,7 +21,7 @@ export default class Share extends HTMLElement{
 
 		this.innerHTML = `
 			<x-modal type="icon" value="share">
-				<column class="pt-2 pb-0-5 gap-0-5">
+				<row class="p-1 gap-0-5">
 					<a href="https://twitter.com/intent/tweet?url=${shareData.url}&text=${shareData.text}" target="_blank">
 						<x-icon name="twitter_bird_original"></x-icon>
 					</a>
@@ -45,7 +45,7 @@ export default class Share extends HTMLElement{
 					<a href="https://www.reddit.com/submit?selftext=${shareData.text}&title=${shareData.title}&url=${shareData.url}" target="_blank">
 						<x-icon name="reddit_original"></x-icon>
 					</a>
-				</column>
+				</row>
 			</x-modal>
 		`;
 
@@ -60,9 +60,7 @@ export default class Share extends HTMLElement{
 					window.Log.error(`Error: ${err}`);
 				}
 
-			else{
-				window.Log.warning("No Native Support For 'navigator.share' On Your Device!");
-			}
+			else window.Log.warning("No Native Support For 'navigator.share' On Your Device!");
 		};
 	}
 };
