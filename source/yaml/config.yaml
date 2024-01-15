@@ -1,6 +1,6 @@
 ######### Version
 # major.minor.patch.build
-version: "0.158.0.0005"
+version: "0.158.0.0006"
 
 ######### Flask
 flask:

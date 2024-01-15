@@ -1,4 +1,4 @@
-/* v0.1.0.2 */
+/* v0.1.0.3 */
 
 @layer XUI{
 	@layer root{
@@ -224,9 +224,14 @@
 		.text-color-error{color: var(--color-error);}
 
 		/** Alignment **/
-		.text-left{text-align: left;}
-		.text-center{text-align: center;}
-		.text-right{text-align: right;}
+		.text-align-start{text-align: start;}
+		.text-align-end{text-align: end;}
+		.text-align-left{text-align: left;}
+		.text-align-center{text-align: center;}
+		.text-align-right{text-align: right;}
+		.text-align-justify{text-align: justify;}
+		.text-align-justify-all{text-align: justify-all;}
+		.text-align-match-parent{text-align: match-parent;}
 
 		/** Weights **/
 		.text-weight-bold{font-weight: bold;}

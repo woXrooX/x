@@ -6,7 +6,7 @@ export default function content(){
 
 	return `
 		<container class="p-5 gap-1">
-			<p class="text-size-0-8 text-center">${window.Lang.use("ifLogOutWontBeAbleTo")}</p>
+			<p class="text-size-0-8 text-align-center">${window.Lang.use("ifLogOutWontBeAbleTo")}</p>
 
 			<form action="logOut" for="logOut" class="w-50 surface-clean p-5">
 				<label>

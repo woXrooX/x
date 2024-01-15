@@ -7,7 +7,7 @@ export default function content(){
 		<container class="p-5">
 			<column class="w-50 surface-clean p-5 gap-1">
 
-				<p class="text-center">${window.Lang.use("eMailConfirmationCodeHasBeenSent")}</p>
+				<p class="text-align-center">${window.Lang.use("eMailConfirmationCodeHasBeenSent")}</p>
 
 				<form action="eMailConfirmation" for="eMailConfirmation">
 
@@ -24,7 +24,7 @@ export default function content(){
 
 				</form>
 
-				<p class="text-center text-size-0-7">
+				<p class="text-align-center text-size-0-7">
 					<warning>Warning:</warning>
 					Kindly ensure to review your spam folders too.
 				</p>
