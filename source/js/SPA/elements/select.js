@@ -175,6 +175,14 @@ constructor(){
 		this.internals_.setFormValue(formData);
 
 		// formData.delete(this.getAttribute('name'), option.getAttribute("value"));
+
+		// Fire "input" event manually when form data update happens
+		this.dispatchEvent(
+			new Event("input", {
+				bubbles: true,
+				cancelable: true
+			})
+		);
 	};
 };
 
