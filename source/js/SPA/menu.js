@@ -174,7 +174,7 @@ export default class Menu{
 	}
 
 	static #toggleAlwaysOpenMode(){
-		Log.info("CSS.#toggleAlwaysOpenMode()");
+		Log.info("Menu.#toggleAlwaysOpenMode()");
 
 		const toggler = document.querySelector(`${Menu.selector} > header > x-icon[for=toggleAlwaysOpenMode]`);
 
