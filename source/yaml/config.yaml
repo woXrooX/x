@@ -1,6 +1,9 @@
+# Note for future me
+# A YAML file use spaces as indentation, you can use 2 or 4 spaces for indentation, but no tab.
+
 ######### Version
 # major.minor.patch.build
-version: "0.158.0.0009"
+version: "0.158.0.0010"
 
 ######### Flask
 flask:
