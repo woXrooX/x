@@ -84,10 +84,6 @@ export default class Router{
 			window.Loading.start();
 			window.Main.animationStart();
 
-			// Change URL To /404 In Case endpoint Is /404
-			// Currntly causing infintive back and forth page looping
-			// if(endpoint === "/404") window.history.pushState("", "", URL+"404");
-
 			// Load The Page
 			window.DOM.setPage(await import(`../pages/${Router.currentPage.name}.js`));
 		}catch(error){

@@ -35,7 +35,6 @@ export default class DOM{
 
 		// Start The Page's Life Cycle
 		DOM.lifeCycle();
-
 	}
 
 	static async executeOnFormGotResponse(response){
@@ -47,6 +46,8 @@ export default class DOM{
 	}
 
 	static async lifeCycle(){
+		Log.info("DOM.lifeCycle()");
+
 		// Create Page Scoped Variable
 		window.pageData = {};
 
@@ -58,9 +59,9 @@ export default class DOM{
 		///// Before
 		// Check If before() Exists
 		if(!!DOM.#page.before === true)
-		// If Async Function Passed Or Normal One
-		if(DOM.#page.before.constructor.name === 'AsyncFunction') await DOM.#page.before();
-		else DOM.#page.before();
+			// If Async Function Passed Or Normal One
+			if(DOM.#page.before.constructor.name === 'AsyncFunction') await DOM.#page.before();
+			else DOM.#page.before();
 
 		////////// Header
 		// Let Header Class To Handle
@@ -69,11 +70,17 @@ export default class DOM{
 		///// Content - Render The Content
 		// Check If Default Function Exists
 		if(typeof DOM.#page.default === "function")
-		// If Async Function Passed Or Normal One
-		if(DOM.#page.default.constructor.name === 'AsyncFunction') DOM.render(await DOM.#page.default());
-		else DOM.render(DOM.#page.default());
-
-		else DOM.render("[DOM] Error: No Default Function Defined!");
+			// If Async Function Passed Or Normal One
+			if(DOM.#page.default.constructor.name === 'AsyncFunction') DOM.render(await DOM.#page.default());
+			else DOM.render(DOM.#page.default());
+		else DOM.render(`
+			<container class="p-5">
+				<column class="flex-y-start surface-error p-3 gap-0-5">
+					<error>ERROR</error>
+					<info class="text-size-0-8">DOM.lifeCycle() -> No default function defined!</info>
+				</column>
+			</container>
+		`);
 
 		////////// Footer
 		// Let Footer Class To Handle
@@ -82,9 +89,9 @@ export default class DOM{
 		///// After
 		// Check If after() Exists
 		if(!!DOM.#page.after === true)
-		// If Async Function Passed Or Normal One
-		if(DOM.#page.after.constructor.name === 'AsyncFunction') await DOM.#page.after();
-		else DOM.#page.after();
+			// If Async Function Passed Or Normal One
+			if(DOM.#page.after.constructor.name === 'AsyncFunction') await DOM.#page.after();
+			else DOM.#page.after();
 
 		// Delete The Page Data At The End Of Each Life Cycle
 		delete window.pageData;
@@ -133,7 +140,7 @@ export default class DOM{
 					break;
 
 				default:
-				Log.warning(`DOM.update() - Unknown Target For Dom Change: ${target}`);
+					Log.warning(`DOM.update() - Unknown Target For Dom Change: ${target}`);
 			}
 	}
 
