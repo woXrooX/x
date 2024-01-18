@@ -405,7 +405,6 @@ body{
 		&.fadeIn{
 			opacity: 0;
 
-
 			&.observed {
 				opacity: 1;
 			}
