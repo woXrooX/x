@@ -39,8 +39,7 @@ def logIn(request):
 		session["user"] = data
 
 		# Handle The Session Update Error
-		if not User.updateSession():
-			pass
+		if not User.updateSession(): pass
 
 		# On Success Redirect & Update Front-End Session
 		return response(

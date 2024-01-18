@@ -12,7 +12,6 @@ def logOut(request):
 		# Remove User From Session
 		session.pop('user')
 
-
 		# Redirect To Home
 		return response(
 			type="success",

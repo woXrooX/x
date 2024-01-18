@@ -87,8 +87,7 @@ def signUp(request):
 		session["user"] = data
 
 		# Handle The Session Update Error
-		if not User.updateSession():
-			pass
+		if not User.updateSession(): pass
 
 		# Setup Dirs
 		if User.initFolders() == False:
