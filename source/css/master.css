@@ -390,3 +390,73 @@ body{
 		}
 	}
 }
+
+@layer observerEffects{
+	.observe{
+		--duration: 500ms;
+		--timing-function: ease-in-out;;
+		--delay: 250ms;
+
+		transition-duration: var(--duration);
+		transition-timing-function: var(--timing-function);
+		transition-delay: var(--delay);
+		transition-property: opacity transform;
+
+		&.fadeIn{
+			opacity: 0;
+
+
+			&.observed {
+				opacity: 1;
+			}
+		}
+
+		&.slideFromLeft{
+			transform: translateX(-100px);
+
+			&.observed {
+				transform: translateX(0);
+			}
+		}
+
+		&.slideFromRight{
+			transform: translateX(100px);
+
+			&.observed {
+				transform: translateX(0);
+			}
+		}
+
+		&.slideFromTop{
+			transform: translateY(-100px);
+
+			&.observed {
+				transform: translateX(0);
+			}
+		}
+
+		&.slideFromBottom{
+			transform: translateY(100px);
+
+			&.observed {
+				transform: translateX(0);
+			}
+		}
+
+		&.scaleUp{
+			transform: scale(0.8);
+
+			&.observed {
+				transform: scale(1);
+			}
+		}
+
+		&.scaleDown{
+			transform: scale(1.5);
+
+			&.observed {
+				transform: scale(1);
+			}
+		}
+	}
+}
