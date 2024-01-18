@@ -1,4 +1,4 @@
-# The X
+# Welcome to x
 
 As a seasoned programmer, We have noticed that the initial phase of a project can be tedious and time-consuming. This includes tasks such as setting up and building a framework to support the project. To streamline this process and allow for more time and energy to be dedicated to the creative aspects, We have developed a software that eliminates these mundane tasks. With our software, fellow programmers can bypass the tedious set-up phase and dive straight into unleashing their creativity. If you share the same sentiment, then We invite you to join us in this journey of productive and efficient software development.
 
