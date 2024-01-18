@@ -1,6 +1,6 @@
 export default function observe({
 	selector = ".observe",
-	onOutOfObservingReAddClass = true,
+	observeOnce = false,
 	delay = 0,
 	// transitionVariables = {
 	// 	duration = "500ms",
@@ -18,7 +18,7 @@ export default function observe({
 				const element = elements[index];
 				setTimeout(() => {
 					if(element.isIntersecting) element.target.classList.add("observed");
-					else if(onOutOfObservingReAddClass === true) element.target.classList.remove("observed");
+					else if(observeOnce === false) element.target.classList.remove("observed");
 				}, delay * index);
 			}
 		},
