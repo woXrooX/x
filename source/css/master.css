@@ -20,8 +20,8 @@
 	--z-loading: 13;
 	--z-urgent: 14;
 
-	--header-height: 40px;
-	--footer-height: 40px;
+	--header-height: 2rem;
+	--footer-height: 2rem;
 
 	--color-cover: rgba(0, 0, 0, 0.6);
 }
