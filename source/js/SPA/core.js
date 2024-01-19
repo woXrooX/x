@@ -78,14 +78,10 @@ export default class Core{
 		Log.info("Core.#init()");
 
 		Language.init();
-
 		CSS.init();
-
 		Menu.init();
-
 		Header.init();
 		Footer.init();
-
 		Router.handle();
 	}
 
@@ -101,7 +97,6 @@ export default class Core{
 			Log.info("onLoad");
 
 			Router.handle();
-
 			Menu.setActive();
 		});
 	}
@@ -112,7 +107,6 @@ export default class Core{
 			Log.info("onUrlChange");
 
 			Router.handle();
-
 			Menu.setActive();
 		});
 	}
@@ -143,7 +137,6 @@ export default class Core{
 			// If has target(s) then update the dom. body > target
 			if(!!event.detail === true) DOM.update(event.detail);
 
-			// Globals
 			Hyperlink.collect();
 			Form.collect();
 		});
@@ -154,12 +147,11 @@ export default class Core{
 		const callback = (mutationList, observer)=>{
 			// Ensure that any methods requiring execution upon a DOM change are encapsulated within the for loop provided below.
 			for(const mutation of mutationList){
-				// A child node has been added or removed.
-				if(mutation.type === "childList"){}
+				// // A child node has been added or removed.
+				// if(mutation.type === "childList"){}
 
-				// The ${mutation.attributeName} attribute was modified.
-				else if(mutation.type === "attributes"){}
-
+				// // The ${mutation.attributeName} attribute was modified.
+				// else if(mutation.type === "attributes"){}
 
 				XRequest.collect();
 			}
