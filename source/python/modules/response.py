@@ -1,107 +1,102 @@
 if __name__ != "__main__":
-    from main import make_response
-    from python.modules.Globals import Globals
-    from python.modules.User import User
+	from main import make_response
+	from python.modules.Globals import Globals
+	from python.modules.User import User
 
-    import json
+	import json
 
-    def response(
-        # Response Type
-        type="error",
+	def response(
+		# Response Type
+		type="error",
 
-        # Response Message (By Keyword)
-        message="invalidKeyword",
+		# Response Message (By Keyword)
+		message="invalidKeyword",
 
-        # Form Related Field
-        field=False,
+		# Form Related Field
+		field=False,
 
-        # Custom Data
-        data={},
+		# Custom Data
+		data={},
 
-        # Actions
-        updateConf=False,
-        setSessionUser=False,
-        deleteSessionUser=False,
-        toast=False,
-        domChange=[],
-        redirect=False,
-        reload=False,
+		# Actions
+		updateConf=False,
+		setSessionUser=False,
+		deleteSessionUser=False,
+		domChange=[],
+		redirect=False,
+		reload=False,
 
-        onFormGotResponse=False,
+		onFormGotResponse=False,
 
-        # Function to use for converting non-serializable objects to a serializable JSON format.
-        nonJsonToJsonFunction=None,
+		# Function to use for converting non-serializable objects to a serializable JSON format.
+		nonJsonToJsonFunction=None,
 
-        # HTTP Response Status Code
-        HTTP_response_status_code=200
-    ):
-        ######## Type
-        # Check If Type Is Valid
-        if type not in ["success", "info", "warning", "error"]: type = "error"
+		# HTTP Response Status Code
+		HTTP_response_status_code=200
+	):
+		######## Type
+		# Check If Type Is Valid
+		if type not in ["success", "info", "warning", "error"]: type = "error"
 
-        ######## Message
-        # Looks like no need for this check here since Front-End Lang.use covers bugs
-        # Check If Keyword Is Valid
-        # if message not in langDict: message="invalidKeyword"
+		######## Message
+		# Looks like no need for this check here since Front-End Lang.use covers bugs
+		# Check If Keyword Is Valid
+		# if message not in langDict: message="invalidKeyword"
 
-        ######## Response Dict
-        responseDict = {
-            "type": type,
-            "message": message,
-        }
+		######## Response Dict
+		responseDict = {
+			"type": type,
+			"message": message,
+		}
 
-        ######## Field
-        # Check If Field Argument Is Not Falsy
-        # NOTE: If html field name, id or selector equals to falsy value then this check will ignore it
-        if field is not False: responseDict["field"] = field
+		######## Field
+		# Check If Field Argument Is Not Falsy
+		# NOTE: If html field name, id or selector equals to falsy value then this check will ignore it
+		if field is not False: responseDict["field"] = field
 
-        ######## Data
-        if data: responseDict["data"] = data
+		######## Data
+		if data: responseDict["data"] = data
 
-        ######## Actions
-        actionsDict = {}
+		######## Actions
+		actionsDict = {}
 
-        ## updateConf
-        if updateConf: actionsDict["updateConf"] = PUBLIC_CONF
+		## updateConf
+		if updateConf: actionsDict["updateConf"] = PUBLIC_CONF
 
-        ## setSessionUser
-        if setSessionUser is True: actionsDict["setSessionUser"] = User.generatePublicSession()
+		## setSessionUser
+		if setSessionUser is True: actionsDict["setSessionUser"] = User.generatePublicSession()
 
-        ## deleteSessionUser
-        if deleteSessionUser is True: actionsDict["deleteSessionUser"] = 0
+		## deleteSessionUser
+		if deleteSessionUser is True: actionsDict["deleteSessionUser"] = 0
 
-        ## toast
-        if toast is True: actionsDict["toast"] = True
+		## domChange
+		if domChange: actionsDict["domChange"] = domChange
 
-        ## domChange
-        if domChange: actionsDict["domChange"] = domChange
+		## redirect
+		if redirect: actionsDict["redirect"] = redirect
 
-        ## redirect
-        if redirect: actionsDict["redirect"] = redirect
+		## reload
+		if reload: actionsDict["reload"] = 0
 
-        ## reload
-        if reload: actionsDict["reload"] = 0
+		## Execute Function On Form Got Response
+		if onFormGotResponse: actionsDict["onFormGotResponse"] = 0
 
-        ## Execute Function On Form Got Response
-        if onFormGotResponse: actionsDict["onFormGotResponse"] = 0
-
-        # Check If Actions Has At Least One Object
-        if actionsDict: responseDict["actions"] = actionsDict
+		# Check If Actions Has At Least One Object
+		if actionsDict: responseDict["actions"] = actionsDict
 
 
-        # Function to use for converting non-serializable objects to a serializable JSON format.
-        if nonJsonToJsonFunction == "str":
-            nonJsonToJsonFunction = str
+		# Function to use for converting non-serializable objects to a serializable JSON format.
+		if nonJsonToJsonFunction == "str": nonJsonToJsonFunction = str
 
 
-        # print("----------------------- responseDict -----------------------")
-        # print(responseDict)
+		# print("----------------------- responseDict -----------------------")
+		# print(responseDict)
 
-        # Final Response
-        return make_response(
-            json.dumps(
-                responseDict,
-                default=nonJsonToJsonFunction
-            ),
-            HTTP_response_status_code
-        )
+		# Final Response
+		return make_response(
+			json.dumps(
+				responseDict,
+				default=nonJsonToJsonFunction
+			),
+			HTTP_response_status_code
+		)

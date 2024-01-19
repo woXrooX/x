@@ -119,10 +119,13 @@ export default class Form{
 			submitter.disabled = false;
 
 			////////// x-modal
-			if(form.hasAttribute("x-modal-action")){
+			if(form.hasAttribute("x-modal")){
 				// Hide
-				if(response["type"] === "success" && form.getAttribute("x-modal-action") === "hide") window.Modal.hide();
+				if(response["type"] === "success" && form.getAttribute("x-modal") === "hide") window.Modal.hide();
 			}
+
+			////////// Toast
+			if(form.hasAttribute("x-toast")) window.Toast.new(response["type"], response["message"]);
 
 			////////// response["actions"]
 			if("actions" in response){
@@ -145,15 +148,6 @@ export default class Form{
 					CSS.detectColorMode();
 				}
 
-				// Toast
-				if("toast" in response["actions"] && response["actions"]["toast"] === true)
-					Form.#response({
-						form: form,
-						type: response["type"],
-						message: response["message"],
-						toast: true
-					});
-
 				// Dom Update
 				if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));
 
@@ -169,37 +163,32 @@ export default class Form{
 		};
 	}
 
-	// static #response(type, message, field, flash = false, toast = false){
+	// static #response(type, message, field, flash = false){
 	static #response({
 		form = null,
 		type,
 		message,
 		field,
 		flash = false,
-		toast = false
 	}){
-	// Check If Form Element Passed
-	if(!!form === false) return;
+		// Check If Form Element Passed
+		if(!!form === false) return;
 
-	// Element <p>
-	const elementP = form.querySelector(`p[for=${field}]`);
+		// Element <p>
+		const elementP = form.querySelector(`p[for=${field}]`);
 
-	// Above Submit Button
-	if(!!message != false && !!elementP === true) elementP.innerHTML = `<${type}>${window.Lang.use(message)}</${type}>`;
+		// Above Submit Button
+		if(!!message != false && !!elementP === true) elementP.innerHTML = `<${type}>${window.Lang.use(message)}</${type}>`;
 
-	// Focus & Flash The Border Color
-	const element = form.querySelector(`[name=${field}]`);
-	if(!!element === true && element.getAttribute("type") != "submit"){
-		// Focus
-		element.focus();
+		// Focus & Flash The Border Color
+		const element = form.querySelector(`[name=${field}]`);
+		if(!!element === true && element.getAttribute("type") != "submit"){
+			// Focus
+			element.focus();
 
-		// Flash Border Color
-		if(flash === true) Form.#flash(type, element);
-	}
-
-	// If Toast Is Enabled
-	if(toast === true) window.Toast.new(type, message);
-
+			// Flash Border Color
+			if(flash === true) Form.#flash(type, element);
+		}
 	}
 
 	static #flash(type, element){
