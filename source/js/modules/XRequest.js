@@ -7,12 +7,12 @@
 export default class XRequest{
 	static X_POST_ELEMENTS = null;
 
-	static {
-		XRequest.collect();
-	}
-
 	/////////// APIs
+	// Collecting happens whenever Core.#observeMutations() -> observes any DOM change
+	// NOTE: If page has zero change on initial load, the XRequest.collect() will not be called and the first XRequest attached elements will not be listened
 	static collect(){
+		Log.info("XRequest.collect()");
+
 		XRequest.X_POST_ELEMENTS = document.querySelectorAll("[x-post]");
 
 		for(const element of XRequest.X_POST_ELEMENTS) XRequest.#applyEventListeners(element);
@@ -29,7 +29,10 @@ export default class XRequest{
 				window.Log.success(response)
 
 				if("data" in response) XRequest.#handleXTarget(element, response["data"]);
-				XRequest.#handleResponse(response);
+
+				if(element.hasAttribute("x-toast")) window.Toast.new(response["type"], response["message"]);
+
+				XRequest.#handleResponseActions(response);
 
 				element.disabled = false;
 			};
@@ -49,15 +52,8 @@ export default class XRequest{
 		return data;
 	}
 
-	static #handleResponse(response){
-		if(!("type" in response)) return;
-		XRequest.#handleResponseActions(response);
-	}
-
 	static #handleResponseActions(response){
 		if(!("actions" in response)) return;
-
-		if("toast" in response["actions"] && response["actions"]["toast"] === true) window.Toast.new(response["type"], response["message"])
 
 		if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));
 
