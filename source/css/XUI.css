@@ -1,4 +1,4 @@
-/* v0.1.0.4 */
+/* v0.2.0.0 */
 
 @layer XUI{
 	@layer root{
@@ -1739,6 +1739,97 @@
 			.radius-100px{border-radius: 100px;}
 
 			.radius-200px{border-radius: 200px;}
+		}
+	}
+
+	@layer animations{
+		@supports (animation-timeline: view()){
+			@layer onView{
+				.onView{
+					animation-timeline: view();
+					animation-fill-mode: forwards;
+					animation-timing-function: linear;
+
+					animation-name:
+						var(--fadeIn-name, normal),
+						var(--fadeOut-name, normal),
+						var(--scaleUpOut-name, normal),
+						var(--scaleDownIn-name, normal)
+					;
+
+					animation-range-start:
+						var(--fadeIn-range-start, normal),
+						var(--fadeOut-range-start, normal),
+						var(--scaleUpOut-range-start, normal),
+						var(--scaleDownIn-range-start, normal)
+					;
+
+					animation-range-end:
+						var(--fadeIn-range-end, normal),
+						var(--fadeOut-range-end, normal),
+						var(--scaleUpOut-range-end, normal),
+						var(--scaleDownIn-range-end, normal)
+					;
+
+					&.fadeIn{
+						--fadeIn-name: fadeIn;
+						--fadeIn-range-start: 30%;
+						--fadeIn-range-end: 50%;
+
+						opacity: 0;
+					}
+
+					&.fadeOut{
+						--fadeOut-name: fadeOut;
+						--fadeOut-range-start: 50%;
+						--fadeOut-range-end: 70%;
+					}
+
+					&.scaleUpOut{
+						--scaleUpOut-name: scaleUpOut;
+						--scaleUpOut-range-start: 60%;
+						--scaleUpOut-range-end: 80%;
+					}
+
+					&.scaleDownIn{
+						--scaleDownIn-name: scaleDownIn;
+						--scaleDownIn-range-start: 20%;
+						--scaleDownIn-range-end: 40%;
+					}
+				}
+
+				@keyframes fadeIn{to {opacity: 1;}}
+				@keyframes fadeOut{to {opacity: 0;}}
+
+				@keyframes scaleUpOut{
+					from {scale: 1;}
+					to {scale: 1.5;}
+				}
+				@keyframes scaleDownIn{
+					from {scale: 1.5;}
+					to {scale: 1;}
+				}
+			}
+		}
+
+		@supports (animation-timeline: scroll()){
+			@layer onScroll{
+				.onScroll{
+					animation-fill-mode: forwards;
+					animation-timing-function: linear;
+
+					&.backgroundShift{
+						animation: backgroundShift;
+						animation-timeline: scroll(root);
+					}
+
+				}
+
+				@keyframes backgroundShift{
+					from {background-color: var(--color-main-tint-1);}
+					to {background-color: var(--color-main-tint-4);}
+				}
+			}
 		}
 	}
 
