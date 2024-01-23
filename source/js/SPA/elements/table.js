@@ -1,4 +1,4 @@
-// v0.1.0.1
+// v0.1.1.0
 // Uses XUI
 
 export default class Table extends HTMLElement{
@@ -199,10 +199,13 @@ export default class Table extends HTMLElement{
 	#sortByValue = (value)=>{
 		this.bodyValues = [];
 
+		const VALUE_LOWER_CASE = value.toLowerCase();
+
 		for(const row of this.JSON["body"])
 			for(const cell of row)
-				if(cell.toLowerCase().includes(value.toLowerCase()))
-					this.bodyValues.push(row);
+				if(typeof cell === "string" && cell.toLowerCase().includes(VALUE_LOWER_CASE)) this.bodyValues.push(row);
+
+				else if(String(cell).toLowerCase().includes(VALUE_LOWER_CASE)) this.bodyValues.push(row);
 
 		if(this.bodyValues.length === 0) this.bodyValues = [[window.Lang.use("noMatches")]];
 	}
