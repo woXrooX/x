@@ -13,7 +13,7 @@ if __name__ != "__main__":
 		# Helpers With Strict Mode True Will Exists The Script (Stop The Server) On Fail
 
 		@staticmethod
-		def createFolder(path, strict = True):
+		def createFolder(path, strict = False):
 			try:
 				Log.info(f"Folder: {path}")
 
@@ -29,7 +29,7 @@ if __name__ != "__main__":
 				return False
 
 		@staticmethod
-		def createFile(pathNameExtension, content = "", strict = True):
+		def createFile(pathNameExtension, content = "", strict = False):
 			if not os.path.exists(f"{pathNameExtension}"):
 				try:
 					Log.info(f"File: {pathNameExtension}")
@@ -47,7 +47,7 @@ if __name__ != "__main__":
 					return False
 
 		@staticmethod
-		def copyFolder(source, destination, strict = True):
+		def copyFolder(source, destination, strict = False):
 			try:
 				Log.info(f"FileSystem.copyFolder(): Source: {source} | Destination: {destination}")
 
@@ -63,7 +63,7 @@ if __name__ != "__main__":
 				return False
 
 		@staticmethod
-		def copyFile(fromPath, toPath, file, strict = True):
+		def copyFile(fromPath, toPath, file, strict = False):
 			try:
 				# shutil.copy vs shutil.copyfile
 				# shutil.copyfile copies the contents of the source file to the destination file.
@@ -84,7 +84,7 @@ if __name__ != "__main__":
 
 		# Will Copy All The Files In A Folder With A Given Extension
 		@staticmethod
-		def copyFiles(fromPath, toPath, extensions = [], strict = True):
+		def copyFiles(fromPath, toPath, extensions = [], strict = False):
 			try:
 				files = os.listdir(fromPath)
 
@@ -97,7 +97,7 @@ if __name__ != "__main__":
 						Log.warning(f"Not Matching File Extension: {file}")
 						continue
 
-					FileSystem.copyFile(fromPath, toPath, file)
+					FileSystem.copyFile(fromPath, toPath, file, strict=True)
 
 				Log.success(f"Files Are Copied To: {toPath}")
 
@@ -111,7 +111,7 @@ if __name__ != "__main__":
 				return False
 
 		@staticmethod
-		def deleteFile(pathAndFile, strict = True):
+		def deleteFile(pathAndFile, strict = False):
 			try:
 				os.remove(f"{pathAndFile}")
 
@@ -127,7 +127,7 @@ if __name__ != "__main__":
 				return False
 
 		@staticmethod
-		def removeFolder(path, strict = True):
+		def removeFolder(path, strict = False):
 			try:
 				shutil.rmtree(path)
 
@@ -159,7 +159,7 @@ if __name__ != "__main__":
 			FileSystem.cleanExternalCopiedPythonModules()
 
 			Log.center("Removing: x/source/www", '-')
-			FileSystem.removeFolder(f'{Globals.X_RUNNING_FROM}/www/', strict=False)
+			FileSystem.removeFolder(f'{Globals.X_RUNNING_FROM}/www/')
 
 
 			################################ Creating
@@ -168,21 +168,21 @@ if __name__ != "__main__":
 
 			# x/source/[folder]
 			x_folders = ["assets", "assets/private", "assets/public", "users", "www", "www/html", "www/static"]
-			for folder in x_folders: FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/{folder}/')
+			for folder in x_folders: FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/{folder}/', strict=True)
 
 			# project/[folder]
 			project_folders = ["Backups", "CSS", "fonts", "images", "JavaScript", "JavaScript/JSON", "JavaScript/lib", "JavaScript/modules", "pages", "pages/back", "pages/front", "Python", "SVG"]
-			for folder in project_folders: FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/{folder}/')
+			for folder in project_folders: FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/{folder}/', strict=True)
 
 			################ Files
 			Log.center("Creating files", '=')
-			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css")
-			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/header.js", 'export default function header(){\n\treturn "Header";\n}')
-			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/footer.js", 'export default function footer(){\n\treturn "Footer";\n}')
-			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py", 'from python.modules.Page import Page\n\n@Page.build()\ndef home(): pass')
-			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/front/home.js", 'export const TITLE = window.Lang.use("home");\n\nexport default function content(){\n\treturn "Home";\n}')
-			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", '{"x": {"en": "x"}}')
-			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/project.json", "{}")
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css", strict=True)
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/header.js", 'export default function header(){\n\treturn "Header";\n}', strict=True)
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/footer.js", 'export default function footer(){\n\treturn "Footer";\n}', strict=True)
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py", 'from python.modules.Page import Page\n\n@Page.build()\ndef home(): pass', strict=True)
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/front/home.js", 'export const TITLE = window.Lang.use("home");\n\nexport default function content(){\n\treturn "Home";\n}', strict=True)
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", '{"x": {"en": "x"}}', strict=True)
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/project.json", "{}", strict=True)
 
 			################################ Loading/Reading Files
 			Log.center("Loading files", '=')
@@ -214,18 +214,18 @@ if __name__ != "__main__":
 
 			################################ Copying "x" folders
 			Log.center('Copying "x" folders', '=')
-			FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/html", f"{Globals.X_RUNNING_FROM}/www/html")
+			FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/html", f"{Globals.X_RUNNING_FROM}/www/html", strict=True)
 			for folder in ["css", "fonts", "js", "images"]: FileSystem.copyFolder(f"{Globals.X_RUNNING_FROM}/{folder}", f"{Globals.X_RUNNING_FROM}/www/static/{folder}")
 
 			################################ Copying "project" folders/files
 			Log.center('Copying "project" folders', '=')
-			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/CSS", f"{Globals.X_RUNNING_FROM}/www/static/css")
-			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_RUNNING_FROM}/www/static/fonts")
-			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_RUNNING_FROM}/www/static/images")
-			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript", f"{Globals.X_RUNNING_FROM}/www/static/js")
-			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{Globals.X_RUNNING_FROM}/python/pages")
-			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{Globals.X_RUNNING_FROM}/www/static/js/pages")
-			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/Python", f"{Globals.X_RUNNING_FROM}/python/modules")
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/CSS", f"{Globals.X_RUNNING_FROM}/www/static/css", strict=True)
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_RUNNING_FROM}/www/static/fonts", strict=True)
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_RUNNING_FROM}/www/static/images", strict=True)
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript", f"{Globals.X_RUNNING_FROM}/www/static/js", strict=True)
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{Globals.X_RUNNING_FROM}/python/pages", strict=True)
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{Globals.X_RUNNING_FROM}/www/static/js/pages", strict=True)
+			FileSystem.copyFolder(f"{Globals.PROJECT_RUNNING_FROM}/Python", f"{Globals.X_RUNNING_FROM}/python/modules", strict=True)
 
 		################# Methods for FileSystem.init()
 		####### CleanUp
@@ -241,7 +241,7 @@ if __name__ != "__main__":
 				file_path = os.path.join(path, file_name)
 
 				if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["pages"]["back"]:
-					FileSystem.deleteFile(file_path)
+					FileSystem.deleteFile(file_path, strict=True)
 
 		# Python (Modules)
 		@staticmethod
@@ -255,7 +255,7 @@ if __name__ != "__main__":
 				file_path = os.path.join(path, file_name)
 
 				if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["modules"]["Python"]:
-					FileSystem.deleteFile(file_path)
+					FileSystem.deleteFile(file_path, strict=True)
 
 		####### Load
 		#### Internals

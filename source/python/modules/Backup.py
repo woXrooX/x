@@ -33,7 +33,7 @@ if __name__ != "__main__":
 			# Check if database is not enabled
 			if Globals.CONF.get("database", {}).get("MySQL", {}).get("enabled", False) is not True: return True
 
-			if FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/database', strict = False) is not True: return False
+			if FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/database') is not True: return False
 
 			# MySQL clone logic...
 
@@ -42,14 +42,14 @@ if __name__ != "__main__":
 		# Assets folder
 		@staticmethod
 		def assets():
-			return FileSystem.copyFolder(f'{Globals.X_RUNNING_FROM}/assets', f'{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/assets', strict = False)
+			return FileSystem.copyFolder(f'{Globals.X_RUNNING_FROM}/assets', f'{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/assets')
 
 		# Users folder
 		@staticmethod
 		def users():
-			return FileSystem.copyFolder(f'{Globals.X_RUNNING_FROM}/users', f'{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/users', strict = False)
+			return FileSystem.copyFolder(f'{Globals.X_RUNNING_FROM}/users', f'{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/users')
 
 		@staticmethod
 		def generateTimestampFolder():
 			Backup.timestamp = str(datetime.datetime.now().replace(microsecond=0))
-			return FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/', strict = False)
+			return FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/')
