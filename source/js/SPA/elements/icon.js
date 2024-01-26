@@ -8,74 +8,74 @@
 "use strict";
 
 export default class Icon extends HTMLElement{
-constructor(){
-	super();
+	constructor(){
+		super();
 
-	// Closed
-	this.shadow = this.attachShadow({mode: 'closed'});
+		// Closed
+		this.shadow = this.attachShadow({mode: 'closed'});
 
-	CSS: {
-		const style = document.createElement('style');
-		style.textContent = `
-			icon{
-				cursor: pointer;
-				user-select: none;
-
-				display: grid;
-				place-items: center;
-
-				transition: 100ms ease-in-out;
-				transition-property: transform;
-
-				&:hover{
-					transform: scale(1.3);
-				}
-
-				&:active{
-					transform: scale(0.5);
-				}
-
-				&.disabled{
-					cursor: not-allowed !important;
-					transition: none !important;
-					transform: none !important;
-					opacity: 0.5 !important;
-				}
-
-				& > svg{
+		CSS: {
+			const style = document.createElement('style');
+			style.textContent = `
+				icon{
+					cursor: pointer;
 					user-select: none;
 
-					width: 1.2em;
-					height: 1.2em;
+					display: grid;
+					place-items: center;
 
-					fill: ${this.getAttribute("color") || "var(--color-text-primary)"};
+					transition: 100ms ease-in-out;
+					transition-property: transform;
+
+					&:hover{
+						transform: scale(1.3);
+					}
+
+					&:active{
+						transform: scale(0.5);
+					}
+
+					&.disabled{
+						cursor: not-allowed !important;
+						transition: none !important;
+						transform: none !important;
+						opacity: 0.5 !important;
+					}
+
+					& > svg{
+						user-select: none;
+
+						width: 1.2em;
+						height: 1.2em;
+
+						fill: ${this.getAttribute("color") || "var(--color-text-primary)"};
+					}
 				}
-			}
-		`;
-		this.shadow.appendChild(style);
+			`;
+			this.shadow.appendChild(style);
+		}
+
+		// Clone And Append Template
+		this.shadow.appendChild(document.createElement('icon'));
+
+		// Element Icon
+		this.elementIcon = this.shadow.querySelector("icon");
+
+		// Set The Initial Icon
+		this.#setIconName(this.getAttribute("name"));
+
+		//// Disabled
+		// Check If Parent Has Attribute Disabled Then Disable Icon
+		this.disabled = this.parentElement.hasAttribute("disabled") === true ? true : false;
+		// Initial Disabled?Enabled Status Update
+		this.disabled === true ? this.#disable() : this.#enable();
+
+		// Is Toggled?
+		this.toggled = false;
+
+		// On click toggle
+		this.addEventListener("click", this.#toggler);
 	}
-
-	// Clone And Append Template
-	this.shadow.appendChild(document.createElement('icon'));
-
-	// Element Icon
-	this.elementIcon = this.shadow.querySelector("icon");
-
-	// Set The Initial Icon
-	this.#setIconName(this.getAttribute("name"));
-
-	//// Disabled
-	// Check If Parent Has Attribute Disabled Then Disable Icon
-	this.disabled = this.parentElement.hasAttribute("disabled") === true ? true : false;
-	// Initial Disabled?Enabled Status Update
-	this.disabled === true ? this.#disable() : this.#enable();
-
-	// Is Toggled?
-	this.toggled = false;
-
-	// On click toggle
-	this.addEventListener("click", this.#toggler);
-}
 
 	////////// Helpers
 	// Set Icon
