@@ -6,89 +6,44 @@
 
 if __name__ != "__main__":
 
-    from python.modules.Globals import Globals
+	from python.modules.Globals import Globals
 
-    import openai
-    import json
+	from openai import OpenAI as OpenAI_OG
+	import json
 
-    class OpenAI:
+	class OpenAI:
+		@staticmethod
+		def chatCompletion(
+			model="gpt-3.5-turbo", # gpt-4
+			message=False,
+			history={}
+		):
+			# Check if feature is enabled
+			if "OpenAI" not in Globals.CONF: return False
 
-        @staticmethod
-        def textCompletion(
-            model="text-davinci-003",
-            prompt=False,
-            max_tokens=1000,
-            temperature=0.1
-        ):
-            # Check If Feature Is Enabled
-            if "OpenAI" not in Globals.CONF: return False
+			# Check if prompt is valid
+			if not message: return False
 
-            # Check If prompt Is Valid
-            if not prompt: return False
+			# Chat history designed to be managed outside of this class
+			# Internal history
+			chat_history = [
+				# {"role": "system", "content": "You are a helpful assistant."},
+				# {"role": "user", "content": "Who won the world series in 2020?"},
+				# {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
+				# {"role": "user", "content": "Where was it played?"}
+			]
 
-            try:
-                openai.api_key = Globals.CONF["OpenAI"]["api_key"]
-                responseOpenAI = openai.Completion.create(
-                  model="text-davinci-003",
-                  prompt=prompt,
-                  max_tokens=max_tokens,
-                  temperature=0.3,
-                  top_p=1,
-                  n=1,
-                  stream=False,
-                  logprobs=None
-                  # stop="\n"
-                )
+			# If initial history passed then add it to "chat_history"
+			if history: chat_history.append(history)
 
-                return responseOpenAI["choices"][0]["text"]
+			# Append user message to chat history
+			chat_history.append({"role": "user", "content": message})
 
-            except:
-                return False
+			try:
+				client = OpenAI_OG(api_key=Globals.CONF["OpenAI"]["api_key"])
+				response = client.chat.completions.create(model=model, messages=chat_history)
 
+				return response.choices[0].message.content
 
-
-        @staticmethod
-        def chatCompletion(
-            model="gpt-3.5-turbo",
-            message=False,
-            max_tokens=1000,
-            temperature=0.1,
-            history={}
-        ):
-            # Check If Feature Is Enabled
-            if "OpenAI" not in Globals.CONF: return False
-
-            # Check If prompt Is Valid
-            if not message: return False
-
-            # Messages | Chat History
-            chatHistory = [
-                # {"role": "system", "content": "You are a helpful assistant."},
-                # {"role": "user", "content": "Who won the world series in 2020?"},
-                # {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
-                # {"role": "user", "content": "Where was it played?"}
-            ]
-
-            # If Initial History Passed Then Add It To Chat History
-            if history: chatHistory.append(history)
-
-            # Append User Message To Chat History
-            chatHistory.append({"role": "user", "content": message})
-
-            try:
-                openai.api_key = Globals.CONF["OpenAI"]["api_key"]
-                completion = openai.ChatCompletion.create(
-                  model="gpt-3.5-turbo",
-                  messages=chatHistory
-                )
-
-                # Append Assistant Message To Chat History
-                chatHistory.append({"role": "assistant", "content": completion["choices"][0]["message"]["content"]})
-
-                # print(completion)
-                # print(chatHistory)
-
-                return completion["choices"][0]["message"]["content"]
-
-            except:
-                return False
+			except:
+				return False
