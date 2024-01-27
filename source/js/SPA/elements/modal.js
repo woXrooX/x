@@ -11,7 +11,7 @@ export default class Modal extends HTMLElement{
 		Modal.#elementMain = Modal.#element.querySelector("main");
 
 		// Hide on click close button
-		Modal.#element.querySelector("x-icon[for=modal_close]").onclick = Modal.hide;
+		Modal.#element.querySelector("x-svg[for=modal_close]").onclick = Modal.hide;
 
 		// Close on click the cover
 		Cover.onClickExecute(Modal.hide);
@@ -38,7 +38,7 @@ export default class Modal extends HTMLElement{
 				switch(type){
 					case 'icon':
 						const color = this.hasAttribute("icon-color") ? `color="${this.getAttribute("icon-color")}"` : "";
-						content = `<x-icon ${color} name="${value}"></x-icon>`;
+						content = `<x-svg ${color} name="${value}"></x-svg>`;
 						break;
 					case 'text':
 						content = value;

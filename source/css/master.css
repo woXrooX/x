@@ -116,7 +116,7 @@ body{
 			transform: translate(-50%, -50%) scale(1);
 		}
 
-		& > x-icon{
+		& > x-svg{
 			position: fixed;
 			top: 5px;
 			right: 5px;
@@ -145,16 +145,19 @@ body{
 		}
 	}
 
-	& > x-icon{
+	& > x-svg{
 		&[for=menu]{
 			position: fixed;
 			z-index: var(--z-menuHamburgerButton);
-			top: var(--padding);
+
+			top: calc(var(--header-height)/4 - var(--padding)/2);
 			left: var(--padding);
 		}
 	}
 
 	& > menu{
+		font-size: 1.2rem;
+
 		background-color: hsla(var(--color-main-hue), 10%, 25%, 0.1);
 		backdrop-filter: blur(100px);
 		height: 100dvh;
@@ -187,7 +190,7 @@ body{
 			flex-direction: row;
 			justify-content: space-between;
 
-			& > x-icon{
+			& > x-svg{
 				&[for=closeMenuInMobile]{
 					display: none;
 
@@ -217,6 +220,7 @@ body{
 							display: flex;
 							flex-direction: row;
 							justify-content: space-between;
+							align-items: center;
 
 							border: 1px solid transparent;
 							border-radius: var(--radius);
@@ -237,10 +241,10 @@ body{
 								gap: var(--gap);
 
 								color: white;
-								font-size: 1rem;
+								font-size: 1em;
 							}
 
-							& > x-icon{
+							& > x-svg{
 								&[for=toggleSubMenu]{
 									transition: var(--transition-velocity) ease-in-out transform;
 									transform: rotate(90deg);
@@ -250,6 +254,8 @@ body{
 						}
 
 						&.subMenu{
+							font-size: 0.94em;
+
 							display: none;
 
 							background-color: hsla(var(--color-main-hue), 10%, 25%, 0.2);
@@ -264,7 +270,7 @@ body{
 						}
 
 						/* If submenu is empty do not show arrow icon */
-						&:has(+ .subMenu:empty) > x-icon[for=toggleSubMenu]{display: none;}
+						&:has(+ .subMenu:empty) > x-svg[for=toggleSubMenu]{display: none;}
 					}
 				}
 			}
@@ -276,7 +282,7 @@ body{
 			width: 100vw;
 
 			& > header{
-				& > x-icon[for=toggleAlwaysOpenMode]{display: none;}
+				& > x-svg[for=toggleAlwaysOpenMode]{display: none;}
 			}
 		}
 	}
