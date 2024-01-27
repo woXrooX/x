@@ -23,27 +23,27 @@ export default class Share extends HTMLElement{
 			<x-modal type="icon" value="share">
 				<row class="p-1 gap-0-5">
 					<a href="https://twitter.com/intent/tweet?url=${shareData.url}&text=${shareData.text}" target="_blank">
-						<x-icon name="twitter_bird_original"></x-icon>
+						<x-svg name="twitter_bird_original"></x-svg>
 					</a>
 
 					<a href="https://www.linkedin.com/sharing/share-offsite/?url=${shareData.url}&title=${shareData.title}&summary=${shareData.text}&source=${shareData.url}" target="_blank">
-						<x-icon name="linkedin_original"></x-icon>
+						<x-svg name="linkedin_original"></x-svg>
 					</a>
 
 					<a href="https://www.facebook.com/sharer.php?u=${shareData.url}&quote=${shareData.text}" target="_blank">
-						<x-icon name="facebook_original"></x-icon>
+						<x-svg name="facebook_original"></x-svg>
 					</a>
 
 					<a href="https://www.instagram.com/share?url=${shareData.url}&caption=${shareData.text}" target="_blank">
-						<x-icon name="instagram_original"></x-icon>
+						<x-svg name="instagram_original"></x-svg>
 					</a>
 
 					<a href="https://t.me/share/url?url=${shareData.url}&text=${shareData.text}" target="_blank">
-						<x-icon name="telegram_original"></x-icon>
+						<x-svg name="telegram_original"></x-svg>
 					</a>
 
 					<a href="https://www.reddit.com/submit?selftext=${shareData.text}&title=${shareData.title}&url=${shareData.url}" target="_blank">
-						<x-icon name="reddit_original"></x-icon>
+						<x-svg name="reddit_original"></x-svg>
 					</a>
 				</row>
 			</x-modal>
