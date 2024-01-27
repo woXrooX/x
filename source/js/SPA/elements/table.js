@@ -102,7 +102,7 @@ export default class Table extends HTMLElement{
 					<th>
 						<row class="cursor-pointer gap-0-5 flex-y-center">
 							${this.JSON["head"][index]["title"]}
-							<x-icon color="currentcolor" name="sort_ASC"></x-icon>
+							<x-svg color="currentcolor" name="sort_ASC"></x-svg>
 						</row>
 					</th>
 				`;
@@ -269,9 +269,9 @@ export default class Table extends HTMLElement{
 
 		this.querySelector("main > div[for=paginationContainer]:last-child > div[for=pagination]").innerHTML = `
 			<button class="btn btn-primary text-transform-uppercase" name="first">${window.Lang.use("first")}</button>
-			<button class="btn btn-primary" name="previous"><x-icon name="arrow_back" color="white"></x-icon></button>
+			<button class="btn btn-primary" name="previous"><x-svg name="arrow_back" color="white"></x-svg></button>
 			<section class="d-flex flex-row gap-0-2">${buttonsHTML}</section>
-			<button class="btn btn-primary" name="next"><x-icon name="arrow_forward" color="white"></x-icon></button>
+			<button class="btn btn-primary" name="next"><x-svg name="arrow_forward" color="white"></x-svg></button>
 			<button class="btn btn-primary text-transform-uppercase" name="last">${window.Lang.use("last")}</button>
 		`;
 

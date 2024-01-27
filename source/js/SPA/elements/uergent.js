@@ -10,7 +10,7 @@ export default class Modal extends HTMLElement{
 		// Structure
 		this.innerHTML = `
 			<dialog inert>
-				<button><x-icon name="x" color="ffffff"></x-icon></button>
+				<button><x-svg name="x" color="ffffff"></x-svg></button>
 				<main>${this.DOM}</main>
 			</dialog>
 			<trigger></trigger>
@@ -33,7 +33,7 @@ export default class Modal extends HTMLElement{
 				let content;
 				switch(type){
 					case 'icon':
-						content = `<x-icon name="${value}"></x-icon>`;
+						content = `<x-svg name="${value}"></x-svg>`;
 						break;
 					case 'text':
 						content = value;

@@ -2,7 +2,7 @@
 
 export default class Menu{
 	static selector = "body > menu";
-	static #selectorMenuButton = "body > x-icon[for=menu]";
+	static #selectorMenuButton = "body > x-svg[for=menu]";
 	static #selectorMenuHyperlinks = `${Menu.selector} > main a`;
 
 	static #element = null;
@@ -72,7 +72,7 @@ export default class Menu{
 					<section class="container">
 						<section class="parentMenu">
 							<a href="${window.CONF["pages"][menu["page"]]["endpoints"][0]}">
-								${"icon" in menu ? `<x-icon color="#ffffff" name="${menu["icon"]}"></x-icon>` : ""}
+								${"icon" in menu ? `<x-svg color="#ffffff" name="${menu["icon"]}"></x-svg>` : ""}
 								${"name" in menu ? window.Lang.use(menu["name"]) : window.Lang.use(menu["page"])}
 							</a>
 				`;
@@ -80,7 +80,7 @@ export default class Menu{
 				// Add the sub menu toggle icon and close the section.parentMenu
 				if("subMenu" in menu)
 					HTML += `
-							<x-icon for="toggleSubMenu" color="#ffffff" name="arrow_bottom_small"></x-icon>
+							<x-svg for="toggleSubMenu" color="#ffffff" name="arrow_bottom_small"></x-svg>
 						</section>
 						<section class="subMenu">${Menu.#recursiveBuilder(menu["subMenu"])}</section>
 					`;
@@ -120,7 +120,7 @@ export default class Menu{
 	static #onClickMenuButtonShow(){Menu.#elementMenuButton.onclick = Menu.#show;}
 
 	// On Click Menu Button Close In Mobile
-	static #onClickCloseMenuInMobile(){document.querySelector(`${Menu.selector} > header > x-icon[for=closeMenuInMobile]`).onclick = Menu.#hide;}
+	static #onClickCloseMenuInMobile(){document.querySelector(`${Menu.selector} > header > x-svg[for=closeMenuInMobile]`).onclick = Menu.#hide;}
 
 	// On click hperlinks hide the Menu
 	static #onClickHyperlinksHide(){
@@ -130,9 +130,9 @@ export default class Menu{
 		for(const hyperlink of hyperlinks) hyperlink.addEventListener("click", Menu.#hide);
 	}
 
-	// On click x-icon[for=toggleSubMenu] show the section.subMenu
+	// On click x-svg[for=toggleSubMenu] show the section.subMenu
 	static #showSubMenuOnClickArrow(){
-		const subMenuTogglers = document.querySelectorAll(`${Menu.selector} > main x-icon[for=toggleSubMenu]`);
+		const subMenuTogglers = document.querySelectorAll(`${Menu.selector} > main x-svg[for=toggleSubMenu]`);
 
 		for(const toggler of subMenuTogglers)
 			toggler.onclick = ()=> {
@@ -176,7 +176,7 @@ export default class Menu{
 	static #toggleAlwaysOpenMode(){
 		Log.info("Menu.#toggleAlwaysOpenMode()");
 
-		const toggler = document.querySelector(`${Menu.selector} > header > x-icon[for=toggleAlwaysOpenMode]`);
+		const toggler = document.querySelector(`${Menu.selector} > header > x-svg[for=toggleAlwaysOpenMode]`);
 
 		const header = document.querySelector(window.Header.selector);
 		const main = document.querySelector(window.Main.selector);
