@@ -578,17 +578,24 @@
 
 		@layer buttons{
 			.btn{
-				--btn-padding: calc(var(--padding) * 2);
-				--btn-font-size: 0.8rem;
+				--btn-font-size: 1rem;
 
 				cursor: pointer;
 				user-select: none;
+
 				color: white;
 				font-size: var(--btn-font-size);
 
-				height: min-content;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: calc(var(--gap) / 4);
+				vertical-align:middle;
+
+				height: calc(1em + 0.4em * 2);
 				min-width: fit-content;
-				padding: 0.4em 0.6em;
+
+				padding-inline: 0.6em;
 
 				border: 1px solid transparent;
 				border-radius: var(--radius);
@@ -598,8 +605,6 @@
 
 
 				&:not(.btn-outline){
-					border: 2px solid transparent;
-
 					box-shadow: 0px 5px 10px 0px rgba(0 0 0 / 0.3);
 
 					&:hover{
