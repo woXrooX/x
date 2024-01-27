@@ -1,4 +1,4 @@
-// v0.1.1
+// v0.1.2
 
 "use strict";
 
@@ -30,13 +30,15 @@ export default class Toast extends HTMLElement{
 
 			style.textContent = `
 				toast{
+					font-size: 1rem;
+
 					overflow: hidden;
 
 					background-color: var(--color-main-tint-1);
 					padding: var(--padding);
 					margin: 0px;
-					border-radius: var(--radius);
 
+					border-radius: var(--radius);
 					box-shadow: var(--shadow);
 
 					display: grid;
@@ -46,7 +48,7 @@ export default class Toast extends HTMLElement{
 
 					animation: fadeIn var(--transition-velocity) ease;
 
-					& > toast-label-color{
+					& > toast-type-color{
 						background-color: var(--color-${[this.typeName]});
 						height: 100%;
 						width: 5px;
@@ -62,13 +64,11 @@ export default class Toast extends HTMLElement{
 							"content content";
 						align-items: center;
 
-						& > icon{
-							font-size: 1rem;
+						& > x-svg[for=toast-type-svg]{
 							grid-area: icon;
 						}
 
-						& > type{
-							font-size: 1rem;
+						& > toast-type-name{
 							text-transform: uppercase;
 							font-weight: bold;
 							grid-area: type;
@@ -76,8 +76,8 @@ export default class Toast extends HTMLElement{
 
 						& > content{
 							color: var(--color-text-secondary);
-							font-size: 0.8rem;
-							grid-area:content;
+							font-size: 0.8em;
+							grid-area: content;
 						}
 					}
 				}
@@ -93,24 +93,23 @@ export default class Toast extends HTMLElement{
 
 		this.shadow.innerHTML += `
 			<toast>
-				<toast-label-color></toast-label-color>
+				<toast-type-color></toast-type-color>
 				<main>
-					<icon>
-						<x-icon
-							name="${Toast.#ICONS[this.typeName]}"
-							color="var(--color-${this.typeName})"
-						></x-icon>
-					</icon>
-					<type>${window.Lang.use(this.typeName)}</type>
+					<x-svg
+						for="toast-type-svg"
+						name="${Toast.#ICONS[this.typeName]}"
+						color="var(--color-${this.typeName})"
+					></x-svg>
+					<toast-type-name>${window.Lang.use(this.typeName)}</toast-type-name>
 					<content>${window.Lang.use(this.textContent)}</content>
 				</main>
-				<x-icon name="x" for="dismiss"></x-icon>
+				<x-svg name="x" for="dismiss"></x-svg>
 			</toast>
 		`;
 
 		//// Remove Toast On Click Dismiss
 		// dismiss.onclick = ()=> this.remove(); // Bug w/ N sec removal
-		this.shadow.querySelector("toast > x-icon[for=dismiss]").onclick = ()=> this.style.display = "none";
+		this.shadow.querySelector("toast > x-svg[for=dismiss]").onclick = ()=> this.style.display = "none";
 	}
 
 	static new(type, content){
