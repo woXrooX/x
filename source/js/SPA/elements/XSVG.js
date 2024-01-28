@@ -1,11 +1,7 @@
-// v0.1.1
+// v0.2.0
 
 // SVG shadow
 // filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
-
-// TO be added to docs
-// icon.forceToggle()
-// setAttribute observers removed. too many ways doing the same stuff
 
 "use strict";
 
@@ -32,6 +28,13 @@ export default class XSVG extends HTMLElement{
 					width: 1em;
 					height: 1em;
 
+					&.disabled{
+						cursor: not-allowed !important;
+						transition: none !important;
+						transform: none !important;
+						opacity: 0.5 !important;
+					}
+
 					& > svg{
 						width: 1em;
 						height: 1em;
@@ -48,13 +51,6 @@ export default class XSVG extends HTMLElement{
 						&:active{
 							transform: scale(0.5);
 						}
-
-						&.disabled{
-							cursor: not-allowed !important;
-							transition: none !important;
-							transform: none !important;
-							opacity: 0.5 !important;
-						}
 					}
 				}
 			</style>
@@ -62,7 +58,7 @@ export default class XSVG extends HTMLElement{
 			<span>${window.SVG.use(this.getAttribute("name"))}</span>
 		`;
 
-		this.svgContainer = this.shadow.querySelector("span > svg");
+		this.svgContainer = this.shadow.querySelector("span");
 
 		//// Disabled
 		// Check If Parent Has Attribute Disabled Then Disable SVG
@@ -95,31 +91,35 @@ export default class XSVG extends HTMLElement{
 		this.toggled = !this.toggled;
 	}
 
-	// Disabler Method
 	#disable(){this.svgContainer.classList.add("disabled");}
 
-	// Enabler Method
 	#enable(){this.svgContainer.classList.remove("disabled");}
 
 	////////// APIs
 	forceToggle = this.#toggler;
 
 	////////// Getters
-	// Get SVG Name
+	// Get SVG name
 	get name(){return this.getAttribute("name");}
 
-	// Get toggle SVG name
+	// Get SVG toggle name
 	get toggle(){return this.getAttribute("toggle");}
 
-	// Get disabled status
+	// Get disabled attribute
 	get disable(){return this.getAttribute("disabled");}
 
 	////////// Setters
-	// Set SVG Name
-	set name(value){this.svgContainer.innerHTML = window.SVG.use(value);}
+	// Set SVG name
+	set name(value){
+		this.setAttribute("name", value);
+		if(this.toggled === false) this.svgContainer.innerHTML = window.SVG.use(value);
+	}
 
-	// Set toggle SVG name
-	set toggle(value){return this.setAttribute("toggle", value);}
+	// Set SVG toggle name
+	set toggle(value){
+		this.setAttribute("toggle", value);
+		if(this.toggled === true) this.svgContainer.innerHTML = window.SVG.use(value);
+	}
 
 	// Sets disabled status
 	set disable(value){
