@@ -54,7 +54,7 @@ export default class CSS{
 	static init(){
 		Log.info("CSS.init()");
 
-		CSS.colorModeSwitcherIcon = document.querySelector(`${Menu.selector} > header > x-icon[for=colorModeSwitcher]`);
+		CSS.colorModeSwitcherIcon = document.querySelector(`${Menu.selector} > header > x-svg[for=colorModeSwitcher]`);
 
 		CSS.#loadColorBrand();
 		CSS.detectColorMode();
@@ -81,6 +81,7 @@ export default class CSS{
 	// Detect Color Mode
 	static detectColorMode(){
 		Log.info("CSS.detectColorMode()");
+
 		// Get User Preferred Color Mode
 		if(
 			// If User Is In Session
@@ -133,11 +134,11 @@ export default class CSS{
 	// On System Color Mode Changes - Listen To Color Mode Changes
 	static #onColorModeChange(){window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", CSS.detectColorMode);}
 
-	// Handles color mode switching to dark and light modes using x-icon in menu
+	// Handles color mode switching to dark and light modes using x-svg in menu
 	static #handleColorModeToggle(){
 		// A Reminder to My Future Self :)
 		// We do not have to apply name and toggle values like we did in CSS.detectColorMode().
-		// Default toggler handles well icon changes since we are only using x-icon to toggle the color modes in this method
+		// Default toggler handles well icon changes since we are only using x-svg to toggle the color modes in this method
 
 		CSS.colorModeSwitcherIcon.addEventListener("click", ()=>{
 			switch(CSS.currentColorMode){
