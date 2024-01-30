@@ -36,7 +36,6 @@ import Share from "./elements/share.js"; // Share depends on modal
 import Table from "./elements/table.js";
 import Tooltip from "./elements/tooltip.js";
 import Select from "./elements/select.js";
-import El from "./elements/el.js";
 
 export default class Core{
 
