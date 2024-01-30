@@ -1,15 +1,15 @@
 //// JSON to DOM = JTD
 // const form = {
-//   "form":{
-//     "attributes":[{"method":"POST"},{"class":"myForm"}],
-//     "childNodes": [
-//       {"input":{"attributes":[{"type":"text"},{"name":"username"},{"placeholder":"Username"}]}},
-//       {"br":{}},
-//       {"input":{"attributes":[{"type":"password"},{"name":"password"},{"placeholder":"Password"}]}},
-//       {"br":{}},
-//       {"input":{"attributes":[{"type":"submit"},{"name":"logIn"},{"value":"Log In"}]}}
-//     ]
-//   }
+// 	"form": {
+// 		"attributes": [{"method": "POST"}, {"class": "myForm"}],
+// 		"childNodes": [
+// 			{"input": {"attributes": [{"type": "text"}, {"name": "username"}, {"placeholder": "Username"}]}},
+// 			{"br": {}},
+// 			{"input": {"attributes": [{"type": "password"}, {"name": "password"}, {"placeholder": "Password"}]}},
+// 			{"br": {}},
+// 			{"input": {"attributes": [{"type": "submit"}, {"name": "logIn"}, {"value": "Log In"}]}}
+// 		]
+// 	}
 // };
 //
 // const dom = JTD(form);
@@ -29,11 +29,11 @@ export default function JTD(object){
 	if("attributes" in object[tagName] && object[tagName]["attributes"].length > 0)
 		for(const attribute of object[tagName]["attributes"])
 			if(Object.keys(attribute).length === 1){
-			const name = Object.keys(attribute)[0];
-			const value = attribute[name];
+				const name = Object.keys(attribute)[0];
+				const value = attribute[name];
 
-			element.setAttribute(name, value);
-		}
+				element.setAttribute(name, value);
+			}
 
 	// Creating Child Nodes If Exists
 	if("childNodes" in object[tagName])
