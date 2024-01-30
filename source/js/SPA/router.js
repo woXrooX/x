@@ -73,7 +73,6 @@ export default class Router{
 
 		// Load Page File
 		Router.#loadPageFile();
-
 	}
 
 	static async #loadPageFile(){
@@ -85,7 +84,7 @@ export default class Router{
 			window.Main.animationStart();
 
 			// Load The Page
-			window.DOM.setPage(await import(`../pages/${Router.currentPage.name}.js`));
+			window.DOM.setPage(await import(`/js/pages/${Router.currentPage.name}.js`));
 		}catch(error){
 			// console.log(error);
 			// console.log(error.name);
@@ -94,15 +93,22 @@ export default class Router{
 			// Set Title To Error
 			window.Title.set("error");
 
+			window.Header.handle();
+
 			// Render The Error
 			window.DOM.render(`
-				<container class="p-5">
-					<column class="flex-y-start surface-error p-3 gap-0-5">
-						<error>${error.name}</error>
-						<info class="text-size-0-8">${error.stack}</info>
+				<container class="flex-y-center p-5">
+					<column class="flex-y-center surface-error p-8 gap-2">
+						<p class="d-flex flex-row flex-y-center gap-0-2 text-color-error text-size-2">
+							<x-svg name="error_hexagon" class="text-size-2-5" color="var(--color-error)"></x-svg>
+							${error.name}
+						</p>
+						<p class="text-size-1-1">${error.stack}</p>
 					</column>
 				</container>
 			`);
+
+			window.Footer.handle();
 		}finally{
 			// End Loading Effects
 			window.Loading.end();
