@@ -1,21 +1,3 @@
-// import Dom from "./DOM.js";
-//
-// const form = {
-//   "form":{
-//     "attributes":[{"method":"POST"},{"class":"myForm"}],
-//     "childNodes": [
-//       {"input":{"attributes":[{"type":"text"},{"name":"username"},{"placeholder":"Username"}]}},
-//       {"br":{}},
-//       {"input":{"attributes":[{"type":"password"},{"name":"password"},{"placeholder":"Password"}]}},
-//       {"br":{}},
-//       {"input":{"attributes":[{"type":"submit"},{"name":"logIn"},{"value":"Log In"}]}}
-//     ]
-//   }
-// };
-//
-// const done = DOM.jsonToDom(form);
-// console.log(done);
-
 // const newDiv = document.createElement("div");
 // const newContent = document.createTextNode("Hi there and greetings!");
 // newDiv.appendChild(newContent);
@@ -142,36 +124,6 @@ export default class DOM{
 				default:
 					Log.warning(`DOM.update() - Unknown Target For Dom Change: ${target}`);
 			}
-	}
-
-	static jsonToDom(object){
-		// Handle Invalid Types
-		if(object == null) return;
-		if(typeof object != "object") return;
-		if(Object.keys(object).length !== 1) return;
-
-		// Creating The Element
-		const tagName = Object.keys(object)[0];
-		const element = document.createElement(tagName);
-
-		// Creating Attributes If Exists
-		if("attributes" in object[tagName] && object[tagName]["attributes"].length > 0)
-		for(const attribute of object[tagName]["attributes"])
-			if(Object.keys(attribute).length === 1){
-			const name = Object.keys(attribute)[0];
-			const value = attribute[name];
-
-			element.setAttribute(name, value);
-
-			}
-
-		// Creating Child Nodes If Exists
-		if("childNodes" in object[tagName])
-		for(const childNode of object[tagName]["childNodes"])
-			element.appendChild(DOM.jsonToDom(childNode));
-
-		return element;
-
 	}
 }
 
