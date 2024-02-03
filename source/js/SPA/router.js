@@ -95,18 +95,7 @@ export default class Router{
 
 			window.Header.handle();
 
-			// Render The Error
-			window.DOM.render(`
-				<container class="flex-y-center p-5">
-					<column class="flex-y-center surface-error p-8 gap-2">
-						<p class="d-flex flex-row flex-y-center gap-0-2 text-color-error text-size-2">
-							<x-svg name="error_hexagon" class="text-size-2-5" color="var(--color-error)"></x-svg>
-							${error.name}
-						</p>
-						<p class="text-size-1-1">${error.stack}</p>
-					</column>
-				</container>
-			`);
+			window.DOM.render(DOM.render(Main.situationalContent("error", error.name, error.stack)));
 
 			window.Footer.handle();
 		}finally{
