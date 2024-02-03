@@ -34,44 +34,27 @@ export default class DOM{
 		window.pageData = {};
 
 		////////// Title
-		// Set Title
 		window.Title.set(DOM.#page.TITLE);
 
-		////////// Content / Main
-		///// Before
-		// Check If before() Exists
+		////////// Before
 		if(!!DOM.#page.before === true)
-			// If Async Function Passed Or Normal One
 			if(DOM.#page.before.constructor.name === 'AsyncFunction') await DOM.#page.before();
 			else DOM.#page.before();
 
 		////////// Header
-		// Let Header Class To Handle
 		window.Header.handle(DOM.#page.header);
 
-		///// Content - Render The Content
-		// Check If Default Function Exists
+		////////// Content - Render The Content
 		if(typeof DOM.#page.default === "function")
-			// If Async Function Passed Or Normal One
 			if(DOM.#page.default.constructor.name === 'AsyncFunction') DOM.render(await DOM.#page.default());
 			else DOM.render(DOM.#page.default());
-		else DOM.render(`
-			<container class="p-5">
-				<column class="flex-y-start surface-error p-3 gap-0-5">
-					<error>ERROR</error>
-					<info class="text-size-0-8">DOM.lifeCycle() -> No default function defined!</info>
-				</column>
-			</container>
-		`);
+		else DOM.render(Main.situationalContent("error", "ERROR", "DOM.lifeCycle() -> No default function defined!"));
 
 		////////// Footer
-		// Let Footer Class To Handle
 		window.Footer.handle(DOM.#page.footer);
 
-		///// After
-		// Check If after() Exists
+		////////// After
 		if(!!DOM.#page.after === true)
-			// If Async Function Passed Or Normal One
 			if(DOM.#page.after.constructor.name === 'AsyncFunction') await DOM.#page.after();
 			else DOM.#page.after();
 
