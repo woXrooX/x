@@ -224,7 +224,7 @@ body{
 
 							border: 1px solid transparent;
 							border-radius: var(--radius);
-							padding: var(--padding) calc(var(--padding) * 2);
+							padding: var(--padding) calc(var(--padding) * 2.5);
 
 							transition: var(--transition-velocity) ease-in-out;
 							transition-property: background-color, border;
