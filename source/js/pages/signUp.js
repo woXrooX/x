@@ -9,7 +9,7 @@ export default function content() {
 
 				<h2>${window.Lang.use('signUp')}</h2>
 
-				<form action="signUp" for="signUp" autocomplete="off">
+				<form action="signUp" for="signUp" autocomplete="off" x-toast>
 
 					<label>
 						<p for="eMail">${window.Lang.use('eMail')}</p>
