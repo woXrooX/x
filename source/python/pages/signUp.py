@@ -109,7 +109,6 @@ def signUp(request):
 			type="success" if emailVerificationSentSuccessfully is True else "info",
 			message="eMailConfirmationCodeHasBeenSent" if emailVerificationSentSuccessfully is True else "Signed Up Without Email Verification!",
 			setSessionUser=True,
-			toast=True,
 			redirect="/eMailConfirmation" if emailVerificationSentSuccessfully is True else "/home",
 			domChange=["menu"]
 		)
