@@ -9,7 +9,7 @@ export default function content(){
 
 				<p class="text-align-center">${window.Lang.use("eMailConfirmationCodeHasBeenSent")}</p>
 
-				<form action="eMailConfirmation" for="eMailConfirmation">
+				<form action="eMailConfirmation" for="eMailConfirmation" x-toast>
 
 
 					<label>

@@ -57,7 +57,6 @@ def eMailConfirmation(request):
 			return response(
 				type="success",
 				message="eMailVerificationSuccess",
-				toast=True,
 				setSessionUser=True,
 				domChange=["menu"],
 				redirect="/home"
