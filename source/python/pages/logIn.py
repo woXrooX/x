@@ -24,12 +24,13 @@ def logIn(request):
 		# passwordEmpty
 		if "password" not in request.form or not request.form["password"]: return response(type="error", message="passwordEmpty", field="password")
 
-		hashed_password = hashlib.sha256(request.form["password"].encode()).hexdigest()
+		if Globals.CONF["password"]["hashing_algorithm"] == "SHA-256": password = hashlib.sha256(request.form["password"].encode()).hexdigest()
+		else: password = request.form["password"]
 
 		######## Check If eMail And Password matching User Exist
 		data = MySQL.execute(
 			sql="SELECT id FROM users WHERE eMail=%s AND password=%s LIMIT 1;",
-			params=(request.form["eMail"], hashed_password),
+			params=(request.form["eMail"], password),
 			fetchOne=True
 		)
 

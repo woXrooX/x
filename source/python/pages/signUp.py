@@ -20,29 +20,23 @@ def signUp(request):
 
 		######## eMail
 		# eMailEmpty
-		if "eMail" not in request.form or not request.form["eMail"]:
-			return response(type="error", message="eMailEmpty", field="eMail")
+		if "eMail" not in request.form or not request.form["eMail"]: return response(type="error", message="eMailEmpty", field="eMail")
 
 		# eMailInvalid
-		if not re.match(Globals.CONF["eMail"]["regEx"], request.form["eMail"]):
-			return response(type="error", message="eMailInvalid", field="eMail")
+		if not re.match(Globals.CONF["eMail"]["regEx"], request.form["eMail"]): return response(type="error", message="eMailInvalid", field="eMail")
 
 		######## password
 		# passwordEmpty
-		if "password" not in request.form or not request.form["password"]:
-			return response(type="error", message="passwordEmpty", field="password")
+		if "password" not in request.form or not request.form["password"]: return response(type="error", message="passwordEmpty", field="password")
 
 		# passwordMinLength
-		if len(request.form["password"]) < Globals.CONF["password"]["min_length"]:
-			return response(type="error", message="passwordMinLength", field="password")
+		if len(request.form["password"]) < Globals.CONF["password"]["min_length"]: return response(type="error", message="passwordMinLength", field="password")
 
 		# passwordMaxLength
-		if len(request.form["password"]) > Globals.CONF["password"]["max_length"]:
-			return response(type="error", message="passwordMaxLength", field="password")
+		if len(request.form["password"]) > Globals.CONF["password"]["max_length"]: return response(type="error", message="passwordMaxLength", field="password")
 
 		# passwordAllowedChars
-		if not re.match(Globals.CONF["password"]["regEx"], request.form["password"]):
-			return response(type="error", message="passwordAllowedChars", field="password")
+		if not re.match(Globals.CONF["password"]["regEx"], request.form["password"]): return response(type="error", message="passwordAllowedChars", field="password")
 
 		######## eMail and Password In Use
 		# eMailInUse
@@ -57,13 +51,14 @@ def signUp(request):
 		# Generate Randome Verification Code
 		eMailVerificationCode = random.randint(100000, 999999)
 
-		hashed_password = hashlib.sha256(request.form["password"].encode()).hexdigest()
+		if Globals.CONF["password"]["hashing_algorithm"] == "SHA-256": password = hashlib.sha256(request.form["password"].encode()).hexdigest()
+		else: password = request.form["password"]
 
 		# Insert To Database
 		data = MySQL.execute(
 			sql="INSERT INTO users (password, eMail, eMail_verification_code, authenticity_status) VALUES (%s, %s, %s, %s)",
 			params=(
-				hashed_password,
+				password,
 				request.form["eMail"],
 				eMailVerificationCode,
 				Globals.USER_AUTHENTICITY_STATUSES["unauthorized"]["id"]
@@ -78,7 +73,7 @@ def signUp(request):
 			sql="SELECT id FROM users WHERE eMail=%s AND password=%s LIMIT 1;",
 			params=(
 				request.form["eMail"],
-				hashed_password
+				password
 			),
 			fetchOne=True
 		)
