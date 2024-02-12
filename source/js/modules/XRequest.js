@@ -71,7 +71,7 @@ export default class XRequest{
 				break;
 
 			default:
-				// To do
+				this.#onClick();
 				break;
 		}
 	}
