@@ -4,34 +4,22 @@ from python.modules.response import response
 from python.modules.Globals import Globals
 from python.modules.User import User
 from python.modules.MySQL import MySQL
+from python.modules.LogInTools import LogInTools
 
 
 @Page.build()
 def logIn(request):
 	if request.method == "POST":
 		# unknownError
-		if request.form["for"] != "logIn":
-			return response(type="warning", message="unknownError")
-
-			#Collecting User-Agent and IP address
-			user_agent = request.headers.get('User-Agent')
-			ip_address = request.remote_addr
-
-			MySQL.execute(
-				sql="INSERT INTO login_attempts (ip_address, user_agent) VALUES (%s, %s);",
-				params=(ip_address,user_agent),
-				commit=True
-			)
+		if request.form["for"] != "logIn": return response(type="warning", message="unknownError")
 
 		######## eMail
 		# eMailEmpty
-		if "eMail" not in request.form or not request.form["eMail"]:
-			return response(type="error", message="eMailEmpty", field="eMail")
+		if "eMail" not in request.form or not request.form["eMail"]: return response(type="error", message="eMailEmpty", field="eMail")
 
 		######## password
 		# passwordEmpty
-		if "password" not in request.form or not request.form["password"]:
-			return response(type="error", message="passwordEmpty", field="password")
+		if "password" not in request.form or not request.form["password"]: return response(type="error", message="passwordEmpty", field="password")
 
 		######## Check If eMail And Password matching User Exist
 		data = MySQL.execute(
@@ -43,7 +31,9 @@ def logIn(request):
 		if data is False: return response(type="error", message="databaseError")
 
 		# No Match
-		if not data: return response(type="error", message="usernameOrPasswordWrong")
+		if not data:
+			LogInTools.newRecord(request.remote_addr, request.headers.get('User-Agent'))
+			return response(type="error", message="usernameOrPasswordWrong")
 
 		# Set Session User ID
 		session["user"] = data
@@ -51,7 +41,10 @@ def logIn(request):
 		# Handle The Session Update Error
 		if not User.updateSession(): pass
 
-		# On Success Redirect & Update Front-End Session
+		#### On Success Redirect & Update Front-End Session & Adds a new login record if enabled
+
+		LogInTools.newRecord(request.remote_addr, request.headers.get('User-Agent'), True)
+
 		return response(
 			type="success",
 			message="success",

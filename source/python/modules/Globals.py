@@ -43,6 +43,7 @@ if __name__ != "__main__":
 					"Globals.py",
 					"GMail.py",
 					"Logger.py",
+					"LogInTools.py",
 					"MongoDB.py",
 					"MySQL.py",
 					"Notifications.py",

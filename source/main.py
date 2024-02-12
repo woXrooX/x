@@ -22,7 +22,7 @@ Log.center('', '-')
 
 
 #################################################### Update Logger enabled/disabled after project.json has been loaded
-Log.enabled = True if Globals.CONF.get("default", {}).get("debug") is True else False
+Log.enabled = True if Globals.CONF.get("tools", {}).get("debug") is True else False
 
 
 #################################################### Setting Up MySQL
@@ -66,7 +66,7 @@ app = Flask(
 import os
 
 # Disable random secret_key assignment on each server restart when debug is True
-if Globals.CONF.get("default", {}).get("debug") is True: app.secret_key = b'12345'
+if Globals.CONF.get("tools", {}).get("debug") is True: app.secret_key = b'12345'
 
 # Generates new "secret_key" every time when server is started
 else: app.secret_key = os.urandom(24)

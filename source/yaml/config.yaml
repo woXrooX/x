@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.163.0.0001"
+version: "0.164.0.0000"
 
 ######### Flask
 flask:
@@ -91,8 +91,13 @@ default:
   #   type: "The type of your object, e.g., 'video.movie'. Depending on the type you specify, other properties may also be required."
 
 
+tools:
   # Enables All "print"s And "console.log"s
   debug: true
+
+  logInTools:
+    # Enables recording log in attempts
+    enableRecording: false
 
 
 ######### Pages

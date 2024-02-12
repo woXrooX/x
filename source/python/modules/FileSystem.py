@@ -327,8 +327,8 @@ if __name__ != "__main__":
 
 
 		#### Merge
-		# Merge config.yaml And project.json
-		# Merge Project Dependent Configurations To Default Configurations. Override Defaults
+		# Merge config.yaml and project.json
+		# Merge project dependent configurations to default configurations. Override defaults
 		@staticmethod
 		def mergeConfigurations():
 			#### Merge
@@ -341,6 +341,9 @@ if __name__ != "__main__":
 			# Defaults
 			if "default" in Globals.PROJECT: Globals.CONF["default"].update(Globals.PROJECT["default"])
 
+			# Tools
+			if "tools" in Globals.PROJECT: Globals.CONF["tools"].update(Globals.PROJECT["tools"])
+
 			# Pages
 			if "pages" in Globals.PROJECT: Globals.CONF["pages"] = Globals.PROJECT["pages"]
 
@@ -352,8 +355,9 @@ if __name__ != "__main__":
 
 			#### Public Configurations
 			Globals.PUBLIC_CONF["default"] = Globals.CONF["default"]
-			Globals.PUBLIC_CONF["menu"] = Globals.CONF["menu"]
+			Globals.PUBLIC_CONF["tools"] = Globals.CONF["tools"]
 			Globals.PUBLIC_CONF["pages"] = Globals.CONF["pages"]
+			Globals.PUBLIC_CONF["menu"] = Globals.CONF["menu"]
 			Globals.PUBLIC_CONF["username"] = Globals.CONF["username"]
 			Globals.PUBLIC_CONF["password"] = Globals.CONF["password"]
 			Globals.PUBLIC_CONF["phoneNumber"] = Globals.CONF["phoneNumber"]

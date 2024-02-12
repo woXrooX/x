@@ -16,8 +16,6 @@ def api():
 		if "for" not in request.get_json(): return response(type="warning", message="invalidRequest")
 
 
-
-
 		if request.get_json()["for"] == "initialData":
 			return make_response(
 				{
