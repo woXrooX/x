@@ -1,11 +1,12 @@
-// x-target-attr	"string_name"
-// x-action 		innerHTML outerHTML replaceWith | if x-target-attr then sets key or value
-
+// x-action 		innerHTML outerHTML replaceWith setAttribute:[name,value]
 
 "use strict";
 
 export default class XRequest{
-	static X_POST_ELEMENTS = null;
+	/////////////////////////// Static
+
+	static XR_ELEMENTS = null;
+	static #OBJECTS = [];
 
 	/////////// APIs
 	// Collecting happens whenever Core.#observeMutations() -> observes any DOM change
@@ -13,45 +14,14 @@ export default class XRequest{
 	static collect(){
 		Log.info("XRequest.collect()");
 
-		XRequest.X_POST_ELEMENTS = document.querySelectorAll("[x-post]");
+		XRequest.#OBJECTS = [];
 
-		for(const element of XRequest.X_POST_ELEMENTS) XRequest.#applyEventListeners(element);
+		XRequest.XR_ELEMENTS = document.querySelectorAll("[x-post]");
+
+		for(const element of XRequest.XR_ELEMENTS) XRequest.#OBJECTS.push(new XRequest(element));
 	}
 
 	/////////// Helpers
-	static #applyEventListeners(element){
-		if(!element.hasAttribute("x-trigger") || element.getAttribute("x-trigger") === "click")
-			element.onclick = async ()=>{
-				element.disabled = true;
-
-				const data = XRequest.#constructData(element);
-				const response = await window.bridge(element.getAttribute("x-post"), data);
-				window.Log.success(response)
-
-				if("data" in response) XRequest.#handleXTarget(element, response["data"]);
-
-				if(element.hasAttribute("x-toast")) window.Toast.new(response["type"], response["message"]);
-
-				XRequest.#handleResponseActions(response);
-
-				element.disabled = false;
-			};
-	}
-
-	static #constructData(element){
-		let data;
-
-		try{data = JSON.parse(element.getAttribute("x-data"));}
-		catch(error){data = null;}
-
-		data = {
-			...(element.hasAttribute("x-for") ? {"for": element.getAttribute("x-for")} : {}),
-			...data
-		}
-
-		return data;
-	}
-
 	static #handleResponseActions(response){
 		if(!("actions" in response)) return;
 
@@ -63,23 +33,84 @@ export default class XRequest{
 	}
 
 
-	static #handleXTarget(element, data){
-		// If no x-target or has falsey value then action on self
-		if(element.hasAttribute("x-target") === false || !!element.getAttribute("x-target") === false)
-			return XRequest.#handleXAction(element, element.getAttribute("x-action"), data);
+	/////////////////////////// Object
 
-		const targetElement = document.querySelector(element.getAttribute("x-target"));
-		// If no such element then action on self
-		if(!!targetElement === false) return XRequest.#handleXAction(element, element.getAttribute("x-action"), data);
+	#element;
+	#for;
+	#data;
+	#trigger;
+	#action;
+	#target;
+	#response;
 
-		XRequest.#handleXAction(targetElement, element.getAttribute("x-action"), data);
+	constructor(element){
+		this.#element = element;
+		this.#trigger = this.#element.getAttribute("x-trigger") ?? "click";
+		this.#action = this.#element.getAttribute("x-action") ?? "replaceWith";
+		this.#target = document.querySelector(this.#element.getAttribute("x-target")) ?? this.#element;
+
+		this.#constructData();
+		this.#handleTrigger();
 	}
 
-	static #handleXAction(targetElement, action, data){
-		if(!!action === false) targetElement.replaceWith(data);
-		else if(action === "innerHTML") targetElement.innerHTML = data;
-		else if(action === "outerHTML") targetElement.outerHTML = data;
-		else if(action === "replaceWith") targetElement.replaceWith(data);
+	#constructData(){
+		try{this.#data = JSON.parse(this.#element.getAttribute("x-data"));}
+		catch(error){this.#data = null;}
+
+		this.#data = {
+			...(this.#element.hasAttribute("x-for") ? {"for": this.#element.getAttribute("x-for")} : {}),
+			...this.#data
+		}
+	}
+
+	/////////// Handlers
+	#handleTrigger(){
+		switch(this.#trigger){
+			case "click":
+				this.#onClick();
+				break;
+
+			default:
+				// To do
+				break;
+		}
+	}
+
+	#handleAction(){
+		if(this.#action === "innerHTML") this.#target.innerHTML = this.#response.data;
+		else if(this.#action === "outerHTML") this.#target.outerHTML = this.#response.data;
+		else if(this.#action === "replaceWith") this.#target.replaceWith(this.#response.data);
+		else if(this.#action.startsWith("setAttribute")) this.#handleSetAttribute();
+		else this.#target.replaceWith(this.#response.data);
+	}
+
+	#handleSetAttribute(){
+		let arr = this.#action
+					.slice(
+						this.#action.indexOf("[")+1,
+						this.#action.indexOf("]")
+					)
+					.split(',');
+
+
+		if(arr.length > 0) this.#target.setAttribute(arr[0], this.#response.data ?? arr[1] ?? '');
+	}
+
+	/////////// Event listeners
+	#onClick(){
+		this.#element.onclick = async ()=>{
+			this.#element.disabled = true;
+
+			this.#response = await window.bridge(this.#element.getAttribute("x-post"), this.#data);
+			window.Log.success(this.#response);
+
+			this.#handleAction();
+
+			if(this.#element.hasAttribute("x-toast")) window.Toast.new(this.#response["type"], this.#response["message"]);
+
+			XRequest.#handleResponseActions(this.#response);
+
+			this.#element.disabled = false;
+		};
 	}
 };
-
