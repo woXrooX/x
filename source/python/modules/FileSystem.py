@@ -189,7 +189,7 @@ if __name__ != "__main__":
 
 			######### Internals
 			# config.yaml
-			FileSystem.loadDefaultConfigurations()
+			FileSystem.loadInternalConfigurations()
 
 			# Internal languageDictionary.json
 			FileSystem.loadInternalLanguageDictionary()
@@ -261,7 +261,7 @@ if __name__ != "__main__":
 		#### Internals
 		# Configurations - config.yaml
 		@staticmethod
-		def loadDefaultConfigurations():
+		def loadInternalConfigurations():
 			try:
 				with open(f"{Globals.X_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
 					Globals.CONF = yaml.safe_load(file)
@@ -335,22 +335,18 @@ if __name__ != "__main__":
 			# Database
 			if "database" in Globals.PROJECT: Globals.CONF["database"] = Globals.PROJECT["database"]
 
-			# eMail
 			if "eMail" in Globals.PROJECT: Globals.CONF["eMail"].update(Globals.PROJECT["eMail"])
 
-			# Defaults
+			if "password" in Globals.PROJECT: Globals.CONF["password"].update(Globals.PROJECT["password"])
+
 			if "default" in Globals.PROJECT: Globals.CONF["default"].update(Globals.PROJECT["default"])
 
-			# Tools
 			if "tools" in Globals.PROJECT: Globals.CONF["tools"].update(Globals.PROJECT["tools"])
 
-			# Pages
 			if "pages" in Globals.PROJECT: Globals.CONF["pages"] = Globals.PROJECT["pages"]
 
-			# Menu
 			if "menu" in Globals.PROJECT: Globals.CONF["menu"] = Globals.PROJECT["menu"]
 
-			# OpenAI
 			if "OpenAI" in Globals.PROJECT: Globals.CONF["OpenAI"] = Globals.PROJECT["OpenAI"]
 
 			#### Public Configurations

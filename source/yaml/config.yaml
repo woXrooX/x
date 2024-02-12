@@ -3,7 +3,8 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.165.0.0000"
+version: "0.165.0.0001"
+
 
 ######### Flask
 flask:
@@ -26,7 +27,7 @@ URL:
 ######### eMail
 eMail:
   regEx: "^[a-zA-Z0-9][a-zA-Z0-9._-]{0,20}[a-zA-Z0-9]@[a-z][a-zA-Z0-9-_]{1,20}.[a-z]{2,3}$"
-  subject: "X"
+  subject: "x"
 
   GMail:
     enabled: false
@@ -98,6 +99,7 @@ tools:
   #   title: "Under Development"
   #   explanation: "Long text that describes the 'title'"
   #   icon: "SVG Logo To Be Shown"
+
 
 ######### Pages
 pages:
@@ -187,6 +189,7 @@ password:
   min_length: 6
   max_length: 50
   regEx: "^(?=.*[a-z])(?=.*[0-9])(?=.*[-!@#$%^&*_+])[-!@#$%^&*_+A-Za-z0-9]{6,}$"
+  hashing_algorithm: null
 
 
 ######### Phone Number
