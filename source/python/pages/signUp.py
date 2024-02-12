@@ -1,4 +1,4 @@
-import re, random
+import re, random, hashlib
 from main import session
 from python.modules.Page import Page
 
@@ -56,11 +56,14 @@ def signUp(request):
 		# Generate Randome Verification Code
 		eMailVerificationCode = random.randint(100000, 999999)
 
+		#Hashing password using SHA-256
+		hashed_password = hashlib.sha256(request.form["password"].encode()).hexdigest()
+
 		# Insert To Database
 		data = MySQL.execute(
 			sql="INSERT INTO users (password, eMail, eMail_verification_code, authenticity_status) VALUES (%s, %s, %s, %s)",
 			params=(
-				request.form["password"],
+				hashed_password,
 				request.form["eMail"],
 				eMailVerificationCode,
 				Globals.USER_AUTHENTICITY_STATUSES["unauthorized"]["id"]
@@ -75,7 +78,7 @@ def signUp(request):
 			sql="SELECT id FROM users WHERE eMail=%s AND password=%s",
 			params=(
 				request.form["eMail"],
-				request.form["password"]
+				hashed_password
 			),
 			fetchOne=True
 		)
