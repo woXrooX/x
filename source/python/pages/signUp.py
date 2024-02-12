@@ -1,7 +1,8 @@
 import re, random, hashlib
-from main import session
-from python.modules.Page import Page
 
+from main import session
+
+from python.modules.Page import Page
 from python.modules.GMail import GMail
 from python.modules.SendGrid import SendGrid
 from python.modules.response import response
@@ -56,7 +57,6 @@ def signUp(request):
 		# Generate Randome Verification Code
 		eMailVerificationCode = random.randint(100000, 999999)
 
-		#Hashing password using SHA-256
 		hashed_password = hashlib.sha256(request.form["password"].encode()).hexdigest()
 
 		# Insert To Database
@@ -75,7 +75,7 @@ def signUp(request):
 
 		# Get User Data
 		data = MySQL.execute(
-			sql="SELECT id FROM users WHERE eMail=%s AND password=%s",
+			sql="SELECT id FROM users WHERE eMail=%s AND password=%s LIMIT 1;",
 			params=(
 				request.form["eMail"],
 				hashed_password

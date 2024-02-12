@@ -1,5 +1,7 @@
 import hashlib
+
 from main import session
+
 from python.modules.Page import Page
 from python.modules.response import response
 from python.modules.Globals import Globals
@@ -22,7 +24,6 @@ def logIn(request):
 		# passwordEmpty
 		if "password" not in request.form or not request.form["password"]: return response(type="error", message="passwordEmpty", field="password")
 
-		#Hashing form password using SHA-256 to check
 		hashed_password = hashlib.sha256(request.form["password"].encode()).hexdigest()
 
 		######## Check If eMail And Password matching User Exist
