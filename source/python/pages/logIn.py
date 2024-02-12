@@ -13,6 +13,16 @@ def logIn(request):
 		if request.form["for"] != "logIn":
 			return response(type="warning", message="unknownError")
 
+			#Collecting User-Agent and IP address
+			user_agent = request.headers.get('User-Agent')
+			ip_address = request.remote_addr
+
+			MySQL.execute(
+				sql="INSERT INTO login_attempts (ip_address, user_agent) VALUES (%s, %s);",
+				params=(ip_address,user_agent),
+				commit=True
+			)
+
 		######## eMail
 		# eMailEmpty
 		if "eMail" not in request.form or not request.form["eMail"]:
