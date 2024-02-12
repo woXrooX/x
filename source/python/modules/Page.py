@@ -57,7 +57,7 @@ if __name__ != "__main__":
 			##################### POST
 			if request.method == "POST":
 				### App Is Down
-				if "appIsDown" in Globals.CONF["default"]:
+				if "appIsDown" in Globals.CONF["tools"]:
 					Log.warning("App Is Down")
 					return response(type="warning", message="appIsDown")
 
@@ -88,7 +88,7 @@ if __name__ != "__main__":
 			##################### GET
 
 			####### App Is Down
-			if "appIsDown" in Globals.CONF["default"]: return render_template("index.html", **globals())
+			if "appIsDown" in Globals.CONF["tools"]: return render_template("index.html", **globals())
 
 
 			# NOTE: Already done inside Page.build()

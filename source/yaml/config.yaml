@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.164.0.0000"
+version: "0.164.0.0001"
 
 ######### Flask
 flask:
@@ -58,12 +58,6 @@ default:
     supported:
       - "en"
 
-  # To Control App's State (Offline, Under Development etc.)
-  # appIsDown:
-  #   title: "Under Development"
-  #   explanation: "Long text that describes the 'title'"
-  #   icon: "SVG Logo To Be Shown"
-
   # For External Color Configurations
   color:
     brand:
@@ -99,6 +93,11 @@ tools:
     # Enables recording log in attempts
     enableRecording: false
 
+  # To Control App's State (Offline, Under Development etc.)
+  # appIsDown:
+  #   title: "Under Development"
+  #   explanation: "Long text that describes the 'title'"
+  #   icon: "SVG Logo To Be Shown"
 
 ######### Pages
 pages:
