@@ -231,11 +231,11 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 
 \! echo "-------------------------- login_records";
 CREATE TABLE IF NOT EXISTS `login_records` (
-    `id` INT NOT NULL UNIQUE auto_increment,
-    `ip_address` VARCHAR(45),
-		`user_agent` TEXT,
-		`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		`success` TINYINT NOT NULL DEFAULT 0
+	`id` INT NOT NULL UNIQUE auto_increment,
+	`ip_address` VARCHAR(45),
+	`user_agent` TEXT,
+	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`success` TINYINT NOT NULL DEFAULT 0
 );
 
 \! echo "============================== [NAME] ==============================";
