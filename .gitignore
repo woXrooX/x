@@ -43,4 +43,6 @@ source/python/pages/*.py
 !source/python/pages/logOut.py
 !source/python/pages/logOutInstant.py
 !source/python/pages/signUp.py
+!source/python/pages/forgotPwd.py
+!source/python/pages/resetPwd.py
 

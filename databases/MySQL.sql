@@ -238,6 +238,28 @@ CREATE TABLE IF NOT EXISTS `login_records` (
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+\! echo "-------------------------- password_recoveries";
+CREATE TABLE IF NOT EXISTS `password_recoveries` (
+    `user` INT NULL,
+
+    `token` VARCHAR(100) NOT NULL UNIQUE,
+
+    -- Details of requester
+    `ip_address_first` VARCHAR(45),
+    `user_agent_first` TEXT,
+    `timestamp_first` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    -- Details of eMail owner
+    `ip_address_last` VARCHAR(45),
+    `user_agent_last` TEXT,
+    `timestamp_last` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    `password_old` VARCHAR(100) NULL,
+    `password_new` VARCHAR(100) NULL,
+
+    FOREIGN KEY (user) REFERENCES users(id)
+);
+
 \! echo "============================== [NAME] ==============================";
 -- -----------------------------------------------------------
 -- -----------------------------------------------------------
