@@ -33,7 +33,9 @@ if __name__ != "__main__":
 					"logIn.py",
 					"logOut.py",
 					"logOutInstant.py",
-					"signUp.py"
+					"signUp.py",
+					"forgotPwd.py",
+					"resetPwd.py"
 				]
 			},
 			"modules":{

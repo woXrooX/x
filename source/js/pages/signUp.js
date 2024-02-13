@@ -29,6 +29,7 @@ export default function content() {
 				</form>
 
 				<a href="/logIn" class="text-size-0-7">${window.Lang.use('haveAccountGoToLogIn')}</a>
+				<a href="/forgotPwd" class="text-size-0-7">Can't remember password?</a>
 
 			</column>
 

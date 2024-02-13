@@ -30,6 +30,7 @@ export default function logIn(){
 				</form>
 
 				<a href="/signUp" class="text-size-0-7">${window.Lang.use("dontHaveAccountGoToSignUp")}</a>
+				<a href="/forgotPwd" class="text-size-0-7">Can't remember password?</a>
 
 			</column>
 		</container>
