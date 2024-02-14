@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.166.0.0001"
+version: "0.167.0.0000"
 
 
 ######### Flask
@@ -166,6 +166,30 @@ pages:
     endpoints:
       - "/logOutInstant"
 
+  requestPasswordRecovery:
+    enabled: false
+    authenticity_statuses:
+      - "unauthenticated"
+    methods:
+      - "GET"
+      - "POST"
+    endpoints:
+      - "/requestPasswordRecovery"
+
+  resetPassword:
+    enabled: false
+    authenticity_statuses:
+      - "unauthenticated"
+    methods:
+      - "GET"
+      - "POST"
+    endpoints:
+      - "/resetPassword"
+    urlArgs:
+      - "TOKEN"
+
+
+
 
 ######### Menu
 menu:
@@ -190,6 +214,7 @@ password:
   max_length: 50
   regEx: "^(?=.*[a-z])(?=.*[0-9])(?=.*[-!@#$%^&*_+])[-!@#$%^&*_+A-Za-z0-9]{6,}$"
   hashing_algorithm: null
+  recoveryLinkValidityDuration: 15
 
 
 ######### Phone Number

@@ -9,7 +9,7 @@ export default function content() {
 
 				<h2>Reset your password</h2>
 
-				<form action="/resetPwd/${window.Router.currentPage["urlArgs"]["TOKEN"]}" for="resetPwd" autocomplete="off">
+				<form action="/resetPassword/${window.Router.currentPage["urlArgs"]["TOKEN"]}" for="resetPassword" autocomplete="off" x-toast>
 
 					<label>
 						<p for="password">${window.Lang.use('password')}</p>
@@ -22,8 +22,8 @@ export default function content() {
 					</label>
 
 					<label>
-						<input  class="btn btn-primary" type="submit" name="Save" value="Save">
-						<p for="Save"></p>
+						<input  class="btn btn-primary" type="submit" name="resetPassword" value="Save">
+						<p for="resetPassword"></p>
 					</label>
 
 				</form>

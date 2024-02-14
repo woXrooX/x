@@ -1,4 +1,6 @@
 if __name__ != "__main__":
+	import hashlib
+
 	from python.modules.Globals import Globals
 	from python.modules.MySQL import MySQL
 
@@ -20,4 +22,10 @@ if __name__ != "__main__":
 
 			return True
 
+
+		@staticmethod
+		def passwordHash(password):
+			if Globals.CONF["password"]["hashing_algorithm"] == "SHA-256": return hashlib.sha256(password.encode()).hexdigest()
+
+			return password
 

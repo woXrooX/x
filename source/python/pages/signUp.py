@@ -1,4 +1,4 @@
-import re, random, hashlib
+import re, random
 
 from main import session
 
@@ -7,6 +7,7 @@ from python.modules.GMail import GMail
 from python.modules.SendGrid import SendGrid
 from python.modules.response import response
 from python.modules.Globals import Globals
+from python.modules.LogInTools import LogInTools
 from python.modules.User import User
 from python.modules.MySQL import MySQL
 
@@ -15,8 +16,7 @@ from python.modules.MySQL import MySQL
 def signUp(request):
 	if request.method == "POST":
 		# unknownError
-		if request.form["for"] != "signUp":
-			return response(type="warning", message="unknownError")
+		if request.form["for"] != "signUp": return response(type="warning", message="unknownError")
 
 		######## eMail
 		# eMailEmpty
@@ -51,8 +51,7 @@ def signUp(request):
 		# Generate Randome Verification Code
 		eMailVerificationCode = random.randint(100000, 999999)
 
-		if Globals.CONF["password"]["hashing_algorithm"] == "SHA-256": password = hashlib.sha256(request.form["password"].encode()).hexdigest()
-		else: password = request.form["password"]
+		password = LogInTools.passwordHash(request.form["password"])
 
 		# Insert To Database
 		data = MySQL.execute(

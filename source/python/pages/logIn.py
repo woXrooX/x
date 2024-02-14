@@ -1,10 +1,7 @@
-import hashlib
-
 from main import session
 
 from python.modules.Page import Page
 from python.modules.response import response
-from python.modules.Globals import Globals
 from python.modules.User import User
 from python.modules.MySQL import MySQL
 from python.modules.LogInTools import LogInTools
@@ -24,8 +21,7 @@ def logIn(request):
 		# passwordEmpty
 		if "password" not in request.form or not request.form["password"]: return response(type="error", message="passwordEmpty", field="password")
 
-		if Globals.CONF["password"]["hashing_algorithm"] == "SHA-256": password = hashlib.sha256(request.form["password"].encode()).hexdigest()
-		else: password = request.form["password"]
+		password = LogInTools.passwordHash(request.form["password"])
 
 		######## Check If eMail And Password matching User Exist
 		data = MySQL.execute(

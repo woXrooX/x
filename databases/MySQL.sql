@@ -252,7 +252,7 @@ CREATE TABLE IF NOT EXISTS `password_recoveries` (
 	-- Details of eMail owner
 	`ip_address_last` VARCHAR(45),
 	`user_agent_last` TEXT,
-	`timestamp_last` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`timestamp_last` TIMESTAMP NULL,
 
 	`password_old` VARCHAR(100) NULL,
 	`password_new` VARCHAR(100) NULL,

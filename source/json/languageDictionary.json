@@ -341,6 +341,11 @@
     "ru":"Неверный ответ",
     "uz":"Noto'g'ri javob"
   },
+  "invalidToken":{
+    "en":"Invalid token",
+    "ru":"Неверный токен",
+    "uz":"Token yaroqsiz"
+  },
   "invalidValue":{
     "en":"Invalid value",
     "ru":"Неверное значение",
@@ -441,6 +446,11 @@
     "ru":"Пароль",
     "uz":"Parol"
   },
+  "passwordChangedSuccessfully":{
+    "en":"Password changed successfully",
+    "ru":"Пароль успешно изменен",
+    "uz":"Parol muvaffaqiyatli almashtirildi"
+  },
   "passwordFieldCheck":{
     "en":"Check password field",
     "ru":"Проверить поле пароля",
@@ -475,6 +485,11 @@
     "en":"Password is OK",
     "ru":"Пароль в порядке",
     "uz":"Parol yaxshi"
+  },
+  "passwordsDoNotMatch":{
+    "en":"Passwords do not match",
+    "ru":"Пароли не совпадают",
+    "uz":"Parollar mos kelmaydi"
   },
   "phone":{
     "en":"Phone",
@@ -640,6 +655,11 @@
     "en":"Title",
     "ru":"Заголовок",
     "uz":"Sarlavha"
+  },
+  "tokenAreadyUsed":{
+    "en":"Token has already used",
+    "ru":"Токен уже использован",
+    "uz":"Token allaqachon ishlatilgan"
   },
   "type":{
     "en":"Type",

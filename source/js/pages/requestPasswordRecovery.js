@@ -9,7 +9,7 @@ export default function content() {
 
 				<h2>Forgot Password</h2>
 
-				<form action="forgotPwd" for="forgotPwd" autocomplete="off" x-toast>
+				<form action="/requestPasswordRecovery" for="requestPasswordRecovery" autocomplete="off" x-toast>
 
 					<label>
 						<p for="eMail">${window.Lang.use('eMail')}</p>
@@ -17,8 +17,8 @@ export default function content() {
 					</label>
 
 					<label>
-						<input  class="btn btn-primary" type="submit" name="forgotPwd" value="Check">
-						<p for="forgotPwd"></p>
+						<input  class="btn btn-primary" type="submit" name="requestPasswordRecovery" value="Check">
+						<p for="requestPasswordRecovery"></p>
 					</label>
 
 				</form>
