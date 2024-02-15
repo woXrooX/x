@@ -141,12 +141,12 @@ CREATE TABLE IF NOT EXISTS `users` (
 	`password_salt` VARCHAR(100),
 
 	`eMail` VARCHAR(100) NOT NULL UNIQUE,
-	`eMail_verified` TINYINT NOT NULL DEFAULT 0,
+	`eMail_verified` BIT(1) NOT NULL DEFAULT 0,
 	`eMail_verification_code` INT NULL,
 	`eMail_verification_attempts_count` INT NOT NULL DEFAULT 0,
 
 	`phone_number` VARCHAR(15) NULL UNIQUE,
-	`phone_number_verified` TINYINT NOT NULL DEFAULT 0,
+	`phone_number_verified` BIT(1) NOT NULL DEFAULT 0,
 	`phone_number_verification_code` INT NULL,
 	`phone_number_verification_attempt` INT NOT NULL DEFAULT 0,
 
@@ -233,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 CREATE TABLE IF NOT EXISTS `login_records` (
 	`ip_address` VARCHAR(45),
 	`user_agent` TEXT,
-	`success` TINYINT NOT NULL DEFAULT 0,
+	`success` BIT(1) NOT NULL DEFAULT 0,
 
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
