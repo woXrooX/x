@@ -160,6 +160,7 @@ body{
 
 		background-color: hsla(var(--color-main-hue), 10%, 25%, 0.1);
 		backdrop-filter: blur(100px);
+		-webkit-backdrop-filter: blur(100px);
 		height: 100dvh;
 		width: auto;
 
@@ -292,6 +293,7 @@ body{
 
 		background: var(--color-cover);
 		backdrop-filter: blur(var(--blur));
+		-webkit-backdrop-filter: blur(var(--blur));
 		opacity: 0;
 		width: 100vw;
 		height: 100vh;
