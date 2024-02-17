@@ -145,6 +145,7 @@ export default class Router{
 			// Root
 			if(window.session["user"]["roles"].includes("root")) return true;
 
+
 			///// Authenticity Statuses
 			let authenticity_check = false;
 			if("authenticity_statuses" in window.CONF["pages"][page]){
@@ -154,6 +155,7 @@ export default class Router{
 						window.CONF["pages"][page]["authenticity_statuses"].includes(authenticity_status)
 					) authenticity_check = true;
 			}else authenticity_check = true;
+
 
 			///// Roles
 			let role_check = false;
@@ -166,13 +168,27 @@ export default class Router{
 					}
 			}else role_check = true;
 
+
+			///// Roles not (Not allowed roles)
+			let role_not_check = true;
+			if("roles_not" in window.CONF["pages"][page])
+				// Check if one of the user assigned roles match with the CONF[page]["roles_not"]
+				for(let i = 0; i < window.session["user"]["roles"].length; i++)
+					if(window.CONF["pages"][page]["roles_not"].includes(window.session["user"]["roles"][i])){
+						role_not_check = false;
+						break;
+					}
+
+
 			///// Plans - similar to role check
 			let plan_check = true; // Should be false in actual implementation
+
 
 			///// Final Check: IF All Checks Passed
 			if(
 				authenticity_check === true &&
 				role_check === true &&
+				role_not_check === true &&
 				plan_check === true
 			) return true;
 		}

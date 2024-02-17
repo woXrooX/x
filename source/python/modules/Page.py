@@ -129,11 +129,16 @@ if __name__ != "__main__":
 				#### Roles
 				role_check = False
 				if "roles" in Globals.CONF["pages"][page]:
-
-					# Check if one of the user assigned rules match with the CONF[page]["roles"]
-					if any(role in Globals.CONF["pages"][page]["roles"] for role in session["user"]["roles"]): role_check = True
-
+					# Check if one of the user assigned roles match with the CONF[page]["roles"]
+					if set(Globals.CONF["pages"][page]["roles"]).intersection(set(session["user"]["roles"])): role_check = True
 				else: role_check = True
+
+
+				#### Roles not (Not allowed roles)
+				role_not_check = True
+				if "roles_not" in Globals.CONF["pages"][page]:
+					# Check if one of the user assigned roles match with the CONF[page]["roles_not"]
+					if set(Globals.CONF["pages"][page]["roles_not"]).intersection(set(session["user"]["roles"])): role_not_check = False
 
 
 				#### Plans - similar to role check
@@ -144,6 +149,7 @@ if __name__ != "__main__":
 				if(
 					authenticity_check is True and
 					role_check is True and
+					role_not_check is True and
 					plan_check is True
 				): return True
 
