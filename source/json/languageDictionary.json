@@ -131,6 +131,11 @@
     "ru":"Ошибка базы данных",
     "uz":"Ma'lumotlar bazasida xatolik"
   },
+  "deleted":{
+    "en":"Deleted",
+    "ru":"Удалено",
+    "uz":"Oʻchirildi"
+  },
   "deletedSuccessfully":{
     "en":"Successfully deleted",
     "ru":"Успешно удалено",
