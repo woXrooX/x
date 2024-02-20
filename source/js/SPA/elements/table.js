@@ -24,6 +24,10 @@ export default class Table extends HTMLElement{
 		this.pageSize = 10;
 		this.currentPage = 1;
 
+		// Encoded columns info holder
+		this.encodedColumns = [];
+
+
 		// Init table
 		this.#build();
 
@@ -110,6 +114,12 @@ export default class Table extends HTMLElement{
 
 			// Just title
 			else HTML += `<th>${this.JSON["head"][index]["title"]}</th>`;
+
+			// Check if this column is encoded
+			if("encoded" in this.JSON["head"][index] && this.JSON["head"][index]["encoded"] === true) this.encodedColumns.push(true);
+			else this.encodedColumns.push(false);
+
+
 		}
 
 		this.querySelector("table > thead > tr").innerHTML = HTML;
@@ -127,7 +137,11 @@ export default class Table extends HTMLElement{
 
 		for(const row of this.bodyValuesInChunks[this.currentPage-1]){
 			HTML += "<tr>";
-			for(const cell of row) HTML += `<td>${cell}</td>`;
+
+			for(let index = 0; index < row.length; index++)
+				if(this.encodedColumns[index] === true) HTML += `<td>${decodeURIComponent(row[index])}</td>`;
+				else HTML += `<td>${row[index]}</td>`;
+
 			HTML += "</tr>";
 		}
 
