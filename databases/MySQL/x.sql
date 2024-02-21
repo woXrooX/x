@@ -21,7 +21,7 @@ INSERT INTO genders (name)
 		("female")
 ;
 
-\! echo "-------------------------- user_authenticity_status";
+\! echo "-------------------------- user_authenticity_statuses";
 CREATE TABLE IF NOT EXISTS `user_authenticity_statuses` (
 	`id` INT NOT NULL UNIQUE auto_increment,
 	`name` VARCHAR(20) NOT NULL UNIQUE,
@@ -178,16 +178,13 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 \! echo "-------------------------- users_roles";
 CREATE TABLE IF NOT EXISTS `users_roles` (
-	`id` INT NOT NULL UNIQUE auto_increment,
 	`user` INT NOT NULL,
 	`role` INT NOT NULL,
 
 	FOREIGN KEY (`user`) REFERENCES users(`id`) ON DELETE CASCADE,
 	FOREIGN KEY (`role`) REFERENCES user_roles(`id`) ON DELETE CASCADE,
 
-	CONSTRAINT `unique_users_roles` UNIQUE (`user`, `role`),
-
-	PRIMARY KEY (`id`)
+	CONSTRAINT `unique_users_roles` UNIQUE (`user`, `role`)
 );
 
 \! echo "-------------------------- notification_types";
