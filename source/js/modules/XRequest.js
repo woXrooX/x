@@ -46,8 +46,8 @@ export default class XRequest{
 	constructor(element){
 		this.#element = element;
 		this.#trigger = this.#element.getAttribute("x-trigger") ?? "click";
-		this.#action = this.#element.getAttribute("x-action") ?? "replaceWith";
-		this.#target = document.querySelector(this.#element.getAttribute("x-target")) ?? this.#element;
+		this.#action = this.#element.getAttribute("x-action") ?? null;
+		this.#target = document.querySelector(this.#element.getAttribute("x-target"));
 
 		this.#constructData();
 		this.#handleTrigger();
@@ -77,11 +77,13 @@ export default class XRequest{
 	}
 
 	#handleAction(){
+		if(!!this.#action === false) return;
+		if(!!this.#target === false) return;
+
 		if(this.#action === "innerHTML") this.#target.innerHTML = this.#response.data;
 		else if(this.#action === "outerHTML") this.#target.outerHTML = this.#response.data;
 		else if(this.#action === "replaceWith") this.#target.replaceWith(this.#response.data);
 		else if(this.#action.startsWith("setAttribute")) this.#handleSetAttribute();
-		else this.#target.replaceWith(this.#response.data);
 	}
 
 	#handleSetAttribute(){
