@@ -1,4 +1,4 @@
-// x-action 		innerHTML outerHTML replaceWith setAttribute:[name,value]
+// 0.1.0001
 
 "use strict";
 
@@ -41,7 +41,7 @@ export default class XRequest{
 	#trigger;
 	#commands;
 	#action = null;
-	#source = null;
+	#source = "";
 	#target;
 	#response;
 
@@ -113,7 +113,7 @@ export default class XRequest{
 		for(const instruction of this.#instructions){
 			if(instruction["types"].includes("any") || instruction["types"].includes(this.#response["type"])){
 				if(instruction["source"] === "data") this.#source = this.#response["data"] ?? null;
-				else if(instruction["source"] === "message") this.#source = this.#response["message"] ?? null;
+				else if(instruction["source"] === "message") this.#source = window.Lang.use(this.#response["message"]);
 
 				this.#action = instruction["action"];
 
