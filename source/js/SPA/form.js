@@ -204,12 +204,6 @@ export default class Form{
 		// form Value Is Falsy
 		if(!!form === false) return false;
 
-		// Check If "form" has "action" Attribute
-		if(form.hasAttribute("action") === false) return false;
-
-		// Check If "form" Attribute "action" has Falsy Value
-		if(!!form.action === false) return false;
-
 		// Check If "form" has "for" Attribute
 		if(form.hasAttribute("for") === false) return false;
 
