@@ -109,7 +109,7 @@ if __name__ != "__main__":
 						"query": MySQL.cursor.statement,
 
 						# This read-only property returns the number of rows returned for SELECT statements,
-						# or the number of rows affected by DML statements such as INSERT or UPDATE.
+						# or the number of rows affected by DML statements such as INSERT or UPDATE or DELETE.
 						"rowCount": MySQL.cursor.rowcount,
 
 						# This read-only property returns the value generated for an AUTO_INCREMENT column by
