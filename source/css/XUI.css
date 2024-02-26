@@ -796,12 +796,13 @@
 	@layer table{
 		table{
 			&.table{
-				width: 100%;
-				table-layout: auto;
-				font-size: 0.7rem;
-
 				--tbl-padding: calc(var(--padding) * 2);
 				--tbl-border-color: hsla(var(--color-main-hue), 5%, 50%, 1);
+				--tbl-font-size: 0.7rem;
+
+				width: 100%;
+				table-layout: auto;
+				font-size: var(--tbl-font-size);
 
 				border-collapse: collapse;
 				border-block: solid 1px var(--tbl-border-color);
@@ -819,6 +820,19 @@
 					& > tr{
 						border-block-end: solid 1px var(--tbl-border-color);
 					}
+				}
+
+				& > tfoot{
+					background-color: var(--color-main-tint-2);
+				}
+
+				& > caption{
+					font-size: calc(var(--tbl-font-size) * 2.5);
+					padding: var(--tbl-padding);
+				}
+
+				& th, td{
+					padding: var(--tbl-padding);
 				}
 
 				&.table-zebra{
@@ -845,16 +859,8 @@
 					}
 				}
 
-				& > tfoot{
-					background-color: var(--color-main-tint-2);
-				}
-
 				&.table-bordered{
 					border: solid 1px var(--tbl-border-color);
-				}
-
-				& th, td{
-					padding: var(--tbl-padding);
 				}
 			}
 		}
