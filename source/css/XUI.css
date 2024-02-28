@@ -1,4 +1,4 @@
-/* v0.3.0.0 */
+/* v0.4.0.0 */
 
 @layer XUI{
 	@layer root{
@@ -795,6 +795,10 @@
 
 	@layer table{
 		table{
+			&.table-layout-fixed{
+				table-layout: fixed;
+			}
+
 			&.table{
 				--tbl-padding: calc(var(--padding) * 2);
 				--tbl-border-color: hsla(var(--color-main-hue), 5%, 50%, 1);
