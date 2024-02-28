@@ -796,7 +796,7 @@
 	@layer table{
 		table{
 			&.table-layout-fixed{
-				table-layout: fixed;
+				table-layout: fixed !important;
 			}
 
 			&.table{
