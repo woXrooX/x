@@ -1,4 +1,4 @@
-/* v0.2.0.0 */
+/* v0.3.0.0 */
 
 @layer XUI{
 	@layer root{
@@ -1785,6 +1785,18 @@
 			user-select: none;
 		}
 		/**************************** Disable selecting END ****************************/
+
+		/**************************** Overflow START ****************************/
+		.overflow-hidden{
+			overflow: hidden;
+		}
+		.overflow-x-hidden{
+			overflow-x: hidden;
+		}
+		.overflow-y-hidden{
+			overflow-y: hidden;
+		}
+		/**************************** Overflow selecting END ****************************/
 
 		/**************************** HR START ****************************/
 		hr{
