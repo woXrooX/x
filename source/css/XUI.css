@@ -827,7 +827,6 @@
 
 				& > thead{
 					background-color: var(--color-main-tint-2);
-					text-align: left;
 
 					& > tr{
 						border-block-end: solid 2px var(--tbl-border-color);
@@ -1051,6 +1050,55 @@
 						& > tr{
 							&:hover{
 								background-color: var(--color-main-tint-4);
+							}
+						}
+					}
+				}
+			}
+
+			&.table-v5{
+				border-collapse: collapse;
+
+				& > thead{
+					& > tr{
+						& > th{
+							background-color: var(--color-main-tint-4);
+							color: var(--color-text-primary);
+						}
+					}
+				}
+
+				& > tbody{
+					& > tr{
+					}
+				}
+
+				& > tfoot{
+					& > tr{
+						& > td{
+							background-color: var(--color-main-tint-4);
+							color: var(--color-text-secondary);
+						}
+					}
+				}
+
+				& th, td{
+					&:first-child{
+						border-top-left-radius: var(--tbl-radius);
+						border-bottom-left-radius: var(--tbl-radius);
+					}
+
+					&:last-child{
+						border-top-right-radius: var(--tbl-radius);
+						border-bottom-right-radius: var(--tbl-radius);
+					}
+				}
+
+				&.table-hover{
+					& > tbody{
+						& > tr{
+							&:hover{
+								background-color: hsla(var(--color-main-hue), 5%, 50%, 0.1);
 							}
 						}
 					}
