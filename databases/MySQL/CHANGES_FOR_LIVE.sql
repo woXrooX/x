@@ -1,0 +1,4 @@
+\! clear
+\W
+
+USE [NAME];
