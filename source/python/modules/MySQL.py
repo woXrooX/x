@@ -35,7 +35,6 @@ if __name__ != "__main__":
 			MySQL.charset = charset
 			MySQL.collate = collate
 
-		# Execute
 		@staticmethod
 		def execute(
 			sql,
@@ -133,7 +132,6 @@ if __name__ != "__main__":
 			return result
 
 		######### Helpers
-		# Connect
 		@staticmethod
 		def connect(
 			prepared = True,
@@ -170,7 +168,6 @@ if __name__ != "__main__":
 				Log.fieldset(f"ERROR: {e}", "MySQL.connect()")
 				return False
 
-		# Disconnect
 		@staticmethod
 		def disconnect():
 			MySQL.connection.close()
