@@ -20,40 +20,24 @@ export default class Modal extends HTMLElement{
 	constructor(){
 		super();
 
-		// Save the DOM
 		this.DOM = this.innerHTML;
 
-		this.innerHTML = `<trigger class="cursor-pointer"></trigger>`;
+		this.style.cursor = "pointer";
 
-		this.trigger = this.querySelector("trigger");
+		this.#buildTriggerContent();
 
-		Trigger: {
-			const type = this.getAttribute("type");
-			const value = this.getAttribute("value");
-			const isButton = this.hasAttribute("button");
+		this.onclick = ()=> Modal.#show(this.DOM);
+	}
 
-			// Create Click Event
-			if(type && value){
-				let content;
-				switch(type){
-					case 'icon':
-						const color = this.hasAttribute("icon-color") ? `color="${this.getAttribute("icon-color")}"` : "";
-						content = `<x-svg ${color} name="${value}"></x-svg>`;
-						break;
-					case 'text':
-						content = value;
-						break;
-					default:
-						Log.error(`Invalid type: ${type}`);
-						return;
-				}
+	#buildTriggerContent(){
+		const value = this.getAttribute("value");
 
-				this.trigger.innerHTML = isButton ? `<button class="btn btn-primary">${content}</button>` : content;
-			}
+		let content;
 
-			// Show On Click trigger
-			this.trigger.onclick = ()=>{Modal.#show(this.DOM);};
-		}
+		if(this.getAttribute("type") == "icon") content = `<x-svg color="${this.getAttribute("icon-color")}" name="${value}"></x-svg>`;
+		else content = value;
+
+		this.innerHTML = content;
 	}
 
 	static #show(DOM){
