@@ -119,6 +119,9 @@ if __name__ != "__main__":
 				else: result = data
 
 			except Exception as e:
+				# In case of errors, rollback the transaction
+				if commit is True: MySQL.connection.rollback()
+
 				Log.fieldset(f"ERROR: {e}", "MySQL.execute()")
 				return False
 
