@@ -65,6 +65,8 @@ if __name__ != "__main__":
 			# Variable for the results of multi execution
 			multi_execute_result = None
 
+			query = ""
+
 			# MySQL response data
 			data = None
 
@@ -88,10 +90,17 @@ if __name__ != "__main__":
 				# Default execution
 				else: MySQL.cursor.execute(sql, params)
 
+				query = MySQL.cursor.statement
+
 				# Multi
 				if multi is True:
 					data = []
-					for cur in multi_execute_result: data.extend(cur.fetchall())
+					multi_statements = ""
+					for cur in multi_execute_result:
+						data.extend(cur.fetchall())
+						multi_statements = multi_statements + '\n' + MySQL.cursor.statement
+
+					query = multi_statements
 
 				# "fetchone" enabled
 				# NOTE: In case multi=True and fetchOne=True will execute the code above.
@@ -105,7 +114,7 @@ if __name__ != "__main__":
 				if includeMySQLData is True:
 					result = {
 						"data": data,
-						"query": MySQL.cursor.statement,
+						"query": query,
 
 						# This read-only property returns the number of rows returned for SELECT statements,
 						# or the number of rows affected by DML statements such as INSERT or UPDATE or DELETE.
