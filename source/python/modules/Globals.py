@@ -70,6 +70,9 @@ if __name__ != "__main__":
 		#### Mix
 		PUBLIC_CONF = {}
 
+		#### Global data holder
+		DATA = {}
+
 		@staticmethod
 		def getUserAuthenticityStatuses():
 			data = MySQL.execute("SELECT * FROM user_authenticity_statuses")
