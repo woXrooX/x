@@ -77,9 +77,11 @@ from python.modules.routeGuard import routeGuard, routeLogs
 
 
 #################################################### Decorations
-# @app.before_first_request
-# def app_init():
-	# return None
+# def before_first_request():
+# 	return None
+
+# with app.app_context():
+# 	before_first_request()
 
 @app.before_request
 def before_request():
