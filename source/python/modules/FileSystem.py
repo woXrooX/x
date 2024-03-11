@@ -181,6 +181,10 @@ if __name__ != "__main__":
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/footer.js", 'export default function footer(){\n\treturn "Footer";\n}', strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py", 'from python.modules.Page import Page\n\n@Page.build()\ndef home(): pass', strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/front/home.js", 'export const TITLE = window.Lang.use("home");\n\nexport default function content(){\n\treturn "Home";\n}', strict=True)
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/Python/beforeFirstRequest.py", 'if __name__ != "__main__":\n\tdef beforeFirstRequest(): pass')
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/Python/onSignUp.py", 'if __name__ != "__main__":\n\tdef onSignUp(): pass')
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/Python/onLogIn.py", 'if __name__ != "__main__":\n\tdef onLogIn(): pass')
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/Python/onLogOut.py", 'if __name__ != "__main__":\n\tdef onLogOut(): pass')
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", '{"x": {"en": "x"}}', strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/project.json", "{}", strict=True)
 

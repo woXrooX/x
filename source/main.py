@@ -77,11 +77,14 @@ from python.modules.routeGuard import routeGuard, routeLogs
 
 
 #################################################### Decorations
-# def before_first_request():
-# 	return None
+def before_first_request():
+	try:
+		from python.modules.beforeFirstRequest import beforeFirstRequest
+		beforeFirstRequest()
 
-# with app.app_context():
-# 	before_first_request()
+	except ModuleNotFoundError: pass
+
+with app.app_context(): before_first_request()
 
 @app.before_request
 def before_request():

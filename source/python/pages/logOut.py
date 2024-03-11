@@ -12,6 +12,12 @@ def logOut(request):
 		# Remove User From Session
 		session.pop('user')
 
+		try:
+			from python.modules.onLogOut import onLogOut
+			onLogOut()
+
+		except ModuleNotFoundError: pass
+
 		# Redirect To Home
 		return response(
 			type="success",

@@ -101,6 +101,12 @@ def signUp(request):
 		# SendGrid
 		if SendGrid.send("noreply", request.form["eMail"], eMailVerificationCode, "Sign Up") is True: emailVerificationSentSuccessfully = True
 
+		try:
+			from python.modules.onSignUp import onSignUp
+			onSignUp()
+
+		except ModuleNotFoundError: pass
+
 		# Success
 		return response(
 			type="success" if emailVerificationSentSuccessfully is True else "info",

@@ -47,6 +47,12 @@ def logIn(request):
 
 		LogInTools.newRecord(request.remote_addr, request.headers.get('User-Agent'), True)
 
+		try:
+			from python.modules.onLogIn import onLogIn
+			onLogIn()
+
+		except ModuleNotFoundError: pass
+
 		return response(
 			type="success",
 			message="success",
