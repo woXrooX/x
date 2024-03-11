@@ -67,12 +67,6 @@ CREATE TABLE IF NOT EXISTS `user_plans` (
 	`name` VARCHAR(10) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 );
-INSERT INTO user_plans (name)
-	VALUES
-		("free"),
-		("pro"),
-		("business")
-;
 
 \! echo "-------------------------- currencies";
 -- https://en.wikipedia.org/wiki/List_of_circulating_currencies

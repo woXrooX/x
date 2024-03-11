@@ -180,8 +180,10 @@ export default class Router{
 					}
 
 
-			///// Plans - similar to role check
-			let plan_check = true; // Should be false in actual implementation
+			///// Plans
+			let plan_check = true;
+			if("plans" in window.CONF["pages"][page])
+				if(!window.CONF["pages"][page]["plans"].includes(window.session["user"]["plan"])) role_check = false;
 
 
 			///// Final Check: IF All Checks Passed

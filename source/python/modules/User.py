@@ -19,7 +19,7 @@ if __name__ != "__main__":
 
 		@staticmethod
 		@checkIfUserInSession
-		def getAssignedRoles():
+		def getRoles():
 			data = MySQL.execute(
 					sql="""
 						SELECT user_roles.name
@@ -30,12 +30,31 @@ if __name__ != "__main__":
 					params=(session["user"]["id"],)
 				)
 
+			if data is False: return False
+
 			session["user"]["roles"] = []
 
 			# Extracting IDs From Response
 			for role in data: session["user"]["roles"].append(role["name"])
 
 			return True
+
+		@staticmethod
+		@checkIfUserInSession
+		def getPlan():
+			data = MySQL.execute(
+				"SELECT user_plans.name FROM user_plans WHERE id = %s LIMIT 1;",
+				(session["user"]["plan"],),
+				fetchOne=True
+			)
+
+			if data is False: return False
+
+			if data is None: session["user"]["plan"] = None
+			else: session["user"]["plan"] = data["name"]
+
+			return True
+
 
 		# Sanitized Session Data For Front
 		@staticmethod
@@ -49,6 +68,7 @@ if __name__ != "__main__":
 				"app_color_mode": session["user"]["app_color_mode"],
 				"authenticity_status": session["user"]["authenticity_status"],
 				"roles": session["user"]["roles"],
+				"plan": session["user"]["plan"],
 			}
 
 		@staticmethod
@@ -66,8 +86,9 @@ if __name__ != "__main__":
 
 			session["user"] = data
 
-			# Handle The Error
-			if not User.getAssignedRoles(): pass
+			if not User.getRoles(): pass
+
+			if not User.getPlan(): pass
 
 			# Success
 			return True

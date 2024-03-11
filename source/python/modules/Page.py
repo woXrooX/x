@@ -97,7 +97,7 @@ if __name__ != "__main__":
 
 
 			# Is Page Enabled
-			if Globals.CONF["pages"][page]["enabled"] == False: return redirect(url_for("home"))
+			if Globals.CONF["pages"][page]["enabled"] == False: return redirect("/404")
 
 
 			# Everyone
@@ -141,8 +141,10 @@ if __name__ != "__main__":
 					if set(Globals.CONF["pages"][page]["roles_not"]).intersection(set(session["user"]["roles"])): role_not_check = False
 
 
-				#### Plans - similar to role check
-				plan_check = True # Should be false in actual implementation
+				#### Plans
+				plan_check = True
+				if "plans" in Globals.CONF["pages"][page]:
+					if session["user"]["plan"] not in Globals.CONF["pages"][page]["plans"]: role_check = False
 
 
 				#### Final check: IF all checks passed
