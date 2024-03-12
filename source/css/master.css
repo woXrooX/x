@@ -30,40 +30,6 @@ body{
 	font-family: Quicksand;
 	padding-top: var(--header-height);
 
-	& > loading{
-		background-color: var(--color-main-tint-1);
-
-		width: 100vw;
-		height: 100vh;
-
-		position: fixed;
-		left: 0px;
-		top: 0px;
-		z-index: var(--z-loading);
-
-		transition: var(--transition-velocity) opacity ease-in-out;
-
-		&::after{
-		content: '';
-		background-color: transparent;
-		height: 20vh;
-		width: 20vh;
-		border-radius: 100%;
-		border: 0px solid transparent;
-		border-right: 2px solid var(--color-text-primary);
-
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
-		transform-origin: center;
-
-		animation: loading 1000ms infinite linear;
-
-		}
-
-	}
-
 	& > toasts{
 		height: auto;
 		max-height: 100vh;
@@ -377,11 +343,6 @@ body{
 			display: none;
 		}
 	}
-}
-
-@keyframes loading{
-	0%{transform: translate(-50%, -50%) rotate(0deg);}
-	100%{transform: translate(-50%, -50%) rotate(720deg);}
 }
 
 @media (width <= 600px){

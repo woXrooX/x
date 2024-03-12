@@ -27,46 +27,69 @@
 				}
 
 				& > loading{
-					background-color: black;
+					pointer-events: all;
 
-					width: 100vw;
-					height: 100vh;
+					opacity: 1;
+					background-color: var(--color-main-tint-1);
+
+					width: 100dvw;
+					height: 100dvh;
 
 					position: fixed;
-					top: 0px;
-					left: 0px;
-					z-index: 100;
+					inset: 0;
+					z-index: var(--z-loading);
 
-					&::after{
-						content: '';
-						background-color: transparent;
-						height: 20vh;
-						width: 20vh;
-						border-radius: 100%;
-						border: 0px solid transparent;
-						border-right: 0px solid red;
+					transition: 250ms opacity ease-in-out;
 
-						position: absolute;
-						left: 50%;
-						top: 50%;
-						transform: translate(-50%, -50%);
-						transform-origin: center;
+					display: grid;
+					place-content: center;
 
-						animation: loading 1000ms infinite linear;
+					&.loaded{
+						pointer-events: none;
+						opacity: 0;
+
+						& > svg{
+							& > text{
+								animation: none;
+							}
+						}
+					}
+
+					& > svg{
+						width: 90dvw;
+						height: 90dvh;
+
+						& > text{
+							font-size: 3rem;
+							stroke: var(--color-text-primary);
+							stroke-width: 1px;
+							letter-spacing: 0.2rem;
+
+							animation: 2500ms infinite alternate loading;
+						}
 					}
 				}
 			}
+
 			@keyframes loading{
 				0%{
-					transform: translate(-50%, -50%) rotate(0deg);
-					border-right: 0px solid red;
+					fill: transparent;
+					stroke: var(--color-text-primary);
+					stroke-width: 1px;
+					stroke-dashoffset: 25%;
+					stroke-dasharray: 0 27%;
 				}
 				50%{
-					border-right: 25px solid red;
+					fill: transparent;
+					stroke: var(--color-text-primary);
+					stroke-width: 1px;
 				}
 				100%{
-					transform: translate(-50%, -50%) rotate(720deg);
-					border-right: 0px solid red;
+					fill: var(--color-text-primary);
+					stroke: transparent;
+					stroke-width: 0px;
+					stroke-dashoffset: -25%;
+					stroke-dasharray: 27% 0;
 				}
 			}
 		</style>
@@ -116,7 +139,7 @@
 
 		<toasts></toasts>
 
-		<loading></loading>
+		<loading><svg><text x="50%" y="50%" dy="0.5rem" text-anchor="middle">{{Globals.CONF["default"]["title"]}}</text></svg></loading>
 
 	</body>
 
