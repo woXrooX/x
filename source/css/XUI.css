@@ -1154,7 +1154,7 @@
 
 	@layer surfaces{
 		/* Clean */
-		.surface-clean{
+		.surface-v1{
 			background-color: var(--color-main-tint-3);
 
 			border-radius: var(--radius);

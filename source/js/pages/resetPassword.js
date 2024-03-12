@@ -5,7 +5,7 @@ export const TITLE = 'Reset password';
 export default function content() {
 	return `
 		<container class="p-5">
-			<column class="w-50 surface-clean p-5 gap-1">
+			<column class="w-50 surface-v1 p-5 gap-1">
 
 				<h2>Reset your password</h2>
 
