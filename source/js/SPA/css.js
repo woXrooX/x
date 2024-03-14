@@ -97,7 +97,7 @@ export default class CSS{
 
 		// Get saved color mode to the local storage
 		// NOTE: Prevents emulation of the color scheme via devtools
-		else if(localStorage.getItem("x.app_color_mode")) CSS.currentColorMode = parseInt(localStorage.getItem("x.app_color_mode"));
+		else if(localStorage.getItem("x.color_mode")) CSS.currentColorMode = parseInt(localStorage.getItem("x.color_mode"));
 
 		// Get System Color Mode
 		else if(window.matchMedia){
@@ -160,10 +160,10 @@ export default class CSS{
 			// Update the session
 			if("type" in req && req["type"] === "success"){
 				window.session["user"]["app_color_mode"] = CSS.currentColorMode;
-				localStorage.setItem('x.app_color_mode', CSS.currentColorMode);
+				localStorage.setItem('x.color_mode', CSS.currentColorMode);
 				Log.success(`CSS.#saveColorMode(): session.user.app_color_mode = ${CSS.currentColorMode}`);
 			}
-		}else localStorage.setItem('x.app_color_mode', CSS.currentColorMode);
+		}else localStorage.setItem('x.color_mode', CSS.currentColorMode);
 	}
 
 	//////////// Modes

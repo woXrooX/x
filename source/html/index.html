@@ -114,14 +114,14 @@
 
 		<header></header>
 
-		{% if Globals.CONF["menu"]["enabled"] == True  %}
-			<x-svg class="text-size-1-2" for="menu" color="#ffffff" name="menu"></x-svg>
+		{% if Globals.CONF["menu"]["enabled"] == True %}
+			<x-svg class="text-size-1-2" for="showMenu" color="#ffffff" name="menu"></x-svg>
 
 			<menu>
 				<header>
 					<x-svg for="colorModeSwitcher" color="#ffffff"></x-svg>
 					<x-svg for="toggleAlwaysOpenMode" color="#ffffff" name="lockOpen" toggle="lockLocked"></x-svg>
-					<x-svg for="closeMenuInMobile" color="#ffffff" name="x"></x-svg>
+					<x-svg for="menuCloseButtonMobile" color="#ffffff" name="x"></x-svg>
 				</header>
 
 				<main></main>

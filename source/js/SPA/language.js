@@ -55,7 +55,7 @@ export default class Language extends HTMLElement{
     if("user" in window.session)
       await window.bridge("API", {for:"changeUserAppLanguage", code: code}, "application/json");
 
-    else localStorage.setItem('x.app_language', code);
+    else localStorage.setItem('x.language', code);
 
     // Update current language code
     Language.#CURRENT = code;
@@ -68,8 +68,8 @@ export default class Language extends HTMLElement{
     if("user" in window.session)
       Language.#CURRENT = window.session["user"].app_language;
 
-    else if(localStorage.getItem("x.app_language"))
-      Language.#CURRENT = localStorage.getItem("x.app_language");
+    else if(localStorage.getItem("x.language"))
+      Language.#CURRENT = localStorage.getItem("x.language");
 
     else Language.#CURRENT = Language.#FALLBACK;
   }
