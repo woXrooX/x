@@ -1,4 +1,4 @@
-/* v0.6.0.1 */
+/* v0.7.0.0 */
 
 @layer XUI{
 	@layer root{
@@ -1922,6 +1922,54 @@
 	}
 
 	@layer border{
+		.border-success{border:1px solid var(--color-success);}
+		.border-info{border:1px solid var(--color-info);}
+		.border-warning{border:1px solid var(--color-warning);}
+		.border-error{border:1px solid var(--color-error);}
+
+
+		@layer color{
+			.border-color-main{border-color: var(--color-main);}
+
+			.border-color-1{border-color: var(--color-main-tint-1);}
+			.border-color-2{border-color: var(--color-main-tint-2);}
+			.border-color-3{border-color: var(--color-main-tint-3);}
+			.border-color-4{border-color: var(--color-main-tint-4);}
+			.border-color-5{border-color: var(--color-main-tint-5);}
+			.border-color-6{border-color: var(--color-main-tint-6);}
+			.border-color-7{border-color: var(--color-main-tint-7);}
+			.border-color-8{border-color: var(--color-main-tint-8);}
+			.border-color-9{border-color: var(--color-main-tint-9);}
+			.border-color-10{border-color: var(--color-main-tint-10);}
+
+			.border-color-success{border-color: var(--color-success);}
+			.border-color-info{border-color: var(--color-info);}
+			.border-color-warning{border-color: var(--color-warning);}
+			.border-color-error{border-color: var(--color-error);}
+
+			.border-color-black{border-color: var(--color-black);}
+			.border-color-white{border-color: var(--color-white);}
+		}
+
+		@layer style{
+			.border-style-solid{border-style: solid !important;}
+			.border-style-dashed{border-style: dashed !important;}
+			.border-style-dotted{border-style: dotted !important;}
+			.border-style-double{border-style: double !important;}
+			.border-style-groove{border-style: groove !important;}
+			.border-style-ridge{border-style: ridge !important;}
+			.border-style-outset{border-style: outset !important;}
+			.border-style-inset{border-style: inset !important;}
+		}
+
+		@layer width{
+			.border-width-1px{border-width: 1px !important;}
+			.border-width-2px{border-width: 2px !important;}
+			.border-width-3px{border-width: 3px !important;}
+			.border-width-4px{border-width: 4px !important;}
+			.border-width-5px{border-width: 5px !important;}
+		}
+
 		@layer radius{
 			.radius-unset{border-radius: unset;}
 
@@ -2036,6 +2084,15 @@
 
 	/* Everything with no specific layer or could not name or too small to have own section/layer goes under other */
 	@layer other{
+		@layer details{
+			details{
+				& > summary{
+					cursor: pointer;
+					user-select: none;
+				}
+			}
+		}
+
 		/**************************** Info, Success, Warning, Error START ****************************/
 		success{
 			color: var(--color-success);
