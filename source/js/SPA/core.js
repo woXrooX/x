@@ -43,15 +43,15 @@ export default class Core{
 	static {
 		// Try To Get Initial Data Then Init The Methods
 		Core.#getInitialData()
-		.then(()=>{
-			Core.#init();
-			Core.#onLoad();
-			Core.#onUrlChange();
-			Core.#onHashChange();
-			Core.#onHistoryButtonClicked();
-			Core.#onDomChange();
-			Core.#observeMutations();
-		});
+			.then(()=>{
+				Core.#init();
+				Core.#onLoad();
+				Core.#onUrlChange();
+				Core.#onHashChange();
+				Core.#onHistoryButtonClicked();
+				Core.#onDomChange();
+				Core.#observeMutations();
+			});
 	}
 
 	/////// Initial Data
@@ -103,7 +103,7 @@ export default class Core{
 	static #onUrlChange(){
 		window.addEventListener('locationchange', ()=>{
 			// window.dispatchEvent(new Event('locationchange'));
-			Log.info("onUrlChange");
+			Log.info("Core.#onUrlChange()");
 
 			Router.handle();
 			Menu.setActive();
@@ -113,14 +113,14 @@ export default class Core{
 	static #onHashChange(){
 		window.addEventListener('hashchange', ()=>{
 			// window.dispatchEvent(new Event('hashchange'));
-			Log.info("onHashChange");
+			Log.info("Core.#onHashChange()");
 		});
 	}
 
 	static #onHistoryButtonClicked(){
 		window.addEventListener('popstate', ()=>{
 			// window.dispatchEvent(new Event('popstate'));
-			Log.info("onHistoryButtonClicked");
+			Log.info("Core.#onHistoryButtonClicked()");
 
 			Router.handle();
 		});
@@ -135,9 +135,6 @@ export default class Core{
 			// Targets sample event.detail = ["menu", "main"...]
 			// If has target(s) then update the dom. body > target
 			if(!!event.detail === true) DOM.update(event.detail);
-
-			Hyperlink.collect();
-			Form.collect();
 		});
 	}
 
@@ -146,10 +143,13 @@ export default class Core{
 		const callback = (mutationList, observer)=>{
 			// Ensure that any methods requiring execution upon a DOM change are encapsulated within the for loop provided below.
 			for(const mutation of mutationList){
-				// // A child node has been added or removed.
-				// if(mutation.type === "childList"){}
+				// A child node has been added or removed.
+				if(mutation.type === "childList"){
+					Hyperlink.collect();
+					Form.collect();
+				}
 
-				// // The ${mutation.attributeName} attribute was modified.
+				// The ${mutation.attributeName} attribute was modified.
 				// else if(mutation.type === "attributes"){}
 
 				XRequest.collect();
