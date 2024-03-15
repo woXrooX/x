@@ -436,6 +436,23 @@
 		}
 		/** Form Variables END **/
 
+		fieldset{
+			padding: var(--f-padding);
+			border-radius: var(--f-radius);
+			border: var(--f-border);
+
+			display: flex;
+			flex-direction: column;
+			gap: var(--f-gap);
+
+			& legend{
+				background-color: var(--color-text-primary);
+				color: var(--color-text-accent);
+				border-radius: var(--f-radius);
+				padding: 2px 5px;
+			}
+		}
+
 		form{
 			width: var(--f-width);
 
@@ -451,24 +468,6 @@
 					display: inline-block;
 					padding: var(--padding);
 				}
-			}
-
-			& fieldset{
-				padding: var(--f-padding);
-				border-radius: var(--f-radius);
-				border: var(--f-border);
-
-				display: flex;
-				flex-direction: column;
-				gap: var(--f-gap);
-
-				& legend{
-					background-color: var(--color-text-primary);
-					color: var(--color-text-accent);
-					border-radius: var(--f-radius);
-					padding: 2px 5px;
-				}
-
 			}
 		}
 
