@@ -1431,6 +1431,19 @@
 			.w-900px{width: 900px;}
 			.w-950px{width: 950px;}
 			.w-1000px{width: 1000px;}
+
+			/* max-width px */
+			.max-w-100px{max-width: 100px;}
+			.max-w-200px{max-width: 200px;}
+			.max-w-250px{max-width: 250px;}
+			.max-w-500px{max-width: 500px;}
+			.max-w-600px{max-width: 600px;}
+			.max-w-1000px{max-width: 1000px;}
+			.max-w-1200px{max-width: 1200px;}
+			.max-w-1500px{max-width: 1500px;}
+			.max-w-2000px{max-width: 2000px;}
+			.max-w-2200px{max-width: 2200px;}
+			.max-w-2500px{max-width: 2500px;}
 		}
 
 		@layer height{
