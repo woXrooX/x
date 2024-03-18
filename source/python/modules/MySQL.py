@@ -13,6 +13,7 @@
 if __name__ != "__main__":
 	import mysql.connector
 	from python.modules.Logger import Log
+	from python.modules.Globals import Globals
 
 	class MySQL:
 		user = password = host = database = charset = collate = None
@@ -21,6 +22,9 @@ if __name__ != "__main__":
 		cursor = None
 
 		enabled = False
+
+
+
 
 		######### APIs / Methods
 		# Init MySQL
@@ -34,6 +38,19 @@ if __name__ != "__main__":
 			MySQL.database = database
 			MySQL.charset = charset
 			MySQL.collate = collate
+
+			# Globals.USER_AUTHENTICITY_STATUSES
+			MySQL.getUserAuthenticityStatuses()
+
+			# Globals.USER_ROLES
+			MySQL.getUserRoles()
+
+			# Globals.NOTIFICATION_TYPES
+			MySQL.getNotificationTypes()
+
+			# Globals.LANGUAGES
+			MySQL.getLanguages()
+
 
 		@staticmethod
 		def execute(
@@ -194,3 +211,32 @@ if __name__ != "__main__":
 		def disconnect():
 			MySQL.connection.close()
 			MySQL.cursor.close()
+
+
+
+
+
+		######### Helpers / DB getters
+		@staticmethod
+		def getUserAuthenticityStatuses():
+			data = MySQL.execute("SELECT * FROM user_authenticity_statuses")
+			if data is False: return Log.fieldset("Could Not Fetch 'user_authenticity_statuses'", "MySQL.getUserAuthenticityStatuses()")
+			for user_authenticity_status in data: Globals.USER_AUTHENTICITY_STATUSES[user_authenticity_status["name"]] = user_authenticity_status
+
+		@staticmethod
+		def getUserRoles():
+			data = MySQL.execute("SELECT * FROM user_roles")
+			if data is False: return Log.fieldset("Could Not Fetch 'user_roles'", "MySQL.getUserRoles()")
+			for user_role in data: Globals.USER_ROLES[user_role["name"]] = user_role
+
+		@staticmethod
+		def getNotificationTypes():
+			data = MySQL.execute("SELECT * FROM notification_types")
+			if data is False: return Log.fieldset("Could Not Fetch 'notification_types'", "MySQL.getNotificationTypes()")
+			for notification_type in data: Globals.NOTIFICATION_TYPES[notification_type["name"]] = notification_type
+
+		@staticmethod
+		def getLanguages():
+			languages = MySQL.execute("SELECT * FROM languages")
+			if languages is False: return Log.fieldset("Could Not Fetch 'languages'", "MySQL.getUserAuthenticityStatuses()")
+			for language in languages: Globals.LANGUAGES[language["code"]] = language

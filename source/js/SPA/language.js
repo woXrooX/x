@@ -48,11 +48,11 @@ export default class Language extends HTMLElement{
 	}
 
 	//////// Methods
-	static async #switchTo(code = Language.#FALLBACK){
+	static async switchTo(code = Language.#FALLBACK){
 		// Check if supported language was passed
 		if(!window.CONF.default.language.supported.includes(code)) return;
 
-		if("user" in window.session) await window.bridge("/API", {for:"changeUserAppLanguage", "code": code}, "application/json");
+		if("user" in window.session) await window.bridge("/api", {for:"changeUserAppLanguage", "code": code}, "application/json");
 		else localStorage.setItem('x.language', code);
 
 		// Update current language code

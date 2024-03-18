@@ -33,3 +33,10 @@ def api():
 			if not User.setAppColorMode(request.get_json()["colorMode"]): return response(type="error", message="somethingWentWrong")
 
 			return response(type="success", message="saved")
+
+		if request.get_json()["for"] == "changeUserAppLanguage":
+			if "code" not in request.get_json() or not request.get_json()["code"]: return response(type="error", message="invalidRequest")
+
+			if not User.setAppLanguage(request.get_json()["code"]): return response(type="error", message="somethingWentWrong")
+
+			return response(type="success", message="saved")

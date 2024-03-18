@@ -66,6 +66,7 @@ if __name__ != "__main__":
 				"firstname": session["user"]["firstname"],
 				"lastname": session["user"]["lastname"],
 				"app_color_mode": session["user"]["app_color_mode"],
+				"app_language": session["user"]["app_language"],
 				"authenticity_status": session["user"]["authenticity_status"],
 				"roles": session["user"]["roles"],
 				"plan": session["user"]["plan"],
@@ -74,9 +75,15 @@ if __name__ != "__main__":
 		@staticmethod
 		@checkIfUserInSession
 		def updateSession():
-			# Get User Data
 			data = MySQL.execute(
-				sql="SELECT * FROM users WHERE id=%s LIMIT 1;",
+				sql="""
+					SELECT
+						users.*,
+						languages.code AS 'app_language'
+					FROM users
+					LEFT JOIN languages ON languages.id = users.app_language
+					WHERE users.id=%s LIMIT 1;
+				""",
 				params=(session["user"]["id"],),
 				fetchOne=True
 			)
@@ -111,6 +118,27 @@ if __name__ != "__main__":
 
 			# Not working if I try to update single key
 			# session["user"]["app_color_mode"] = color_mode
+			if User.updateSession() is False: pass
+
+			return True
+
+		@staticmethod
+		@checkIfUserInSession
+		def setAppLanguage(code):
+			if code not in Globals.CONF["default"]["language"]["supported"]: return False
+
+			if code not in Globals.LANGUAGES: return False
+
+			data = MySQL.execute(
+				sql="UPDATE users SET app_language=%s WHERE id=%s",
+				params=(Globals.LANGUAGES[code]["id"], session["user"]["id"]),
+				commit=True
+			)
+
+			if data is False: return False
+
+			Log.success("User.setAppLanguage(): User app language updated.")
+
 			if User.updateSession() is False: pass
 
 			return True

@@ -42,15 +42,6 @@ if(
 		Globals.CONF["database"]["MySQL"]["collate"]
 	)
 
-	######## GLOBAL USER_AUTHENTICITY_STATUSES
-	Globals.getUserAuthenticityStatuses()
-
-	######## GLOBAL USER_ROLES
-	Globals.getUserRoles()
-
-	######## GLOBAL NOTIFICATION_TYPES
-	Globals.getNotificationTypes()
-
 
 #################################################### Flask APP
 app = Flask(
