@@ -37,6 +37,9 @@ export default class Language extends HTMLElement{
 	// Just returns translation for the "keyword"
 	static use(keyword){return Language.translate(keyword);}
 
+	//////// Getters
+	static get CURRENT(){return Language.#CURRENT;}
+
 	//////// Helpers
 	static codeToFlag(code){
 		switch(code){
