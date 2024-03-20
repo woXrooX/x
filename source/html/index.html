@@ -139,7 +139,7 @@
 
 		<toasts></toasts>
 
-		<loading><svg><text x="50%" y="50%" dy="0.5rem" text-anchor="middle">{{Globals.PROJECT_LANG_DICT[Globals.CONF["default"]["title"]][Globals.CONF["default"]["language"]["fallback"]]}}</text></svg></loading>
+		<loading><svg><text x="50%" y="50%" dy="0.5rem" text-anchor="middle">{{Globals.PROJECT_LANG_DICT.get([Globals.CONF["default"]["title"]][Globals.CONF["default"]["language"]["fallback"]], "x")}}</text></svg></loading>
 
 	</body>
 
