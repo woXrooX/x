@@ -5,6 +5,7 @@ export default class Modal extends HTMLElement{
 	static #element = null;
 	static #elementMain = null;
 	static #shown = false;
+	static #FUNC_POOL = {};
 
 	static {
 		Modal.#element = document.querySelector(Modal.#selector);
@@ -26,7 +27,7 @@ export default class Modal extends HTMLElement{
 
 		this.#buildTriggerContent();
 
-		this.onclick = ()=> Modal.#show(this.DOM);
+		this.onclick = ()=> Modal.#show(this.DOM, this.getAttribute("func_name"));
 	}
 
 	#buildTriggerContent(){
@@ -40,15 +41,21 @@ export default class Modal extends HTMLElement{
 		this.innerHTML = content;
 	}
 
-	static #show(DOM){
+	static #execute_on_show(func_name){
+		if(!!func_name === false) return;
+		Modal.#FUNC_POOL[func_name]();
+	}
+
+	static push_func(func){ Modal.#FUNC_POOL[func.name] = func; }
+
+	static #show(DOM, func_name){
 		if(Modal.#shown === true) return;
 
 		Modal.#shown = true;
 
 		Modal.#element.classList.add("show");
 		Modal.#elementMain.innerHTML = DOM;
-
-		Form.collect(Modal.#element);
+		Modal.#execute_on_show(func_name);
 
 		Cover.show();
 	}
