@@ -41,14 +41,14 @@ export default class Modal extends HTMLElement{
 		this.innerHTML = content;
 	}
 
-	static #execute_on_show(func_name){
+	static async #execute_on_show(func_name){
 		if(!!func_name === false) return;
-		Modal.#FUNC_POOL[func_name]();
+		await Modal.#FUNC_POOL[func_name]();
 	}
 
 	static push_func(func){ Modal.#FUNC_POOL[func.name] = func; }
 
-	static #show(DOM, func_name){
+	static #show(DOM, func_name = null){
 		if(Modal.#shown === true) return;
 
 		Modal.#shown = true;
