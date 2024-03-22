@@ -29,7 +29,7 @@ if __name__ != "__main__":
 		onFormGotResponse=False,
 
 		# Function to use for converting non-serializable objects to a serializable JSON format.
-		nonJsonToJsonFunction=None,
+		defaultSerializerFunc=None,
 
 		# HTTP Response Status Code
 		HTTP_response_status_code=200
@@ -86,7 +86,7 @@ if __name__ != "__main__":
 
 
 		# Function to use for converting non-serializable objects to a serializable JSON format.
-		if nonJsonToJsonFunction == "str": nonJsonToJsonFunction = str
+		if defaultSerializerFunc == "str": defaultSerializerFunc = str
 
 
 		# print("----------------------- responseDict -----------------------")
@@ -96,7 +96,7 @@ if __name__ != "__main__":
 		return make_response(
 			json.dumps(
 				responseDict,
-				default=nonJsonToJsonFunction
+				default=defaultSerializerFunc
 			),
 			HTTP_response_status_code
 		)
