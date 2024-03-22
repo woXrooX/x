@@ -85,17 +85,16 @@ if __name__ != "__main__":
 		if actionsDict: responseDict["actions"] = actionsDict
 
 
-		# Function to use for converting non-serializable objects to a serializable JSON format.
-		if defaultSerializerFunc == "str": defaultSerializerFunc = str
-
-
 		# print("----------------------- responseDict -----------------------")
 		# print(responseDict)
+
 
 		# Final Response
 		return make_response(
 			json.dumps(
 				responseDict,
+
+				# Function to use for converting non-serializable objects to a serializable JSON format.
 				default=defaultSerializerFunc
 			),
 			HTTP_response_status_code
