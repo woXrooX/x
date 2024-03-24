@@ -113,6 +113,8 @@ export default class CSS{
 		switch(CSS.currentColorMode){
 			case CSS.colorModes.LIGHT:
 				CSS.#light();
+
+				if(!!CSS.colorModeSwitcherIcon === false) break;
 				CSS.colorModeSwitcherIcon.name = "dark_mode";
 				CSS.colorModeSwitcherIcon.toggle = "light_mode";
 				break;
@@ -126,6 +128,8 @@ export default class CSS{
 
 			default:
 				CSS.#dark();
+
+				if(!!CSS.colorModeSwitcherIcon === false) break;
 				CSS.colorModeSwitcherIcon.name = "light_mode";
 				CSS.colorModeSwitcherIcon.toggle = "dark_mode";
 		}
@@ -139,6 +143,8 @@ export default class CSS{
 		// A Reminder to My Future Self :)
 		// We do not have to apply name and toggle values like we did in CSS.detectColorMode().
 		// Default toggler handles well icon changes since we are only using x-svg to toggle the color modes in this method
+
+		if(!!CSS.colorModeSwitcherIcon === false) return;
 
 		CSS.colorModeSwitcherIcon.addEventListener("click", ()=>{
 			switch(CSS.currentColorMode){
