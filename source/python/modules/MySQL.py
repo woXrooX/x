@@ -154,11 +154,21 @@ if __name__ != "__main__":
 
 				else: result = data
 
-			except Exception as e:
+			except Exception as err:
 				# In case of errors, rollback the transaction
 				if commit is True: MySQL.connection.rollback()
 
-				Log.fieldset(f"ERROR: {e}", "MySQL.execute()")
+				Log.fieldset(f"ERROR: {err}\nNO: {err.errno}\nSQL STATE: {err.sqlstate}\nMESSAGE: {err.msg}", "MySQL.execute()")
+
+				if includeMySQLData is True:
+					return {
+						"error": True,
+						"error_no": err.errno,
+						"sql_state": err.sqlstate,
+						"error_message": err.msg,
+						"error_raw": err
+					}
+
 				return False
 
 			finally:
