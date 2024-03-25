@@ -296,17 +296,14 @@ body{
 		width: 100%;
 		height: var(--header-height);
 		padding: var(--padding);
-		padding-left: var(--header-height);
 
 		position: fixed;
 		top: 0px;
 		left: 0px;
 		z-index: var(--z-header);
 
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
+		display: grid;
+		place-items: center;
 
 		&.hide{
 			display: none;
