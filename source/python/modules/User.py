@@ -37,6 +37,8 @@ if __name__ != "__main__":
 			# Extracting IDs From Response
 			for role in data: session["user"]["roles"].append(role["name"])
 
+			Log.success("User.getRoles()")
+
 			return True
 
 		@staticmethod
@@ -53,6 +55,8 @@ if __name__ != "__main__":
 			if data is None: session["user"]["plan"] = None
 			else: session["user"]["plan"] = data["name"]
 
+			Log.success("User.getPlan()")
+
 			return True
 
 
@@ -60,6 +64,9 @@ if __name__ != "__main__":
 		@staticmethod
 		@checkIfUserInSession
 		def generatePublicSession():
+
+			Log.success("User.generatePublicSession()")
+
 			return {
 				"id": session["user"]["id"],
 				"username": session["user"]["username"],
@@ -97,7 +104,8 @@ if __name__ != "__main__":
 
 			if not User.getPlan(): pass
 
-			# Success
+			Log.success("User.updateSession()")
+
 			return True
 
 		@staticmethod
@@ -114,11 +122,11 @@ if __name__ != "__main__":
 
 			if data is False: return False
 
-			Log.success("User.setAppColorMode(): App color mode updated.")
-
 			# Not working if I try to update single key
 			# session["user"]["app_color_mode"] = color_mode
 			if User.updateSession() is False: pass
+
+			Log.success("User.setAppColorMode()")
 
 			return True
 
@@ -137,9 +145,9 @@ if __name__ != "__main__":
 
 			if data is False: return False
 
-			Log.success("User.setAppLanguage(): User app language updated.")
-
 			if User.updateSession() is False: pass
+
+			Log.success("User.setAppLanguage()")
 
 			return True
 
