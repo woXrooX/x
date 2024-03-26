@@ -86,19 +86,14 @@ def signUp(request):
 		# Handle The Session Update Error
 		if not User.updateSession(): pass
 
-		# Setup Dirs
-		if User.initFolders() == False:
-			# Handle Folder Creation Errors
-			pass
+		#### Setup Dirs
+		# Handle Folder Creation Errors
+		if not User.initFolders(): pass
 
 
 		#### Check If Verification Code Sent Successfully
 		emailVerificationSentSuccessfully = False
 
-		# Gmail
-		if GMail(request.form["eMail"], eMailVerificationCode) is True: emailVerificationSentSuccessfully = True
-
-		# SendGrid
 		if SendGrid.send("noreply", request.form["eMail"], eMailVerificationCode, "Sign Up") is True: emailVerificationSentSuccessfully = True
 
 		try:

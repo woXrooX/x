@@ -579,6 +579,11 @@
 		"ru": "Сохранено",
 		"uz": "Saqlandi"
 	},
+	"savedButReLoginRequired": {
+		"en": "Your changes have been saved, but please log out and log back in for them to take effect.",
+		"ru": "Ваши изменения были сохранены, но, пожалуйста, выйдите из системы и войдите снова, чтобы они вступили в силу.",
+		"uz": "O'zgartirishlaringiz saqlandi, lekin ular kuchga kirishi uchun tizimdan chiqing va qayta kiring."
+	},
 	"security": {
 		"en": "Security",
 		"ru": "Безопасность",
