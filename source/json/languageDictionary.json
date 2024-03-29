@@ -114,6 +114,11 @@
 		"ru": "Не удалось отправить код подтверждения по электронной почте!",
 		"uz": "Tasdiqlash kodini elektron pochtaga yuborib bo`lmadi!"
 	},
+	"credits": {
+		"en": "Credits",
+		"ru": "Благодарности",
+		"uz": "Rahmatlar"
+	},
 	"currency": {
 		"en": "Currency",
 		"ru": "Валюта",
@@ -528,6 +533,11 @@
 		"en": "Please wait",
 		"ru": "Пожалуйста, подождите",
 		"uz": "Iltimos kuting"
+	},
+	"powered_by_woXrooX": {
+		"en": "Powered by <a href='https://www.woXrooX.com'>woXrooX</a>",
+		"ru": "При поддержке <a href='https://www.woXrooX.com'>woXrooX</a>",
+		"uz": "<a href='https://www.woXrooX.com'>woXrooX</a> tomonidan qo`llab-quvvatlangan"
 	},
 	"price": {
 		"en": "Price",
