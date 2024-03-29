@@ -17,22 +17,22 @@
 	"add": {
 		"en": "Add",
 		"ru": "Добавлять",
-		"uz": "Qo'shish"
+		"uz": "Qo`shish"
 	},
 	"addOption": {
 		"en": "Add option",
 		"ru": "Добавить вариант",
-		"uz": "Variantni qo'shish"
+		"uz": "Variantni qo`shish"
 	},
 	"addUser": {
 		"en": "Add user",
 		"ru": "Добавить пользователя",
-		"uz": "Foydalanuvchi qo'shish"
+		"uz": "Foydalanuvchi qo`shish"
 	},
 	"allChangesWillTakeEffectAfterNextLogIn": {
 		"en": "All changes will take effect at next log in",
 		"ru": "Все изменения вступят в силу после следующего входа в систему",
-		"uz": "Barcha o'zgarishlar keyingi tizimga kirgandan keyin kuchga kiradi"
+		"uz": "Barcha o`zgarishlar keyingi tizimga kirgandan keyin kuchga kiradi"
 	},
 	"appIsDown": {
 		"en": "App is down!",
@@ -47,7 +47,7 @@
 	"byClckingSignUpYouAgree": {
 		"en": "By clicking Sign up, you agree to our <a href='/termsOfUse'>Terms of use</a> and that you have read our <a href='/privacyPolicy'>Privacy Policy</a> , Including our <a href='/cookieTerms'>Cookie Use</a>",
 		"ru": "Нажимая «Зарегистрироваться», вы соглашаетесь с нашими <a href='/termsOfUse'>Условиями использования</a> и с нашей <a href='/privacyPolicy'>Политикой конфиденциальности</a>, включая <a href = '/cookieTerms'>Использование файлов cookie</a>",
-		"uz": "Ro'yxatdan o'tishni bosish orqali siz <a href='/termsOfUse'>Foydalanish shartlari</a>, <a href='/privacyPolicy'>Maxfiylik siyosati</a> va <a href='/cookieTerms'>Cookie-fayllardan foydalanish</a> shartlarmizni o'qiganligingizni va rozi bo'lganingizni bildirasiz"
+		"uz": "Ro`yxatdan o`tishni bosish orqali siz <a href='/termsOfUse'>Foydalanish shartlari</a>, <a href='/privacyPolicy'>Maxfiylik siyosati</a> va <a href='/cookieTerms'>Cookie-fayllardan foydalanish</a> shartlarmizni o`qiganligingizni va rozi bo`lganingizni bildirasiz"
 	},
 	"change": {
 		"en": "Change",
@@ -92,7 +92,7 @@
 	"couldNotDeleteFile": {
 		"en": "Could not delete the file!",
 		"ru": "Не удалось удалить файл!",
-		"uz": "Faylni oʻchirib boʻlmadi!"
+		"uz": "Faylni o`chirib bo`lmadi!"
 	},
 	"couldNotLogOutInstant": {
 		"en": "There was an error while logging out. Please refresh the page.",
@@ -107,12 +107,12 @@
 	"couldNotSendEMail": {
 		"en": "Could Not Send EMail!",
 		"ru": "Не удалось отправить электронное письмо!",
-		"uz": "E-pochta yuborib bo'lmadi!"
+		"uz": "E-pochta yuborib bo`lmadi!"
 	},
 	"couldNotSendEMailVerificationCode": {
 		"en": "Could Not Send EMail Verification Code!",
 		"ru": "Не удалось отправить код подтверждения по электронной почте!",
-		"uz": "Tasdiqlash kodini elektron pochtaga yuborib bo‘lmadi!"
+		"uz": "Tasdiqlash kodini elektron pochtaga yuborib bo`lmadi!"
 	},
 	"currency": {
 		"en": "Currency",
@@ -122,7 +122,7 @@
 	"databaseError": {
 		"en": "Database error",
 		"ru": "Ошибка базы данных",
-		"uz": "Ma'lumotlar bazasida xatolik"
+		"uz": "Ma`lumotlar bazasida xatolik"
 	},
 	"default": {
 		"en": "Default",
@@ -132,12 +132,12 @@
 	"deleted": {
 		"en": "Deleted",
 		"ru": "Удалено",
-		"uz": "Oʻchirildi"
+		"uz": "O`chirildi"
 	},
 	"deletedSuccessfully": {
 		"en": "Successfully deleted",
 		"ru": "Успешно удалено",
-		"uz": "Muvaffaqiyatli oʻchirildi"
+		"uz": "Muvaffaqiyatli o`chirildi"
 	},
 	"didNotReceiveCode": {
 		"en": "Did not receive a code?",
@@ -145,9 +145,9 @@
 		"uz": "Kod kelmadimi?"
 	},
 	"dontHaveAccountGoToSignUp": {
-		"en": "Don't have an account ? Go to sign up",
+		"en": "Don`t have an account ? Go to sign up",
 		"ru": "Нет учетной записи? Перейти к подписке",
-		"uz": "Ro'yxatdan o'tmaganmisiz? Ro'yxatdan o'tish bu yerda"
+		"uz": "Ro`yxatdan o`tmaganmisiz? Ro`yxatdan o`tish bu yerda"
 	},
 	"eMail": {
 		"en": "Email",
@@ -177,12 +177,12 @@
 	"eMailConfirmationCodeNotCorrect": {
 		"en": "The email confirmation code is not correct!",
 		"ru": "Код подтверждения электронной почты неверен!",
-		"uz": "Elektron pochtani tasdiqlash kodi noto'g'ri!"
+		"uz": "Elektron pochtani tasdiqlash kodi noto`g`ri!"
 	},
 	"eMailEmpty": {
 		"en": "Email address is empty",
 		"ru": "Адрес электронной почты пуст",
-		"uz": "Elektron pochta manzili bo'sh bo'lmasligi kerak"
+		"uz": "Elektron pochta manzili bo`sh bo`lmasligi kerak"
 	},
 	"eMailFieldCheck": {
 		"en": "Please check the Email field",
@@ -197,7 +197,7 @@
 	"eMailInvalid": {
 		"en": "Invalid Email address",
 		"ru": "Неверный адрес электронной почты",
-		"uz": "Elektron pochta manzili noto‘g‘ri"
+		"uz": "Elektron pochta manzili noto`g`ri"
 	},
 	"eMailOk": {
 		"en": "Email address is OK",
@@ -242,7 +242,7 @@
 	"fieldEmpty": {
 		"en": "Field empty",
 		"ru": "Поле пусто",
-		"uz": "Maydon boʻsh"
+		"uz": "Maydon bo`sh"
 	},
 	"fileWasNotChosen": {
 		"en": "File was not chosen!",
@@ -272,7 +272,7 @@
 	"haveAccountGoToLogIn": {
 		"en": "Have an account ? Go to log in",
 		"ru": "",
-		"uz": "Ro'yxatdan o'tganmisiz? Kirish bu yerda"
+		"uz": "Ro`yxatdan o`tganmisiz? Kirish bu yerda"
 	},
 	"home": {
 		"en": "Home",
@@ -282,17 +282,17 @@
 	"ifLogOutWontBeAbleTo": {
 		"en": "Before you go, keep in mind that logging out will terminate your current session and limit your ability to engage with the site.",
 		"ru": "Прежде чем уйти, имейте в виду, что выход из системы прекратит ваш текущий сеанс и ограничит вашу способность взаимодействовать с сайтом.",
-		"uz": "Chiqishdan oldin, tizimdan chiqish joriy seansni to'xtatishini va sayt bilan bog'lanish imkoniyatini cheklashini yodda tuting."
+		"uz": "Chiqishdan oldin, tizimdan chiqish joriy seansni to`xtatishini va sayt bilan bog`lanish imkoniyatini cheklashini yodda tuting."
 	},
 	"info": {
 		"en": "Info",
 		"ru": "Информация",
-		"uz": "Ma'lumot"
+		"uz": "Ma`lumot"
 	},
 	"information": {
 		"en": "Information",
 		"ru": "Информация",
-		"uz": "Ma'lumot"
+		"uz": "Ma`lumot"
 	},
 	"inOrderToUseEnableJavaScript": {
 		"en": "In order to use our service please enable JavaScript",
@@ -307,17 +307,17 @@
 	"invalidAgeWasProvided": {
 		"en": "Invalid age was provided",
 		"ru": "Указан неверный возраст",
-		"uz": "Noto'g'ri yosh ko'rsatilgan"
+		"uz": "Noto`g`ri yosh ko`rsatilgan"
 	},
 	"invalidDataSelected": {
 		"en": "Invalid data selected",
 		"ru": "Выбраны неверные данные",
-		"uz": "Noto'g'ri ma'lumotlar tanlandi"
+		"uz": "Noto`g`ri ma`lumotlar tanlandi"
 	},
 	"invalidField": {
 		"en": "Invalid field",
 		"ru": "Недопустимое поле",
-		"uz": "Maydon noto‘g‘ri"
+		"uz": "Maydon noto`g`ri"
 	},
 	"invalidFile": {
 		"en": "Invalid file",
@@ -327,22 +327,22 @@
 	"invalidKeyword": {
 		"en": "Invalid keyword!",
 		"ru": "Неверное ключевое слово!",
-		"uz": "Noto'g'ri kalit so'z!"
+		"uz": "Noto`g`ri kalit so`z!"
 	},
 	"invalidPrompt": {
 		"en": "Invalid prompt",
 		"ru": "Неверная подсказка",
-		"uz": "Noto'g'ri buyruq"
+		"uz": "Noto`g`ri buyruq"
 	},
 	"invalidRequest": {
 		"en": "Invalid request",
 		"ru": "Неверная запрос",
-		"uz": "Noto'g'ri so'rov"
+		"uz": "Noto`g`ri so`rov"
 	},
 	"invalidResponse": {
 		"en": "Invalid response",
 		"ru": "Неверный ответ",
-		"uz": "Noto'g'ri javob"
+		"uz": "Noto`g`ri javob"
 	},
 	"invalidToken": {
 		"en": "Invalid token",
@@ -352,12 +352,12 @@
 	"invalidValue": {
 		"en": "Invalid value",
 		"ru": "Неверное значение",
-		"uz": "Qiymat noto‘g‘ri"
+		"uz": "Qiymat noto`g`ri"
 	},
 	"javaScriptDisabled": {
 		"en": "JavaScript is disabled",
 		"ru": "JavaScript отключен",
-		"uz": "JavaScript o'chirilgan"
+		"uz": "JavaScript o`chirilgan"
 	},
 	"languagesLibrary": {
 		"en": "Languages library",
@@ -402,7 +402,7 @@
 	"noData": {
 		"en": "No data",
 		"ru": "Нет данных",
-		"uz": "Maʼlumot yoʻq"
+		"uz": "Ma`lumot yo`q"
 	},
 	"noFound": {
 		"en": "No found",
@@ -422,7 +422,7 @@
 	"notSpecified": {
 		"en": "Not specified",
 		"ru": "Не указан",
-		"uz": "Ko'rsatilmagan"
+		"uz": "Ko`rsatilmagan"
 	},
 	"optional": {
 		"en": "Optional",
@@ -452,7 +452,7 @@
 	"passwordAllowedChars": {
 		"en": "Password must include at least one letter, one number and one of this allowed characters ( ! @ # $ % ^ & * - _ + )",
 		"ru": "Пароль должен включать как минимум одну букву, одну цифру и один из разрешенных символов (! @ # $% ^ & * - _ +)",
-		"uz": "Parolda kamida bitta harif, bitta raqam va ushbu ruxsat berilgan belgilardan biri bo'lishi kerak (! @ # $% ^ & * - _ +)"
+		"uz": "Parolda kamida bitta harif, bitta raqam va ushbu ruxsat berilgan belgilardan biri bo`lishi kerak (! @ # $% ^ & * - _ +)"
 	},
 	"passwordChangedSuccessfully": {
 		"en": "Password changed successfully",
@@ -462,7 +462,7 @@
 	"passwordEmpty": {
 		"en": "Password is empty",
 		"ru": "Пароль пуст",
-		"uz": "Parol bo'sh bo'lmasligi kerak"
+		"uz": "Parol bo`sh bo`lmasligi kerak"
 	},
 	"passwordFieldCheck": {
 		"en": "Check password field",
@@ -482,7 +482,7 @@
 	"passwordMinLength": {
 		"en": "Password must be at least 6 characters long",
 		"ru": "Пароль должен содержать минимум 6 символов",
-		"uz": "Parol kamida 6 ta ( harf, raqam, belgi) lardan iborat bo'lishi kerak"
+		"uz": "Parol kamida 6 ta ( harf, raqam, belgi) lardan iborat bo`lishi kerak"
 	},
 	"passwordOk": {
 		"en": "Password is OK",
@@ -497,7 +497,7 @@
 	"paymentSettings": {
 		"en": "Payment settings",
 		"ru": "Настройки оплаты",
-		"uz": "To'lov sozlamalari"
+		"uz": "To`lov sozlamalari"
 	},
 	"phone": {
 		"en": "Phone",
@@ -512,7 +512,7 @@
 	"phoneNumberEmpty": {
 		"en": "Phone number empty",
 		"ru": "Номер телефона пустой",
-		"uz": "Telefon raqami bo'sh"
+		"uz": "Telefon raqami bo`sh"
 	},
 	"phoneNumberInUse": {
 		"en": "Phone number is in use",
@@ -557,7 +557,7 @@
 	"remove": {
 		"en": "Remove",
 		"ru": "Удалить",
-		"uz": "O'chirish"
+		"uz": "O`chirish"
 	},
 	"required": {
 		"en": "Required",
@@ -582,7 +582,7 @@
 	"savedButReLoginRequired": {
 		"en": "Your changes have been saved, but please log out and log back in for them to take effect.",
 		"ru": "Ваши изменения были сохранены, но, пожалуйста, выйдите из системы и войдите снова, чтобы они вступили в силу.",
-		"uz": "O'zgartirishlaringiz saqlandi, lekin ular kuchga kirishi uchun tizimdan chiqing va qayta kiring."
+		"uz": "O`zgartirishlaringiz saqlandi, lekin ular kuchga kirishi uchun tizimdan chiqing va qayta kiring."
 	},
 	"security": {
 		"en": "Security",
@@ -597,12 +597,12 @@
 	"shareDefaultText": {
 		"en": "Hey there, do you have a minute? I found something really cool that I wanted to share. Check it out!",
 		"ru": "Эй, у тебя есть минутка? Я нашел кое-что действительно классное, чем хотел поделиться. Проверьте это!",
-		"uz": "Salom, bir daqiqa vaqtingiz bormi? Men baham ko'rmoqchi bo'lgan ajoyib narsani topdim. Tekshirib ko'r!"
+		"uz": "Salom, bir daqiqa vaqtingiz bormi? Men baham ko`rmoqchi bo`lgan ajoyib narsani topdim. Tekshirib ko`r!"
 	},
 	"signUp": {
 		"en": "Sign up",
 		"ru": "Регистрироваться",
-		"uz": "Ro'yxatdan o'tish"
+		"uz": "Ro`yxatdan o`tish"
 	},
 	"siteLanguage": {
 		"en": "Site language",
@@ -617,12 +617,12 @@
 	"size": {
 		"en": "Size",
 		"ru": "Размер",
-		"uz": "Oʻlcham"
+		"uz": "O`lcham"
 	},
 	"somethingWentWrong": {
 		"en": "Something went wrong",
 		"ru": "Что-то пошло не так",
-		"uz": "Nimadir noto'g'ri bajarildi"
+		"uz": "Nimadir noto`g`ri bajarildi"
 	},
 	"style": {
 		"en": "Style",
@@ -667,7 +667,7 @@
 	"timestamp": {
 		"en": "Timestamp",
 		"ru": "Временная метка",
-		"uz": "Vaqt tamg'asi"
+		"uz": "Vaqt tamg`asi"
 	},
 	"title": {
 		"en": "Title",
@@ -692,12 +692,12 @@
 	"unknown": {
 		"en": "Unknown",
 		"ru": "Неизвестный",
-		"uz": "Noma'lum"
+		"uz": "Noma`lum"
 	},
 	"unknownError": {
 		"en": "Unknown error",
 		"ru": "Неизвестная ошибка",
-		"uz": "Noma'lum xato"
+		"uz": "Noma`lum xato"
 	},
 	"update": {
 		"en": "Update",
@@ -727,7 +727,7 @@
 	"usernameAllowedChars": {
 		"en": "List of allowed characters for username ( a-z A-Z 0-9 - _ ' )",
 		"ru": "Список разрешенных символов для имени пользователя ( a-z A-Z 0-9 - _ ' )",
-		"uz": "Foydalanuvchi nomi uchun ruxsat berilgan belgilar ro'yxati ( a-z A-Z 0-9 - _ ' )"
+		"uz": "Foydalanuvchi nomi uchun ruxsat berilgan belgilar ro`yxati ( a-z A-Z 0-9 - _ ' )"
 	},
 	"usernameEmpty": {
 		"en": "Username field must be filled",
@@ -752,7 +752,7 @@
 	"usernameMinLength": {
 		"en": "Username minimum length must be 6 characters long",
 		"ru": "Минимальная длина имени пользователя должна быть 6 символов.",
-		"uz": "Foydalanuvchi nomi kamida 6 ta belgidan iborat bo'lishi kerak"
+		"uz": "Foydalanuvchi nomi kamida 6 ta belgidan iborat bo`lishi kerak"
 	},
 	"usernameOk": {
 		"en": "Username is OK",
@@ -772,7 +772,7 @@
 	"userTypeInvalid": {
 		"en": "Invalid user type!",
 		"ru": "Неверный тип пользователя!",
-		"uz": "Foydalanuvchi turi noto'g'ri!"
+		"uz": "Foydalanuvchi turi noto`g`ri!"
 	},
 	"verifyEmail": {
 		"en": "Verify Email",
@@ -787,7 +787,7 @@
 	"wrongLanguageSelected": {
 		"en": "Wrong language selected",
 		"ru": "Выбран неправильный язык",
-		"uz": "Noto'g'ri til tanlandi"
+		"uz": "Noto`g`ri til tanlandi"
 	},
 	"x": {
 		"en": "x"
