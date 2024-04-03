@@ -41,13 +41,10 @@ export default class Language extends HTMLElement{
 	static get CURRENT(){return Language.#CURRENT;}
 
 	//////// Helpers
-	static codeToFlag(code){
-		switch(code){
-			case "en": return "🇬🇧";
-			case "uz": return "🇺🇿";
-			case "ru": return "🇷🇺";
-			default: return "🏴‍☠️";
-		}
+	static code_to_flag(code){
+		if(code == "en") code = "gb";
+
+		return `<img src="/images/SVG/flags/4x3/${code}.svg" style="width: 1em;">`;
 	}
 
 	//////// Methods
