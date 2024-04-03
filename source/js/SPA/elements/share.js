@@ -20,7 +20,8 @@ export default class Share extends HTMLElement{
 
 
 		this.innerHTML = `
-			<x-modal type="icon" value="share">
+			<x-svg name="share" id="modal_share"></x-svg>
+			<x-modal trigger_selector="x-svg#modal_share">
 				<row class="p-1 gap-0-5">
 					<a href="https://twitter.com/intent/tweet?url=${shareData.url}&text=${shareData.text}" target="_blank">
 						<x-svg name="twitter_bird_original"></x-svg>
