@@ -18,29 +18,6 @@ export default class Modal extends HTMLElement{
 		Cover.onClickExecute(Modal.hide);
 	}
 
-	constructor(){
-		super();
-
-		this.DOM = this.innerHTML;
-
-		this.style.cursor = "pointer";
-
-		this.#buildTriggerContent();
-
-		this.onclick = ()=> Modal.#show(this.DOM, this.getAttribute("func_name"));
-	}
-
-	#buildTriggerContent(){
-		const value = this.getAttribute("value");
-
-		let content;
-
-		if(this.getAttribute("type") == "icon") content = `<x-svg color="${this.getAttribute("icon-color")}" name="${value}"></x-svg>`;
-		else content = value;
-
-		this.innerHTML = content;
-	}
-
 	static async #execute_on_show(func_name){
 		if(!!func_name === false) return;
 		await Modal.#FUNC_POOL[func_name]();
@@ -74,6 +51,56 @@ export default class Modal extends HTMLElement{
 
 		Cover.hide();
 	}
+
+	/////////////// x-modal object
+	#DOM = null;
+
+	constructor(){
+		super();
+		this.shadow = this.attachShadow({mode: 'closed'});
+		this.#DOM = this.innerHTML;
+
+		CSS: {
+			const style = document.createElement('style');
+			style.textContent = `:host {display: none;}`;
+			this.shadow.appendChild(style);
+		}
+
+		this.#handle_trigger();
+	}
+
+	#handle_trigger = ()=>{
+		switch (this.getAttribute("trigger_type")){
+			case "click":
+				this.#handle_trigger_click();
+				break;
+
+			case "hover":
+				this.#handle_trigger_hover();
+				break;
+
+			case "auto":
+				this.#handle_trigger_auto();
+				break;
+
+			default:
+				this.#handle_trigger_click();
+				break;
+		}
+	};
+
+	#handle_trigger_click = ()=>{
+		const trigger_element = document.querySelector(this.getAttribute("trigger_selector"));
+		if(!!trigger_element === false) return;
+
+		trigger_element.onclick = ()=> Modal.#show(this.#DOM, this.getAttribute("func_name"));
+	};
+
+	#handle_trigger_hover = ()=>{
+	};
+
+	#handle_trigger_auto = ()=>{
+	};
 };
 
 window.customElements.define('x-modal', Modal);
