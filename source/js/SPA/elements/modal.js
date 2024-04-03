@@ -92,7 +92,7 @@ export default class Modal extends HTMLElement{
 	#handle_trigger_click = ()=>{
 		const trigger_element = document.querySelector(this.getAttribute("trigger_selector"));
 		if(!!trigger_element === false) return;
-
+		trigger_element.style.cursor = "pointer";
 		trigger_element.onclick = ()=> Modal.#show(this.#DOM, this.getAttribute("func_name"));
 	};
 
