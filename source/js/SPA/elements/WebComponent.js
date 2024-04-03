@@ -31,21 +31,24 @@ export default class WC extends HTMLElement{
 		// If you don't set this.attachShadow({mode: 'open'}) or this.attachShadow({mode: 'closed'}) in your web component constructor,
 		// the default behavior will be to not use Shadow DOM at all.
 		// This means that the component's internal structure will not be encapsulated, and it will behave like a regular DOM element.
-		this.innerHTML = "Some html";
+		this.innerHTML = "Some HTML";
 
 		// Closed
 		this.shadow = this.attachShadow({mode: 'closed'});
-		this.shadow.innerHTML = "Some html";
+		this.shadow.innerHTML = "Some HTML";
 
 		// Open
 		// sets and returns 'this.shadowRoot'
 		this.attachShadow({mode: "open"});
-		this.shadowRoot.innerHTML = "Some html";
+		this.shadowRoot.innerHTML = "Some HTML";
 
-		// Open
-		// this.attachShadow({mode: 'open'});
-		// this.shadowRoot.appendChild(Node);
-		// this.shadowRoot.querySelector("toast>main>icon").innerHTML = "HTML";
+		// Slot - Use a slot to accept content passed to the component
+		// const slot = document.createElement('slot');
+		// this.shadow.appendChild(slot);
+		// slot.addEventListener('slotchange', (event) => {
+		// 	const nodes = slot.assignedNodes();
+		// 	console.log('Slotted content changed:', nodes);
+		// });
 
 		// DOM: {
 		// 	const content = JSON.parse(this.textContent);
@@ -55,7 +58,11 @@ export default class WC extends HTMLElement{
 
 		// CSS: {
 		// 	const style = document.createElement('style');
-		// 	style.textContent = ``;
+		// style.textContent = `
+		// 	:host {
+		// 		display: none; /* Default display is none */
+		// 	}
+		// `;
 		// 	this.shadow.appendChild(style);
 		// }
 
