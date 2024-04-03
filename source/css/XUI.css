@@ -1272,6 +1272,9 @@
 	@layer sizing{
 		@layer width{
 			.w-auto{width: auto;}
+			.w-fit-content{width: fit-content;}
+			.w-min-content{width: min-content;}
+			.w-max-content{width: max-content;}
 
 			/* % */
 			.w-10{width: 10%;}
