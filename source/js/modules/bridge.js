@@ -1,7 +1,7 @@
 "use strict";
 
 ///////////////////////////// FETCH - Bridge
-export default async function bridge(url='', data=null, contentType = null, method="POST"){
+export default async function bridge(data=null, url=null, contentType = null, method="POST"){
 	// Set the default URL
 	if(!!url === false) url = window.location.href;
 
