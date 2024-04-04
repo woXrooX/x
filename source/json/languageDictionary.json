@@ -314,11 +314,6 @@
 		"ru": "Указан неверный возраст",
 		"uz": "Noto`g`ri yosh ko`rsatilgan"
 	},
-	"invalid_bridge_usage": {
-		"en": "Invalid method usage: 'bridge()'",
-		"ru": "Неправильное использование метода: 'bridge()'",
-		"uz": "Funktsiyadan noto`g`ri foydalanildi: 'bridge()'"
-	},
 	"invalidDataSelected": {
 		"en": "Invalid data selected",
 		"ru": "Выбраны неверные данные",
@@ -363,6 +358,11 @@
 		"en": "Invalid value",
 		"ru": "Неверное значение",
 		"uz": "Qiymat noto`g`ri"
+	},
+	"invalid_method_usage_bridge": {
+		"en": "Invalid method usage: 'bridge()'",
+		"ru": "Неправильное использование метода: 'bridge()'",
+		"uz": "Funktsiyadan noto`g`ri foydalanildi: 'bridge()'"
 	},
 	"javaScriptDisabled": {
 		"en": "JavaScript is disabled",
