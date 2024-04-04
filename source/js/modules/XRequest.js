@@ -149,7 +149,7 @@ export default class XRequest{
 		this.#element.onclick = async ()=>{
 			this.#element.disabled = true;
 
-			this.#response = await window.bridge(this.#element.getAttribute("x-post"), this.#data);
+			this.#response = await window.bridge(this.#data, this.#element.getAttribute("x-post"));
 
 			this.#handleCommands();
 

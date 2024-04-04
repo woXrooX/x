@@ -42,7 +42,7 @@ export default class Form{
 		}
 		data["fields"][event.target.name] = event.target.value;
 
-		let response = await window.bridge(`${form.getAttribute("for")}`, data);
+		let response = await window.bridge(data, `${form.getAttribute("for")}`);
 		if("field" in response) Form.#response(response["field"], response["type"], response["message"]);
 		};
 	});
@@ -77,7 +77,7 @@ export default class Form{
 			console.log(`${key}: ${value}`);
 
 			// Send The Request
-			let response = await window.bridge(form.action, formData, form.enctype);
+			let response = await window.bridge(formData, form.action, form.enctype);
 
 			// Data From Back-End
 			Log.info(response);

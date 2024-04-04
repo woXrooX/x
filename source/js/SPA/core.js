@@ -56,7 +56,7 @@ export default class Core{
 
 	/////// Initial Data
 	static async #getInitialData(){
-		let response = await window.bridge("/api", {for:"initialData"});
+		let response = await window.bridge({for:"initialData"}, "/api");
 
 		Log.success(response);
 
