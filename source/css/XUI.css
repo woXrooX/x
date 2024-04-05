@@ -1,4 +1,4 @@
-/* v0.7.0.0 */
+/* v0.8.0.0 */
 
 @layer XUI{
 	@layer root{
@@ -2093,6 +2093,18 @@
 					from {background-color: var(--color-main-tint-1);}
 					to {background-color: var(--color-main-tint-4);}
 				}
+			}
+		}
+	}
+
+	@layer print{
+		@media print{
+			.on-print-display-none{display: none !important;}
+			.on-print-opacity-0{opacity: 0 !important;}
+
+			.on-print-bs-none{box-shadow: none !important;}
+			.on-print-bs-none-all-children{
+				& *{box-shadow: none !important;}
 			}
 		}
 	}
