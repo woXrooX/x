@@ -42,6 +42,8 @@ export default class Language extends HTMLElement{
 
 	//////// Helpers
 	static code_to_flag(code){
+		if(!!code === false) code = Language.#FALLBACK;
+
 		if(code == "en") code = "gb";
 
 		return `<img src="/images/SVG/flags/4x3/${code}.svg" style="width: 1em;">`;
