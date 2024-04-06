@@ -1,8 +1,7 @@
 # Py Cache
 __pycache__/
 
-source/assets/*
-source/users/*
+source/project_files/*
 source/www/*
 
 ################ Python

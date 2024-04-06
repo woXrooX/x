@@ -168,8 +168,8 @@ if __name__ != "__main__":
 
 
 			# Must match w/ the path in .gitignore
-			# source/users/...
-			path = f'{Globals.X_RUNNING_FROM}/users/{ID}/'
+			# source/project_files/users/...
+			path = f'{Globals.X_RUNNING_FROM}/project_files/users/{ID}/'
 
 			# Try to create user folders
 			try:
@@ -199,7 +199,7 @@ if __name__ != "__main__":
 		@staticmethod
 		def deleteFiles(id):
 			try:
-				shutil.rmtree(f'{Globals.X_RUNNING_FROM}/users/{id}/')
+				shutil.rmtree(f'{Globals.X_RUNNING_FROM}/project_files/users/{id}/')
 
 				Log.success(f"User files deleted. User ID: {id}")
 

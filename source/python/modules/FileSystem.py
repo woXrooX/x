@@ -167,7 +167,7 @@ if __name__ != "__main__":
 			Log.center("Creating folders", '=')
 
 			# x/source/[folder]
-			x_folders = ["assets", "assets/private", "assets/public", "users", "www", "www/html", "www/static"]
+			x_folders = ["project_files/assets", "project_files/assets/private", "project_files/assets/public", "project_files/users", "www", "www/html", "www/static"]
 			for folder in x_folders: FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/{folder}/', strict=True)
 
 			# project/[folder]
