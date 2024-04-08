@@ -1,4 +1,4 @@
-/* v0.8.0.0 */
+/* v0.8.0.1 */
 
 @layer XUI{
 	@layer root{
@@ -1447,6 +1447,19 @@
 			.max-w-2000px{max-width: 2000px;}
 			.max-w-2200px{max-width: 2200px;}
 			.max-w-2500px{max-width: 2500px;}
+
+			/* min-width px */
+			.min-w-100px{min-width: 100px;}
+			.min-w-200px{min-width: 200px;}
+			.min-w-250px{min-width: 250px;}
+			.min-w-500px{min-width: 500px;}
+			.min-w-600px{min-width: 600px;}
+			.min-w-1000px{min-width: 1000px;}
+			.min-w-1200px{min-width: 1200px;}
+			.min-w-1500px{min-width: 1500px;}
+			.min-w-2000px{min-width: 2000px;}
+			.min-w-2200px{min-width: 2200px;}
+			.min-w-2500px{min-width: 2500px;}
 		}
 
 		@layer height{
