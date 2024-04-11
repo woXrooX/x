@@ -59,6 +59,7 @@ export default class Modal extends HTMLElement{
 		super();
 		this.shadow = this.attachShadow({mode: 'closed'});
 		this.#DOM = this.innerHTML;
+		this.replaceChildren();
 
 		CSS: {
 			const style = document.createElement('style');
