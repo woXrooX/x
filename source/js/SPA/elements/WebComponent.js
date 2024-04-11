@@ -18,6 +18,8 @@ export default class WC extends HTMLElement{
 		`;
 	}
 
+	#DOM = null;
+
 	constructor(){
 		super();
 
@@ -32,6 +34,9 @@ export default class WC extends HTMLElement{
 		// the default behavior will be to not use Shadow DOM at all.
 		// This means that the component's internal structure will not be encapsulated, and it will behave like a regular DOM element.
 		this.innerHTML = "Some HTML";
+
+		// Clean up
+		this.replaceChildren();
 
 		// Closed
 		this.shadow = this.attachShadow({mode: 'closed'});
