@@ -1,87 +1,87 @@
 x-select{
-  & > button{
-    width: 100%;
-    margin-bottom: calc(var(--padding) * 2);
-  }
+	& > button{
+		width: 100%;
+		margin-bottom: calc(var(--padding) * 2);
+	}
 
-  & > main{
-    background-color: var(--color-main-tint-1);
-    width: 100%;
-    padding: var(--padding);
-    border-radius: var(--radius);
+	& > main{
+		background-color: var(--color-main-tint-1);
+		width: 100%;
+		padding: var(--padding);
+		border-radius: var(--radius);
 
-    display: none;
-    flex-direction: column;
-    gap: calc(var(--gap) / 2);
+		display: none;
+		flex-direction: column;
+		gap: calc(var(--gap) / 2);
 
-    &.show{
-      display: flex;
-    }
+		&.show{
+			display: flex;
+		}
 
-    & > section{
-      background-color: var(--color-main-tint-2);
-      padding: var(--padding);
-      border-radius: var(--radius);
+		& > section{
+			background-color: var(--color-main-tint-2);
+			padding: var(--padding);
+			border-radius: var(--radius);
 
-      &#optionsSelected{
-        display: none;
-        flex-wrap: wrap;
-        flex-direction: row;
-        gap: calc(var(--gap) / 2);
+			&#optionsSelected{
+				display: none;
+				flex-wrap: wrap;
+				flex-direction: row;
+				gap: calc(var(--gap) / 2);
 
-        &.show{
-          display: flex;
-        }
+				&.show{
+					display: flex;
+				}
 
-        & > div{
-          cursor: pointer;
-          display: none;
-          background-color: var(--color-main-tint-3);
-          width: auto;
-          height: auto;
-          padding: var(--padding);
-          border-radius: var(--radius);
-          transition: var(--transition-velocity) ease-in-out background-color;
+				& > div{
+					cursor: pointer;
+					display: none;
+					background-color: var(--color-main-tint-3);
+					width: auto;
+					height: auto;
+					padding: var(--padding);
+					border-radius: var(--radius);
+					transition: var(--transition-velocity) ease-in-out background-color;
 
-          &:hover{
-            user-select: none;
-            background-color: var(--color-main-tint-4);
-          }
-        }
-      }
+					&:hover{
+						user-select: none;
+						background-color: var(--color-main-tint-4);
+					}
+				}
+			}
 
-      &#search{
-      }
+			&#search{
+			}
 
-      &#optionsToSelect{
-        max-height: 250px;
-        overflow: scroll;
+			&#optionsToSelect{
+				max-height: 250px;
+				overflow: scroll;
 
-        display: flex;
-        flex-direction: column;
-        gap: calc(var(--gap) / 2);
+				display: flex;
+				flex-direction: column;
+				gap: calc(var(--gap) / 2);
 
-        &.hide{
-          display: none;
-        }
+				&.hide{
+				display: none;
+				}
 
-        & > div{
-          cursor: pointer;
-          background-color: var(--color-main-tint-3);
-          width: auto;
-          height: auto;
-          padding: var(--padding);
-          border-radius: var(--radius);
-          transition: var(--transition-velocity) ease-in-out background-color;
+				& > div{
+					cursor: pointer;
+					background-color: var(--color-main-tint-3);
+					width: auto;
+					height: auto;
+					padding: var(--padding);
+					border-radius: var(--radius);
+					transition: var(--transition-velocity) ease-in-out background-color;
 
-          &:hover{
-            user-select: none;
-            background-color: var(--color-main-tint-4);
-          }
-        }
-      }
-    }
-  }
+					&:hover{
+						user-select: none;
+						background-color: var(--color-main-tint-4);
+					}
+				}
+			}
+		}
+	}
 }
 
 x-urgent{
