@@ -8,17 +8,16 @@
 	--z-body: 1;
 	--z-footer: 2;
 	--z-main: 3;
-	--z-boxes: 4;
-	--z-nav: 5;
-	--z-header: 6;
-	--z-menuHamburgerButton: 7;
-	--z-cover: 8;
-	--z-modal: 9;
-	--z-menu: 10;
-	--z-tooltip: 11; /* Will move to css anchor positioning */
-	--z-toasts: 12;
-	--z-loading: 13;
-	--z-urgent: 14;
+	--z-header: 4;
+	--z-menuHamburgerButton: 5;
+	--z-layers: 6;
+	--z-cover: 7;
+	--z-modal: 8;
+	--z-menu: 9;
+	--z-tooltip: 10; /* Will move to css anchor positioning */
+	--z-toasts: 11;
+	--z-loading: 12;
+	--z-urgent: 13;
 
 	--header-height: 2rem;
 	--footer-height: 2rem;
@@ -31,84 +30,72 @@ body{
 	font-family: Quicksand;
 	padding-top: var(--header-height);
 
-	& > toasts{
-		height: auto;
-		max-height: 100vh;
-		width: 400px;
+	& > main{
+		width: 100vw;
+		min-height: calc(100dvh - var(--header-height));
+
+		opacity: 0;
+		transform: translateY(20px);
+
+		&.show{
+			transition: calc(var(--transition-velocity) * 2) ease-in-out;
+			transition-property: opacity, transform;
+
+			opacity: 1;
+			transform: translateY(0px);
+		}
+	}
+
+	& > footer{
+		background-color: var(--color-main-tint-4);
+
+		color: var(--color-text-primary);
+		font-size: 0.7rem;
+
+		width: 100%;
+		height: var(--footer-height);
 		padding: var(--padding);
-		padding-bottom: calc(var(--padding) * 4);
 
-		overflow-x: hidden;
-		overflow-y: scroll;
+		display: grid;
+		place-items: center;
 
-		display: flex;
-		flex-direction: column-reverse;
-		gap: var(--gap);
+		&.hide{
+			display: none;
+		}
+	}
+
+	& > header{
+		background-color: var(--color-main);
+		color: white;
+		/* NOTE: We need to make header text color dynamic. We use contrast-color(). This feature is coming soon. */
+
+		width: 100%;
+		height: var(--header-height);
+		padding: var(--padding);
 
 		position: fixed;
 		top: 0px;
-		right: 0px;
-		z-index: var(--z-toasts);
+		left: 0px;
+		z-index: var(--z-header);
 
-		&:empty{
-		padding: 0px;
+		display: grid;
+		place-items: center;
+
+		&.hide{
+			display: none;
 		}
-
 	}
 
-	& > modal{
-		pointer-events: none;
+	/* If header is empty */
+	&:has(header:empty){
+		padding-top: 0px;
 
-		opacity: 0;
-
-		background-color: var(--color-main-tint-4);
-
-		min-width: 40px;
-		border: 0px;
-		border-radius: var(--radius);
-		box-shadow: var(--shadow);
-
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%) scale(0.8);
-		z-index: var(--z-modal);
-
-		transition: var(--transition-velocity) ease-in-out;
-		transition-property: transform, opacity;
-
-		&.show{
-			pointer-events: all;
-			opacity: 1;
-			transform: translate(-50%, -50%) scale(1);
-		}
-
-		& > x-svg{
-			position: fixed;
-			top: 5px;
-			right: 5px;
+		& > header{
+			display: none;
 		}
 
 		& > main{
-			width: auto;
-			max-width: 80vw;
-
-			height: auto;
-			max-height: 80vh;
-
-			overflow: hidden;
-			overflow-y: scroll;
-
-			padding: var(--padding);
-			padding-top: 2rem;
-
-			display: grid;
-			place-items: center;
-
-			@media (width <= 600px){
-				max-width: 90dvw;
-				max-height: 90dvh;
-			}
+			min-height: 100dvh;
 		}
 	}
 
@@ -270,6 +257,8 @@ body{
 		}
 	}
 
+	& > layers{}
+
 	& > cover{
 		pointer-events:auto;
 
@@ -288,73 +277,85 @@ body{
 		transition: var(--transition-velocity) opacity;
 	}
 
-	& > header{
-		background-color: var(--color-main);
-		color: white;
-		/* NOTE: We need to make header text color dynamic. We use contrast-color(). This feature is coming soon. */
+	& > modal{
+		pointer-events: none;
 
-		width: 100%;
-		height: var(--header-height);
-		padding: var(--padding);
+		opacity: 0;
+
+		background-color: var(--color-main-tint-4);
+
+		min-width: 40px;
+		border: 0px;
+		border-radius: var(--radius);
+		box-shadow: var(--shadow);
 
 		position: fixed;
-		top: 0px;
-		left: 0px;
-		z-index: var(--z-header);
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) scale(0.8);
+		z-index: var(--z-modal);
 
-		display: grid;
-		place-items: center;
+		transition: var(--transition-velocity) ease-in-out;
+		transition-property: transform, opacity;
 
-		&.hide{
-			display: none;
+		&.show{
+			pointer-events: all;
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1);
 		}
-	}
 
-	/* If header is empty */
-	&:has(header:empty){
-		padding-top: 0px;
-
-		& > header{
-			display: none;
+		& > x-svg{
+			position: fixed;
+			top: 5px;
+			right: 5px;
 		}
 
 		& > main{
-			min-height: 100dvh;
+			width: auto;
+			max-width: 80vw;
+
+			height: auto;
+			max-height: 80vh;
+
+			overflow: hidden;
+			overflow-y: scroll;
+
+			padding: var(--padding);
+			padding-top: 2rem;
+
+			display: grid;
+			place-items: center;
+
+			@media (width <= 600px){
+				max-width: 90dvw;
+				max-height: 90dvh;
+			}
 		}
 	}
 
-	& > main{
-		width: 100vw;
-		min-height: calc(100dvh - var(--header-height));
-
-		opacity: 0;
-		transform: translateY(20px);
-
-		&.show{
-			transition: calc(var(--transition-velocity) * 2) ease-in-out;
-			transition-property: opacity, transform;
-
-			opacity: 1;
-			transform: translateY(0px);
-		}
-	}
-
-	& > footer{
-		background-color: var(--color-main-tint-4);
-
-		color: var(--color-text-primary);
-		font-size: 0.7rem;
-
-		width: 100%;
-		height: var(--footer-height);
+	& > toasts{
+		height: auto;
+		max-height: 100vh;
+		width: 400px;
 		padding: var(--padding);
+		padding-bottom: calc(var(--padding) * 4);
 
-		display: grid;
-		place-items: center;
+		overflow-x: hidden;
+		overflow-y: scroll;
 
-		&.hide{
-			display: none;
+		display: flex;
+		flex-direction: column-reverse;
+		gap: var(--gap);
+
+		position: fixed;
+		top: 0px;
+		right: 0px;
+		z-index: var(--z-toasts);
+
+		&:empty{
+		padding: 0px;
 		}
+
 	}
 }
 

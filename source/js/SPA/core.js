@@ -29,7 +29,7 @@ import Form from "./form.js";
 
 //// Custom Elements (In docs we call these Built-In X-Elements)
 import XSVG from "./elements/XSVG.js";
-import Modal from "./elements/modal.js"; // Modal should be built-in
+import Modal from "./elements/modal.js";
 import Toast from "./elements/toast.js";
 import Share from "./elements/share.js"; // Share depends on modal
 
