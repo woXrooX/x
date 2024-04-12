@@ -540,9 +540,9 @@
 		"uz": "Iltimos kuting"
 	},
 	"powered_by_woXrooX": {
-		"en": "Powered by <a href='https://www.woXrooX.com'>woXrooX</a>",
-		"ru": "При поддержке <a href='https://www.woXrooX.com'>woXrooX</a>",
-		"uz": "<a href='https://www.woXrooX.com'>woXrooX</a> tomonidan qo`llab-quvvatlangan"
+		"en": "<span class='text-nowrap'>Powered by <a href='https://www.woXrooX.com'>woXrooX</a></span>",
+		"ru": "<span class='text-nowrap'>При поддержке <a href='https://www.woXrooX.com'>woXrooX</a></span>",
+		"uz": "<span class='text-nowrap'><a href='https://www.woXrooX.com'>woXrooX</a> tomonidan qo`llab-quvvatlangan</span>"
 	},
 	"price": {
 		"en": "Price",
