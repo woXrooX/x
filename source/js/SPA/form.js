@@ -11,8 +11,7 @@ export default class Form{
 		// Returns Live Collection
 		// const forms = element.getElementsByTagName("form");
 
-		// Since We Are Manuallay Collecting Inside Modal We Want To Isolate Collecting "x-modal form" Here
-		const forms = element.querySelectorAll(':not(x-modal) > form');
+		const forms = element.querySelectorAll('form');
 
 		for(const form of forms){
 			if(Form.#formGuard(form) === false) continue;
@@ -119,10 +118,7 @@ export default class Form{
 			submitter.disabled = false;
 
 			////////// x-modal
-			if(form.hasAttribute("x-modal")){
-				// Hide
-				if(response["type"] === "success" && form.getAttribute("x-modal") === "hide") window.Modal.hide();
-			}
+			Modal.handle_commands(form.getAttribute("x-modal"), response["type"]);
 
 			////////// Toast
 			if(form.hasAttribute("x-toast")) window.Toast.new(response["type"], response["message"]);
