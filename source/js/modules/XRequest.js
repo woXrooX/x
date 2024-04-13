@@ -1,5 +1,3 @@
-// 0.1.0001
-
 "use strict";
 
 export default class XRequest{
@@ -112,7 +110,7 @@ export default class XRequest{
 
 		for(const instruction of this.#instructions){
 			if(instruction["types"].includes("any") || instruction["types"].includes(this.#response["type"])){
-				if(instruction["source"] === "data") this.#source = this.#response["data"] ?? null;
+				if(instruction["source"] === "data") this.#source = this.#response["data"] ?? '';
 				else if(instruction["source"] === "message") this.#source = window.Lang.use(this.#response["message"]);
 
 				this.#action = instruction["action"];
@@ -154,6 +152,8 @@ export default class XRequest{
 			this.#handleCommands();
 
 			if(this.#element.hasAttribute("x-toast")) window.Toast.new(this.#response["type"], this.#response["message"]);
+
+			Modal.handle_commands(this.#element.getAttribute("x-modal"), this.#response["type"]);
 
 			XRequest.#handleResponseActions(this.#response);
 
