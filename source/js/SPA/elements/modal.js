@@ -39,8 +39,8 @@ export default class Modal extends HTMLElement{
 	}
 
 	static handle_commands(commands, type){
-		if(commands === false) return;
-		if(type === false) return;
+		if(!!commands === false) return;
+		if(!!type === false) return;
 
 		const instructions = Modal.#parse_commands(commands);
 
@@ -72,8 +72,6 @@ export default class Modal extends HTMLElement{
 
 	static #parse_commands(commands){
 		const instructions = [];
-
-		if(commands === false) return instructions;
 
 		commands = commands.split(' ');
 
