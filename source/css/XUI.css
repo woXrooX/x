@@ -1607,6 +1607,7 @@
 		.d-inline-block{display: inline-block;}
 
 		@layer flex{
+			.d-inline-flex{display: inline-flex;}
 			.d-flex{display: flex;}
 			.flex-row{flex-direction: row;}
 			.flex-column{flex-direction: column;}
