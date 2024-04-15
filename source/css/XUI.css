@@ -1464,6 +1464,9 @@
 
 		@layer height{
 			.h-auto{height: auto;}
+			.h-fit-content{height: fit-content;}
+			.h-min-content{height: min-content;}
+			.h-max-content{height: max-content;}
 
 			/* % */
 			.h-10{height: 10%;}
@@ -1593,6 +1596,62 @@
 			.max-vh-90{max-height: 90vh;}
 			.max-vh-95{max-height: 95vh;}
 			.max-vh-100{max-height: 100vh;}
+
+			/* px */
+			.h-10px{height: 10px;}
+			.h-20px{height: 20px;}
+			.h-30px{height: 30px;}
+			.h-40px{height: 40px;}
+			.h-50px{height: 50px;}
+			.h-60px{height: 60px;}
+			.h-70px{height: 70px;}
+			.h-80px{height: 80px;}
+			.h-90px{height: 90px;}
+			.h-100px{height: 100px;}
+			.h-150px{height: 150px;}
+			.h-200px{height: 200px;}
+			.h-250px{height: 250px;}
+			.h-300px{height: 300px;}
+			.h-350px{height: 350px;}
+			.h-400px{height: 400px;}
+			.h-450px{height: 450px;}
+			.h-500px{height: 500px;}
+			.h-550px{height: 550px;}
+			.h-600px{height: 600px;}
+			.h-650px{height: 650px;}
+			.h-700px{height: 700px;}
+			.h-750px{height: 750px;}
+			.h-800px{height: 800px;}
+			.h-850px{height: 850px;}
+			.h-900px{height: 900px;}
+			.h-950px{height: 950px;}
+			.h-1000px{height: 1000px;}
+
+			/* max-height px */
+			.max-h-100px{max-height: 100px;}
+			.max-h-200px{max-height: 200px;}
+			.max-h-250px{max-height: 250px;}
+			.max-h-500px{max-height: 500px;}
+			.max-h-600px{max-height: 600px;}
+			.max-h-1000px{max-height: 1000px;}
+			.max-h-1200px{max-height: 1200px;}
+			.max-h-1500px{max-height: 1500px;}
+			.max-h-2000px{max-height: 2000px;}
+			.max-h-2200px{max-height: 2200px;}
+			.max-h-2500px{max-height: 2500px;}
+
+			/* min-height px */
+			.min-h-100px{min-height: 100px;}
+			.min-h-200px{min-height: 200px;}
+			.min-h-250px{min-height: 250px;}
+			.min-h-500px{min-height: 500px;}
+			.min-h-600px{min-height: 600px;}
+			.min-h-1000px{min-height: 1000px;}
+			.min-h-1200px{min-height: 1200px;}
+			.min-h-1500px{min-height: 1500px;}
+			.min-h-2000px{min-height: 2000px;}
+			.min-h-2200px{min-height: 2200px;}
+			.min-h-2500px{min-height: 2500px;}
 		}
 	}
 
