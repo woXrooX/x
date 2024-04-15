@@ -11,6 +11,7 @@ if __name__ != "__main__":
 
 	class SendGrid:
 
+		# Returns True on success else False
 		@staticmethod
 		def send(from_email, to_email, content, subject = ""):
 			# Check If SendGrid Is Enabled

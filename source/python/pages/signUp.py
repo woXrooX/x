@@ -64,7 +64,6 @@ def signUp(request):
 			),
 			commit=True
 		)
-
 		if data is False: return response(type="error", message="databaseError")
 
 		# Get User Data
@@ -76,9 +75,7 @@ def signUp(request):
 			),
 			fetchOne=True
 		)
-
 		if not data: return response(type="error", message="databaseError")
-
 
 		# Set Session User Data
 		session["user"] = data
@@ -90,11 +87,8 @@ def signUp(request):
 		# Handle Folder Creation Errors
 		if not User.initFolders(): pass
 
-
 		#### Check If Verification Code Sent Successfully
-		emailVerificationSentSuccessfully = False
-
-		if SendGrid.send("noreply", request.form["eMail"], eMailVerificationCode, "Sign Up") is True: emailVerificationSentSuccessfully = True
+		emailVerificationSentSuccessfully = SendGrid.send("noreply", request.form["eMail"], eMailVerificationCode, "Sign Up")
 
 		try:
 			from python.modules.onSignUp import onSignUp
