@@ -31,6 +31,9 @@ body{
 	padding-top: var(--header-height);
 
 	& > main{
+		display: grid;
+		justify-items: center;
+
 		width: 100vw;
 		min-height: calc(100dvh - var(--header-height));
 
