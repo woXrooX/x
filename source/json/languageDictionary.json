@@ -134,6 +134,11 @@
 		"ru": "По умолчанию",
 		"uz": "Odatiy"
 	},
+	"delete": {
+		"en": "Delete",
+		"ru": "Удалить",
+		"uz": "O`chirish"
+	},
 	"deleted": {
 		"en": "Deleted",
 		"ru": "Удалено",
