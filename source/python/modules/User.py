@@ -72,6 +72,7 @@ if __name__ != "__main__":
 				"username": session["user"]["username"],
 				"firstname": session["user"]["firstname"],
 				"lastname": session["user"]["lastname"],
+				"profile_picture": session["user"]["profile_picture"],
 				"app_color_mode": session["user"]["app_color_mode"],
 				"app_language": session["user"]["app_language"],
 				"authenticity_status": session["user"]["authenticity_status"],
