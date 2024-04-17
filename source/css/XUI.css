@@ -1233,6 +1233,14 @@
 		.bg-gradient-45    {background-image: linear-gradient(45deg, var(--color-main-tint-2), var(--color-main-tint-6) 80%);}
 	}
 
+	@layer image{
+		.object-fit-cover{object-fit: cover;}
+		.object-fit-contain{object-fit: contain;}
+		.object-fit-fill{object-fit: fill;}
+		.object-fit-none{object-fit: none;}
+		.object-fit-scale-down{object-fit: scale-down;}
+	}
+
 	@layer layout{
 		container{
 			display: flex;
