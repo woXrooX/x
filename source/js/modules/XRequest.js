@@ -23,6 +23,18 @@ export default class XRequest{
 	static #handleResponseActions(response){
 		if(!("actions" in response)) return;
 
+		if("updateConf" in response["actions"]) window.conf = response["actions"]["updateConf"];
+
+		if("setSessionUser" in response["actions"]){
+			window.session["user"] = response["actions"]["setSessionUser"];
+			CSS.detectColorMode();
+		}
+
+		if("deleteSessionUser" in response["actions"]){
+			delete window.session["user"];
+			CSS.detectColorMode();
+		}
+
 		if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));
 
 		if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
