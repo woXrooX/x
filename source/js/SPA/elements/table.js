@@ -279,14 +279,14 @@ export default class Table extends HTMLElement{
 
 		let buttonsHTML = "";
 
-		for(let i = 1; i <= this.bodyValuesInChunks.length; i++) buttonsHTML += `<button class="btn btn-primary d-none" name="${i}">${i}</button>`;
+		for(let i = 1; i <= this.bodyValuesInChunks.length; i++) buttonsHTML += `<button class="btn btn-primary btn-s d-none" name="${i}">${i}</button>`;
 
 		this.querySelector("main > div[for=paginationContainer]:last-child > div[for=pagination]").innerHTML = `
-			<button class="btn btn-primary text-transform-uppercase" name="first">${window.Lang.use("first")}</button>
-			<button class="btn btn-primary" name="previous"><x-svg name="arrow_back" color="white"></x-svg></button>
+			<button class="btn btn-primary btn-s text-transform-uppercase" name="first">${window.Lang.use("first")}</button>
+			<button class="btn btn-primary btn-s" name="previous"><x-svg name="arrow_back" color="white"></x-svg></button>
 			<section class="d-flex flex-row gap-0-2">${buttonsHTML}</section>
-			<button class="btn btn-primary" name="next"><x-svg name="arrow_forward" color="white"></x-svg></button>
-			<button class="btn btn-primary text-transform-uppercase" name="last">${window.Lang.use("last")}</button>
+			<button class="btn btn-primary btn-s" name="next"><x-svg name="arrow_forward" color="white"></x-svg></button>
+			<button class="btn btn-primary btn-s text-transform-uppercase" name="last">${window.Lang.use("last")}</button>
 		`;
 
 		this.firstButton = this.querySelector(`main > div[for=paginationContainer]:last-child > div[for="pagination"] > button[name=first]`);

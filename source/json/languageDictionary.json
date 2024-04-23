@@ -49,6 +49,11 @@
 		"ru": "Нажимая «Зарегистрироваться», вы соглашаетесь с нашими <a href='/termsOfUse'>Условиями использования</a> и с нашей <a href='/privacyPolicy'>Политикой конфиденциальности</a>, включая <a href = '/cookieTerms'>Использование файлов cookie</a>",
 		"uz": "Ro`yxatdan o`tishni bosish orqali siz <a href='/termsOfUse'>Foydalanish shartlari</a>, <a href='/privacyPolicy'>Maxfiylik siyosati</a> va <a href='/cookieTerms'>Cookie-fayllardan foydalanish</a> shartlarmizni o`qiganligingizni va rozi bo`lganingizni bildirasiz"
 	},
+	"cannot_remember_password": {
+		"en": "Can't remember password?",
+		"ru": "Не можете вспомнить пароль?",
+		"uz": "Parolni eslay olmaysizmi?"
+	},
 	"change": {
 		"en": "Change",
 		"ru": "Изменить",
