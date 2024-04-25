@@ -93,3 +93,67 @@
 .font-family-SpecialElite{
   font-family: SpecialElite;
 }
+
+
+
+/* CormorantGaramond */
+
+@font-face{
+	font-family: CormorantGaramond-Bold;
+	src:url("/fonts/CormorantGaramond/CormorantGaramond-Bold.ttf");
+}
+.font-family-CormorantGaramond-Bold{font-family: CormorantGaramond-Bold;}
+
+@font-face{
+	font-family: CormorantGaramond-BoldItalic;
+	src:url("/fonts/CormorantGaramond/CormorantGaramond-BoldItalic.ttf");
+}
+.font-family-CormorantGaramond-BoldItalic{font-family: CormorantGaramond-BoldItalic;}
+
+@font-face{
+	font-family: CormorantGaramond-Italic;
+	src:url("/fonts/CormorantGaramond/CormorantGaramond-Italic.ttf");
+}
+.font-family-CormorantGaramond-Italic{font-family: CormorantGaramond-Italic;}
+
+@font-face{
+	font-family: CormorantGaramond-Light;
+	src:url("/fonts/CormorantGaramond/CormorantGaramond-Light.ttf");
+}
+.font-family-CormorantGaramond-Light{font-family: CormorantGaramond-Light;}
+
+@font-face{
+	font-family: CormorantGaramond-LightItalic;
+	src:url("/fonts/CormorantGaramond/CormorantGaramond-LightItalic.ttf");
+}
+.font-family-CormorantGaramond-LightItalic{font-family: CormorantGaramond-LightItalic;}
+
+@font-face{
+	font-family: CormorantGaramond-Medium;
+	src:url("/fonts/CormorantGaramond/CormorantGaramond-Medium.ttf");
+}
+.font-family-CormorantGaramond-Medium{font-family: CormorantGaramond-Medium;}
+
+@font-face{
+	font-family: CormorantGaramond-MediumItalic;
+	src:url("/fonts/CormorantGaramond/CormorantGaramond-MediumItalic.ttf");
+}
+.font-family-CormorantGaramond-MediumItalic{font-family: CormorantGaramond-MediumItalic;}
+
+@font-face{
+	font-family: CormorantGaramond-Regular;
+	src:url("/fonts/CormorantGaramond/CormorantGaramond-Regular.ttf");
+}
+.font-family-CormorantGaramond-Regular{font-family: CormorantGaramond-Regular;}
+
+@font-face{
+	font-family: CormorantGaramond-SemiBold;
+	src:url("/fonts/CormorantGaramond/CormorantGaramond-SemiBold.ttf");
+}
+.font-family-CormorantGaramond-SemiBold{font-family: CormorantGaramond-SemiBold;}
+
+@font-face{
+	font-family: CormorantGaramond-SemiBoldItalic;
+	src:url("/fonts/CormorantGaramond/CormorantGaramond-SemiBoldItalic.ttf");
+}
+.font-family-CormorantGaramond-SemiBoldItalic{font-family: CormorantGaramond-SemiBoldItalic;}
