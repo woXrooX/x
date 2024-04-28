@@ -8,65 +8,14 @@ USE [NAME];
 
 SET NAMES utf8mb4;
 
-\! echo "-------------------------- genders";
-CREATE TABLE IF NOT EXISTS `genders` (
-	`id` INT NOT NULL UNIQUE auto_increment,
-	`name` VARCHAR(10) NOT NULL UNIQUE,
-	PRIMARY KEY (`id`)
-);
-INSERT INTO genders (name)
-	VALUES
-		("unknown"),
-		("male"),
-		("female")
-;
 
-\! echo "-------------------------- user_authenticity_statuses";
-CREATE TABLE IF NOT EXISTS `user_authenticity_statuses` (
-	`id` INT NOT NULL UNIQUE auto_increment,
-	`name` VARCHAR(20) NOT NULL UNIQUE,
-	PRIMARY KEY (`id`)
-);
-INSERT INTO user_authenticity_statuses (name)
-	VALUES
-		("unauthenticated"),
-		("unauthorized"),
-		("authorized")
-;
 
-\! echo "-------------------------- user_roles";
-CREATE TABLE IF NOT EXISTS `user_roles` (
-	`id` INT NOT NULL UNIQUE auto_increment,
-	`name` VARCHAR(20) NOT NULL UNIQUE,
-	PRIMARY KEY (`id`)
-);
-INSERT INTO user_roles (name)
-	VALUES
-		("root"),
-		("dev"),
-		("admin")
-;
 
-\! echo "-------------------------- user_states";
-CREATE TABLE IF NOT EXISTS `user_states` (
-	`id` INT NOT NULL UNIQUE auto_increment,
-	`name` VARCHAR(10) NOT NULL UNIQUE,
-	PRIMARY KEY (`id`)
-);
-INSERT INTO user_states (name)
-	VALUES
-		("active"),
-		("inactive"),
-		("deleted"),
-		("suspended")
-;
 
-\! echo "-------------------------- user_plans";
-CREATE TABLE IF NOT EXISTS `user_plans` (
-	`id` INT NOT NULL UNIQUE auto_increment,
-	`name` VARCHAR(10) NOT NULL UNIQUE,
-	PRIMARY KEY (`id`)
-);
+
+-- ------------------------------------
+-- ------------------------------------ App settings
+-- ------------------------------------
 
 \! echo "-------------------------- currencies";
 -- https://en.wikipedia.org/wiki/List_of_circulating_currencies
@@ -83,11 +32,11 @@ CREATE TABLE IF NOT EXISTS `currencies` (
 	`native_name` VARCHAR(30) NULL,
 	PRIMARY KEY (`id`)
 );
-INSERT INTO currencies (code, decimal_digits, fractional_unit, symbol, native_name)
+INSERT INTO currencies (id, code, decimal_digits, fractional_unit, symbol, native_name)
 	VALUES
-		("UZS", 2, "Tiyin", NULL, "Oʻzbek soʻmi"),
-		("USD", 2, "Cent", "$", "United States dollar"),
-		("RUB", 2, "Копейка", "₽", "Российский рубль")
+		(1, "UZS", 2, "Tiyin", NULL, "Oʻzbek soʻmi"),
+		(2, "USD", 2, "Cent", "$", "United States dollar"),
+		(3, "RUB", 2, "Копейка", "₽", "Российский рубль")
 ;
 
 \! echo "-------------------------- languages";
@@ -97,15 +46,15 @@ CREATE TABLE IF NOT EXISTS `languages` (
 	`native_name` VARCHAR(50) NULL,
 	PRIMARY KEY (`id`)
 );
-INSERT INTO languages (code, native_name)
+INSERT INTO languages (id, code, native_name)
 	VALUES
-		("en", "English"),
-		("uz", "Uzbek, Ўзбек, أۇزبېك‎"),
-		("ru", "Русский язык"),
-		("ja", "日本語 (にほんご／にっぽんご)")
+		(1, "en", "English"),
+		(2, "uz", "Uzbek, Ўзбек, أۇزبېك‎"),
+		(3, "ru", "Русский язык"),
+		(4, "ja", "日本語 (にほんご／にっぽんご)")
 ;
 
-\! echo "-------------------------- app_color_mode";
+\! echo "-------------------------- app_color_modes";
 -- 1 Is For Dark Mode
 -- 2 Is For Light Mode
 
@@ -114,11 +63,53 @@ CREATE TABLE IF NOT EXISTS `app_color_modes` (
 	`name` VARCHAR(10) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 );
-INSERT INTO app_color_modes (name)
+INSERT INTO app_color_modes (id, name)
 	VALUES
-		("dark"),
-		("light")
+		(1, "dark"),
+		(2, "light")
 ;
+
+
+
+
+
+-- ------------------------------------
+-- ------------------------------------ users
+-- ------------------------------------
+
+\! echo "-------------------------- user_authenticity_statuses";
+CREATE TABLE IF NOT EXISTS `user_authenticity_statuses` (
+	`id` INT NOT NULL UNIQUE auto_increment,
+	`name` VARCHAR(20) NOT NULL UNIQUE,
+	PRIMARY KEY (`id`)
+);
+INSERT INTO user_authenticity_statuses (id, name)
+	VALUES
+		(1, "unauthenticated"),
+		(2, "unauthorized"),
+		(3, "authorized")
+;
+
+\! echo "-------------------------- user_states";
+CREATE TABLE IF NOT EXISTS `user_states` (
+	`id` INT NOT NULL UNIQUE auto_increment,
+	`name` VARCHAR(10) NOT NULL UNIQUE,
+	PRIMARY KEY (`id`)
+);
+INSERT INTO user_states (id, name)
+	VALUES
+		(1, "active"),
+		(2, "inactive"),
+		(3, "deleted"),
+		(4, "suspended")
+;
+
+\! echo "-------------------------- user_plans";
+CREATE TABLE IF NOT EXISTS `user_plans` (
+	`id` INT NOT NULL UNIQUE auto_increment,
+	`name` VARCHAR(10) NOT NULL UNIQUE,
+	PRIMARY KEY (`id`)
+);
 
 \! echo "-------------------------- users";
 CREATE TABLE IF NOT EXISTS `users` (
@@ -140,7 +131,11 @@ CREATE TABLE IF NOT EXISTS `users` (
 	`firstname` VARCHAR(100),
 	`lastname` VARCHAR(100),
 	`birth_date` DATE NULL,
-	`gender` INT NULL,
+
+	-- 0 = Male
+	-- 1 = Female
+	-- NULL = Not specified
+	`gender` BIT(1) DEFAULT NULL,
 
 	`profile_picture` VARCHAR(100) NULL,
 	`cover_picture` VARCHAR(100) NULL,
@@ -157,8 +152,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 	`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-	FOREIGN KEY (gender) REFERENCES genders(id) ON DELETE SET NULL,
-
 	FOREIGN KEY (authenticity_status) REFERENCES user_authenticity_statuses(id) ON DELETE SET NULL,
 	FOREIGN KEY (state) REFERENCES user_states(id) ON DELETE SET NULL,
 	FOREIGN KEY (plan) REFERENCES user_plans(id) ON DELETE SET NULL,
@@ -170,6 +163,19 @@ CREATE TABLE IF NOT EXISTS `users` (
 	PRIMARY KEY (`id`)
 );
 
+\! echo "-------------------------- user_roles";
+CREATE TABLE IF NOT EXISTS `user_roles` (
+	`id` INT NOT NULL UNIQUE auto_increment,
+	`name` VARCHAR(20) NOT NULL UNIQUE,
+	PRIMARY KEY (`id`)
+);
+INSERT INTO user_roles (id, name)
+	VALUES
+		(1, "root"),
+		(2, "dev"),
+		(3, "admin")
+;
+
 \! echo "-------------------------- users_roles";
 CREATE TABLE IF NOT EXISTS `users_roles` (
 	`user` INT NOT NULL,
@@ -180,6 +186,31 @@ CREATE TABLE IF NOT EXISTS `users_roles` (
 
 	CONSTRAINT `unique_users_roles` UNIQUE (`user`, `role`)
 );
+
+\! echo "-------------------------- user_occupations";
+CREATE TABLE IF NOT EXISTS `user_occupations` (
+	`id` INT NOT NULL UNIQUE auto_increment,
+	`name` VARCHAR(20) NOT NULL UNIQUE,
+	PRIMARY KEY (`id`)
+);
+
+\! echo "-------------------------- users_occupations";
+CREATE TABLE IF NOT EXISTS `users_occupations` (
+	`user` INT NOT NULL,
+	`occupation` INT NOT NULL,
+
+	FOREIGN KEY (`user`) REFERENCES users(`id`) ON DELETE CASCADE,
+	FOREIGN KEY (`occupation`) REFERENCES user_occupations(`id`) ON DELETE CASCADE,
+
+	CONSTRAINT `unique_users_occupations` UNIQUE (`user`, `occupation`)
+);
+
+
+
+
+-- ------------------------------------
+-- ------------------------------------ notification
+-- ------------------------------------
 
 \! echo "-------------------------- notification_types";
 CREATE TABLE IF NOT EXISTS `notification_types` (
@@ -212,6 +243,14 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 
 	PRIMARY KEY (`id`)
 );
+
+
+
+
+
+-- ------------------------------------
+-- ------------------------------------ Login tools
+-- ------------------------------------
 
 \! echo "-------------------------- login_records";
 CREATE TABLE IF NOT EXISTS `login_records` (
