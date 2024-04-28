@@ -43,6 +43,31 @@ if __name__ != "__main__":
 
 		@staticmethod
 		@check_if_user_in_session
+		def get_occupations():
+			data = MySQL.execute(
+					sql="""
+						SELECT user_occupations.name
+						FROM user_occupations
+						INNER JOIN users_occupations
+						ON user_occupations.id = users_occupations.occupation AND users_occupations.user = %s
+					""",
+					params=(session["user"]["id"],)
+				)
+
+			if data is False: return False
+
+			session["user"]["occupations"] = []
+
+			# Extracting IDs From Response
+			for occupation in data: session["user"]["occupations"].append(occupation["name"])
+
+			Log.success("User.get_occupations()")
+
+			return True
+
+
+		@staticmethod
+		@check_if_user_in_session
 		def get_plan():
 			data = MySQL.execute(
 				"SELECT user_plans.name FROM user_plans WHERE id = %s LIMIT 1;",
@@ -77,6 +102,7 @@ if __name__ != "__main__":
 				"app_language": session["user"]["app_language"],
 				"authenticity_status": session["user"]["authenticity_status"],
 				"roles": session["user"]["roles"],
+				"occupations": session["user"]["occupations"],
 				"plan": session["user"]["plan"],
 			}
 
@@ -102,6 +128,8 @@ if __name__ != "__main__":
 			session["user"] = data
 
 			if not User.get_roles(): pass
+
+			if not User.get_occupations(): pass
 
 			if not User.get_plan(): pass
 
