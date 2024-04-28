@@ -66,7 +66,7 @@ export default class SVG{
 		return SVG.#open + body + SVG.#close;
 	}
 
-	static set(SVGs){
+	static load(SVGs){
 		if(!!SVGs === false) return;
 
 		for(const svg in SVGs) SVG.all[svg] = SVGs[svg];

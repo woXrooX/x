@@ -60,16 +60,13 @@ export default class Core{
 
 		Log.success(response);
 
-		window.CONF = response["CONF"];
 		window.session = response["session"];
-
+		window.CONF = response["CONF"];
 		window.Language.DICT = response["LANG_DICT"];
-
 		window.USER_AUTHENTICITY_STATUSES = response["USER_AUTHENTICITY_STATUSES"];
 		window.USER_ROLES = response["USER_ROLES"];
-
-		// Load External SVGs To SVG Class
-		window.SVG.set(response["PROJECT_SVG"]);
+		window.USER_OCCUPATIONS = response["USER_OCCUPATIONS"];
+		window.SVG.load(response["PROJECT_SVG"]);
 	}
 
 	// Initialize all the initial methods

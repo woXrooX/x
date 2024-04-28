@@ -64,7 +64,7 @@ if __name__ != "__main__":
 		if updateConf: actionsDict["updateConf"] = PUBLIC_CONF
 
 		## setSessionUser
-		if setSessionUser is True: actionsDict["setSessionUser"] = User.generatePublicSession()
+		if setSessionUser is True: actionsDict["setSessionUser"] = User.generate_public_session()
 
 		## deleteSessionUser
 		if deleteSessionUser is True: actionsDict["deleteSessionUser"] = 0

@@ -41,7 +41,7 @@ def logIn(request):
 		session["user"] = data
 
 		# Handle The Session Update Error
-		if not User.updateSession(): pass
+		if not User.update_session(): pass
 
 		#### On Success Redirect & Update Front-End Session & Adds a new login record if enabled
 

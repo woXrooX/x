@@ -20,23 +20,24 @@ def api():
 			return make_response(
 				{
 					"CONF": Globals.PUBLIC_CONF,
-					"session": {"user": User.generatePublicSession()} if "user" in session else {},
+					"session": {"user": User.generate_public_session()} if "user" in session else {},
 					"LANG_DICT": Globals.LANG_DICT,
 					"USER_AUTHENTICITY_STATUSES": Globals.USER_AUTHENTICITY_STATUSES,
 					"USER_ROLES": Globals.USER_ROLES,
+					"USER_OCCUPATIONS": Globals.USER_OCCUPATIONS,
 					"PROJECT_SVG": Globals.PROJECT_SVG
 				}, 200)
 
 		if request.get_json()["for"] == "changeUserAppColorMode":
 			if "colorMode" not in request.get_json(): return response(type="error", message="invalidValue")
 
-			if not User.setAppColorMode(request.get_json()["colorMode"]): return response(type="error", message="somethingWentWrong")
+			if not User.set_app_color_mode(request.get_json()["colorMode"]): return response(type="error", message="somethingWentWrong")
 
 			return response(type="success", message="saved")
 
 		if request.get_json()["for"] == "changeUserAppLanguage":
 			if "code" not in request.get_json() or not request.get_json()["code"]: return response(type="error", message="invalidRequest")
 
-			if not User.setAppLanguage(request.get_json()["code"]): return response(type="error", message="somethingWentWrong")
+			if not User.set_app_language(request.get_json()["code"]): return response(type="error", message="somethingWentWrong")
 
 			return response(type="success", message="saved")

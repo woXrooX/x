@@ -11,15 +11,15 @@ if __name__ != "__main__":
 		# NOTE: Designed for use as a decorator
 		# If user is not in session, returns False
 		@staticmethod
-		def checkIfUserInSession(func):
+		def check_if_user_in_session(func):
 			def wrapper(*args, **kwargs):
 				if "user" not in session: return False
 				return func(*args, **kwargs)
 			return wrapper
 
 		@staticmethod
-		@checkIfUserInSession
-		def getRoles():
+		@check_if_user_in_session
+		def get_roles():
 			data = MySQL.execute(
 					sql="""
 						SELECT user_roles.name
@@ -37,13 +37,13 @@ if __name__ != "__main__":
 			# Extracting IDs From Response
 			for role in data: session["user"]["roles"].append(role["name"])
 
-			Log.success("User.getRoles()")
+			Log.success("User.get_roles()")
 
 			return True
 
 		@staticmethod
-		@checkIfUserInSession
-		def getPlan():
+		@check_if_user_in_session
+		def get_plan():
 			data = MySQL.execute(
 				"SELECT user_plans.name FROM user_plans WHERE id = %s LIMIT 1;",
 				(session["user"]["plan"],),
@@ -55,17 +55,17 @@ if __name__ != "__main__":
 			if data is None: session["user"]["plan"] = None
 			else: session["user"]["plan"] = data["name"]
 
-			Log.success("User.getPlan()")
+			Log.success("User.get_plan()")
 
 			return True
 
 
 		# Sanitized Session Data For Front
 		@staticmethod
-		@checkIfUserInSession
-		def generatePublicSession():
+		@check_if_user_in_session
+		def generate_public_session():
 
-			Log.success("User.generatePublicSession()")
+			Log.success("User.generate_public_session()")
 
 			return {
 				"id": session["user"]["id"],
@@ -81,8 +81,8 @@ if __name__ != "__main__":
 			}
 
 		@staticmethod
-		@checkIfUserInSession
-		def updateSession():
+		@check_if_user_in_session
+		def update_session():
 			data = MySQL.execute(
 				sql="""
 					SELECT
@@ -101,17 +101,17 @@ if __name__ != "__main__":
 
 			session["user"] = data
 
-			if not User.getRoles(): pass
+			if not User.get_roles(): pass
 
-			if not User.getPlan(): pass
+			if not User.get_plan(): pass
 
-			Log.success("User.updateSession()")
+			Log.success("User.update_session()")
 
 			return True
 
 		@staticmethod
-		@checkIfUserInSession
-		def setAppColorMode(color_mode):
+		@check_if_user_in_session
+		def set_app_color_mode(color_mode):
 			# Replace the [1, 2] with the data retrived from the database "app_color_modes"
 			if color_mode not in [1, 2]: return False
 
@@ -125,15 +125,15 @@ if __name__ != "__main__":
 
 			# Not working if I try to update single key
 			# session["user"]["app_color_mode"] = color_mode
-			if User.updateSession() is False: pass
+			if User.update_session() is False: pass
 
-			Log.success("User.setAppColorMode()")
+			Log.success("User.set_app_color_mode()")
 
 			return True
 
 		@staticmethod
-		@checkIfUserInSession
-		def setAppLanguage(code):
+		@check_if_user_in_session
+		def set_app_language(code):
 			if code not in Globals.CONF["default"]["language"]["supported"]: return False
 
 			if code not in Globals.LANGUAGES: return False
@@ -146,20 +146,20 @@ if __name__ != "__main__":
 
 			if data is False: return False
 
-			if User.updateSession() is False: pass
+			if User.update_session() is False: pass
 
-			Log.success("User.setAppLanguage()")
+			Log.success("User.set_app_language()")
 
 			return True
 
 		@staticmethod
-		def initFolders(id = None):
+		def init_folders(id = None):
 			ID = None
 
 			if id is not None:
 				if isinstance(id, int) and id > 0: ID = id
 				else:
-					Log.warning(f"Invalid argument passed to the method @ user.initFolders(): {id}. Due to invalid ID, could not initiate user folders.")
+					Log.warning(f"Invalid argument passed to the method @ user.init_folders(): {id}. Due to invalid ID, could not initiate user folders.")
 
 					return False
 
@@ -198,7 +198,7 @@ if __name__ != "__main__":
 				return False
 
 		@staticmethod
-		def deleteFiles(id):
+		def delete_files(id):
 			try:
 				shutil.rmtree(f'{Globals.X_RUNNING_FROM}/project_files/users/{id}/')
 

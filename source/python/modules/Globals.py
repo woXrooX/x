@@ -18,6 +18,7 @@ if __name__ != "__main__":
 		LANGUAGES = {}
 		USER_AUTHENTICITY_STATUSES = {}
 		USER_ROLES = {}
+		USER_OCCUPATIONS = {}
 		NOTIFICATION_TYPES = {}
 
 		BUILT_IN_FILES = {

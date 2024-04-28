@@ -6,7 +6,7 @@ if __name__ != "__main__":
 
 	class Notifications():
 		@staticmethod
-		@User.checkIfUserInSession
+		@User.check_if_user_in_session
 		def new(
 			owner = None,
 			content = "",
@@ -27,7 +27,7 @@ if __name__ != "__main__":
 
 		# Gets the all notifications related to the current user (the user in the current session)
 		@staticmethod
-		@User.checkIfUserInSession
+		@User.check_if_user_in_session
 		def getAll():
 			data = MySQL.execute(
 				sql="SELECT * FROM notifications WHERE user=%s",
@@ -39,7 +39,7 @@ if __name__ != "__main__":
 			return data
 
 		@staticmethod
-		@User.checkIfUserInSession
+		@User.check_if_user_in_session
 		def markAsSeen(id):
 			data = MySQL.execute(
 				sql="UPDATE notifications SET seen=1 WHERE id=%s AND owner=%s;",

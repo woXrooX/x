@@ -81,11 +81,11 @@ def signUp(request):
 		session["user"] = data
 
 		# Handle The Session Update Error
-		if not User.updateSession(): pass
+		if not User.update_session(): pass
 
 		#### Setup Dirs
 		# Handle Folder Creation Errors
-		if not User.initFolders(): pass
+		if not User.init_folders(): pass
 
 		#### Check If Verification Code Sent Successfully
 		emailVerificationSentSuccessfully = SendGrid.send("noreply", request.form["eMail"], eMailVerificationCode, "Sign Up")

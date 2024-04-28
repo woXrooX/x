@@ -39,17 +39,11 @@ if __name__ != "__main__":
 			MySQL.charset = charset
 			MySQL.collate = collate
 
-			# Globals.USER_AUTHENTICITY_STATUSES
-			MySQL.getUserAuthenticityStatuses()
-
-			# Globals.USER_ROLES
-			MySQL.getUserRoles()
-
-			# Globals.NOTIFICATION_TYPES
-			MySQL.getNotificationTypes()
-
-			# Globals.LANGUAGES
-			MySQL.getLanguages()
+			MySQL.get_user_authenticity_statuses()
+			MySQL.get_user_roles()
+			MySQL.get_user_occupations()
+			MySQL.get_notification_types()
+			MySQL.get_languages()
 
 
 		@staticmethod
@@ -228,25 +222,31 @@ if __name__ != "__main__":
 
 		######### Helpers / DB getters
 		@staticmethod
-		def getUserAuthenticityStatuses():
+		def get_user_authenticity_statuses():
 			data = MySQL.execute("SELECT * FROM user_authenticity_statuses")
-			if data is False: return Log.fieldset("Could Not Fetch 'user_authenticity_statuses'", "MySQL.getUserAuthenticityStatuses()")
+			if data is False: return Log.fieldset("Could Not Fetch 'user_authenticity_statuses'", "MySQL.get_user_authenticity_statuses()")
 			for user_authenticity_status in data: Globals.USER_AUTHENTICITY_STATUSES[user_authenticity_status["name"]] = user_authenticity_status
 
 		@staticmethod
-		def getUserRoles():
+		def get_user_roles():
 			data = MySQL.execute("SELECT * FROM user_roles")
-			if data is False: return Log.fieldset("Could Not Fetch 'user_roles'", "MySQL.getUserRoles()")
+			if data is False: return Log.fieldset("Could Not Fetch 'user_roles'", "MySQL.get_user_roles()")
 			for user_role in data: Globals.USER_ROLES[user_role["name"]] = user_role
 
 		@staticmethod
-		def getNotificationTypes():
+		def get_user_occupations():
+			data = MySQL.execute("SELECT * FROM user_occupations")
+			if data is False: return Log.fieldset("Could Not Fetch 'user_occupations'", "MySQL.get_user_occupations()")
+			for user_occupation in data: Globals.USER_OCCUPATIONS[user_occupation["name"]] = user_occupation
+
+		@staticmethod
+		def get_notification_types():
 			data = MySQL.execute("SELECT * FROM notification_types")
-			if data is False: return Log.fieldset("Could Not Fetch 'notification_types'", "MySQL.getNotificationTypes()")
+			if data is False: return Log.fieldset("Could Not Fetch 'notification_types'", "MySQL.get_notification_types()")
 			for notification_type in data: Globals.NOTIFICATION_TYPES[notification_type["name"]] = notification_type
 
 		@staticmethod
-		def getLanguages():
+		def get_languages():
 			languages = MySQL.execute("SELECT * FROM languages")
-			if languages is False: return Log.fieldset("Could Not Fetch 'languages'", "MySQL.getUserAuthenticityStatuses()")
+			if languages is False: return Log.fieldset("Could Not Fetch 'languages'", "MySQL.get_languages()")
 			for language in languages: Globals.LANGUAGES[language["code"]] = language
