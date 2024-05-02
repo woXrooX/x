@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `user_plans` (
 CREATE TABLE IF NOT EXISTS `users` (
 	`id` INT NOT NULL UNIQUE auto_increment,
 	`username` VARCHAR(100) NULL UNIQUE,
-	`password` VARCHAR(100) NOT NULL UNIQUE,
+	`password` VARCHAR(100) NOT NULL,
 	`password_salt` VARCHAR(100),
 
 	`eMail` VARCHAR(100) NOT NULL UNIQUE,

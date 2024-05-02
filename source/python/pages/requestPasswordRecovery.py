@@ -22,19 +22,22 @@ def requestPasswordRecovery(request):
 			fetchOne=True
 		)
 		if user is False: return response(type="error", message="databaseError")
-		if not user: return response(type="error", message="eMailNotFound")
+		if not user: return response(type="error", message="user_with_this_eMail_does_not_exists")
 
 
 		#### Check if the link already has been sent
 		data = MySQL.execute(
-			sql="SELECT 1 FROM password_recoveries WHERE password_recoveries.user = %s AND TIMESTAMPDIFF(MINUTE, password_recoveries.timestamp_first, NOW()) < %s LIMIT 1;",
-			params = (user['id'], Globals.CONF["password"]["recoveryLinkValidityDuration"]),
+			sql="""
+				SELECT 1
+				FROM password_recoveries
+				WHERE password_recoveries.user = %s AND TIMESTAMPDIFF(MINUTE, password_recoveries.timestamp_first, NOW()) < %s LIMIT 1;""",
+			params = (user['id'], Globals.CONF["password"]["recovery_link_validity_duration"]),
 			fetchOne=True
 		)
 		if data is False: return response(type="error", message="databaseError")
-		if data: return response(type="info", message="linkAlreadyHasBeenSent", redirect="/home")
+		if data: return response(type="info", message="password_recovery_link_already_has_been_sent", redirect="/home")
 
-		#### Sned the recovery link
+		#### The recovery link
 		token = secrets.token_urlsafe(32)
 
 		# Save the token to database
@@ -45,9 +48,20 @@ def requestPasswordRecovery(request):
 		)
 		if data is False: return response(type="error", message="databaseError")
 
-		# SendGrid
-		if SendGrid.send("noreply", request.form["eMail"], f'{request.url_root}resetPassword/{token}', "Password recovery") is not True:
-			# Handle error
-			pass
+		eMail_content = f"""
+			<h3>Dear user</h3>
 
-		return response(type="success", message="An email with password reset instructions has been sent to you.", redirect="/home")
+			<p>We have received your request to reset your password. Please click the link below to set a new password for your account.<p>
+
+			<p>Password recovery link: {request.url_root}resetPassword/{token}</p>
+
+			<p>If you did not request a password reset, please ignore this email. Your account will remain secure.</p>
+
+			<p>Warm regards,</p>
+			<p>The {Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
+		"""
+
+		if SendGrid.send("noreply", request.form["eMail"], eMail_content, "Password recovery") is not True:
+			return response(type="warning", message="Unable to send email. Your request has been saved. Please reach out to support for further assistance", redirect="/home")
+
+		return response(type="success", message="An email with password reset instructions has been sent to your email", redirect="/home")

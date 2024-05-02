@@ -359,6 +359,11 @@
 		"ru": "Неверный ответ",
 		"uz": "Noto`g`ri javob"
 	},
+	"invalid_role": {
+		"en": "Invalid role",
+		"ru": "Неверная роль",
+		"uz": "Noto`g`ri rol"
+	},
 	"invalidToken": {
 		"en": "Invalid token",
 		"ru": "Неверный токен",
@@ -474,7 +479,7 @@
 		"ru": "Пароль должен включать как минимум одну букву, одну цифру и один из разрешенных символов (! @ # $% ^ & * - _ +)",
 		"uz": "Parolda kamida bitta harif, bitta raqam va ushbu ruxsat berilgan belgilardan biri bo`lishi kerak (! @ # $% ^ & * - _ +)"
 	},
-	"passwordChangedSuccessfully": {
+	"password_changed_successfully": {
 		"en": "Password changed successfully",
 		"ru": "Пароль успешно изменен",
 		"uz": "Parol muvaffaqiyatli almashtirildi"
@@ -513,6 +518,11 @@
 		"en": "Passwords do not match",
 		"ru": "Пароли не совпадают",
 		"uz": "Parollar mos kelmaydi"
+	},
+	"password_recovery_link_already_has_been_sent": {
+		"en": "The password recovery link has already been sent",
+		"ru": "Ссылка для восстановления пароля уже отправлена",
+		"uz": "Parolni tiklash linki allaqachon yuborilgan"
 	},
 	"paymentSettings": {
 		"en": "Payment settings",
@@ -699,7 +709,7 @@
 		"ru": "Заголовок",
 		"uz": "Sarlavha"
 	},
-	"tokenAreadyUsed": {
+	"token_aready_used": {
 		"en": "Token has already used",
 		"ru": "Токен уже использован",
 		"uz": "Token allaqachon ishlatilgan"
@@ -798,6 +808,11 @@
 		"en": "Invalid user type!",
 		"ru": "Неверный тип пользователя!",
 		"uz": "Foydalanuvchi turi noto`g`ri!"
+	},
+	"user_with_this_eMail_does_not_exists": {
+		"en": "User with this email does not exist",
+		"ru": "Пользователь с таким адресом электронной почты не существует",
+		"uz": "Ushbu elektron pochtalik foydalanuvchi mavjud emas"
 	},
 	"verifyEmail": {
 		"en": "Verify Email",

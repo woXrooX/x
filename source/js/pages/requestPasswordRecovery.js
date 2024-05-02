@@ -1,32 +1,23 @@
-"use strict";
-
-export const TITLE = 'Forgot Password';
+export const TITLE = 'Password recovery';
 
 export default function content() {
 	return `
-		<container class="p-5">
-			<column class="w-50 surface-v1 p-5 gap-1">
+		<container class="p-5 max-w-600px">
+			<form for="requestPasswordRecovery" autocomplete="off" class="surface-v1 p-5 gap-1" x-toast>
 
-				<h2>Forgot Password</h2>
+				<h2>Password recovery</h2>
 
-				<form action="/requestPasswordRecovery" for="requestPasswordRecovery" autocomplete="off" x-toast>
+				<label>
+					<p for="eMail">${window.Lang.use('eMail')}</p>
+					<input type="eMail" name="eMail">
+				</label>
 
-					<label>
-						<p for="eMail">${window.Lang.use('eMail')}</p>
-						<input type="eMail" name="eMail">
-					</label>
+				<label>
+					<input  class="btn btn-primary" type="submit" name="requestPasswordRecovery" value="Check">
+					<p for="requestPasswordRecovery"></p>
+				</label>
 
-					<label>
-						<input  class="btn btn-primary" type="submit" name="requestPasswordRecovery" value="Check">
-						<p for="requestPasswordRecovery"></p>
-					</label>
-
-				</form>
-
-				<a href="/signUp" class="text-size-0-7">${window.Lang.use("dontHaveAccountGoToSignUp")}</a>
-
-			</column>
-
+			</form>
 		</container>
-  `;
+	`;
 }

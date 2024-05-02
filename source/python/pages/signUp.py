@@ -43,10 +43,6 @@ def signUp(request):
 		data = MySQL.execute(sql="SELECT id FROM users WHERE eMail=%s", params=(request.form["eMail"], ), fetchOne=True)
 		if data: return response(type="error", message="eMailInUse", field="eMail")
 
-		# passwordInUse
-		data = MySQL.execute(sql="SELECT id FROM users WHERE password=%s", params=(request.form["password"], ), fetchOne=True)
-		if data: return response(type="error", message="passwordInUse", field="password")
-
 		######## Success
 		# Generate Randome Verification Code
 		eMailVerificationCode = random.randint(100000, 999999)

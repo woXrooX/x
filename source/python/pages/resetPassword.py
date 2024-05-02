@@ -12,8 +12,7 @@ def resetPassword(request, TOKEN):
 		# unknownError
 		if request.form["for"] != "resetPassword": return response(type="warning", message="unknownError")
 
-
-		######## Password
+		######## Password validation
 		# passwordEmpty
 		if "password" not in request.form or not request.form["password"]: return response(type="error", message="passwordEmpty", field="password")
 
@@ -26,45 +25,44 @@ def resetPassword(request, TOKEN):
 		# passwordAllowedChars
 		if not re.match(Globals.CONF["password"]["regEx"], request.form["password"]): return response(type="error", message="passwordAllowedChars", field="password")
 
-		# confirmPasswordEmpty
-		if "confirm_password" not in request.form or not request.form["confirm_password"]: return response(type="error", message="confirmPasswordEmpty", field="confirm_password")
+		# confirm_password_empty
+		if "confirm_password" not in request.form or not request.form["confirm_password"]: return response(type="error", message="invalidValue", field="confirm_password")
 
 		# Passwords do not match
 		if request.form["password"] != request.form["confirm_password"]: return response(type="error", message="passwordsDoNotMatch", field="confirm_password")
 
-		######## Password recovery
+		password = LogInTools.passwordHash(request.form["password"])
+
+		######## Token validation
 		# prd = password recovery data
 		prd = MySQL.execute(
-			sql="SELECT user, timestamp_first, password_new FROM password_recoveries WHERE token=%s AND TIMESTAMPDIFF(MINUTE, password_recoveries.timestamp_first, NOW()) < %s LIMIT 1;",
-			params=(TOKEN, Globals.CONF["password"]["recoveryLinkValidityDuration"]),
+			sql="""
+				SELECT
+					user, timestamp_first, password_new FROM password_recoveries
+				WHERE token=%s AND TIMESTAMPDIFF(MINUTE, password_recoveries.timestamp_first, NOW()) < %s LIMIT 1;
+			""",
+			params=(TOKEN, Globals.CONF["password"]["recovery_link_validity_duration"]),
 			fetchOne=True
 		)
-
 		if prd is False: return response(type="error", message="databaseError")
 
 		# No matching token
 		if not prd: return response(type="error", message="invalidToken", redirect="/400")
 
 		# Already recovered
-		if prd["password_new"] is not None: return response(type="info", message="tokenAreadyUsed", redirect="/logIn")
+		if prd["password_new"] is not None: return response(type="info", message="token_aready_used", redirect="/logIn")
 
-		password = LogInTools.passwordHash(request.form["password"])
+		# Set the new users passowrd and update password_recoveries
+		data = MySQL.execute(
+			sql="""
+				UPDATE users SET password=%s WHERE id=%s;
 
-		# Set the new passowrd
-		update_user = MySQL.execute(
-			sql="UPDATE users SET password=%s WHERE id=%s;",
-			params=(password, prd['user']),
+				UPDATE password_recoveries SET ip_address_last = %s, user_agent_last = %s, timestamp_last = NOW(), password_new = %s WHERE token = %s;
+			""",
+			params=(password, prd['user'], request.remote_addr, request.headers.get('User-Agent'), password, TOKEN),
+			multi=True,
 			commit=True
 		)
+		if data is False: return response(type="error", message="databaseError")
 
-		if update_user is False: return response(type="error", message="databaseError")
-
-		update_password_recoveries = MySQL.execute(
-			sql="UPDATE password_recoveries SET ip_address_last = %s, user_agent_last = %s, timestamp_last = NOW(), password_new = %s WHERE token = %s;",
-			params=(request.remote_addr, request.headers.get('User-Agent'), password, TOKEN),
-			commit=True
-		)
-
-		if update_password_recoveries is False: return response(type="error", message="databaseError")
-
-		return response(type="success", message="passwordChangedSuccessfully", redirect="/logIn")
+		return response(type="success", message="password_changed_successfully", redirect="/logIn")

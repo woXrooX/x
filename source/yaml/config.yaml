@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.181.0.0008"
+version: "0.182.0.0000"
 
 
 ######### Flask
@@ -214,7 +214,9 @@ password:
   max_length: 50
   regEx: "^(?=.*[a-z])(?=.*[0-9])(?=.*[-!@#$%^&*_+])[-!@#$%^&*_+A-Za-z0-9]{6,}$"
   hashing_algorithm: null
-  recoveryLinkValidityDuration: 15
+
+  # Minutes
+  recovery_link_validity_duration: 15
 
 
 ######### Phone Number
