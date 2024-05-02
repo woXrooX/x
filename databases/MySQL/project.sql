@@ -4,3 +4,4 @@
 
 USE [NAME];
 
+\! echo "-------------------------- ALTER table";
