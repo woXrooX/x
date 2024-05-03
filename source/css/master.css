@@ -113,6 +113,8 @@ body{
 	}
 
 	& > menu{
+		--menu-padding: 5px;
+
 		font-size: 1.2rem;
 
 		background-color: hsla(var(--color-main-hue), 10%, 25%, 0.1);
@@ -147,7 +149,7 @@ body{
 
 		& > header{
 			width: 100%;
-			padding: calc(var(--padding) * 2);
+			padding: calc(var(--menu-padding) * 2);
 
 			display: flex;
 			flex-direction: row;
@@ -166,7 +168,7 @@ body{
 
 		& > main{
 			width: 100%;
-			padding: calc(var(--padding) * 2);
+			padding: calc(var(--menu-padding) * 2);
 			overflow-y: scroll;
 
 			display: flex;
@@ -176,7 +178,7 @@ body{
 				&.container{
 					display: flex;
 					flex-direction: column;
-					margin-top: var(--padding);
+					margin-top: var(--menu-padding);
 
 					& > section{
 						&.parentMenu{
@@ -187,7 +189,7 @@ body{
 
 							border: 1px solid transparent;
 							border-radius: var(--radius);
-							padding: var(--padding) calc(var(--padding) * 2.5);
+							padding: var(--menu-padding) calc(var(--menu-padding) * 2.5);
 
 							transition: var(--transition-velocity) ease-in-out;
 							transition-property: background-color, border;
@@ -224,7 +226,7 @@ body{
 							background-color: hsla(var(--color-main-hue), 10%, 25%, 0.2);
 
 							margin-top: 5px;
-							padding: calc(var(--padding) * 2);
+							padding: calc(var(--menu-padding) * 2);
 							border-radius: var(--radius);
 
 							&:empty{display: none;}
@@ -315,10 +317,10 @@ body{
 
 		& > main{
 			width: auto;
-			max-width: 80vw;
+			max-width: 90dvw;
 
 			height: auto;
-			max-height: 80vh;
+			max-height: 90dvh;
 
 			overflow: hidden;
 			overflow-y: scroll;
@@ -330,8 +332,7 @@ body{
 			place-items: center;
 
 			@media (width <= 600px){
-				max-width: 90dvw;
-				max-height: 90dvh;
+				width: 90dvw;
 			}
 		}
 	}
