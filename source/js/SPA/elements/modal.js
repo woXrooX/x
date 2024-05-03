@@ -18,6 +18,9 @@ export default class Modal extends HTMLElement{
 
 		// Close on click the cover
 		Cover.onClickExecute(Modal.hide);
+
+		// Close on "Escape" press
+		document.addEventListener('keydown', ()=>{if(event.key === "Escape") Modal.hide();});
 	}
 
 	/////////// APIs
