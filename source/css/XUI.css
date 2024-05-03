@@ -184,14 +184,18 @@
 
 		/*** Mobile Screen START ***/
 		@media (width <= 600px){
-		  :root{
-			font-size: 16px;
-		  }
+			:root{
+				font-size: 16px;
 
-		  html, body{
-			height: 100dvh;
-			overflow: hidden;
-		  }
+				--padding: 2px;
+				--margin: 2px;
+				--gap: 10px;
+			}
+
+			html, body{
+				height: 100dvh;
+				overflow: hidden;
+			}
 		}
 		/*** Mobile Screen END ***/
 	}
