@@ -34,7 +34,7 @@ export default class Menu{
 		if(Menu.build() === false) return;
 
 		// Init active
-		Menu.setActive();
+		Menu.set_active();
 
 		//// Listen To The Events
 		// Show menu event
@@ -58,7 +58,7 @@ export default class Menu{
 		Menu.#element.querySelector("main").innerHTML = Menu.#recursiveBuilder(window.CONF["menu"]["menus"]);
 
 		// After adding hyperlinks to DOM create hide event for each of the hyperlinks
-		Menu.#onClickHyperlinksHide();
+		Menu.#on_click_hyperlinks();
 
 		Menu.#toggleSubMenus();
 	}
@@ -67,12 +67,11 @@ export default class Menu{
 		let HTML = "";
 
 		for(const menu of menus)
-			if(Menu.#guard(menu["page"]) === true){
-
+			if(Menu.#guard(menu) === true){
 				HTML += `
 					<section class="container">
 						<section class="parentMenu">
-							<a href="${window.CONF["pages"][menu["page"]]["endpoints"][0]}">
+							<a href="${"url" in menu ? menu["url"] : window.CONF["pages"][menu["page"]]["endpoints"][0]}">
 								${"icon" in menu ? `<x-svg color="#ffffff" name="${menu["icon"]}"></x-svg>` : ""}
 								${"name" in menu ? window.Lang.use(menu["name"]) : window.Lang.use(menu["page"])}
 							</a>
@@ -96,11 +95,19 @@ export default class Menu{
 		return HTML;
 	}
 
-	static #onClickHyperlinksHide(){
+	static #on_click_hyperlinks(){
 		const hyperlinks = document.querySelectorAll(Menu.#selectorMenuHyperlinks);
 
 		// Assign Hide Method To On Click Event
-		for(const hyperlink of hyperlinks) hyperlink.addEventListener("click", Menu.#hide);
+		for(const hyperlink of hyperlinks)
+			// Blank menu items
+			if(hyperlink.getAttribute('href') == ''){
+				const subMenu_toggler = hyperlink.parentElement.querySelector("x-svg[for=toggleSubMenu]");
+				if(!!subMenu_toggler === true) hyperlink.addEventListener("click", ()=>{subMenu_toggler.click();});
+			}
+
+			// Normal menu items
+			else hyperlink.addEventListener("click", Menu.#hide);
 	}
 
 	// On click x-svg[for=toggleSubMenu] show the section.subMenu
@@ -114,7 +121,7 @@ export default class Menu{
 			}
 	}
 
-	static setActive(){
+	static set_active(){
 		// Hyperlinks
 		const hyperlinks = document.querySelectorAll(Menu.#selectorMenuHyperlinks);
 
@@ -125,11 +132,6 @@ export default class Menu{
 
 			// Activate section.parentMenu if href matches
 			if(hyperlink.getAttribute("href") == window.location.pathname) hyperlink.parentElement.setAttribute("active", "");
-
-			// Else active the first section.parentMenu
-			else if(window.location.pathname == "/" || window.location.pathname == "" || window.location.pathname == "/home")
-				document.querySelector(`${Menu.#selectorMenuHyperlinks}:first-child`).parentElement.setAttribute("active", "");
-
 		}
 	}
 
@@ -215,17 +217,20 @@ export default class Menu{
 	}
 
 	static #guard(menu){
-		// Check If Menu Is Enabled
-		// Done At Menu.init()
+		///// Menu to a custom URL
+		if("url" in menu){
+			if("name" in menu) return true;
+			return false;
+		}
 
-		// Check If Menu Linked Page Exists In CONF["pages"]
-		if(!(menu in window.CONF["pages"])) return false;
+		///// Page linked menu
+		// Check if menu linked page exists in CONF["pages"]
+		if(!(menu["page"] in window.CONF["pages"])) return false;
 
-		// Check If Menu Linked Page Is Enabled In CONF["pages"]
-		if(window.CONF["pages"][menu]["enabled"] == false) return false;
+		// Check if menu linked page is enabled in CONF["pages"]
+		if(window.CONF["pages"][menu["page"]]["enabled"] == false) return false;
 
-		// Use Route Guard To Check Menus
-		return window.Router.routeGuard(menu);
+		return window.Router.routeGuard(menu["page"]);
 	}
 }
 

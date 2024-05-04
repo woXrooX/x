@@ -93,7 +93,7 @@ export default class Core{
 			Log.info("onLoad");
 
 			Router.handle();
-			Menu.setActive();
+			Menu.set_active();
 		});
 	}
 
@@ -103,7 +103,7 @@ export default class Core{
 			Log.info("Core.#onUrlChange()");
 
 			Router.handle();
-			Menu.setActive();
+			Menu.set_active();
 		});
 	}
 
