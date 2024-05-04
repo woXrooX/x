@@ -8,21 +8,19 @@ export default class Hyperlink{
 
 		for(const a of links){
 			a.onclick = ()=>{
-				// Check IF Has Href
+				// Check iF has href
 				if(!!a.hasAttribute("href") === false) return;
 
-				// Check IF Href Is Hash.
+				// Check iF href is hash.
 				if(a.getAttribute("href").charAt(0) == '#') return;
 
-				// Check IF Href Is for File.
-				// For Now Bulk Checking Using '.'
+				// Check if href is for file or external URL
 				if(a.getAttribute("href").includes('.')) return;
 
-				// Check If Href Is For External Webistes
-				// Previous Check Is Already Doing This Job By Checking If Href Has '.' example.com always Has '.'
-				if(a.getAttribute("href").includes('http://') || a.getAttribute("href").includes('https://')) return;
-
 				event.preventDefault();
+
+				// If blank do nothing
+				if(a.getAttribute('href') == '') return;
 
 				Hyperlink.locate(a.getAttribute("href"));
 			}
