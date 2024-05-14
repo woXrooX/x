@@ -16,7 +16,7 @@ export async function before(){
 export default function content(){
 	return `
 		<container class="p-5">
-			<column class="surface-v1 p-5">${Lang.use(couldNotLogOutInstant)}</column>
+			<column class="surface-v1 p-5">${Lang.use('could_not_log_out_instant')}</column>
 		</container>
 	`;
 }
