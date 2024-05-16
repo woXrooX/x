@@ -44,7 +44,7 @@ export default class DOM{
 		////////// Header
 		window.Header.handle(DOM.#page.header);
 
-		////////// Content - Render The Content
+		////////// Default/Main - Render the main function
 		if(typeof DOM.#page.default === "function")
 			if(DOM.#page.default.constructor.name === 'AsyncFunction') DOM.render(await DOM.#page.default());
 			else DOM.render(DOM.#page.default());
