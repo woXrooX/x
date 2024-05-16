@@ -104,7 +104,7 @@
 		"ru": "При выходе произошла ошибка. Пожалуйста, обновите страницу.",
 		"uz": "Akkauntdan chiqishda xatolik yuz berdi. Iltimos, sahifani yangilang."
 	},
-	"couldNotSaveFile": {
+	"could_not_save_file": {
 		"en": "Could not save the file!",
 		"ru": "Не удалось сохранить файл!",
 		"uz": "Fayl saqlanmadi!"
