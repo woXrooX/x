@@ -1,6 +1,6 @@
 export const TITLE = 'Password recovery';
 
-export default function content() {
+export default function main(){
 	return `
 		<container class="p-5 max-w-600px">
 			<form for="requestPasswordRecovery" autocomplete="off" class="surface-v1 p-5 gap-1" x-toast>

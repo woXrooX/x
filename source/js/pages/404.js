@@ -2,7 +2,7 @@
 
 export const TITLE = 404;
 
-export default function content(){
+export default function main(){
 	return `
 		<container class="p-5">
 			<column class="w-50 surface-error p-3 gap-0-5">

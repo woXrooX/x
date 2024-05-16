@@ -13,7 +13,7 @@ export async function before(){
 	}
 }
 
-export default function content(){
+export default function main(){
 	return `
 		<container class="p-5">
 			<column class="surface-v1 p-5">${Lang.use('could_not_log_out_instant')}</column>

@@ -2,7 +2,7 @@
 
 export const TITLE = "App Is Down";
 
-export default function content(){
+export default function main(){
 	return `
 		<container class="p-5">
 			<column class="w-50 surface-v1 p-5">
