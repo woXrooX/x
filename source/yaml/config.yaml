@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.183.0.0007"
+version: "0.184.0.0000"
 
 
 ######### Flask
@@ -166,6 +166,7 @@ pages:
     endpoints:
       - "/logOutInstant"
 
+
   requestPasswordRecovery:
     enabled: false
     authenticity_statuses:
@@ -175,6 +176,7 @@ pages:
       - "POST"
     endpoints:
       - "/requestPasswordRecovery"
+
 
   resetPassword:
     enabled: false
@@ -187,6 +189,17 @@ pages:
       - "/resetPassword"
     urlArgs:
       - "TOKEN"
+
+
+  x_root:
+    enabled: false
+    roles:
+      - "root"
+    methods:
+      - "GET"
+      - "POST"
+    endpoints:
+      - "/x/root"
 
 
 

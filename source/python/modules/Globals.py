@@ -36,7 +36,8 @@ if __name__ != "__main__":
 					"logOutInstant.py",
 					"requestPasswordRecovery.py",
 					"resetPassword.py",
-					"signUp.py"
+					"signUp.py",
+					"x_root.py"
 				]
 			},
 			"modules":{
