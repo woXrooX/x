@@ -21,6 +21,11 @@ export default class Loading{
 
 		Loading.#elementLoading.classList.add("loaded");
 	}
+
+	static on_element(element){
+		if(!!element === false) return;
+		element.classList.toggle('loading-on-element');
+	}
 };
 
 window.Loading = Loading;
