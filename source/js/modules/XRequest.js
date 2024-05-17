@@ -1,5 +1,3 @@
-"use strict";
-
 export default class XRequest{
 	/////////////////////////// Static
 
@@ -157,7 +155,7 @@ export default class XRequest{
 	/////////// Event listeners
 	#onClick(){
 		this.#element.onclick = async ()=>{
-			this.#element.disabled = true;
+			Loading.on_element(this.#element);
 
 			this.#response = await window.bridge(this.#data, this.#element.getAttribute("x-post"));
 
@@ -169,7 +167,7 @@ export default class XRequest{
 
 			XRequest.#handleResponseActions(this.#response);
 
-			this.#element.disabled = false;
+			Loading.on_element(this.#element);
 		};
 	}
 };
