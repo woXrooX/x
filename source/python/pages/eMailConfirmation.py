@@ -24,8 +24,12 @@ def eMailConfirmation(request):
 		# Check If Verification Code Does Not Match Then Increment The Counter
 		if int(request.form["verificationCode"]) != session["user"]["eMail_verification_code"]:
 			data = MySQL.execute(
-				sql="UPDATE users SET eMail_verification_attempts_count=%s WHERE id=%s",
-				params=((session["user"]["eMail_verification_attempts_count"] + 1), session["user"]["id"]),
+				sql="""
+					UPDATE users SET
+						eMail_verification_attempts_count=eMail_verification_attempts_count+1
+					WHERE id=%s
+				""",
+				params=(session["user"]["id"],),
 				commit=True
 			)
 
@@ -40,9 +44,14 @@ def eMailConfirmation(request):
 		# Success | Match
 		if int(request.form["verificationCode"]) == session["user"]["eMail_verification_code"]:
 			data = MySQL.execute(
-				sql="UPDATE users SET eMail_verification_attempts_count=%s, authenticity_status=%s  WHERE id=%s",
+				sql="""
+					UPDATE users SET
+						eMail_verified=1,
+						eMail_verification_attempts_count=eMail_verification_attempts_count+1,
+						authenticity_status=%s
+					WHERE id=%s
+				""",
 				params=(
-					(session["user"]["eMail_verification_attempts_count"] + 1),
 					Globals.USER_AUTHENTICITY_STATUSES["authorized"]["id"],
 					session["user"]["id"],
 				),
