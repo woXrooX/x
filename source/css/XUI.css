@@ -574,7 +574,6 @@
 		textarea{
 			height: unset;
 			font-size: calc(var(--f-font-size) / 1.5);
-			min-height: 150px;
 			resize: vertical;
 			padding: var(--f-padding);
 		}
