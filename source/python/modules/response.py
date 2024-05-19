@@ -32,7 +32,8 @@ if __name__ != "__main__":
 		defaultSerializerFunc=None,
 
 		# HTTP Response Status Code
-		HTTP_response_status_code=200
+		HTTP_response_status_code=200,
+		headers={'Content-Type': 'application/json'}
 	):
 		######## Type
 		# Check If Type Is Valid
@@ -44,7 +45,7 @@ if __name__ != "__main__":
 		# if message not in langDict: message="invalidKeyword"
 
 		######## Response Dict
-		responseDict = {
+		response_dict = {
 			"type": type,
 			"message": message,
 		}
@@ -52,10 +53,10 @@ if __name__ != "__main__":
 		######## Field
 		# Check If Field Argument Is Not Falsy
 		# NOTE: If html field name, id or selector equals to falsy value then this check will ignore it
-		if field is not False: responseDict["field"] = field
+		if field is not False: response_dict["field"] = field
 
 		######## Data
-		if data: responseDict["data"] = data
+		if data: response_dict["data"] = data
 
 		######## Actions
 		actionsDict = {}
@@ -82,20 +83,12 @@ if __name__ != "__main__":
 		if onFormGotResponse: actionsDict["onFormGotResponse"] = 0
 
 		# Check If Actions Has At Least One Object
-		if actionsDict: responseDict["actions"] = actionsDict
+		if actionsDict: response_dict["actions"] = actionsDict
 
 
-		# print("----------------------- responseDict -----------------------")
-		# print(responseDict)
+		# print("----------------------- response_dict -----------------------")
+		# print(response_dict)
 
 
-		# Final Response
-		return make_response(
-			json.dumps(
-				responseDict,
-
-				# Function to use for converting non-serializable objects to a serializable JSON format.
-				default=defaultSerializerFunc
-			),
-			HTTP_response_status_code
-		)
+		# Final Response -> body, status, headers
+		return json.dumps(response_dict, default=defaultSerializerFunc), HTTP_response_status_code, headers
