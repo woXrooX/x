@@ -1,5 +1,4 @@
 if __name__ != "__main__":
-	from main import make_response
 	from python.modules.Globals import Globals
 	from python.modules.User import User
 
