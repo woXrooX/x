@@ -1,2 +1,2 @@
-https://www.woXrooX.com/projects/x/contributing
+https://www.woXrooX.com/contributing
 

@@ -1,1 +1,1 @@
-https://www.woXrooX.com/projects/x/CODE_OF_CONDUCT
+https://www.woXrooX.com/CODE_OF_CONDUCT
