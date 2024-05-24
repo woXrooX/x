@@ -1,5 +1,3 @@
-/* v0.8.0.1 */
-
 @layer XUI{
 	@layer root{
 		html{
@@ -479,7 +477,7 @@
 		/* Defaults */
 		select,
 		textarea,
-		input:where([type=text], [type=eMail], [type=password], [type=number], [type=color], [type=file], [type=date], [type=month], [type=tel], [type=range]){
+		input:where([type=text], [type=eMail], [type=password], [type=number], [type=color], [type=file], [type=date], [type=month], [type=tel], [type=range], [type=time]){
 			background-color: var(--color-main-tint-3);
 			width: var(--f-width);
 			height: var(--f-height);
