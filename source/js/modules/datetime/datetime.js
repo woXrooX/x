@@ -65,7 +65,7 @@ export function time_difference(time_1, time_2){
 // Exptected input: type->string, format->HH:mm:ss
 export function parse_time(time){
 	if(typeof time !== "string") return false;
-	if(/^([01]\d|2[0-3]):[0-5]\d:[0-5]\d$/.test(time) === false) return false;
+	if(/^([0-9]|[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/.test(time) === false) return false;
 
 	const splitted = time.split(':');
 
