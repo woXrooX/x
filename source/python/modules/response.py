@@ -32,8 +32,14 @@ if __name__ != "__main__":
 
 		# HTTP Response Status Code
 		HTTP_response_status_code=200,
-		headers={'Content-Type': 'application/json'}
+		headers={'Content-Type': 'application/json'},
+
+		RAW=False
 	):
+		######## RAW
+		# Sample: RAW=('body', 200, {'header_key': 'header_val'})
+		if RAW: return RAW
+
 		######## Type
 		# Check If Type Is Valid
 		if type not in ["success", "info", "warning", "error"]: type = "error"
