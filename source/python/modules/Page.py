@@ -54,7 +54,8 @@ if __name__ != "__main__":
 		# Returns function if fails
 		@staticmethod
 		def guard(page):
-			##################### POST
+			if request.method not in ["POST", "GET"]: return response(RAW=('', 400, {'text/html': 'charset=utf-8'}))
+
 			if request.method == "POST":
 				### App Is Down
 				if "appIsDown" in Globals.CONF["tools"]:
