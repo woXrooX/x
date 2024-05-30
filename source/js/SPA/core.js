@@ -140,6 +140,13 @@ export default class Core{
 		const callback = (mutationList, observer)=>{
 			// Ensure that any methods requiring execution upon a DOM change are encapsulated within the for loop provided below.
 			for(const mutation of mutationList){
+
+				// Skip observing based on element
+				// if(mutation.target.nodeName == "IFRAME") continue;
+
+				// Check if the mutation target is within an element to be ignored
+				if(mutation.target.closest('[x-ignore-mutations]')) continue;
+
 				// A child node has been added or removed.
 				if(mutation.type === "childList"){
 					Hyperlink.collect();
