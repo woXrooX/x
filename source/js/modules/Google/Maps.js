@@ -1,4 +1,3 @@
-
 export class Maps{
 	static #API_KEY;
 	static #element = null;
@@ -8,7 +7,7 @@ export class Maps{
 
 	static #CONF = {}
 
-	static init(API_KEY, element, CONF = {}){
+	static async init(API_KEY, element, CONF = {}){
 		if(!!API_KEY === false) return Log.error("Google.Maps.init(): Invalid API_KEY argument!");
 		if(!!element === false) return Log.error("Google.Maps.init(): Element does not exists!");
 
