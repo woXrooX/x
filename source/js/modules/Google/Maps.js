@@ -69,7 +69,8 @@ export class Maps{
 		Maps.#markers.push(marker);
 	}
 
-	static remove_marker(lat, lng){
+	// Remove marker by latitude, longitude
+	static RMBLL(lat, lng){
 		if (Maps.#initialized === false) return;
 
 		for(let i = 0; i < Maps.#markers.length; i++){
@@ -82,7 +83,7 @@ export class Maps{
 		}
 	}
 
-	static remove_all_markers() {
+	static remove_all_markers(){
 		if (Maps.#initialized === false) return;
 		for(let i = 0; i < Maps.#markers.length; i++) Maps.#markers[i].setMap(null);
 	}
