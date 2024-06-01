@@ -1,6 +1,6 @@
 export const TITLE = window.Lang.use("logIn");
 
-export default function logIn(){
+export default function main(){
 	return `
 		<container class="p-5 max-w-600px">
 			<form action="/logIn" for="logIn" autocomplete="off" class="surface-v1 p-5">
