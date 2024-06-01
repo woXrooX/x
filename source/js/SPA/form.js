@@ -1,8 +1,10 @@
 "use strict";
 
 export default class Form{
+	static #FUNC_POOL = {};
 	static #flashDuration = 2000;
 
+	/////////// APIs
 	static collect(element = null){
 		if(!!element === false) element = document;
 
@@ -28,6 +30,9 @@ export default class Form{
 		Form.#onSubmit(form);
 	}
 
+	static push_func(func){ Form.#FUNC_POOL[func.name] = func; }
+
+	/////////// Helpers
 	static #onInput(form){
 	// check if onInput mode is enabled
 	if(!form.hasAttribute("oninputcheck")) return;
@@ -123,6 +128,9 @@ export default class Form{
 			////////// Toast
 			if(form.hasAttribute("x-toast")) window.Toast.new(response["type"], response["message"]);
 
+			////////// Callback
+			Form.#execute_on_response(form.getAttribute("func_name"), response);
+
 			////////// response["actions"]
 			if("actions" in response){
 				// Update window.conf
@@ -152,9 +160,6 @@ export default class Form{
 
 				// Reload
 				if("reload" in response["actions"]) window.location.reload();
-
-				// Execute Function On Form Got Response
-				if("onFormGotResponse" in response["actions"]) window.DOM.executeOnFormGotResponse(response);
 			}
 		};
 	}
@@ -194,6 +199,11 @@ export default class Form{
 	// Flash Border Color
 	setTimeout(()=>{element.removeAttribute("style");}, Form.#flashDuration);
 
+	}
+
+	static async #execute_on_response(func_name, response){
+		if(!!func_name === false || typeof func_name != "string") return;
+		await Form.#FUNC_POOL[func_name](response);
 	}
 
 	static #formGuard(form){

@@ -25,8 +25,6 @@ if __name__ != "__main__":
 		redirect=False,
 		reload=False,
 
-		onFormGotResponse=False,
-
 		# Function to use for converting non-serializable objects to a serializable JSON format.
 		defaultSerializerFunc=None,
 
@@ -83,9 +81,6 @@ if __name__ != "__main__":
 
 		## reload
 		if reload: actionsDict["reload"] = 0
-
-		## Execute Function On Form Got Response
-		if onFormGotResponse: actionsDict["onFormGotResponse"] = 0
 
 		# Check If Actions Has At Least One Object
 		if actionsDict: response_dict["actions"] = actionsDict

@@ -19,14 +19,6 @@ export default class DOM{
 		DOM.lifeCycle();
 	}
 
-	static async executeOnFormGotResponse(response){
-
-		// If Async Function Passed Or Normal One
-		if(DOM.#page.onFormGotResponse.constructor.name === 'AsyncFunction') await DOM.#page.onFormGotResponse(response);
-		else DOM.#page.onFormGotResponse(response);
-
-	}
-
 	static async lifeCycle(){
 		Log.info("DOM.lifeCycle()");
 
