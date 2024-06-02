@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.185.1.0000"
+version: "0.186.0.0000"
 
 
 ######### Flask
@@ -50,8 +50,8 @@ default:
   # Subsequently, on the second attempt, it endeavors to retrieve the cached language settings.
   # As part of the third step, the application makes attempts to acquire the language code associated with the current geographical location.
   # Finally, should all prior attempts prove unsuccessful, the application gracefully defaults to a fallback language.
-  # In the event that no matching language is found within the "languageDictionary.json" file, the application will once again resort to utilizing the fallback language.
-  # Even in the scenario where the fallback language yields no corresponding results within the "languageDictionary.json" file, the application will proceed to display the unprocessed keywords that were employed in the call to window.Language.use(KEYWORD).
+  # In the event that no matching language is found within the "language_dictionary.json" file, the application will once again resort to utilizing the fallback language.
+  # Even in the scenario where the fallback language yields no corresponding results within the "language_dictionary.json" file, the application will proceed to display the unprocessed keywords that were employed in the call to window.Language.use(KEYWORD).
   language:
     fallback: "en"
 

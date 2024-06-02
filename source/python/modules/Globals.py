@@ -9,10 +9,10 @@ if __name__ != "__main__":
 		#### Paths
 		X_RUNNING_FROM = pathlib.Path(main.__file__).parent.absolute()
 
-		# Go Back Two Times From "X_RUNNING_FROM"
+		# Go back two times from "X_RUNNING_FROM"
 		PROJECT_RUNNING_FROM = os.path.abspath(os.path.join(X_RUNNING_FROM, '../..'))
 
-		#### X
+		#### x
 		CONF = {}
 		LANG_DICT = {}
 		LANGUAGES = {}
@@ -68,6 +68,7 @@ if __name__ != "__main__":
 		PROJECT = {}
 		PROJECT_SVG = {}
 		PROJECT_LANG_DICT = {}
+		PROJECT_HTML = {}
 
 		#### Mix
 		PUBLIC_CONF = {}

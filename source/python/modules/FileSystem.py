@@ -153,10 +153,10 @@ if __name__ != "__main__":
 			Log.center("Clean up", '=')
 
 			Log.center("Pages (Back-End)", '-')
-			FileSystem.cleanExternalCopiedPagesBack()
+			FileSystem.clean_external_copied_pages_back()
 
 			Log.center("Python (Modules)", '-')
-			FileSystem.cleanExternalCopiedPythonModules()
+			FileSystem.clean_external_copied_Python_modules()
 
 			Log.center("Removing: x/source/www", '-')
 			FileSystem.removeFolder(f'{Globals.X_RUNNING_FROM}/www/')
@@ -171,12 +171,13 @@ if __name__ != "__main__":
 			for folder in x_folders: FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/{folder}/', strict=True)
 
 			# project/[folder]
-			project_folders = ["Backups", "CSS", "fonts", "images", "JavaScript", "JavaScript/JSON", "JavaScript/lib", "JavaScript/modules", "pages", "pages/back", "pages/front", "Python", "SVG"]
+			project_folders = ["Backups", "CSS", "fonts", "HTML", "images", "JavaScript", "JavaScript/JSON", "JavaScript/lib", "JavaScript/modules", "pages", "pages/back", "pages/front", "Python", "SVG"]
 			for folder in project_folders: FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/{folder}/', strict=True)
 
 			################ Files
 			Log.center("Creating files", '=')
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css", strict=True)
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/HTML/head.html", strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/header.js", 'export default function header(){\n\treturn "Header";\n}', strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/footer.js", 'export default function footer(){\n\treturn Lang.use("powered_by_woXrooX");\n}', strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py", 'from python.modules.Page import Page\n\n@Page.build()\ndef home(): pass', strict=True)
@@ -185,35 +186,39 @@ if __name__ != "__main__":
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/Python/onSignUp.py", 'if __name__ != "__main__":\n\tdef onSignUp(): pass')
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/Python/onLogIn.py", 'if __name__ != "__main__":\n\tdef onLogIn(): pass')
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/Python/onLogOut.py", 'if __name__ != "__main__":\n\tdef onLogOut(): pass')
-			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", '{"x": {"en": "x"}}', strict=True)
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/language_dictionary.json", '{"x": {"en": "x"}}', strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/project.json", "{}", strict=True)
+
 
 			################################ Loading/Reading Files
 			Log.center("Loading files", '=')
 
 			######### Internals
 			# config.yaml
-			FileSystem.loadInternalConfigurations()
+			FileSystem.load_internal_configurations()
 
-			# Internal languageDictionary.json
-			FileSystem.loadInternalLanguageDictionary()
+			# language_dictionary.json
+			FileSystem.load_internal_language_dictionary()
 
 			######### Externals
 			# project.json
-			FileSystem.loadProjectConfigurations()
+			FileSystem.load_project_configurations()
+
+			# HTML
+			FileSystem.load_external_HTML()
 
 			# SVG
-			FileSystem.loadExternalSVG()
+			FileSystem.load_external_SVG()
 
-			# languageDictionary.json
-			FileSystem.loadExternalLanguageDictionary()
+			# language_dictionary.json
+			FileSystem.load_external_language_dictionary()
 
 			######### Merge
 			# Merge Configurations
-			FileSystem.mergeConfigurations()
+			FileSystem.merge_configurations()
 
 			# Merge Configurations
-			FileSystem.mergeLanguageDictionaries()
+			FileSystem.merge_language_dictionaries()
 
 
 			################################ Copying "x" folders
@@ -235,7 +240,7 @@ if __name__ != "__main__":
 		####### CleanUp
 		# Pages (Back-End)
 		@staticmethod
-		def cleanExternalCopiedPagesBack():
+		def clean_external_copied_pages_back():
 			path = f"{Globals.X_RUNNING_FROM}/python/pages/"
 
 			files = os.listdir(path)
@@ -247,9 +252,10 @@ if __name__ != "__main__":
 				if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["pages"]["back"]:
 					FileSystem.deleteFile(file_path, strict=True)
 
+
 		# Python (Modules)
 		@staticmethod
-		def cleanExternalCopiedPythonModules():
+		def clean_external_copied_Python_modules():
 			path = f"{Globals.X_RUNNING_FROM}/python/modules/"
 
 			files = os.listdir(path)
@@ -261,11 +267,12 @@ if __name__ != "__main__":
 				if os.path.isfile(file_path) and file_name not in Globals.BUILT_IN_FILES["modules"]["Python"]:
 					FileSystem.deleteFile(file_path, strict=True)
 
+
 		####### Load
 		#### Internals
 		# Configurations - config.yaml
 		@staticmethod
-		def loadInternalConfigurations():
+		def load_internal_configurations():
 			try:
 				with open(f"{Globals.X_RUNNING_FROM}/yaml/config.yaml", 'r') as file:
 					Globals.CONF = yaml.safe_load(file)
@@ -276,22 +283,22 @@ if __name__ != "__main__":
 				Log.error("Could Not Load The config.yaml")
 				sys.exit()
 
-		# Language Dictionary
 		@staticmethod
-		def loadInternalLanguageDictionary():
+		def load_internal_language_dictionary():
 			try:
-				with open(f'{Globals.X_RUNNING_FROM}/json/languageDictionary.json', encoding="utf8") as file:
+				with open(f'{Globals.X_RUNNING_FROM}/json/language_dictionary.json', encoding="utf8") as file:
 					Globals.LANG_DICT = json.load(file)
 
-				Log.success("Internal languageDictionary.json Is Loaded")
+				Log.success("Internal language_dictionary.json Is Loaded")
 
 			except:
-				Log.error("Could Not Read The Internal languageDictionary.json")
+				Log.error("Could Not Read The Internal language_dictionary.json")
+
 
 		#### Externals
 		# Project Configurations - project.json
 		@staticmethod
-		def loadProjectConfigurations():
+		def load_project_configurations():
 			try:
 				with open(f"{Globals.PROJECT_RUNNING_FROM}/project.json", 'r') as file:
 					Globals.PROJECT = json.load(file)
@@ -302,9 +309,22 @@ if __name__ != "__main__":
 				Log.error("Could Not Load The project.json")
 				sys.exit()
 
-		# Load External SVG
 		@staticmethod
-		def loadExternalSVG():
+		def load_external_HTML():
+			for file in os.listdir(f'{Globals.PROJECT_RUNNING_FROM}/HTML'):
+				# Check if file is a HTML file
+				if not file.endswith(".html"): continue
+
+				try:
+					with open(f'{Globals.PROJECT_RUNNING_FROM}/HTML/{file}', "r") as HTML:
+						Globals.PROJECT_HTML[os.path.splitext(file)[0]] = HTML.read()
+
+					Log.success(f"HTML loaded: {file}")
+
+				except: Log.warning(f"Could not load the HTML file: {file}")
+
+		@staticmethod
+		def load_external_SVG():
 			for file in os.listdir(f'{Globals.PROJECT_RUNNING_FROM}/SVG'):
 				# Check If File Is A SVG File
 				if not file.endswith(".svg"): continue
@@ -319,22 +339,22 @@ if __name__ != "__main__":
 					Log.warning(f"Could Not Load The SVG: {file}")
 
 		@staticmethod
-		def loadExternalLanguageDictionary():
+		def load_external_language_dictionary():
 			try:
-				with open(f"{Globals.PROJECT_RUNNING_FROM}/languageDictionary.json", 'r') as file:
+				with open(f"{Globals.PROJECT_RUNNING_FROM}/language_dictionary.json", 'r') as file:
 					Globals.PROJECT_LANG_DICT = json.load(file)
 
-				Log.success("External languageDictionary.json Is Loaded")
+				Log.success("External language_dictionary.json Is Loaded")
 
 			except:
-				Log.error("Could Not Read The External languageDictionary.json")
+				Log.error("Could Not Read The External language_dictionary.json")
 
 
 		#### Merge
 		# Merge config.yaml and project.json
 		# Merge project dependent configurations to default configurations. Override defaults
 		@staticmethod
-		def mergeConfigurations():
+		def merge_configurations():
 			#### Merge
 			# Database
 			if "database" in Globals.PROJECT: Globals.CONF["database"] = Globals.PROJECT["database"]
@@ -363,6 +383,6 @@ if __name__ != "__main__":
 			Globals.PUBLIC_CONF["phoneNumber"] = Globals.CONF["phoneNumber"]
 
 		@staticmethod
-		def mergeLanguageDictionaries():
+		def merge_language_dictionaries():
 			# Override The LANG_DICT w/ The PROJECT_LANG_DICT
 			Globals.LANG_DICT.update(Globals.PROJECT_LANG_DICT)
