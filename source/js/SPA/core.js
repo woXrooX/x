@@ -42,7 +42,7 @@ export default class Core{
 	// Class Static Initialization Block
 	static {
 		// Try To Get Initial Data Then Init The Methods
-		Core.#getInitialData()
+		Core.#get_initial_data()
 			.then(()=>{
 				Core.#init();
 				Core.#onLoad();
@@ -55,18 +55,28 @@ export default class Core{
 	}
 
 	/////// Initial Data
-	static async #getInitialData(){
-		let response = await window.bridge({for:"initialData"}, "/api");
+	static async #get_initial_data(){
+		return new Promise( async (resolve, reject) => {
+			let response = await window.bridge({for:"initialData"}, "/api");
 
-		Log.success(response);
+			if(typeof response === "object"){
+				Log.success(response);
 
-		window.session = response["session"];
-		window.CONF = response["CONF"];
-		window.Language.DICT = response["LANG_DICT"];
-		window.USER_AUTHENTICITY_STATUSES = response["USER_AUTHENTICITY_STATUSES"];
-		window.USER_ROLES = response["USER_ROLES"];
-		window.USER_OCCUPATIONS = response["USER_OCCUPATIONS"];
-		window.SVG.load(response["PROJECT_SVG"]);
+				window.session = response["session"];
+				window.CONF = response["CONF"];
+				window.Language.DICT = response["LANG_DICT"];
+				window.USER_AUTHENTICITY_STATUSES = response["USER_AUTHENTICITY_STATUSES"];
+				window.USER_ROLES = response["USER_ROLES"];
+				window.USER_OCCUPATIONS = response["USER_OCCUPATIONS"];
+				window.SVG.load(response["PROJECT_SVG"]);
+
+				resolve();
+			}else{
+				Log.error("Fetching the initial data failed!");
+
+				reject();
+			}
+		});
 	}
 
 	// Initialize all the initial methods

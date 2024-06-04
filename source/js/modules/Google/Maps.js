@@ -7,7 +7,7 @@ export class Maps{
 
 	static #CONF = {}
 
-	static async init(API_KEY, element, CONF = {}){
+	static init(API_KEY, element, CONF = {}){
 		if(!!API_KEY === false) return Log.error("Google.Maps.init(): Invalid API_KEY argument!");
 		if(!!element === false) return Log.error("Google.Maps.init(): Element does not exists!");
 
@@ -17,7 +17,7 @@ export class Maps{
 
 		if(Maps.#initialized === true) return Maps.#init_Google_Maps_object();
 
-		Maps.#init_script();
+		return Maps.#init_script();
 	}
 
 	//// Helpers
@@ -26,11 +26,16 @@ export class Maps{
 
 		window.google_maps_callback_func = Maps.#init_Google_Maps_object;
 
-		const script = document.createElement('script');
-		script.src = `https://maps.googleapis.com/maps/api/js?key=${Maps.#API_KEY}&callback=google_maps_callback_func&libraries=marker`;
-		script.type = "module";
-		window.document.head.appendChild(script);
-		script.onerror = ()=>{ Log.error("Failed to load Google Maps script."); };
+		return new Promise((resolve, reject) => {
+			const script = document.createElement('script');
+			script.src = `https://maps.googleapis.com/maps/api/js?key=${Maps.#API_KEY}&callback=google_maps_callback_func&libraries=marker`;
+			script.onload = () => resolve();
+			script.onerror = () => reject(new Error('Failed to load the Google script'));
+
+			// Below line should come after setting the onload and onerror event handlers.
+			// This ensures that the handlers are in place before the script starts loading, so that they can properly handle the load and error events.
+			window.document.head.appendChild(script);
+		});
 	}
 
 	static #init_Google_Maps_object(){
