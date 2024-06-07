@@ -218,27 +218,28 @@ CREATE TABLE IF NOT EXISTS `notification_types` (
 	`name` VARCHAR(20) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 );
-INSERT INTO notification_types (name)
+INSERT INTO notification_types (id, name)
 	VALUES
-		("success"),
-		("info"),
-		("important"),
-		("warning"),
-		("error")
+		(1, "success"),
+		(2, "info"),
+		(3, "warning"),
+		(4, "error"),
+		(5, "important"),
+		(6, "urgent")
 ;
 
 \! echo "-------------------------- notifications";
 CREATE TABLE IF NOT EXISTS `notifications` (
 	`id` INT NOT NULL UNIQUE auto_increment,
-	`owner` INT NOT NULL,
-	`content` TEXT NOT NULL,
-	`seen` BOOLEAN NOT NULL DEFAULT false,
+	`recipient` INT NOT NULL,
+	`content` VARCHAR(5000) NOT NULL,
+	`seen` BIT(1) NOT NULL DEFAULT 0,
 	`type` INT NOT NULL,
 
 	`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-	FOREIGN KEY (`owner`) REFERENCES users(`id`) ON DELETE CASCADE,
+	FOREIGN KEY (`recipient`) REFERENCES users(`id`) ON DELETE CASCADE,
 	FOREIGN KEY (`type`) REFERENCES notification_types(`id`) ON DELETE CASCADE,
 
 	PRIMARY KEY (`id`)
