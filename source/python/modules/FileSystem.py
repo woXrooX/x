@@ -361,6 +361,8 @@ if __name__ != "__main__":
 
 			if "eMail" in Globals.PROJECT: Globals.CONF["eMail"].update(Globals.PROJECT["eMail"])
 
+			if "Stripe" in Globals.PROJECT: Globals.CONF["Stripe"].update(Globals.PROJECT["Stripe"])
+
 			if "password" in Globals.PROJECT: Globals.CONF["password"].update(Globals.PROJECT["password"])
 
 			if "default" in Globals.PROJECT: Globals.CONF["default"].update(Globals.PROJECT["default"])

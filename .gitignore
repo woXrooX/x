@@ -9,7 +9,6 @@ source/python/modules/*
 !source/python/modules/Backup.py
 !source/python/modules/FileSystem.py
 !source/python/modules/Globals.py
-!source/python/modules/GMail.py
 !source/python/modules/Logger.py
 !source/python/modules/LogInTools.py
 !source/python/modules/MongoDB.py

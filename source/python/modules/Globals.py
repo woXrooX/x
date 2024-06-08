@@ -45,7 +45,6 @@ if __name__ != "__main__":
 					"Backup.py",
 					"FileSystem.py",
 					"Globals.py",
-					"GMail.py",
 					"Logger.py",
 					"LogInTools.py",
 					"MongoDB.py",

@@ -68,6 +68,7 @@ export default class Core{
 				window.USER_AUTHENTICITY_STATUSES = response["USER_AUTHENTICITY_STATUSES"];
 				window.USER_ROLES = response["USER_ROLES"];
 				window.USER_OCCUPATIONS = response["USER_OCCUPATIONS"];
+				window.NOTIFICATION_TYPES = response["NOTIFICATION_TYPES"];
 				window.SVG.load(response["PROJECT_SVG"]);
 
 				resolve();

@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.186.0.0002"
+version: "0.187.0.0000"
 
 
 ######### Flask
@@ -29,16 +29,18 @@ eMail:
   regEx: "^[a-zA-Z0-9][a-zA-Z0-9._-]{0,20}[a-zA-Z0-9]@[a-z][a-zA-Z0-9-_]{1,20}.[a-z]{2,3}$"
   subject: "x"
 
-  GMail:
-    enabled: false
-    eMail: null
-    password: null
-
   SendGrid:
     enabled: false
     domain: null
     api_key: null
 
+######### Striep
+Stripe:
+  disabled: true
+  secret_key: null
+  publishable_key: null
+  restricted_key: null
+  webhook_secret: null
 
 ######### App Defaults
 default:

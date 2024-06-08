@@ -3,7 +3,6 @@ import re, random
 from main import session
 
 from python.modules.Page import Page
-from python.modules.GMail import GMail
 from python.modules.SendGrid import SendGrid
 from python.modules.response import response
 from python.modules.Globals import Globals

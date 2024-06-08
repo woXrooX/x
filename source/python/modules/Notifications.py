@@ -2,51 +2,50 @@ if __name__ != "__main__":
 	from main import session
 	from python.modules.Globals import Globals
 	from python.modules.MySQL import MySQL
-	from python.modules.User import User
 
 	class Notifications():
 		@staticmethod
-		@User.check_if_user_in_session
-		def new(
-			owner = None,
-			content = "",
-			type_name = None
-		):
-			user_id = owner if type(owner) is int and owner > 0 else session["user"]["id"]
-			type_id = Globals.NOTIFICATION_TYPES[type_name]["id"] if type_name in Globals.NOTIFICATION_TYPES else Globals.NOTIFICATION_TYPES["warning"]["id"]
+		def new(recipient, content, type_name):
+			if int(recipient) <= 0: return False
+
+			if type_name not in Globals.NOTIFICATION_TYPES: return False
+			type_id = Globals.NOTIFICATION_TYPES[type_name]["id"] if type_name in Globals.NOTIFICATION_TYPES else Globals.NOTIFICATION_TYPES["error"]["id"]
 
 			data = MySQL.execute(
-				sql="INSERT INTO notifications (owner, content, type) VALUES (%s, %s, %s);",
-				params=(user_id, content, type_id),
+				sql="INSERT INTO notifications (recipient, content, type) VALUES (%s, %s, %s);",
+				params=[recipient, content, Globals.NOTIFICATION_TYPES[type_name]["id"]],
 				commit=True
 			)
-
 			if data is False: return False
-
 			return True
 
-		# Gets the all notifications related to the current user (the user in the current session)
 		@staticmethod
-		@User.check_if_user_in_session
-		def getAll():
+		def get_all(recipient = None):
+			if int(recipient) <= 0: return False
+
 			data = MySQL.execute(
-				sql="SELECT * FROM notifications WHERE user=%s",
-				params=(session["user"]["id"],)
+				sql="""
+					SELECT
+						notifications.*,
+						notification_types.name as type
+					FROM notifications
+					JOIN notification_types ON notification_types.id = notifications.type
+					WHERE recipient=%s
+					ORDER BY timestamp DESC;
+				""",
+				params=[recipient]
 			)
-
 			if data is False: return False
-
 			return data
 
 		@staticmethod
-		@User.check_if_user_in_session
-		def markAsSeen(id):
+		def set_seen(id, recipient):
+			if int(recipient) <= 0: return False
+
 			data = MySQL.execute(
-				sql="UPDATE notifications SET seen=1 WHERE id=%s AND owner=%s;",
-				params=(id, session["user"]["id"]),
+				sql="UPDATE notifications SET seen=1 WHERE id=%s AND recipient=%s;",
+				params=[id, recipient],
 				commit=True
 			)
-
 			if data is False: return False
-
 			return True
