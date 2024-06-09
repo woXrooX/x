@@ -2,7 +2,7 @@
 
 export default class Hyperlink{
 	static collect(){
-		Log.info("Hyperlink.collect()");
+		// Log.info("Hyperlink.collect()");
 
 		const links = document.getElementsByTagName("a");
 

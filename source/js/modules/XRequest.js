@@ -8,7 +8,7 @@ export default class XRequest{
 	// Collecting happens whenever Core.#observeMutations() -> observes any DOM change
 	// NOTE: If page has zero change on initial load, the XRequest.collect() will not be called and the first XRequest attached elements will not be listened
 	static collect(){
-		Log.info("XRequest.collect()");
+		// Log.info("XRequest.collect()");
 
 		XRequest.#OBJECTS = [];
 

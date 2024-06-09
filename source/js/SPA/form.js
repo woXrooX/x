@@ -8,7 +8,7 @@ export default class Form{
 	static collect(element = null){
 		if(!!element === false) element = document;
 
-		Log.info(`Form.collect()`);
+		// Log.info(`Form.collect()`);
 
 		// Returns Live Collection
 		// const forms = element.getElementsByTagName("form");
