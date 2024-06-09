@@ -35,24 +35,26 @@ def x_root(request):
 
 			return response(type="success", message="success")
 
-
 		if request.get_json()["for"] == "get_all_users":
 			users = MySQL.execute(
 				sql="""
 					SELECT
 						users.*,
 						GROUP_CONCAT(DISTINCT user_roles.name ORDER BY user_roles.name ASC SEPARATOR ', ') AS roles_list
-
 					FROM users
-
 					LEFT JOIN users_roles ON users.id = users_roles.user
-
 					LEFT JOIN user_roles ON user_roles.id = users_roles.role
-
 					GROUP BY users.id;
 				"""
 			)
-
 			if users is False: return response(type="error", message="database_error")
 
 			return response(type="success", message="success", data=users, defaultSerializerFunc=str)
+
+		if request.get_json()["for"] == "get_all_login_records":
+			if Globals.CONF["tools"].get("log_in_tools", {}).get("enable_recording", False) is False: return response(type="info", message="log_in_tools_recording_disabled")
+
+			data = MySQL.execute("SELECT * FROM login_records;")
+			if data is False: return response(type="error", message="database_error")
+
+			return response(type="success", message="success", data=data, defaultSerializerFunc=str)
