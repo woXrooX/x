@@ -45,7 +45,7 @@ def signUp(request):
 		# Generate Randome Verification Code
 		eMailVerificationCode = random.randint(100000, 999999)
 
-		password = LogInTools.passwordHash(request.form["password"])
+		password = LogInTools.password_hash(request.form["password"])
 
 		# Insert To Database
 		data = MySQL.execute(

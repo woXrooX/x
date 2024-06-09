@@ -21,7 +21,7 @@ def logIn(request):
 		# password_empty
 		if "password" not in request.form or not request.form["password"]: return response(type="error", message="password_empty", field="password")
 
-		password = LogInTools.passwordHash(request.form["password"])
+		password = LogInTools.password_hash(request.form["password"])
 
 		######## Check If eMail And Password matching User Exist
 		data = MySQL.execute(
@@ -34,7 +34,7 @@ def logIn(request):
 
 		# No Match
 		if not data:
-			LogInTools.newRecord(request.remote_addr, request.headers.get('User-Agent'))
+			LogInTools.new_record(request.remote_addr, request.headers.get('User-Agent'))
 			return response(type="error", message="usernameOrPasswordWrong")
 
 		# Set Session User ID
@@ -45,7 +45,7 @@ def logIn(request):
 
 		#### On Success Redirect & Update Front-End Session & Adds a new login record if enabled
 
-		LogInTools.newRecord(request.remote_addr, request.headers.get('User-Agent'), True)
+		LogInTools.new_record(request.remote_addr, request.headers.get('User-Agent'), True)
 
 		try:
 			from python.modules.onLogIn import onLogIn

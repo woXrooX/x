@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.187.0.0002"
+version: "0.187.0.0003"
 
 
 ######### Flask
@@ -92,9 +92,9 @@ tools:
   # Enables All "print"s And "console.log"s
   debug: true
 
-  logInTools:
+  log_in_tools:
     # Enables recording log in attempts
-    enableRecording: false
+    enable_recording: false
 
   # To Control App's State (Offline, Under Development etc.)
   # app_is_down:

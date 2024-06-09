@@ -31,7 +31,7 @@ def resetPassword(request, TOKEN):
 		# Passwords do not match
 		if request.form["password"] != request.form["confirm_password"]: return response(type="error", message="passwords_do_not_match", field="confirm_password")
 
-		password = LogInTools.passwordHash(request.form["password"])
+		password = LogInTools.password_hash(request.form["password"])
 
 		######## Token validation
 		# prd = password recovery data
