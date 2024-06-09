@@ -11,7 +11,7 @@ def x_root(request):
 	if request.method == "POST":
 		if request.get_json()["for"] == "sanitize_users_folders":
 			users = MySQL.execute("SELECT id FROM users;")
-			if users is False: return response(type="error", message="databaseError")
+			if users is False: return response(type="error", message="database_error")
 
 			user_IDs = [user["id"] for user in users]
 
@@ -53,6 +53,6 @@ def x_root(request):
 				"""
 			)
 
-			if users is False: return response(type="error", message="databaseError")
+			if users is False: return response(type="error", message="database_error")
 
 			return response(type="success", message="success", data=users, defaultSerializerFunc=str)

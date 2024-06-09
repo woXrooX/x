@@ -6,8 +6,8 @@ from python.modules.Globals import Globals
 @Page.build()
 def logOut(request):
 	if request.method == "POST":
-		# unknownError
-		if request.form["for"] != "logOut": return response(type="warning", message="unknownError")
+		# unknown_error
+		if request.form["for"] != "log_out": return response(type="warning", message="unknown_error")
 
 		# Remove User From Session
 		session.pop('user')

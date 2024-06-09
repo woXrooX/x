@@ -8,9 +8,9 @@ export default class Router{
 	}
 
 	static async handle(){
-		// Check If App Is Down If So Stop Handling Set appIsDown As Current Page
-		if("appIsDown" in window.CONF["tools"]){
-			Router.currentPage.name = "appIsDown";
+		// Check If App Is Down If So Stop Handling Set app_is_down As Current Page
+		if("app_is_down" in window.CONF["tools"]){
+			Router.currentPage.name = "app_is_down";
 			Router.#loadPageFile();
 			return;
 		}

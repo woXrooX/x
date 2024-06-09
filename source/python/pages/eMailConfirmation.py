@@ -9,7 +9,7 @@ from python.modules.MySQL import MySQL
 def eMailConfirmation(request):
 	if request.method == "POST":
 		# Check If "for" Meant To Go To Here
-		if request.form["for"] != "eMailConfirmation": return response(type="warning", message="unknownError")
+		if request.form["for"] != "eMail_confirmation": return response(type="warning", message="unknown_error")
 
 		# Check For Existentance Of "verificationCode"
 		if(
@@ -19,7 +19,7 @@ def eMailConfirmation(request):
 			# Check If Verification Code Is Empty
 			"verificationCode" in request.form and request.form["verificationCode"] == ''
 
-		): return response(type="warning", message="eMailConfirmationCodeEmpty", field="verificationCode")
+		): return response(type="warning", message="eMail_confirmation_code_empty", field="verificationCode")
 
 		# Check If Verification Code Does Not Match Then Increment The Counter
 		if int(request.form["verificationCode"]) != session["user"]["eMail_verification_code"]:
@@ -33,12 +33,12 @@ def eMailConfirmation(request):
 				commit=True
 			)
 
-			if data is False: return response(type="error", message="databaseError")
+			if data is False: return response(type="error", message="database_error")
 
 			# Update The session["user"] After The Changes To The Database
 			User.update_session()
 
-			return response(type="warning", message="eMailConfirmationCodeDidNotMatch", field="verificationCode")
+			return response(type="warning", message="eMail_confirmation_code_did_not_match", field="verificationCode")
 
 
 		# Success | Match
@@ -58,14 +58,14 @@ def eMailConfirmation(request):
 				commit=True
 			)
 
-			if data is False: return response(type="error", message="databaseError")
+			if data is False: return response(type="error", message="database_error")
 
 			# Update The session["user"] After The Changes To The Database
 			User.update_session()
 
 			return response(
 				type="success",
-				message="eMailVerificationSuccess",
+				message="eMail_verification_success",
 				setSessionUser=True,
 				domChange=["menu"],
 				redirect="/home"

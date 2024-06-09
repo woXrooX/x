@@ -91,7 +91,7 @@ export default class Form{
 				Form.#response({
 					form: form,
 					type: "error",
-					message: window.Lang.use("invalidResponse"),
+					message: window.Lang.use("invalid_response"),
 					field: form.getAttribute("for")
 				});
 

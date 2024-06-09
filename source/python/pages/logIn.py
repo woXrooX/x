@@ -10,16 +10,16 @@ from python.modules.LogInTools import LogInTools
 @Page.build()
 def logIn(request):
 	if request.method == "POST":
-		# unknownError
-		if request.form["for"] != "logIn": return response(type="warning", message="unknownError")
+		# unknown_error
+		if request.form["for"] != "log_in": return response(type="warning", message="unknown_error")
 
 		######## eMail
-		# eMailEmpty
-		if "eMail" not in request.form or not request.form["eMail"]: return response(type="error", message="eMailEmpty", field="eMail")
+		# eMail_empty
+		if "eMail" not in request.form or not request.form["eMail"]: return response(type="error", message="eMail_empty", field="eMail")
 
 		######## password
-		# passwordEmpty
-		if "password" not in request.form or not request.form["password"]: return response(type="error", message="passwordEmpty", field="password")
+		# password_empty
+		if "password" not in request.form or not request.form["password"]: return response(type="error", message="password_empty", field="password")
 
 		password = LogInTools.passwordHash(request.form["password"])
 
@@ -30,7 +30,7 @@ def logIn(request):
 			fetchOne=True
 		)
 
-		if data is False: return response(type="error", message="databaseError")
+		if data is False: return response(type="error", message="database_error")
 
 		# No Match
 		if not data:

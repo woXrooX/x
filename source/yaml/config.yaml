@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.187.0.0001"
+version: "0.187.0.0002"
 
 
 ######### Flask
@@ -97,7 +97,7 @@ tools:
     enableRecording: false
 
   # To Control App's State (Offline, Under Development etc.)
-  # appIsDown:
+  # app_is_down:
   #   title: "Under Development"
   #   explanation: "Long text that describes the 'title'"
   #   icon: "SVG Logo To Be Shown"
@@ -235,6 +235,6 @@ password:
 
 
 ######### Phone Number
-phoneNumber:
+phone_number:
   regEx: "^[+]{1,1}[0-9]{11,11}$"
 

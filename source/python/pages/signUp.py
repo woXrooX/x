@@ -14,33 +14,32 @@ from python.modules.MySQL import MySQL
 @Page.build()
 def signUp(request):
 	if request.method == "POST":
-		# unknownError
-		if request.form["for"] != "signUp": return response(type="warning", message="unknownError")
+		# unknown_error
+		if request.form["for"] != "sign_up": return response(type="warning", message="unknown_error")
 
 		######## eMail
-		# eMailEmpty
-		if "eMail" not in request.form or not request.form["eMail"]: return response(type="error", message="eMailEmpty", field="eMail")
+		# eMail_empty
+		if "eMail" not in request.form or not request.form["eMail"]: return response(type="error", message="eMail_empty", field="eMail")
 
-		# eMailInvalid
-		if not re.match(Globals.CONF["eMail"]["regEx"], request.form["eMail"]): return response(type="error", message="eMailInvalid", field="eMail")
+		# eMail_invalid
+		if not re.match(Globals.CONF["eMail"]["regEx"], request.form["eMail"]): return response(type="error", message="eMail_invalid", field="eMail")
 
 		######## password
-		# passwordEmpty
-		if "password" not in request.form or not request.form["password"]: return response(type="error", message="passwordEmpty", field="password")
+		# password_empty
+		if "password" not in request.form or not request.form["password"]: return response(type="error", message="password_empty", field="password")
 
-		# passwordMinLength
-		if len(request.form["password"]) < Globals.CONF["password"]["min_length"]: return response(type="error", message="passwordMinLength", field="password")
+		# password_min_length
+		if len(request.form["password"]) < Globals.CONF["password"]["min_length"]: return response(type="error", message="password_min_length", field="password")
 
-		# passwordMaxLength
-		if len(request.form["password"]) > Globals.CONF["password"]["max_length"]: return response(type="error", message="passwordMaxLength", field="password")
+		# password_max_length
+		if len(request.form["password"]) > Globals.CONF["password"]["max_length"]: return response(type="error", message="password_max_length", field="password")
 
-		# passwordAllowedChars
-		if not re.match(Globals.CONF["password"]["regEx"], request.form["password"]): return response(type="error", message="passwordAllowedChars", field="password")
+		# password_allowed_chars
+		if not re.match(Globals.CONF["password"]["regEx"], request.form["password"]): return response(type="error", message="password_allowed_chars", field="password")
 
-		######## eMail and Password In Use
-		# eMailInUse
+		# eMail_in_use
 		data = MySQL.execute(sql="SELECT id FROM users WHERE eMail=%s", params=(request.form["eMail"], ), fetchOne=True)
-		if data: return response(type="error", message="eMailInUse", field="eMail")
+		if data: return response(type="error", message="eMail_in_use", field="eMail")
 
 		######## Success
 		# Generate Randome Verification Code
@@ -59,7 +58,7 @@ def signUp(request):
 			),
 			commit=True
 		)
-		if data is False: return response(type="error", message="databaseError")
+		if data is False: return response(type="error", message="database_error")
 
 		# Get User Data
 		data = MySQL.execute(
@@ -70,7 +69,7 @@ def signUp(request):
 			),
 			fetchOne=True
 		)
-		if not data: return response(type="error", message="databaseError")
+		if not data: return response(type="error", message="database_error")
 
 		# Set Session User Data
 		session["user"] = data
@@ -94,7 +93,7 @@ def signUp(request):
 		# Success
 		return response(
 			type="success" if emailVerificationSentSuccessfully is True else "info",
-			message="eMailConfirmationCodeHasBeenSent" if emailVerificationSentSuccessfully is True else "Signed Up Without Email Verification!",
+			message="eMail_confirmation_code_has_been_sent" if emailVerificationSentSuccessfully is True else "Signed Up Without Email Verification!",
 			setSessionUser=True,
 			redirect="/eMailConfirmation" if emailVerificationSentSuccessfully is True else "/home",
 			domChange=["menu"]

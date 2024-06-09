@@ -7,7 +7,7 @@
 // 			{"br": {}},
 // 			{"input": {"attributes": [{"type": "password"}, {"name": "password"}, {"placeholder": "Password"}]}},
 // 			{"br": {}},
-// 			{"input": {"attributes": [{"type": "submit"}, {"name": "logIn"}, {"value": "Log In"}]}}
+// 			{"input": {"attributes": [{"type": "submit"}, {"name": "log_in"}, {"value": "Log In"}]}}
 // 		]
 // 	}
 // };

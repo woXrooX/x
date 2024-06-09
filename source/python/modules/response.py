@@ -9,7 +9,7 @@ if __name__ != "__main__":
 		type="error",
 
 		# Response Message (By Keyword)
-		message="invalidKeyword",
+		message="invalid_keyword",
 
 		# Form Related Field
 		field=False,
@@ -45,7 +45,7 @@ if __name__ != "__main__":
 		######## Message
 		# Looks like no need for this check here since Front-End Lang.use covers bugs
 		# Check If Keyword Is Valid
-		# if message not in langDict: message="invalidKeyword"
+		# if message not in langDict: message="invalid_keyword"
 
 		######## Response Dict
 		response_dict = {

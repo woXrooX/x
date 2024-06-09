@@ -1,15 +1,15 @@
 "use strict";
 
-export const TITLE = window.Lang.use(["eMailConfirmation"]);
+export const TITLE = window.Lang.use(["eMail_confirmation"]);
 
 export default function main(){
 	return `
 		<container class="p-5">
 			<column class="w-50 surface-v1 p-5 gap-1">
 
-				<p class="text-align-center">${window.Lang.use("eMailConfirmationCodeHasBeenSent")}</p>
+				<p class="text-align-center">${window.Lang.use("eMail_confirmation_code_has_been_sent")}</p>
 
-				<form action="eMailConfirmation" for="eMailConfirmation" x-toast>
+				<form for="eMail_confirmation" x-toast>
 
 
 					<label>
@@ -18,7 +18,7 @@ export default function main(){
 					</label>
 
 					<label>
-						<input class="btn btn-primary" type='submit' name='verify' value='${window.Lang.use("verifyEmail")}'>
+						<input class="btn btn-primary" type='submit' name='verify' value='${window.Lang.use("verify_eMail")}'>
 						<p for='eMailConfirmation'></p>
 					</label>
 

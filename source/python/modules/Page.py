@@ -58,21 +58,21 @@ if __name__ != "__main__":
 
 			if request.method == "POST":
 				### App Is Down
-				if "appIsDown" in Globals.CONF["tools"]:
+				if "app_is_down" in Globals.CONF["tools"]:
 					Log.warning("App Is Down")
-					return response(type="warning", message="appIsDown")
+					return response(type="warning", message="app_is_down")
 
 				### "application/json"
 				if request.content_type == "application/json":
 					# Invalid JSON
 					if request.get_json() is None:
 						Log.warning("Invalid JSON request")
-						return response(type="warning", message="invalidRequest")
+						return response(type="warning", message="invalid_request")
 
 					# Check if "for" in request
 					if "for" not in request.get_json():
 						Log.warning("Missing 'for' in request JSON")
-						return response(type="warning", message="invalidRequest")
+						return response(type="warning", message="invalid_request")
 
 
 				### "multipart/form-data"
@@ -83,13 +83,13 @@ if __name__ != "__main__":
 				if "multipart/form-data" in request.content_type.split(';'):
 					if "for" not in request.form:
 						Log.warning("Missing 'for' in request form data")
-						return response(type="warning", message="invalidRequest")
+						return response(type="warning", message="invalid_request")
 
 
 			##################### GET
 
-			####### App Is Down
-			if "appIsDown" in Globals.CONF["tools"]: return render_template("index.html", **globals())
+			####### App is down
+			if "app_is_down" in Globals.CONF["tools"]: return render_template("index.html", **globals())
 
 
 			# NOTE: Already done inside Page.build()

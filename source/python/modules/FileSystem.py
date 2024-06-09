@@ -382,7 +382,7 @@ if __name__ != "__main__":
 			Globals.PUBLIC_CONF["menu"] = Globals.CONF["menu"]
 			Globals.PUBLIC_CONF["username"] = Globals.CONF["username"]
 			Globals.PUBLIC_CONF["password"] = Globals.CONF["password"]
-			Globals.PUBLIC_CONF["phoneNumber"] = Globals.CONF["phoneNumber"]
+			Globals.PUBLIC_CONF["phone_number"] = Globals.CONF["phone_number"]
 
 		@staticmethod
 		def merge_language_dictionaries():

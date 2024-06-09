@@ -1,11 +1,11 @@
-export const TITLE = window.Lang.use('signUp');
+export const TITLE = window.Lang.use('sign_up');
 
 export default function main(){
 	return `
 		<container class="p-5 max-w-600px">
-			<form action="/signUp" for="signUp" autocomplete="off" class="surface-v1 p-5">
+			<form for="sign_up" autocomplete="off" class="surface-v1 p-5">
 
-				<h2 class="text-align-center">${window.Lang.use('signUp')}</h2>
+				<h2 class="text-align-center">${window.Lang.use('sign_up')}</h2>
 
 				<label>
 					<p for="eMail">${window.Lang.use('eMail')}</p>
@@ -18,11 +18,11 @@ export default function main(){
 				</label>
 
 				<label>
-					<input  class="btn btn-primary" type="submit" name="signUp" value="${window.Lang.use('signUp')}">
-					<p for="signUp"></p>
+					<input  class="btn btn-primary" type="submit" name="sign_up" value="${window.Lang.use('sign_up')}">
+					<p for="sign_up"></p>
 				</label>
 
-				<a href="/logIn" class="text-align-center text-size-0-7">${window.Lang.use('haveAccountGoToLogIn')}</a>
+				<a href="/logIn" class="text-align-center text-size-0-7">${window.Lang.use('have_account_go_to_log_in')}</a>
 
 			</form>
 		</container>

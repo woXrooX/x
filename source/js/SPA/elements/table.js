@@ -131,7 +131,7 @@ export default class Table extends HTMLElement{
 		this.#divideDataIntoChunks();
 
 		if(this.bodyValuesInChunks.length === 0){
-			this.querySelector("table > tbody").innerHTML = `<tr><td>${window.Lang.use("noData")}</td></tr>`;
+			this.querySelector("table > tbody").innerHTML = `<tr><td>${window.Lang.use("no_data")}</td></tr>`;
 			return;
 		}
 
@@ -221,7 +221,7 @@ export default class Table extends HTMLElement{
 
 				else if(String(cell).toLowerCase().includes(VALUE_LOWER_CASE)) this.bodyValues.push(row);
 
-		if(this.bodyValues.length === 0) this.bodyValues = [[window.Lang.use("noMatches")]];
+		if(this.bodyValues.length === 0) this.bodyValues = [[window.Lang.use("no_matches")]];
 	}
 
 	// Divide data to chunks aka pages

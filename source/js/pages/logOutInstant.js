@@ -1,6 +1,6 @@
 "use strict";
 
-export const TITLE = window.Lang.use("logOut");
+export const TITLE = window.Lang.use("log_out");
 
 export async function before(){
 	const resp = await window.bridge({for:"logOutInstant"}, "/logOutInstant");

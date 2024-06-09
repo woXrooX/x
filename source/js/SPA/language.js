@@ -15,7 +15,7 @@ export default class Language extends HTMLElement{
 	// Can be used for translations and just for normal use cases
 	static translate(keyword, code = Language.#CURRENT){
 		// Check if valid keyword was passed
-		if(!!keyword === false) keyword = "invalidKeyword";
+		if(!!keyword === false) keyword = "invalid_keyword";
 
 		// Check if keyword is in Lang.DICT
 		if(!(keyword in Language.DICT)) return keyword;

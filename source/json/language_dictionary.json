@@ -4,50 +4,25 @@
 		"ru": "Аккаунт",
 		"uz": "Akkaunt"
 	},
-	"accountType": {
-		"en": "Account type",
-		"ru": "Тип аккаунта",
-		"uz": "Akkaunt turi"
-	},
-	"action": {
-		"en": "Action",
-		"ru": "Действие",
-		"uz": "Harakat"
-	},
 	"add": {
 		"en": "Add",
 		"ru": "Добавлять",
 		"uz": "Qo`shish"
 	},
-	"addOption": {
-		"en": "Add option",
-		"ru": "Добавить вариант",
-		"uz": "Variantni qo`shish"
-	},
-	"addUser": {
-		"en": "Add user",
-		"ru": "Добавить пользователя",
-		"uz": "Foydalanuvchi qo`shish"
-	},
-	"allChangesWillTakeEffectAfterNextLogIn": {
+	"all_changes_will_take_effect_after_next_log_in": {
 		"en": "All changes will take effect at next log in",
 		"ru": "Все изменения вступят в силу после следующего входа в систему",
 		"uz": "Barcha o`zgarishlar keyingi tizimga kirgandan keyin kuchga kiradi"
 	},
-	"appIsDown": {
+	"app_is_down": {
 		"en": "App is down!",
 		"ru": "Приложение не работает!",
 		"uz": "Ilova ishlamayapti!"
 	},
-	"areYouSure": {
+	"are_you_sure": {
 		"en": "Are you sure?",
 		"ru": "Вы уверены?",
 		"uz": "Ishonchingiz komilmi?"
-	},
-	"byClckingSignUpYouAgree": {
-		"en": "By clicking Sign up, you agree to our <a href='/termsOfUse'>Terms of use</a> and that you have read our <a href='/privacyPolicy'>Privacy Policy</a> , Including our <a href='/cookieTerms'>Cookie Use</a>",
-		"ru": "Нажимая «Зарегистрироваться», вы соглашаетесь с нашими <a href='/termsOfUse'>Условиями использования</a> и с нашей <a href='/privacyPolicy'>Политикой конфиденциальности</a>, включая <a href = '/cookieTerms'>Использование файлов cookie</a>",
-		"uz": "Ro`yxatdan o`tishni bosish orqali siz <a href='/termsOfUse'>Foydalanish shartlari</a>, <a href='/privacyPolicy'>Maxfiylik siyosati</a> va <a href='/cookieTerms'>Cookie-fayllardan foydalanish</a> shartlarmizni o`qiganligingizni va rozi bo`lganingizni bildirasiz"
 	},
 	"cannot_remember_password": {
 		"en": "Can't remember password?",
@@ -59,42 +34,7 @@
 		"ru": "Изменить",
 		"uz": "O`zgartirish"
 	},
-	"chooseCurrency": {
-		"en": "Choose currency",
-		"ru": "Выберите валюту",
-		"uz": "Valyutani tanlang"
-	},
-	"chooseLang": {
-		"en": "Choose language",
-		"ru": "Выберите язык",
-		"uz": "Tilni tanlang"
-	},
-	"chooseSiteLang": {
-		"en": "Choose site language",
-		"ru": "Выберите язык сайта",
-		"uz": "Sayt tilini tanlang"
-	},
-	"chooseUsername": {
-		"en": "Choose a username",
-		"ru": "Выберите имя пользователя",
-		"uz": "Foydalanuvchi ismini tanlang"
-	},
-	"chooseUserType": {
-		"en": "Choose a user type",
-		"ru": "Выберите тип пользователя",
-		"uz": "Foydalanuvchi turini tanlang"
-	},
-	"color": {
-		"en": "Color",
-		"ru": "Цвет",
-		"uz": "Rang"
-	},
-	"contact": {
-		"en": "Contact",
-		"ru": "Связаться с нами",
-		"uz": "Aloqa"
-	},
-	"couldNotDeleteFile": {
+	"could_not_delete_file": {
 		"en": "Could not delete the file!",
 		"ru": "Не удалось удалить файл!",
 		"uz": "Faylni o`chirib bo`lmadi!"
@@ -109,12 +49,12 @@
 		"ru": "Не удалось сохранить файл!",
 		"uz": "Fayl saqlanmadi!"
 	},
-	"couldNotSendEMail": {
+	"could_not_send_eMail": {
 		"en": "Could Not Send EMail!",
 		"ru": "Не удалось отправить электронное письмо!",
 		"uz": "E-pochta yuborib bo`lmadi!"
 	},
-	"couldNotSendEMailVerificationCode": {
+	"could_not_send_eMail_verification_code": {
 		"en": "Could Not Send EMail Verification Code!",
 		"ru": "Не удалось отправить код подтверждения по электронной почте!",
 		"uz": "Tasdiqlash kodini elektron pochtaga yuborib bo`lmadi!"
@@ -124,20 +64,10 @@
 		"ru": "Благодарности",
 		"uz": "Rahmatlar"
 	},
-	"currency": {
-		"en": "Currency",
-		"ru": "Валюта",
-		"uz": "Valyuta"
-	},
-	"databaseError": {
+	"database_error": {
 		"en": "Database error",
 		"ru": "Ошибка базы данных",
 		"uz": "Ma`lumotlar bazasida xatolik"
-	},
-	"default": {
-		"en": "Default",
-		"ru": "По умолчанию",
-		"uz": "Odatiy"
 	},
 	"delete": {
 		"en": "Delete",
@@ -149,17 +79,12 @@
 		"ru": "Удалено",
 		"uz": "O`chirildi"
 	},
-	"deletedSuccessfully": {
+	"deleted_successfully": {
 		"en": "Successfully deleted",
 		"ru": "Успешно удалено",
 		"uz": "Muvaffaqiyatli o`chirildi"
 	},
-	"didNotReceiveCode": {
-		"en": "Did not receive a code?",
-		"ru": "Не получили код?",
-		"uz": "Kod kelmadimi?"
-	},
-	"dontHaveAccountGoToSignUp": {
+	"dont_have_account_go_to_sign_up": {
 		"en": "Don`t have an account ? Go to sign up",
 		"ru": "Нет учетной записи? Перейти к подписке",
 		"uz": "Ro`yxatdan o`tmaganmisiz? Ro`yxatdan o`tish bu yerda"
@@ -169,57 +94,42 @@
 		"ru": "Эл. почта",
 		"uz": "Elektron pochta"
 	},
-	"eMailConfirmation": {
+	"eMail_confirmation": {
 		"en": "Email confirmation",
 		"ru": "Подтверждение электонной почты",
 		"uz": "Elektron pochtani tasdiqlash"
 	},
-	"eMailConfirmationCodeDidNotMatch": {
+	"eMail_confirmation_code_did_not_match": {
 		"en": "The email confirmation code did not match!",
 		"ru": "Код подтверждения электронной почты не совпадает!",
 		"uz": "Elektron pochtani tasdiqlash kodi mos kelmadi!"
 	},
-	"eMailConfirmationCodeEmpty": {
+	"eMail_confirmation_code_empty": {
 		"en": "The email confirmation code was not entered!",
 		"ru": "Код подтверждения электронной почты не был введен!",
 		"uz": "Elektron pochtani tasdiqlash kodi kiritilmadi!"
 	},
-	"eMailConfirmationCodeHasBeenSent": {
+	"eMail_confirmation_code_has_been_sent": {
 		"en": "An email with a verification code has been sent to your email",
 		"ru": "На вашу электронную почту отправлено письмо с кодом подтверждения",
 		"uz": "Sizning elektron pochtangizga tasdiqlash kodi yuborildi"
 	},
-	"eMailConfirmationCodeNotCorrect": {
-		"en": "The email confirmation code is not correct!",
-		"ru": "Код подтверждения электронной почты неверен!",
-		"uz": "Elektron pochtani tasdiqlash kodi noto`g`ri!"
-	},
-	"eMailEmpty": {
+	"eMail_empty": {
 		"en": "Email address is empty",
 		"ru": "Адрес электронной почты пуст",
 		"uz": "Elektron pochta manzili bo`sh bo`lmasligi kerak"
 	},
-	"eMailFieldCheck": {
-		"en": "Please check the Email field",
-		"ru": "Пожалуйста, проверьте поле электронной почты",
-		"uz": "Iltimos Elektron pochta maydonini tekshiring"
-	},
-	"eMailInUse": {
+	"eMail_in_use": {
 		"en": "This Email is already in use",
 		"ru": "Этот электронный адрес уже используется",
 		"uz": "Ushbu elektron pochta manzili band"
 	},
-	"eMailInvalid": {
+	"eMail_invalid": {
 		"en": "Invalid Email address",
 		"ru": "Неверный адрес электронной почты",
 		"uz": "Elektron pochta manzili noto`g`ri"
 	},
-	"eMailOk": {
-		"en": "Email address is OK",
-		"ru": "Адрес электронной почты в порядке",
-		"uz": "Elektron pochta manzili yaxshi"
-	},
-	"eMailVerificationSuccess": {
+	"eMail_verification_success": {
 		"en": "The email has been successfully verified!",
 		"ru": "Электронная почта успешно подтверждена!",
 		"uz": "Elektron pochta muvaffaqiyatli tasdiqlandi!"
@@ -229,45 +139,10 @@
 		"ru": "Английский",
 		"uz": "Ingliz tili"
 	},
-	"enterPassword": {
-		"en": "Enter password",
-		"ru": "Введите пароль",
-		"uz": "Parolni kiriting"
-	},
-	"enterUsername": {
-		"en": "Enter username",
-		"ru": "Введите имя пользователя",
-		"uz": "Foydalanuvchi ismini kiriting"
-	},
 	"error": {
 		"en": "Error",
 		"ru": "Ошибка",
 		"uz": "Xato"
-	},
-	"faq": {
-		"en": "Faq",
-		"ru": "Вопросы-Ответы",
-		"uz": "Tss"
-	},
-	"female": {
-		"en": "Female",
-		"ru": "Женщина",
-		"uz": "Ayol"
-	},
-	"fieldEmpty": {
-		"en": "Field empty",
-		"ru": "Поле пусто",
-		"uz": "Maydon bo`sh"
-	},
-	"fileWasNotChosen": {
-		"en": "File was not chosen!",
-		"ru": "Файл не выбран!",
-		"uz": "Fayl tanlanmadi!"
-	},
-	"financialSettings": {
-		"en": "Financial settings",
-		"ru": "Финансовые параметры",
-		"uz": "Moliyaviy sozlamalar"
 	},
 	"firstname": {
 		"en": "First name",
@@ -279,12 +154,7 @@
 		"ru": "Пол",
 		"uz": "Jins"
 	},
-	"general": {
-		"en": "General",
-		"ru": "Общее",
-		"uz": "Umumiy"
-	},
-	"haveAccountGoToLogIn": {
+	"have_account_go_to_log_in": {
 		"en": "Have an account ? Go to log in",
 		"ru": "",
 		"uz": "Ro`yxatdan o`tganmisiz? Kirish bu yerda"
@@ -294,7 +164,7 @@
 		"ru": "Главная",
 		"uz": "Bosh sahifa"
 	},
-	"ifLogOutWontBeAbleTo": {
+	"if_log_out_wont_be_able_to": {
 		"en": "Before you go, keep in mind that logging out will terminate your current session and limit your ability to engage with the site.",
 		"ru": "Прежде чем уйти, имейте в виду, что выход из системы прекратит ваш текущий сеанс и ограничит вашу способность взаимодействовать с сайтом.",
 		"uz": "Chiqishdan oldin, tizimdan chiqish joriy seansni to`xtatishini va sayt bilan bog`lanish imkoniyatini cheklashini yodda tuting."
@@ -304,57 +174,37 @@
 		"ru": "Информация",
 		"uz": "Ma`lumot"
 	},
-	"information": {
-		"en": "Information",
-		"ru": "Информация",
-		"uz": "Ma`lumot"
-	},
-	"inOrderToUseEnableJavaScript": {
+	"JavaScript_required": {
 		"en": "In order to use our service please enable JavaScript",
 		"ru": "Чтобы использовать наш сервис, включите JavaScript",
 		"uz": "Bizning xizmatimizdan foydalanish uchun JavaScript-ni yoqing"
 	},
-	"introduction": {
-		"en": "Introduction",
-		"ru": "Интродукция",
-		"uz": "Kirish"
+	"JavaScript_disabled": {
+		"en": "JavaScript is disabled",
+		"ru": "JavaScript отключен",
+		"uz": "JavaScript o`chirilgan"
 	},
-	"invalidAgeWasProvided": {
-		"en": "Invalid age was provided",
-		"ru": "Указан неверный возраст",
-		"uz": "Noto`g`ri yosh ko`rsatilgan"
-	},
-	"invalidDataSelected": {
-		"en": "Invalid data selected",
-		"ru": "Выбраны неверные данные",
-		"uz": "Noto`g`ri ma`lumotlar tanlandi"
-	},
-	"invalidField": {
+	"invalid_field": {
 		"en": "Invalid field",
 		"ru": "Недопустимое поле",
 		"uz": "Maydon noto`g`ri"
 	},
-	"invalidFile": {
+	"invalid_file": {
 		"en": "Invalid file",
 		"ru": "Неверный файл",
 		"uz": "Yaroqsiz fayl"
 	},
-	"invalidKeyword": {
+	"invalid_keyword": {
 		"en": "Invalid keyword!",
 		"ru": "Неверное ключевое слово!",
 		"uz": "Noto`g`ri kalit so`z!"
 	},
-	"invalidPrompt": {
-		"en": "Invalid prompt",
-		"ru": "Неверная подсказка",
-		"uz": "Noto`g`ri buyruq"
-	},
-	"invalidRequest": {
+	"invalid_request": {
 		"en": "Invalid request",
 		"ru": "Неверная запрос",
 		"uz": "Noto`g`ri so`rov"
 	},
-	"invalidResponse": {
+	"invalid_response": {
 		"en": "Invalid response",
 		"ru": "Неверный ответ",
 		"uz": "Noto`g`ri javob"
@@ -364,12 +214,12 @@
 		"ru": "Неверная роль",
 		"uz": "Noto`g`ri rol"
 	},
-	"invalidToken": {
+	"invalid_token": {
 		"en": "Invalid token",
 		"ru": "Неверный токен",
 		"uz": "Token yaroqsiz"
 	},
-	"invalidValue": {
+	"invalid_value": {
 		"en": "Invalid value",
 		"ru": "Неверное значение",
 		"uz": "Qiymat noto`g`ri"
@@ -379,102 +229,42 @@
 		"ru": "Неправильное использование метода: 'bridge()'",
 		"uz": "Funktsiyadan noto`g`ri foydalanildi: 'bridge()'"
 	},
-	"javaScriptDisabled": {
-		"en": "JavaScript is disabled",
-		"ru": "JavaScript отключен",
-		"uz": "JavaScript o`chirilgan"
-	},
-	"languagesLibrary": {
-		"en": "Languages library",
-		"ru": "Библиотека языков",
-		"uz": "Tillar kutubxonasi"
-	},
 	"lastname": {
 		"en": "Last name",
 		"ru": "Фамилия",
 		"uz": "Familiya"
 	},
-	"lastUpdate": {
-		"en": "Last update",
-		"ru": "Последнее обновление",
-		"uz": "Oxirgi yangilanish"
-	},
-	"logIn": {
+	"log_in": {
 		"en": "Log in",
 		"ru": "Вход",
 		"uz": "Kirish"
 	},
-	"logOut": {
+	"log_out": {
 		"en": "Log out",
 		"ru": "Выйти",
 		"uz": "Chiqish"
 	},
-	"male": {
-		"en": "Male",
-		"ru": "Мужчина",
-		"uz": "Erkak"
-	},
-	"me": {
-		"en": "My page",
-		"ru": "Моя страница",
-		"uz": "Mening sahifam"
-	},
-	"myPage": {
-		"en": "My page",
-		"ru": "Моя страница",
-		"uz": "Mening sahifam"
-	},
-	"noData": {
+	"no_data": {
 		"en": "No data",
 		"ru": "Нет данных",
 		"uz": "Ma`lumot yo`q"
 	},
-	"noFound": {
-		"en": "No found",
-		"ru": "Не найдено",
-		"uz": "Topilmadi"
-	},
-	"noMatches": {
+	"no_matches": {
 		"en": "No matches",
 		"ru": "Нет совпадений",
 		"uz": "Mos kelmadi"
 	},
-	"notFound": {
+	"not_found": {
 		"en": "Not found",
 		"ru": "Не найдена",
 		"uz": "Topilmadi"
-	},
-	"notSpecified": {
-		"en": "Not specified",
-		"ru": "Не указан",
-		"uz": "Ko`rsatilmagan"
-	},
-	"optional": {
-		"en": "Optional",
-		"ru": "По желанию",
-		"uz": "Ixtiyoriy"
-	},
-	"options": {
-		"en": "Options",
-		"ru": "Опции",
-		"uz": "Tanlovlar"
-	},
-	"overview": {
-		"en": "Overview",
-		"ru": "Обзор",
-		"uz": "Qisqacha"
-	},
-	"pageNotFound": {
-		"en": "Page not found",
-		"ru": "Страница не найдена",
-		"uz": "Sahifa topilmadi"
 	},
 	"password": {
 		"en": "Password",
 		"ru": "Пароль",
 		"uz": "Parol"
 	},
-	"passwordAllowedChars": {
+	"password_allowed_chars": {
 		"en": "Password must include at least one letter, one number and one of this allowed characters ( ! @ # $ % ^ & * - _ + )",
 		"ru": "Пароль должен включать как минимум одну букву, одну цифру и один из разрешенных символов (! @ # $% ^ & * - _ +)",
 		"uz": "Parolda kamida bitta harif, bitta raqam va ushbu ruxsat berilgan belgilardan biri bo`lishi kerak (! @ # $% ^ & * - _ +)"
@@ -484,37 +274,22 @@
 		"ru": "Пароль успешно изменен",
 		"uz": "Parol muvaffaqiyatli almashtirildi"
 	},
-	"passwordEmpty": {
+	"password_empty": {
 		"en": "Password is empty",
 		"ru": "Пароль пуст",
 		"uz": "Parol bo`sh bo`lmasligi kerak"
 	},
-	"passwordFieldCheck": {
-		"en": "Check password field",
-		"ru": "Проверить поле пароля",
-		"uz": "Parol maydonini tekshiring"
+	"password_max_length": {
+		"en": "passwordMaxLengthMessage",
+		"ru": "passwordMaxLengthMessage",
+		"uz": "passwordMaxLengthMessage"
 	},
-	"passwordInUse": {
-		"en": "Password is in use",
-		"ru": "Пароль уже используется",
-		"uz": "Parol band"
-	},
-	"passwordMaxLength": {
-		"en": "passwordMaxLength",
-		"ru": "passwordMaxLength",
-		"uz": "passwordMaxLength"
-	},
-	"passwordMinLength": {
+	"password_min_length": {
 		"en": "Password must be at least 6 characters long",
 		"ru": "Пароль должен содержать минимум 6 символов",
 		"uz": "Parol kamida 6 ta ( harf, raqam, belgi) lardan iborat bo`lishi kerak"
 	},
-	"passwordOk": {
-		"en": "Password is OK",
-		"ru": "Пароль в порядке",
-		"uz": "Parol yaxshi"
-	},
-	"passwordsDoNotMatch": {
+	"passwords_do_not_match": {
 		"en": "Passwords do not match",
 		"ru": "Пароли не совпадают",
 		"uz": "Parollar mos kelmaydi"
@@ -523,36 +298,6 @@
 		"en": "The password recovery link has already been sent",
 		"ru": "Ссылка для восстановления пароля уже отправлена",
 		"uz": "Parolni tiklash linki allaqachon yuborilgan"
-	},
-	"paymentSettings": {
-		"en": "Payment settings",
-		"ru": "Настройки оплаты",
-		"uz": "To`lov sozlamalari"
-	},
-	"phone": {
-		"en": "Phone",
-		"ru": "Телефон",
-		"uz": "Telefon"
-	},
-	"phoneNumber": {
-		"en": "Phone number",
-		"ru": "Номер телефона",
-		"uz": "Telefon raqami"
-	},
-	"phoneNumberEmpty": {
-		"en": "Phone number empty",
-		"ru": "Номер телефона пустой",
-		"uz": "Telefon raqami bo`sh"
-	},
-	"phoneNumberInUse": {
-		"en": "Phone number is in use",
-		"ru": "Номер телефона используется",
-		"uz": "Telefon raqami band"
-	},
-	"phoneNumberInvalid": {
-		"en": "Phone number invalid",
-		"ru": "Номер телефона недействителен",
-		"uz": "Telefon raqami yaroqsiz"
 	},
 	"plzW8": {
 		"en": "Please wait",
@@ -564,45 +309,10 @@
 		"ru": "<span class='text-nowrap'>При поддержке <a target='_blank' href='https://www.woXrooX.com'>woXrooX</a></span>",
 		"uz": "<span class='text-nowrap'><a target='_blank' href='https://www.woXrooX.com'>woXrooX</a> tomonidan qo`llab-quvvatlangan</span>"
 	},
-	"price": {
-		"en": "Price",
-		"ru": "Цена",
-		"uz": "Narx"
-	},
-	"privacyPolicy": {
+	"privacy_policy": {
 		"en": "Privacy policy",
 		"ru": "Политика конфиденциальности",
 		"uz": "Maxfiylik siyosati"
-	},
-	"products": {
-		"en": "Products",
-		"ru": "Товары",
-		"uz": "Mahsulotlar"
-	},
-	"quickStart": {
-		"en": "Quick start",
-		"ru": "Быстрый старт",
-		"uz": "Tez boshlash"
-	},
-	"random": {
-		"en": "Random",
-		"ru": "Случайный",
-		"uz": "Tasodifiy"
-	},
-	"remove": {
-		"en": "Remove",
-		"ru": "Удалить",
-		"uz": "O`chirish"
-	},
-	"required": {
-		"en": "Required",
-		"ru": "Необходимые",
-		"uz": "Majburiy"
-	},
-	"resendAgain": {
-		"en": "Resend again",
-		"ru": "Отправить еще раз",
-		"uz": "Qayta yuborish"
 	},
 	"save": {
 		"en": "Save",
@@ -614,207 +324,42 @@
 		"ru": "Сохранено",
 		"uz": "Saqlandi"
 	},
-	"savedButReLoginRequired": {
-		"en": "Your changes have been saved, but please log out and log back in for them to take effect.",
-		"ru": "Ваши изменения были сохранены, но, пожалуйста, выйдите из системы и войдите снова, чтобы они вступили в силу.",
-		"uz": "O`zgartirishlaringiz saqlandi, lekin ular kuchga kirishi uchun tizimdan chiqing va qayta kiring."
-	},
-	"security": {
-		"en": "Security",
-		"ru": "Безопасность",
-		"uz": "Xavfsizlik"
-	},
-	"settings": {
-		"en": "Settings",
-		"ru": "Настройки",
-		"uz": "Sozlamalar"
-	},
-	"shareDefaultText": {
+	"share_default_text": {
 		"en": "Hey there, do you have a minute? I found something really cool that I wanted to share. Check it out!",
 		"ru": "Эй, у тебя есть минутка? Я нашел кое-что действительно классное, чем хотел поделиться. Проверьте это!",
 		"uz": "Salom, bir daqiqa vaqtingiz bormi? Men baham ko`rmoqchi bo`lgan ajoyib narsani topdim. Tekshirib ko`r!"
 	},
-	"signUp": {
+	"sign_up": {
 		"en": "Sign up",
 		"ru": "Регистрироваться",
 		"uz": "Ro`yxatdan o`tish"
 	},
-	"siteLanguage": {
-		"en": "Site language",
-		"ru": "Язык сайта",
-		"uz": "Sayt tili"
-	},
-	"sitePreferences": {
-		"en": "Site preferences",
-		"ru": "Настройки сайта",
-		"uz": "Sayt parametrlari"
-	},
-	"size": {
-		"en": "Size",
-		"ru": "Размер",
-		"uz": "O`lcham"
-	},
-	"somethingWentWrong": {
+	"something_went_wrong": {
 		"en": "Something went wrong",
 		"ru": "Что-то пошло не так",
 		"uz": "Nimadir noto`g`ri bajarildi"
-	},
-	"style": {
-		"en": "Style",
-		"ru": "Стиль",
-		"uz": "Uslub"
 	},
 	"success": {
 		"en": "Success",
 		"ru": "Успех",
 		"uz": "Muvaffaqiyat"
 	},
-	"support": {
-		"en": "Support",
-		"ru": "Поддержка",
-		"uz": "Muvaffaqiyat"
-	},
-	"table": {
-		"en": "Table",
-		"ru": "Таблица",
-		"uz": "Jadval"
-	},
-	"tel": {
-		"en": "Tel:",
-		"ru": "Тел:",
-		"uz": "Tel:"
-	},
-	"termsOfUse": {
-		"en": "Terms of use",
-		"ru": "Условия эксплуатации",
-		"uz": "Foydalanish shartlari"
-	},
-	"test": {
-		"en": "Test",
-		"ru": "Тест",
-		"uz": "Sinov"
-	},
-	"text": {
-		"en": "Text",
-		"ru": "Текст",
-		"uz": "Matn"
-	},
-	"timestamp": {
-		"en": "Timestamp",
-		"ru": "Временная метка",
-		"uz": "Vaqt tamg`asi"
-	},
-	"title": {
-		"en": "Title",
-		"ru": "Заголовок",
-		"uz": "Sarlavha"
-	},
 	"token_aready_used": {
 		"en": "Token has already used",
 		"ru": "Токен уже использован",
 		"uz": "Token allaqachon ishlatilgan"
 	},
-	"type": {
-		"en": "Type",
-		"ru": "Тип",
-		"uz": "Tur"
-	},
-	"undefined": {
-		"en": "Undefined",
-		"ru": "Неопределенный",
-		"uz": "Aniqlanmagan"
-	},
-	"unknown": {
-		"en": "Unknown",
-		"ru": "Неизвестный",
-		"uz": "Noma`lum"
-	},
-	"unknownError": {
+	"unknown_error": {
 		"en": "Unknown error",
 		"ru": "Неизвестная ошибка",
 		"uz": "Noma`lum xato"
-	},
-	"update": {
-		"en": "Update",
-		"ru": "Обновить",
-		"uz": "Yangilash"
-	},
-	"updated": {
-		"en": "Updated",
-		"ru": "Обновлено",
-		"uz": "Yangilandi"
-	},
-	"updates": {
-		"en": "Updates",
-		"ru": "Обновления",
-		"uz": "Yangilanishlar"
-	},
-	"upload": {
-		"en": "Upload",
-		"ru": "Загрузить",
-		"uz": "Yuklash"
-	},
-	"username": {
-		"en": "Username",
-		"ru": "Имя пользовател",
-		"uz": "Foydalanuvchi nomi"
-	},
-	"usernameAllowedChars": {
-		"en": "List of allowed characters for username ( a-z A-Z 0-9 - _ ' )",
-		"ru": "Список разрешенных символов для имени пользователя ( a-z A-Z 0-9 - _ ' )",
-		"uz": "Foydalanuvchi nomi uchun ruxsat berilgan belgilar ro`yxati ( a-z A-Z 0-9 - _ ' )"
-	},
-	"usernameEmpty": {
-		"en": "Username field must be filled",
-		"ru": "Поле имени пользователя должно быть заполнено",
-		"uz": "Foydalanuvchi ismi kiritilmadi"
-	},
-	"usernameFieldCheck": {
-		"en": "Check username field",
-		"ru": "Проверить имя пользователя",
-		"uz": "Foydalanuvchi nomini tekshiring"
-	},
-	"usernameInUse": {
-		"en": "Username is in use",
-		"ru": "Имя пользователя уже используется",
-		"uz": "Foydalanuvchi nomi band"
-	},
-	"usernameMaxLength": {
-		"en": "usernameMaxLength",
-		"ru": "usernameMaxLength",
-		"uz": "usernameMaxLength"
-	},
-	"usernameMinLength": {
-		"en": "Username minimum length must be 6 characters long",
-		"ru": "Минимальная длина имени пользователя должна быть 6 символов.",
-		"uz": "Foydalanuvchi nomi kamida 6 ta belgidan iborat bo`lishi kerak"
-	},
-	"usernameOk": {
-		"en": "Username is OK",
-		"ru": "Имя пользователя в порядке",
-		"uz": "Foydalanuvchi nomi yaxshi"
-	},
-	"usernameOrPasswordWrong": {
-		"en": "Username or password wrong",
-		"ru": "Неверное имя пользователя или пароль",
-		"uz": "Foydalanuvchi nomi yoki parol hato kiritildi"
-	},
-	"users": {
-		"en": "Users",
-		"ru": "Пользователи",
-		"uz": "Foydalanuvchilar"
-	},
-	"userTypeInvalid": {
-		"en": "Invalid user type!",
-		"ru": "Неверный тип пользователя!",
-		"uz": "Foydalanuvchi turi noto`g`ri!"
 	},
 	"user_with_this_eMail_does_not_exists": {
 		"en": "User with this email does not exist",
 		"ru": "Пользователь с таким адресом электронной почты не существует",
 		"uz": "Ushbu elektron pochtalik foydalanuvchi mavjud emas"
 	},
-	"verifyEmail": {
+	"verify_eMail": {
 		"en": "Verify Email",
 		"ru": "Подтвердить Email",
 		"uz": "Elektron pochtani tasdiqlash"
@@ -823,11 +368,6 @@
 		"en": "Warning",
 		"ru": "Предупреждение",
 		"uz": "Ogohlantirish"
-	},
-	"wrongLanguageSelected": {
-		"en": "Wrong language selected",
-		"ru": "Выбран неправильный язык",
-		"uz": "Noto`g`ri til tanlandi"
 	},
 	"x": {
 		"en": "x"

@@ -10,10 +10,10 @@ def api():
 	### "application/json"
 	if request.content_type == "application/json":
 		# Invalid JSON
-		if request.get_json() is None: return response(type="warning", message="invalidRequest")
+		if request.get_json() is None: return response(type="warning", message="invalid_request")
 
 		# Check if "for" in request
-		if "for" not in request.get_json(): return response(type="warning", message="invalidRequest")
+		if "for" not in request.get_json(): return response(type="warning", message="invalid_request")
 
 
 		if request.get_json()["for"] == "initialData":
@@ -30,15 +30,15 @@ def api():
 				}, 200)
 
 		if request.get_json()["for"] == "changeUserAppColorMode":
-			if "colorMode" not in request.get_json(): return response(type="error", message="invalidValue")
+			if "colorMode" not in request.get_json(): return response(type="error", message="invalid_value")
 
-			if not User.set_app_color_mode(request.get_json()["colorMode"]): return response(type="error", message="somethingWentWrong")
+			if not User.set_app_color_mode(request.get_json()["colorMode"]): return response(type="error", message="something_went_wrong")
 
 			return response(type="success", message="saved")
 
 		if request.get_json()["for"] == "changeUserAppLanguage":
-			if "code" not in request.get_json() or not request.get_json()["code"]: return response(type="error", message="invalidRequest")
+			if "code" not in request.get_json() or not request.get_json()["code"]: return response(type="error", message="invalid_request")
 
-			if not User.set_app_language(request.get_json()["code"]): return response(type="error", message="somethingWentWrong")
+			if not User.set_app_language(request.get_json()["code"]): return response(type="error", message="something_went_wrong")
 
 			return response(type="success", message="saved")

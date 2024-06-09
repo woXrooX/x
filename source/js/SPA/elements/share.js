@@ -10,7 +10,7 @@ export default class Share extends HTMLElement{
 
 		const shareData = {
 			title: encodeURIComponent(this.getAttribute("title") || document.title),
-			text: encodeURIComponent(this.textToShare || window.Lang.use("shareDefaultText")),
+			text: encodeURIComponent(this.textToShare || window.Lang.use("share_default_text")),
 
 			// If Share URL Is Not HTTPS It Won't Work
 			// On Facebook
