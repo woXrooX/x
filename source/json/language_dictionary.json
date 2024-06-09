@@ -239,6 +239,11 @@
 		"ru": "Вход",
 		"uz": "Kirish"
 	},
+	"log_in_tools_recording_disabled": {
+		"en": "Log in recording is not enabled",
+		"ru": "Запись входа в систему не включена",
+		"uz": "Tizimga kirishni yozib olish yoqilmagan"
+	},
 	"log_out": {
 		"en": "Log out",
 		"ru": "Выйти",
