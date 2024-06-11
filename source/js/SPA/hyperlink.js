@@ -6,24 +6,25 @@ export default class Hyperlink{
 
 		const links = document.getElementsByTagName("a");
 
-		for(const a of links){
-			a.onclick = ()=>{
-				// Check iF has href
-				if(!!a.hasAttribute("href") === false) return;
+		for(const a of links) a.onclick = ()=>{
+			// Check if has href
+			if(!!a.hasAttribute("href") === false) return;
 
-				// Check iF href is hash.
-				if(a.getAttribute("href").charAt(0) == '#') return;
+			// Check if href is hash.
+			if(a.getAttribute("href").charAt(0) == '#') return;
 
-				// Check if href is for file or external URL
-				if(a.getAttribute("href").includes('.')) return;
+			// Check if href is for file or external URL
+			if(a.getAttribute("href").includes('.')) return;
 
-				event.preventDefault();
+			// Check if target blank
+			if(a.getAttribute("target") === "_blank") return;
 
-				// If blank do nothing
-				if(a.getAttribute('href') == '') return;
+			event.preventDefault();
 
-				Hyperlink.locate(a.getAttribute("href"));
-			}
+			// If blank do nothing
+			if(a.getAttribute('href') == '') return;
+
+			Hyperlink.locate(a.getAttribute("href"));
 		}
 	}
 
