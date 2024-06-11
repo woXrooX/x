@@ -180,6 +180,7 @@ if __name__ != "__main__":
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/HTML/head.html", strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/header.js", 'export default function header(){\n\treturn "Header";\n}', strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/footer.js", 'export default function footer(){\n\treturn Lang.use("powered_by_woXrooX");\n}', strict=True)
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/menu_footer.js", 'export default function menu_footer(){\n\treturn `<row class="flex-row flex-center p-2">${Lang.use("powered_by_woXrooX")}</row>`;\n}', strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py", 'from python.modules.Page import Page\n\n@Page.build()\ndef home(): pass', strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/front/home.js", 'export const TITLE = window.Lang.use("home");\n\nexport default function main(){\n\treturn "Home";\n}', strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/Python/beforeFirstRequest.py", 'if __name__ != "__main__":\n\tdef beforeFirstRequest(): pass')

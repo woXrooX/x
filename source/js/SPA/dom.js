@@ -45,6 +45,9 @@ export default class DOM{
 		////////// Footer
 		window.Footer.handle(DOM.#page.footer);
 
+		///////// Menu
+		window.Menu.handle(DOM.#page.menu_footer);
+
 		////////// After
 		if(!!DOM.#page.after === true)
 			if(DOM.#page.after.constructor.name === 'AsyncFunction') await DOM.#page.after();

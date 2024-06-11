@@ -10,6 +10,8 @@ export default class Menu{
 
 	static #shown = false;
 
+	static #footerFunc = null;
+
 	// Modes
 	static #modes = Object.freeze({
 		DEFAULT: 0,
@@ -30,12 +32,6 @@ export default class Menu{
 
 		Menu.#detectCurrentMode();
 
-		// Try To Build The Menu
-		if(Menu.build() === false) return;
-
-		// Init active
-		Menu.set_active();
-
 		//// Listen To The Events
 		// Show menu event
 		Menu.#showMenuButton.onclick = Menu.#show;
@@ -43,6 +39,30 @@ export default class Menu{
 		document.querySelector(`${Menu.selector} > header > x-svg[for=menuCloseButtonMobile]`).onclick = Menu.#hide;
 		Menu.#toggleAlwaysOpenMode();
 		Cover.onClickExecute(Menu.#hide);
+	}
+
+	static async handle(func){
+		// Check If Page Scoped menu() Defined
+		if(typeof func === "function") {
+			if(func() !== false) Menu.#footerFunc = func();
+			else Menu.#footerFunc = null;
+		}
+		else{
+			try{Menu.#footerFunc = await import(`../modules/menu_footer.js`);}
+			catch(error){
+				Menu.#footerFunc = null;
+				return;
+			}
+
+			if(
+				typeof Menu.#footerFunc.default === "function" &&
+				Menu.#footerFunc.default() !== false
+			) Menu.#footerFunc = Menu.#footerFunc.default();
+			else Menu.footerFunc = null;
+		}
+
+		Menu.build();
+		Menu.set_active();
 	}
 
 	static build(){
@@ -56,6 +76,9 @@ export default class Menu{
 
 		// Add created menus into "menu > main"
 		Menu.#element.querySelector("main").innerHTML = Menu.#recursiveBuilder(window.CONF["menu"]["menus"]);
+
+		// Add content to menu > footer
+		if(Menu.#footerFunc != null) Menu.#element.querySelector("footer").innerHTML = Menu.#footerFunc;
 
 		// After adding hyperlinks to DOM create hide event for each of the hyperlinks
 		Menu.#on_click_hyperlinks();
