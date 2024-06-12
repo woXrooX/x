@@ -2,11 +2,11 @@
 
 export default class Menu{
 	static selector = "body > menu";
-	static #selectorMenuHyperlinks = `${Menu.selector} > main a`;
+	static #selector_menu_hyperlinks = `${Menu.selector} > main a`;
 
 	static #element = null;
-	static #showMenuButton = null;
-	static #alwaysOpenModeTogler = null;
+	static #show_menu_button = null;
+	static #always_open_mode_toggler = null;
 
 	static #shown = false;
 
@@ -17,6 +17,9 @@ export default class Menu{
 		ICON_ONLY: 2
 	});
 
+	static #current_mode = Menu.#modes.DEFAULT;
+
+	/////////// APIs
 	static init(){
 		Log.info("Menu.init()");
 
@@ -25,10 +28,10 @@ export default class Menu{
 		// Check If "body > menu" Exists
 		if(!!Menu.#element === false) return;
 
-		Menu.#showMenuButton = document.querySelector("body > x-svg[for=showMenu]");
-		Menu.#alwaysOpenModeTogler = document.querySelector(`${Menu.selector} > header > x-svg[for=toggleAlwaysOpenMode]`);
+		Menu.#show_menu_button = document.querySelector("body > x-svg[for=show_menu]");
+		Menu.#always_open_mode_toggler = document.querySelector(`${Menu.selector} > header > x-svg[for=toggle_always_open_mode]`);
 
-		Menu.#detectCurrentMode();
+		Menu.#detect_current_mode();
 
 		// Try To Build The Menu
 		if(Menu.build() === false) return;
@@ -38,10 +41,10 @@ export default class Menu{
 
 		//// Listen To The Events
 		// Show menu event
-		Menu.#showMenuButton.onclick = Menu.#show;
+		Menu.#show_menu_button.onclick = Menu.#show;
 		// On Mobile menu close event
-		document.querySelector(`${Menu.selector} > header > x-svg[for=menuCloseButtonMobile]`).onclick = Menu.#hide;
-		Menu.#toggleAlwaysOpenMode();
+		document.querySelector(`${Menu.selector} > header > x-svg[for=menu_close_button_on_mobile]`).onclick = Menu.#hide;
+		Menu.#toggle_always_open_mode();
 		Cover.onClickExecute(Menu.#hide);
 	}
 
@@ -55,15 +58,30 @@ export default class Menu{
 		if(window.CONF["menu"]["enabled"] === false) return false;
 
 		// Add created menus into "menu > main"
-		Menu.#element.querySelector("main").innerHTML = Menu.#recursiveBuilder(window.CONF["menu"]["menus"]);
+		Menu.#element.querySelector("main").innerHTML = Menu.#recursive_builder(window.CONF["menu"]["menus"]);
 
 		// After adding hyperlinks to DOM create hide event for each of the hyperlinks
 		Menu.#on_click_hyperlinks();
 
-		Menu.#toggleSubMenus();
+		Menu.#toggle_sub_menus();
 	}
 
-	static #recursiveBuilder(menus){
+	static set_active(){
+		// Hyperlinks
+		const hyperlinks = document.querySelectorAll(Menu.#selector_menu_hyperlinks);
+
+		// loop Through All The Hyperlinks Of Parent Menu
+		for(const hyperlink of hyperlinks){
+			// De-Activate All
+			hyperlink.parentElement.removeAttribute("active");
+
+			// Activate section.parentMenu if href matches
+			if(hyperlink.getAttribute("href") == window.location.pathname) hyperlink.parentElement.setAttribute("active", "");
+		}
+	}
+
+	/////////// Helpers
+	static #recursive_builder(menus){
 		let HTML = "";
 
 		for(const menu of menus)
@@ -82,7 +100,7 @@ export default class Menu{
 					HTML += `
 							<x-svg for="toggleSubMenu" color="#ffffff" name="arrow_bottom_small"></x-svg>
 						</section>
-						<section class="subMenu">${Menu.#recursiveBuilder(menu["subMenu"])}</section>
+						<section class="subMenu">${Menu.#recursive_builder(menu["subMenu"])}</section>
 					`;
 
 				// Close the section.parentMenu if no "subMenu" in menu
@@ -96,7 +114,7 @@ export default class Menu{
 	}
 
 	static #on_click_hyperlinks(){
-		const hyperlinks = document.querySelectorAll(Menu.#selectorMenuHyperlinks);
+		const hyperlinks = document.querySelectorAll(Menu.#selector_menu_hyperlinks);
 
 		// Assign Hide Method To On Click Event
 		for(const hyperlink of hyperlinks)
@@ -111,7 +129,7 @@ export default class Menu{
 	}
 
 	// On click x-svg[for=toggleSubMenu] show the section.subMenu
-	static #toggleSubMenus(){
+	static #toggle_sub_menus(){
 		const subMenuTogglers = document.querySelectorAll(`${Menu.selector} > main x-svg[for=toggleSubMenu]`);
 
 		for(const toggler of subMenuTogglers)
@@ -121,70 +139,56 @@ export default class Menu{
 			}
 	}
 
-	static set_active(){
-		// Hyperlinks
-		const hyperlinks = document.querySelectorAll(Menu.#selectorMenuHyperlinks);
+	static #detect_current_mode(){
+		if(localStorage.getItem("x.menu_mode")) Menu.#current_mode = parseInt(localStorage.getItem("x.menu_mode"));
+		else Menu.#current_mode = Menu.#modes.DEFAULT;
 
-		// loop Through All The Hyperlinks Of Parent Menu
-		for(const hyperlink of hyperlinks){
-			// De-Activate All
-			hyperlink.parentElement.removeAttribute("active");
-
-			// Activate section.parentMenu if href matches
-			if(hyperlink.getAttribute("href") == window.location.pathname) hyperlink.parentElement.setAttribute("active", "");
-		}
+		Menu.#switch_mode(Menu.#current_mode);
 	}
 
-	static #detectCurrentMode(){
-		if(localStorage.getItem("x.menu_mode")) Menu.currentMode = parseInt(localStorage.getItem("x.menu_mode"));
-		else Menu.currentMode = Menu.#modes.DEFAULT;
-
-		Menu.#switchMode(Menu.currentMode);
-	}
-
-	static #switchMode(mode){
+	static #switch_mode(mode){
 		switch(mode){
 			case Menu.#modes.DEFAULT:
-				this.#defaultMode();
+				Menu.#default_mode();
 				break;
 
 			case Menu.#modes.ALWAYS_OPEN:
-				this.#alwaysOpenMode();
-				Menu.#alwaysOpenModeTogler.forceToggle();
+				Menu.#always_open_mode();
+				Menu.#always_open_mode_toggler.forceToggle();
 				break;
 
 			default:
-				this.#defaultMode();
+				Menu.#default_mode();
 				break;
 		}
 	}
 
-	static #saveMode(){localStorage.setItem('x.menu_mode', Menu.currentMode);}
+	static #save_mode(){localStorage.setItem('x.menu_mode', Menu.#current_mode);}
 
-	static #defaultMode(){
-		Log.info("Menu.#defaultMode()");
+	static #default_mode(){
+		Log.info("Menu.#default_mode()");
 
-		Menu.currentMode = Menu.#modes.DEFAULT;
-		this.#saveMode();
+		Menu.#current_mode = Menu.#modes.DEFAULT;
+		Menu.#save_mode();
 
 		if(Menu.#shown) window.Cover.show();
-		Menu.#element.classList.remove("alwaysOpenMode");
+		Menu.#element.classList.remove("always_open_mode");
 	}
 
-	static #alwaysOpenMode(){
-		Log.info("Menu.#alwaysOpenMode()");
+	static #always_open_mode(){
+		Log.info("Menu.#always_open_mode()");
 
-		Menu.currentMode = Menu.#modes.ALWAYS_OPEN;
-		this.#saveMode();
+		Menu.#current_mode = Menu.#modes.ALWAYS_OPEN;
+		Menu.#save_mode();
 
 		window.Cover.hide();
-		Menu.#element.classList.add("alwaysOpenMode");
+		Menu.#element.classList.add("always_open_mode");
 	}
 
-	static #toggleAlwaysOpenMode(){
-		Menu.#alwaysOpenModeTogler.addEventListener("click", ()=>{
-			if(Menu.currentMode === Menu.#modes.ALWAYS_OPEN) Menu.#defaultMode();
-			else Menu.#alwaysOpenMode();
+	static #toggle_always_open_mode(){
+		Menu.#always_open_mode_toggler.addEventListener("click", ()=>{
+			if(Menu.#current_mode === Menu.#modes.ALWAYS_OPEN) Menu.#default_mode();
+			else Menu.#always_open_mode();
 		});
 	}
 
