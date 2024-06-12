@@ -8,7 +8,7 @@
 export default class DOM{
 	static #page = null;
 
-	static setPage(page){
+	static set_page(page){
 		// Check If Page Is Valid
 		if(!!page == false) return;
 
@@ -16,14 +16,14 @@ export default class DOM{
 		DOM.#page = page;
 
 		// Start The Page's Life Cycle
-		DOM.lifeCycle();
+		DOM.life_cycle();
 	}
 
-	static async lifeCycle(){
-		Log.info("DOM.lifeCycle()");
+	static async life_cycle(){
+		Log.info("DOM.life_cycle()");
 
-		// Create Page Scoped Variable
-		window.pageData = {};
+		// Create page scoped variable
+		window.page_data = {};
 
 		////////// Title
 		window.Title.set(DOM.#page.TITLE);
@@ -40,7 +40,7 @@ export default class DOM{
 		if(typeof DOM.#page.default === "function")
 			if(DOM.#page.default.constructor.name === 'AsyncFunction') DOM.render(await DOM.#page.default());
 			else DOM.render(DOM.#page.default());
-		else DOM.render(Main.situationalContent("error", "ERROR", "DOM.lifeCycle() -> No default function defined!"));
+		else DOM.render(Main.situationalContent("error", "ERROR", "DOM.life_cycle() -> No default function defined!"));
 
 		////////// Footer
 		window.Footer.handle(DOM.#page.footer);
@@ -50,18 +50,18 @@ export default class DOM{
 			if(DOM.#page.after.constructor.name === 'AsyncFunction') await DOM.#page.after();
 			else DOM.#page.after();
 
-		// Delete The Page Data At The End Of Each Life Cycle
-		delete window.pageData;
+		// Delete the page data at the end of each life_cycle()
+		delete window.page_data;
 	}
 
 	static render(dom){
-		// Scroll To Top Before Rendering
+		// Scroll to top before rendering
 		window.scrollTo(0, 0);
 
-		// If Passed Object Like: createElement("x-form")
+		// If passed object like: createElement("x-form")
 		if(typeof dom === "object") window.Main.element.replaceChildren(dom);
 
-		// If Passed String Like: "<x-form></x-from>"
+		// If passed string like: "<x-form></x-from>"
 		else if(typeof dom === "string") window.Main.element.innerHTML = dom;
 
 		window.dispatchEvent(new CustomEvent("domChange"));
@@ -83,7 +83,7 @@ export default class DOM{
 
 				case "main":
 					Log.info(`DOM.update() - target: ${target}`);
-					DOM.lifeCycle();
+					DOM.life_cycle();
 					break;
 
 				case "footer":
@@ -93,7 +93,7 @@ export default class DOM{
 				case "all":
 					Log.info(`DOM.update() - target: ${target}`);
 					Menu.build();
-					DOM.lifeCycle();
+					DOM.life_cycle();
 					break;
 
 				default:
@@ -102,5 +102,5 @@ export default class DOM{
 	}
 }
 
-// Make DOM Usable W/O Importing It
+// Make DOM usable W/O importing it
 window.DOM = DOM;
