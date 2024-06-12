@@ -43,10 +43,8 @@ export default class Menu{
 
 	static async handle(func){
 		// Check If Page Scoped menu() Defined
-		if(typeof func === "function") {
-			if(func() !== false) Menu.#footerFunc = func();
-			else Menu.#footerFunc = null;
-		}
+		if(typeof func === "function"){if(func() !== false) Menu.#footerFunc = func();}
+
 		else{
 			try{Menu.#footerFunc = await import(`../modules/menu_footer.js`);}
 			catch(error){
@@ -54,11 +52,8 @@ export default class Menu{
 				return;
 			}
 
-			if(
-				typeof Menu.#footerFunc.default === "function" &&
-				Menu.#footerFunc.default() !== false
-			) Menu.#footerFunc = Menu.#footerFunc.default();
-			else Menu.footerFunc = null;
+			if(typeof Menu.#footerFunc.default === "function" && Menu.#footerFunc.default() !== false) Menu.#footerFunc = Menu.#footerFunc.default();
+			else Menu.#footerFunc = null;
 		}
 
 		Menu.build();
@@ -78,7 +73,7 @@ export default class Menu{
 		Menu.#element.querySelector("main").innerHTML = Menu.#recursiveBuilder(window.CONF["menu"]["menus"]);
 
 		// Add content to menu > footer
-		if(Menu.#footerFunc != null) Menu.#element.querySelector("footer").innerHTML = Menu.#footerFunc;
+		if(!!Menu.#footerFunc) Menu.#element.querySelector("footer").innerHTML = Menu.#footerFunc;
 
 		// After adding hyperlinks to DOM create hide event for each of the hyperlinks
 		Menu.#on_click_hyperlinks();

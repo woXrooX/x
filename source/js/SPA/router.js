@@ -98,8 +98,6 @@ export default class Router{
 			window.DOM.render(DOM.render(Main.situationalContent("error", error.name, error.stack)));
 
 			window.Footer.handle();
-
-			window.Menu.handle();
 		}finally{
 			// End Loading Effects
 			window.Loading.end();
