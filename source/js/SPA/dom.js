@@ -22,9 +22,6 @@ export default class DOM{
 	static async life_cycle(){
 		Log.info("DOM.life_cycle()");
 
-		// Create page scoped variable
-		window.page_data = {};
-
 		////////// Title
 		window.Title.set(DOM.#page.TITLE);
 
@@ -49,9 +46,6 @@ export default class DOM{
 		if(!!DOM.#page.after === true)
 			if(DOM.#page.after.constructor.name === 'AsyncFunction') await DOM.#page.after();
 			else DOM.#page.after();
-
-		// Delete the page data at the end of each life_cycle()
-		delete window.page_data;
 	}
 
 	static render(dom){
