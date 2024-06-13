@@ -26,29 +26,23 @@ export default class DOM{
 		window.Title.set(DOM.#page.TITLE);
 
 		////////// Before
-		if(!!DOM.#page.before === true)
-			if(DOM.#page.before.constructor.name === 'AsyncFunction') await DOM.#page.before();
-			else DOM.#page.before();
+		if(!!DOM.#page.before === true) await DOM.#page.before();
 
 		////////// Header
-		window.Header.handle(DOM.#page.header);
+		await window.Header.handle(DOM.#page.header);
 
 		////////// Default/Main - Render the main function
-		if(typeof DOM.#page.default === "function")
-			if(DOM.#page.default.constructor.name === 'AsyncFunction') DOM.render(await DOM.#page.default());
-			else DOM.render(DOM.#page.default());
-		else DOM.render(Main.situationalContent("error", "ERROR", "DOM.life_cycle() -> No default function defined!"));
+		if(typeof DOM.#page.default === "function") await DOM.render(await DOM.#page.default());
+		else await DOM.render(Main.situationalContent("error", "ERROR", "DOM.life_cycle() -> No default function defined!"));
 
 		////////// Footer
-		window.Footer.handle(DOM.#page.footer);
+		await window.Footer.handle(DOM.#page.footer);
 
 		////////// After
-		if(!!DOM.#page.after === true)
-			if(DOM.#page.after.constructor.name === 'AsyncFunction') await DOM.#page.after();
-			else DOM.#page.after();
+		if(!!DOM.#page.after === true) await DOM.#page.after();
 	}
 
-	static render(dom){
+	static async render(dom){
 		// Scroll to top before rendering
 		window.scrollTo(0, 0);
 
