@@ -82,7 +82,23 @@ def signUp(request):
 		if not User.init_folders(): pass
 
 		#### Check If Verification Code Sent Successfully
-		emailVerificationSentSuccessfully = SendGrid.send("noreply", request.form["eMail"], eMailVerificationCode, "Sign Up")
+		eMail_content = f"""
+			Dear User,
+
+			<h2>Welcome to {Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}!</h2>
+
+			<p>Please verify your email address using the code below:</p>
+
+			<h2>{eMailVerificationCode}</h2>
+
+			<p>Enter this code on the verification <a href="{request.url_root}eMailConfirmation">page</a>.</p>
+
+			<p>If you did not create an account using this email address, please ignore this message.</p>
+
+			<p>{Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
+		"""
+
+		emailVerificationSentSuccessfully = SendGrid.send("noreply", request.form["eMail"], eMail_content, "Sign Up")
 
 		try:
 			from python.modules.onSignUp import onSignUp
