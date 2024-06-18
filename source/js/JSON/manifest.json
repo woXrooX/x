@@ -1,0 +1,25 @@
+{
+	"name": "x",
+	"short_name": "x",
+	"start_url": "/",
+	"theme_color": "hsl(230deg, 13%, 9%)",
+	"background_color": "hsl(230deg, 20%, 20%)",
+	"display": "standalone",
+	"icons": [
+		{
+			"src": "/images/PWA/logo_384.png",
+			"sizes": "384x384",
+			"type": "image/png"
+		},
+		{
+			"src": "/images/PWA/logo_180.png",
+			"sizes": "180x180",
+			"type": "image/png"
+		},
+		{
+			"src": "/images/PWA/logo_120.png",
+			"sizes": "120x120",
+			"type": "image/png"
+		}
+	]
+}
