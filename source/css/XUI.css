@@ -183,10 +183,10 @@
 		/*** Mobile Screen START ***/
 		@media (width <= 600px){
 			:root{
-				font-size: 16px;
+				font-size: 20px;
 
-				--padding: 2px;
-				--margin: 2px;
+				--padding: 3px;
+				--margin: 3px;
 				--gap: 10px;
 			}
 
