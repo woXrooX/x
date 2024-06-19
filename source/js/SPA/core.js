@@ -85,7 +85,7 @@ export default class Core{
 		Log.info("Core.#init()");
 
 		Language.init();
-		CSS.init();
+		x.CSS.init();
 		Menu.init();
 		Header.init();
 		Footer.init();

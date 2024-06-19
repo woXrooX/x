@@ -25,12 +25,12 @@ export default class XRequest{
 
 		if("setSessionUser" in response["actions"]){
 			window.session["user"] = response["actions"]["setSessionUser"];
-			CSS.detectColorMode();
+			x.CSS.detectColorMode();
 		}
 
 		if("deleteSessionUser" in response["actions"]){
 			delete window.session["user"];
-			CSS.detectColorMode();
+			x.CSS.detectColorMode();
 		}
 
 		if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));

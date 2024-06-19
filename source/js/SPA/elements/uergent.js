@@ -80,7 +80,7 @@ export default class Modal extends HTMLElement{
 
 	#animationOut = ()=>{
 		this.dialog.removeAttribute("opening");
-		setTimeout(()=> this.dialog.close(), parseInt(CSS.getValue("--transition-velocity")));
+		setTimeout(()=> this.dialog.close(), parseInt(x.CSS.getValue("--transition-velocity")));
 	}
 };
 

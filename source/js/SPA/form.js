@@ -141,7 +141,7 @@ export default class Form{
 					window.session["user"] = response["actions"]["setSessionUser"];
 
 					// Update Color Mode: User Dependent
-					CSS.detectColorMode();
+					x.CSS.detectColorMode();
 				}
 
 				// Delete window.session["user"]
@@ -149,7 +149,7 @@ export default class Form{
 					delete window.session["user"];
 
 					// Update Color Mode: User Independent
-					CSS.detectColorMode();
+					x.CSS.detectColorMode();
 				}
 
 				// Dom Update

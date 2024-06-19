@@ -193,4 +193,4 @@ export default class CSS{
 }
 
 // Make CSS Usable W/O Importing It
-window.CSS = CSS;
+window.x["CSS"] = CSS;

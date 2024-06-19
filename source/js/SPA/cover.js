@@ -9,12 +9,12 @@ export default class Cover{
 	}
 
 	// Can be set the cover z-index if needed
-	static show(zIndex = window.CSS.getValue("--z-cover")){
+	static show(zIndex = x.CSS.getValue("--z-cover")){
 		// Check if body > cover exists
 		if(!!Cover.#element === false) return;
 
 		// If "auto" was passed set to default zIndex
-		if(zIndex === "auto") zIndex = window.CSS.getValue("--z-cover");
+		if(zIndex === "auto") zIndex = x.CSS.getValue("--z-cover");
 
 		Cover.#element.style.opacity = 1;
 		Cover.#element.style.zIndex = zIndex;
@@ -30,7 +30,7 @@ export default class Cover{
 		Cover.#element.style.opacity = 0;
 
 		Cover.#element.ontransitionend = ()=>{
-			Cover.#element.style.zIndex = window.CSS.getValue("--z-minus");
+			Cover.#element.style.zIndex = x.CSS.getValue("--z-minus");
 			Cover.#element.ontransitionend = null;
 		};
 
