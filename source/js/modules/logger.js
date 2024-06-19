@@ -1,40 +1,40 @@
 "use strict";
 
 export default class Logger{
-    static line(){
-        // Check If Debugging Mode Is Enabled Else Exit
-        if("CONF" in window && window.CONF.tools.debug === false && force === false) return;
+	static line(){
+		// Check If Debugging Mode Is Enabled Else Exit
+		if("CONF" in window && window.CONF.tools.debug === false && force === false) return;
 
-        console.log("==========================================");
-    }
+		console.log("==========================================");
+	}
 
-    static success(text, force = false){
-        Logger.#log(text, "success");
-    }
-    static info(text, force = false){
-        Logger.#log(text, "info");
-    }
-    static warning(text, force = false){
-        Logger.#log(text, "warning");
-    }
-    static error(text, force = false){
-        Logger.#log(text, "error", force);
-    }
+	static success(text, force = false){
+		Logger.#log(text, "success");
+	}
+	static info(text, force = false){
+		Logger.#log(text, "info");
+	}
+	static warning(text, force = false){
+		Logger.#log(text, "warning");
+	}
+	static error(text, force = false){
+		Logger.#log(text, "error", force);
+	}
 
-    static #log(text, type, force = false){
-        // Check If Debugging Mode Is Enabled And Force Is False Else Exit
-        if("CONF" in window && window.CONF.tools.debug === false && force === false) return;
+	static #log(text, type, force = false){
+		// Check If Debugging Mode Is Enabled And Force Is False Else Exit
+		if("CONF" in window && window.CONF.tools.debug === false && force === false) return;
 
-        // Setting Type Color
-        const color = `color: ${CSS.getValue(`--color-${type}`) || 'white'}`;
+		// Setting Type Color
+		const color = `color: ${x.CSS.getValue(`--color-${type}`) || 'white'}`;
 
-        // Generating Timestamp
-        const now = new Date();
-        const timestamp = `${now.getDate()}.${now.getMonth()+1}.${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+		// Generating Timestamp
+		const now = new Date();
+		const timestamp = `${now.getDate()}.${now.getMonth()+1}.${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
 
-        // Final Output
-        console.log(`%c[${timestamp}][${type.toUpperCase()}] `, color, text);
-    }
+		// Final Output
+		console.log(`%c[${timestamp}][${type.toUpperCase()}] `, color, text);
+	}
 }
 
 // Log Is Alias To Logger
