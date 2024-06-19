@@ -104,11 +104,11 @@ body{
 
 	& > x-svg{
 		&[for=show_menu]{
+			font-size: 2rem;
 			position: fixed;
+			top: 0px;
+			left: 0px;
 			z-index: var(--z-menuHamburgerButton);
-
-			top: calc(var(--header-height)/4 - var(--padding)/2);
-			left: var(--padding);
 		}
 	}
 
