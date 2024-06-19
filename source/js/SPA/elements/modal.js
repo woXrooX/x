@@ -55,8 +55,7 @@ export default class Modal extends HTMLElement{
 		}
 	}
 
-	/////////// Helpers
-	static #show(DOM, func_name = null){
+	static show(DOM, func_name = null){
 		if(Modal.#shown === true) return;
 
 		Modal.#shown = true;
@@ -68,6 +67,7 @@ export default class Modal extends HTMLElement{
 		Cover.show();
 	}
 
+	/////////// Helpers
 	static async #execute_on_show(func_name){
 		if(!!func_name === false) return;
 		await Modal.#FUNC_POOL[func_name]();
@@ -150,7 +150,7 @@ export default class Modal extends HTMLElement{
 
 		for(const element of trigger_elements){
 			element.style.cursor = "pointer";
-			element.onclick = ()=> Modal.#show(this.#DOM, this.getAttribute("func_name"));
+			element.onclick = ()=> Modal.show(this.#DOM, this.getAttribute("func_name"));
 		}
 	};
 
