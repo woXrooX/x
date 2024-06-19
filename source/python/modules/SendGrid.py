@@ -40,17 +40,17 @@ if __name__ != "__main__":
 			email_html = f"""
 				<!DOCTYPE html>
 				<html>
-				<head>
-					<meta charset="utf-8">
-					<title>{Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}</title>
-				</head>
-				<body style="width:100%; padding:10px;">
-					<header style="text-aligment:center; color: white; padding:5px; background-color:hsl({Globals.CONF["default"]["color"]["brand"]["hue"]}deg, {Globals.CONF["default"]["color"]["brand"]["saturation"]}%, {Globals.CONF["default"]["color"]["brand"]["lightness"]}%); width:100%;">
-					{Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}
-					</header>
-					<main>{content}</main>
-					<footer></footer>
-				</body>
+					<head>
+						<meta charset="utf-8">
+						<title>{Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}</title>
+					</head>
+					<body style="width:100%; padding:10px;">
+						<header style="text-aligment:center; color: white; padding:5px; background-color:hsl({Globals.CONF["default"]["color"]["brand"]["hue"]}deg, {Globals.CONF["default"]["color"]["brand"]["saturation"]}%, {Globals.CONF["default"]["color"]["brand"]["lightness"]}%); width:100%;">
+							{Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}
+						</header>
+						<main>{content}</main>
+						<footer></footer>
+					</body>
 				</html>
 			"""
 
