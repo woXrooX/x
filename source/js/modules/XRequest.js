@@ -19,11 +19,11 @@ export default class XRequest{
 	}
 
 	/////////// APIs
-  static push_func(func) { XRequest.#FUNC_POOL[func.name] = func; }
+	static push_func(func) { XRequest.#FUNC_POOL[func.name] = func; }
 
 	/////////// Helpers
 	static #handleResponseActions(response, func_name = null){
-    if (response) XRequest.#execute_on_response(func_name, response['data']);
+	if (response) XRequest.#execute_on_response(func_name, response['data']);
 
 		if(!("actions" in response)) return;
 
