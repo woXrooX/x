@@ -23,7 +23,7 @@ export default class XRequest{
 
 	/////////// Helpers
 	static #handleResponseActions(response, func_name = null){
-	if (response) XRequest.#execute_on_response(func_name, response['data']);
+		if (response) XRequest.#execute_on_response(func_name, response['data']);
 
 		if(!("actions" in response)) return;
 
