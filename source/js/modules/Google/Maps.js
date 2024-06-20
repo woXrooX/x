@@ -1,3 +1,9 @@
+//// CSS for removing certain parts
+// .gm-style .gmnoprint, .gm-style .gmnoscreen {
+// 	display: none;
+// }
+// div#map *{border: none !important;}
+
 export class Maps{
 	static #API_KEY;
 	static #element = null;
