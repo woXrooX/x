@@ -3,6 +3,7 @@ export default class XRequest{
 
 	static XR_ELEMENTS = null;
 	static #OBJECTS = [];
+	static #FUNC_POOL = {};
 
 	/////////// APIs
 	// Collecting happens whenever Core.#observeMutations() -> observes any DOM change
@@ -17,8 +18,13 @@ export default class XRequest{
 		for(const element of XRequest.XR_ELEMENTS) XRequest.#OBJECTS.push(new XRequest(element));
 	}
 
+	/////////// APIs
+  static push_func(func) { XRequest.#FUNC_POOL[func.name] = func; }
+
 	/////////// Helpers
-	static #handleResponseActions(response){
+	static #handleResponseActions(response, func_name = null){
+    if (response) XRequest.#execute_on_response(func_name, response['data']);
+
 		if(!("actions" in response)) return;
 
 		if("updateConf" in response["actions"]) window.conf = response["actions"]["updateConf"];
@@ -40,6 +46,10 @@ export default class XRequest{
 		if("reload" in response["actions"]) window.location.reload();
 	}
 
+	static async #execute_on_response(func_name, data = null){
+		if(!!func_name === false) return;
+		await XRequest.#FUNC_POOL[func_name](data);
+	}
 
 	/////////////////////////// Object
 
@@ -165,9 +175,12 @@ export default class XRequest{
 
 			Modal.handle_commands(this.#element.getAttribute("x-modal"), this.#response["type"]);
 
-			XRequest.#handleResponseActions(this.#response);
+			XRequest.#handleResponseActions(this.#response, this.#element.getAttribute("func_name"));
 
 			Loading.on_element(this.#element);
 		};
 	}
 };
+
+// Make XRequest Usable W/O Importing It
+window.XRequest = XRequest;
