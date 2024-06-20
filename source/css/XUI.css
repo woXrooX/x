@@ -210,6 +210,7 @@
 
 	@layer text{
 		@layer color{
+			.text-color-main{color: var(--color-main);}
 			.text-color-brand{color: var(--color-brand);}
 
 			.text-color-primary{color: var(--color-text-primary);}
