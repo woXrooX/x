@@ -42,7 +42,8 @@ export default class DOM{
 		if(!!DOM.#page.after === true) await DOM.#page.after();
 
 		// Scroll to top after DOM is ready
-		document.querySelector("body > main").scrollTo({top: 0,left: 0})
+		window.scrollTo(0, 0); // For desktop
+		document.querySelector("body > main").scrollTo({top: 0,left: 0}); // For mobile
 	}
 
 	static async render(dom){
