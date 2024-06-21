@@ -169,13 +169,13 @@ export default class XRequest{
 
 			this.#handleCommands();
 
-			if(this.#response) XRequest.#execute_on_response(func_name, this.#response, this.#element);
+			if(this.#response) XRequest.#execute_on_response(this.#element.getAttribute("xr-func"), this.#response, this.#element);
 
 			if(this.#element.hasAttribute("x-toast")) window.Toast.new(this.#response["type"], this.#response["message"]);
 
 			Modal.handle_commands(this.#element.getAttribute("x-modal"), this.#response["type"]);
 
-			XRequest.#handle_response_actions(this.#response, this.#element.getAttribute("func_name"));
+			XRequest.#handle_response_actions(this.#response);
 
 			Loading.on_element(this.#element);
 		};
