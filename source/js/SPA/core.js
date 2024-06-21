@@ -131,6 +131,7 @@ export default class Core{
 			Log.info("Core.#onHistoryButtonClicked()");
 
 			Router.handle();
+			Menu.set_active();
 		});
 	}
 
