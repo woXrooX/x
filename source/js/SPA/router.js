@@ -84,7 +84,7 @@ export default class Router{
 			window.Main.animationStart();
 
 			// Load The Page
-			window.DOM.set_page(await import(`/js/pages/${Router.currentPage.name}.js`));
+			await window.DOM.set_page(await import(`/js/pages/${Router.currentPage.name}.js`));
 		}catch(error){
 			Log.line();
 			Log.error(error);

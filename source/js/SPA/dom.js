@@ -8,7 +8,7 @@
 export default class DOM{
 	static #page = null;
 
-	static set_page(page){
+	static async set_page(page){
 		// Check If Page Is Valid
 		if(!!page == false) return;
 
@@ -16,36 +16,36 @@ export default class DOM{
 		DOM.#page = page;
 
 		// Start The Page's Life Cycle
-		DOM.life_cycle();
+		await DOM.life_cycle();
 	}
 
 	static async life_cycle(){
 		Log.info("DOM.life_cycle()");
 
-		////////// Title
+		// Title
 		window.Title.set(DOM.#page.TITLE);
 
-		////////// Before
+		// Before
 		if(!!DOM.#page.before === true) await DOM.#page.before();
 
-		////////// Header
+		// Header
 		await window.Header.handle(DOM.#page.header);
 
-		////////// Default/Main - Render the main function
+		// Default/Main - Render the main function
 		if(typeof DOM.#page.default === "function") await DOM.render(await DOM.#page.default());
 		else await DOM.render(Main.situationalContent("error", "ERROR", "DOM.life_cycle() -> No default function defined!"));
 
-		////////// Footer
+		// Footer
 		await window.Footer.handle(DOM.#page.footer);
 
-		////////// After
+		// After
 		if(!!DOM.#page.after === true) await DOM.#page.after();
+
+		// Scroll to top after DOM is ready
+		document.querySelector("body > main").scrollTo({top: 0,left: 0})
 	}
 
 	static async render(dom){
-		// Scroll to top before rendering
-		window.scrollTo(0, 0);
-
 		// If passed object like: createElement("x-form")
 		if(typeof dom === "object") window.Main.element.replaceChildren(dom);
 
