@@ -70,13 +70,19 @@ export default class Menu{
 		// Hyperlinks
 		const hyperlinks = document.querySelectorAll(Menu.#selector_menu_hyperlinks);
 
-		// loop Through All The Hyperlinks Of Parent Menu
+		// Find the current window.location.pathname matching page, and take the endpoints from it
+		let matched_endpoints = [];
+		for(const menu of window.CONF["menu"]["menus"])
+			for(const endpoint of window.CONF["pages"][menu["page"]]["endpoints"])
+				if(endpoint === window.location.pathname) matched_endpoints = window.CONF["pages"][menu["page"]]["endpoints"];
+
+		// Loop through all the hyperlinks of parent menu
 		for(const hyperlink of hyperlinks){
 			// De-Activate All
 			hyperlink.parentElement.removeAttribute("active");
 
-			// Activate section.parentMenu if href matches
-			if(hyperlink.getAttribute("href") == window.location.pathname) hyperlink.parentElement.setAttribute("active", "");
+			// Activate section.parent_menu if href matches
+			if(matched_endpoints.includes(hyperlink.getAttribute("href"))) hyperlink.parentElement.setAttribute("active", "");
 		}
 	}
 
@@ -88,14 +94,14 @@ export default class Menu{
 			if(Menu.#guard(menu) === true){
 				HTML += `
 					<section class="container">
-						<section class="parentMenu">
+						<section class="parent_menu">
 							<a href="${"url" in menu ? menu["url"] : window.CONF["pages"][menu["page"]]["endpoints"][0]}">
 								${"icon" in menu ? `<x-svg color="#ffffff" name="${menu["icon"]}"></x-svg>` : ""}
 								${"name" in menu ? window.Lang.use(menu["name"]) : window.Lang.use(menu["page"])}
 							</a>
 				`;
 
-				// Add the sub menu toggle icon and close the section.parentMenu
+				// Add the sub menu toggle icon and close the section.parent_menu
 				if("subMenu" in menu)
 					HTML += `
 							<x-svg for="toggleSubMenu" color="#ffffff" name="arrow_bottom_small"></x-svg>
@@ -103,7 +109,7 @@ export default class Menu{
 						<section class="subMenu">${Menu.#recursive_builder(menu["subMenu"])}</section>
 					`;
 
-				// Close the section.parentMenu if no "subMenu" in menu
+				// Close the section.parent_menu if no "subMenu" in menu
 				else HTML += `</section>`;
 
 				// Close the section.container
