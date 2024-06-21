@@ -7,9 +7,9 @@ export default async function content(){
 			<row class="flex-row flex-x-start surface-v1 p-2 gap-1">
 
 				<button
-					x-post
-					x-for="sanitize_users_folders"
-					x-trigger="click"
+					xr-post
+					xr-for="sanitize_users_folders"
+					xr-trigger="click"
 
 					x-toast
 

@@ -13,7 +13,7 @@ export default class XRequest{
 
 		XRequest.#OBJECTS = [];
 
-		XRequest.XR_ELEMENTS = document.querySelectorAll("[x-post]");
+		XRequest.XR_ELEMENTS = document.querySelectorAll("[xr-post]");
 
 		for(const element of XRequest.XR_ELEMENTS) XRequest.#OBJECTS.push(new XRequest(element));
 	}
@@ -22,9 +22,7 @@ export default class XRequest{
 	static push_func(func) { XRequest.#FUNC_POOL[func.name] = func; }
 
 	/////////// Helpers
-	static #handleResponseActions(response, func_name = null){
-		if (response) XRequest.#execute_on_response(func_name, response['data']);
-
+	static #handle_response_actions(response){
 		if(!("actions" in response)) return;
 
 		if("updateConf" in response["actions"]) window.conf = response["actions"]["updateConf"];
@@ -46,9 +44,9 @@ export default class XRequest{
 		if("reload" in response["actions"]) window.location.reload();
 	}
 
-	static async #execute_on_response(func_name, data = null){
+	static async #execute_on_response(func_name, response, element){
 		if(!!func_name === false) return;
-		await XRequest.#FUNC_POOL[func_name](data);
+		await XRequest.#FUNC_POOL[func_name](response, element);
 	}
 
 	/////////////////////////// Object
@@ -73,9 +71,9 @@ export default class XRequest{
 
 	constructor(element){
 		this.#element = element;
-		this.#trigger = this.#element.getAttribute("x-trigger") ?? "click";
-		this.#commands = this.#element.getAttribute("x-commands");
-		this.#target = this.#element.getAttribute("x-target") ? document.querySelector(this.#element.getAttribute("x-target")) : null;
+		this.#trigger = this.#element.getAttribute("xr-trigger") ?? "click";
+		this.#commands = this.#element.getAttribute("xr-commands");
+		this.#target = this.#element.getAttribute("xr-target") ? document.querySelector(this.#element.getAttribute("xr-target")) : null;
 
 		this.#constructData();
 		this.#handleTrigger();
@@ -83,11 +81,11 @@ export default class XRequest{
 	}
 
 	#constructData(){
-		try{this.#data = JSON.parse(this.#element.getAttribute("x-data"));}
+		try{this.#data = JSON.parse(this.#element.getAttribute("xr-data"));}
 		catch(error){this.#data = null;}
 
 		this.#data = {
-			...(this.#element.hasAttribute("x-for") ? {"for": this.#element.getAttribute("x-for")} : {}),
+			...(this.#element.hasAttribute("xr-for") ? {"for": this.#element.getAttribute("xr-for")} : {}),
 			...this.#data
 		}
 	}
@@ -167,15 +165,17 @@ export default class XRequest{
 		this.#element.onclick = async ()=>{
 			Loading.on_element(this.#element);
 
-			this.#response = await window.bridge(this.#data, this.#element.getAttribute("x-post"));
+			this.#response = await window.bridge(this.#data, this.#element.getAttribute("xr-post"));
 
 			this.#handleCommands();
+
+			if(this.#response) XRequest.#execute_on_response(func_name, this.#response, this.#element);
 
 			if(this.#element.hasAttribute("x-toast")) window.Toast.new(this.#response["type"], this.#response["message"]);
 
 			Modal.handle_commands(this.#element.getAttribute("x-modal"), this.#response["type"]);
 
-			XRequest.#handleResponseActions(this.#response, this.#element.getAttribute("func_name"));
+			XRequest.#handle_response_actions(this.#response, this.#element.getAttribute("func_name"));
 
 			Loading.on_element(this.#element);
 		};
