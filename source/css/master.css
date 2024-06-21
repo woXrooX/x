@@ -1,9 +1,4 @@
 :root{
-	--screen-size-phone: 600px;
-	--screen-size-tablet: 768px;
-	--screen-size-desktop: 992px;
-	--screen-size-tv: 1200px;
-
 	--z-minus: -1;
 	--z-body: 1;
 	--z-footer: 2;

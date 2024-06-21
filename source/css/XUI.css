@@ -4,6 +4,12 @@
 			&:root{
 				font-size: 22px;
 
+				/* Screen sizes */
+				--screen-size-phone: 600px;  		/* s */
+				--screen-size-tablet: 768px; 		/* m */
+				--screen-size-desktop: 992px;		/* l */
+				--screen-size-tv: 1200px;			/* xl */
+
 				/* Default color schema starts with dark mode */
 				--color-main-hue: 230deg;
 				--color-main-saturation: 13%;
@@ -180,7 +186,7 @@
 		}
 		/*** Body END ***/
 
-		/*** Mobile Screen START ***/
+		/* s */
 		@media (width <= 600px){
 			:root{
 				font-size: 16px;
@@ -195,7 +201,6 @@
 				overflow: hidden;
 			}
 		}
-		/*** Mobile Screen END ***/
 	}
 
 	@layer cursor{
@@ -1675,11 +1680,27 @@
 		/* inline-block */
 		.d-inline-block{display: inline-block;}
 
+		/* s */
+		@media (width <= 600px){
+			/* none */
+			.s-d-none{display: none;}
+
+			/* block */
+			.s-d-block{display: block;}
+
+			/* inline-block */
+			.s-d-inline-block{display: inline-block;}
+		}
+
 		@layer flex{
 			.d-inline-flex{display: inline-flex;}
 			.d-flex{display: flex;}
+
+			/* Directions */
 			.flex-row{flex-direction: row;}
+			.flex-row-reverse{flex-direction: row-reverse;}
 			.flex-column{flex-direction: column;}
+			.flex-column-reverse{flex-direction: column-reverse;}
 
 			/* X - justify-content */
 			.flex-x-start{justify-content: flex-start;}
@@ -1725,6 +1746,25 @@
 			.flex-nowrap{flex-wrap: nowrap;}
 			.flex-wrap{flex-wrap: wrap;}
 			.flex-wrap-reverse{flex-wrap: wrap-reverse;}
+
+			/* s */
+			@media (width <= 600px){
+				.s-d-inline-flex{display: inline-flex;}
+				.s-d-flex{display: flex;}
+
+				/* Directions */
+				.s-flex-row{flex-direction: row;}
+				.s-flex-row-reverse{flex-direction: row-reverse;}
+				.s-flex-column{flex-direction: column;}
+				.s-flex-column-reverse{flex-direction: column-reverse;}
+
+				/* X - justify-content */
+				.s-flex-x-start{justify-content: flex-start;}
+				.s-flex-x-end{justify-content: flex-end;}
+				.s-flex-x-center{justify-content: center;}
+				.s-flex-x-between{justify-content: space-between;}
+				.s-flex-x-around{justify-content: space-around;}
+			}
 		}
 	}
 
