@@ -9,7 +9,7 @@ export default function main(){
 
 				<p class="text-align-center">${window.Lang.use("eMail_confirmation_code_has_been_sent")}</p>
 
-				<form for="eMail_confirmation" x-toast>
+				<form for="eMail_confirmation" x-toast="on:any:message">
 
 
 					<label>

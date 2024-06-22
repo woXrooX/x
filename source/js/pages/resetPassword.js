@@ -5,7 +5,7 @@ export const TITLE = 'Reset password';
 export default function main(){
 	return `
 		<container class="p-5 max-w-600px">
-			<form action="/resetPassword/${window.Router.currentPage["urlArgs"]["TOKEN"]}" for="resetPassword" autocomplete="off" class="surface-v1 p-5 gap-1" x-toast>
+			<form action="/resetPassword/${window.Router.currentPage["urlArgs"]["TOKEN"]}" for="resetPassword" autocomplete="off" class="surface-v1 p-5 gap-1" x-toast="on:any:message">
 
 				<h2>Reset your password</h2>
 

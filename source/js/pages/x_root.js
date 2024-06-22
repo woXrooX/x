@@ -11,7 +11,7 @@ export default async function content(){
 					xr-for="sanitize_users_folders"
 					xr-trigger="click"
 
-					x-toast
+					x-toast="on:any:message"
 
 					class="btn btn-warning"
 				>SANITIZE USERS FOLDERS</button>
