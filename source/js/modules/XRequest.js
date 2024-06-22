@@ -60,6 +60,7 @@ export default class XRequest{
 	#source = "";
 	#target;
 	#response;
+	#toast;
 
 	#instructions = [
 		// {
@@ -69,15 +70,19 @@ export default class XRequest{
 		// }
 	];
 
+	#toast_instructions = [];
+
 	constructor(element){
 		this.#element = element;
 		this.#trigger = this.#element.getAttribute("xr-trigger") ?? "click";
 		this.#commands = this.#element.getAttribute("xr-commands");
 		this.#target = this.#element.getAttribute("xr-target") ? document.querySelector(this.#element.getAttribute("xr-target")) : null;
+		this.#toast = this.#element.getAttribute("x-toast");
 
 		this.#constructData();
 		this.#handleTrigger();
 		this.#parseCommands();
+		this.#parse_toast_commands();
 	}
 
 	#constructData(){
@@ -160,6 +165,32 @@ export default class XRequest{
 		if(arr.length > 0) this.#target.setAttribute(arr[0], this.#source ?? arr[1] ?? '');
 	}
 
+
+	#parse_toast_commands(){
+		if(!!this.#toast === false) return;
+
+		const commands = this.#toast.split(' ');
+
+		for(const command of commands){
+			const parts = command.split(':');
+
+			if(parts.length !== 2) continue;
+
+			this.#toast_instructions.push({"types": parts[1].split('|')});
+		}
+	}
+
+	#handle_toast_commands(){
+		if(!("type" in this.#response)) return;
+
+		for(const instruction of this.#toast_instructions){
+			if(instruction["types"].includes("any") || instruction["types"].includes(this.#response["type"])){
+				window.Toast.new(this.#response["type"], this.#response["message"]);
+				break;
+			}
+		}
+	}
+
 	/////////// Event listeners
 	#onClick(){
 		this.#element.onclick = async ()=>{
@@ -171,7 +202,7 @@ export default class XRequest{
 
 			if(this.#response) XRequest.#execute_on_response(this.#element.getAttribute("xr-func"), this.#response, this.#element);
 
-			if(this.#element.hasAttribute("x-toast")) window.Toast.new(this.#response["type"], this.#response["message"]);
+			this.#handle_toast_commands();
 
 			Modal.handle_commands(this.#element.getAttribute("x-modal"), this.#response["type"]);
 
