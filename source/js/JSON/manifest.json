@@ -1,11 +1,17 @@
 {
 	"name": "x",
 	"short_name": "x",
+	"description": "Speeding Up Web App Creation Process",
 	"start_url": "/",
-	"theme_color": "hsl(230deg, 13%, 9%)",
-	"background_color": "hsl(230deg, 13%, 9%)",
+	"theme_color": "#141414",
+	"background_color": "#141414",
 	"display": "standalone",
 	"icons": [
+		{
+			"src": "/images/PWA/logo_512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		},
 		{
 			"src": "/images/PWA/logo_384.png",
 			"sizes": "384x384",
