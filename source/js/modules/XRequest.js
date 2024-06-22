@@ -75,12 +75,12 @@ export default class XRequest{
 		this.#commands = this.#element.getAttribute("xr-commands");
 		this.#target = this.#element.getAttribute("xr-target") ? document.querySelector(this.#element.getAttribute("xr-target")) : null;
 
-		this.#constructData();
-		this.#handleTrigger();
-		this.#parseCommands();
+		this.#construct_data();
+		this.#handle_trigger();
+		this.#parse_commands();
 	}
 
-	#constructData(){
+	#construct_data(){
 		try{this.#data = JSON.parse(this.#element.getAttribute("xr-data"));}
 		catch(error){this.#data = null;}
 
@@ -91,19 +91,19 @@ export default class XRequest{
 	}
 
 	/////////// Handlers
-	#handleTrigger(){
+	#handle_trigger(){
 		switch(this.#trigger){
 			case "click":
-				this.#onClick();
+				this.#on_click();
 				break;
 
 			default:
-				this.#onClick();
+				this.#on_click();
 				break;
 		}
 	}
 
-	#parseCommands(){
+	#parse_commands(){
 		if(!!this.#commands === false) return;
 		if(!!this.#target === false) return;
 
@@ -123,7 +123,7 @@ export default class XRequest{
 		}
 	}
 
-	#handleCommands(){
+	#handle_commands(){
 		if(!("type" in this.#response)) return;
 
 		for(const instruction of this.#instructions){
@@ -133,23 +133,23 @@ export default class XRequest{
 
 				this.#action = instruction["action"];
 
-				this.#handleActions();
+				this.#handle_actions();
 
 				break;
 			}
 		}
 	}
 
-	#handleActions(){
+	#handle_actions(){
 		if(!!this.#source === false) return;
 
 		if(this.#action === "innerHTML") this.#target.innerHTML = this.#source;
 		else if(this.#action === "outerHTML") this.#target.outerHTML = this.#source;
 		else if(this.#action === "replaceWith") this.#target.replaceWith(this.#source);
-		else if(this.#action.startsWith("setAttribute")) this.#handleSetAttribute();
+		else if(this.#action.startsWith("setAttribute")) this.#handle_set_attribute();
 	}
 
-	#handleSetAttribute(){
+	#handle_set_attribute(){
 		let arr = this.#action
 					.slice(
 						this.#action.indexOf("[")+1,
@@ -161,17 +161,19 @@ export default class XRequest{
 	}
 
 	/////////// Event listeners
-	#onClick(){
+	#on_click(){
 		this.#element.onclick = async ()=>{
 			Loading.on_element(this.#element);
 
 			this.#response = await window.bridge(this.#data, this.#element.getAttribute("xr-post"));
 
-			this.#handleCommands();
+			if(!("type" in this.#response)) return;
 
-			if(this.#response) XRequest.#execute_on_response(this.#element.getAttribute("xr-func"), this.#response, this.#element);
+			XRequest.#execute_on_response(this.#element.getAttribute("xr-func"), this.#response, this.#element);
 
-			if(this.#element.hasAttribute("x-toast")) window.Toast.new(this.#response["type"], this.#response["message"]);
+			this.#handle_commands();
+
+			Toast.handle_commands(this.#element.getAttribute("x-toast"), this.#response);
 
 			Modal.handle_commands(this.#element.getAttribute("x-modal"), this.#response["type"]);
 

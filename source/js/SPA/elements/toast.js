@@ -1,8 +1,8 @@
-// v0.1.2
-
 "use strict";
 
 export default class Toast extends HTMLElement{
+	/////////////////////////// Static
+
 	static #selector = "body > toasts";
 	static #autoDismissTimer = 5000;
 	static #template = document.createElement("template");
@@ -12,6 +12,53 @@ export default class Toast extends HTMLElement{
 		"warning": "warning_triangle",
 		"error": "error_hexagon"
 	}
+
+	/////////// APIs
+	static new(type, content){
+		if(!!type === false || !!content === false){
+			type = "warning";
+			content = "Toast: " + Lang.use("invalid_value");
+		}
+
+		document.querySelector(Toast.#selector).innerHTML += `<x-toast type="${type}">${content}</x-toast>`;
+
+		// Auto Remove After N Seconds
+		setTimeout(()=>{document.querySelector(Toast.#selector).firstChild?.remove();}, Toast.#autoDismissTimer);
+	}
+
+	static handle_commands(commands, response){
+		if(!!commands === false) return;
+		if(!!response === false) return;
+
+		const instructions = Toast.#parse_commands(commands);
+
+		for(const instruction of instructions)
+			if(instruction["types"].includes("any") || instruction["types"].includes(response["type"]))
+				return Toast.new(response["type"], response[instruction["source"]]);
+	}
+
+	/////////// Helpers
+	static #parse_commands(commands){
+		const instructions = [];
+
+		commands = commands.split(' ');
+
+		for(const command of commands){
+			const parts = command.split(':');
+
+			// Invalid command
+			if(parts.length !== 3) continue;
+
+			instructions.push({
+				"types": parts[1].split('|'),
+				"source": parts[2]
+			});
+		}
+
+		return instructions;
+	}
+
+	/////////////////////////// Object
 
 	constructor(){
 		super();
@@ -110,24 +157,6 @@ export default class Toast extends HTMLElement{
 		//// Remove Toast On Click Dismiss
 		// dismiss.onclick = ()=> this.remove(); // Bug w/ N sec removal
 		this.shadow.querySelector("toast > x-svg[for=dismiss]").onclick = ()=> this.style.display = "none";
-	}
-
-	static new(type, content){
-		if(!!type === false || !!content === false) return;
-
-		document.querySelector(Toast.#selector).innerHTML += `<x-toast type="${type}">${content}</x-toast>`;
-
-		// Auto Remove After N Seconds
-		setTimeout(()=>{document.querySelector(Toast.#selector).firstChild?.remove();}, Toast.#autoDismissTimer);
-	}
-
-	//// Handles Toast actions by the passed element's "x-toast" attributes
-	// x-toast -> enables
-	// x-toast="type:error" -> enables with specific only on type action
-	// x-toast-type="error|success" -> force type(s)
-	// x-toast-message -> force message
-	static handleByAttributes(element, response){
-
 	}
 }
 
