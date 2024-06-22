@@ -31,10 +31,10 @@ export default class Hyperlink{
 	// locate | load | open
 	// Force full page reload: No
 	static locate(url = ""){
-		// Check if current page is already equal to requesting page
-		if(window.location.href == url) return;
-
 		const completed_url = new URL(url, window.location.origin);
+
+		// Check if current page is already equal to requesting page
+		if(window.location.href == completed_url.href) return;
 
 		// Add To History
 		window.history.pushState("", "", completed_url);
