@@ -33,14 +33,14 @@ body{
 		min-height: calc(100dvh - var(--header-height));
 
 		opacity: 0;
-		transform: translateY(20px);
+		margin-top: 20px;
 
 		&.show{
 			transition: calc(var(--transition-velocity) * 2) ease-in-out;
-			transition-property: opacity, transform;
+			transition-property: opacity, transform, margin;
 
 			opacity: 1;
-			transform: translateY(0px);
+			margin-top: 0px;
 		}
 	}
 
