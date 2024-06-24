@@ -4,6 +4,7 @@ export default class Router{
 	static currentPage = {
 		"name": null,
 		"endpoint": null,
+		"full_URL": null,
 		"urlArgs": {}
 	}
 
@@ -50,18 +51,15 @@ export default class Router{
 				// Check If Page Endpoint Equals To Currnt Endpoint
 				if(endpoint == pathname){
 					//// Check If Page Is Not Current Loaded Page
-					// If yes then exit this method
+					// TODO: We need to create a endpoints matching loop like in thr  Menu.set_active() in order to fix issues like "/" and "/home" are being rendered even the page is thesame
 					// NOTE: endpoint should be unique.
-					// Page a and page b can not have the same endpoint.
-					// It may seem working but there will be bugs.
-					// It will make return false the expression below in rare cases.
-					if(
-						Router.currentPage.endpoint == pathname ||
-						Router.currentPage.endpoint === "home" && pathname === '/'
-					) return;
+					// Page a and page b can not have the same endpoint. It may seem working but there will be bugs. It will make return false the expression below in rare cases.
+					// If yes then exit this method
+					if(Router.currentPage.full_URL === window.location.href) return;
 
 					Router.currentPage.name = page;
 					Router.currentPage.endpoint = endpoint;
+					Router.currentPage.full_URL = window.location.href;
 
 					// Break Out The Loops
 					break loopPages;
