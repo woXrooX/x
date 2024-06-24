@@ -3,8 +3,8 @@
 	"short_name": "x",
 	"description": "Speeding Up Web App Creation Process",
 	"start_url": "/",
-	"theme_color": "#141414",
-	"background_color": "#141414",
+	"theme_color": "#14151A",
+	"background_color": "#14151A",
 	"display": "standalone",
 	"icons": [
 		{
