@@ -91,8 +91,6 @@ def signUp(request):
 
 			<h2>{eMailVerificationCode}</h2>
 
-			<p>Enter this code on the verification <a href="{request.url_root}eMailConfirmation">page</a>.</p>
-
 			<p>If you did not create an account using this email address, please ignore this message.</p>
 
 			<p>{Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
