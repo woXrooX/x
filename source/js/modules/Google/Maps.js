@@ -9,6 +9,7 @@ export class Maps{
 	static #element = null;
 	static map_object = null;
 	static markers = [];
+	static circles = [];
 	static #initialized = false;
 
 	static #CONF = {}
@@ -31,7 +32,7 @@ export class Maps{
 		if(Maps.#initialized === false) return false;
 		if(!!location_text === false || typeof location_text !== "string") return false;
 
-		const geocode = await Maps.#text_to_geocode(location_text);
+		const geocode = await Maps.text_to_geocode(location_text);
 
 		const pin = new google.maps.marker.PinElement(pin_styles);
 
@@ -43,8 +44,6 @@ export class Maps{
 			// zIndex: 5,
 			// collisionBehavior: "OPTIONAL_AND_HIDES_LOWER_PRIORITY",
 		});
-
-		// marker.setMap(Maps.map_object);
 
 		if(info_window_content !== null){
 			const infowindow = new google.maps.InfoWindow({
@@ -85,6 +84,21 @@ export class Maps{
 		Maps.map_object.setCenter(value, zoom_value);
 	}
 
+	static draw_circle(center, radius, stroke_color="#FF0000", fill_color="#FF0000") {
+		const circle = new google.maps.Circle({
+			strokeColor: stroke_color,
+			strokeOpacity: 0.8,
+			strokeWeight: 2,
+			fillColor: fill_color,
+			fillOpacity: 0.35,
+			map: Maps.map_object,
+			center: center,
+			radius: radius * 1000, // Convert km to meters
+		});
+
+		Maps.circles.push(circle);
+	}
+
 	// Remove marker by latitude, longitude
 	static RMBLL(lat, lng){
 		if (Maps.#initialized === false) return;
@@ -103,6 +117,48 @@ export class Maps{
 		if (Maps.#initialized === false) return;
 		for(let i = 0; i < Maps.markers.length; i++) Maps.markers[i].setMap(null);
 		Maps.markers = [];
+	}
+
+	static remove_all_circles(){
+		if (Maps.#initialized === false) return;
+		for(let i = 0; i < Maps.circles.length; i++) Maps.circles[i].setMap(null);
+		Maps.circles = [];
+	}
+
+	// pos = {lat: x.x, lng: x.x}
+	static async distance_between(pos_one, pos_two){
+		pos_one = pos_one;
+		pos_two = pos_two;
+		const R = 6371; // Radius of the Earth in km
+
+		const d_lat = (pos_one["lat"] - pos_two["lat"]) * Math.PI / 180;
+		const d_lng = (pos_one["lng"] - pos_two["lng"]) * Math.PI / 180;
+
+		const a =
+			Math.sin(d_lat / 2) * Math.sin(d_lat / 2) +
+			Math.cos(pos_one["lat"] * Math.PI / 180) * Math.cos(pos_two["lat"] * Math.PI / 180) *
+			Math.sin(d_lng / 2) * Math.sin(d_lng / 2);
+
+		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+		return R * c; // Distance in km
+	}
+
+	static async get_marker_geocode(marker){
+		return JSON.parse(JSON.stringify(marker.position));
+	}
+
+	static text_to_geocode(text){
+		return new Promise((resolve, reject) => {
+			const geocoder = new google.maps.Geocoder();
+			geocoder.geocode({ 'address': text }, (results, status) => {
+				if(status === 'OK') resolve({
+					lat: results[0].geometry.location.lat(),
+					lng: results[0].geometry.location.lng()
+				});
+				else reject('Geocode was not successful for the following reason: ' + status);
+			});
+		});
 	}
 
 	//// Helpers
@@ -126,18 +182,5 @@ export class Maps{
 	static #init_Google_Maps_object(){
 		Maps.map_object = new google.maps.Map(Maps.#element, Maps.#CONF);
 		Maps.#initialized = true;
-	}
-
-	static #text_to_geocode(text){
-		return new Promise((resolve, reject) => {
-			const geocoder = new google.maps.Geocoder();
-			geocoder.geocode({ 'address': text }, (results, status) => {
-				if(status === 'OK') resolve({
-					lat: results[0].geometry.location.lat(),
-					lng: results[0].geometry.location.lng()
-				});
-				else reject('Geocode was not successful for the following reason: ' + status);
-			});
-		});
 	}
 }
