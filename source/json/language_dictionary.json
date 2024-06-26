@@ -129,6 +129,11 @@
 		"ru": "Неверный адрес электронной почты",
 		"uz": "Elektron pochta manzili noto`g`ri"
 	},
+	"eMail_or_password_incorrect": {
+		"en": "Email or password incorrect",
+		"ru": "Электронная почта или пароль неверны",
+		"uz": "Elektron pochta yoki parol noto`g`ri"
+	},
 	"eMail_verification_success": {
 		"en": "The email has been successfully verified!",
 		"ru": "Электронная почта успешно подтверждена!",

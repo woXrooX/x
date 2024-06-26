@@ -35,7 +35,7 @@ def logIn(request):
 		# No Match
 		if not data:
 			LogInTools.new_record(request.remote_addr, request.headers.get('User-Agent'))
-			return response(type="error", message="usernameOrPasswordWrong")
+			return response(type="error", message="eMail_or_password_incorrect")
 
 		# Set Session User ID
 		session["user"] = data
