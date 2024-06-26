@@ -5,7 +5,6 @@
 	<head>
 
 		<meta charset="UTF-8">
-
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<link rel="manifest" href="/js/JSON/manifest.json">
@@ -13,9 +12,8 @@
 		<link rel="apple-touch-icon" href="/images/PWA/logo_120.png"> <!-- App icon for apple devices, required -->
 		<meta name="color-schema" content="dark">
 		<!-- <meta name="theme-color" content="#14151A"> This tag overrides the manifest.json theme_color -->
-
-		<meta name="robots" content="noindex, nofollow">
-		<meta name="description" content="{{Globals.CONF["default"]["title"]}}">
+		<!-- <meta name="robots" content="noindex, nofollow"> TMP: Enabled -->
+		<!-- <meta name="description" content="Speeding Up Web App Creation Process"> Will be set from the HTML/head.html -->
 
 		<link
 			rel="icon"
@@ -104,13 +102,11 @@
 		<link rel="preload stylesheet" href="/css/x-elements.css" as="style">
 
 		<script>window.x = {};</script>
-
 		<script type="module" src="/js/main.js"></script>
 
 		{{Globals.PROJECT_HTML["head"] | safe}}
 
 	</head>
-
 
 	<body>
 
