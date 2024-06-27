@@ -162,6 +162,8 @@ export default class XRequest{
 
 	/////////// Event listeners
 	#on_click(){
+		this.#element.style.cursor = "pointer";
+
 		this.#element.onclick = async ()=>{
 			Loading.on_element(this.#element);
 
