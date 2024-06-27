@@ -126,7 +126,7 @@ export default class Form{
 			Modal.handle_commands(form.getAttribute("x-modal"), response["type"]);
 
 			////////// x-toast
-			Toast.handle_commands(form.hasAttribute("x-toast"), response);
+			Toast.handle_commands(form.getAttribute("x-toast"), response);
 
 			////////// Callback
 			Form.#execute_on_response(form.getAttribute("func_name"), response);
