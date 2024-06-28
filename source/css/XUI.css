@@ -1806,6 +1806,8 @@
 			.flex-shrink-2{flex-shrink: 2;}
 			.flex-shrink-3{flex-shrink: 3;}
 
+			.flex-basis-100{flex-basis: 100%;}
+
 			.flex-basis-100px{flex-basis: 100px;}
 			.flex-basis-150px{flex-basis: 150px;}
 			.flex-basis-200px{flex-basis: 200px;}
