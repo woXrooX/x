@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.189.0.0034"
+version: "0.189.0.0035"
 
 
 ######### Flask
@@ -228,7 +228,7 @@ username:
 password:
   min_length: 6
   max_length: 50
-  regEx: "^(?=.*[a-z])(?=.*[0-9])(?=.*[-!@#$%^&*_+])[-!@#$%^&*_+A-Za-z0-9]{6,}$"
+  regEx: "^[a-zA-Z0-9!@#$%^&*-_+]+$"
   hashing_algorithm: null
 
   # Minutes

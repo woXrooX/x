@@ -275,9 +275,9 @@
 		"uz": "Parol"
 	},
 	"password_allowed_chars": {
-		"en": "Password must include at least one letter, one number and one of this allowed characters ( ! @ # $ % ^ & * - _ + )",
-		"ru": "Пароль должен включать как минимум одну букву, одну цифру и один из разрешенных символов (! @ # $% ^ & * - _ +)",
-		"uz": "Parolda kamida bitta harif, bitta raqam va ushbu ruxsat berilgan belgilardan biri bo`lishi kerak (! @ # $% ^ & * - _ +)"
+		"en": "The allowed characters for passwords are: lowercase letters (a-z), uppercase letters (A-Z), numbers (0-9), and the following special characters: ! @ # $ % ^ & * - _ +",
+		"ru": "Допустимые символы для паролей: строчные буквы (a-z), прописные буквы (A-Z), цифры (0-9) и следующие специальные символы: ! @ # $ % ^ & * - _ +",
+		"uz": "Parollar uchun ruxsat etilgan belgilar: kichik harflar (a-z), katta harflar (A-Z), raqamlar (0-9) va quyidagi maxsus belgilar: ! @ # $ % ^ & * - _ +"
 	},
 	"password_changed_successfully": {
 		"en": "Password changed successfully",
