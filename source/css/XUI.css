@@ -2425,6 +2425,16 @@
 		.overflow-y-hidden{
 			overflow-y: hidden;
 		}
+
+		.overflow-scroll{
+			overflow: scroll;
+		}
+		.overflow-x-scroll{
+			overflow-x: scroll;
+		}
+		.overflow-y-scroll{
+			overflow-y: scroll;
+		}
 		/**************************** Overflow selecting END ****************************/
 
 		/**************************** HR START ****************************/
