@@ -73,8 +73,9 @@ export default class Menu{
 		// Find the current window.location.pathname matching page, and take the endpoints from it
 		let matched_endpoints = [];
 		for(const menu of window.CONF["menu"]["menus"])
-			for(const endpoint of window.CONF["pages"][menu["page"]]["endpoints"])
-				if(endpoint === window.location.pathname) matched_endpoints = window.CONF["pages"][menu["page"]]["endpoints"];
+			if(!("url" in menu))
+				for(const endpoint of window.CONF["pages"][menu["page"]]["endpoints"])
+					if(endpoint === window.location.pathname) matched_endpoints = window.CONF["pages"][menu["page"]]["endpoints"];
 
 		// Loop through all the hyperlinks of parent menu
 		for(const hyperlink of hyperlinks){
