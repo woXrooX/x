@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.189.1.0001"
+version: "0.189.1.0002"
 
 
 ######### Flask
@@ -29,7 +29,7 @@ URL:
 # The domain part can be up to 255 characters long.
 # The entire email address, including the @ symbol, can be up to 320 characters long.
 eMail:
-  regEx: "^[a-zA-Z0-9][a-zA-Z0-9._-]{0,20}[a-zA-Z0-9]@[a-z][a-zA-Z0-9-_]{1,20}.[a-z]{2,3}$"
+  regEx: "^[a-zA-Z0-9][a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]{0,62}[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9](?:\\.[a-zA-Z]+)+$"
   subject: "x"
 
   SendGrid:
@@ -231,7 +231,7 @@ username:
 password:
   min_length: 6
   max_length: 50
-  regEx: "^[a-zA-Z0-9][a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]{0,62}[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9](?:\.[a-zA-Z]+)+$"
+  regEx: "^[a-zA-Z0-9!@#$%^&*-_+]+$"
   hashing_algorithm: null
 
   # Minutes
