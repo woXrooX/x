@@ -6,7 +6,7 @@ from python.modules.User import User
 from python.modules.MySQL import MySQL
 
 @Page.build()
-def eMailConfirmation(request):
+def eMail_confirmation(request):
 	if request.method == "POST":
 		# Check If "for" Meant To Go To Here
 		if request.form["for"] != "eMail_confirmation": return response(type="warning", message="unknown_error")

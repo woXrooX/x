@@ -22,24 +22,6 @@ if __name__ != "__main__":
 		NOTIFICATION_TYPES = {}
 
 		BUILT_IN_FILES = {
-			"pages": {
-				"back": [
-					"__init__.py",
-					"api.py",
-					"app_is_down.py",
-					"eMailConfirmation.py",
-					"error_handlers.py",
-					"files_assets.py",
-					"files_users.py",
-					"logIn.py",
-					"logOut.py",
-					"logOutInstant.py",
-					"requestPasswordRecovery.py",
-					"resetPassword.py",
-					"signUp.py",
-					"x_root.py"
-				]
-			},
 			"modules":{
 				"Python": [
 					"Backup.py",
@@ -59,6 +41,24 @@ if __name__ != "__main__":
 					"SendGrid.py",
 					"tools.py",
 					"User.py"
+				]
+			},
+			"pages": {
+				"back": [
+					"__init__.py",
+					"api.py",
+					"app_is_down.py",
+					"eMail_confirmation.py",
+					"error_handlers.py",
+					"files_assets.py",
+					"files_users.py",
+					"log_in.py",
+					"log_out.py",
+					"log_out_instant.py",
+					"request_password_recovery.py",
+					"reset_password.py",
+					"sign_up.py",
+					"x_root.py"
 				]
 			}
 		}

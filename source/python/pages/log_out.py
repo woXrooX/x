@@ -4,7 +4,7 @@ from python.modules.response import response
 from python.modules.Globals import Globals
 
 @Page.build()
-def logOut(request):
+def log_out(request):
 	if request.method == "POST":
 		# unknown_error
 		if request.form["for"] != "log_out": return response(type="warning", message="unknown_error")

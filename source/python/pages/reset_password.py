@@ -7,10 +7,10 @@ from python.modules.MySQL import MySQL
 from python.modules.Globals import Globals
 
 @Page.build()
-def resetPassword(request, TOKEN):
+def reset_password(request, TOKEN):
 	if request.method == "POST":
 		# unknown_error
-		if request.form["for"] != "resetPassword": return response(type="warning", message="unknown_error")
+		if request.form["for"] != "reset_password": return response(type="warning", message="unknown_error")
 
 		######## Password validation
 		# password_empty
@@ -50,7 +50,7 @@ def resetPassword(request, TOKEN):
 		if not prd: return response(type="error", message="invalid_token", redirect="/400")
 
 		# Already recovered
-		if prd["password_new"] is not None: return response(type="info", message="token_aready_used", redirect="/logIn")
+		if prd["password_new"] is not None: return response(type="info", message="token_aready_used", redirect="/log_in")
 
 		# Set the new users passowrd and update password_recoveries
 		data = MySQL.execute(
@@ -65,4 +65,4 @@ def resetPassword(request, TOKEN):
 		)
 		if data is False: return response(type="error", message="database_error")
 
-		return response(type="success", message="password_changed_successfully", redirect="/logIn")
+		return response(type="success", message="password_changed_successfully", redirect="/log_in")

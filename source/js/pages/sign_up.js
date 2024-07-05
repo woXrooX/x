@@ -22,7 +22,7 @@ export default function main(){
 					<p for="sign_up"></p>
 				</label>
 
-				<a href="/logIn" class="text-align-center text-size-0-7">${window.Lang.use('have_account_go_to_log_in')}</a>
+				<a href="/log_in" class="text-align-center text-size-0-7">${window.Lang.use('have_account_go_to_log_in')}</a>
 
 			</form>
 		</container>

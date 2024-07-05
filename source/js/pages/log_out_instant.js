@@ -3,7 +3,7 @@
 export const TITLE = window.Lang.use("log_out");
 
 export async function before(){
-	const resp = await window.bridge({for:"logOutInstant"}, "/logOutInstant");
+	const resp = await window.bridge({for:"log_out_instant"}, "/log_out_instant");
 
 	if("type" in resp && resp["type"] == "success"){
 		delete window.session["user"];

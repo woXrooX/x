@@ -1,6 +1,4 @@
-"use strict";
-
-export const TITLE = "App Is Down";
+export const TITLE = Lang.use("app_is_down");
 
 export default function main(){
 	return `

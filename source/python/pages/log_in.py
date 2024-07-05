@@ -8,7 +8,7 @@ from python.modules.LogInTools import LogInTools
 
 
 @Page.build()
-def logIn(request):
+def log_in(request):
 	if request.method == "POST":
 		# unknown_error
 		if request.form["for"] != "log_in": return response(type="warning", message="unknown_error")

@@ -33,15 +33,15 @@ source/python/pages/*.py
 !source/python/pages/__init__.py
 
 !source/python/pages/api.py
-!source/python/pages/eMailConfirmation.py
+!source/python/pages/eMail_confirmation.py
 !source/python/pages/error_handlers.py
 !source/python/pages/files_assets.py
 !source/python/pages/files_users.py
-!source/python/pages/logIn.py
-!source/python/pages/logOut.py
-!source/python/pages/logOutInstant.py
-!source/python/pages/requestPasswordRecovery.py
-!source/python/pages/resetPassword.py
-!source/python/pages/signUp.py
+!source/python/pages/log_in.py
+!source/python/pages/log_out.py
+!source/python/pages/log_out_instant.py
+!source/python/pages/request_password_recovery.py
+!source/python/pages/reset_password.py
+!source/python/pages/sign_up.py
 !source/python/pages/x_root.py
 

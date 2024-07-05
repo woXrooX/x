@@ -12,7 +12,7 @@ from python.modules.MySQL import MySQL
 
 
 @Page.build()
-def signUp(request):
+def sign_up(request):
 	if request.method == "POST":
 		# unknown_error
 		if request.form["for"] != "sign_up": return response(type="warning", message="unknown_error")
@@ -109,6 +109,6 @@ def signUp(request):
 			type="success" if emailVerificationSentSuccessfully is True else "info",
 			message="eMail_confirmation_code_has_been_sent" if emailVerificationSentSuccessfully is True else "Signed Up Without Email Verification!",
 			setSessionUser=True,
-			redirect="/eMailConfirmation" if emailVerificationSentSuccessfully is True else "/home",
+			redirect="/eMail_confirmation" if emailVerificationSentSuccessfully is True else "/home",
 			domChange=["menu"]
 		)

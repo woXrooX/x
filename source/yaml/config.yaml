@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.189.1.0003"
+version: "0.189.1.0004"
 
 
 ######### Flask
@@ -116,7 +116,7 @@ pages:
       - "/home"
 
 
-  signUp:
+  sign_up:
     enabled: false
     authenticity_statuses:
       - "unauthenticated"
@@ -124,10 +124,10 @@ pages:
       - "GET"
       - "POST"
     endpoints:
-      - "/signUp"
+      - "/sign_up"
 
 
-  logIn:
+  log_in:
     enabled: false
     authenticity_statuses:
       - "unauthenticated"
@@ -135,10 +135,10 @@ pages:
       - "GET"
       - "POST"
     endpoints:
-      - "/logIn"
+      - "/log_in"
 
 
-  eMailConfirmation:
+  eMail_confirmation:
     enabled: false
     authenticity_statuses:
       - "unauthorized"
@@ -146,22 +146,10 @@ pages:
       - "GET"
       - "POST"
     endpoints:
-      - "/eMailConfirmation"
+      - "/eMail_confirmation"
 
 
-  logOut:
-    enabled: false
-    authenticity_statuses:
-      - "unauthorized"
-      - "authorized"
-    methods:
-      - "GET"
-      - "POST"
-    endpoints:
-      - "/logOut"
-
-
-  logOutInstant:
+  log_out:
     enabled: false
     authenticity_statuses:
       - "unauthorized"
@@ -170,10 +158,22 @@ pages:
       - "GET"
       - "POST"
     endpoints:
-      - "/logOutInstant"
+      - "/log_out"
 
 
-  requestPasswordRecovery:
+  log_out_instant:
+    enabled: false
+    authenticity_statuses:
+      - "unauthorized"
+      - "authorized"
+    methods:
+      - "GET"
+      - "POST"
+    endpoints:
+      - "/log_out_instant"
+
+
+  request_password_recovery:
     enabled: false
     authenticity_statuses:
       - "unauthenticated"
@@ -181,10 +181,10 @@ pages:
       - "GET"
       - "POST"
     endpoints:
-      - "/requestPasswordRecovery"
+      - "/request_password_recovery"
 
 
-  resetPassword:
+  reset_password:
     enabled: false
     authenticity_statuses:
       - "unauthenticated"
@@ -192,7 +192,7 @@ pages:
       - "GET"
       - "POST"
     endpoints:
-      - "/resetPassword"
+      - "/reset_password"
     urlArgs:
       - "TOKEN"
 
@@ -215,9 +215,9 @@ menu:
   enabled: true
   menus:
     - page: "home"
-    - page: "signUp"
-    - page: "logIn"
-    - page: "logOut"
+    - page: "sign_up"
+    - page: "log_in"
+    - page: "log_out"
 
 
 ######### Username

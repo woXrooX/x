@@ -7,10 +7,10 @@ from python.modules.MySQL import MySQL
 from python.modules.Globals import Globals
 
 @Page.build()
-def requestPasswordRecovery(request):
+def request_password_recovery(request):
 	if request.method == "POST":
 		# unknown_error
-		if request.form["for"] != "requestPasswordRecovery": return response(type="warning", message="unknown_error")
+		if request.form["for"] != "request_password_recovery": return response(type="warning", message="unknown_error")
 
 		# eMail_empty
 		if "eMail" not in request.form or not request.form["eMail"]: return response(type="error", message="eMail_empty", field="eMail")
@@ -53,7 +53,7 @@ def requestPasswordRecovery(request):
 
 			<p>We have received your request to reset your password. Please click the link below to set a new password for your account.<p>
 
-			<p>Password recovery link: {request.url_root}resetPassword/{token}</p>
+			<p>Password recovery link: {request.url_root}reset_password/{token}</p>
 
 			<p>If you did not request a password reset, please ignore this email. Your account will remain secure.</p>
 

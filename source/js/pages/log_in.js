@@ -22,8 +22,8 @@ export default function main(){
 					<p for="log_in"></p>
 				</label>
 
-				<a href="/signUp" class="text-align-center text-size-0-7">${window.Lang.use("dont_have_account_go_to_sign_up")}</a>
-				<a href="/requestPasswordRecovery" class="text-align-center text-size-0-7">${Lang.use("cannot_remember_password")}</a>
+				<a href="/sign_up" class="text-align-center text-size-0-7">${window.Lang.use("dont_have_account_go_to_sign_up")}</a>
+				<a href="/request_password_recovery" class="text-align-center text-size-0-7">${Lang.use("cannot_remember_password")}</a>
 
 			</form>
 		</container>

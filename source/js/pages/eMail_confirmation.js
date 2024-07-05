@@ -19,7 +19,7 @@ export default function main(){
 
 					<label>
 						<input class="btn btn-primary" type='submit' name='verify' value='${window.Lang.use("verify_eMail")}'>
-						<p for='eMailConfirmation'></p>
+						<p for='eMail_confirmation'></p>
 					</label>
 
 				</form>
