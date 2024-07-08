@@ -11,7 +11,7 @@ export class MarkerClusterer{
 
 	static begin_clustering(map_object, markers){
 		if(MarkerClusterer.#initialized !== true) return;
-		MarkerClusterer.#clusterer_object = new markerClusterer.MarkerClusterer({markers: markers, map: map_object, markerClustererOptions: markerClustererOptions});
+		MarkerClusterer.#clusterer_object = new markerClusterer.MarkerClusterer({markers: markers, map: map_object});
 	}
 
 	static remove_all_markers(){
