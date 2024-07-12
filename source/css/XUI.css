@@ -1289,10 +1289,10 @@
 		@media (width <= 600px) {
 			row{
 				flex-direction: column;
-				width: 100% !important;
+				width: 100%;
 			}
 			column{
-				width: 100% !important;
+				width: 100%;
 			}
 		}
 	}
