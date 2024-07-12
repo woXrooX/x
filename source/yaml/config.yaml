@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.189.1.0008"
+version: "0.189.1.0009"
 
 
 ######### Flask
@@ -193,7 +193,7 @@ pages:
       - "POST"
     endpoints:
       - "/reset_password"
-    urlArgs:
+    url_args:
       - "TOKEN"
 
 

@@ -1,17 +1,17 @@
 "use strict";
 
 export default class Router{
-	static currentPage = {
+	static current_page = {
 		"name": null,
 		"endpoint": null,
 		"full_URL": null,
-		"urlArgs": {}
+		"url_args": {}
 	}
 
 	static async handle(){
 		// Check If App Is Down If So Stop Handling Set app_is_down As Current Page
 		if("app_is_down" in window.CONF["tools"]){
-			Router.currentPage.name = "app_is_down";
+			Router.current_page.name = "app_is_down";
 			Router.#loadPageFile();
 			return;
 		}
@@ -32,17 +32,17 @@ export default class Router{
 			// Window Path Name
 			let pathname = window.location.pathname;
 
-			if("urlArgs" in window.CONF.pages[page]){
+			if("url_args" in window.CONF.pages[page]){
 				//// NOTE: Order Matters In This Scope
 
 				// Create array of URL arguments from the "pathname"
-				const args = pathname.split('/').splice(-window.CONF.pages[page].urlArgs.length);
+				const args = pathname.split('/').splice(-window.CONF.pages[page].url_args.length);
 
-				// Assign key value pairs of URL arguments inside "Router.currentPage.urlArgs"
-				for(let index = 0; index < args.length; index++) Router.currentPage.urlArgs[window.CONF.pages[page].urlArgs[index]] = args[index];
+				// Assign key value pairs of URL arguments inside "Router.current_page.url_args"
+				for(let index = 0; index < args.length; index++) Router.current_page.url_args[window.CONF.pages[page].url_args[index]] = args[index];
 
 				// Extract URL arguments from the "pathname"
-				pathname = pathname.split('/').slice(0, -window.CONF.pages[page].urlArgs.length).join('/');
+				pathname = pathname.split('/').slice(0, -window.CONF.pages[page].url_args.length).join('/');
 			}
 
 			// Endpoints
@@ -55,11 +55,11 @@ export default class Router{
 					// NOTE: endpoint should be unique.
 					// Page a and page b can not have the same endpoint. It may seem working but there will be bugs. It will make return false the expression below in rare cases.
 					// If yes then exit this method
-					if(Router.currentPage.full_URL === window.location.href) return;
+					if(Router.current_page.full_URL === window.location.href) return;
 
-					Router.currentPage.name = page;
-					Router.currentPage.endpoint = endpoint;
-					Router.currentPage.full_URL = window.location.href;
+					Router.current_page.name = page;
+					Router.current_page.endpoint = endpoint;
+					Router.current_page.full_URL = window.location.href;
 
 					// Break Out The Loops
 					break loopPages;
@@ -67,14 +67,14 @@ export default class Router{
 		}
 
 		// If Still No Endpoint Matched Then Set It To "404"
-		if(Router.currentPage.name === null) Router.currentPage.name = "404";
+		if(Router.current_page.name === null) Router.current_page.name = "404";
 
 		// Load Page File
 		Router.#loadPageFile();
 	}
 
 	static async #loadPageFile(){
-		window.Log.info(`Page file is loading: ${Router.currentPage.name}.js`);
+		window.Log.info(`Page file is loading: ${Router.current_page.name}.js`);
 
 		try{
 			// Start Loading Effects
@@ -82,7 +82,7 @@ export default class Router{
 			window.Main.animationStart();
 
 			// Load The Page
-			await window.DOM.set_page(await import(`/js/pages/${Router.currentPage.name}.js`));
+			await window.DOM.set_page(await import(`/js/pages/${Router.current_page.name}.js`));
 		}catch(error){
 			Log.line();
 			Log.error(error);
@@ -108,15 +108,15 @@ export default class Router{
 	static errorHandlers(){
 		switch(window.location.pathname){
 			case "/400":
-				Router.currentPage.name = "400";
+				Router.current_page.name = "400";
 				return true;
 
 			case "/403":
-				Router.currentPage.name = "403";
+				Router.current_page.name = "403";
 				return;
 
 			case "/404":
-				Router.currentPage.name = "404";
+				Router.current_page.name = "404";
 				return true;
 
 			default: return false;
