@@ -211,6 +211,17 @@ CREATE TABLE IF NOT EXISTS `users_occupations` (
 -- ------------------------------------
 -- ------------------------------------ Notifications
 -- ------------------------------------
+\! echo "-------------------------- notification_events";
+CREATE TABLE IF NOT EXISTS `notification_events` (
+	`id` INT NOT NULL UNIQUE auto_increment,
+	`name` VARCHAR(20) NOT NULL UNIQUE,
+	PRIMARY KEY (`id`)
+);
+-- INSERT INTO notification_events (id, name)
+-- 	VALUES
+-- 		(1, "event_name_A"),
+-- 		(2, "event_name_B")
+-- ;
 
 \! echo "-------------------------- notification_types";
 CREATE TABLE IF NOT EXISTS `notification_types` (
@@ -231,16 +242,26 @@ INSERT INTO notification_types (id, name)
 \! echo "-------------------------- notifications";
 CREATE TABLE IF NOT EXISTS `notifications` (
 	`id` INT NOT NULL UNIQUE auto_increment,
+
+	-- NULL = System
+	`sender` INT NULL,
 	`recipient` INT NOT NULL,
-	`content` VARCHAR(5000) NOT NULL,
+	`content` VARCHAR(5000) NULL,
 	`seen` BIT(1) NOT NULL DEFAULT 0,
-	`type` INT NOT NULL,
+
+	`event` INT NULL,
+
+	-- NULL = No type
+	`type` INT NULL,
 
 	`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
+	FOREIGN KEY (`sender`) REFERENCES users(`id`),
 	FOREIGN KEY (`recipient`) REFERENCES users(`id`) ON DELETE CASCADE,
-	FOREIGN KEY (`type`) REFERENCES notification_types(`id`) ON DELETE CASCADE,
+
+	FOREIGN KEY (`event`) REFERENCES notification_events(`id`),
+	FOREIGN KEY (`type`) REFERENCES notification_types(`id`),
 
 	PRIMARY KEY (`id`)
 );
