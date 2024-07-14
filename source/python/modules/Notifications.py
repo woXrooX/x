@@ -33,7 +33,7 @@ if __name__ != "__main__":
 					FROM notifications
 					JOIN users ON users.id = notifications.sender
 					LEFT JOIN notification_events ON notification_events.id = notifications.event
-					JOIN notification_types ON notification_types.id = notifications.type
+					LEFT JOIN notification_types ON notification_types.id = notifications.type
 					WHERE recipient=%s
 					ORDER BY timestamp DESC;
 				""",
