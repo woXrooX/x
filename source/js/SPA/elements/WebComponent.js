@@ -130,4 +130,4 @@ export default class WC extends HTMLElement{
 window.customElements.define('x-wc', WC);
 
 // Make WC Usable W/O Importing It
-window.WC = WC;
+window.x["WC"] = WC;
