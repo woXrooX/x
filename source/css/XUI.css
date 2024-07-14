@@ -1722,6 +1722,7 @@
 			.max-h-2500px{max-height: 2500px;}
 
 			/* min-height px */
+			.min-h-50px{min-height: 50px;}
 			.min-h-100px{min-height: 100px;}
 			.min-h-200px{min-height: 200px;}
 			.min-h-250px{min-height: 250px;}
@@ -1914,6 +1915,7 @@
 				.s-max-h-2500px{max-height: 2500px;}
 
 				/* min-height px */
+				.s-min-h-50px{min-height: 50px;}
 				.s-min-h-100px{min-height: 100px;}
 				.s-min-h-200px{min-height: 200px;}
 				.s-min-h-250px{min-height: 250px;}
