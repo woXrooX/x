@@ -29,7 +29,7 @@ export async function after(){
 		}
 
 		let HTML = "";
-		for(const notification of notifications) HTML += Notifications_module.NCG(notification);
+		for(const notification of notifications) HTML += Notifications_module.notification_card_generator(notification);
 
 		return HTML;
 	}

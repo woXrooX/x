@@ -9,14 +9,26 @@ export async function after(){
 	container.innerHTML = await build_notification_HTML();
 	Loading.on_element(container);
 
-	async function build_notifications_HTML(){
-		let notification = await window.bridge({for: "get_all_notifications"});
+	async function build_notification_HTML(){
+		let notification = await window.bridge({for: "get_notification"});
 		if("data" in notification) notification = notification["data"];
 		else return `<p class="w-100 text-size-0-8 surface-info p-1">${Lang.use("no_notification")}</p>`;
 
-		let HTML = "";
-		for(const notification of notifications) HTML += Notifications_module.NCG(notification);
+		let Notifications_module;
 
-		return HTML;
+		try{
+			Notifications_module = await import("/js/modules/Notifications.js");
+		}catch(error){
+			Log.line();
+			Log.error(error);
+			Log.error(error.name);
+			Log.error(error.stack);
+			Log.line();
+
+			return `<p class="w-100 text-size-0-8 surface-error p-1">${Lang.use("unknown_error")}</p>`;
+		}
+		console.log(Notifications_module);
+
+		return Notifications_module.notification_content_generator(notification);
 	}
 }
