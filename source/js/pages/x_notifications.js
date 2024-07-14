@@ -18,9 +18,7 @@ export async function after(){
 		if("data" in notifications) notifications = notifications["data"];
 		else return `<p class="w-100 text-size-0-8 surface-info p-1">${Lang.use("notification_does_not_exist")}</p>`;
 
-		let HTML = "";
-		let content = "";
-		let surface = "";
+		let HTML, content, surface;
 		for(const notification of notifications){
 			!!notification['event'] ? content = `@${notification['sender']} ${Lang.use(notification['event'])}` : content = notification['content'];
 			!!notification['type'] ? surface = `surface-${notification['type']}` : surface = 'bg-2 bs-default';
