@@ -10,7 +10,9 @@ export default class Toast extends HTMLElement{
 		"success": "done_circle",
 		"info": "info_circle",
 		"warning": "warning_triangle",
-		"error": "error_hexagon"
+		"important": "important",
+		"error": "error_hexagon",
+		"urgent": "hourglass_over"
 	}
 
 	/////////// APIs
