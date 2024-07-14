@@ -41,7 +41,6 @@ export default class Offline extends HTMLElement{
 		`;
 
 		this.dialog = this.shadow.querySelector("dialog");
-		console.log(this.dialog);
 
 		window.addEventListener('online', this.#hide);
 		window.addEventListener('offline', this.#show);
