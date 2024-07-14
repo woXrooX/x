@@ -10,7 +10,7 @@ export async function after(){
 	const container = document.querySelector("container");
 
 	Loading.on_element(container);
-	container.innerHTML += await notifications_HTML();
+	container.innerHTML = await notifications_HTML();
 	Loading.on_element(container);
 
 	async function notifications_HTML(){
@@ -19,13 +19,18 @@ export async function after(){
 		else return `<p class="w-100 text-size-0-8 surface-info p-1">${Lang.use("notification_does_not_exist")}</p>`;
 
 		let HTML = "";
-		for(const notification of notifications)
+		let content = "";
+		for(const notification of notifications){
+			!!notification['event'] ? content = `@${notification['sender']} ${Lang.use(notification['event'])}` : content = notification['content'];
+
 			HTML += `
 				<a href="/x/notification/${notification["id"]}" class="w-100 p-2 d-flex flex-column flex-y-end surface-${notification['type']}">
-					<p class="w-100">${notification['content']}</p>
+					<p class="w-100">${content}</p>
 					<p class="text-size-0-6">${TTHR(notification["timestamp"])}</p>
 				</a>
 			`;
+		}
+
 		return HTML;
 	}
 }
