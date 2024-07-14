@@ -44,4 +44,5 @@ source/python/pages/*.py
 !source/python/pages/reset_password.py
 !source/python/pages/sign_up.py
 !source/python/pages/x_root.py
+!source/python/pages/x_notifications.py
 
