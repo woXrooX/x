@@ -27,8 +27,12 @@ if __name__ != "__main__":
 				sql="""
 					SELECT
 						notifications.*,
+						users.username as sender,
+						notification_events.name as event,
 						notification_types.name as type
 					FROM notifications
+					JOIN users ON users.id = notifications.sender
+					LEFT JOIN notification_events ON notification_events.id = notifications.event
 					JOIN notification_types ON notification_types.id = notifications.type
 					WHERE recipient=%s
 					ORDER BY timestamp DESC;
