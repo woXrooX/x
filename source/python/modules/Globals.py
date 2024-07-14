@@ -58,6 +58,7 @@ if __name__ != "__main__":
 					"request_password_recovery.py",
 					"reset_password.py",
 					"sign_up.py",
+					"x_notifications.py",
 					"x_root.py"
 				]
 			}

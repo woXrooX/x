@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.190.0.0004"
+version: "0.190.0.0005"
 
 
 ######### Flask
@@ -195,6 +195,18 @@ pages:
       - "/reset_password"
     url_args:
       - "TOKEN"
+
+
+  x_notifications:
+    enabled: false
+    authenticity_statuses:
+      - "unauthorized"
+      - "authorized"
+    methods:
+      - "GET"
+      - "POST"
+    endpoints:
+      - "/x/notifications"
 
 
   x_root:

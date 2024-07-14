@@ -269,6 +269,16 @@
 		"ru": "Не найдена",
 		"uz": "Topilmadi"
 	},
+	"no_notifications": {
+		"en": "No notifications",
+		"ru": "Нет уведомлений",
+		"uz": "Bildirishnomalar yo`q"
+	},
+	"notifications": {
+		"en": "Notifications",
+		"ru": "Уведомления",
+		"uz": "Bildirishnomalar"
+	},
 	"password": {
 		"en": "Password",
 		"ru": "Пароль",
