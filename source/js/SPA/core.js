@@ -33,6 +33,7 @@ import Modal from "./elements/modal.js";
 import Toast from "./elements/toast.js";
 import Share from "./elements/share.js"; // Share depends on modal
 import Offline from "./elements/Offline.js";
+import Notification_Bell from "./elements/Notification_Bell.js";
 
 import Table from "./elements/table.js";
 import Tooltip from "./elements/tooltip.js";
