@@ -196,6 +196,18 @@ pages:
     url_args:
       - "TOKEN"
 
+  x_notification:
+    enabled: false
+    authenticity_statuses:
+      - "unauthorized"
+      - "authorized"
+    methods:
+      - "GET"
+      - "POST"
+    endpoints:
+      - "/x/notification"
+    url_args:
+      - "ID"
 
   x_notifications:
     enabled: false
