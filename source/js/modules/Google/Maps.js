@@ -28,11 +28,10 @@ export class Maps{
 		return Maps.#init_script();
 	}
 
-	static async put_marker(location_text, pin_styles = {}, title = null, info_window_content = null, on_click_exec_func = null){
+	static async put_marker(lat, lng, pin_styles = {}, title = null, info_window_content = null, on_click_exec_func = null){
 		if(Maps.#initialized === false) return false;
-		if(!!location_text === false || typeof location_text !== "string") return false;
 
-		const geocode = await Maps.text_to_geocode(location_text);
+		const geocode = {"lat": lat, "lng": lng};
 
 		const pin = new google.maps.marker.PinElement(pin_styles);
 
