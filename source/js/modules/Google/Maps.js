@@ -127,8 +127,6 @@ export class Maps{
 
 	// pos = {lat: x.x, lng: x.x}
 	static async distance_between(pos_one, pos_two){
-		pos_one = pos_one;
-		pos_two = pos_two;
 		const R = 6371; // Radius of the Earth in km
 
 		const d_lat = (pos_one["lat"] - pos_two["lat"]) * Math.PI / 180;
