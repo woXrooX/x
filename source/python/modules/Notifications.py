@@ -21,8 +21,6 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def get_all(recipient = None):
-			if int(recipient) <= 0: return False
-
 			data = MySQL.execute(
 				sql="""
 					SELECT
@@ -32,7 +30,7 @@ if __name__ != "__main__":
 					FROM notifications
 					LEFT JOIN notification_events ON notification_events.id = notifications.event
 					LEFT JOIN notification_types ON notification_types.id = notifications.type
-					WHERE recipient=%s
+					WHERE notifications.recipient=%s
 					ORDER BY timestamp DESC;
 				""",
 				params=[recipient]
@@ -40,13 +38,25 @@ if __name__ != "__main__":
 			return data
 
 		@staticmethod
-		def set_seen(id, recipient):
-			if int(recipient) <= 0: return False
-
+		def get_one(ID):
 			data = MySQL.execute(
-				sql="UPDATE notifications SET seen=1 WHERE id=%s AND recipient=%s;",
-				params=[id, recipient],
-				commit=True
+				sql="""
+					SELECT
+						notifications.*,
+						notification_events.name as event,
+						notification_types.name as type
+					FROM notifications
+					LEFT JOIN notification_events ON notification_events.id = notifications.event
+					LEFT JOIN notification_types ON notification_types.id = notifications.type
+					WHERE notifications.id = %s AND notifications.recipient=%s LIMIT 1;
+				""",
+				params=[ID, session['user']['id']],
+				fetchOne=True
 			)
+			return data
+
+		@staticmethod
+		def set_seen(ID):
+			data = MySQL.execute("UPDATE notifications SET seen=1 WHERE id=%s;", [ID], commit=True)
 			if data is False: return False
 			return True
