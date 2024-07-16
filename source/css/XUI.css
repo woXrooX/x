@@ -1238,6 +1238,8 @@
 			border-left: solid 5px var(--color-urgent);
 			box-shadow: var(--shadow);
 		}
+
+		.grayscale-95{filter: grayscale(95%);}
 	}
 
 	@layer backgrounds{
