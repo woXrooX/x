@@ -63,6 +63,11 @@ if Globals.CONF.get("tools", {}).get("debug") is True: app.secret_key = b'12345'
 else: app.secret_key = os.urandom(24)
 
 
+#################################################### Keep session
+from datetime import timedelta
+app.permanent_session_lifetime = timedelta(days=30)
+
+
 #################################################### routeGuard
 from python.modules.routeGuard import routeGuard, routeLogs
 
