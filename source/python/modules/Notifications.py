@@ -73,3 +73,9 @@ if __name__ != "__main__":
 			data = MySQL.execute("UPDATE notifications SET seen=1 WHERE id=%s;", [ID], commit=True)
 			if data is False: return False
 			return True
+
+		@staticmethod
+		def delete(ID):
+			data = MySQL.execute("DELETE FROM notifications WHERE id=%s AND recipient=%s;", [ID, session["user"]["id"]], commit=True)
+			if data is False: return False
+			return True
