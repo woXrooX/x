@@ -27,15 +27,9 @@ export default class XRequest{
 
 		if("updateConf" in response["actions"]) window.conf = response["actions"]["updateConf"];
 
-		if("setSessionUser" in response["actions"]){
-			window.session["user"] = response["actions"]["setSessionUser"];
-			x.CSS.detectColorMode();
-		}
+		if("setSessionUser" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change", {detail: response["actions"]["setSessionUser"]}));
 
-		if("deleteSessionUser" in response["actions"]){
-			delete window.session["user"];
-			x.CSS.detectColorMode();
-		}
+		if("deleteSessionUser" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change"));
 
 		if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));
 

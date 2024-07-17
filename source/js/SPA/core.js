@@ -47,14 +47,15 @@ export default class Core{
 	static {
 		// Try To Get Initial Data Then Init The Methods
 		Core.#get_initial_data()
-			.then(()=>{
-				Core.#init();
-				Core.#onLoad();
-				Core.#onUrlChange();
-				Core.#onHashChange();
-				Core.#onHistoryButtonClicked();
-				Core.#onDomChange();
-				Core.#observeMutations();
+			.then(async ()=>{
+				await Core.#init();
+				Core.#on_load();
+				Core.#on_url_change();
+				Core.#on_hash_change();
+				Core.#on_history_button_clicked();
+				Core.#on_dom_change();
+				await Core.#on_user_session_change();
+				Core.#observe_mutations();
 			});
 	}
 
@@ -94,11 +95,10 @@ export default class Core{
 		Header.init();
 		Footer.init();
 		Router.handle();
-		Notification.update_unseen_count();
 	}
 
 	/////// Event Handlers
-	static #onLoad(){
+	static #on_load(){
 		// Works On The First Visit
 		document.addEventListener('readystatechange', ()=>{
 			if(event.target.readyState === 'loading') return;
@@ -106,45 +106,45 @@ export default class Core{
 			// if(event.target.readyState === 'complete');
 
 			// window.dispatchEvent(new Event('load'));
-			Log.info("onLoad");
+			Log.info("on_load");
 
 			Router.handle();
 			Menu.set_active();
 		});
 	}
 
-	static #onUrlChange(){
+	static #on_url_change(){
 		window.addEventListener('locationchange', ()=>{
 			// window.dispatchEvent(new Event('locationchange'));
-			Log.info("Core.#onUrlChange()");
+			Log.info("Core.#on_url_change()");
 
 			Router.handle();
 			Menu.set_active();
 		});
 	}
 
-	static #onHashChange(){
+	static #on_hash_change(){
 		window.addEventListener('hashchange', ()=>{
 			// window.dispatchEvent(new Event('hashchange'));
-			Log.info("Core.#onHashChange()");
+			Log.info("Core.#on_hash_change()");
 		});
 	}
 
-	static #onHistoryButtonClicked(){
+	static #on_history_button_clicked(){
 		window.addEventListener('popstate', ()=>{
 			// window.dispatchEvent(new Event('popstate'));
-			Log.info("Core.#onHistoryButtonClicked()");
+			Log.info("Core.#on_history_button_clicked()");
 
 			Router.handle();
 			Menu.set_active();
 		});
 	}
 
-	static #onDomChange(){
+	static #on_dom_change(){
 		window.addEventListener('domChange', ()=>{
 			// window.dispatchEvent(new CustomEvent('domChange'));
 			// window.dispatchEvent(new CustomEvent("domChange", {detail:"menu"}));
-			Log.info("Core.#onDomChange()");
+			Log.info("Core.#on_dom_change()");
 
 			// Targets sample event.detail = ["menu", "main"...]
 			// If has target(s) then update the dom. body > target
@@ -152,7 +152,29 @@ export default class Core{
 		});
 	}
 
-	static #observeMutations(){
+	static async #on_user_session_change(){
+		window.addEventListener('user_session_change', async ()=>{
+			// window.dispatchEvent(new CustomEvent('user_session_change'));
+			// window.dispatchEvent(new CustomEvent("user_session_change", {detail:"user_session_data"}));
+			Log.info("Core.#on_user_session_change()");
+
+			// User session on
+			if("detail" in event && event.detail !== null){
+				window.session["user"] = event.detail;
+				await x.Notification.init();
+			}
+
+			// User session off
+			else{
+				delete window.session["user"];
+				clearInterval(x.Notification.poll_interval_func);
+			}
+
+			x.CSS.detectColorMode();
+		});
+	}
+
+	static #observe_mutations(){
 		// Callback function to execute when mutations are observed
 		const callback = (mutationList, observer)=>{
 			// Ensure that any methods requiring execution upon a DOM change are encapsulated within the for loop provided below.

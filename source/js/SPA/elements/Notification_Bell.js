@@ -1,6 +1,9 @@
 export default class Notification_Bell extends HTMLElement {
 	constructor(){
 		super();
+
+		if(!("user" in window.session)) return;
+
 		this.attachShadow({ mode: 'open' });
 
 		this.shadowRoot.innerHTML = `
@@ -25,7 +28,7 @@ export default class Notification_Bell extends HTMLElement {
 						background-color: rgba(255, 0, 0, 0.7);
 
 						color: white;
-						font-size: 0.4em;
+						font-size: 0.5em;
 						text-align: center;
 
 						padding: 3px;
@@ -41,12 +44,20 @@ export default class Notification_Bell extends HTMLElement {
 			</style>
 		`;
 
-		this.addEventListener("click", ()=> window.Hyperlink.locate("/x/notifications"));
+		this.addEventListener("click", ()=> Hyperlink.locate("/x/notifications"));
 
 		this.#update_unseen_count_HTML();
 	}
 
-	async #update_unseen_count_HTML(){ this.shadowRoot.querySelector("main > span").innerHTML = window.x.Notification.unseen_count || ''; }
+	async #update_unseen_count_HTML(){
+		await x.Notification.update_unseen_count();
+
+		this.shadowRoot.querySelector("main > span").innerHTML = x.Notification.unseen_count || '';
+
+		setInterval(()=>{
+			this.shadowRoot.querySelector("main > span").innerHTML = x.Notification.unseen_count || '';
+		}, x.Notification.poll_interval_duration);
+	}
 }
 
 customElements.define('x-notification-bell', Notification_Bell);

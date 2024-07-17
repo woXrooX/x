@@ -137,20 +137,10 @@ export default class Form{
 				if("updateConf" in response["actions"]) window.conf = response["actions"]["updateConf"];
 
 				// Set window.session["user"]
-				if("setSessionUser" in response["actions"]){
-					window.session["user"] = response["actions"]["setSessionUser"];
-
-					// Update Color Mode: User Dependent
-					x.CSS.detectColorMode();
-				}
+				if("setSessionUser" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change", {detail: response["actions"]["setSessionUser"]}));
 
 				// Delete window.session["user"]
-				if("deleteSessionUser" in response["actions"]){
-					delete window.session["user"];
-
-					// Update Color Mode: User Independent
-					x.CSS.detectColorMode();
-				}
+				if("deleteSessionUser" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change"));
 
 				// Dom Update
 				if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));
