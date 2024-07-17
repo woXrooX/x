@@ -11,6 +11,7 @@ def log_out(request):
 
 		# Remove User From Session
 		session.pop('user')
+		session.permanent = False
 
 		try:
 			from python.modules.onLogOut import onLogOut
