@@ -27,6 +27,8 @@ import Loading from "./loading.js";
 import Menu from "./menu.js";
 import Form from "./form.js";
 
+import Notification from "./notification.js";
+
 //// Custom Elements (In docs we call these Built-In X-Elements)
 import XSVG from "./elements/XSVG.js";
 import Modal from "./elements/modal.js";
@@ -92,6 +94,7 @@ export default class Core{
 		Header.init();
 		Footer.init();
 		Router.handle();
+		Notification.update_unseen_count();
 	}
 
 	/////// Event Handlers

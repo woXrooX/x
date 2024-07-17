@@ -3,6 +3,7 @@ from main import session
 from python.modules.Page import Page
 from python.modules.response import response
 from python.modules.Notifications import Notifications
+import time
 
 @Page.build()
 def x_notifications(request):
@@ -13,3 +14,10 @@ def x_notifications(request):
 				if data is False: return response(type="error", message="database_error")
 
 				return response(type="success", message="success", data=data, defaultSerializerFunc=str)
+
+			if request.get_json()["for"] == "get_unseen_count":
+				data = Notifications.get_unseen_count(session['user']['id'])
+				if data is False: return response(type="error", message="database_error")
+				if "unseen_notifications_count" in data: return response(type="success", message="success", data=data["unseen_notifications_count"])
+				return response(type="success", message="success")
+

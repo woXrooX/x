@@ -1,21 +1,20 @@
 export default class Notification_Bell extends HTMLElement {
 	constructor(){
 		super();
-
 		this.attachShadow({ mode: 'open' });
 
 		this.shadowRoot.innerHTML = `
-			<span>
+			<main>
 				<x-svg name="notifications_bell"></x-svg>
-				<span>90</span>
-			</span>
+				<span></span>
+			</main>
 			<style>
 				:host{
 					width: 1em;
 					height: 1em;
 					display: inline-block;
 				}
-				span{
+				main{
 					display: inline-grid;
 
 					& > x-svg{
@@ -43,7 +42,11 @@ export default class Notification_Bell extends HTMLElement {
 		`;
 
 		this.addEventListener("click", ()=> window.Hyperlink.locate("/x/notifications"));
+
+		this.#update_unseen_count_HTML();
 	}
+
+	async #update_unseen_count_HTML(){ this.shadowRoot.querySelector("main > span").innerHTML = window.x.Notification.unseen_count || ''; }
 }
 
 customElements.define('x-notification-bell', Notification_Bell);
