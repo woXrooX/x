@@ -6,14 +6,6 @@ export default class Toast extends HTMLElement{
 	static #selector = "body > toasts";
 	static #autoDismissTimer = 5000;
 	static #template = document.createElement("template");
-	static #ICONS = {
-		"success": "done_circle",
-		"info": "info_circle",
-		"warning": "warning_triangle",
-		"important": "important",
-		"error": "error_hexagon",
-		"urgent": "hourglass_over"
-	}
 
 	/////////// APIs
 	static new(type, content){
@@ -70,7 +62,7 @@ export default class Toast extends HTMLElement{
 		Type: {
 			this.typeName = "error";
 
-			if(Object.keys(Toast.#ICONS).includes(this.getAttribute("type"))) this.typeName = this.getAttribute("type");
+			if(window.x.Notification.types.includes(this.getAttribute("type"))) this.typeName = this.getAttribute("type");
 			else this.textContent = `Toast.constructor(): Invalid type "${this.getAttribute('type')}"`;
 		}
 
@@ -146,7 +138,7 @@ export default class Toast extends HTMLElement{
 				<main>
 					<x-svg
 						for="toast-type-svg"
-						name="${Toast.#ICONS[this.typeName]}"
+						name="type_${this.typeName}"
 						color="var(--color-${this.typeName})"
 					></x-svg>
 					<toast-type-name>${window.Lang.use(this.typeName)}</toast-type-name>

@@ -95,7 +95,7 @@ export default class Router{
 
 			window.Header.handle();
 
-			window.DOM.render(DOM.render(Main.situationalContent("error", error.name, error.stack)));
+			window.DOM.render(DOM.render(Main.situational_content("error", error.name, error.stack)));
 
 			window.Footer.handle();
 		}finally{

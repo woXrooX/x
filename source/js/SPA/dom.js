@@ -33,7 +33,7 @@ export default class DOM{
 
 		// Default/Main - Render the main function
 		if(typeof DOM.#page.default === "function") await DOM.render(await DOM.#page.default());
-		else await DOM.render(Main.situationalContent("error", "ERROR", "DOM.life_cycle() -> No default function defined!"));
+		else await DOM.render(Main.situational_content("error", "ERROR", "DOM.life_cycle() -> No default function defined!"));
 
 		// Footer
 		await window.Footer.handle(DOM.#page.footer);
