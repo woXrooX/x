@@ -1,7 +1,6 @@
 export default class Notification_Bell extends HTMLElement {
 	constructor(){
 		super();
-
 		this.attachShadow({ mode: 'open' });
 
 		this.shadowRoot.innerHTML = `
@@ -43,17 +42,19 @@ export default class Notification_Bell extends HTMLElement {
 		`;
 
 		this.addEventListener("click", ()=> window.Hyperlink.locate("/x/notifications"));
-		this.get_all_unseen_notifications();
+		this.get_all_unseen_notifications_count();
 	}
-
-	async get_all_unseen_notifications (){
+	
+	async get_all_unseen_notifications_count (){
 		let span_HTML = this.shadowRoot.querySelector("span > span");
-
-		let notifications = await window.bridge({for: "get_all_unseen_notifications"}, "/x/notifications");
+		
+		let notifications = await window.bridge({for: "get_all_unseen_notifications_count"}, "/x/notifications");
 		if(!("data" in notifications)) return;
 		notifications = notifications["data"];
 		
 		span_HTML.innerHTML = notifications[0]["unseen_notifications_count"];
+
+		if(notifications[0]["unseen_notifications_count"] == 0) span_HTML.innerHTML = ''; 
 	}
 }
 

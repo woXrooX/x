@@ -3,6 +3,7 @@ from main import session
 from python.modules.Page import Page
 from python.modules.response import response
 from python.modules.Notifications import Notifications
+import time
 
 @Page.build()
 def x_notifications(request):
@@ -19,3 +20,4 @@ def x_notifications(request):
 				if data is False: return response(type="error", message="database_error")
 				
 				return response(type="success", message="success", data=data)
+
