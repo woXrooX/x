@@ -1,6 +1,6 @@
 "use strict";
 
-export const TITLE = window.Lang.use(["eMail_confirmation"]);
+export const TITLE = window.Lang.use("eMail_confirmation");
 
 export default function main(){
 	return `
@@ -13,20 +13,20 @@ export default function main(){
 
 
 					<label>
-						<p for='verificationCode'></p>
-						<input type='number' name='verificationCode'>
+						<p for="verification_code"></p>
+						<input type="number" name="verification_code" placeholder="Enter code">
 					</label>
 
 					<label>
-						<input class="btn btn-primary" type='submit' name='verify' value='${window.Lang.use("verify_eMail")}'>
-						<p for='eMail_confirmation'></p>
+						<input class="btn btn-primary" type="submit" name="verify" value="${window.Lang.use("verify_eMail")}">
+						<p for="eMail_confirmation"></p>
 					</label>
 
 				</form>
 
 				<p class="text-align-center text-size-0-7">
 					<warning>Warning:</warning>
-					Kindly ensure to review your spam folders too.
+					Check your spam folder if not received.
 				</p>
 
 			</column>

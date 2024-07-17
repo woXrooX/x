@@ -110,9 +110,9 @@
 		"uz": "Elektron pochtani tasdiqlash kodi kiritilmadi!"
 	},
 	"eMail_confirmation_code_has_been_sent": {
-		"en": "An email with a verification code has been sent to your email",
-		"ru": "На вашу электронную почту отправлено письмо с кодом подтверждения",
-		"uz": "Sizning elektron pochtangizga tasdiqlash kodi yuborildi"
+		"en": "Verification code sent to your email",
+		"ru": "Код подтверждения отправлен на вашу электронную почту",
+		"uz": "Elektron pochtangizga tasdiqlash kodi yuborildi"
 	},
 	"eMail_empty": {
 		"en": "Email address is empty",

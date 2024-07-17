@@ -11,18 +11,18 @@ def eMail_confirmation(request):
 		# Check If "for" Meant To Go To Here
 		if request.form["for"] != "eMail_confirmation": return response(type="warning", message="unknown_error")
 
-		# Check For Existentance Of "verificationCode"
+		# Check For Existentance Of "verification_code"
 		if(
-			# If No "verificationCode" Key In Request
-			"verificationCode" not in request.form or
+			# If No "verification_code" Key In Request
+			"verification_code" not in request.form or
 
 			# Check If Verification Code Is Empty
-			"verificationCode" in request.form and request.form["verificationCode"] == ''
+			"verification_code" in request.form and request.form["verification_code"] == ''
 
-		): return response(type="warning", message="eMail_confirmation_code_empty", field="verificationCode")
+		): return response(type="warning", message="eMail_confirmation_code_empty", field="verification_code")
 
 		# Check If Verification Code Does Not Match Then Increment The Counter
-		if int(request.form["verificationCode"]) != session["user"]["eMail_verification_code"]:
+		if int(request.form["verification_code"]) != session["user"]["eMail_verification_code"]:
 			data = MySQL.execute(
 				sql="""
 					UPDATE users SET
@@ -38,11 +38,11 @@ def eMail_confirmation(request):
 			# Update The session["user"] After The Changes To The Database
 			User.update_session()
 
-			return response(type="warning", message="eMail_confirmation_code_did_not_match", field="verificationCode")
+			return response(type="warning", message="eMail_confirmation_code_did_not_match", field="verification_code")
 
 
 		# Success | Match
-		if int(request.form["verificationCode"]) == session["user"]["eMail_verification_code"]:
+		if int(request.form["verification_code"]) == session["user"]["eMail_verification_code"]:
 			data = MySQL.execute(
 				sql="""
 					UPDATE users SET
