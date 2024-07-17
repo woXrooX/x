@@ -36,7 +36,22 @@ if __name__ != "__main__":
 				params=[recipient]
 			)
 			return data
+		
+		@staticmethod
+		def get_all_unseen_count(recipient = None):
+			if int(recipient) <= 0: return False
 
+			data = MySQL.execute(
+				sql="""
+					SELECT
+						COUNT(*) AS unseen_notifications_count
+					FROM notifications
+					WHERE recipient=%s AND seen=0;
+				""",
+				params=[recipient]
+			)
+			return data
+		
 		@staticmethod
 		def get_one(ID):
 			data = MySQL.execute(

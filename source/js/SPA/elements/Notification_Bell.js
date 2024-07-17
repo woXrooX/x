@@ -7,7 +7,7 @@ export default class Notification_Bell extends HTMLElement {
 		this.shadowRoot.innerHTML = `
 			<span>
 				<x-svg name="notifications_bell"></x-svg>
-				<span>90</span>
+				<span></span>
 			</span>
 			<style>
 				:host{
@@ -43,6 +43,17 @@ export default class Notification_Bell extends HTMLElement {
 		`;
 
 		this.addEventListener("click", ()=> window.Hyperlink.locate("/x/notifications"));
+		this.get_all_unseen_notifications();
+	}
+
+	async get_all_unseen_notifications (){
+		let span_HTML = this.shadowRoot.querySelector("span > span");
+
+		let notifications = await window.bridge({for: "get_all_unseen_notifications"}, "/x/notifications");
+		if(!("data" in notifications)) return;
+		notifications = notifications["data"];
+		
+		span_HTML.innerHTML = notifications[0]["unseen_notifications_count"];
 	}
 }
 
