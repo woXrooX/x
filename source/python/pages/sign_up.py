@@ -73,6 +73,7 @@ def sign_up(request):
 
 		# Set Session User Data
 		session["user"] = data
+		session.permanent = True
 
 		# Handle The Session Update Error
 		if not User.update_session(): pass

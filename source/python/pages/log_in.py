@@ -39,6 +39,7 @@ def log_in(request):
 
 		# Set Session User ID
 		session["user"] = data
+		session.permanent = True
 
 		# Handle The Session Update Error
 		if not User.update_session(): pass
