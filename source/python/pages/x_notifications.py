@@ -13,7 +13,7 @@ def x_notifications(request):
 				data = Notifications.get_all(session['user']['id'])
 				if data is False: return response(type="error", message="database_error")
 
-				return response(type="success", message="success", data=data, defaultSerializerFunc=str)
+				return response(type="success", message="success", data=data, default_serializer_func=str)
 
 			if request.get_json()["for"] == "get_unseen_count":
 				data = Notifications.get_unseen_count(session['user']['id'])

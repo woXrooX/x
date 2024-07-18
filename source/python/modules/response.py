@@ -18,15 +18,15 @@ if __name__ != "__main__":
 		data={},
 
 		# Actions
-		updateConf=False,
-		setSessionUser=False,
-		deleteSessionUser=False,
-		domChange=[],
+		update_conf=False,
+		set_session_user=False,
+		delete_session_user=False,
+		dom_change=[],
 		redirect=False,
 		reload=False,
 
 		# Function to use for converting non-serializable objects to a serializable JSON format.
-		defaultSerializerFunc=None,
+		default_serializer_func=None,
 
 		# HTTP Response Status Code
 		HTTP_response_status_code=200,
@@ -64,17 +64,13 @@ if __name__ != "__main__":
 		######## Actions
 		actionsDict = {}
 
-		## updateConf
-		if updateConf: actionsDict["updateConf"] = PUBLIC_CONF
+		if update_conf: actionsDict["update_conf"] = PUBLIC_CONF
 
-		## setSessionUser
-		if setSessionUser is True: actionsDict["setSessionUser"] = User.generate_public_session()
+		if set_session_user is True: actionsDict["set_session_user"] = User.generate_public_session()
 
-		## deleteSessionUser
-		if deleteSessionUser is True: actionsDict["deleteSessionUser"] = 0
+		if delete_session_user is True: actionsDict["delete_session_user"] = 0
 
-		## domChange
-		if domChange: actionsDict["domChange"] = domChange
+		if dom_change: actionsDict["dom_change"] = dom_change
 
 		## redirect
 		if redirect: actionsDict["redirect"] = redirect
@@ -91,4 +87,4 @@ if __name__ != "__main__":
 
 
 		# Final Response -> body, status, headers
-		return json.dumps(response_dict, default=defaultSerializerFunc), HTTP_response_status_code, headers
+		return json.dumps(response_dict, default=default_serializer_func), HTTP_response_status_code, headers

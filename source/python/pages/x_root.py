@@ -49,7 +49,7 @@ def x_root(request):
 			)
 			if users is False: return response(type="error", message="database_error")
 
-			return response(type="success", message="success", data=users, defaultSerializerFunc=str)
+			return response(type="success", message="success", data=users, default_serializer_func=str)
 
 		if request.get_json()["for"] == "get_all_login_records":
 			if Globals.CONF["tools"].get("log_in_tools", {}).get("enable_recording", False) is False: return response(type="info", message="log_in_tools_recording_disabled")
@@ -57,4 +57,4 @@ def x_root(request):
 			data = MySQL.execute("SELECT * FROM login_records;")
 			if data is False: return response(type="error", message="database_error")
 
-			return response(type="success", message="success", data=data, defaultSerializerFunc=str)
+			return response(type="success", message="success", data=data, default_serializer_func=str)

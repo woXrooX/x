@@ -109,7 +109,7 @@ def sign_up(request):
 		return response(
 			type="success" if emailVerificationSentSuccessfully is True else "info",
 			message="eMail_confirmation_code_has_been_sent" if emailVerificationSentSuccessfully is True else "Signed Up Without Email Verification!",
-			setSessionUser=True,
+			set_session_user=True,
 			redirect="/eMail_confirmation" if emailVerificationSentSuccessfully is True else "/home",
-			domChange=["menu"]
+			dom_change=["menu"]
 		)

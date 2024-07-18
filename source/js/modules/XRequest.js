@@ -25,13 +25,13 @@ export default class XRequest{
 	static #handle_response_actions(response){
 		if(!("actions" in response)) return;
 
-		if("updateConf" in response["actions"]) window.conf = response["actions"]["updateConf"];
+		if("update_conf" in response["actions"]) window.conf = response["actions"]["update_conf"];
 
-		if("setSessionUser" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change", {detail: response["actions"]["setSessionUser"]}));
+		if("set_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change", {detail: response["actions"]["set_session_user"]}));
 
-		if("deleteSessionUser" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change"));
+		if("delete_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change"));
 
-		if("domChange" in response["actions"]) window.dispatchEvent(new CustomEvent("domChange", {detail: response["actions"]["domChange"]}));
+		if("dom_change" in response["actions"]) window.dispatchEvent(new CustomEvent("dom_change", {detail: response["actions"]["dom_change"]}));
 
 		if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
 

@@ -57,7 +57,7 @@ def log_in(request):
 		return response(
 			type="success",
 			message="success",
-			setSessionUser=True,
+			set_session_user=True,
 			redirect="/home",
-			domChange=["menu"]
+			dom_change=["menu"]
 		)

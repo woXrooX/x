@@ -141,9 +141,9 @@ export default class Core{
 	}
 
 	static #on_dom_change(){
-		window.addEventListener('domChange', ()=>{
-			// window.dispatchEvent(new CustomEvent('domChange'));
-			// window.dispatchEvent(new CustomEvent("domChange", {detail:"menu"}));
+		window.addEventListener('dom_change', ()=>{
+			// window.dispatchEvent(new CustomEvent('dom_change'));
+			// window.dispatchEvent(new CustomEvent("dom_change", {detail:"menu"}));
 			Log.info("Core.#on_dom_change()");
 
 			// Targets sample event.detail = ["menu", "main"...]

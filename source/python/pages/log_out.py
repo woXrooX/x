@@ -22,7 +22,7 @@ def log_out(request):
 		return response(
 			type="success",
 			message="success",
-			deleteSessionUser=True,
+			delete_session_user=True,
 			redirect="/home",
-			domChange=["menu"]
+			dom_change=["menu"]
 		)

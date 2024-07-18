@@ -12,7 +12,7 @@ def x_notification(request, ID):
 
 				if data is not None: Notifications.set_seen(ID)
 
-				return response(type="success", message="success", data=data, defaultSerializerFunc=str)
+				return response(type="success", message="success", data=data, default_serializer_func=str)
 
 			if request.get_json()["for"] == "delete_notification":
 				data = Notifications.delete(ID)

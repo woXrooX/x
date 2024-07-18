@@ -61,7 +61,7 @@ export default class Language extends HTMLElement{
 		Language.#CURRENT = code;
 
 		// Update the DOM
-		window.dispatchEvent(new CustomEvent("domChange", {detail: ["all"]}));
+		window.dispatchEvent(new CustomEvent("dom_change", {detail: ["all"]}));
 	}
 
 	static #detectCurrentCode(){

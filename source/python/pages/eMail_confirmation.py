@@ -66,7 +66,7 @@ def eMail_confirmation(request):
 			return response(
 				type="success",
 				message="eMail_verification_success",
-				setSessionUser=True,
-				domChange=["menu"],
+				set_session_user=True,
+				dom_change=["menu"],
 				redirect="/home"
 			)
