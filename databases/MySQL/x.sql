@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `users_occupations` (
 \! echo "-------------------------- notification_events";
 CREATE TABLE IF NOT EXISTS `notification_events` (
 	`id` INT NOT NULL UNIQUE auto_increment,
-	`name` VARCHAR(20) NOT NULL UNIQUE,
+	`name` VARCHAR(500) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 );
 -- INSERT INTO notification_events (id, name)
