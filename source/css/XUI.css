@@ -216,13 +216,13 @@
 	}
 
 	@layer cursor{
-		.cursor-pointer{
-			cursor: pointer;
-		}
+		.cursor-pointer{ cursor: pointer; }
+		.cursor-not-allowed{ cursor: not-allowed; }
+	}
 
-		.cursor-not-allowed{
-			cursor: not-allowed;
-		}
+	@layer pointer_events{
+		.pointer-events-none{ pointer-events: none; }
+		.pointer-events-auto{ pointer-events: auto; }
 	}
 
 	@layer text{
