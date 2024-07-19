@@ -17,7 +17,7 @@ export function feedback_leave_button(){
 
 	return `
 		<column id="modal_feedback_button" class="text-size-1-5 bg-error radius-default p-1 position-fixed bottom-20px right-20px">
-			<x-svg name="feedback"></x-svg>
+			<x-svg name="feedback" color="white"></x-svg>
 		</column>
 		<x-modal trigger_selector="column#modal_feedback_button">
 			<h2>Report a problem</h2>
@@ -30,7 +30,7 @@ export function feedback_leave_button(){
 
 				<label>
 					<p for="feedback_text">Description</p>
-					<textarea name="feedback_text" rows="5"></textarea>
+					<textarea name="feedback_text" rows="5" class="text-color-primary"></textarea>
 				</label>
 
 				<label>
