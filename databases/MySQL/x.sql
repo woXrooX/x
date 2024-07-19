@@ -304,3 +304,29 @@ CREATE TABLE IF NOT EXISTS `password_recoveries` (
 
 	FOREIGN KEY (user) REFERENCES users(id)
 );
+
+
+
+
+
+-- ------------------------------------
+-- ------------------------------------ Feedbacks
+-- ------------------------------------
+\! echo "-------------------------- feedbacks";
+CREATE TABLE IF NOT EXISTS `feedbacks` (
+	`id` INT NOT NULL UNIQUE auto_increment,
+
+	`ip_address` VARCHAR(45),
+	`user_agent` TEXT,
+	`feedback_left_page` VARCHAR(500) NULL,
+
+	`created_by_user` INT NULL,
+
+	`fullname` VARCHAR(200) NULL,
+	`eMail` VARCHAR(100) NULL,
+	`feedback_text` LONGTEXT NOT NULL,
+
+	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+	PRIMARY KEY (`id`)
+);

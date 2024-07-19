@@ -154,6 +154,11 @@
 		"ru": "Имя",
 		"uz": "Ism"
 	},
+	"feedbacks": {
+		"en": "Feedbacks",
+		"ru": "Отзывы",
+		"uz": "Fikr-mulohazalar"
+	},
 	"gender": {
 		"en": "Gender",
 		"ru": "Пол",

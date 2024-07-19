@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.192.0.0002"
+version: "0.193.0.0000"
 
 
 ######### Flask
@@ -195,6 +195,24 @@ pages:
       - "/reset_password"
     url_args:
       - "TOKEN"
+
+
+  x_feedbacks_leave:
+    enabled: false
+    methods:
+      - "GET"
+      - "POST"
+    endpoints:
+      - "/x/feedbacks/leave"
+
+  x_feedbacks:
+    enabled: false
+    methods:
+      - "GET"
+      - "POST"
+    endpoints:
+      - "/x/feedbacks"
+
 
   x_notification:
     enabled: false
