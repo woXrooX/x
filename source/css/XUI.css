@@ -2708,13 +2708,20 @@
 
 		/**************************** HR START ****************************/
 		hr{
-			border:none;
-			border-top:1px solid var(--color-text-secondary);
-
-			/* 2D */
-			&.v-2D{
+			&.v1{
+				border: none;
 				border-top:1px solid var(--color-main-tint-4);
 				border-bottom:1px solid var(--color-main-tint-2);
+			}
+
+			&.v2{
+				border: none;
+				border-top: 1px solid var(--color-text-secondary);
+			}
+
+			&.v3{
+				border: none;
+				border-top: 1px solid var(--color-main-tint-4);
 			}
 		}
 		/**************************** HR END ****************************/
