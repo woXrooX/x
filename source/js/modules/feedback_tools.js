@@ -16,7 +16,7 @@ export function feedback_leave_button(){
 	`;
 
 	return `
-		<column id="modal_feedback_button" class="text-size-1-5 bg-error radius-default p-1 position-fixed bottom-20px right-20px">
+		<column id="modal_feedback_button" class="text-size-1-5 bg-error radius-default p-1 position-fixed bottom-20px right-20px w-auto">
 			<x-svg name="feedback" color="white"></x-svg>
 		</column>
 		<x-modal trigger_selector="column#modal_feedback_button">
