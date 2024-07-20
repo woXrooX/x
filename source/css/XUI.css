@@ -512,9 +512,10 @@
 		textarea,
 		input:where([type=text], [type=eMail], [type=password], [type=number], [type=color], [type=file], [type=date], [type=month], [type=tel], [type=range], [type=time]){
 			background-color: var(--color-main-tint-3);
+			color: var(--color-text-primary);
+			font-size: var(--f-font-size);
 			width: var(--f-width);
 			height: var(--f-height);
-			font-size: var(--f-font-size);
 			padding: 0 var(--f-padding);
 			border-radius: var(--f-radius);
 			border: var(--f-border);

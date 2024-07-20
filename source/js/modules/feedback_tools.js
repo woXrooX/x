@@ -30,7 +30,7 @@ export function feedback_leave_button(){
 
 				<label>
 					<p for="feedback_text">Description</p>
-					<textarea name="feedback_text" rows="5" class="text-color-primary"></textarea>
+					<textarea name="feedback_text" rows="5"></textarea>
 				</label>
 
 				<label>
