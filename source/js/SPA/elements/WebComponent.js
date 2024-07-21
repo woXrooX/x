@@ -85,14 +85,17 @@ export default class WC extends HTMLElement{
 
 	}
 
+	// The connectedCallback method is called each time the custom element is appended to a document-connected element.
 	connectedCallback(){
 		console.log("connectedCallback");
 	}
 
+	// The disconnectedCallback method is called each time the custom element is removed from the document.
 	disconnectedCallback(){
 		console.log("disconnectedCallback");
 	}
 
+	// This callback is invoked when a custom element is moved to a new document.
 	adoptedCallback(){
 		console.log("adoptedCallback");
 	}
@@ -102,6 +105,7 @@ export default class WC extends HTMLElement{
 		return ["attr1", "attr2"];
 	}
 
+	// The attributeChangedCallback method is invoked whenever one of the element's observed attributes is added, removed, or changed.
 	// name = attribute name
 	// old and new attribute values
 	attributeChangedCallback(attributeName, oldValue, newValue){
