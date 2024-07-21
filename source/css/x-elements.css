@@ -199,3 +199,12 @@ x-tooltip{
 		}
 	}
 }
+
+x-link{
+	&:not([class]){
+		cursor: pointer;
+		color: var(--color-text-secondary);
+		&:hover{ color: var(--color-text-error); }
+	}
+}
+

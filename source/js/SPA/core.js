@@ -30,6 +30,7 @@ import Form from "./form.js";
 import Notification from "./notification.js";
 
 //// Custom Elements (In docs we call these Built-In X-Elements)
+import Link from "./elements/Link.js";
 import XSVG from "./elements/XSVG.js";
 import Modal from "./elements/modal.js";
 import Toast from "./elements/toast.js";
