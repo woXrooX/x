@@ -2445,6 +2445,10 @@
 			.border-color-9{border-color: var(--color-main-tint-9);}
 			.border-color-10{border-color: var(--color-main-tint-10);}
 
+			.border-color-text-primary{border-color: var(--color-text-primary);}
+			.border-color-text-secondary{border-color: var(--color-text-secondary);}
+			.border-color-text-accent{border-color: var(--color-text-accent);}
+
 			.border-color-success{border-color: var(--color-success);}
 			.border-color-info{border-color: var(--color-info);}
 			.border-color-warning{border-color: var(--color-warning);}
