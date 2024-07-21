@@ -19,7 +19,7 @@ export default class Notification{
 	}
 
 	static async #poll(){
-		Notification.poll_interval = setInterval(async ()=>{
+		Notification.poll_interval_func = setInterval(async ()=>{
 			await Notification.update_unseen_count();
 		}, Notification.poll_interval_duration);
 	}

@@ -87,7 +87,7 @@ export default class Core{
 	}
 
 	// Initialize all the initial methods
-	static #init(){
+	static async #init(){
 		Log.info("Core.#init()");
 
 		Language.init();
@@ -96,6 +96,8 @@ export default class Core{
 		Header.init();
 		Footer.init();
 		Router.handle();
+
+		await x.Notification.init();
 	}
 
 	/////// Event Handlers
