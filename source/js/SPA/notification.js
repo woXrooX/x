@@ -29,7 +29,9 @@ export default class Notification{
 
 		let data = await window.bridge({for: "get_unseen_count"}, "/x/notifications");
 		if("error" in data) return;
-		if(!("data" in data)) return;
+
+		// No unseen notifications
+		if(!("data" in data)) return Notification.unseen_count = 0;
 
 		Notification.unseen_count = data["data"];
 	}
