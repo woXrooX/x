@@ -591,9 +591,50 @@
 				}
 			}
 
-			&[type=radio], &[type=checkbox]{
+			&[type=radio]{
 				width: 20px;
 				height: auto;
+			}
+
+			&[type=checkbox]{
+				&.checkbox-v1{
+					--checkbox-width: 3.5em;
+					--checkbox-height: 2em;
+					--checkbox-radius: 1em;
+
+					appearance: none;
+					cursor: pointer;
+					position: relative;
+					display: inline-block;
+					background: lightgray;
+					height: 2em;
+					width: var(--checkbox-width);
+					vertical-align: middle;
+					border-radius: var(--checkbox-radius);
+					transition: var(--transition-velocity) linear background;
+
+					&:checked{
+						background: green;
+
+						&::before{
+							transform: translateX(1em);
+						}
+					}
+
+					&::before{
+						content: '';
+						display: block;
+						height: calc(var(--checkbox-height) - 0.4em);
+						width: calc(var(--checkbox-width) - 40%);
+						background: white;
+						border-radius: var(--checkbox-radius);
+						position: absolute;
+						top: 0.2em;
+						left: 5%;
+						transition: var(--transition-velocity) linear transform;
+						transform: translateX(0em);
+					}
+				}
 			}
 		}
 
