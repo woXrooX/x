@@ -77,8 +77,8 @@ if __name__ != "__main__":
 			multi_execute_result = None
 
 			query = None
-			rowCount = None
-			lastRowID = None
+			row_count = None
+			last_row_id = None
 
 
 			# MySQL response data
@@ -106,22 +106,22 @@ if __name__ != "__main__":
 				else: MySQL.cursor.execute(sql, params)
 
 				query = MySQL.cursor.statement
-				rowCount = MySQL.cursor.rowcount
-				lastRowID = MySQL.cursor.lastrowid
+				row_count = MySQL.cursor.row_count
+				last_row_id = MySQL.cursor.last_row_id
 
 
 				# Multi
 				if multi is True:
 					data = []
 					query = []
-					rowCount = []
-					lastRowID = []
+					row_count = []
+					last_row_id = []
 
 					for cur in multi_execute_result:
 						data.extend(cur.fetchall())
 						query.append(MySQL.cursor.statement)
-						rowCount.append(MySQL.cursor.rowcount)
-						lastRowID.append(MySQL.cursor.lastrowid)
+						row_count.append(MySQL.cursor.row_count)
+						last_row_id.append(MySQL.cursor.last_row_id)
 
 				# "fetchone" enabled
 				# NOTE: In case multi=True and fetchOne=True will execute the code above.
@@ -139,11 +139,11 @@ if __name__ != "__main__":
 
 						# This read-only property returns the number of rows returned for SELECT statements,
 						# or the number of rows affected by DML statements such as INSERT or UPDATE or DELETE.
-						"rowCount": rowCount,
+						"row_count": row_count,
 
 						# This read-only property returns the value generated for an AUTO_INCREMENT column by
 						# the previous INSERT or UPDATE statement or None when there is no such value available.
-						"lastRowID": lastRowID
+						"last_row_id": last_row_id
 					}
 
 				else: result = data
