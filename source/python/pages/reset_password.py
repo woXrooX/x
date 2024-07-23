@@ -42,7 +42,7 @@ def reset_password(request, TOKEN):
 				WHERE token=%s AND TIMESTAMPDIFF(MINUTE, password_recoveries.timestamp_first, NOW()) < %s LIMIT 1;
 			""",
 			params=(TOKEN, Globals.CONF["password"]["recovery_link_validity_duration"]),
-			fetchOne=True
+			fetch_one=True
 		)
 		if prd is False: return response(type="error", message="database_error")
 

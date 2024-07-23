@@ -72,7 +72,7 @@ if __name__ != "__main__":
 			data = MySQL.execute(
 				"SELECT user_plans.name FROM user_plans WHERE id = %s LIMIT 1;",
 				(session["user"]["plan"],),
-				fetchOne=True
+				fetch_one=True
 			)
 
 			if data is False: return False
@@ -119,7 +119,7 @@ if __name__ != "__main__":
 					WHERE users.id=%s LIMIT 1;
 				""",
 				params=(session["user"]["id"],),
-				fetchOne=True
+				fetch_one=True
 			)
 
 			# Error

@@ -38,7 +38,7 @@ def sign_up(request):
 		if not re.match(Globals.CONF["password"]["regEx"], request.form["password"]): return response(type="error", message="password_allowed_chars", field="password")
 
 		# eMail_in_use
-		data = MySQL.execute(sql="SELECT id FROM users WHERE eMail=%s", params=(request.form["eMail"], ), fetchOne=True)
+		data = MySQL.execute(sql="SELECT id FROM users WHERE eMail=%s", params=(request.form["eMail"], ), fetch_one=True)
 		if data: return response(type="error", message="eMail_in_use", field="eMail")
 
 		######## Success
@@ -67,7 +67,7 @@ def sign_up(request):
 				request.form["eMail"],
 				password
 			),
-			fetchOne=True
+			fetch_one=True
 		)
 		if not data: return response(type="error", message="database_error")
 

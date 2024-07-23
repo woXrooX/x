@@ -60,9 +60,9 @@ if __name__ != "__main__":
 			commit = False,
 			prepared = True,
 			dictionary = True,
-			fetchOne = False,
+			fetch_one = False,
 
-			includeMySQLData = False
+			include_MySQL_data = False
 		):
 			# Check If MySQL Is Enabled
 			if MySQL.enabled is False: return False
@@ -106,8 +106,8 @@ if __name__ != "__main__":
 				else: MySQL.cursor.execute(sql, params)
 
 				query = MySQL.cursor.statement
-				row_count = MySQL.cursor.row_count
-				last_row_id = MySQL.cursor.last_row_id
+				row_count = MySQL.cursor.rowcount
+				last_row_id = MySQL.cursor.lastrowid
 
 
 				# Multi
@@ -120,19 +120,19 @@ if __name__ != "__main__":
 					for cur in multi_execute_result:
 						data.extend(cur.fetchall())
 						query.append(MySQL.cursor.statement)
-						row_count.append(MySQL.cursor.row_count)
-						last_row_id.append(MySQL.cursor.last_row_id)
+						row_count.append(MySQL.cursor.rowcount)
+						last_row_id.append(MySQL.cursor.lastrowid)
 
-				# "fetchone" enabled
-				# NOTE: In case multi=True and fetchOne=True will execute the code above.
-				elif fetchOne is True: data = MySQL.cursor.fetchone()
+				# "fetch_one" enabled
+				# NOTE: In case multi=True and fetch_one=True will execute the code above.
+				elif fetch_one is True: data = MySQL.cursor.fetchone()
 
 				# Default "fetchall"
 				else: data = MySQL.cursor.fetchall()
 
 				#### Save execution information before MySQL.disconnect() cleans them up
 				# Construct the result
-				if includeMySQLData is True:
+				if include_MySQL_data is True:
 					result = {
 						"data": data,
 						"query": query,
@@ -154,7 +154,7 @@ if __name__ != "__main__":
 
 				Log.fieldset(f"ERROR: {err}\nNO: {err.errno}\nSQL STATE: {err.sqlstate}\nMESSAGE: {err.msg}", "MySQL.execute()")
 
-				if includeMySQLData is True:
+				if include_MySQL_data is True:
 					return {
 						"error": True,
 						"error_no": err.errno,

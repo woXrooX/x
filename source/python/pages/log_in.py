@@ -27,7 +27,7 @@ def log_in(request):
 		data = MySQL.execute(
 			sql="SELECT id FROM users WHERE eMail=%s AND password=%s LIMIT 1;",
 			params=(request.form["eMail"], password),
-			fetchOne=True
+			fetch_one=True
 		)
 
 		if data is False: return response(type="error", message="database_error")

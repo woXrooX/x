@@ -45,7 +45,7 @@ if __name__ != "__main__":
 					WHERE recipient=%s AND seen=0;
 				""",
 				params=[recipient],
-				fetchOne=True
+				fetch_one=True
 			)
 			return data
 
@@ -63,7 +63,7 @@ if __name__ != "__main__":
 					WHERE notifications.id = %s AND notifications.recipient=%s LIMIT 1;
 				""",
 				params=[ID, session['user']['id']],
-				fetchOne=True
+				fetch_one=True
 			)
 			return data
 

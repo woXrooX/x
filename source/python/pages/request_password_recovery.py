@@ -19,7 +19,7 @@ def request_password_recovery(request):
 		user = MySQL.execute(
 			sql="SELECT id, password FROM users WHERE eMail=%s LIMIT 1;",
 			params=(request.form["eMail"],),
-			fetchOne=True
+			fetch_one=True
 		)
 		if user is False: return response(type="error", message="database_error")
 		if not user: return response(type="error", message="user_with_this_eMail_does_not_exists")
@@ -32,7 +32,7 @@ def request_password_recovery(request):
 				FROM password_recoveries
 				WHERE password_recoveries.user = %s AND TIMESTAMPDIFF(MINUTE, password_recoveries.timestamp_first, NOW()) < %s LIMIT 1;""",
 			params = (user['id'], Globals.CONF["password"]["recovery_link_validity_duration"]),
-			fetchOne=True
+			fetch_one=True
 		)
 		if data is False: return response(type="error", message="database_error")
 		if data: return response(type="info", message="password_recovery_link_already_has_been_sent", redirect="/home")
