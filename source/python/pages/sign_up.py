@@ -6,7 +6,7 @@ from python.modules.Page import Page
 from python.modules.SendGrid import SendGrid
 from python.modules.response import response
 from python.modules.Globals import Globals
-from python.modules.LogInTools import LogInTools
+from python.modules.Log_In_Tools import Log_In_Tools
 from python.modules.User import User
 from python.modules.MySQL import MySQL
 
@@ -45,7 +45,7 @@ def sign_up(request):
 		# Generate Randome Verification Code
 		eMailVerificationCode = random.randint(100000, 999999)
 
-		password = LogInTools.password_hash(request.form["password"])
+		password = Log_In_Tools.password_hash(request.form["password"])
 
 		# Insert To Database
 		data = MySQL.execute(

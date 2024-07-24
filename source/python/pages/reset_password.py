@@ -2,7 +2,7 @@ import re
 
 from python.modules.Page import Page
 from python.modules.response import response
-from python.modules.LogInTools import LogInTools
+from python.modules.Log_In_Tools import Log_In_Tools
 from python.modules.MySQL import MySQL
 from python.modules.Globals import Globals
 
@@ -31,7 +31,7 @@ def reset_password(request, TOKEN):
 		# Passwords do not match
 		if request.form["password"] != request.form["confirm_password"]: return response(type="error", message="passwords_do_not_match", field="confirm_password")
 
-		password = LogInTools.password_hash(request.form["password"])
+		password = Log_In_Tools.password_hash(request.form["password"])
 
 		######## Token validation
 		# prd = password recovery data

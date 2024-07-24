@@ -4,7 +4,8 @@ from python.modules.Page import Page
 from python.modules.response import response
 from python.modules.User import User
 from python.modules.MySQL import MySQL
-from python.modules.LogInTools import LogInTools
+from python.modules.Log_In_Tools import Log_In_Tools
+from python.modules.Globals import Globals
 
 
 @Page.build()
@@ -21,7 +22,7 @@ def log_in(request):
 		# password_empty
 		if "password" not in request.form or not request.form["password"]: return response(type="error", message="password_empty", field="password")
 
-		password = LogInTools.password_hash(request.form["password"])
+		password = Log_In_Tools.password_hash(request.form["password"])
 
 		######## Check If eMail And Password matching User Exist
 		data = MySQL.execute(
@@ -34,7 +35,7 @@ def log_in(request):
 
 		# No Match
 		if not data:
-			LogInTools.new_record(request.remote_addr, request.headers.get('User-Agent'))
+			Log_In_Tools.new_record(request.remote_addr, request.headers.get('User-Agent'))
 			return response(type="error", message="eMail_or_password_incorrect")
 
 		# Set Session User ID
@@ -46,7 +47,7 @@ def log_in(request):
 
 		#### On Success Redirect & Update Front-End Session & Adds a new login record if enabled
 
-		LogInTools.new_record(request.remote_addr, request.headers.get('User-Agent'), True)
+		Log_In_Tools.new_record(request.remote_addr, request.headers.get('User-Agent'), True)
 
 		try:
 			from python.modules.onLogIn import onLogIn

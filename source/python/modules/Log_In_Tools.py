@@ -4,7 +4,7 @@ if __name__ != "__main__":
 	from python.modules.Globals import Globals
 	from python.modules.MySQL import MySQL
 
-	class LogInTools():
+	class Log_In_Tools():
 
 		# Returns "False" if disabled or gets falsey value from MySQL.execute()
 		# Returns "True" if succeeds
