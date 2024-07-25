@@ -6,6 +6,7 @@ from python.modules.User import User
 from python.modules.MySQL import MySQL
 from python.modules.Log_In_Tools import Log_In_Tools
 from python.modules.Globals import Globals
+from urllib.parse import unquote
 
 
 @Page.build()
@@ -55,10 +56,12 @@ def log_in(request):
 
 		except ModuleNotFoundError: pass
 
+		redirect = unquote(request.args.get("redirect")) if "redirect" in request.args else "/home"
+
 		return response(
 			type="success",
 			message="success",
 			set_session_user=True,
-			redirect="/home",
+			redirect= redirect,
 			dom_change=["menu"]
 		)

@@ -1,4 +1,5 @@
 if __name__ != "__main__":
+	from urllib.parse import quote
 	from functools import wraps # For page.guard() Wrapper
 	"""
 		@wraps(func)
@@ -54,134 +55,79 @@ if __name__ != "__main__":
 		# Returns function if fails
 		@staticmethod
 		def guard(page):
-			if request.method not in ["POST", "GET"]: return response(RAW=('', 400, {'text/html': 'charset=utf-8'}))
+			if request.method not in ["POST", "GET"]: return response(RAW=("Method Not Allowed", 405, {'text/html': 'charset=utf-8'}))
 
+			if "app_is_down" in Globals.CONF["tools"]:
+				Log.warning("App Is Down")
+				if request.method == "GET": return render_template("index.html", **globals())
+				return response(type="info", message="app_is_down")
+
+			PAGE_CONF = Globals.CONF["pages"][page]
+
+			if PAGE_CONF["enabled"] == False:
+				if request.method == "GET": return redirect("/home")
+				return response(type="error", message="404", redirect="/404")
+
+			# Validate POST request
 			if request.method == "POST":
-				### App Is Down
-				if "app_is_down" in Globals.CONF["tools"]:
-					Log.warning("App Is Down")
-					return response(type="warning", message="app_is_down")
-
-				### "application/json"
 				if request.content_type == "application/json":
-					# Invalid JSON
-					if request.get_json() is None:
+					if request.get_json() is None or "for" not in request.get_json():
 						Log.warning("Invalid JSON request")
 						return response(type="warning", message="invalid_request")
 
-					# Check if "for" in request
-					if "for" not in request.get_json():
-						Log.warning("Missing 'for' in request JSON")
-						return response(type="warning", message="invalid_request")
-
-
-				### "multipart/form-data"
-				# "multipart/form-data" will include boundary, which is not const value
-				# That's why we need to extract "multipart/form-data" then compare it
-				# Ex. "multipart/form-data; boundary=----WebKitFormBoundaryqZq6yAWEgk6aywYg"
-				# Check If "for" In Request
 				if "multipart/form-data" in request.content_type.split(';'):
 					if "for" not in request.form:
 						Log.warning("Missing 'for' in request form data")
 						return response(type="warning", message="invalid_request")
 
-
-			##################### GET
-
-			####### App is down
-			if "app_is_down" in Globals.CONF["tools"]: return render_template("index.html", **globals())
-
-
-			# NOTE: Already done inside Page.build()
-			# Check If Page Exists In CONF["pages"]
-			# if page not in Globals.CONF["pages"]: return redirect(url_for("home"))
-
-
-			# Is Page Enabled
-			if Globals.CONF["pages"][page]["enabled"] == False: return redirect("/404")
-
-
-			# Everyone
-			if(
-				"authenticity_statuses" not in Globals.CONF["pages"][page] and
-				"roles" not in Globals.CONF["pages"][page] and
-				"plans" not in Globals.CONF["pages"][page]
-			): return True
-
-
-			# Session dependent checks
 			if "user" in session:
-				# Root
 				if "root" in session["user"]["roles"]: return True
 
+				if "authenticity_statuses" in PAGE_CONF:
+					if "unauthenticated" in PAGE_CONF["authenticity_statuses"]:
+						if request.method == "GET": return redirect("/400")
+						return response(type="error", message="400", redirect="/400")
 
-				#### Authenticity statuses
-				authenticity_check = False
-				if "authenticity_statuses" in Globals.CONF["pages"][page]:
-					for user_authenticity_status in Globals.USER_AUTHENTICITY_STATUSES:
-						if(
-							session["user"]["authenticity_status"] == Globals.USER_AUTHENTICITY_STATUSES[user_authenticity_status]["id"] and
-							user_authenticity_status in Globals.CONF["pages"][page]["authenticity_statuses"]
-						):	authenticity_check = True
+					if session["user"]["authenticity_status"] not in PAGE_CONF["authenticity_statuses"]:
+						if request.method == "GET": return redirect("/400")
+						return response(type="error", message="400", redirect="/400")
 
-				else: authenticity_check = True
-
-
-				#### Roles
-				role_check = False
-				if "roles" in Globals.CONF["pages"][page]:
-					# Check if one of the user assigned roles match with the CONF[page]["roles"]
-					if set(Globals.CONF["pages"][page]["roles"]).intersection(set(session["user"]["roles"])): role_check = True
-				else: role_check = True
-
-
-				#### Roles not (Not allowed roles)
-				role_not_check = True
-				if "roles_not" in Globals.CONF["pages"][page]:
-					# Check if one of the user assigned roles match with the CONF[page]["roles_not"]
-					if set(Globals.CONF["pages"][page]["roles_not"]).intersection(set(session["user"]["roles"])): role_not_check = False
-
-
-				#### Plans
-				plan_check = True
-				if "plans" in Globals.CONF["pages"][page]:
-					if session["user"]["plan"] not in Globals.CONF["pages"][page]["plans"]: role_check = False
-
-
-				#### Final check: IF all checks passed
 				if(
-					authenticity_check is True and
-					role_check is True and
-					role_not_check is True and
-					plan_check is True
-				): return True
+					"roles" in PAGE_CONF and
+					set(PAGE_CONF["roles"]).isdisjoint(set(session["user"]["roles"]))
+				):
+					if request.method == "GET": return redirect("/400")
+					return response(type="error", message="400", redirect="/400")
 
+				if(
+					"roles_not" in PAGE_CONF and
+					set(PAGE_CONF["roles_not"]).intersection(set(session["user"]["roles"]))
+				):
+					if request.method == "GET": return redirect("/400")
+					return response(type="error", message="400", redirect="/400")
 
-			# Session independent checks
+				if(
+					"plans" in PAGE_CONF and
+					session["user"]["plan"] not in PAGE_CONF["plans"]
+				):
+					if request.method == "GET": return redirect("/400")
+					return response(type="error", message="400", redirect="/400")
+
+				return True
+
 			if "user" not in session:
-
-				#### Authenticity Statuses
-				authenticity_check = False
 				if(
-					"authenticity_statuses" not in Globals.CONF["pages"][page] or
-					"authenticity_statuses" in Globals.CONF["pages"][page] and
-					"unauthenticated" in Globals.CONF["pages"][page]["authenticity_statuses"]
-				): authenticity_check = True
-
-				#### Roles
-				role_check = False
-				if "roles" not in Globals.CONF["pages"][page]: role_check = True
-
-				#### Plans
-				plan_check = False
-				if "plans" not in Globals.CONF["pages"][page]: plan_check = True
-
-				#### Final Check: IF all checks passed
-				if(
-					authenticity_check is True and
-					role_check is True and
-					plan_check is True
+					(
+						"authenticity_statuses" not in PAGE_CONF or
+						"authenticity_statuses" in PAGE_CONF and
+						"unauthenticated" in PAGE_CONF["authenticity_statuses"]
+					) and
+					"roles" not in PAGE_CONF and
+					"plans" not in PAGE_CONF
 				): return True
 
-			# Failed The Guard Checks
-			return redirect(url_for("home"))
+				else:
+					if request.method == "GET": return redirect(f"/log_in?redirect={quote(request.path, safe='')}")
+					return response(type="error", message="400", redirect=f"/log_in?redirect={quote(request.path, safe='')}")
+
+			return True

@@ -113,8 +113,10 @@ if __name__ != "__main__":
 				sql="""
 					SELECT
 						users.*,
+						user_authenticity_statuses.name AS authenticity_status,
 						languages.code AS 'app_language'
 					FROM users
+					LEFT JOIN user_authenticity_statuses ON users.authenticity_status = user_authenticity_statuses.id
 					LEFT JOIN languages ON languages.id = users.app_language
 					WHERE users.id=%s LIMIT 1;
 				""",

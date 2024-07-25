@@ -241,7 +241,7 @@ export default class Menu{
 		// Check if menu linked page is enabled in CONF["pages"]
 		if(window.CONF["pages"][menu["page"]]["enabled"] == false) return false;
 
-		return window.Router.routeGuard(menu["page"]);
+		return window.Router.guard(menu["page"]);
 	}
 }
 
