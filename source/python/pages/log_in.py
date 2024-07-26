@@ -5,7 +5,6 @@ from python.modules.response import response
 from python.modules.User import User
 from python.modules.MySQL import MySQL
 from python.modules.Log_In_Tools import Log_In_Tools
-from python.modules.Globals import Globals
 from urllib.parse import unquote
 
 
