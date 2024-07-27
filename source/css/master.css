@@ -203,7 +203,7 @@ body{
 							}
 
 							& > x-svg{
-								&[for=toggleSubMenu]{
+								&[for=toggle_sub_menu]{
 									transition: var(--transition-velocity) ease-in-out transform;
 									transform: rotate(90deg);
 									&.open{transform: rotate(0deg);}
@@ -211,7 +211,7 @@ body{
 							}
 						}
 
-						&.subMenu{
+						&.sub_menu{
 							font-size: 0.94em;
 
 							display: none;
@@ -227,8 +227,16 @@ body{
 							&.show{display: block;}
 						}
 
-						/* If submenu is empty do not show arrow icon */
-						&:has(+ .subMenu:empty) > x-svg[for=toggleSubMenu]{display: none;}
+						/* If sub_menu is empty */
+						&:has(+ .sub_menu:empty){
+							/* Do not show arrow icon */
+							& > x-svg[for=toggle_sub_menu]{display: none;}
+
+							/* If .parent_menu is a blank button for .sub_menu then do not display */
+							&.parent_menu:has(a[href=""]){
+								&.parent_menu{display: none;}
+							}
+						}
 					}
 				}
 			}

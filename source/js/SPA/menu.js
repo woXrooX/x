@@ -103,14 +103,14 @@ export default class Menu{
 				`;
 
 				// Add the sub menu toggle icon and close the section.parent_menu
-				if("subMenu" in menu)
+				if("sub_menu" in menu)
 					HTML += `
-							<x-svg for="toggleSubMenu" color="#ffffff" name="arrow_bottom_small"></x-svg>
+							<x-svg for="toggle_sub_menu" color="#ffffff" name="arrow_bottom_small"></x-svg>
 						</section>
-						<section class="subMenu">${Menu.#recursive_builder(menu["subMenu"])}</section>
+						<section class="sub_menu">${Menu.#recursive_builder(menu["sub_menu"])}</section>
 					`;
 
-				// Close the section.parent_menu if no "subMenu" in menu
+				// Close the section.parent_menu if no "sub_menu" in menu
 				else HTML += `</section>`;
 
 				// Close the section.container
@@ -127,22 +127,22 @@ export default class Menu{
 		for(const hyperlink of hyperlinks)
 			// Blank menu items
 			if(hyperlink.getAttribute('href') == ''){
-				const subMenu_toggler = hyperlink.parentElement.querySelector("x-svg[for=toggleSubMenu]");
-				if(!!subMenu_toggler === true) hyperlink.addEventListener("click", ()=>{subMenu_toggler.click();});
+				const sub_menu_toggler = hyperlink.parentElement.querySelector("x-svg[for=toggle_sub_menu]");
+				if(!!sub_menu_toggler === true) hyperlink.addEventListener("click", ()=>{sub_menu_toggler.click();});
 			}
 
 			// Normal menu items
 			else hyperlink.addEventListener("click", Menu.#hide);
 	}
 
-	// On click x-svg[for=toggleSubMenu] show the section.subMenu
+	// On click x-svg[for=toggle_sub_menu] show the section.sub_menu
 	static #toggle_sub_menus(){
-		const subMenuTogglers = document.querySelectorAll(`${Menu.selector} > main x-svg[for=toggleSubMenu]`);
+		const sub_menu_togglers = document.querySelectorAll(`${Menu.selector} > main x-svg[for=toggle_sub_menu]`);
 
-		for(const toggler of subMenuTogglers)
+		for(const toggler of sub_menu_togglers)
 			toggler.onclick = ()=> {
 				toggler.classList.toggle("open");
-				toggler.parentElement.parentElement.querySelector("section.subMenu").classList.toggle("show");
+				toggler.parentElement.parentElement.querySelector("section.sub_menu").classList.toggle("show");
 			}
 	}
 
