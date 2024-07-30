@@ -43,6 +43,7 @@ if __name__ != "__main__":
 			MySQL.get_user_roles()
 			MySQL.get_user_occupations()
 			MySQL.get_notification_types()
+			MySQL.get_notification_events()
 			MySQL.get_languages()
 
 
@@ -244,6 +245,13 @@ if __name__ != "__main__":
 			data = MySQL.execute("SELECT * FROM notification_types")
 			if data is False: return Log.fieldset("Could Not Fetch 'notification_types'", "MySQL.get_notification_types()")
 			for notification_type in data: Globals.NOTIFICATION_TYPES[notification_type["name"]] = notification_type
+
+		@staticmethod
+		def get_notification_events():
+			data = MySQL.execute("SELECT * FROM notification_events")
+			if data is False: return Log.fieldset("Could Not Fetch 'notification_events'", "MySQL.get_notification_events()")
+			for notification_event in data: Globals.NOTIFICATION_EVENTS[notification_event["name"]] = notification_event
+
 
 		@staticmethod
 		def get_languages():

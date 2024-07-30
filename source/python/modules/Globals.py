@@ -20,6 +20,7 @@ if __name__ != "__main__":
 		USER_ROLES = {}
 		USER_OCCUPATIONS = {}
 		NOTIFICATION_TYPES = {}
+		NOTIFICATION_EVENTS = {}
 
 		BUILT_IN_FILES = {
 			"modules":{

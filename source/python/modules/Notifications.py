@@ -5,14 +5,18 @@ if __name__ != "__main__":
 
 	class Notifications():
 		@staticmethod
-		def new(sender, recipient, content = None, event = None, type_name = None):
+		def new(sender, recipient, content = None, event_name = None, type_name = None):
 			type_id = None
 			if type_name is not None:
 				type_id = Globals.NOTIFICATION_TYPES[type_name]["id"] if type_name in Globals.NOTIFICATION_TYPES else Globals.NOTIFICATION_TYPES["error"]["id"]
 
+			event_id = None
+			if event_name is not None:
+				event_id = Globals.NOTIFICATION_EVENTS[event_name]["id"] if event_name in Globals.NOTIFICATION_EVENTS else None
+
 			data = MySQL.execute(
 				sql="INSERT INTO notifications (sender, recipient, content, event, type) VALUES (%s, %s, %s, %s, %s);",
-				params=[sender, recipient, content, event, type_id],
+				params=[sender, recipient, content, event_id, type_id],
 				commit=True
 			)
 			if data is False: return False
