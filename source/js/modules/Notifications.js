@@ -1,7 +1,7 @@
 import { TTHR } from "/js/modules/datetime/datetime.js";
 
-// Notification card content generator
-export function notification_card_generator(notification){
+// Small card
+export function notification_s_card_generator(notification){
 	return `
 		<a
 			href="/x/notification/${notification["id"]}"
@@ -17,7 +17,8 @@ export function notification_card_generator(notification){
 	`;
 }
 
-export function notification_content_generator(notification){
+// Medium card
+export function notification_m_card_generator(notification){
 	let label_HTML = "";
 	let type_HTML = "";
 	if(notification["type"] !== null){
@@ -48,13 +49,7 @@ export function notification_content_generator(notification){
 					></x-svg>
 				</header>
 
-				<main class="text-size-0-8">
-					${notification["event"]} |
-					${notification["type"]} |
-					${notification["sender"]} |
-					${notification["recipient"]} |
-					${notification["content"]}
-				</main>
+				<main class="text-size-0-8">${notification["event"]} | ${notification["type"]} | ${notification["sender"]} | ${notification["recipient"]} | ${notification["content"]}</main>
 
 				<footer class="w-100 d-flex flex-row flex-x-end">
 					<p class="w-auto text-size-0-7 text-color-secondary text-nowrap">${TTHR(notification["timestamp"])}</p>
