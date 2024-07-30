@@ -55,22 +55,22 @@ export default class Modal extends HTMLElement{
 		}
 	}
 
-	static show(DOM, func_name = null){
+	static show(DOM, func_name = null, data = null){
 		if(Modal.#shown === true) return;
 
 		Modal.#shown = true;
 
 		Modal.#element.classList.add("show");
 		Modal.element_main.innerHTML = DOM;
-		Modal.#execute_on_show(func_name);
+		Modal.#execute_on_show(func_name, data);
 
 		Cover.show();
 	}
 
 	/////////// Helpers
-	static async #execute_on_show(func_name){
+	static async #execute_on_show(func_name, data = null){
 		if(!!func_name === false) return;
-		await Modal.#FUNC_POOL[func_name]();
+		await Modal.#FUNC_POOL[func_name](data);
 	}
 
 	static #parse_commands(commands){
@@ -150,7 +150,7 @@ export default class Modal extends HTMLElement{
 
 		for(const element of trigger_elements){
 			element.style.cursor = "pointer";
-			element.onclick = ()=> Modal.show(this.#DOM, this.getAttribute("func_name"));
+			element.onclick = ()=> Modal.show(this.#DOM, this.getAttribute("modal_func"), this.getAttribute("modal_data"));
 		}
 	};
 

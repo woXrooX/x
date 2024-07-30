@@ -129,7 +129,7 @@ export default class Form{
 			Toast.handle_commands(form.getAttribute("x-toast"), response);
 
 			////////// Callback
-			Form.#execute_on_response(form.getAttribute("func_name"), response);
+			Form.#execute_on_response(form.getAttribute("form_func"), response);
 
 			////////// response["actions"]
 			if("actions" in response){
