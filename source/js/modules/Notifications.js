@@ -1,7 +1,7 @@
 import { TTHR } from "/js/modules/datetime/datetime.js";
 
 // Small card
-export function notification_s_card_generator(notification){
+export async function notification_s_card_generator(notification){
 	return `
 		<a
 			href="/x/notification/${notification["id"]}"
@@ -18,7 +18,7 @@ export function notification_s_card_generator(notification){
 }
 
 // Medium card
-export function notification_m_card_generator(notification){
+export async function notification_m_card_generator(notification){
 	let label_HTML = "";
 	let type_HTML = "";
 	if(notification["type"] !== null){

@@ -28,6 +28,6 @@ export async function after(){
 			return `<p class="w-100 text-size-0-8 surface-error p-1">${Lang.use("unknown_error")}</p>`;
 		}
 
-		return Notifications_module.notification_m_card_generator(notification);
+		return await Notifications_module.notification_m_card_generator(notification);
 	}
 }
