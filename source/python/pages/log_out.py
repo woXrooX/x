@@ -13,8 +13,8 @@ def log_out(request):
 		session.pop('user')
 
 		try:
-			from python.modules.onLogOut import onLogOut
-			onLogOut()
+			from python.modules.on_log_out import on_log_out
+			on_log_out()
 
 		except ModuleNotFoundError: pass
 

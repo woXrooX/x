@@ -50,8 +50,8 @@ def log_in(request):
 		Log_In_Tools.new_record(request.remote_addr, request.headers.get('User-Agent'), True)
 
 		try:
-			from python.modules.onLogIn import onLogIn
-			onLogIn()
+			from python.modules.on_log_in import on_log_in
+			on_log_in()
 
 		except ModuleNotFoundError: pass
 

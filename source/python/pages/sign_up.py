@@ -100,8 +100,8 @@ def sign_up(request):
 		emailVerificationSentSuccessfully = SendGrid.send("noreply", request.form["eMail"], eMail_content, "Sign Up")
 
 		try:
-			from python.modules.onSignUp import onSignUp
-			onSignUp()
+			from python.modules.on_sign_up import on_sign_up
+			on_sign_up()
 
 		except ModuleNotFoundError: pass
 

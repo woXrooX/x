@@ -75,8 +75,8 @@ from python.modules.routeGuard import routeGuard, routeLogs
 #################################################### Decorations
 def before_first_request():
 	try:
-		from python.modules.beforeFirstRequest import beforeFirstRequest
-		beforeFirstRequest()
+		from python.modules.before_first_request import before_first_request
+		before_first_request()
 
 	except ModuleNotFoundError: pass
 
