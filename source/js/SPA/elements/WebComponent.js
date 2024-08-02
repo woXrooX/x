@@ -19,9 +19,14 @@ export default class WC extends HTMLElement{
 	}
 
 	#DOM = null;
+	#JSON = {};
 
 	constructor(){
 		super();
+
+		// Content as a JSON
+		try{this.#JSON = JSON.parse(this.innerHTML);}
+		catch(error){console.warn("WC: Not JSON-able content.");}
 
 		//// Native Form Behaviour
 		// Get access to the internal form control APIs
