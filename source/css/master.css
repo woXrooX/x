@@ -462,7 +462,7 @@ body{
 			left: 0;
 			width: 100%;
 			height: 100%;
-			background-color: light-dark(rgba(256, 256, 256, 0.6), rgba(0, 0, 0, 0.6));
+			background-color: light-dark(rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0.6));
 			z-index: 1;
 		}
 
@@ -479,6 +479,12 @@ body{
 			border-top: 2px solid var(--color-main);
 			border-radius: 50%;
 			animation: HTML_loading_spin 1s linear infinite;
+		}
+
+		&.loading-on-element-bg-unset{
+			&::before{
+				background-color: unset;
+			}
 		}
 	}
 
