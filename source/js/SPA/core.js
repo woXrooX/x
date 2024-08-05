@@ -7,21 +7,17 @@ import Logger from "../modules/logger.js";
 import bridge from "../modules/bridge.js";
 import XRequest from "../modules/XRequest.js";
 
-//// Core Classes
+//// SPA Classes
 import Language from "./language.js";
-
 import Title from "./title.js";
 import SVG from "./svg.js";
 import CSS from "./css.js";
-
 import Header from "./header.js";
 import Main from "./main.js";
 import Footer from "./footer.js";
-
 import Hyperlink from "./hyperlink.js";
 import Router from "./router.js";
 import DOM from "./dom.js";
-
 import Cover from "./cover.js";
 import Loading from "./loading.js";
 import Menu from "./menu.js";
@@ -29,7 +25,10 @@ import Form from "./form.js";
 
 import Notification from "./notification.js";
 
-//// Custom Elements (In docs we call these Built-In X-Elements)
+//// Tools
+import x_String from "../modules/String.js";
+
+//// Built-In X-Elements
 import Link from "./elements/Link.js";
 import XSVG from "./elements/XSVG.js";
 import Modal from "./elements/modal.js";
@@ -37,14 +36,11 @@ import Toast from "./elements/toast.js";
 import Share from "./elements/share.js"; // Share depends on modal
 import Offline from "./elements/Offline.js";
 import Notification_Bell from "./elements/Notification_Bell.js";
-
 import Table from "./elements/table.js";
 import Tooltip from "./elements/tooltip.js";
 import Select from "./elements/select.js";
 
 export default class Core{
-
-	// Class Static Initialization Block
 	static {
 		// Try To Get Initial Data Then Init The Methods
 		Core.#get_initial_data()
