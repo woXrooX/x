@@ -140,3 +140,41 @@ window.customElements.define('x-wc', WC);
 
 // Make WC Usable W/O Importing It
 window.x["WC"] = WC;
+
+
+
+
+// Standard class style
+class Name{
+	/////////////////////////// Static
+
+	/////////// Variables
+	static public_static_var = null;
+	static #private_static_var = null;
+
+	//// Static initialization blocks
+	// Will be evaluated during class initialization.
+	static {
+		// Code here
+	}
+
+	/////////// APIs
+	static public_method(){}
+
+	/////////// Helpers
+	static #private_method(){}
+
+	/////////////////////////// Object
+
+	/////////// Variables
+	public_var = null;
+	#private_var = null;
+
+	constructor(){}
+
+	/////////// APIs
+	public_method(){}
+
+	/////////// Helpers
+	#private_method(){}
+}
