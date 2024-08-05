@@ -7,7 +7,7 @@ export default class x_String{
 	///// Template decoder
 	// Template: "Hello, {name}! You have {count} new messages."
 	// Values: { name: "Alice", count: 5 };
-	template_decoder(template, values){
+	static template_decoder(template, values){
 		return template.replace(/{(\w+)}/g, replacer);
 		function replacer(match, key){ return values[key]; }
 	}
