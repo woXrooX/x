@@ -12,17 +12,17 @@ export default class Main{
 		Main.element.classList.add("show");
 	}
 
-	static situational_content(type = "error", contentTitle = "ERROR", content = "ERROR", documentTitle = null){
-		if(documentTitle === null) documentTitle = type.toUpperCase();
+	static situational_content(type = "error", content_title = "ERROR", content = "ERROR", document_title = null){
+		if(document_title === null) document_title = type.toUpperCase();
 
-		Title.set(documentTitle);
+		Title.set(document_title);
 
 		return `
 			<container class="flex-y-center p-5">
 				<column class="flex-center surface-${type} p-8 gap-2">
 					<p class="d-flex flex-row flex-y-center gap-0-2 text-color-${type} text-size-2">
 						<x-svg name="type_${type}" class="text-size-2-5" color="var(--color-${type})"></x-svg>
-						${contentTitle}
+						${content_title}
 					</p>
 					<p class="text-size-1-1 text-align-center">${content}</p>
 				</column>

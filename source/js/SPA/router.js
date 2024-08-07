@@ -84,17 +84,16 @@ export default class Router{
 			await window.DOM.set_page(await import(`/js/pages/${Router.current_page.name}.js`));
 		}catch(error){
 			Log.line();
-			Log.error(error);
-			Log.error(error.name);
-			Log.error(error.stack);
+			console.trace(error);
+			// Log.error(error);
+			// Log.error(error.name);
+			// Log.error(error.message);
+			// Log.error(error.stack);
 			Log.line();
-
-			// Set Title To Error
-			window.Title.set("error");
 
 			window.Header.handle();
 
-			window.DOM.render(DOM.render(Main.situational_content("error", error.name, error.stack)));
+			window.DOM.render(Main.situational_content("error", error.name, error.stack));
 
 			window.Footer.handle();
 		}finally{
