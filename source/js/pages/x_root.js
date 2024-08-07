@@ -39,11 +39,11 @@ async function all_users_HTML(){
 	for(const i in USERS.data) BODY.push(Object.values(USERS.data[i]))
 
 	return `
-		<column class="surface-v1 p-2 gap-1 w-100">
+		<column class="surface-v1 p-2 gap-1 w-100 flex-y-start">
+			<p class="text-size-1-5">Users count: ${USERS["data"].length}</p>
+			<p class="text-size-0-9 text-color-secondary">DBs: db.users.* + db.users_roles.name</p>
 
-			<h1>db.users.* + db.users_roles.name</h1>
-
-			<x-table class="scrollbar-x table-v1 table-zebra table-hover table-bordered max-vw-90">
+			<x-table class="scrollbar-x table-v1 table-zebra table-hover table-bordered w-100">
 				{
 					"searchable": true,
 					"head": ${JSON.stringify(HEAD)},
@@ -71,7 +71,7 @@ async function login_records_HTML(){
 	return `
 		<column class="surface-v1 p-2 gap-1 w-100">
 
-			<h1>db.login_records.*</h1>
+			<p class="text-size-1-5">db.login_records.*</p>
 
 			<x-table class="scrollbar-x table-v1 table-zebra table-hover table-bordered max-vw-90">
 				{
