@@ -34,7 +34,7 @@ async function all_users_HTML(){
 	const HEAD = [];
 	const BODY = [];
 
-	for(const KEY of Object.keys(USERS.data[0])) HEAD.push({"title": KEY});
+	for(const KEY of Object.keys(USERS.data[0])) HEAD.push({"title": KEY, "sortable": true});
 	HEAD.push({"title": "Actions", "encoded": true});
 
 	for(const i in USERS.data){
