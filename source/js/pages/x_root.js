@@ -6,7 +6,9 @@ export default async function content(){
 
 			<row class="flex-row flex-x-start surface-v1 p-2 gap-0-5">
 
-				<button
+				<x-svg
+					name="folder_settings"
+
 					xr-post
 					xr-for="sanitize_users_folders"
 					xr-trigger="click"
@@ -14,7 +16,8 @@ export default async function content(){
 					x-toast="on:any:message"
 
 					class="btn btn-warning"
-				>SANITIZE USERS FOLDERS</button>
+				></x-svg>
+				<!-- SANITIZE USERS FOLDERS -->
 
 				<x-svg class="modal_eMail_write btn btn-info" name="eMail"></x-svg>
 				<x-modal trigger_selector="x-svg.modal_eMail_write">
