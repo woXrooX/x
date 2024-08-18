@@ -39,8 +39,13 @@ def x_root(request):
 			users = MySQL.execute(
 				sql="""
 					SELECT
-						users.*,
-						GROUP_CONCAT(DISTINCT user_roles.name ORDER BY user_roles.name ASC SEPARATOR ', ') AS roles_list
+						users.id,
+						users.firstname,
+						users.lastname,
+						users.eMail,
+						GROUP_CONCAT(DISTINCT user_roles.name ORDER BY user_roles.name ASC SEPARATOR ', ') AS roles_list,
+						users.last_update,
+						users.timestamp
 					FROM users
 					LEFT JOIN users_roles ON users.id = users_roles.user
 					LEFT JOIN user_roles ON user_roles.id = users_roles.role

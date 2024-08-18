@@ -35,8 +35,20 @@ async function all_users_HTML(){
 	const BODY = [];
 
 	for(const KEY of Object.keys(USERS.data[0])) HEAD.push({"title": KEY});
+	HEAD.push({"title": "Actions", "encoded": true});
 
-	for(const i in USERS.data) BODY.push(Object.values(USERS.data[i]))
+	for(const i in USERS.data){
+		let arr = Object.values(USERS.data[i]);
+		arr.push(encodeURIComponent(`
+			<a href="/x/user/${USERS.data[i]["id"]}">
+				<x-svg
+					name="open_in_new_tab" color="white"
+					class="btn btn-primary"
+				></x-svg>
+			</a>
+		`));
+		BODY.push(arr);
+	}
 
 	return `
 		<column class="surface-v1 p-2 gap-1 w-100 flex-y-start">
