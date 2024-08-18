@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.194.0.0019"
+version: "0.195.0.0000"
 
 
 ######### Flask
@@ -248,6 +248,18 @@ pages:
       - "POST"
     endpoints:
       - "/x/root"
+
+  x_user:
+    enabled: false
+    roles:
+      - "root"
+    methods:
+      - "GET"
+      - "POST"
+    endpoints:
+      - "/x/user"
+    url_args:
+      - "id"
 
 
 

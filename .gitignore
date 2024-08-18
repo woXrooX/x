@@ -48,4 +48,5 @@ source/python/pages/*.py
 !source/python/pages/x_notification.py
 !source/python/pages/x_notifications.py
 !source/python/pages/x_root.py
+!source/python/pages/x_user.py
 

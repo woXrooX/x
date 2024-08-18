@@ -63,7 +63,8 @@ if __name__ != "__main__":
 					"x_feedbacks.py",
 					"x_notification.py",
 					"x_notifications.py",
-					"x_root.py"
+					"x_root.py",
+					"x_user.py"
 				]
 			}
 		}
