@@ -53,7 +53,7 @@ export async function after(){
 		}
 
 		return `
-			<column class="w-100 surface-v1 p-1">
+			<div class="scrollbar-x w-100 surface-v1 p-1">
 				<table class="table-v1 table-zebra table-hover table-bordered">
 					<caption>${Lang.use("feedbacks")}</caption>
 					<thead>
@@ -69,7 +69,7 @@ export async function after(){
 					</thead>
 					<tbody>${HTML}</tbody>
 				</table>
-			</column>
+			</div>
 		`;
 	}
 }
