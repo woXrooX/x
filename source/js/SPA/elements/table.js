@@ -99,7 +99,7 @@ export default class Table extends HTMLElement{
 				// Create sort icon
 				HTML += `
 					<th>
-						<row class="cursor-pointer gap-0-5 flex-y-center flex-x-start">
+						<row class="cursor-pointer gap-0-5 flex-row flex-y-center flex-x-start">
 							${this.JSON["head"][index]["title"]}
 							<x-svg name="sort_ASC" toggle="sort_DESC"></x-svg>
 						</row>
