@@ -30,6 +30,13 @@ def x_user(request, id):
 
 				return response(type="success", message="success", data=data, default_serializer_func=str)
 
+			if request.get_json()["for"] == "get_user_log_in_records":
+				data = MySQL.execute("SELECT ip_address, user_agent, timestamp FROM log_in_records WHERE user = %s;", [id])
+				if data is False: return response(type="error", message="database_error")
+
+				return response(type="success", message="success", data=data, default_serializer_func=str)
+
+
 			if request.get_json()["for"] == "delete_user":
 				if not User.delete_files(id): return response(type="error", message="could_not_delete_file")
 
