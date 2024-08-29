@@ -1,6 +1,6 @@
 export const TITLE = window.Lang.use("user");
 
-export default function content(){
+export default function main(){
 	return `
 		<container class="p-5 gap-1">
 			${actions_HTML()}
