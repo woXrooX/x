@@ -276,12 +276,12 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 
 \! echo "-------------------------- log_in_records";
 CREATE TABLE IF NOT EXISTS `log_in_records` (
-	`ip_address` VARCHAR(45),
-	`user_agent` TEXT,
-
 	-- NULL = Unsuccessful attempt
 	-- id = Successful login
 	`user` INT NULL,
+
+	`ip_address` VARCHAR(45),
+	`user_agent` TEXT,
 
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
