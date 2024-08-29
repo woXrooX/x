@@ -3,10 +3,10 @@ export const TITLE = window.Lang.use("root");
 export default async function main(){
 	return `
 		<container class="root p-5 gap-1">
-			${action_row_HTML()}
+			${actions_HTML()}
 		</container>
 	`;
-	function action_row_HTML(){
+	function actions_HTML(){
 		return `
 			<row class="flex-row flex-x-start surface-v1 p-2 gap-0-5">
 				<x-svg
@@ -107,6 +107,7 @@ export async function after(){
 				</column>
 			`;
 		}
+
 		async function log_in_records_HTML(){
 			let log_in_records = await window.bridge({for:"get_all_log_in_records"});
 
