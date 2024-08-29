@@ -47,7 +47,7 @@ def log_in(request):
 
 		#### On Success Redirect & Update Front-End Session & Adds a new login record if enabled
 
-		Log_In_Tools.new_record(request.remote_addr, request.headers.get('User-Agent'), True)
+		Log_In_Tools.new_record(request.remote_addr, request.headers.get('User-Agent'), session["user"]["id"])
 
 		try:
 			from python.modules.on_log_in import on_log_in

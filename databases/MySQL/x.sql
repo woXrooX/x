@@ -274,11 +274,14 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 -- ------------------------------------ Login tools
 -- ------------------------------------
 
-\! echo "-------------------------- login_records";
-CREATE TABLE IF NOT EXISTS `login_records` (
+\! echo "-------------------------- log_in_records";
+CREATE TABLE IF NOT EXISTS `log_in_records` (
 	`ip_address` VARCHAR(45),
 	`user_agent` TEXT,
-	`success` BIT(1) NOT NULL DEFAULT 0,
+
+	-- NULL = Unsuccessful attempt
+	-- id = Successful login
+	`user` INT NULL,
 
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

@@ -9,15 +9,14 @@ if __name__ != "__main__":
 		# Returns "False" if disabled or gets falsey value from MySQL.execute()
 		# Returns "True" if succeeds
 		@staticmethod
-		def new_record(ip_address, user_agent, success = False):
+		def new_record(ip_address, user_agent, user = None):
 			if "enable_recording" in Globals.CONF["tools"]["log_in_tools"] and Globals.CONF["tools"]["log_in_tools"]["enable_recording"] is False: return False
 
 			res = MySQL.execute(
-				sql="INSERT INTO login_records (ip_address, user_agent, success) VALUES (%s, %s, %s);",
-				params=(ip_address, user_agent, success),
+				sql="INSERT INTO log_in_records (ip_address, user_agent, user) VALUES (%s, %s, %s);",
+				params=[ip_address, user_agent, user],
 				commit=True
 			)
-
 			if res is False: return False
 
 			return True
