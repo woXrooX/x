@@ -9,7 +9,7 @@ export default function main(){
 
 	function actions_HTML(){
 		return `
-			<row class="p-1 surface-v1 gap-0-5 flex-x-start">
+			<row class="p-1 surface-v1 gap-0-5 flex-row flex-x-start">
 				<x-svg
 					name="mark_eMail_read"
 
