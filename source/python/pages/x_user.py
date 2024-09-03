@@ -47,7 +47,7 @@ def x_user(request, id):
 				)
 				if data is False: return response(type="error", message="databaseError")
 
-				return response(type="success", message="deleted", redirect="/x/root")
+				return response(type="success", message="deleted", redirect="/x/users")
 
 			if request.get_json()["for"] == "resend_eMail_confirmation":
 				user = MySQL.execute("SELECT eMail, eMail_verified FROM users WHERE id=%s LIMIT 1;", [id], fetch_one=True)
