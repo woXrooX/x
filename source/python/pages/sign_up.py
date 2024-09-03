@@ -43,7 +43,7 @@ def sign_up(request):
 
 		######## Success
 		# Generate Randome Verification Code
-		eMailVerificationCode = random.randint(100000, 999999)
+		eMail_verification_code = random.randint(100000, 999999)
 
 		password = Log_In_Tools.password_hash(request.form["password"])
 
@@ -53,7 +53,7 @@ def sign_up(request):
 			params=(
 				password,
 				request.form["eMail"],
-				eMailVerificationCode,
+				eMail_verification_code,
 				Globals.USER_AUTHENTICITY_STATUSES["unauthorized"]["id"]
 			),
 			commit=True
@@ -90,14 +90,14 @@ def sign_up(request):
 
 			<p>Please verify your email address using the code below:</p>
 
-			<h2>{eMailVerificationCode}</h2>
+			<h2>{eMail_verification_code}</h2>
 
 			<p>If you did not create an account using this email address, please ignore this message.</p>
 
 			<p>{Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
 		"""
 
-		emailVerificationSentSuccessfully = SendGrid.send("noreply", request.form["eMail"], eMail_content, "Sign Up")
+		email_verification_sent_status = SendGrid.send("noreply", request.form["eMail"], eMail_content, "Sign Up")
 
 		try:
 			from python.modules.on_sign_up import on_sign_up
@@ -106,10 +106,12 @@ def sign_up(request):
 		except ModuleNotFoundError: pass
 
 		# Success
+		Log_In_Tools.new_record(request)
+
 		return response(
-			type="success" if emailVerificationSentSuccessfully is True else "info",
-			message="eMail_confirmation_code_has_been_sent" if emailVerificationSentSuccessfully is True else "Signed Up Without Email Verification!",
+			type="success" if email_verification_sent_status is True else "info",
+			message="eMail_confirmation_code_has_been_sent" if email_verification_sent_status is True else "Signed Up Without Email Verification!",
 			set_session_user=True,
-			redirect="/eMail_confirmation" if emailVerificationSentSuccessfully is True else "/home",
+			redirect="/eMail_confirmation" if email_verification_sent_status is True else "/home",
 			dom_change=["menu"]
 		)

@@ -276,14 +276,22 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 
 \! echo "-------------------------- log_in_records";
 CREATE TABLE IF NOT EXISTS `log_in_records` (
+	`id` INT NOT NULL UNIQUE auto_increment,
+
 	-- NULL = Unsuccessful attempt
 	-- id = Successful login
 	`user` INT NULL,
 
 	`ip_address` VARCHAR(45),
+
+	-- The X-Forwarded-For (XFF) request header is a de-facto standard header for identifying the originating IP address of a client connecting to a web server through a proxy server.
+	`x_forwarded_for` TEXT NULL,
+
 	`user_agent` TEXT,
 
-	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+	PRIMARY KEY (`id`)
 );
 
 \! echo "-------------------------- password_recoveries";

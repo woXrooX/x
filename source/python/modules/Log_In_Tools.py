@@ -1,6 +1,8 @@
 if __name__ != "__main__":
 	import hashlib
 
+	from main import session
+
 	from python.modules.Globals import Globals
 	from python.modules.MySQL import MySQL
 
@@ -9,12 +11,17 @@ if __name__ != "__main__":
 		# Returns "False" if disabled or gets falsey value from MySQL.execute()
 		# Returns "True" if succeeds
 		@staticmethod
-		def new_record(ip_address, user_agent, user = None):
+		def new_record(request):
 			if "enable_recording" in Globals.CONF["tools"]["log_in_tools"] and Globals.CONF["tools"]["log_in_tools"]["enable_recording"] is False: return False
 
 			res = MySQL.execute(
-				sql="INSERT INTO log_in_records (ip_address, user_agent, user) VALUES (%s, %s, %s);",
-				params=[ip_address, user_agent, user],
+				sql="INSERT INTO log_in_records (user, ip_address, x_forwarded_for, user_agent) VALUES (%s, %s, %s, %s);",
+				params=[
+					session["user"]["id"] if "user" in session else None,
+					request.remote_addr,
+					request.headers.get('X-Forwarded-For', None),
+					request.headers.get('User-Agent', None)
+				],
 				commit=True
 			)
 			if res is False: return False
