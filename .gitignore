@@ -43,10 +43,12 @@ source/python/pages/*.py
 !source/python/pages/request_password_recovery.py
 !source/python/pages/reset_password.py
 !source/python/pages/sign_up.py
+!source/python/pages/x_actions.py
 !source/python/pages/x_feedbacks_leave.py
 !source/python/pages/x_feedbacks.py
+!source/python/pages/x_log_in_records.py
 !source/python/pages/x_notification.py
 !source/python/pages/x_notifications.py
-!source/python/pages/x_root.py
 !source/python/pages/x_user.py
+!source/python/pages/x_users.py
 
