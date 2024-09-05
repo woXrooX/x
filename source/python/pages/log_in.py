@@ -35,7 +35,7 @@ def log_in(request):
 
 		# No Match
 		if not data:
-			Log_In_Tools.new_record(request)
+			Log_In_Tools.new_record(request, "eMail_or_password_incorrect")
 			return response(type="error", message="eMail_or_password_incorrect")
 
 		# Set Session User ID
@@ -47,7 +47,7 @@ def log_in(request):
 
 		#### On Success Redirect & Update Front-End Session & Adds a new login record if enabled
 
-		Log_In_Tools.new_record(request)
+		Log_In_Tools.new_record(request, "success")
 
 		try:
 			from python.modules.on_log_in import on_log_in

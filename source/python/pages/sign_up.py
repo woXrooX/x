@@ -106,7 +106,7 @@ def sign_up(request):
 		except ModuleNotFoundError: pass
 
 		# Success
-		Log_In_Tools.new_record(request)
+		Log_In_Tools.new_record(request, "success")
 
 		return response(
 			type="success" if email_verification_sent_status is True else "info",

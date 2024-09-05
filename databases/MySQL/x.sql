@@ -289,6 +289,8 @@ CREATE TABLE IF NOT EXISTS `log_in_records` (
 
 	`user_agent` TEXT,
 
+	`message` VARCHAR(1000) NULL,
+
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
 	PRIMARY KEY (`id`)
