@@ -1,4 +1,4 @@
-export const TITLE = window.Lang.use("root");
+export const TITLE = window.Lang.use("actions");
 
 export default async function main(){
 	return `

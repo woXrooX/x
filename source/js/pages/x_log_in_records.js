@@ -1,4 +1,4 @@
-export const TITLE = window.Lang.use("root");
+export const TITLE = window.Lang.use("log_in_records");
 
 export default async function main(){return `<container class="root p-5 gap-1"></container>`;}
 
