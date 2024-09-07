@@ -1,13 +1,13 @@
 export default class x_String{
 	static {
-		String.prototype.x_template_decoder = function(values){ return x_String.template_decoder(this, values); };
+		String.prototype.x_format = function(values){ return x_String.format(this, values); };
 	}
 
 	/////////// APIs
-	///// Template decoder
+	///// Formatted string
 	// Template: "Hello, {name}! You have {count} new messages."
 	// Values: { name: "Alice", count: 5 };
-	static template_decoder(template, values){
+	static format(template, values){
 		return template.replace(/{(\w+)}/g, replacer);
 		function replacer(match, key){ return values[key]; }
 	}
