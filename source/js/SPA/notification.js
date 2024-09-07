@@ -1,7 +1,7 @@
 export default class Notification{
 	static unseen_count = 0;
 	static poll_interval_func = null;
-	static poll_interval_duration = 60000;
+	static poll_interval_duration = 300000;
 	static types = [
 		"success",
 		"info",
