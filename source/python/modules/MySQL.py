@@ -144,6 +144,7 @@ if __name__ != "__main__":
 
 						# This read-only property returns the value generated for an AUTO_INCREMENT column by
 						# the previous INSERT or UPDATE statement or None when there is no such value available.
+						# NOTE: For regular UPDATE operations that don't change the primary key, lastrowid won't provide the ID of the updated row.
 						"last_row_id": last_row_id
 					}
 
