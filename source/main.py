@@ -55,12 +55,7 @@ app = Flask(
 
 #################################################### Secret Key
 import os
-
-# Disable random secret_key assignment on each server restart when debug is True
-if Globals.CONF.get("tools", {}).get("debug") is True: app.secret_key = b'12345'
-
-# Generates new "secret_key" every time when server is started
-else: app.secret_key = os.urandom(24)
+app.secret_key = os.urandom(24)
 
 
 #################################################### Permanent session
@@ -68,17 +63,23 @@ from datetime import timedelta
 app.permanent_session_lifetime = timedelta(days=31)
 
 
-#################################################### routeGuard
+#################################################### On app start
+try:
+	from python.modules.on_app_start import init
+	init()
+
+except Exception as e: Log.error(e)
+
+
+#################################################### Default Flask Decorations
 from python.modules.routeGuard import routeGuard, routeLogs
 
-
-#################################################### Decorations
 def before_first_request():
 	try:
 		from python.modules.before_first_request import before_first_request
 		before_first_request()
 
-	except ModuleNotFoundError: pass
+	except Exception as e: Log.error(e)
 
 with app.app_context(): before_first_request()
 

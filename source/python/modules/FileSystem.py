@@ -183,6 +183,7 @@ if __name__ != "__main__":
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py", 'from python.modules.Page import Page\n\n@Page.build()\ndef home(): pass', strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/pages/front/home.js", 'export const TITLE = window.Lang.use("home");\n\nexport default function main(){\n\treturn "Home";\n}', strict=True)
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/Python/before_first_request.py", 'if __name__ != "__main__":\n\tdef before_first_request(): pass')
+			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/Python/on_app_start.py", 'if __name__ != "__main__":\n\tdef init(): pass')
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/Python/on_sign_up.py", 'if __name__ != "__main__":\n\tdef on_sign_up(): pass')
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/Python/on_log_in.py", 'if __name__ != "__main__":\n\tdef on_log_in(): pass')
 			FileSystem.createFile(f"{Globals.PROJECT_RUNNING_FROM}/Python/on_log_out.py", 'if __name__ != "__main__":\n\tdef on_log_out(): pass')

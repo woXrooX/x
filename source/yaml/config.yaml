@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.195.0.0024"
+version: "0.195.0.0025"
 
 
 ######### Flask
