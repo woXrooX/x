@@ -55,7 +55,11 @@ app = Flask(
 
 #################################################### Secret Key
 import os
-app.secret_key = os.urandom(24)
+# Disable random secret_key assignment on each server restart when debug is True
+if Globals.CONF.get("tools", {}).get("debug") is True: app.secret_key = b'12345'
+
+# Generates new "secret_key" every time when server is started
+else: app.secret_key = os.urandom(24)
 
 
 #################################################### Permanent session
