@@ -246,7 +246,8 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 	-- NULL = System
 	`sender` INT NULL,
 	`recipient` INT NOT NULL,
-	`content` VARCHAR(5000) NULL,
+	`content_TEXT` TEXT NULL,
+	`content_JSON` JSON NULL,
 	`seen` BIT(1) NOT NULL DEFAULT 0,
 
 	`event` INT NULL,

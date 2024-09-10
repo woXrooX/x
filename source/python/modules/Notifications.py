@@ -1,26 +1,97 @@
 if __name__ != "__main__":
+	import json
+
 	from main import session
 	from python.modules.Globals import Globals
 	from python.modules.MySQL import MySQL
+	from python.modules.SendGrid import SendGrid
+	from python.modules.Logger import Log
 
 	class Notifications():
 		@staticmethod
-		def new(sender, recipient, content = None, event_name = None, type_name = None):
-			type_id = None
-			if type_name is not None:
-				type_id = Globals.NOTIFICATION_TYPES[type_name]["id"] if type_name in Globals.NOTIFICATION_TYPES else Globals.NOTIFICATION_TYPES["error"]["id"]
+		def new(
+			recipient,
+			sender = None,
+			content_TEXT = None,
+			content_JSON = None,
+			event_name = None,
+			type_name = None,
+			via_in_app = False,
+			via_eMail = False,
+			via_eMail_from = False,
+			via_SMS = False
+		):
+			recipient = MySQL.execute("SELECT id, eMail, phone_number FROM users WHERE id = %s LIMIT 1;", [recipient], fetch_one = True)
+			if recipient is False or recipient is None: return False
 
-			event_id = None
-			if event_name is not None:
-				event_id = Globals.NOTIFICATION_EVENTS[event_name]["id"] if event_name in Globals.NOTIFICATION_EVENTS else None
+			if via_in_app is True:
+				if Notifications.new_in_app(recipient["id"], sender, content_TEXT, content_JSON, event_name, type_name) is False:
+					Log.warning("Notifications.new() -> Could not send: new_in_app()")
+					return False
 
+			if via_eMail is True:
+				if Notifications.new_eMail(recipient["eMail"], sender, content_TEXT, content_JSON, event_name) is False:
+					Log.warning("Notifications.new() -> Could not send: new_eMail()")
+					return False
+
+			# if via_SMS is True: Notifications.new_SMS(recipient["id"], sender, content_TEXT, content_JSON, event_name, type_name)
+
+			return True
+
+		@staticmethod
+		def new_in_app(
+			recipient,
+			sender = None,
+			content_TEXT = None,
+			content_JSON = None,
+			event_name = None,
+			type_name = None
+		):
 			data = MySQL.execute(
-				sql="INSERT INTO notifications (sender, recipient, content, event, type) VALUES (%s, %s, %s, %s, %s);",
-				params=[sender, recipient, content, event_id, type_id],
+				sql="INSERT INTO notifications (sender, recipient, content_TEXT, content_JSON, event, type) VALUES (%s, %s, %s, %s, %s, %s);",
+				params=[
+					sender,
+					recipient,
+					content_TEXT,
+					json.dumps(content_JSON) if isinstance(content_JSON, dict) else None,
+					Globals.NOTIFICATION_EVENTS.get(event_name, {}).get("id", None),
+					Globals.NOTIFICATION_TYPES.get(type_name, {}).get("id", None)
+				],
 				commit=True
 			)
 			if data is False: return False
 			return True
+
+		@staticmethod
+		def new_eMail(
+			recipient,
+			sender = None,
+			content_TEXT = None,
+			content_JSON = None,
+			event_name = None
+		):
+			eMail_subject_LANG_DICT_key = f"{event_name}_eMail_subject"
+			eMail_content_LANG_DICT_key = f"{event_name}_eMail_content"
+
+
+			if eMail_subject_LANG_DICT_key not in Globals.LANG_DICT: return False
+			if eMail_content_LANG_DICT_key not in Globals.LANG_DICT: return False
+
+			try: subject = Globals.LANG_DICT[eMail_subject_LANG_DICT_key]["en"].format(sender=sender, recipient=recipient, content_TEXT=content_TEXT, **content_JSON)
+			except KeyError as e:
+				Log.error(f"Notifications.new_eMail() -> KeyError occurred: {e}. On subject")
+				return False
+
+			try: content = Globals.LANG_DICT[eMail_content_LANG_DICT_key]["en"].format(sender=sender, recipient=recipient, content_TEXT=content_TEXT, **content_JSON)
+			except KeyError as e:
+				Log.error(f"Notifications.new_eMail() -> KeyError occurred: {e}. On content")
+				return False
+
+			SendGrid.send("noreply", recipient, content, subject)
+
+		# @staticmethod
+		# def new_SMS(): pass
+
 
 		@staticmethod
 		def get_all(recipient = None):
