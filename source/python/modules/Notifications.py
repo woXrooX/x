@@ -18,7 +18,6 @@ if __name__ != "__main__":
 			type_name = None,
 			via_in_app = False,
 			via_eMail = False,
-			via_eMail_from = False,
 			via_SMS = False
 		):
 			recipient = MySQL.execute("SELECT id, eMail, phone_number FROM users WHERE id = %s LIMIT 1;", [recipient], fetch_one = True)
@@ -53,7 +52,7 @@ if __name__ != "__main__":
 					sender,
 					recipient,
 					content_TEXT,
-					json.dumps(content_JSON) if isinstance(content_JSON, dict) else None,
+					json.dumps(content_JSON, default=str) if isinstance(content_JSON, dict) else None,
 					Globals.NOTIFICATION_EVENTS.get(event_name, {}).get("id", None),
 					Globals.NOTIFICATION_TYPES.get(type_name, {}).get("id", None)
 				],
@@ -77,14 +76,16 @@ if __name__ != "__main__":
 			if eMail_subject_LANG_DICT_key not in Globals.LANG_DICT: return False
 			if eMail_content_LANG_DICT_key not in Globals.LANG_DICT: return False
 
+			content_JSON = content_JSON if isinstance(content_JSON, dict) else {}
+
 			try: subject = Globals.LANG_DICT[eMail_subject_LANG_DICT_key]["en"].format(sender=sender, recipient=recipient, content_TEXT=content_TEXT, **content_JSON)
-			except KeyError as e:
-				Log.error(f"Notifications.new_eMail() -> KeyError occurred: {e}. On subject")
+			except Exception as e:
+				Log.error(f"Notifications.new_eMail()->subject: {e}")
 				return False
 
 			try: content = Globals.LANG_DICT[eMail_content_LANG_DICT_key]["en"].format(sender=sender, recipient=recipient, content_TEXT=content_TEXT, **content_JSON)
-			except KeyError as e:
-				Log.error(f"Notifications.new_eMail() -> KeyError occurred: {e}. On content")
+			except Exception as e:
+				Log.error(f"Notifications.new_eMail()->content: {e}")
 				return False
 
 			SendGrid.send("noreply", recipient, content, subject)
