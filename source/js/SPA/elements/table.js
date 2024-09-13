@@ -11,6 +11,7 @@ export default class Table extends HTMLElement{
 		if(!("body" in this.JSON)) return;
 		this.body_values = this.JSON["body"];
 		this.body_values_in_chunks = [];
+		this.matched_rows_count = 0;
 
 
 		// Sortable column IDs
@@ -51,10 +52,10 @@ export default class Table extends HTMLElement{
 					<column class="w-100">${!!this.JSON?.searchable === true ? '<input type="text">' : ""}</column>
 				</row>
 
-				<div for="table"></div>
+				<div for="table" class="scrollbar-x"></div>
 
 				<div for="pagination_container" class="d-flex flex-row flex-x-between">
-					<div for="showing_counter" class="d-flex flex-row flex-x-start flex-y-center text-size-0-8"></div>
+					<div for="showing_counter" class="d-flex flex-row flex-x-start flex-y-center gap-1 text-size-0-8"></div>
 					<div for="pagination" class="d-flex flex-row flex-x-end gap-0-2"></div>
 				</div>
 
@@ -223,6 +224,8 @@ export default class Table extends HTMLElement{
 
 		console.log(this.body_values);
 
+		this.matched_rows_count = this.body_values.length;
+
 		if(this.body_values.length === 0) this.body_values = [[window.Lang.use("no_matches")]];
 	}
 
@@ -241,10 +244,14 @@ export default class Table extends HTMLElement{
 			if(event.target.value == ""){
 				this.body_values = this.JSON["body"];
 				this.#build_body();
+				this.#build_matched_rows_counter();
+				this.#build_page_buttons();
 				return;
 			}
 			this.#sort_by_value(event.target.value);
 			this.#build_body();
+			this.#build_page_buttons();
+			this.#build_matched_rows_counter();
 		}
 	}
 
@@ -272,8 +279,14 @@ export default class Table extends HTMLElement{
 
 	#build_showing_counter = ()=>{
 		this.querySelector("main > div[for=pagination_container]:last-child > div[for=showing_counter]").innerHTML = `
-			Page ${this.current_page} of ${this.body_values_in_chunks.length}
+			<p><span class="text-color-secondary text-size-0-7">Page</span> ${this.current_page} <span class="text-color-secondary">of</span> ${this.body_values_in_chunks.length}</p>
+			<p><span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.JSON["body"].length}</p>
 		`;
+	}
+
+	#build_matched_rows_counter = ()=>{
+		let element = this.querySelector("main > div[for=pagination_container]:last-child > div[for=showing_counter]")
+		element.innerHTML += `<p><span class="text-color-secondary">Matched rows:</span> ${this.matched_rows_count}</p>`;
 	}
 
 	#build_page_buttons = ()=>{
