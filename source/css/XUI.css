@@ -404,6 +404,8 @@
 		/* white-space */
 		.text-nowrap{white-space: nowrap !important;}
 
+		.text-word-break-all{word-break: break-all;}
+
 		/* text-decoration */
 		.text-decoration-underline{text-decoration: underline;}
 
