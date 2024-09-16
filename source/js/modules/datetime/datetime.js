@@ -1,7 +1,10 @@
 // Timestamp to human readable
 // Exptected input: type->string, fromat "2034-11-18 01:29:44"
-export function TTHR(inputTimestamp){
-	const timestamp = new Date(inputTimestamp);
+export function timestamp_to_human_readable(input_timestamp){
+	const UTC_timestamp = timestamp_to_UTC(input_timestamp);
+	const local_timestamp = UTC_to_local_timestamp(UTC_timestamp);
+
+	const timestamp = new Date(local_timestamp);
 	if (isNaN(timestamp)) return false;
 
 	const now = new Date();
@@ -37,6 +40,31 @@ export function TTHR(inputTimestamp){
 	if(Math.abs(total_minutes_diff) !== 0) return format_difference(total_minutes_diff, 'minute');
 
 	return format_difference(total_seconds_diff, 'second');
+}
+
+export const timestamp_to_UTC = (timestamp) => timestamp.replace(' ', 'T') + 'Z';
+
+export function UTC_to_local_timestamp(UTC_timestamp) {
+	const date = new Date(UTC_timestamp);
+
+	const user_time_zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+	const local_timestamp = new Intl.DateTimeFormat("en-US", {
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
+		hour: '2-digit',
+		minute: '2-digit',
+		second: '2-digit',
+		hour12: false,
+		timeZone: user_time_zone
+	}).format(date);
+
+	const [month, day, year, time] = local_timestamp.split(/[/,]/);
+	const [hours, minutes, seconds] = time.trim().split(':');
+	return `${year}-${month}-${day.trim()} ${hours}-${minutes}-${seconds}`;
+
+	return local_timestamp;
 }
 
 // Exptected inputs: type->string, fromat->HH:mm:ss
