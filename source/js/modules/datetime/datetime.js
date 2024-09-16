@@ -67,6 +67,12 @@ export function UTC_to_local_timestamp(UTC_timestamp) {
 	return local_timestamp;
 }
 
+export function server_timestamp_to_local_timestamp(server_timestamp){
+	const UTC_timestamp = timestamp_to_UTC(timestamp_to_UTC);
+	const local_timestamp = UTC_to_local_timestamp(UTC_timestamp);
+	return local_timestamp;
+}
+
 // Exptected inputs: type->string, fromat->HH:mm:ss
 export function time_difference(time_1, time_2){
 	const time_1_parsed = parse_time(time_1);
