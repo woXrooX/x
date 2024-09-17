@@ -34,27 +34,26 @@ export default class Table extends HTMLElement{
 
 	#init = ()=>{
 		this.innerHTML = `
-			<main class="d-flex flex-column gap-0-5">
+			<container class="gap-0-5">
 
-				<row class="flex-row flex-y-center flex-x-between gap-0-5">
-					<column class="w-auto">
-						<select>
-							<option selected disabled>${this.page_size}</option>
-							<option value="10">10</option>
-							<option value="15">15</option>
-							<option value="20">20</option>
-							<option value="25">25</option>
-							<option value="50">50</option>
-							<option value="100">100</option>
-							<option value="all">${window.Lang.use("all")}</option>
-						</select>
-					</column>
-					<column class="w-100">${!!this.JSON?.searchable === true ? '<input type="text">' : ""}</column>
-				</row>
+				<header class="d-flex flex-row flex-y-center flex-x-between gap-0-5 w-100">
+					<select class="w-auto">
+						<option selected disabled>${this.page_size}</option>
+						<option value="10">10</option>
+						<option value="15">15</option>
+						<option value="20">20</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+						<option value="all">${window.Lang.use("all")}</option>
+					</select>
 
-				<div for="table" class="scrollbar-x"></div>
+					<column class="w-100">${!!this.JSON?.searchable === true ? '<input type="text" class="w-100">' : ""}</column>
+				</header>
 
-				<footer class="d-flex flex-row flex-x-between">
+				<main class="scrollbar-x w-100"></main>
+
+				<footer class="d-flex flex-row s-flex-column flex-x-between gap-1 w-100">
 					<section class="d-flex flex-row flex-x-start flex-y-center gap-0-5 text-size-0-8">
 						<span class="page_numbers"></span>
 						<span class="total_rows"></span>
@@ -63,7 +62,8 @@ export default class Table extends HTMLElement{
 
 					<section class="d-flex flex-row flex-x-end gap-0-2"></section>
 				</footer>
-			</main>
+
+			</container>
 		`;
 
 
@@ -81,7 +81,7 @@ export default class Table extends HTMLElement{
 
 	//////////////////////////// Header
 	#listen_to_page_size_select = ()=>{
-		this.querySelector("main > row > column > select").onchange = ()=>{
+		this.querySelector("container > header > select").onchange = ()=>{
 			const selectedPageSize = event.target.value;
 
 			// If not a number then show all
@@ -102,11 +102,14 @@ export default class Table extends HTMLElement{
 	}
 
 	#listen_to_search_typing = ()=>{
-		this.querySelector("main > row > column > input").oninput = ()=>{
+		this.querySelector("container > header > column > input").oninput = ()=>{
+			// Fixes issues when you are on page N and the search generated page numbers are less than N
+			this.#update_buttons((this.current_page = 1));
+
 			if(event.target.value == ""){
 				this.body_values = this.JSON["body"];
 				this.#build_body();
-				this.querySelector("main > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
+				this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
 				this.#build_page_buttons_HTML();
 				return;
 			}
@@ -124,7 +127,7 @@ export default class Table extends HTMLElement{
 
 	//////////////////////////// Main
 	#build_table = ()=>{
-		this.querySelector("main > div[for=table]").innerHTML = `
+		this.querySelector("container > main").innerHTML = `
 			<table class="${this.getAttribute("class") || ""}">
 				<thead><tr></tr></thead>
 				<tbody></tbody>
@@ -294,7 +297,7 @@ export default class Table extends HTMLElement{
 
 	//////////////////////////// Footer
 	#build_page_numbers_HTML = ()=>{
-		this.querySelector("main > footer > section:nth-child(1) > span.page_numbers").innerHTML = `
+		this.querySelector("container > footer > section:nth-child(1) > span.page_numbers").innerHTML = `
 			<span class="text-color-secondary text-size-0-7">Page</span>
 			${this.current_page}
 			<span class="text-color-secondary text-size-0-7">of</span>
@@ -302,21 +305,21 @@ export default class Table extends HTMLElement{
 		`;
 	}
 
-	#build_total_rows_HTML = ()=>{this.querySelector("main > footer > section:nth-child(1) > span.total_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.JSON["body"].length}`;}
+	#build_total_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.total_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.JSON["body"].length}`;}
 
-	#build_matched_rows_HTML = ()=>{this.querySelector("main > footer > section:nth-child(1) > span.matched_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Matched rows:</span> ${this.matched_rows_count}`;}
-
-
+	#build_matched_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Matched rows:</span> ${this.matched_rows_count}`;}
 
 
 
-	////////////// main > footer > section:nth-child(2)
+
+
+	////////////// container > footer > section:nth-child(2)
 	#build_page_buttons_HTML = ()=>{
 		let buttons_HTML = "";
 
 		for(let i = 1; i <= this.body_values_in_chunks.length; i++) buttons_HTML += `<button class="btn btn-primary btn-s d-none" name="${i}">${i}</button>`;
 
-		this.querySelector("main > footer > section:nth-child(2)").innerHTML = `
+		this.querySelector("container > footer > section:nth-child(2)").innerHTML = `
 			<button class="btn btn-primary btn-s text-transform-uppercase" name="first">${window.Lang.use("first")}</button>
 			<button class="btn btn-primary btn-s" name="previous"><x-svg name="arrow_back" color="white"></x-svg></button>
 			<section class="d-flex flex-row gap-0-2">${buttons_HTML}</section>
@@ -324,10 +327,10 @@ export default class Table extends HTMLElement{
 			<button class="btn btn-primary btn-s text-transform-uppercase" name="last">${window.Lang.use("last")}</button>
 		`;
 
-		this.first_button = this.querySelector(`main > footer > section:nth-child(2) > button[name=first]`);
-		this.previous_button = this.querySelector(`main > footer > section:nth-child(2) > button[name=previous]`);
-		this.next_button = this.querySelector(`main > footer > section:nth-child(2) > button[name=next]`);
-		this.last_button = this.querySelector(`main > footer > section:nth-child(2) > button[name=last]`);
+		this.first_button = this.querySelector(`container > footer > section:nth-child(2) > button[name=first]`);
+		this.previous_button = this.querySelector(`container > footer > section:nth-child(2) > button[name=previous]`);
+		this.next_button = this.querySelector(`container > footer > section:nth-child(2) > button[name=next]`);
+		this.last_button = this.querySelector(`container > footer > section:nth-child(2) > button[name=last]`);
 
 		this.#update_buttons(this.current_page);
 		this.#listen_to_page_buttons_clicks();
@@ -347,13 +350,13 @@ export default class Table extends HTMLElement{
 		this.last_button.onclick = ()=> this.#update_buttons((this.current_page = this.body_values_in_chunks.length));
 
 		// 1 to this.body_values_in_chunks.length
-		const buttons = this.querySelectorAll("main > footer > section:nth-child(2) > section > button");
+		const buttons = this.querySelectorAll("container > footer > section:nth-child(2) > section > button");
 
 		for(const button of buttons) button.onclick = ()=> this.#update_buttons((this.current_page = parseInt(button.name)));
 	}
 
 	#hide_buttons = ()=>{
-		const buttons = this.querySelectorAll("main > footer > section:nth-child(2) > section > button");
+		const buttons = this.querySelectorAll("container > footer > section:nth-child(2) > section > button");
 
 		for(const button of buttons) button.classList.add("d-none");
 	}
@@ -381,9 +384,9 @@ export default class Table extends HTMLElement{
 
 
 		const buttons = [
-			this.querySelector(`main > footer > section:nth-child(2) > section > button:nth-child(${id-1})`),
-			this.querySelector(`main > footer > section:nth-child(2) > section > button:nth-child(${id})`),
-			this.querySelector(`main > footer > section:nth-child(2) > section > button:nth-child(${id+1})`)
+			this.querySelector(`container > footer > section:nth-child(2) > section > button:nth-child(${id-1})`),
+			this.querySelector(`container > footer > section:nth-child(2) > section > button:nth-child(${id})`),
+			this.querySelector(`container > footer > section:nth-child(2) > section > button:nth-child(${id+1})`)
 		];
 
 		for(const button of buttons) button?.classList.remove("d-none", "disabled", "text-decoration-underline");
