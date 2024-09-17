@@ -62,7 +62,7 @@ export function UTC_to_local_timestamp(UTC_timestamp) {
 
 	const [month, day, year, time] = local_timestamp.split(/[/,]/);
 	const [hours, minutes, seconds] = time.trim().split(':');
-	return `${year}-${month}-${day.trim()} ${hours}-${minutes}-${seconds}`;
+	return `${year}-${month}-${day.trim()} ${hours}:${minutes}:${seconds}`;
 
 	return local_timestamp;
 }
