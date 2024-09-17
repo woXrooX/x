@@ -90,20 +90,6 @@ INSERT INTO user_authenticity_statuses (id, name)
 		(3, "authorized")
 ;
 
-\! echo "-------------------------- user_states";
-CREATE TABLE IF NOT EXISTS `user_states` (
-	`id` INT NOT NULL UNIQUE auto_increment,
-	`name` VARCHAR(10) NOT NULL UNIQUE,
-	PRIMARY KEY (`id`)
-);
-INSERT INTO user_states (id, name)
-	VALUES
-		(1, "active"),
-		(2, "inactive"),
-		(3, "deleted"),
-		(4, "suspended")
-;
-
 \! echo "-------------------------- user_plans";
 CREATE TABLE IF NOT EXISTS `user_plans` (
 	`id` INT NOT NULL UNIQUE auto_increment,
@@ -142,7 +128,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 	`background_picture` VARCHAR(100) NULL,
 
 	`authenticity_status` INT NULL,
-	`state` INT NULL,
 	`plan` INT NULL,
 
 	`currency` INT NULL,
@@ -152,8 +137,13 @@ CREATE TABLE IF NOT EXISTS `users` (
 	`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
+	-- Deleted flag
+	-- Temporarily keeps the unique columns
+	`flag_deleted` TIMESTAMP NULL DEFAULT NULL,
+	`flag_deleted_username` VARCHAR(100) NULL,
+	`flag_deleted_eMail` VARCHAR(100) NULL,
+
 	FOREIGN KEY (authenticity_status) REFERENCES user_authenticity_statuses(id) ON DELETE SET NULL,
-	FOREIGN KEY (state) REFERENCES user_states(id) ON DELETE SET NULL,
 	FOREIGN KEY (plan) REFERENCES user_plans(id) ON DELETE SET NULL,
 
 	FOREIGN KEY (currency) REFERENCES currencies(id) ON DELETE SET NULL,
