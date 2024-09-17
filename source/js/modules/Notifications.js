@@ -1,6 +1,6 @@
 import { timestamp_to_human_readable } from "/js/modules/datetime/datetime.js";
 
-// Small card
+// in_app_s
 export async function notification_s_card_generator(notification){
 	return `
 		<a
@@ -17,7 +17,7 @@ export async function notification_s_card_generator(notification){
 	`;
 }
 
-// Medium card
+// in_app_m
 export async function notification_m_card_generator(notification){
 	let label_HTML = "";
 	let type_HTML = "";
