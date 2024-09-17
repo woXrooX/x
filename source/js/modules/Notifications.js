@@ -11,7 +11,7 @@ export async function notification_s_card_generator(notification){
 				${notification["seen"] == 1 ? "filter-grayscale-90" : ''}
 			"
 		>
-			<p class="w-100 text-size-0-8">${notification["sender"]} | ${notification["recipient"]} | ${notification["content"]} | ${notification["event"]} | ${notification["type"]}</p>
+			<p class="w-100 text-size-0-8">${Lang.use(notification["event"]+"_in_app_s")}</p>
 			<p class="w-auto text-size-0-6 text-color-secondary text-nowrap">${timestamp_to_human_readable(notification["timestamp"])}</p>
 		</a>
 	`;
@@ -28,6 +28,10 @@ export async function notification_m_card_generator(notification){
 			<p class="text-weight-bold text-transform-uppercase text-size-0-9">${Lang.use(notification["type"])}</p>
 		`;
 	}
+
+	let content_JSON = {};
+	try{content_JSON = JSON.parse(notification["content_JSON"]);}
+	catch(error){}
 
 	return `
 		<row class="flex-row gap-0-5 surface-v1 p-1">
@@ -49,7 +53,12 @@ export async function notification_m_card_generator(notification){
 					></x-svg>
 				</header>
 
-				<main class="text-size-0-8">${notification["sender"]} | ${notification["recipient"]} | ${notification["content"]} | ${notification["event"]} | ${notification["type"]}</main>
+				<main class="d-flex flex-column gap-1 text-size-0-8">${Lang.use(notification["event"]+"_in_app_m").x_format({
+					"recipient": notification["recipient"],
+					"sender": notification["sender"],
+					"content_TEXT": notification["content_TEXT"],
+					...content_JSON
+				})}</main>
 
 				<footer class="w-100 d-flex flex-row flex-x-end">
 					<p class="w-auto text-size-0-7 text-color-secondary text-nowrap">${timestamp_to_human_readable(notification["timestamp"])}</p>
