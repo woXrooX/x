@@ -54,7 +54,7 @@ export default class Table extends HTMLElement{
 
 				<div for="table" class="scrollbar-x"></div>
 
-				<footer class="d-flex flex-row flex-x-between">
+				<footer class="d-flex flex-x-between s-flex-column gap-1">
 					<section class="d-flex flex-row flex-x-start flex-y-center gap-0-5 text-size-0-8">
 						<span class="page_numbers"></span>
 						<span class="total_rows"></span>
@@ -103,6 +103,8 @@ export default class Table extends HTMLElement{
 
 	#listen_to_search_typing = ()=>{
 		this.querySelector("main > row > column > input").oninput = ()=>{
+			this.#update_buttons((this.current_page = 1));
+
 			if(event.target.value == ""){
 				this.body_values = this.JSON["body"];
 				this.#build_body();
