@@ -54,7 +54,7 @@ export default class Table extends HTMLElement{
 
 				<div for="table" class="scrollbar-x"></div>
 
-				<div for="pagination_container" class="d-flex flex-row flex-x-between">
+				<div for="pagination_container" class="d-flex flex-x-between s-flex-column gap-1">
 					<div for="showing_counter" class="d-flex flex-row flex-x-start flex-y-center gap-1 text-size-0-8"></div>
 					<div for="pagination" class="d-flex flex-row flex-x-end gap-0-2"></div>
 				</div>
@@ -222,8 +222,6 @@ export default class Table extends HTMLElement{
 					break loop_cell;
 				}
 
-		console.log(this.body_values);
-
 		this.matched_rows_count = this.body_values.length;
 
 		if(this.body_values.length === 0) this.body_values = [[window.Lang.use("no_matches")]];
@@ -241,6 +239,9 @@ export default class Table extends HTMLElement{
 	///////////// Search input
 	#listen_to_search_typing = ()=>{
 		this.querySelector("main > row > column > input").oninput = ()=>{
+			// Fixes the error happens when you are on a page N > search_results / page_size
+			this.#update_buttons((this.current_page = 1));
+
 			if(event.target.value == ""){
 				this.body_values = this.JSON["body"];
 				this.#build_body();
