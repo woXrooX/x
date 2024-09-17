@@ -54,11 +54,15 @@ export default class Table extends HTMLElement{
 
 				<div for="table" class="scrollbar-x"></div>
 
-				<div for="pagination_container" class="d-flex flex-x-between s-flex-column gap-1">
-					<div for="showing_counter" class="d-flex flex-row flex-x-start flex-y-center gap-1 text-size-0-8"></div>
-					<div for="pagination" class="d-flex flex-row flex-x-end gap-0-2"></div>
-				</div>
+				<footer class="d-flex flex-row flex-x-between">
+					<section class="d-flex flex-row flex-x-start flex-y-center gap-0-5 text-size-0-8">
+						<span class="page_numbers"></span>
+						<span class="total_rows"></span>
+						<span class="matched_rows"></span>
+					</section>
 
+					<section class="d-flex flex-row flex-x-end gap-0-2"></section>
+				</footer>
 			</main>
 		`;
 
@@ -69,9 +73,56 @@ export default class Table extends HTMLElement{
 
 		this.#build_table();
 
-		this.#build_page_buttons();
+		this.#build_total_rows_HTML();
+
+		this.#build_page_buttons_HTML();
 	}
 
+
+	//////////////////////////// Header
+	#listen_to_page_size_select = ()=>{
+		this.querySelector("main > row > column > select").onchange = ()=>{
+			const selectedPageSize = event.target.value;
+
+			// If not a number then show all
+			if(isNaN(selectedPageSize)) this.page_size = this.JSON["body"].length;
+
+			// Else set page size to the selected
+			else this.page_size = parseInt(selectedPageSize);
+
+			// Reset "current_page" to 1
+			this.current_page = 1;
+
+			// Update and build the body
+			this.#build_body();
+
+			// Update and build the page buttons
+			this.#build_page_buttons_HTML();
+		}
+	}
+
+	#listen_to_search_typing = ()=>{
+		this.querySelector("main > row > column > input").oninput = ()=>{
+			if(event.target.value == ""){
+				this.body_values = this.JSON["body"];
+				this.#build_body();
+				this.querySelector("main > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
+				this.#build_page_buttons_HTML();
+				return;
+			}
+
+			this.#sort_by_value(event.target.value);
+			this.#build_body();
+			this.#build_page_buttons_HTML();
+			this.#build_matched_rows_HTML();
+		}
+	}
+
+
+
+
+
+	//////////////////////////// Main
 	#build_table = ()=>{
 		this.querySelector("main > div[for=table]").innerHTML = `
 			<table class="${this.getAttribute("class") || ""}">
@@ -85,6 +136,7 @@ export default class Table extends HTMLElement{
 		this.#build_body();
 		this.#build_foot();
 	}
+
 	#build_head = ()=>{
 		if(!("head" in this.JSON)) return;
 		let HTML = "";
@@ -114,12 +166,11 @@ export default class Table extends HTMLElement{
 			// Check if this column is encoded
 			if("encoded" in this.JSON["head"][index] && this.JSON["head"][index]["encoded"] === true) this.encoded_columns.push(true);
 			else this.encoded_columns.push(false);
-
-
 		}
 
 		this.querySelector("table > thead > tr").innerHTML = HTML;
 	}
+
 	#build_body = ()=>{
 		let HTML = "";
 
@@ -142,6 +193,7 @@ export default class Table extends HTMLElement{
 
 		this.querySelector("table > tbody").innerHTML = HTML;
 	}
+
 	#build_foot = ()=>{
 		if(!("foot" in this.JSON)) return;
 		let HTML = "";
@@ -150,6 +202,7 @@ export default class Table extends HTMLElement{
 		this.querySelector("table > tfoot > tr").innerHTML = HTML;
 	}
 
+	////////////// Helper
 	////////// Sort
 	#listen_to_the_sort_clicks = ()=>{
 		for(const id of this.sortable_column_ids){
@@ -236,86 +289,71 @@ export default class Table extends HTMLElement{
 			this.body_values_in_chunks.push(this.body_values.slice(i, i + this.page_size));
 	}
 
-	///////////// Search input
-	#listen_to_search_typing = ()=>{
-		this.querySelector("main > row > column > input").oninput = ()=>{
-			// Fixes the error happens when you are on a page N > search_results / page_size
-			this.#update_buttons((this.current_page = 1));
 
-			if(event.target.value == ""){
-				this.body_values = this.JSON["body"];
-				this.#build_body();
-				this.#build_matched_rows_counter();
-				this.#build_page_buttons();
-				return;
-			}
-			this.#sort_by_value(event.target.value);
-			this.#build_body();
-			this.#build_page_buttons();
-			this.#build_matched_rows_counter();
-		}
-	}
 
-	///////////// Pagination
-	#listen_to_page_size_select = ()=>{
-		this.querySelector("main > row > column > select").onchange = ()=>{
-			const selectedPageSize = event.target.value;
 
-			// If not a number then show all
-			if(isNaN(selectedPageSize)) this.page_size = this.JSON["body"].length;
-
-			// Else set page size to the selected
-			else this.page_size = parseInt(selectedPageSize);
-
-			// Reset "current_page" to 1
-			this.current_page = 1;
-
-			// Update and build the body
-			this.#build_body();
-
-			// Update and build the page buttons
-			this.#build_page_buttons();
-		}
-	}
-
-	#build_showing_counter = ()=>{
-		this.querySelector("main > div[for=pagination_container]:last-child > div[for=showing_counter]").innerHTML = `
-			<p><span class="text-color-secondary text-size-0-7">Page</span> ${this.current_page} <span class="text-color-secondary">of</span> ${this.body_values_in_chunks.length}</p>
-			<p><span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.JSON["body"].length}</p>
+	//////////////////////////// Footer
+	#build_page_numbers_HTML = ()=>{
+		this.querySelector("main > footer > section:nth-child(1) > span.page_numbers").innerHTML = `
+			<span class="text-color-secondary text-size-0-7">Page</span>
+			${this.current_page}
+			<span class="text-color-secondary text-size-0-7">of</span>
+			${this.body_values_in_chunks.length}
 		`;
 	}
 
-	#build_matched_rows_counter = ()=>{
-		let element = this.querySelector("main > div[for=pagination_container]:last-child > div[for=showing_counter]")
-		element.innerHTML += `<p><span class="text-color-secondary">Matched rows:</span> ${this.matched_rows_count}</p>`;
-	}
+	#build_total_rows_HTML = ()=>{this.querySelector("main > footer > section:nth-child(1) > span.total_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.JSON["body"].length}`;}
 
-	#build_page_buttons = ()=>{
-		this.#build_showing_counter();
+	#build_matched_rows_HTML = ()=>{this.querySelector("main > footer > section:nth-child(1) > span.matched_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Matched rows:</span> ${this.matched_rows_count}`;}
 
-		let buttonsHTML = "";
 
-		for(let i = 1; i <= this.body_values_in_chunks.length; i++) buttonsHTML += `<button class="btn btn-primary btn-s d-none" name="${i}">${i}</button>`;
 
-		this.querySelector("main > div[for=pagination_container]:last-child > div[for=pagination]").innerHTML = `
+
+
+	////////////// main > footer > section:nth-child(2)
+	#build_page_buttons_HTML = ()=>{
+		let buttons_HTML = "";
+
+		for(let i = 1; i <= this.body_values_in_chunks.length; i++) buttons_HTML += `<button class="btn btn-primary btn-s d-none" name="${i}">${i}</button>`;
+
+		this.querySelector("main > footer > section:nth-child(2)").innerHTML = `
 			<button class="btn btn-primary btn-s text-transform-uppercase" name="first">${window.Lang.use("first")}</button>
 			<button class="btn btn-primary btn-s" name="previous"><x-svg name="arrow_back" color="white"></x-svg></button>
-			<section class="d-flex flex-row gap-0-2">${buttonsHTML}</section>
+			<section class="d-flex flex-row gap-0-2">${buttons_HTML}</section>
 			<button class="btn btn-primary btn-s" name="next"><x-svg name="arrow_forward" color="white"></x-svg></button>
 			<button class="btn btn-primary btn-s text-transform-uppercase" name="last">${window.Lang.use("last")}</button>
 		`;
 
-		this.firstButton = this.querySelector(`main > div[for=pagination_container]:last-child > div[for="pagination"] > button[name=first]`);
-		this.previousButton = this.querySelector(`main > div[for=pagination_container]:last-child > div[for="pagination"] > button[name=previous]`);
-		this.nextButton = this.querySelector(`main > div[for=pagination_container]:last-child > div[for=pagination] > button[name=next]`);
-		this.lastButton = this.querySelector(`main > div[for=pagination_container]:last-child > div[for="pagination"] > button[name=last]`);
+		this.first_button = this.querySelector(`main > footer > section:nth-child(2) > button[name=first]`);
+		this.previous_button = this.querySelector(`main > footer > section:nth-child(2) > button[name=previous]`);
+		this.next_button = this.querySelector(`main > footer > section:nth-child(2) > button[name=next]`);
+		this.last_button = this.querySelector(`main > footer > section:nth-child(2) > button[name=last]`);
 
 		this.#update_buttons(this.current_page);
 		this.#listen_to_page_buttons_clicks();
 	}
 
+	#listen_to_page_buttons_clicks = ()=>{
+		// first
+		this.first_button.onclick = ()=> this.#update_buttons((this.current_page = 1));
+
+		// previous
+		this.previous_button.onclick = ()=> this.#update_buttons(--this.current_page);
+
+		// next
+		this.next_button.onclick = ()=> this.#update_buttons(++this.current_page);
+
+		// last
+		this.last_button.onclick = ()=> this.#update_buttons((this.current_page = this.body_values_in_chunks.length));
+
+		// 1 to this.body_values_in_chunks.length
+		const buttons = this.querySelectorAll("main > footer > section:nth-child(2) > section > button");
+
+		for(const button of buttons) button.onclick = ()=> this.#update_buttons((this.current_page = parseInt(button.name)));
+	}
+
 	#hide_buttons = ()=>{
-		const buttons = this.querySelectorAll("main > div[for=pagination_container]:last-child > div[for=pagination] > section > button");
+		const buttons = this.querySelectorAll("main > footer > section:nth-child(2) > section > button");
 
 		for(const button of buttons) button.classList.add("d-none");
 	}
@@ -326,26 +364,26 @@ export default class Table extends HTMLElement{
 
 		//// Enable/Disable main buttons
 		// Enable/Disable "first" button
-		if(id == 1) this.firstButton.disabled = true;
-		else this.firstButton.disabled = false;
+		if(id == 1) this.first_button.disabled = true;
+		else this.first_button.disabled = false;
 
 		// Enable/Disable "previous" button
-		if(id > 1) this.previousButton.disabled = false;
-		else this.previousButton.disabled = true;
+		if(id > 1) this.previous_button.disabled = false;
+		else this.previous_button.disabled = true;
 
 		// Enable/Disable "next" button
-		if(id == this.body_values_in_chunks.length) this.nextButton.disabled = true;
-		else this.nextButton.disabled = false;
+		if(id == this.body_values_in_chunks.length) this.next_button.disabled = true;
+		else this.next_button.disabled = false;
 
 		// Enable/Disable "last" button
-		if(id == this.body_values_in_chunks.length) this.lastButton.disabled = true;
-		else this.lastButton.disabled = false;
+		if(id == this.body_values_in_chunks.length) this.last_button.disabled = true;
+		else this.last_button.disabled = false;
 
 
 		const buttons = [
-			this.querySelector(`main > div[for=pagination_container]:last-child > div[for=pagination] > section > button:nth-child(${id-1})`),
-			this.querySelector(`main > div[for=pagination_container]:last-child > div[for=pagination] > section > button:nth-child(${id})`),
-			this.querySelector(`main > div[for=pagination_container]:last-child > div[for=pagination] > section > button:nth-child(${id+1})`)
+			this.querySelector(`main > footer > section:nth-child(2) > section > button:nth-child(${id-1})`),
+			this.querySelector(`main > footer > section:nth-child(2) > section > button:nth-child(${id})`),
+			this.querySelector(`main > footer > section:nth-child(2) > section > button:nth-child(${id+1})`)
 		];
 
 		for(const button of buttons) button?.classList.remove("d-none", "disabled", "text-decoration-underline");
@@ -357,28 +395,13 @@ export default class Table extends HTMLElement{
 		// Update body after current page changes
 		this.#build_body();
 
-		// Update showing counter
-		this.#build_showing_counter();
+		// Update page numbers
+		this.#build_page_numbers_HTML();
 	}
 
-	#listen_to_page_buttons_clicks = ()=>{
-		// first
-		this.firstButton.onclick = ()=> this.#update_buttons((this.current_page = 1));
 
-		// previous
-		this.previousButton.onclick = ()=> this.#update_buttons(--this.current_page);
 
-		// next
-		this.nextButton.onclick = ()=> this.#update_buttons(++this.current_page);
 
-		// last
-		this.lastButton.onclick = ()=> this.#update_buttons((this.current_page = this.body_values_in_chunks.length));
-
-		// 1 to this.body_values_in_chunks.length
-		const buttons = this.querySelectorAll("main > div[for=pagination_container]:last-child > div[for=pagination] > section > button");
-
-		for(const button of buttons) button.onclick = ()=> this.#update_buttons((this.current_page = parseInt(button.name)));
-	}
 };
 
 window.customElements.define('x-table', Table);
