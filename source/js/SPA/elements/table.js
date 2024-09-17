@@ -37,7 +37,7 @@ export default class Table extends HTMLElement{
 			<container class="gap-0-5">
 
 				<header class="d-flex flex-row flex-y-center flex-x-between gap-0-5 w-100">
-					<select class="w-auto">
+					<select class="w-auto text-align-center">
 						<option selected disabled>${this.page_size}</option>
 						<option value="10">10</option>
 						<option value="15">15</option>
