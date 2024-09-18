@@ -26,7 +26,7 @@ def log_in(request):
 
 		######## Check If eMail And Password matching User Exist
 		data = MySQL.execute(
-			sql="SELECT id FROM users WHERE eMail=%s AND password=%s LIMIT 1;",
+			sql="SELECT id FROM users WHERE eMail=%s AND password=%s AND flag_deleted IS NULL LIMIT 1;",
 			params=(request.form["eMail"], password),
 			fetch_one=True
 		)

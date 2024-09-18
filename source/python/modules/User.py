@@ -228,6 +228,28 @@ if __name__ != "__main__":
 				return False
 
 		@staticmethod
+		def soft_delete(user_id):
+			if not user_id: return False
+
+			data = MySQL.execute(
+				sql="""
+					UPDATE users
+					SET
+						flag_deleted = NOW(),
+						flag_deleted_username = username,
+						flag_deleted_eMail = eMail,
+						username = NULL,
+						eMail = NULL
+					WHERE id=%s LIMIT 1;
+				""",
+				params=[user_id],
+				commit=True
+			)
+			if data is False: return False
+
+			return True
+
+		@staticmethod
 		def delete_files(id):
 			try:
 				shutil.rmtree(f'{Globals.X_RUNNING_FROM}/project_files/users/{id}/')
