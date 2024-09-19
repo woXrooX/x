@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 	`password` VARCHAR(100) NOT NULL,
 	`password_salt` VARCHAR(100),
 
-	`eMail` VARCHAR(100) NOT NULL UNIQUE,
+	`eMail` VARCHAR(100) NULL UNIQUE,
 	`eMail_verified` BIT(1) NOT NULL DEFAULT 0,
 	`eMail_verification_code` INT NULL,
 	`eMail_verification_attempts_count` INT NOT NULL DEFAULT 0,
