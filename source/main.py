@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, make_response, send_from_directory, abort
 
 
-#################################################### Draw "The X"
+#################################################### Clean up the terminal
 from python.modules.Logger import Log
 Log.clear()
 
@@ -25,22 +25,9 @@ Log.center('', '-')
 Log.enabled = True if Globals.CONF.get("tools", {}).get("debug") is True else False
 
 
-#################################################### Setting Up MySQL
+#################################################### Initializing Up MySQL
 from python.modules.MySQL import MySQL
-######## If Database Is Enabled
-if(
-	Globals.CONF.get("database", {}).get("enabled") is True and
-	Globals.CONF.get("database", {}).get("MySQL", {}).get("enabled") is True
-):
-	######## Set Up Connection
-	MySQL.init(
-		Globals.CONF["database"]["MySQL"]["user"],
-		Globals.CONF["database"]["MySQL"]["password"],
-		Globals.CONF["database"]["MySQL"]["host"],
-		Globals.CONF["database"]["MySQL"]["name"],
-		Globals.CONF["database"]["MySQL"]["charset"],
-		Globals.CONF["database"]["MySQL"]["collate"]
-	)
+MySQL.init()
 
 
 #################################################### Flask APP

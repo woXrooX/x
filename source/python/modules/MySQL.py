@@ -29,15 +29,20 @@ if __name__ != "__main__":
 		######### APIs / Methods
 		# Init MySQL
 		@staticmethod
-		def init(user, password, host, database, charset, collate):
-			MySQL.enabled = True
+		def init():
+			if(
+				Globals.CONF.get("database", {}).get("enabled", False) is not True or
+				Globals.CONF.get("database", {}).get("MySQL", {}).get("enabled", False) is not True
+			): return False
 
-			MySQL.user = user
-			MySQL.password = password
-			MySQL.host = host
-			MySQL.database = database
-			MySQL.charset = charset
-			MySQL.collate = collate
+			MySQL.user = Globals.CONF["database"]["MySQL"]["user"]
+			MySQL.password = Globals.CONF["database"]["MySQL"]["password"]
+			MySQL.host = Globals.CONF["database"]["MySQL"]["host"]
+			MySQL.database = Globals.CONF["database"]["MySQL"]["name"]
+			MySQL.charset = Globals.CONF["database"]["MySQL"]["charset"]
+			MySQL.collate = Globals.CONF["database"]["MySQL"]["collate"]
+
+			MySQL.enabled = True
 
 			MySQL.get_user_authenticity_statuses()
 			MySQL.get_user_roles()
@@ -45,6 +50,8 @@ if __name__ != "__main__":
 			MySQL.get_notification_types()
 			MySQL.get_notification_events()
 			MySQL.get_languages()
+
+			Log.success("MySQL.init(): MySQL has been initialized")
 
 
 		@staticmethod
