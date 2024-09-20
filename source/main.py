@@ -30,6 +30,11 @@ from python.modules.MySQL import MySQL
 MySQL.init()
 
 
+#################################################### Initializing Up Twilio
+from python.modules.Twilio import Twilio
+Twilio.init()
+
+
 #################################################### Flask APP
 app = Flask(
 	__name__,

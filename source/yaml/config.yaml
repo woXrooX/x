@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.196.0.0004"
+version: "0.197.0.0000"
 
 
 ######### Flask
@@ -36,6 +36,18 @@ eMail:
     enabled: false
     domain: null
     api_key: null
+
+
+######### Twilio
+Twilio:
+  enabled: false
+  api_key: "XXXXXXXXXXXXXXXXX"
+  api_secret: "YYYYYYYYYYYYYYYYYY"
+  account_sid: "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  auth_token: "your_auth_token"
+  region: null
+  edge: null
+
 
 ######### Striep
 Stripe:
@@ -260,8 +272,6 @@ pages:
       - "/x/user"
     url_args:
       - "id"
-
-
 
 
 ######### Menu

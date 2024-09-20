@@ -22,6 +22,7 @@ source/python/modules/*
 !source/python/modules/routeGuard.py
 !source/python/modules/SendGrid.py
 !source/python/modules/tools.py
+!source/python/modules/Twilio.py
 !source/python/modules/User.py
 
 ################ Pages

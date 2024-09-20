@@ -41,6 +41,7 @@ if __name__ != "__main__":
 					"routeGuard.py",
 					"SendGrid.py",
 					"tools.py",
+					"Twilio.py",
 					"User.py"
 				]
 			},
