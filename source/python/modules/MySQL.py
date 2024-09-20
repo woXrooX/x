@@ -33,7 +33,7 @@ if __name__ != "__main__":
 			if(
 				Globals.CONF.get("database", {}).get("enabled", False) is not True or
 				Globals.CONF.get("database", {}).get("MySQL", {}).get("enabled", False) is not True
-			): return False
+			): return
 
 			MySQL.user = Globals.CONF["database"]["MySQL"]["user"]
 			MySQL.password = Globals.CONF["database"]["MySQL"]["password"]
