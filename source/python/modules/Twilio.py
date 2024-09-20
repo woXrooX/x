@@ -1,6 +1,4 @@
 if __name__ != "__main__":
-	from twilio.rest import Client
-
 	from python.modules.Globals import Globals
 	from python.modules.Logger import Log
 
@@ -11,6 +9,8 @@ if __name__ != "__main__":
 		@staticmethod
 		def init():
 			if Globals.CONF.get("Twilio", {}).get("enabled", False) is not True: return
+
+			from twilio.rest import Client
 
 			try:
 				Twilio.client = Client(
