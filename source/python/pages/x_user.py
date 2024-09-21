@@ -38,14 +38,7 @@ def x_user(request, id):
 
 
 			if request.get_json()["for"] == "delete_user":
-				if not User.delete_files(id): return response(type="error", message="could_not_delete_file")
-
-				data = MySQL.execute(
-					sql="DELETE FROM users WHERE id=%s LIMIT 1;",
-					params=[id],
-					commit=True
-				)
-				if data is False: return response(type="error", message="databaseError")
+				if User.soft_delete(id) is not True: return response(type="warning", message="could_not_delete", dom_change=["main"])
 
 				return response(type="success", message="deleted", redirect="/x/users")
 
