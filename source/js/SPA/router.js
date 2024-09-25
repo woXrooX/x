@@ -12,19 +12,19 @@ export default class Router{
 		// Check If App Is Down If So Stop Handling Set app_is_down As Current Page
 		if("app_is_down" in window.CONF["tools"]){
 			Router.current_page.name = "app_is_down";
-			Router.#loadPageFile();
+			Router.#load_page_file();
 			return;
 		}
 
 		// Check the "window.location.pathname" for the error URLs
 		if(Router.errorHandlers() === true){
-			Router.#loadPageFile();
+			Router.#load_page_file();
 			return;
 		}
 
 		// NOTE: We have much efficient way of detecting "if page exists" if we give up on endpoints system
 		// Loop Through Pages
-		loopPages:
+		loop_pages:
 		for(const page in window.CONF["pages"]){
 			if(Router.guard(page) === false) continue;
 
@@ -45,7 +45,7 @@ export default class Router{
 			}
 
 			// Endpoints
-			loopEndpoints:
+			loop_endpoints:
 			for(const endpoint of window.CONF["pages"][page]["endpoints"])
 				// Check If Page Endpoint Equals To Currnt Endpoint
 				if(endpoint == pathname){
@@ -61,7 +61,7 @@ export default class Router{
 					Router.current_page.full_URL = window.location.href;
 
 					// Break Out The Loops
-					break loopPages;
+					break loop_pages;
 				}
 		}
 
@@ -69,16 +69,16 @@ export default class Router{
 		if(Router.current_page.name === null) Router.current_page.name = "404";
 
 		// Load Page File
-		Router.#loadPageFile();
+		Router.#load_page_file();
 	}
 
-	static async #loadPageFile(){
+	static async #load_page_file(){
 		window.Log.info(`Page file is loading: ${Router.current_page.name}.js`);
 
 		try{
 			// Start Loading Effects
 			window.Loading.start();
-			window.Main.animationStart();
+			window.Main.animation_start();
 
 			// Load The Page
 			await window.DOM.set_page(await import(`/js/pages/${Router.current_page.name}.js`));
@@ -99,7 +99,7 @@ export default class Router{
 		}finally{
 			// End Loading Effects
 			window.Loading.end();
-			window.Main.animationEnd();
+			window.Main.animation_end();
 		}
 	}
 
