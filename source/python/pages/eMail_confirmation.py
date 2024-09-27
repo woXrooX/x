@@ -1,4 +1,7 @@
+from urllib.parse import unquote
+
 from main import session
+
 from python.modules.Page import Page
 from python.modules.response import response
 from python.modules.Globals import Globals
@@ -63,10 +66,12 @@ def eMail_confirmation(request):
 			# Update The session["user"] After The Changes To The Database
 			User.update_session()
 
+			redirect = unquote(request.args.get("redirect")) if "redirect" in request.args else "/home"
+
 			return response(
 				type="success",
 				message="eMail_verification_success",
 				set_session_user=True,
 				dom_change=["menu"],
-				redirect="/home"
+				redirect=redirect
 			)

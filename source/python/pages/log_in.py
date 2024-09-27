@@ -1,3 +1,5 @@
+from urllib.parse import unquote
+
 from main import session
 
 from python.modules.Page import Page
@@ -5,7 +7,6 @@ from python.modules.response import response
 from python.modules.User import User
 from python.modules.MySQL import MySQL
 from python.modules.Log_In_Tools import Log_In_Tools
-from urllib.parse import unquote
 
 
 @Page.build()
@@ -61,6 +62,6 @@ def log_in(request):
 			type="success",
 			message="success",
 			set_session_user=True,
-			redirect= redirect,
-			dom_change=["menu"]
+			dom_change=["menu"],
+			redirect= redirect
 		)
