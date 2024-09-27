@@ -271,16 +271,16 @@ CREATE TABLE IF NOT EXISTS `log_in_records` (
 
 	-- NULL = Unsuccessful attempt
 	-- id = Successful login
-	`user` INT NULL,
+	`user` INT NULL DEFAULT NULL,
 
-	`ip_address` VARCHAR(45),
+	`ip_address` VARCHAR(45) NULL DEFAULT NULL,
 
 	-- The X-Forwarded-For (XFF) request header is a de-facto standard header for identifying the originating IP address of a client connecting to a web server through a proxy server.
-	`x_forwarded_for` TEXT NULL,
+	`x_forwarded_for` TEXT NULL DEFAULT NULL,
 
-	`user_agent` TEXT,
+	`user_agent` TEXT NULL DEFAULT NULL,
 
-	`message` VARCHAR(1000) NULL,
+	`message` VARCHAR(1000) NULL DEFAULT NULL,
 
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
