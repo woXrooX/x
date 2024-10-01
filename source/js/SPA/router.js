@@ -84,7 +84,6 @@ export default class Router{
 			await window.DOM.set_page(await import(`/js/pages/${Router.current_page.name}.js`));
 		}catch(error){
 			// Log.line();
-			// console.trace(error);
 			// Log.error(error);
 			// Log.error(error.name);
 			// Log.error(error.message);
@@ -93,8 +92,10 @@ export default class Router{
 
 			window.Header.handle();
 
-			if("CONF" in window && window.CONF.tools.debug === true) window.DOM.render(Main.situational_content("error", error.name, error.stack));
-			else window.DOM.render(Main.situational_content("warning", Lang.use("warning"), Lang.use("something_went_wrong")));
+			if("CONF" in window && window.CONF.tools.debug === true){
+				window.DOM.render(Main.situational_content("error", error.name, error.stack));
+				console.trace(error);
+			}else window.DOM.render(Main.situational_content("warning", Lang.use("warning"), Lang.use("something_went_wrong")));
 
 			window.Footer.handle();
 		}finally{
