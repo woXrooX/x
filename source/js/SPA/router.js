@@ -83,17 +83,18 @@ export default class Router{
 			// Load The Page
 			await window.DOM.set_page(await import(`/js/pages/${Router.current_page.name}.js`));
 		}catch(error){
-			Log.line();
-			console.trace(error);
+			// Log.line();
+			// console.trace(error);
 			// Log.error(error);
 			// Log.error(error.name);
 			// Log.error(error.message);
 			// Log.error(error.stack);
-			Log.line();
+			// Log.line();
 
 			window.Header.handle();
 
-			window.DOM.render(Main.situational_content("error", error.name, error.stack));
+			if("CONF" in window && window.CONF.tools.debug === true) window.DOM.render(Main.situational_content("error", error.name, error.stack));
+			else window.DOM.render(Main.situational_content("warning", Lang.use("warning"), Lang.use("something_went_wrong")));
 
 			window.Footer.handle();
 		}finally{
