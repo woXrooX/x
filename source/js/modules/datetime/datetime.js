@@ -1,11 +1,11 @@
 // Timestamp to human readable
 // Exptected input: type->string, fromat "2034-11-18 01:29:44"
-export function timestamp_to_human_readable(input_timestamp){
+export function timestamp_to_human_readable_v1(input_timestamp){
 	const UTC_timestamp = timestamp_to_UTC(input_timestamp);
 	const local_timestamp = UTC_to_local_timestamp(UTC_timestamp);
 
 	const timestamp = new Date(local_timestamp);
-	if (isNaN(timestamp)) return false;
+	if(isNaN(timestamp)) return false;
 
 	const now = new Date();
 	const total_diff = now - timestamp;
@@ -40,6 +40,33 @@ export function timestamp_to_human_readable(input_timestamp){
 	if(Math.abs(total_minutes_diff) !== 0) return format_difference(total_minutes_diff, 'minute');
 
 	return format_difference(total_seconds_diff, 'second');
+}
+
+export function timestamp_to_human_readable_v2(input_timestamp) {
+	const UTC_timestamp = timestamp_to_UTC(input_timestamp);
+	const local_timestamp = UTC_to_local_timestamp(UTC_timestamp);
+
+	const timestamp = new Date(local_timestamp);
+	if(isNaN(timestamp)) return false;
+
+	const now = new Date();
+	const total_diff = now - timestamp;
+	const abs_total_diff = Math.abs(total_diff);
+
+	const units = [
+		{ value: 365 * 24 * 60 * 60 * 1000, label: 'y' },
+		{ value: 30 * 24 * 60 * 60 * 1000, label: 'mo' },
+		{ value: 7 * 24 * 60 * 60 * 1000, label: 'w' },
+		{ value: 24 * 60 * 60 * 1000, label: 'd' },
+		{ value: 60 * 60 * 1000, label: 'h' },
+		{ value: 60 * 1000, label: 'm' },
+		{ value: 1000, label: 's' }
+	];
+
+	for(let unit of units)
+		if(abs_total_diff >= unit.value) return `${Math.floor(abs_total_diff / unit.value)}${unit.label}`;
+
+	return 'now';
 }
 
 export const timestamp_to_UTC = (timestamp) => timestamp.replace(' ', 'T') + 'Z';
