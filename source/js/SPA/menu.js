@@ -87,6 +87,20 @@ export default class Menu{
 		}
 	}
 
+	// static set_active(){
+	// 	// Hyperlinks
+	// 	const hyperlinks = document.querySelectorAll(Menu.#selector_menu_hyperlinks);
+
+	// 	// loop Through All The Hyperlinks Of Parent Menu
+	// 	for(const hyperlink of hyperlinks){
+	// 		// De-Activate All
+	// 		hyperlink.parentElement.removeAttribute("active");
+
+	// 		// Activate section.parentMenu if href matches
+	// 		if(hyperlink.getAttribute("href") == window.location.pathname) hyperlink.parentElement.setAttribute("active", "");
+	// 	}
+	// }
+
 	/////////// Helpers
 	static #recursive_builder(menus){
 		let HTML = "";
