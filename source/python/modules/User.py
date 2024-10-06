@@ -241,7 +241,7 @@ if __name__ != "__main__":
 						flag_deleted_eMail = eMail,
 						username = NULL,
 						eMail = NULL
-					WHERE id=%s LIMIT 1;
+					WHERE id=%s AND flag_deleted IS NULL LIMIT 1;
 				""",
 				params=[session["user"]["id"], user_id],
 				commit=True
