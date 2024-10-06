@@ -140,6 +140,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 	-- Deleted flag
 	-- Temporarily keeps the unique columns
 	`flag_deleted` TIMESTAMP NULL DEFAULT NULL,
+	`flag_deleted_by_user` INT NULL,
 	`flag_deleted_username` VARCHAR(100) NULL,
 	`flag_deleted_eMail` VARCHAR(100) NULL,
 
