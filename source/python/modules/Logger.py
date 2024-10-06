@@ -64,7 +64,7 @@ if __name__ != "__main__":
 		def error(text, force = False): Logger.log("error", text, force)
 
 		@staticmethod
-		def custom(type, text, force = False): Logger.log(type, text, force)
+		def custom(type_name, text, force = False): Logger.log(type_name, text, force)
 
 		@staticmethod
 		@guard
@@ -72,36 +72,36 @@ if __name__ != "__main__":
 
 		@staticmethod
 		@guard
-		def center(text, fillChar = ' ', force = False):
+		def center(text, fill_char = ' ', type_name="bright_white", force = False):
 			# Calculate The With OF The Terminal
 			padding = (Logger.columns - 2 - len(text)) // 2
 
 			# If Empty Text Passed Then Draw Full Line
-			if text == "": print(fillChar * Logger.columns)
+			if text == '': print(f"{Logger.colors.get(type_name, Logger.colors['custom'])}{fill_char * Logger.columns}\033[0m")
 
 			# Else Normal Line With Space In The Center
-			else: print(fillChar * padding +' '+ text +' '+ fillChar * padding)
+			else: print(f"{Logger.colors.get(type_name, Logger.colors['custom'])}{fill_char * padding} {text} {fill_char * padding}\033[0m")
 
 		@staticmethod
-		def fieldset(content, legend="", type="success", fillChar = '-', force = False):
+		def fieldset(content, legend="", type_name="bright_white", fill_char = '-', force = False):
 			if not content: return
 
-			Logger.center(legend, fillChar)
+			Logger.center(legend, fill_char, type_name)
 			Logger.raw(content)
-			Logger.center('', fillChar)
+			Logger.center('', fill_char, type_name)
 
 
 		@staticmethod
 		@guard
-		def line(char = "\u2588"): print(Logger.coloredText("bright_cyan", char) * Logger.lineLength)
+		def line(char = "\u2588"): print(Logger.colored_text("bright_cyan", char) * Logger.lineLength)
 
 
 		######### Helpers
 		# NOTE: Helpers only for internal usage
 		@staticmethod
 		@guard
-		def log(type, text, force = False):
-			print(f"{Logger.colors.get(type, Logger.colors['custom'])}[{Logger.timestamp()}] [{type.upper()}]\033[0m {text}")
+		def log(type_name, text, force = False):
+			print(f"{Logger.colors.get(type_name, Logger.colors['custom'])}[{Logger.timestamp()}] [{type_name.upper()}]\033[0m {text}")
 
 
 		@staticmethod
@@ -109,7 +109,7 @@ if __name__ != "__main__":
 		def clear(): print("\033[H\033[J")
 
 		@staticmethod
-		def coloredText(color, text): return f"{Logger.colors[color]}{text}{Logger.colors['reset']}"
+		def colored_text(color, text): return f"{Logger.colors[color]}{text}{Logger.colors['reset']}"
 
 		@staticmethod
 		def timestamp(): return datetime.now().strftime('%Y.%m.%d %H:%M:%S')

@@ -71,7 +71,7 @@ if __name__ != "__main__":
 				Log.fieldset(
 					f"{response.status_code}\n{response.body}\n{response.headers}",
 					legend="SendGrid.send()",
-					type="success"
+					type_name="success"
 				)
 
 				return True

@@ -157,11 +157,11 @@ if __name__ != "__main__":
 
 				else: result = data
 
-			except Exception as err:
+			except mysql.connector.Error as err:
 				# In case of errors, rollback the transaction
 				if commit is True: MySQL.connection.rollback()
 
-				Log.fieldset(f"ERROR: {err}\nNO: {err.errno}\nSQL STATE: {err.sqlstate}\nMESSAGE: {err.msg}", "MySQL.execute()")
+				Log.fieldset(f"ERROR: {str(err)}\nNO: {err.errno}\nSQL STATE: {err.sqlstate}\nMESSAGE: {err.msg}", "MySQL.execute()", "error")
 
 				if include_MySQL_data is True:
 					return {
@@ -171,6 +171,14 @@ if __name__ != "__main__":
 						"error_message": err.msg,
 						"error_raw": err
 					}
+
+				return False
+
+			except Exception as err:
+				# In case of errors, rollback the transaction
+				if commit is True: MySQL.connection.rollback()
+
+				Log.fieldset(f"ERROR: {err}", "MySQL.execute()", "error")
 
 				return False
 
@@ -212,12 +220,12 @@ if __name__ != "__main__":
 					dictionary=dictionary
 				)
 
-				Log.fieldset(f"Connection ID: {MySQL.connection.connection_id}", "MySQL.connect()")
+				Log.fieldset(f"Connection ID: {MySQL.connection.connection_id}", "MySQL.connect()", "success")
 
 				return True
 
 			except Exception as e:
-				Log.fieldset(f"ERROR: {e}", "MySQL.connect()")
+				Log.fieldset(f"ERROR: {e}", "MySQL.connect()", "error")
 				return False
 
 		@staticmethod
@@ -233,36 +241,36 @@ if __name__ != "__main__":
 		@staticmethod
 		def get_user_authenticity_statuses():
 			data = MySQL.execute("SELECT * FROM user_authenticity_statuses")
-			if data is False: return Log.fieldset("Could Not Fetch 'user_authenticity_statuses'", "MySQL.get_user_authenticity_statuses()")
+			if data is False: return Log.fieldset("Could Not Fetch 'user_authenticity_statuses'", "MySQL.get_user_authenticity_statuses()", "error")
 			for user_authenticity_status in data: Globals.USER_AUTHENTICITY_STATUSES[user_authenticity_status["name"]] = user_authenticity_status
 
 		@staticmethod
 		def get_user_roles():
 			data = MySQL.execute("SELECT * FROM user_roles")
-			if data is False: return Log.fieldset("Could Not Fetch 'user_roles'", "MySQL.get_user_roles()")
+			if data is False: return Log.fieldset("Could Not Fetch 'user_roles'", "MySQL.get_user_roles()", "error")
 			for user_role in data: Globals.USER_ROLES[user_role["name"]] = user_role
 
 		@staticmethod
 		def get_user_occupations():
 			data = MySQL.execute("SELECT * FROM user_occupations")
-			if data is False: return Log.fieldset("Could Not Fetch 'user_occupations'", "MySQL.get_user_occupations()")
+			if data is False: return Log.fieldset("Could Not Fetch 'user_occupations'", "MySQL.get_user_occupations()", "error")
 			for user_occupation in data: Globals.USER_OCCUPATIONS[user_occupation["name"]] = user_occupation
 
 		@staticmethod
 		def get_notification_types():
 			data = MySQL.execute("SELECT * FROM notification_types")
-			if data is False: return Log.fieldset("Could Not Fetch 'notification_types'", "MySQL.get_notification_types()")
+			if data is False: return Log.fieldset("Could Not Fetch 'notification_types'", "MySQL.get_notification_types()", "error")
 			for notification_type in data: Globals.NOTIFICATION_TYPES[notification_type["name"]] = notification_type
 
 		@staticmethod
 		def get_notification_events():
 			data = MySQL.execute("SELECT * FROM notification_events")
-			if data is False: return Log.fieldset("Could Not Fetch 'notification_events'", "MySQL.get_notification_events()")
+			if data is False: return Log.fieldset("Could Not Fetch 'notification_events'", "MySQL.get_notification_events()", "error")
 			for notification_event in data: Globals.NOTIFICATION_EVENTS[notification_event["name"]] = notification_event
 
 
 		@staticmethod
 		def get_languages():
 			languages = MySQL.execute("SELECT * FROM languages")
-			if languages is False: return Log.fieldset("Could Not Fetch 'languages'", "MySQL.get_languages()")
+			if languages is False: return Log.fieldset("Could Not Fetch 'languages'", "MySQL.get_languages()", "error")
 			for language in languages: Globals.LANGUAGES[language["code"]] = language
