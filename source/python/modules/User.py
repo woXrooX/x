@@ -236,13 +236,14 @@ if __name__ != "__main__":
 					UPDATE users
 					SET
 						flag_deleted = NOW(),
+						flag_deleted_by_user = %s,
 						flag_deleted_username = username,
 						flag_deleted_eMail = eMail,
 						username = NULL,
 						eMail = NULL
 					WHERE id=%s LIMIT 1;
 				""",
-				params=[user_id],
+				params=[session["user"]["id"], user_id],
 				commit=True
 			)
 			if data is False: return False
