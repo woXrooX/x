@@ -1,11 +1,13 @@
 {
+	"id": "x",
 	"name": "x",
 	"short_name": "x",
-	"description": "Speeding Up Web App Creation Process",
-	"start_url": "/",
+	"description": "Crafted by humans, for humans, on Earth.",
+	"start_url": "/home",
+	"lang": "en",
+	"display": "standalone",
 	"theme_color": "#14151A",
 	"background_color": "#14151A",
-	"display": "standalone",
 	"icons": [
 		{
 			"src": "/images/PWA/logo_512.png",
