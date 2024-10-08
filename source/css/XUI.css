@@ -571,6 +571,7 @@
 			&[type=file]{
 				padding: var(--padding);
 				font-size: var(--f-font-size);
+				cursor: pointer;
 
 				/* Button */
 				&::file-selector-button{
@@ -584,6 +585,20 @@
 					border-radius: var(--f-radius);
 
 					cursor: pointer;
+				}
+
+				&.file-v1{
+					border: 1px dashed var(--color-text-secondary);
+
+					&::file-selector-button{
+						color: transparent;
+
+						background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224px%22%20viewBox%3D%220%20-960%20960%20960%22%20width%3D%2224px%22%20fill%3D%22%23ffffff%22%3E%3Cpath%20d%3D%22M440-367v127q0%2017%2011.5%2028.5T480-200q17%200%2028.5-11.5T520-240v-127l36%2036q6%206%2013.5%209t15%202.5q7.5-.5%2014.5-3.5t13-9q11-12%2011.5-28T612-388L508-492q-6-6-13-8.5t-15-2.5q-8%200-15%202.5t-13%208.5L348-388q-12%2012-11.5%2028t12.5%2028q12%2011%2028%2011.5t28-11.5l35-35ZM240-80q-33%200-56.5-23.5T160-160v-640q0-33%2023.5-56.5T240-880h287q16%200%2030.5%206t25.5%2017l194%20194q11%2011%2017%2025.5t6%2030.5v447q0%2033-23.5%2056.5T720-80H240Zm280-560q0%2017%2011.5%2028.5T560-600h160L520-800v160Z%22%2F%3E%3C%2Fsvg%3E");
+						background-repeat: no-repeat;
+						background-position: center;
+
+						cursor: pointer;
+					}
 				}
 			}
 
