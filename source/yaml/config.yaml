@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.197.0.0021"
+version: "0.198.0.0000"
 
 
 ######### Flask
@@ -13,15 +13,6 @@ flask:
   static_folder: "www/static"
   static_url_path: "/"
 
-
-######### URL
-# Won't be needed in production
-URL:
-  prefix: "http"
-  sub_domain: "www"
-  domain_name: "localhost"
-  domain_extension: "com"
-  port: "5000"
 
 
 ######### eMail
@@ -75,6 +66,13 @@ default:
     # Languages that will be displayed in the language switcher
     supported:
       - "en"
+
+  # URL:
+  #   prefix: "http"
+  #   sub_domain: "www"
+  #   domain_name: "localhost"
+  #   domain_extension: "com"
+  #   port: "5000"
 
   # For External Color Configurations
   # HEX: #14151A
@@ -209,6 +207,26 @@ pages:
       - "TOKEN"
 
 
+  x_actions:
+    enabled: false
+    roles:
+      - "root"
+    methods:
+      - "GET"
+      - "POST"
+    endpoints:
+      - "/x/actions"
+
+  x_app_analytics:
+    enabled: false
+    roles:
+      - "root"
+    methods:
+      - "GET"
+      - "POST"
+    endpoints:
+      - "/x/app_analytics"
+
   x_feedbacks_leave:
     enabled: false
     methods:
@@ -225,6 +243,15 @@ pages:
     endpoints:
       - "/x/feedbacks"
 
+  x_log_in_records:
+    enabled: false
+    roles:
+      - "root"
+    methods:
+      - "GET"
+      - "POST"
+    endpoints:
+      - "/x/log_in_records"
 
   x_notification:
     enabled: false
@@ -250,17 +277,6 @@ pages:
     endpoints:
       - "/x/notifications"
 
-
-  x_root:
-    enabled: false
-    roles:
-      - "root"
-    methods:
-      - "GET"
-      - "POST"
-    endpoints:
-      - "/x/root"
-
   x_user:
     enabled: false
     roles:
@@ -272,6 +288,16 @@ pages:
       - "/x/user"
     url_args:
       - "id"
+
+  x_users:
+    enabled: false
+    roles:
+      - "root"
+    methods:
+      - "GET"
+      - "POST"
+    endpoints:
+      - "/x/users"
 
 
 ######### Menu
