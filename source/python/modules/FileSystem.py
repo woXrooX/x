@@ -171,7 +171,7 @@ if __name__ != "__main__":
 			for folder in x_folders: FileSystem.createFolder(f'{Globals.X_RUNNING_FROM}/{folder}/', strict=True)
 
 			# project/[folder]
-			project_folders = ["Backups", "CSS", "fonts", "HTML", "images", "JavaScript", "JavaScript/JSON", "JavaScript/lib", "JavaScript/modules", "pages", "pages/back", "pages/front", "Python", "SVG"]
+			project_folders = ["Backups", "CSS", "fonts", "HTML", "images", "JavaScript", "JavaScript/JSON", "JavaScript/libs", "JavaScript/modules", "pages", "pages/back", "pages/front", "Python", "SVG"]
 			for folder in project_folders: FileSystem.createFolder(f'{Globals.PROJECT_RUNNING_FROM}/{folder}/', strict=True)
 
 			################ Files
