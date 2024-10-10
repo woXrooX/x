@@ -2,7 +2,7 @@ export const TITLE = window.Lang.use("actions");
 
 export default async function main(){
 	return `
-		<container class="root p-5 gap-1">
+		<container class="p-5 gap-1">
 			<row class="flex-row flex-x-start surface-v1 p-2 gap-0-5">
 				<x-svg
 					name="folder_settings"

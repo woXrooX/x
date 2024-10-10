@@ -1,6 +1,6 @@
-export const TITLE = window.Lang.use("root");
+export const TITLE = window.Lang.use("users");
 
-export default async function main(){return `<container class="root p-5 gap-1"></container>`;}
+export default async function main(){return `<container class="p-5 gap-1"></container>`;}
 
 export async function after(){
 	const container = document.querySelector("container");
@@ -40,14 +40,13 @@ export async function after(){
 					<p class="text-size-1-5">Users count: ${USERS["data"].length}</p>
 					<p class="text-size-0-9 text-color-secondary">DBs: db.users.* + db.users_roles.name</p>
 
-					<x-table class="scrollbar-x table-v1 table-zebra table-hover table-bordered w-100">
+					<x-table class="table-v1 table-zebra table-hover table-bordered w-100">
 						{
 							"searchable": true,
 							"head": ${JSON.stringify(HEAD)},
 							"body": ${JSON.stringify(BODY)}
 						}
 					</x-table>
-
 				</column>
 			`;
 		}
