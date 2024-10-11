@@ -13,7 +13,7 @@ def x_app_analytics(request):
 			if request.get_json()["for"] == "get_all_access_logs":
 				if "URL" not in Globals.CONF["default"]: return response(type="error", message="invalid_request")
 
-				log_file_and_path = f"/var/log/www.{Globals.CONF["default"]["URL"]["domain_name"]}.{Globals.CONF["default"]["URL"]["domain_extension"]}.access.log"
+				log_file_and_path = f"/var/log/www.{Globals.CONF['default']['URL']['domain_name']}.{Globals.CONF['default']['URL']['domain_extension']}.access.log"
 
 				if not os.path.exists(log_file_and_path):
 					Log.warning(f"x_app_analytics -> File does not exists: {log_file_and_path}")
