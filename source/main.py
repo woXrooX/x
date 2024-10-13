@@ -1,7 +1,3 @@
-#################################################### Flask Imports
-from flask import Flask, render_template, request, session, redirect, url_for, make_response, send_from_directory, abort
-
-
 #################################################### Clean up the terminal
 from python.modules.Logger import Log
 Log.clear()
@@ -35,14 +31,15 @@ from python.modules.Twilio import Twilio
 Twilio.init()
 
 
-#################################################### Flask APP
-app = Flask(
-	__name__,
-	root_path = Globals.CONF["flask"]["root_path"],
-	template_folder = Globals.CONF["flask"]["template_folder"],
-	static_folder = Globals.CONF["flask"]["static_folder"],
-	static_url_path = Globals.CONF["flask"]["static_url_path"]
-)
+#################################################### Set up BEE
+from python.libs.BEE.BEE import BEE
+
+app = BEE()
+# __name__,
+# root_path = Globals.CONF["flask"]["root_path"],
+# template_folder = Globals.CONF["flask"]["template_folder"],
+# static_folder = Globals.CONF["flask"]["static_folder"],
+# static_url_path = Globals.CONF["flask"]["static_url_path"]
 
 
 #################################################### Secret Key
@@ -95,13 +92,3 @@ def before_request():
 
 #################################################### Dynamically Imprting All Pages
 from python.pages import *
-
-
-#################################################### RUN using Flask (For Development)
-### Flask server
-# if __name__ == "__main__":
-	# No SSL
-	# app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True)
-
-	# OpenSSL
-	# app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True, ssl_context=('SSL/cert.pem', 'SSL/key.pem'))

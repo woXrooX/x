@@ -4,7 +4,7 @@ if __name__ != "__main__":
 	import shutil
 	import json
 	import yaml
-	from main import session
+
 	from python.modules.Logger import Log
 	from python.modules.Globals import Globals
 
