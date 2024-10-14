@@ -82,13 +82,13 @@ export default class Table extends HTMLElement{
 	//////////////////////////// Header
 	#listen_to_page_size_select = ()=>{
 		this.querySelector("container > header > select").onchange = ()=>{
-			const selectedPageSize = event.target.value;
+			const selected_page_size = event.target.value;
 
 			// If not a number then show all
-			if(isNaN(selectedPageSize)) this.page_size = this.JSON["body"].length;
+			if(isNaN(selected_page_size)) this.page_size = this.JSON["body"].length;
 
 			// Else set page size to the selected
-			else this.page_size = parseInt(selectedPageSize);
+			else this.page_size = parseInt(selected_page_size);
 
 			// Reset "current_page" to 1
 			this.current_page = 1;
