@@ -59,7 +59,7 @@ export default class Core{
 	/////// Initial Data
 	static async #get_initial_data(){
 		return new Promise( async (resolve, reject) => {
-			let response = await window.bridge({for:"initialData"}, "/api");
+			let response = await window.bridge({for:"initial_data"}, "/api");
 
 			if(typeof response === "object"){
 				Log.success(response);

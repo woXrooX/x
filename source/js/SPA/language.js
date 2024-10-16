@@ -54,7 +54,7 @@ export default class Language extends HTMLElement{
 		// Check if supported language was passed
 		if(!window.CONF.default.language.supported.includes(code)) return;
 
-		if("user" in window.session) await window.bridge({for:"changeUserAppLanguage", "code": code}, "/api", "application/json");
+		if("user" in window.session) await window.bridge({for:"change_user_app_language", "code": code}, "/api", "application/json");
 		else localStorage.setItem('x.language', code);
 
 		// Update current language code

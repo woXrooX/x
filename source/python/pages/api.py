@@ -16,7 +16,7 @@ def api():
 		if "for" not in request.get_json(): return response(type="warning", message="invalid_request")
 
 
-		if request.get_json()["for"] == "initialData":
+		if request.get_json()["for"] == "initial_data":
 			return make_response(
 				{
 					"CONF": Globals.PUBLIC_CONF,
@@ -29,14 +29,14 @@ def api():
 					"PROJECT_SVG": Globals.PROJECT_SVG
 				}, 200)
 
-		if request.get_json()["for"] == "changeUserAppColorMode":
+		if request.get_json()["for"] == "change_user_app_color_mode":
 			if "colorMode" not in request.get_json(): return response(type="error", message="invalid_value")
 
 			if not User.set_app_color_mode(request.get_json()["colorMode"]): return response(type="error", message="something_went_wrong")
 
 			return response(type="success", message="saved")
 
-		if request.get_json()["for"] == "changeUserAppLanguage":
+		if request.get_json()["for"] == "change_user_app_language":
 			if "code" not in request.get_json() or not request.get_json()["code"]: return response(type="error", message="invalid_request")
 
 			if not User.set_app_language(request.get_json()["code"]): return response(type="error", message="something_went_wrong")

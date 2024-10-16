@@ -162,7 +162,7 @@ export default class CSS{
 	static async #saveColorMode(){
 		// If user is logged in, update user color mode on database
 		if("user" in window.session){
-			const req = await window.bridge({for:"changeUserAppColorMode", colorMode: CSS.currentColorMode}, "/api", "application/json");
+			const req = await window.bridge({for:"change_user_app_color_mode", colorMode: CSS.currentColorMode}, "/api", "application/json");
 			// Update the session
 			if("type" in req && req["type"] === "success"){
 				window.session["user"]["app_color_mode"] = CSS.currentColorMode;
