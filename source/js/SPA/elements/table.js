@@ -19,7 +19,7 @@ export default class Table extends HTMLElement{
 		this.last_sorted_column_id = null;
 		this.last_sort_mode = null;
 
-		this.page_size = 10;
+		this.page_size = "page_size" in this.JSON ? this.JSON["page_size"] : 10;
 		this.current_page = 1;
 
 		// Encoded columns info holder
@@ -33,6 +33,8 @@ export default class Table extends HTMLElement{
 	}
 
 	#init = ()=>{
+		this.#set_initial_page_size();
+
 		this.innerHTML = `
 			<container class="gap-0-5">
 
@@ -290,6 +292,16 @@ export default class Table extends HTMLElement{
 
 		for(let i = 0; i < this.body_values.length; i += this.page_size)
 			this.body_values_in_chunks.push(this.body_values.slice(i, i + this.page_size));
+	}
+
+	#set_initial_page_size = () => {
+		if(this.page_size === "all") return this.page_size = this.JSON["body"].length;
+		
+		if(isNaN(parseInt(this.page_size))) return this.page_size = 10;
+
+		if(parseInt(this.page_size) < 0) return this.page_size = 10;
+
+		if(parseInt(this.page_size) > this.JSON["body"].length) return this.page_size = this.JSON["body"].length;
 	}
 
 
