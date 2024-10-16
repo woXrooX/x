@@ -299,7 +299,7 @@ export default class Table extends HTMLElement{
 
 		if(isNaN(parseInt(this.page_size))) return this.page_size = 10;
 
-		if(parseInt(this.page_size) < 0) return this.page_size = 10;
+		if(parseInt(this.page_size) < 0 || parseInt(this.page_size) == 0) return this.page_size = 10;
 
 		if(parseInt(this.page_size) > this.JSON["body"].length) return this.page_size = this.JSON["body"].length;
 
