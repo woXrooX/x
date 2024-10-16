@@ -296,12 +296,14 @@ export default class Table extends HTMLElement{
 
 	#set_initial_page_size = () => {
 		if(this.page_size === "all") return this.page_size = this.JSON["body"].length;
-		
+
 		if(isNaN(parseInt(this.page_size))) return this.page_size = 10;
 
 		if(parseInt(this.page_size) < 0) return this.page_size = 10;
 
 		if(parseInt(this.page_size) > this.JSON["body"].length) return this.page_size = this.JSON["body"].length;
+
+		return this.page_size = parseInt(this.page_size);
 	}
 
 
