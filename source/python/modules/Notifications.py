@@ -5,6 +5,7 @@ if __name__ != "__main__":
 	from python.modules.Globals import Globals
 	from python.modules.MySQL import MySQL
 	from python.modules.SendGrid import SendGrid
+	from python.modules.Twilio import Twilio
 	from python.modules.Logger import Log
 
 	class Notifications():
@@ -23,19 +24,24 @@ if __name__ != "__main__":
 			recipient = MySQL.execute("SELECT id, eMail, phone_number FROM users WHERE id = %s LIMIT 1;", [recipient], fetch_one = True)
 			if recipient is False or recipient is None: return False
 
+			is_successfully = True
+
 			if via_in_app is True:
 				if Notifications.new_in_app(recipient["id"], sender, content_TEXT, content_JSON, event_name, type_name) is False:
-					Log.warning("Notifications.new() -> Could not send: new_in_app()")
-					return False
+					Log.warning("Notifications.new() -> Could not create: new_in_app()")
+					is_successfully = False
 
 			if via_eMail is True:
 				if Notifications.new_eMail(recipient["eMail"], sender, content_TEXT, content_JSON, event_name) is False:
 					Log.warning("Notifications.new() -> Could not send: new_eMail()")
-					return False
+					is_successfully = False
 
-			# if via_SMS is True: Notifications.new_SMS(recipient["id"], sender, content_TEXT, content_JSON, event_name, type_name)
+			if via_SMS is True:
+				if Notifications.new_SMS(recipient["phone_number"], sender, content_TEXT, content_JSON, event_name) is False:
+					Log.warning("Notifications.new() -> Could not send: new_SMS()")
+					is_successfully = False
 
-			return True
+			return is_successfully
 
 		@staticmethod
 		def new_in_app(
@@ -69,6 +75,8 @@ if __name__ != "__main__":
 			content_JSON = None,
 			event_name = None
 		):
+			if recipient is None: return
+
 			eMail_subject_LANG_DICT_key = f"{event_name}_eMail_subject"
 			eMail_content_LANG_DICT_key = f"{event_name}_eMail_content"
 
@@ -90,8 +98,28 @@ if __name__ != "__main__":
 
 			SendGrid.send("noreply", recipient, content, subject)
 
-		# @staticmethod
-		# def new_SMS(): pass
+		@staticmethod
+		def new_SMS(
+			recipient,
+			sender = None,
+			content_TEXT = None,
+			content_JSON = None,
+			event_name = None
+		):
+			if recipient is None: return
+
+			SMS_body_LANG_DICT_key = f"{event_name}_SMS_body"
+
+			if SMS_body_LANG_DICT_key not in Globals.LANG_DICT: return False
+
+			content_JSON = content_JSON if isinstance(content_JSON, dict) else {}
+
+			try: content = Globals.LANG_DICT[SMS_body_LANG_DICT_key]["en"].format(recipient=recipient, sender=sender, content_TEXT=content_TEXT, **content_JSON)
+			except Exception as e:
+				Log.error(f"Notifications.new_SMS()->content: {e}")
+				return False
+
+			Twilio.send_sms(content, Globals.CONF["Twilio"]["alphanumeric_sender_id"], recipient)
 
 
 		@staticmethod

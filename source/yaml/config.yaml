@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.198.2.0000"
+version: "0.198.2.0001"
 
 
 ######### Flask
@@ -38,6 +38,7 @@ Twilio:
   auth_token: "your_auth_token"
   region: null
   edge: null
+  alphanumeric_sender_id: null
 
 
 ######### Striep
