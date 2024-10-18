@@ -2549,7 +2549,7 @@
 
 		.bs-default{box-shadow: var(--shadow);}
 
-		.bs-2D{
+		.bs-v1{
 			box-shadow: -2px 2px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.7);
 
 			transition: var(--transition-velocity) ease-in-out box-shadow;
@@ -2559,7 +2559,7 @@
 			}
 		}
 
-		.bs-2D-multi-layer{
+		.bs-v2{
 			box-shadow:
 				5px 5px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.4),
 				10px 10px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.3),
