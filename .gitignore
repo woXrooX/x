@@ -6,6 +6,7 @@ source/www/*
 
 ################ Python
 source/python/modules/*
+!source/python/modules/phone_numbers
 !source/python/modules/Backup.py
 !source/python/modules/FileSystem.py
 !source/python/modules/Globals.py
