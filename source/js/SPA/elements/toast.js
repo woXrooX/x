@@ -87,7 +87,7 @@ export default class Toast extends HTMLElement{
 					grid-template-columns:auto 2fr auto;
 					align-items: center;
 
-					animation: fadeIn var(--transition-velocity) ease;
+					animation: fade_in var(--transition-velocity) ease;
 
 					& > toast-type-color{
 						background-color: var(--color-${[this.typeName]});
@@ -123,7 +123,7 @@ export default class Toast extends HTMLElement{
 					}
 				}
 
-				@keyframes fadeIn{
+				@keyframes fade_in{
 					0%{transform:translateY(-10px);}
 					100%{transform:translateY(0px);}
 				}
