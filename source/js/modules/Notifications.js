@@ -12,7 +12,7 @@ export async function notification_s_card_generator(notification){
 			"
 		>
 			<p class="w-100 text-size-0-8">${Lang.use(notification["event"]+"_in_app_s")}</p>
-			<p class="w-auto text-size-0-6 text-color-secondary text-nowrap">${timestamp_to_human_readable_v1(notification["timestamp"])}</p>
+			<p class="w-auto text-size-0-6 text-color-secondary text-white-space-nowrap-important">${timestamp_to_human_readable_v1(notification["timestamp"])}</p>
 		</a>
 	`;
 }
@@ -61,7 +61,7 @@ export async function notification_m_card_generator(notification){
 				})}</main>
 
 				<footer class="w-100 d-flex flex-row flex-x-end">
-					<p class="w-auto text-size-0-7 text-color-secondary text-nowrap">${timestamp_to_human_readable_v1(notification["timestamp"])}</p>
+					<p class="w-auto text-size-0-7 text-color-secondary text-white-space-nowrap-important">${timestamp_to_human_readable_v1(notification["timestamp"])}</p>
 				</footer>
 			</column>
 		</row>

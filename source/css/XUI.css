@@ -395,14 +395,15 @@
 			.text-ls-3{letter-spacing: 3rem;}
 		}
 
-
+		@layer white-space{
+			.text-white-space-nowrap{white-space: nowrap;}
+			.text-white-space-nowrap-important{white-space: nowrap !important;}
+			.text-white-space-pre{white-space: pre;}
+		}
 
 		/****** Other ******/
 		/** Style **/
 		.text-italic{font-style: italic;}
-
-		/* white-space */
-		.text-nowrap{white-space: nowrap !important;}
 
 		.text-word-break-all{word-break: break-all;}
 
