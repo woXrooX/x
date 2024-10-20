@@ -389,7 +389,7 @@ body{
 		transition-delay: var(--delay);
 		transition-property: opacity transform;
 
-		&.fadeIn{
+		&.fade_in{
 			opacity: 0;
 
 			&.observed {
@@ -397,7 +397,7 @@ body{
 			}
 		}
 
-		&.slideFromLeft{
+		&.slide_from_left{
 			transform: translateX(-100px);
 
 			&.observed {
@@ -405,7 +405,7 @@ body{
 			}
 		}
 
-		&.slideFromRight{
+		&.slide_from_right{
 			transform: translateX(100px);
 
 			&.observed {
@@ -413,7 +413,7 @@ body{
 			}
 		}
 
-		&.slideFromTop{
+		&.slide_from_top{
 			transform: translateY(-100px);
 
 			&.observed {
@@ -421,7 +421,7 @@ body{
 			}
 		}
 
-		&.slideFromBottom{
+		&.slide_from_bottom{
 			transform: translateY(100px);
 
 			&.observed {
@@ -429,7 +429,7 @@ body{
 			}
 		}
 
-		&.scaleUp{
+		&.scale_up{
 			transform: scale(0.8);
 
 			&.observed {
@@ -437,7 +437,7 @@ body{
 			}
 		}
 
-		&.scaleDown{
+		&.scale_down{
 			transform: scale(1.5);
 
 			&.observed {
