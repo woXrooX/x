@@ -381,7 +381,7 @@ body{
 @layer observer_effects{
 	.observe{
 		--duration: 500ms;
-		--timing-function: ease-in-out;;
+		--timing-function: ease-in-out;
 		--delay: 250ms;
 
 		transition-duration: var(--duration);
@@ -394,6 +394,18 @@ body{
 
 			&.observed {
 				opacity: 1;
+			}
+		}
+
+		&.fade_in_v1{
+			--duration: 750ms;
+
+			opacity: 0;
+			filter: blur(20px);
+
+			&.observed {
+				opacity: 1;
+				filter: blur(0px);
 			}
 		}
 
