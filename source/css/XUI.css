@@ -2647,68 +2647,68 @@
 
 	@layer animations{
 		@supports (animation-timeline: view()){
-			@layer onView{
-				.onView{
+			@layer on_view{
+				.on_view{
 					animation-timeline: view();
 					animation-fill-mode: forwards;
 					animation-timing-function: linear;
 
 					animation-name:
-						var(--fadeIn-name, normal),
-						var(--fadeOut-name, normal),
-						var(--scaleUpOut-name, normal),
-						var(--scaleDownIn-name, normal)
+						var(--fade_in_name, normal),
+						var(--fade_out_name, normal),
+						var(--scale_up_out_name, normal),
+						var(--scale_down_in_name, normal)
 					;
 
 					animation-range-start:
-						var(--fadeIn-range-start, normal),
-						var(--fadeOut-range-start, normal),
-						var(--scaleUpOut-range-start, normal),
-						var(--scaleDownIn-range-start, normal)
+						var(--fade_in_range_start, normal),
+						var(--fade_out_range_start, normal),
+						var(--scale_up_out_range_start, normal),
+						var(--scale_down_in_range_start, normal)
 					;
 
 					animation-range-end:
-						var(--fadeIn-range-end, normal),
-						var(--fadeOut-range-end, normal),
-						var(--scaleUpOut-range-end, normal),
-						var(--scaleDownIn-range-end, normal)
+						var(--fade_in_range_end, normal),
+						var(--fade_out_range_end, normal),
+						var(--scale_up_out_range_end, normal),
+						var(--scale_down_in_range_end, normal)
 					;
 
-					&.fadeIn{
-						--fadeIn-name: fadeIn;
-						--fadeIn-range-start: 30%;
-						--fadeIn-range-end: 50%;
+					&.fade_in{
+						--fade_in_name: fade_in;
+						--fade_in_range_start: 30%;
+						--fade_in_range_end: 50%;
 
 						opacity: 0;
 					}
 
-					&.fadeOut{
-						--fadeOut-name: fadeOut;
-						--fadeOut-range-start: 50%;
-						--fadeOut-range-end: 70%;
+					&.fade_out{
+						--fade_out_name: fade_out;
+						--fade_out_range_start: 50%;
+						--fade_out_range_end: 70%;
 					}
 
-					&.scaleUpOut{
-						--scaleUpOut-name: scaleUpOut;
-						--scaleUpOut-range-start: 60%;
-						--scaleUpOut-range-end: 80%;
+					&.scale_up_out{
+						--scale_up_out_name: scale_up_out;
+						--scale_up_out_range_start: 60%;
+						--scale_up_out_range_end: 80%;
 					}
 
-					&.scaleDownIn{
-						--scaleDownIn-name: scaleDownIn;
-						--scaleDownIn-range-start: 20%;
-						--scaleDownIn-range-end: 40%;
+					&.scale_down_in{
+						--scale_down_in_name: scale_down_in;
+						--scale_down_in_range_start: 20%;
+						--scale_down_in_range_end: 40%;
 					}
 				}
 
-				@keyframes fadeIn{to {opacity: 1;}}
-				@keyframes fadeOut{to {opacity: 0;}}
+				@keyframes fade_in{to {opacity: 1;}}
+				@keyframes fade_out{to {opacity: 0;}}
 
-				@keyframes scaleUpOut{
+				@keyframes scale_up_out{
 					from {scale: 1;}
 					to {scale: 1.5;}
 				}
-				@keyframes scaleDownIn{
+				@keyframes scale_down_in{
 					from {scale: 1.5;}
 					to {scale: 1;}
 				}
