@@ -401,6 +401,11 @@
 			.text-white-space-pre{white-space: pre;}
 		}
 
+		@layer font-family{
+			.font_family_Quicksand{font-family: Quicksand;}
+
+		}
+
 		/****** Other ******/
 		/** Style **/
 		.text-italic{font-style: italic;}
