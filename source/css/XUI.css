@@ -2722,19 +2722,19 @@
 		}
 
 		@supports (animation-timeline: scroll()){
-			@layer onScroll{
-				.onScroll{
+			@layer on_scroll{
+				.on_scroll{
 					animation-fill-mode: forwards;
 					animation-timing-function: linear;
 
-					&.backgroundShift{
-						animation: backgroundShift;
+					&.background_shift{
+						animation: background_shift;
 						animation-timeline: scroll(root);
 					}
 
 				}
 
-				@keyframes backgroundShift{
+				@keyframes background_shift{
 					from {background-color: var(--color-main-tint-1);}
 					to {background-color: var(--color-main-tint-4);}
 				}
