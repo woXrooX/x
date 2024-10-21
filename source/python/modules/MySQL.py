@@ -19,6 +19,7 @@ if __name__ != "__main__":
 		user = password = host = database = charset = collate = None
 
 		connection = None
+		connected = False
 		cursor = None
 
 		enabled = False
@@ -78,9 +79,6 @@ if __name__ != "__main__":
 			# Many and multi can not work together
 			if multi is True and many is True: return False
 
-			# Check If Connected Successfully
-			if MySQL.connect(prepared, dictionary) is False: return False
-
 			# Variable for the results of multi execution
 			multi_execute_result = None
 
@@ -94,6 +92,9 @@ if __name__ != "__main__":
 
 			# MySQL.execute results
 			result = None
+
+			# Check if connected successfully
+			if MySQL.connect(prepared, dictionary) is False: return False
 
 			# Execute
 			try:
