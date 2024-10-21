@@ -398,8 +398,6 @@ body{
 		}
 
 		&.fade_in_v1{
-			--duration: 750ms;
-
 			opacity: 0;
 			filter: blur(20px);
 
