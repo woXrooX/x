@@ -593,7 +593,7 @@
 					cursor: pointer;
 				}
 
-				&.file-v1{
+				&.input_type_file_v1{
 					border: 1px dashed var(--color-text-secondary);
 
 					&::file-selector-button{
