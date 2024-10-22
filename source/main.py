@@ -16,9 +16,9 @@ FileSystem.init()
 from python.modules.Globals import Globals
 
 # Prints latest tracked version
-Log.center('', '-')
-Log.center(Globals.CONF["version"], '-')
-Log.center('', '-')
+Log.center('', '-', type_name="bright_black")
+Log.center(f"x version: {Globals.CONF['version']}", ' ')
+Log.center('', '-', type_name="bright_black")
 
 
 #################################################### Update Logger enabled/disabled after project.json has been loaded
