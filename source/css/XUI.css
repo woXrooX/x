@@ -1291,7 +1291,7 @@
 
 	@layer surfaces{
 		.surface-v1{
-			background-color: var(--color-main-tint-3);
+			background-color: var(--color-main-tint-2);
 
 			border-radius: var(--radius);
 			box-shadow: var(--shadow);
