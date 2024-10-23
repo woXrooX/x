@@ -79,6 +79,9 @@ if __name__ != "__main__":
 		PROJECT_LANG_DICT = {}
 		PROJECT_HTML = {}
 
+		# Global empty data holder to be used by project
+		PROJECT_DATA = {}
+
 		#### Mix
 		PUBLIC_CONF = {}
 
