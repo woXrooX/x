@@ -408,6 +408,18 @@
 		}
 
 		/****** Other ******/
+		/* Drop cap style */
+		.text_drop_cap{
+			&::first-letter {
+				font-family: "Georgia", serif;
+				font-size: 3em;
+				font-weight: bold;
+				line-height: 0.8;
+				letter-spacing: 0.1em;
+				float: left;
+			}
+		}
+
 		/** Style **/
 		.text-italic{font-style: italic;}
 
