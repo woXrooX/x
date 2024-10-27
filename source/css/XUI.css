@@ -1377,6 +1377,7 @@
 		.bg-10{background-color: var(--color-main-tint-10);}
 
 		/* Basics */
+		.bg-none{background-color: none;}
 		.bg-black{background-color: black;}
 		.bg-white{background-color: white;}
 		.bg-transparent{background-color: transparent;}
