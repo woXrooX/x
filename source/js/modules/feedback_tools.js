@@ -1,6 +1,6 @@
 export function feedback_leave_button(){
-	if(!("x_feedbacks_leave" in window.CONF["pages"])) return '';
-	if(window.CONF["pages"]["x_feedbacks_leave"]["enabled"] === false) return '';
+	if(!("x_feedback_leave" in window.CONF["pages"])) return '';
+	if(window.CONF["pages"]["x_feedback_leave"]["enabled"] === false) return '';
 
 	let unauthenticated_user_inputs_HTML = '';
 	if(!("user" in window.session)) unauthenticated_user_inputs_HTML = `
@@ -22,7 +22,7 @@ export function feedback_leave_button(){
 		<x-modal trigger_selector="column#modal_feedback_button">
 			<h2>Report a problem</h2>
 
-			<form action="/x/feedbacks/leave" for="leave_feedback" class="p-2" x-modal="on:success:hide" x-toast="on:any:message">
+			<form action="/x/feedback/leave" for="leave_feedback" class="p-2" x-modal="on:success:hide" x-toast="on:any:message">
 
 				<input type="hidden" name="feedback_left_page" value="${window.location.pathname}">
 

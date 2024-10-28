@@ -315,10 +315,10 @@ CREATE TABLE IF NOT EXISTS `password_recoveries` (
 
 
 -- ------------------------------------
--- ------------------------------------ Feedbacks
+-- ------------------------------------ Feedback
 -- ------------------------------------
-\! echo "-------------------------- feedbacks";
-CREATE TABLE IF NOT EXISTS `feedbacks` (
+\! echo "-------------------------- feedback";
+CREATE TABLE IF NOT EXISTS `feedback` (
 	`id` INT NOT NULL UNIQUE auto_increment,
 
 	`ip_address` VARCHAR(45),

@@ -6,39 +6,39 @@ export async function after(){
 	const container = document.querySelector("container");
 
 	Loading.on_element(container);
-	container.innerHTML = await build_feedbacks_HTML();
+	container.innerHTML = await build_feedback_HTML();
 	Loading.on_element(container);
 
-	async function build_feedbacks_HTML(){
-		let feedbacks = await window.bridge({for:"get_all_feedbacks"});
-		if("data" in feedbacks) feedbacks = feedbacks["data"];
-		else return `<p class="w-100 text-size-0-8 surface-info p-1">No feedbacks</p>`;
+	async function build_feedback_HTML(){
+		let feedback = await window.bridge({for:"get_all_feedback"});
+		if("data" in feedback) feedback = feedback["data"];
+		else return `<p class="w-100 text-size-0-8 surface-info p-1">No feedback</p>`;
 
 		let HTML = '';
 
-		for(let feedback of feedbacks){
-			let feedback_text = feedback["feedback_text"];
+		for(let cell of feedback){
+			let feedback_text = cell["feedback_text"];
 			if(feedback_text.length > 10) feedback_text = `
-				<span id="modal_feedback_${feedback["id"]}">${feedback["feedback_text"].slice(0, 10)}...</span>
-				<x-modal trigger_selector="span#modal_feedback_${feedback["id"]}">
-					<p class="text-size-0-8 p-2">${feedback["feedback_text"]}</p>
+				<span id="modal_feedback_${cell["id"]}">${cell["feedback_text"].slice(0, 10)}...</span>
+				<x-modal trigger_selector="span#modal_feedback_${cell["id"]}">
+					<p class="text-size-0-8 p-2">${cell["feedback_text"]}</p>
 				</x-modal>
 			`;
 
 			HTML += `
 				<tr>
-					<td>${feedback["created_by_user"] ?? "N/A"}</td>
-					<td>${feedback["created_by_user"] != null ? feedback["users_fullname"] : feedback["fullname"]}</td>
-					<td>${feedback["created_by_user"] != null ? feedback["users_eMail"] : feedback["eMail"]}</td>
+					<td>${cell["created_by_user"] ?? "N/A"}</td>
+					<td>${cell["created_by_user"] != null ? cell["users_fullname"] : cell["fullname"]}</td>
+					<td>${cell["created_by_user"] != null ? cell["users_eMail"] : cell["eMail"]}</td>
 					<td>${feedback_text}</td>
-					<td>${feedback["feedback_left_page"] || "N/A"}</td>
-					<td>${feedback["timestamp"]}</td>
+					<td>${cell["feedback_left_page"] || "N/A"}</td>
+					<td>${cell["timestamp"]}</td>
 
 					<td>
 						<x-svg
 							xr-post
 							xr-for="delete"
-							xr-data='{"id": "${feedback["id"]}"}'
+							xr-data='{"id": "${cell["id"]}"}'
 
 							x-toast="on:any:message"
 
