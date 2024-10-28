@@ -139,11 +139,6 @@
 		"ru": "Электронная почта успешно подтверждена!",
 		"uz": "Elektron pochta muvaffaqiyatli tasdiqlandi!"
 	},
-	"en": {
-		"en": "English",
-		"ru": "Английский",
-		"uz": "Ingliz tili"
-	},
 	"error": {
 		"en": "Error",
 		"ru": "Ошибка",
@@ -394,7 +389,12 @@
 		"ru": "Предупреждение",
 		"uz": "Ogohlantirish"
 	},
+
 	"x": {
 		"en": "x"
-	}
+	},
+
+	"en": { "en": "English"},
+	"ru": { "ru": "Русский" },
+	"uz": { "uz": "Uzbekcha" }
 }

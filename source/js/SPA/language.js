@@ -8,7 +8,7 @@ export default class Language extends HTMLElement{
 	static init(){
 		Language.#FALLBACK = window.CONF.default.language.fallback;
 
-		Language.#detectCurrentCode();
+		Language.#detect_current_code();
 	}
 
 	//////// APIs
@@ -34,23 +34,12 @@ export default class Language extends HTMLElement{
 		return Language.DICT[keyword][code];
 	}
 
-	// Just returns translation for the "keyword"
 	static use(keyword){return Language.translate(keyword);}
 
-	//////// Getters
-	static get CURRENT(){return Language.#CURRENT;}
+	static async switch_to(code = Language.#FALLBACK){
+		console.log(code);
 
-	//////// Helpers
-	static code_to_flag(code){
-		if(!!code === false) code = Language.#FALLBACK;
 
-		if(code == "en") code = "gb";
-
-		return `<img src="/images/SVG/flags/4x3/${code}.svg" style="width: 1em;">`;
-	}
-
-	//////// Methods
-	static async switchTo(code = Language.#FALLBACK){
 		// Check if supported language was passed
 		if(!window.CONF.default.language.supported.includes(code)) return;
 
@@ -64,7 +53,52 @@ export default class Language extends HTMLElement{
 		window.dispatchEvent(new CustomEvent("dom_change", {detail: ["all"]}));
 	}
 
-	static #detectCurrentCode(){
+	static code_to_flag(code){
+		if(!!code === false) code = Language.#FALLBACK;
+
+		if(code == "en") code = "gb";
+
+		return `<img src="/images/SVG/flags/4x3/${code}.svg" style="width: 1em;">`;
+	}
+
+	static build_switcher_modal_HTML(){
+		Modal.push_func(function change_language(){
+			const buttons = document.body.querySelectorAll("modal > main > column > button");
+
+			for(const button of buttons) button.onclick = ()=>{
+				Lang.switch_to(button.name);
+				Modal.hide();
+			}
+		});
+
+		return `
+			<span id="header_language_modal">${Lang.code_to_flag(Lang.CURRENT)}</span>
+			<x-modal trigger_selector="span#header_language_modal" modal_func="change_language">
+				<column class="p-2 gap-1">${build_buttons_HTML()}</column>
+			</x-modal>
+		`;
+
+		function build_buttons_HTML(){
+			let HTML = '';
+
+			for(const code of window.CONF.default.language.supported) HTML += `
+				<button name="${code}" class="btn btn-primary d-flex flex-row gap-1 flex-x-between ${Lang.CURRENT == code ? '' : "btn-outline"} w-100">
+					<span class="text-color-white">${Lang.use(code)}</span>
+					<span>${Lang.code_to_flag(code)}</span>
+				</button>
+			`;
+
+			return HTML;
+		}
+	}
+
+	//////// Getters
+
+	static get CURRENT(){return Language.#CURRENT;}
+
+	//////// Helpers
+
+	static #detect_current_code(){
 		if("user" in window.session) Language.#CURRENT = window.session["user"].app_language;
 
 		else if(localStorage.getItem("x.language")) Language.#CURRENT = localStorage.getItem("x.language");
