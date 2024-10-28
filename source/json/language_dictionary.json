@@ -154,8 +154,8 @@
 		"ru": "Имя",
 		"uz": "Ism"
 	},
-	"feedbacks": {
-		"en": "Feedbacks",
+	"feedback": {
+		"en": "Feedback",
 		"ru": "Отзывы",
 		"uz": "Fikr-mulohazalar"
 	},

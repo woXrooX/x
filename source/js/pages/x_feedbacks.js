@@ -1,4 +1,4 @@
-export const TITLE = window.Lang.use("feedbacks");
+export const TITLE = window.Lang.use("feedback");
 
 export default function main(){return `<container class="p-5 max-w-1500px"></container>`;}
 
@@ -55,7 +55,7 @@ export async function after(){
 		return `
 			<div class="scrollbar-x w-100 surface-v1 p-1">
 				<table class="table-v1 table-zebra table-hover table-bordered">
-					<caption>${Lang.use("feedbacks")}</caption>
+					<caption>${Lang.use("feedback")}</caption>
 					<thead>
 						<tr>
 							<th>User ID</th>
