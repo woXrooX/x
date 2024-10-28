@@ -2221,6 +2221,8 @@
 		.position-static{position: static;}
 		.position-fixed{position: fixed;}
 
+		.inset-0{ inset: 0;}
+
 		@layer left{
 			.left-5px{left: 5px;}
 			.left-10px{left: 10px;}
