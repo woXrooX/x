@@ -28,25 +28,22 @@ export async function after(){
 			return `<p class="w-100 text-size-0-8 surface-error p-1">${Lang.use("unknown_error")}</p>`;
 		}
 
-		let HTML = "";
+		let HTML = await build_delete_all_notifications_HTML();
 		for(const notification of notifications) HTML += await Notifications_module.notification_s_card_generator(notification);
 
-		return HTML += await delete_all_notifications(notifications);
+		return HTML;
+
+		async function build_delete_all_notifications_HTML(){
+			return `
+				<button 
+					class="w-100 btn btn-error btn-outline"
+					name="delete"
+					xr-post
+					xr-for="delete_all_notifications"
+					x-toast="on:any:message"
+				>Delete All Notifications</button>
+			`;
+		}
 	}
 
-	async function delete_all_notifications(notifications){
-		let notifications_id = [];
-		for (const notification of notifications) notifications_id.push(notification["id"]);
-		
-		return `
-			<button 
-				class="w-100 btn btn-error btn-outline"
-				name="delete"
-				xr-post
-				xr-for="delete_all_notifications"
-				xr-data='{"IDs": [${notifications_id}]}'
-				x-toast="on:any:message"
-			>Delete All Notifications</button>
-		`
-	}
 }

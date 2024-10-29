@@ -3,6 +3,7 @@ from main import session
 from python.modules.Page import Page
 from python.modules.response import response
 from python.modules.Notifications import Notifications
+from python.modules.MySQL import MySQL
 import time
 
 @Page.build()
@@ -22,8 +23,7 @@ def x_notifications(request):
 				return response(type="success", message="success")
 
 			if request.get_json()["for"] == "delete_all_notifications":
-				data = Notifications.delete_all(request.get_json()["IDs"])
+				data = MySQL.execute("DELETE FROM notifications WHERE recipient=%s;", [session["user"]["id"]], commit=True)
 				if data is False: return response(type="error", message="database_error")
-
 				return response(type="success", message="success", dom_change=["main"])
 

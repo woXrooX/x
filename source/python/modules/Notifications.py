@@ -182,11 +182,3 @@ if __name__ != "__main__":
 			data = MySQL.execute("DELETE FROM notifications WHERE id=%s AND recipient=%s;", [ID, session["user"]["id"]], commit=True)
 			if data is False: return False
 			return True
-
-		@staticmethod
-		def delete_all(IDs):
-			for id in IDs:
-				data = MySQL.execute("DELETE FROM notifications WHERE id=%s AND recipient=%s;", [id, session["user"]["id"]], commit=True)
-			if data is False: return False
-			return True
-		
