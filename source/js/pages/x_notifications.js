@@ -44,7 +44,7 @@ export async function after(){
 				name="delete"
 				xr-post
 				xr-for="delete_all_notifications"
-				xr-data='{"IDs": [${notifications}]}'
+				xr-data='{"IDs": [${notifications_id}]}'
 				x-toast="on:any:message"
 			>Delete All Notifications</button>
 		`
