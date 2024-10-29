@@ -5,17 +5,17 @@ from python.modules.MySQL import MySQL
 from python.modules.response import response
 
 @Page.build()
-def x_feedbacks(request):
+def x_feedback(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":
-			if request.get_json()["for"] == "get_all_feedbacks":
+			if request.get_json()["for"] == "get_all_feedback":
 				data = MySQL.execute("""
 					SELECT
-						feedbacks.*,
+						feedback.*,
 						CONCAT(users.firstname, ' ', users.lastname) AS users_fullname,
 						users.eMail AS users_eMail
-					FROM feedbacks
-					LEFT JOIN users ON users.id = feedbacks.created_by_user;
+					FROM feedback
+					LEFT JOIN users ON users.id = feedback.created_by_user;
 				""")
 				if data == False: return response(type="error", message="database_error")
 
@@ -25,7 +25,7 @@ def x_feedbacks(request):
 				if "id" not in request.get_json(): return response(type="error",message="invalid_request")
 
 				data = MySQL.execute(
-					sql="DELETE FROM feedbacks WHERE id=%s;",
+					sql="DELETE FROM feedback WHERE id=%s;",
 					params=[request.get_json()["id"]],
 					commit=True
 				)

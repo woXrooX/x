@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.198.2.0021"
+version: "0.199.0.0000"
 
 
 ######### Flask
@@ -228,21 +228,20 @@ pages:
     endpoints:
       - "/x/app_analytics"
 
-  x_feedbacks_leave:
+  x_feedback_leave:
     enabled: false
     methods:
-      - "GET"
       - "POST"
     endpoints:
-      - "/x/feedbacks/leave"
+      - "/x/feedback/leave"
 
-  x_feedbacks:
+  x_feedback:
     enabled: false
     methods:
       - "GET"
       - "POST"
     endpoints:
-      - "/x/feedbacks"
+      - "/x/feedback"
 
   x_log_in_records:
     enabled: false
