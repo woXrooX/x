@@ -21,3 +21,10 @@ def x_notifications(request):
 				if "unseen_notifications_count" in data: return response(type="success", message="success", data=data["unseen_notifications_count"])
 				return response(type="success", message="success")
 
+			if request.get_json()["for"] == "delete_all_notifications":
+				print("IDS",request.get_json()["IDs"])
+				# data = Notifications.delete_all(request.get_json()["IDs"])
+				# if data is False: return response(type="error", message="database_error")
+
+				return response(type="success", message="success", dom_change=["main"])
+

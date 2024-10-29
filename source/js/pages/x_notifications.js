@@ -31,6 +31,22 @@ export async function after(){
 		let HTML = "";
 		for(const notification of notifications) HTML += await Notifications_module.notification_s_card_generator(notification);
 
-		return HTML;
+		return HTML += await delete_all_notifications(notifications);
+	}
+
+	async function delete_all_notifications(notifications){
+		let notifications_id = [];
+		for (const notification of notifications) notifications_id.push(notification["id"]);
+		
+		return `
+			<button 
+				class="w-100 btn btn-error btn-outline"
+				name="delete"
+				xr-post
+				xr-for="delete_all_notifications"
+				xr-data='{"IDs": [${notifications}]}'
+				x-toast="on:any:message"
+			>Delete All Notifications</button>
+		`
 	}
 }
