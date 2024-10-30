@@ -28,9 +28,25 @@ export async function after(){
 			return `<p class="w-100 text-size-0-8 surface-error p-1">${Lang.use("unknown_error")}</p>`;
 		}
 
-		let HTML = "";
+		let HTML = build_delete_all_button_HTML();
+
 		for(const notification of notifications) HTML += await Notifications_module.notification_s_card_generator(notification);
 
 		return HTML;
+
+		function build_delete_all_button_HTML(){
+			return `
+				<row class="flex-row flex-x-end">
+					<x-svg
+						class="btn btn-error"
+						name="delete"
+						color="white"
+						xr-post
+						xr-for="delete_all_notifications"
+						x-toast="on:any:message"
+					></x-svg>
+				</row>
+			`;
+		}
 	}
 }
