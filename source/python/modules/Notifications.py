@@ -133,7 +133,7 @@ if __name__ != "__main__":
 					FROM notifications
 					LEFT JOIN notification_events ON notification_events.id = notifications.event
 					LEFT JOIN notification_types ON notification_types.id = notifications.type
-					WHERE notifications.recipient=%s
+					WHERE notifications.flag_deleted IS NULL AND notifications.recipient=%s
 					ORDER BY timestamp DESC;
 				""",
 				params=[recipient]
@@ -146,7 +146,7 @@ if __name__ != "__main__":
 				sql="""
 					SELECT COUNT(*) AS unseen_notifications_count
 					FROM notifications
-					WHERE recipient=%s AND seen=0;
+					WHERE notifications.flag_deleted IS NULL AND recipient=%s AND seen=0;
 				""",
 				params=[recipient],
 				fetch_one=True
@@ -164,7 +164,7 @@ if __name__ != "__main__":
 					FROM notifications
 					LEFT JOIN notification_events ON notification_events.id = notifications.event
 					LEFT JOIN notification_types ON notification_types.id = notifications.type
-					WHERE notifications.id = %s AND notifications.recipient=%s LIMIT 1;
+					WHERE notifications.id = %s AND notifications.flag_deleted IS NULL AND notifications.recipient=%s LIMIT 1;
 				""",
 				params=[ID, session['user']['id']],
 				fetch_one=True
@@ -173,12 +173,16 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def set_seen(ID):
-			data = MySQL.execute("UPDATE notifications SET seen=1 WHERE id=%s;", [ID], commit=True)
+			data = MySQL.execute("UPDATE notifications SET seen=1 WHERE id=%s AND notifications.flag_deleted IS NULL;", [ID], commit=True)
 			if data is False: return False
 			return True
 
 		@staticmethod
 		def delete(ID):
-			data = MySQL.execute("DELETE FROM notifications WHERE id=%s AND recipient=%s;", [ID, session["user"]["id"]], commit=True)
+			data = MySQL.execute(
+				sql="UPDATE notifications SET flag_deleted = NOW(), flag_deleted_by_user = %s WHERE id=%s AND recipient=%s;",
+				params=[session["user"]["id"], ID, session["user"]["id"]],
+				commit=True
+			)
 			if data is False: return False
 			return True

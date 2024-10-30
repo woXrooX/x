@@ -18,4 +18,4 @@ def x_notification(request, ID):
 				data = Notifications.delete(ID)
 				if data is False: return response(type="error", message="database_error")
 
-				return response(type="success", message="success", redirect="/x/notifications")
+				return response(type="success", message="deleted", redirect="/x/notifications")
