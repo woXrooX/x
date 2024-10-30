@@ -28,20 +28,24 @@ export async function after(){
 			return `<p class="w-100 text-size-0-8 surface-error p-1">${Lang.use("unknown_error")}</p>`;
 		}
 
-		let HTML = await build_delete_all_notifications_HTML();
+		let HTML = build_delete_all_button_HTML();
+		
 		for(const notification of notifications) HTML += await Notifications_module.notification_s_card_generator(notification);
 
 		return HTML;
 
-		async function build_delete_all_notifications_HTML(){
+		function build_delete_all_button_HTML(){
 			return `
-				<button 
-					class="w-100 btn btn-error btn-outline"
-					name="delete"
-					xr-post
-					xr-for="delete_all_notifications"
-					x-toast="on:any:message"
-				>Delete All Notifications</button>
+				<row class="flex-row flex-x-end">
+					<x-svg 
+						class="btn btn-error"
+						name="delete"
+						color="white"
+						xr-post
+						xr-for="delete_all_notifications"
+						x-toast="on:any:message"
+					></x-svg>
+				</row>
 			`;
 		}
 	}

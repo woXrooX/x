@@ -23,7 +23,7 @@ def x_notifications(request):
 				return response(type="success", message="success")
 
 			if request.get_json()["for"] == "delete_all_notifications":
-				data = MySQL.execute("DELETE FROM notifications WHERE recipient=%s;", [session["user"]["id"]], commit=True)
+				data = MySQL.execute("UPDATE notifications SET flag_deleted = NOW(), flag_deleted_by_user = %s WHERE recipient=%s;", [session["user"]["id"], session["user"]["id"]], commit=True)
 				if data is False: return response(type="error", message="database_error")
-				return response(type="success", message="success", dom_change=["main"])
+				return response(type="success", message="deleted", dom_change=["main"])
 
