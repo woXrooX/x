@@ -42,3 +42,6 @@ def api():
 			if not User.set_app_language(request.get_json()["code"]): return response(type="error", message="something_went_wrong")
 
 			return response(type="success", message="saved")
+
+	# If no matches, return "invalid_request"
+	return response(type="warning", message="invalid_request")
