@@ -44,4 +44,4 @@ def api():
 			return response(type="success", message="saved")
 
 	# If no matches, return "invalid_request"
-	return response(type="warning", message="invalid_request")
+	return ("400 Bad Request", 400, {'text/html': 'charset=utf-8'})
