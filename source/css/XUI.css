@@ -2759,16 +2759,37 @@
 	}
 
 	@layer filters{
-		.filter-grayscale-10{filter: grayscale(10%);}
-		.filter-grayscale-20{filter: grayscale(20%);}
-		.filter-grayscale-30{filter: grayscale(30%);}
-		.filter-grayscale-40{filter: grayscale(40%);}
-		.filter-grayscale-50{filter: grayscale(50%);}
-		.filter-grayscale-60{filter: grayscale(60%);}
-		.filter-grayscale-70{filter: grayscale(70%);}
-		.filter-grayscale-80{filter: grayscale(80%);}
-		.filter-grayscale-90{filter: grayscale(90%);}
-		.filter-grayscale-100{filter: grayscale(100%);}
+		.filter_grayscale_10{filter: grayscale(10%);}
+		.filter_grayscale_20{filter: grayscale(20%);}
+		.filter_grayscale_30{filter: grayscale(30%);}
+		.filter_grayscale_40{filter: grayscale(40%);}
+		.filter_grayscale_50{filter: grayscale(50%);}
+		.filter_grayscale_60{filter: grayscale(60%);}
+		.filter_grayscale_70{filter: grayscale(70%);}
+		.filter_grayscale_80{filter: grayscale(80%);}
+		.filter_grayscale_90{filter: grayscale(90%);}
+		.filter_grayscale_100{filter: grayscale(100%);}
+	}
+
+	@layer backdrop_filters{
+		.backdrop_filter_1px{ backdrop-filter: blur(1px); }
+		.backdrop_filter_2px{ backdrop-filter: blur(2px); }
+		.backdrop_filter_3px{ backdrop-filter: blur(3px); }
+		.backdrop_filter_5px{ backdrop-filter: blur(5px); }
+		.backdrop_filter_10px{ backdrop-filter: blur(10px); }
+		.backdrop_filter_15px{ backdrop-filter: blur(15px); }
+		.backdrop_filter_20px{ backdrop-filter: blur(20px); }
+		.backdrop_filter_25px{ backdrop-filter: blur(25px); }
+		.backdrop_filter_30px{ backdrop-filter: blur(30px); }
+		.backdrop_filter_35px{ backdrop-filter: blur(35px); }
+		.backdrop_filter_40px{ backdrop-filter: blur(40px); }
+		.backdrop_filter_45px{ backdrop-filter: blur(45px); }
+		.backdrop_filter_50px{ backdrop-filter: blur(50px); }
+		.backdrop_filter_55px{ backdrop-filter: blur(55px); }
+		.backdrop_filter_60px{ backdrop-filter: blur(60px); }
+		.backdrop_filter_65px{ backdrop-filter: blur(65px); }
+		.backdrop_filter_70px{ backdrop-filter: blur(70px); }
+		.backdrop_filter_100px{ backdrop-filter: blur(100px); }
 	}
 
 	@layer print{
