@@ -1,10 +1,13 @@
 {
-	"id": "x",
+	"id": "https://www.woXrooX.com/",
+	"scope": "https://www.woXrooX.com/",
+	"start_url": "/home",
+
 	"name": "x",
 	"short_name": "x",
 	"description": "Crafted by humans, for humans, on Earth.",
-	"start_url": "/home",
 	"lang": "en",
+
 	"display": "standalone",
 	"theme_color": "#14151A",
 	"background_color": "#14151A",
