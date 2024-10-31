@@ -18,7 +18,13 @@
 			"src": "/images/PWA/logo_512.png",
 			"sizes": "512x512",
 			"type": "image/png",
-			"purpose": "any maskable"
+			"purpose": "any"
+		},
+		{
+			"src": "/images/PWA/logo_512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
 		},
 		{
 			"src": "/images/PWA/logo_384.png",
