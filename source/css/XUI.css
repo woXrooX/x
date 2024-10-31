@@ -403,13 +403,12 @@
 		}
 
 		@layer font-family{
-			.font_family_Quicksand{font-family: Quicksand;}
-
+			.font-family-Quicksand{font-family: Quicksand;}
 		}
 
 		/****** Other ******/
 		/* Drop cap style */
-		.text_drop_cap{
+		.text-drop-cap{
 			&::first-letter {
 				font-family: "Georgia", serif;
 				font-size: 3em;
@@ -606,7 +605,7 @@
 					cursor: pointer;
 				}
 
-				&.input_type_file_v1{
+				&.input-type-file-v1{
 					border: 1px dashed var(--color-text-secondary);
 
 					&::file-selector-button{
@@ -2224,6 +2223,7 @@
 		.inset-0{ inset: 0;}
 
 		@layer left{
+			.left-0{left: 0;}
 			.left-5px{left: 5px;}
 			.left-10px{left: 10px;}
 			.left-15px{left: 15px;}
@@ -2238,6 +2238,7 @@
 		}
 
 		@layer top{
+			.top-0{top: 0;}
 			.top-5px{top: 5px;}
 			.top-10px{top: 10px;}
 			.top-15px{top: 15px;}
@@ -2252,6 +2253,7 @@
 		}
 
 		@layer right{
+			.right-0{right: 0;}
 			.right-5px{right: 5px;}
 			.right-10px{right: 10px;}
 			.right-15px{right: 15px;}
@@ -2266,6 +2268,7 @@
 		}
 
 		@layer bottom{
+			.bottom-0{bottom: 0;}
 			.bottom-5px{bottom: 5px;}
 			.bottom-10px{bottom: 10px;}
 			.bottom-15px{bottom: 15px;}
