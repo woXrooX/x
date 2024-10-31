@@ -50,7 +50,7 @@ def x_user(request, id):
 				eMail_verification_code = random.randint(100000, 999999)
 
 				data = MySQL.execute("UPDATE users SET eMail_verification_code=%s WHERE id=%s LIMIT 1", [eMail_verification_code, id], commit=True)
-				if data is False: return response(type="error", message="databaseError")
+				if data is False: return response(type="error", message="database_error")
 
 				eMail_content = f"""
 					Dear User,
