@@ -1,21 +1,24 @@
 {
 	"id": "https://www.woXrooX.com/",
-	"scope": "https://www.woXrooX.com/",
+	"scope": "/",
 	"start_url": "/home",
 
 	"name": "x",
 	"short_name": "x",
 	"description": "Crafted by humans, for humans, on Earth.",
 	"lang": "en",
+	"categories": ["cat_name"],
 
 	"display": "standalone",
+	"orientation": "any",
 	"theme_color": "#14151A",
 	"background_color": "#14151A",
 	"icons": [
 		{
 			"src": "/images/PWA/logo_512.png",
 			"sizes": "512x512",
-			"type": "image/png"
+			"type": "image/png",
+			"purpose": "any maskable"
 		},
 		{
 			"src": "/images/PWA/logo_384.png",
@@ -32,5 +35,18 @@
 			"sizes": "120x120",
 			"type": "image/png"
 		}
+	],
+
+	"prefer_related_applications": false,
+	"related_applications": [
+	  {
+		"platform": "play",
+		"id": "com.example.app",
+		"url": "https://play.google.com/store/apps/details?id=com.example.app"
+	  },
+	  {
+		"platform": "itunes",
+		"url": "https://apps.apple.com/app/example-app/id123456789"
+	  }
 	]
 }
