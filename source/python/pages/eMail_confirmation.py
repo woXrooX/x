@@ -11,59 +11,42 @@ from python.modules.MySQL import MySQL
 @Page.build()
 def eMail_confirmation(request):
 	if request.method == "POST":
-		# Check If "for" Meant To Go To Here
-		if request.form["for"] != "eMail_confirmation": return response(type="warning", message="unknown_error")
+		# I/ data validations
 
-		# Check For Existentance Of "verification_code"
-		if(
-			# If No "verification_code" Key In Request
-			"verification_code" not in request.form or
+		# Check if "for" neant to go to here
+		if request.form["for"] != "eMail_confirmation": return response(type="warning", message="invalid_request")
+		if "verification_code" not in request.form or not request.form["verification_code"]: return response(type="warning", message="eMail_confirmation_code_empty", field="verification_code")
 
-			# Check If Verification Code Is Empty
-			"verification_code" in request.form and request.form["verification_code"] == ''
+		int_verification_code = int(request.form["verification_code"])
 
-		): return response(type="warning", message="eMail_confirmation_code_empty", field="verification_code")
-
-		# Check If Verification Code Does Not Match Then Increment The Counter
-		if int(request.form["verification_code"]) != session["user"]["eMail_verification_code"]:
+		# Check if verification code does not match then increment the counter
+		if int_verification_code != session["user"]["eMail_verification_code"]:
 			data = MySQL.execute(
-				sql="""
-					UPDATE users SET
-						eMail_verification_attempts_count=eMail_verification_attempts_count+1
-					WHERE id=%s
-				""",
-				params=(session["user"]["id"],),
+				sql="UPDATE users SET eMail_verification_attempts_count=eMail_verification_attempts_count + 1 WHERE id = %s;",
+				params=[session["user"]["id"]],
 				commit=True
 			)
-
 			if data is False: return response(type="error", message="database_error")
 
-			# Update The session["user"] After The Changes To The Database
 			User.update_session()
 
 			return response(type="warning", message="eMail_confirmation_code_did_not_match", field="verification_code")
 
-
 		# Success | Match
-		if int(request.form["verification_code"]) == session["user"]["eMail_verification_code"]:
+		if int_verification_code == session["user"]["eMail_verification_code"]:
 			data = MySQL.execute(
 				sql="""
 					UPDATE users SET
-						eMail_verified=1,
-						eMail_verification_attempts_count=eMail_verification_attempts_count+1,
-						authenticity_status=%s
-					WHERE id=%s
+						eMail_verified = b'1',
+						eMail_verification_attempts_count = eMail_verification_attempts_count + 1,
+						authenticity_status = %s
+					WHERE id = %s;
 				""",
-				params=(
-					Globals.USER_AUTHENTICITY_STATUSES["authorized"]["id"],
-					session["user"]["id"],
-				),
+				params=[Globals.USER_AUTHENTICITY_STATUSES["authorized"]["id"], session["user"]["id"]],
 				commit=True
 			)
-
 			if data is False: return response(type="error", message="database_error")
 
-			# Update The session["user"] After The Changes To The Database
 			User.update_session()
 
 			redirect = unquote(request.args.get("redirect")) if "redirect" in request.args else "/home"
@@ -75,3 +58,5 @@ def eMail_confirmation(request):
 				dom_change=["menu"],
 				redirect=redirect
 			)
+
+		return response(type="error", message="unknown_error")
