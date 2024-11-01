@@ -968,6 +968,14 @@
 				table-layout: fixed !important;
 			}
 
+			&.table-thead-sticky{
+				& > thead{
+					position: sticky;
+					top: 0;
+					left: 0;
+				}
+			}
+
 			/* Table versions */
 			&.table-v1{
 				border-collapse: collapse;
