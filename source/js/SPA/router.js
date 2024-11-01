@@ -124,9 +124,6 @@ export default class Router{
 	}
 
 	static guard(page){
-		// Check If Page Exists
-		// Already Looping Through Existent Pages
-
 		const PAGE_CONF = window.CONF["pages"][page]
 
 		if(PAGE_CONF["enabled"] === false) return false;
@@ -146,9 +143,7 @@ export default class Router{
 			}
 
 			if("roles_not" in PAGE_CONF){
-				let result = true;
-				for(let i = 0; i < PAGE_CONF["roles_not"].length; i++) if(window.session["user"]["roles"].includes(PAGE_CONF["roles_not"][i])) result = false;
-				if(result === false) return false;
+				for(let role_not of PAGE_CONF["roles_not"]) if(window.session["user"]["roles"].includes(role_not)) return false;
 			}
 
 			if("plans" in PAGE_CONF){
