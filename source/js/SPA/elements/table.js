@@ -53,7 +53,7 @@ export default class Table extends HTMLElement{
 					<column class="w-100">${!!this.JSON?.searchable === true ? '<input type="text" class="w-100">' : ""}</column>
 				</header>
 
-				<main class="scrollbar-x w-100"></main>
+				<main class="scrollbar-x scrollbar-y w-100" style="max-height: calc(90vh - var(--header-height) * 4)"></main>
 
 				<footer class="d-flex flex-row s-flex-column flex-x-between gap-1 w-100">
 					<section class="d-flex flex-row flex-x-start flex-y-center gap-0-5 text-size-0-8">

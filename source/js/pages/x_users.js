@@ -36,18 +36,13 @@ export async function after(){
 			}
 
 			return `
-				<column class="surface-v1 p-2 gap-1 w-100 flex-y-start">
-					<p class="text-size-1-5">Users count: ${USERS["data"].length}</p>
-					<p class="text-size-0-9 text-color-secondary">DBs: db.users.* + db.users_roles.name</p>
-
-					<x-table class="table-v1 table-zebra table-hover table-bordered w-100">
-						{
-							"searchable": true,
-							"head": ${JSON.stringify(HEAD)},
-							"body": ${JSON.stringify(BODY)}
-						}
-					</x-table>
-				</column>
+				<x-table class="surface-v1 p-2 table-v1 table-zebra table-hover table-bordered table-thead-sticky w-100">
+					{
+						"searchable": true,
+						"head": ${JSON.stringify(HEAD)},
+						"body": ${JSON.stringify(BODY)}
+					}
+				</x-table>
 			`;
 		}
 	}
