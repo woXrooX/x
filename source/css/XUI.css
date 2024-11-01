@@ -960,13 +960,9 @@
 			}
 
 			/* Default padding for all cells */
-			& th, td{
-				padding: var(--tbl-padding);
-			}
+			& th, td{ padding: var(--tbl-padding); }
 
-			&.table-layout-fixed{
-				table-layout: fixed !important;
-			}
+			&.table-layout-fixed{ table-layout: fixed !important; }
 
 			&.table-thead-sticky{
 				& > thead{
