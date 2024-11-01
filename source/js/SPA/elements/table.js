@@ -270,6 +270,29 @@ export default class Table extends HTMLElement{
 
 		const VALUE_LOWER_CASE = value.toLowerCase();
 
+		const advanced_match_string = VALUE_LOWER_CASE.match(/^(.*?):(.*)$/);
+		let matched_title_index = null;
+
+		// Getting the index of an title in this.JSON["head"] that contains the matched string before character ':'
+		if(!!advanced_match_string != false)
+			for(let i = 0; i < this.JSON["head"].length; i++) if(this.JSON["head"][i]["title"].toLowerCase().includes(advanced_match_string[1])) matched_title_index = i;
+
+		// Matched title found from this.JSON["head"]
+		if(matched_title_index !== null){
+			for(const row of this.JSON["body"])
+				for(let i = 0; i < row.length; i++){
+					if(i !== matched_title_index) continue;
+					
+					if(typeof row[i] === "string" && row[i].toLowerCase().includes(advanced_match_string[2])){
+						this.body_values.push(row);
+						break;
+					}else if(String(row[i]).toLowerCase().includes(advanced_match_string[2])){
+						this.body_values.push(row);
+						break;
+					}
+				}
+		}
+
 		loop_row: for(const row of this.JSON["body"])
 			loop_cell: for(const cell of row)
 				if(typeof cell === "string" && cell.toLowerCase().includes(VALUE_LOWER_CASE)){
