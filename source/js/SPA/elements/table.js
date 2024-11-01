@@ -270,18 +270,42 @@ export default class Table extends HTMLElement{
 
 		const VALUE_LOWER_CASE = value.toLowerCase();
 
-		loop_row: for(const row of this.JSON["body"])
-			loop_cell: for(const cell of row)
-				if(typeof cell === "string" && cell.toLowerCase().includes(VALUE_LOWER_CASE)){
-					this.body_values.push(row);
-					break loop_cell;
-				}else if(String(cell).toLowerCase().includes(VALUE_LOWER_CASE)){
-					this.body_values.push(row);
-					break loop_cell;
+		match_by_value_by_column: {
+			const title_and_value = VALUE_LOWER_CASE.match(/^(.*?):(.*)$/);
+			if(title_and_value === null) break match_by_value_by_column;
+
+			const title = title_and_value[1];
+			const value = title_and_value[2];
+
+			let matched_title_index = null;
+
+			// Getting the index of an title in this.JSON["head"] that contains the "title"
+			loop_columns: for(let i = 0; i < this.JSON["head"].length; i++)
+				if(this.JSON["head"][i]["title"].toLowerCase().includes(title)){
+					matched_title_index = i;
+					break loop_columns;
 				}
 
-		this.matched_rows_count = this.body_values.length;
+			if(matched_title_index === null) break match_by_value_by_column;
 
+			for(const row of this.JSON["body"])
+				if(typeof row[matched_title_index] === "string" && row[matched_title_index].toLowerCase().includes(value)) this.body_values.push(row);
+				else if(String(row[matched_title_index]).toLowerCase().includes(value)) this.body_values.push(row);
+		}
+
+		match_by_value_to_cells: {
+			loop_rows: for(const row of this.JSON["body"])
+				loop_cells: for(const cell of row)
+					if(typeof cell === "string" && cell.toLowerCase().includes(VALUE_LOWER_CASE)){
+						this.body_values.push(row);
+						break loop_cells;
+					}else if(String(cell).toLowerCase().includes(VALUE_LOWER_CASE)){
+						this.body_values.push(row);
+						break loop_cells;
+					}
+		}
+
+		this.matched_rows_count = this.body_values.length;
 		if(this.body_values.length === 0) this.body_values = [[window.Lang.use("no_matches")]];
 	}
 
