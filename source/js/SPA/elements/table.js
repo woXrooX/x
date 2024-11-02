@@ -1,5 +1,10 @@
 export default class Table extends HTMLElement{
+	//////////////////////////// Static
+
 	static #sort_modes = Object.freeze({ASC: 1, DESC: 2});
+
+	////////////// Helpers
+	static match_and_highlight(string, regex){ return string.replace(regex, `<span class="bg-error text-color-white">$&</span>`); }
 
 	constructor(){
 		super();
@@ -116,7 +121,7 @@ export default class Table extends HTMLElement{
 				return;
 			}
 
-			this.#sort_by_value(event.target.value);
+			this.#find_matches(event.target.value);
 			this.#build_body();
 			this.#build_page_buttons_HTML();
 			this.#build_matched_rows_HTML();
@@ -207,7 +212,8 @@ export default class Table extends HTMLElement{
 		this.querySelector("table > tfoot > tr").innerHTML = HTML;
 	}
 
-	////////////// Helper
+	//////////////////////////// Helpers
+
 	////////// Sort
 	#listen_to_the_sort_clicks = ()=>{
 		for(const id of this.sortable_column_ids){
@@ -265,49 +271,69 @@ export default class Table extends HTMLElement{
 		});
 	}
 
-	#sort_by_value = (value)=>{
+	#find_matches = (value)=>{
 		this.body_values = [];
 
+		const ROWS = structuredClone(this.JSON["body"]);
 		const VALUE_LOWER_CASE = value.toLowerCase();
 
-		match_by_value_by_column: {
-			const title_and_value = VALUE_LOWER_CASE.match(/^(.*?):(.*)$/);
-			if(title_and_value === null) break match_by_value_by_column;
-
-			const title = title_and_value[1];
-			const value = title_and_value[2];
-
-			let matched_title_index = null;
-
-			// Getting the index of an title in this.JSON["head"] that contains the "title"
-			loop_columns: for(let i = 0; i < this.JSON["head"].length; i++)
-				if(this.JSON["head"][i]["title"].toLowerCase().includes(title)){
-					matched_title_index = i;
-					break loop_columns;
-				}
-
-			if(matched_title_index === null) break match_by_value_by_column;
-
-			for(const row of this.JSON["body"])
-				if(typeof row[matched_title_index] === "string" && row[matched_title_index].toLowerCase().includes(value)) this.body_values.push(row);
-				else if(String(row[matched_title_index]).toLowerCase().includes(value)) this.body_values.push(row);
-		}
-
-		match_by_value_to_cells: {
-			loop_rows: for(const row of this.JSON["body"])
-				loop_cells: for(const cell of row)
-					if(typeof cell === "string" && cell.toLowerCase().includes(VALUE_LOWER_CASE)){
-						this.body_values.push(row);
-						break loop_cells;
-					}else if(String(cell).toLowerCase().includes(VALUE_LOWER_CASE)){
-						this.body_values.push(row);
-						break loop_cells;
-					}
-		}
+		this.#match_values_by_columns(VALUE_LOWER_CASE, ROWS);
+		this.#match_values_by_cells(VALUE_LOWER_CASE, ROWS);
 
 		this.matched_rows_count = this.body_values.length;
 		if(this.body_values.length === 0) this.body_values = [[window.Lang.use("no_matches")]];
 	}
+
+	#match_values_by_columns = (VALUE_LOWER_CASE, ROWS)=>{
+		const TITLE_AND_VALUE = VALUE_LOWER_CASE.match(/^(.*?):(.*)$/);
+		if(TITLE_AND_VALUE === null) return;
+
+		const TITLE = TITLE_AND_VALUE[1];
+		const VALUE = TITLE_AND_VALUE[2];
+
+		let matched_title_index = null;
+
+		// Getting the index of an title in this.JSON["head"] that contains the "title"
+		loop_columns: for(let i = 0; i < this.JSON["head"].length; i++)
+			if(this.JSON["head"][i]["title"].toLowerCase().includes(TITLE)){
+				matched_title_index = i;
+				break loop_columns;
+			}
+
+		if(matched_title_index === null) return;
+		if(this.encoded_columns[matched_title_index] === true) return;
+
+		const re_VALUE = new RegExp(VALUE, 'gi');
+
+		for(const ROW of ROWS){
+			const STRING_CELL = String(ROW[matched_title_index]);
+
+			if(STRING_CELL.toLowerCase().includes(VALUE)){
+				ROW[matched_title_index] = Table.match_and_highlight(STRING_CELL, re_VALUE);
+				this.body_values.push(ROW);
+			}
+		}
+	}
+
+	#match_values_by_cells = (VALUE_LOWER_CASE, ROWS)=>{
+		const re_VALUE_LOWER_CASE = new RegExp(VALUE_LOWER_CASE, 'gi');
+
+		for(const ROW of ROWS){
+			let is_anything_in_row_matched = false;
+			loop_cells: for(let i = 0; i < ROW.length; i++){
+				if(this.encoded_columns[i] === true) continue loop_cells;
+
+				const STRING_CELL = String(ROW[i]);
+				if(STRING_CELL.toLowerCase().includes(VALUE_LOWER_CASE)){
+					ROW[i] = Table.match_and_highlight(STRING_CELL, re_VALUE_LOWER_CASE);
+					is_anything_in_row_matched = true;
+				}
+			}
+
+			if(is_anything_in_row_matched === true) this.body_values.push(ROW);
+		}
+	}
+
 
 	// Divide data to chunks aka pages
 	#divide_data_into_chunks = ()=>{
