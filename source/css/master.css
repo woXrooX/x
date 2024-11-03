@@ -26,8 +26,6 @@ body{
 	padding-top: var(--header-height);
 
 	& > div#root{
-		max-height: calc(100dvh - var(--header-height));
-
 		& > main{
 			display: grid;
 			justify-items: center;
