@@ -423,24 +423,28 @@
 	}
 
 	@layer custom_scrollbars{
+		/*** Removing default scrollbars START ***/
+		*{
+			/* IE and Edge */
+			/* -ms-overflow-style: none; */
+			/* Firefox */
+			/* scrollbar-width: none; */
+		}
+
+		/* Chrome, Safari, Opera */
+		*::-webkit-scrollbar{ display: none; }
+		/*** Removing default scrollbars END ***/
+
 		/** Common START **/
 		.scrollbar-x,
-		.scrollbar-y{
-			overflow: hidden;
-		}
-		.scrollbar-x{
-			overflow-x: scroll;
-		}
-		.scrollbar-y{
-			overflow-y: scroll;
-		}
+		.scrollbar-y{ overflow: hidden; }
+		.scrollbar-x{ overflow-x: scroll; }
+		.scrollbar-y{ overflow-y: scroll; }
 		/** Common END **/
 
 		/********************* v1 START *********************/
 		/** Firefox START **/
-		:where(.scrollbar-x, .scrollbar-y){
-			scrollbar-width: auto;
-		}
+		:where(.scrollbar-x, .scrollbar-y){ scrollbar-width: auto; }
 
 		@supports (-moz-appearance:none){
 			:where(.scrollbar-x, .scrollbar-y){
