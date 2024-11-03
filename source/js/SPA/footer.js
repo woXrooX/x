@@ -1,5 +1,5 @@
 export default class Footer{
-	static selector = "body > footer";
+	static selector = "body > div#root > footer";
 	static #element = null;
 	static #contentFunc = null;
 
@@ -20,7 +20,7 @@ export default class Footer{
 		// If No Talk To Default footer.js
 		else{
 			try{
-				Footer.#contentFunc = await import(`../modules/footer.js`);
+				Footer.#contentFunc = await import(`/js/modules/footer.js`);
 			}catch(error){
 				Footer.#hide();
 				return;

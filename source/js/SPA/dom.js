@@ -43,7 +43,7 @@ export default class DOM{
 
 		// Scroll to top after DOM is ready
 		window.scrollTo(0, 0); // For desktop
-		document.querySelector("body > main").scrollTo({top: 0,left: 0}); // For mobile
+		document.querySelector(Main.selector).scrollTo({top: 0,left: 0}); // For mobile
 	}
 
 	static async render(dom){

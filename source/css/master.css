@@ -25,41 +25,44 @@ body{
 	font-family: Quicksand;
 	padding-top: var(--header-height);
 
-	& > main{
-		display: grid;
-		justify-items: center;
+	& > div#root{
+		max-height: calc(100dvh - var(--header-height));
 
-		width: 100vw;
-		min-height: calc(100dvh - var(--header-height));
+		& > main{
+			display: grid;
+			justify-items: center;
 
-		opacity: 0;
-		margin-top: 20px;
+			width: 100vw;
+			min-height: calc(100dvh - var(--header-height));
 
-		&.show{
-			transition: calc(var(--transition-velocity) * 2) ease-in-out;
-			transition-property: opacity, transform, margin;
+			opacity: 0;
+			margin-top: 20px;
 
-			opacity: 1;
-			margin-top: 0px;
+			&.show{
+				transition: calc(var(--transition-velocity) * 2) ease-in-out;
+				transition-property: opacity, transform, margin;
+
+				opacity: 1;
+				margin-top: 0px;
+			}
+		}
+
+		& > footer{
+			background-color: var(--color-main-tint-4);
+
+			color: var(--color-text-primary);
+			font-size: 0.7rem;
+
+			width: 100%;
+			height: var(--footer-height);
+
+			display: grid;
+			place-items: center;
+
+			&.hide{ display: none; }
 		}
 	}
 
-	& > footer{
-		background-color: var(--color-main-tint-4);
-
-		color: var(--color-text-primary);
-		font-size: 0.7rem;
-
-		width: 100%;
-		height: var(--footer-height);
-
-		display: grid;
-		place-items: center;
-
-		&.hide{
-			display: none;
-		}
-	}
 
 	& > header{
 		background-color: var(--color-main);
