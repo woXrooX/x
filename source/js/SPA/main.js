@@ -2,15 +2,11 @@ export default class Main{
 	static selector = "body > div#root > main";
 
 	// As index.html Already Has body > main Element We Do Not Have To Wait For DOM Creation To Use Query Selector
-	static element = Main.element = document.querySelector(Main.selector);
+	static element = window.x["Root"].element.querySelector("main");
 
-	static animation_start(){
-		Main.element.classList.remove("show");
-	}
+	static animation_start(){ Main.element.classList.remove("show"); }
 
-	static animation_end(){
-		Main.element.classList.add("show");
-	}
+	static animation_end(){ Main.element.classList.add("show"); }
 
 	static situational_content(type = "error", content_title = "ERROR", content = "ERROR", document_title = null){
 		if(document_title === null) document_title = type.toUpperCase();

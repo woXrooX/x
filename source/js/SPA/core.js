@@ -8,6 +8,7 @@ import bridge from "/js/modules/bridge.js";
 import XRequest from "/js/modules/XRequest.js";
 
 //// SPA Classes
+import Root from "/js/SPA/root.js";
 import Language from "/js/SPA/language.js";
 import Title from "/js/SPA/title.js";
 import SVG from "/js/SPA/svg.js";
