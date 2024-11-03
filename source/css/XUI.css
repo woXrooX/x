@@ -177,18 +177,6 @@
 		  margin-left: 20px;
 		}
 
-		/*** Removing default scrollbars START ***/
-		*{
-		  -ms-overflow-style: none; /* IE and Edge */
-		  scrollbar-width: none; /* Firefox */
-		}
-
-		/* Chrome, Safari, Opera */
-		*::-webkit-scrollbar{
-		  display: none;
-		}
-		/*** Removing default scrollbars END ***/
-
 		/*** Body START ***/
 		body{
 			background-color: var(--color-main-tint-1);
