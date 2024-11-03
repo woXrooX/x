@@ -3,42 +3,42 @@
 
 ///////////////////////////// Modules
 // Order matters
-import Logger from "../modules/logger.js";
-import bridge from "../modules/bridge.js";
-import XRequest from "../modules/XRequest.js";
+import Logger from "/js/modules/logger.js";
+import bridge from "/js/modules/bridge.js";
+import XRequest from "/js/modules/XRequest.js";
 
 //// SPA Classes
-import Language from "./language.js";
-import Title from "./title.js";
-import SVG from "./svg.js";
-import CSS from "./css.js";
-import Header from "./header.js";
-import Main from "./main.js";
-import Footer from "./footer.js";
-import Hyperlink from "./hyperlink.js";
-import Router from "./router.js";
-import DOM from "./dom.js";
-import Cover from "./cover.js";
-import Loading from "./loading.js";
-import Menu from "./menu.js";
-import Form from "./form.js";
+import Language from "/js/SPA/language.js";
+import Title from "/js/SPA/title.js";
+import SVG from "/js/SPA/svg.js";
+import CSS from "/js/SPA/css.js";
+import Header from "/js/SPA/header.js";
+import Main from "/js/SPA/main.js";
+import Footer from "/js/SPA/footer.js";
+import Hyperlink from "/js/SPA/hyperlink.js";
+import Router from "/js/SPA/router.js";
+import DOM from "/js/SPA/dom.js";
+import Cover from "/js/SPA/cover.js";
+import Loading from "/js/SPA/loading.js";
+import Menu from "/js/SPA/menu.js";
+import Form from "/js/SPA/form.js";
 
-import Notification from "./notification.js";
+import Notification from "/js/SPA/notification.js";
 
 //// Tools
-import x_String from "../modules/String.js";
+import x_String from "/js/modules/String.js";
 
 //// Built-In X-Elements
-import Link from "./elements/Link.js";
-import XSVG from "./elements/XSVG.js";
-import Modal from "./elements/modal.js";
-import Toast from "./elements/toast.js";
-import Share from "./elements/share.js"; // Share depends on modal
-import Offline from "./elements/Offline.js";
-import Notification_Bell from "./elements/Notification_Bell.js";
-import Table from "./elements/table.js";
-import Tooltip from "./elements/tooltip.js";
-import Select from "./elements/select.js";
+import Link from "/js/SPA/elements/Link.js";
+import XSVG from "/js/SPA/elements/XSVG.js";
+import Modal from "/js/SPA/elements/modal.js";
+import Toast from "/js/SPA/elements/toast.js";
+import Share from "/js/SPA/elements/share.js"; // Share depends on modal
+import Offline from "/js/SPA/elements/Offline.js";
+import Notification_Bell from "/js/SPA/elements/Notification_Bell.js";
+import Table from "/js/SPA/elements/table.js";
+import Tooltip from "/js/SPA/elements/tooltip.js";
+import Select from "/js/SPA/elements/select.js";
 
 export default class Core{
 	static {

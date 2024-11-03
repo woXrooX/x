@@ -20,7 +20,7 @@ export default class Header{
 		// If No Talk To Default header.js
 		else{
 			try{
-				Header.#contentFunc = await import(`../modules/header.js`);
+				Header.#contentFunc = await import(`/js/modules/header.js`);
 			}catch(error){
 				Header.#hide();
 				return;
