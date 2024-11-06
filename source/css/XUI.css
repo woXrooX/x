@@ -156,6 +156,8 @@
 			-webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Mobile link click effect disabling */
 		}
 
+		html{ scroll-behavior: smooth; }
+
 		/* Selection */
 		*::selection{
 			color: var(--color-text-primary);
