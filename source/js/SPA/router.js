@@ -100,6 +100,7 @@ export default class Router{
 			// End Loading Effects
 			window.Loading.end();
 			window.Main.animation_end();
+			window.x.URL.handle_scroll_to_hash();
 		}
 	}
 
