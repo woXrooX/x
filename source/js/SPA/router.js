@@ -15,7 +15,7 @@ export default class Router{
 		}
 
 		// Check the "window.location.pathname" for the error URLs
-		if(Router.errorHandlers() === true){
+		if(Router.error_handlers() === true){
 			Router.#load_page_file();
 			return;
 		}
@@ -103,7 +103,7 @@ export default class Router{
 		}
 	}
 
-	static errorHandlers(){
+	static error_handlers(){
 		switch(window.location.pathname){
 			case "/400":
 				Router.current_page.name = "400";
