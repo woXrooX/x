@@ -1,6 +1,6 @@
 export default function observe({
 	selector = ".observe",
-	observeOnce = false,
+	observe_once = false,
 	delay = 0,
 	// transitionVariables = {
 	// 	duration = "500ms",

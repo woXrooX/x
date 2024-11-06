@@ -379,7 +379,7 @@ body{
 	}
 }
 
-@layer observer_effects{
+@layer observer_animations{
 	.observe{
 		--duration: 500ms;
 		--timing-function: ease-in-out;
@@ -390,69 +390,23 @@ body{
 		transition-delay: var(--delay);
 		transition-property: opacity transform;
 
-		&.fade_in{
-			opacity: 0;
-
-			&.observed {
-				opacity: 1;
-			}
-		}
-
-		&.fade_in_v1{
+		&.observer_animation_v1{
 			opacity: 0;
 			filter: blur(20px);
+			transform: translateY(100px);
 
 			&.observed {
 				opacity: 1;
 				filter: blur(0px);
-			}
-		}
-
-		&.slide_from_left{
-			transform: translateX(-100px);
-
-			&.observed {
 				transform: translateX(0);
 			}
 		}
 
-		&.slide_from_right{
-			transform: translateX(100px);
+		&.observer_animation_v2{
+			opacity: 0;
 
 			&.observed {
-				transform: translateX(0);
-			}
-		}
-
-		&.slide_from_top{
-			transform: translateY(-100px);
-
-			&.observed {
-				transform: translateX(0);
-			}
-		}
-
-		&.slide_from_bottom{
-			transform: translateY(100px);
-
-			&.observed {
-				transform: translateX(0);
-			}
-		}
-
-		&.scale_up{
-			transform: scale(0.8);
-
-			&.observed {
-				transform: scale(1);
-			}
-		}
-
-		&.scale_down{
-			transform: scale(1.5);
-
-			&.observed {
-				transform: scale(1);
+				opacity: 1;
 			}
 		}
 	}
