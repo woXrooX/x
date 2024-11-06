@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Logger{
 	static line(force = false){
 		// Check If Debugging Mode Is Enabled Else Exit

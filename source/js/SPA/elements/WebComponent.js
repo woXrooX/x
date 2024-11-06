@@ -3,8 +3,6 @@
 // Native Form Behaviour
 // https://web.dev/more-capable-form-controls/
 
-"use strict";
-
 export default class WC extends HTMLElement{
 	//// Native Form Behaviour
 	// Identify the element as a form-associated custom element

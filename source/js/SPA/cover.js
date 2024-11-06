@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Cover{
 	static selector = "body > cover";
 	static #element = null;

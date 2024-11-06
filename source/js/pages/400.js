@@ -1,5 +1,3 @@
-"use strict";
-
 export const TITLE = 400;
 
 export default function main(){

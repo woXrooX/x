@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Router{
 	static current_page = {
 		"name": null,

@@ -1,5 +1,3 @@
-"use strict";
-
 export const TITLE = window.Lang.use("log_out");
 
 export default function main(){

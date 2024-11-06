@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Title{
 	static set(newTitle = ""){
 		if(!!newTitle === false) document.title = window.Lang.use(window.CONF["default"]["title"]);

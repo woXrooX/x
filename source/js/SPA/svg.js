@@ -1,5 +1,3 @@
-"use strict";
-
 export default class SVG{
 	static all = {
 		//// Menu icons

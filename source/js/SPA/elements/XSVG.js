@@ -1,9 +1,5 @@
-// v0.2.0
-
 // SVG shadow
 // filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
-
-"use strict";
 
 export default class XSVG extends HTMLElement{
 	constructor(){

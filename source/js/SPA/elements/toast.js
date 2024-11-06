@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Toast extends HTMLElement{
 	/////////////////////////// Static
 

@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Menu{
 	static selector = "body > menu";
 	static #selector_menu_hyperlinks = `${Menu.selector} > main a`;

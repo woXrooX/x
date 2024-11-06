@@ -1,5 +1,3 @@
-"use strict";
-
 export const TITLE = window.Lang.use("eMail_confirmation");
 
 export default function main(){

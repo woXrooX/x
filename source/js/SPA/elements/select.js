@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Select extends HTMLElement{
 	// Identify the element as a form-associated custom element
 	static formAssociated = true;

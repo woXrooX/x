@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Layer extends HTMLElement{
 	static #container_selector = "body > layers";
 	static #container = null;

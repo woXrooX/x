@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Tooltip extends HTMLElement{
   constructor(){
     super();

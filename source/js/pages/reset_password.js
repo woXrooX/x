@@ -1,5 +1,3 @@
-"use strict";
-
 export const TITLE = 'Reset password';
 
 export default function main(){

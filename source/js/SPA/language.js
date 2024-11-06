@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Language extends HTMLElement{
 	static #FALLBACK = "en";
 	static #CURRENT = "en";

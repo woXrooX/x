@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Form{
 	static #FUNC_POOL = {};
 	static #flashDuration = 2000;

@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Loading{
 	static selector = "body > loading";
 	static #elementLoading = null;

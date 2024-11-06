@@ -1,5 +1,3 @@
-"use strict";
-
 ///////////////////////////// FETCH - Bridge
 export default async function bridge(data=null, url=null, contentType=null, method="POST"){
 	if(!!data === false) return {"type": "error", "message": "invalid_method_usage_bridge"};

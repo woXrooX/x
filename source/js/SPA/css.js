@@ -32,8 +32,6 @@
 
 // background -> middleground -> foreground
 
-"use strict";
-
 export default class CSS{
 	// Color Modes
 	static color_modes = Object.freeze({DARK: 1, LIGHT: 2});
