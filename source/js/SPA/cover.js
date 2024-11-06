@@ -7,15 +7,15 @@ export default class Cover{
 	}
 
 	// Can be set the cover z-index if needed
-	static show(zIndex = x.CSS.get_value("--z-cover")){
+	static show(z_index = x.CSS.get_value("--z-cover")){
 		// Check if body > cover exists
 		if(!!Cover.#element === false) return;
 
-		// If "auto" was passed set to default zIndex
-		if(zIndex === "auto") zIndex = x.CSS.get_value("--z-cover");
+		// If "auto" was passed set to default z_index
+		if(z_index === "auto") z_index = x.CSS.get_value("--z-cover");
 
 		Cover.#element.style.opacity = 1;
-		Cover.#element.style.zIndex = zIndex;
+		Cover.#element.style.zIndex = z_index;
 
 		// disable scrolling
 		document.body.style = "overflow: hidden";
