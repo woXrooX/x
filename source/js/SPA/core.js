@@ -22,6 +22,7 @@ import Cover from "/js/SPA/cover.js";
 import Loading from "/js/SPA/loading.js";
 import Menu from "/js/SPA/menu.js";
 import Form from "/js/SPA/form.js";
+import URL from "/js/SPA/URL.js";
 
 import Notification from "/js/SPA/notification.js";
 
@@ -117,8 +118,7 @@ export default class Core{
 			// window.dispatchEvent(new Event('locationchange'));
 			Log.info("Core.#on_url_change()");
 
-			Router.handle();
-			Menu.set_active();
+			URL.handle_change();
 		});
 	}
 
@@ -134,8 +134,7 @@ export default class Core{
 			// window.dispatchEvent(new Event('popstate'));
 			Log.info("Core.#on_history_button_clicked()");
 
-			Router.handle();
-			Menu.set_active();
+			URL.handle_change();
 		});
 	}
 
