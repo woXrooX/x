@@ -7,7 +7,7 @@ export async function before(){
 
 	if("type" in resp && resp["type"] == "success"){
 		delete window.session["user"];
-		x.CSS.detectColorMode();
+		x.CSS.detect_color_mode();
 		window.dispatchEvent(new CustomEvent("dom_change", {detail: ["all"]}));
 		Hyperlink.locate("home");
 	}
