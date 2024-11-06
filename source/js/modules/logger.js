@@ -26,7 +26,7 @@ export default class Logger{
 		if("CONF" in window && window.CONF.tools.debug === false && force === false) return;
 
 		// Setting Type Color
-		const color = `color: ${x.CSS.getValue(`--color-${type}`) || 'white'}`;
+		const color = `color: ${x.CSS.get_value(`--color-${type}`) || 'white'}`;
 
 		// Generating Timestamp
 		const now = new Date();

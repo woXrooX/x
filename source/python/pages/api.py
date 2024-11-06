@@ -30,9 +30,9 @@ def api():
 				}, 200)
 
 		if request.get_json()["for"] == "change_user_app_color_mode":
-			if "colorMode" not in request.get_json(): return response(type="error", message="invalid_value")
+			if "color_mode" not in request.get_json(): return response(type="error", message="invalid_value")
 
-			if not User.set_app_color_mode(request.get_json()["colorMode"]): return response(type="error", message="something_went_wrong")
+			if not User.set_app_color_mode(request.get_json()["color_mode"]): return response(type="error", message="something_went_wrong")
 
 			return response(type="success", message="saved")
 

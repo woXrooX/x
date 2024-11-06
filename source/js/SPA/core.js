@@ -170,7 +170,7 @@ export default class Core{
 				clearInterval(x.Notification.poll_interval_func);
 			}
 
-			x.CSS.detectColorMode();
+			x.CSS.detect_color_mode();
 		});
 	}
 
