@@ -1,7 +1,7 @@
 export default class Footer{
 	static selector = "body > div#root > footer";
 	static #element = null;
-	static #contentFunc = null;
+	static #content_func = null;
 
 	static init(){
 		Footer.#element = document.querySelector(Footer.selector);
@@ -20,7 +20,7 @@ export default class Footer{
 		// If No Talk To Default footer.js
 		else{
 			try{
-				Footer.#contentFunc = await import(`/js/modules/footer.js`);
+				Footer.#content_func = await import(`/js/modules/footer.js`);
 			}catch(error){
 				Footer.#hide();
 				return;
@@ -29,9 +29,9 @@ export default class Footer{
 			// Check If
 			if(
 				// footer.js Has Default Method To Call
-				typeof Footer.#contentFunc.default === "function" &&
+				typeof Footer.#content_func.default === "function" &&
 				// And Doesn Return False
-				Footer.#contentFunc.default() !== false
+				Footer.#content_func.default() !== false
 			) Footer.#build();
 
 			// Else Hide Footer
@@ -62,7 +62,7 @@ export default class Footer{
 
 		// If No Content Passed Update To Default
 		if(!!content === false){
-			Footer.#element.innerHTML = Footer.#contentFunc.default();
+			Footer.#element.innerHTML = Footer.#content_func.default();
 			Footer.#show();
 
 			// Exit The Update

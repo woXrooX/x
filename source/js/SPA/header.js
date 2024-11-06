@@ -1,7 +1,7 @@
 export default class Header{
 	static selector = "body > header";
 	static #element = null;
-	static #contentFunc = null;
+	static #content_func = null;
 
 	static init(){
 		Header.#element = document.querySelector(Header.selector);
@@ -20,7 +20,7 @@ export default class Header{
 		// If No Talk To Default header.js
 		else{
 			try{
-				Header.#contentFunc = await import(`/js/modules/header.js`);
+				Header.#content_func = await import(`/js/modules/header.js`);
 			}catch(error){
 				Header.#hide();
 				return;
@@ -29,9 +29,9 @@ export default class Header{
 			// Check If
 			if(
 				// JS/header.js Has Default Method To Call
-				typeof Header.#contentFunc.default === "function" &&
+				typeof Header.#content_func.default === "function" &&
 				// And Doesn Return False
-				Header.#contentFunc.default() !== false
+				Header.#content_func.default() !== false
 			) Header.#build();
 
 			// Else Hide Header
@@ -62,7 +62,7 @@ export default class Header{
 
 		// If No Content Passed Update To Default
 		if(!!content === false){
-			Header.#element.innerHTML = Header.#contentFunc.default();
+			Header.#element.innerHTML = Header.#content_func.default();
 			Header.#show();
 
 			// Exit The Update
