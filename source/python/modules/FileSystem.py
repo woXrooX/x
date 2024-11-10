@@ -280,8 +280,8 @@ if __name__ != "__main__":
 
 				Log.success("Loaded: config.yaml")
 
-			except:
-				Log.error("Could Not Load The config.yaml")
+			except Exception as err:
+				Log.error(f"FileSystem.load_internal_configurations(): {err}")
 				sys.exit()
 
 		@staticmethod
