@@ -31,7 +31,7 @@ if __name__ != "__main__":
 						if request.method == "GET": return render_template("index.html", **globals())
 						else:
 							ret_val = func(*args, **kwargs, request=request)
-							if ret_val is None: return response(RAW=("Internal Server Error", 500, {'text/html': 'charset=utf-8'}))
+							if ret_val is None: return response(RAW=("No Response", 444, {'text/html': 'charset=utf-8'}))
 							return ret_val
 
 					else: return guard_result
