@@ -29,7 +29,10 @@ if __name__ != "__main__":
 					if guard_result is True:
 						# If it is a "GET" request, it will always just returns the "index.html"
 						if request.method == "GET": return render_template("index.html", **globals())
-						else: return func(*args, **kwargs, request=request)
+						else:
+							ret_val = func(*args, **kwargs, request=request)
+							if ret_val is None: return response(RAW=("Internal Server Error", 500, {'text/html': 'charset=utf-8'}))
+							return ret_val
 
 					else: return guard_result
 
