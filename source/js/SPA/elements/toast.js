@@ -2,8 +2,7 @@ export default class Toast extends HTMLElement{
 	/////////////////////////// Static
 
 	static #selector = "body > toasts";
-	static #autoDismissTimer = 5000;
-	static #template = document.createElement("template");
+	static #auto_dismiss_timer = 5000;
 
 	/////////// APIs
 	static new(type, content){
@@ -15,7 +14,7 @@ export default class Toast extends HTMLElement{
 		document.querySelector(Toast.#selector).innerHTML += `<x-toast type="${type}">${content}</x-toast>`;
 
 		// Auto Remove After N Seconds
-		setTimeout(()=>{document.querySelector(Toast.#selector).firstChild?.remove();}, Toast.#autoDismissTimer);
+		setTimeout(()=>{document.querySelector(Toast.#selector).firstChild?.remove();}, Toast.#auto_dismiss_timer);
 	}
 
 	static handle_commands(commands, response){
@@ -58,16 +57,14 @@ export default class Toast extends HTMLElement{
 		this.shadow = this.attachShadow({mode: 'closed'});
 
 		Type: {
-			this.typeName = "error";
+			this.type_name = "error";
 
-			if(window.x.Notification.types.includes(this.getAttribute("type"))) this.typeName = this.getAttribute("type");
+			if(window.x.Notification.types.includes(this.getAttribute("type"))) this.type_name = this.getAttribute("type");
 			else this.textContent = `Toast.constructor(): Invalid type "${this.getAttribute('type')}"`;
 		}
 
-		CSS: {
-			const style = document.createElement('style');
-
-			style.textContent = `
+		this.shadow.innerHTML += `
+			<style>
 				toast{
 					font-size: 1rem;
 
@@ -80,43 +77,30 @@ export default class Toast extends HTMLElement{
 					border-radius: var(--radius);
 					box-shadow: var(--shadow);
 
-					display: grid;
-					gap: 10px;
-					grid-template-columns:auto 2fr auto;
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
 					align-items: center;
 
 					animation: fade_in var(--transition-velocity) ease;
 
-					& > toast-type-color{
-						background-color: var(--color-${[this.typeName]});
-						height: 100%;
-						width: 5px;
-						border-radius: var(--radius);
-					}
-
 					& > main{
-						display: grid;
-						gap: calc(var(--gap) / 4);
-						grid-template-columns:auto 2fr;
-						grid-template-areas:
-							"icon type"
-							"content content";
+						display: flex;
+						flex-direction: row;
+						gap: calc(var(--gap) * 0.5);
+						justify-content: flex-start;
 						align-items: center;
 
-						& > x-svg[for=toast-type-svg]{
-							grid-area: icon;
-						}
-
-						& > toast-type-name{
-							text-transform: uppercase;
-							font-weight: bold;
-							grid-area: type;
+						& > toast-type-color{
+							background-color: var(--color-${[this.type_name]});
+							height: 1em;
+							width: 5px;
+							border-radius: var(--radius);
 						}
 
 						& > content{
 							color: var(--color-text-secondary);
 							font-size: 0.8em;
-							grid-area: content;
 						}
 					}
 				}
@@ -125,21 +109,15 @@ export default class Toast extends HTMLElement{
 					0%{transform:translateY(-10px);}
 					100%{transform:translateY(0px);}
 				}
-			`;
-
-			this.shadow.appendChild(style);
-		}
-
-		this.shadow.innerHTML += `
+			</style>
 			<toast>
-				<toast-type-color></toast-type-color>
 				<main>
+					<toast-type-color></toast-type-color>
 					<x-svg
 						for="toast-type-svg"
-						name="type_${this.typeName}"
-						color="var(--color-${this.typeName})"
+						name="type_${this.type_name}"
+						color="var(--color-${this.type_name})"
 					></x-svg>
-					<toast-type-name>${window.Lang.use(this.typeName)}</toast-type-name>
 					<content>${window.Lang.use(this.textContent)}</content>
 				</main>
 				<x-svg name="x" for="dismiss"></x-svg>
