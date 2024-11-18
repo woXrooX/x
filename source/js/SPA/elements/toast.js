@@ -87,16 +87,9 @@ export default class Toast extends HTMLElement{
 					& > main{
 						display: flex;
 						flex-direction: row;
-						gap: calc(var(--gap) * 0.5);
+						gap: calc(var(--gap) * 0.3);
 						justify-content: flex-start;
 						align-items: center;
-
-						& > toast-type-color{
-							background-color: var(--color-${[this.type_name]});
-							height: 1em;
-							width: 5px;
-							border-radius: var(--radius);
-						}
 
 						& > content{
 							color: var(--color-text-secondary);
@@ -112,7 +105,6 @@ export default class Toast extends HTMLElement{
 			</style>
 			<toast>
 				<main>
-					<toast-type-color></toast-type-color>
 					<x-svg
 						for="toast-type-svg"
 						name="type_${this.type_name}"
