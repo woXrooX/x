@@ -37,8 +37,8 @@ export default class Hyperlink{
 		// Add To History
 		window.history.pushState("", "", completed_url);
 
-		// Firing Event "locationchange" After Changing URL
-		window.dispatchEvent(new Event('locationchange'));
+		// Firing event "URL_change" after changing the URL
+		window.dispatchEvent(new Event('URL_change'));
 	}
 
 	// Unlike Hyperlink.locate, users cannot navigate back to the original page using the browser's back button.

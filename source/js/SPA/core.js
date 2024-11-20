@@ -48,7 +48,7 @@ export default class Core{
 			.then(async ()=>{
 				await Core.#init();
 				Core.#on_load();
-				Core.#on_url_change();
+				Core.#on_URL_change();
 				Core.#on_hash_change();
 				Core.#on_history_button_clicked();
 				Core.#on_dom_change();
@@ -113,10 +113,10 @@ export default class Core{
 		});
 	}
 
-	static #on_url_change(){
-		window.addEventListener('locationchange', ()=>{
-			// window.dispatchEvent(new Event('locationchange'));
-			Log.info("Core.#on_url_change()");
+	static #on_URL_change(){
+		window.addEventListener('URL_change', ()=>{
+			// window.dispatchEvent(new Event('URL_change'));
+			Log.info("Core.#on_URL_change()");
 
 			URL.handle_change();
 		});
