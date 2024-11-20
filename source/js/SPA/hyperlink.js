@@ -9,7 +9,7 @@ export default class Hyperlink{
 			if(!!a.hasAttribute("href") === false) return;
 
 			// Check if href is hash.
-			if(a.getAttribute("href").charAt(0) == '#') return;
+			if(a.getAttribute("href").charAt(0) === '#') return;
 
 			// Check if href is for file or external URL
 			if(a.getAttribute("href").includes('.')) return;
@@ -38,7 +38,7 @@ export default class Hyperlink{
 		window.history.pushState("", "", completed_url);
 
 		// Firing event "URL_change" after changing the URL
-		window.dispatchEvent(new Event('URL_change'));
+		window.dispatchEvent(new CustomEvent('URL_change'));
 	}
 
 	// Unlike Hyperlink.locate, users cannot navigate back to the original page using the browser's back button.
