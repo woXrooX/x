@@ -29,13 +29,13 @@ export default class Hyperlink{
 	// locate | load | open
 	// Force full page reload: No
 	static locate(url = ""){
-		const completed_url = new URL(url, window.location.origin);
+		const completed_URL = new URL(url, window.location.origin);
 
 		// Check if current page is already equal to requesting page
-		if(window.location.href == completed_url.href) return;
+		if(window.location.href == completed_URL.href) return;
 
-		// Add To History
-		window.history.pushState("", "", completed_url);
+		// Push new state to history
+		window.history.pushState({ page: completed_URL.href }, '', completed_URL.href);
 
 		// Firing event "URL_change" after changing the URL
 		window.dispatchEvent(new CustomEvent('URL_change'));
@@ -47,9 +47,9 @@ export default class Hyperlink{
 		// Check if current page is already equal to requesting page
 		if(window.location.href == url) return;
 
-		const completed_url = new URL(url, window.location.origin);
+		const completed_URL = new URL(url, window.location.origin);
 
-		window.location.replace(completed_url);
+		window.location.replace(completed_URL);
 	}
 }
 

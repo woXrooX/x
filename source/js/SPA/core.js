@@ -131,7 +131,17 @@ export default class Core{
 
 	static #on_history_button_clicked(){
 		window.addEventListener('popstate', ()=>{
+			// NOTE: Just calling history.pushState() or history.replaceState() won't trigger a popstate event.
+			// The popstate event will be triggered by doing a browser action such as a click on the back or forward button (or calling history.back() or history.forward() in JavaScript).
+
+			// NOTE: hashchange event also triggers the popstate. Web is a mess!
+
 			// window.dispatchEvent(new Event('popstate'));
+
+			// Trigger popstate event
+			// const pop_state_event = new PopStateEvent('popstate', { state: { page: completed_URL.href } });
+			// window.dispatchEvent(pop_state_event);
+
 			Log.info("Core.#on_history_button_clicked()");
 
 			URL.handle_change();
