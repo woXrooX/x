@@ -35,9 +35,6 @@ export default class Language extends HTMLElement{
 	static use(keyword){return Language.translate(keyword);}
 
 	static async switch_to(code = Language.#FALLBACK){
-		console.log(code);
-
-
 		// Check if supported language was passed
 		if(!window.CONF.default.language.supported.includes(code)) return;
 
