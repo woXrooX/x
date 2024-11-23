@@ -48,7 +48,6 @@ export default class CSS{
 
 		CSS.color_mode_switcher_icon = document.querySelector(`${Menu.selector} > header > x-svg[for=color_mode_switcher]`);
 
-		CSS.#load_color_brand();
 		CSS.detect_color_mode();
 		CSS.#on_color_mode_change();
 		CSS.#handle_color_mode_toggle();
@@ -56,16 +55,6 @@ export default class CSS{
 
 	// Get CSS value
 	static get_value(variable){ return getComputedStyle(document.querySelector(':root')).getPropertyValue(variable); }
-
-	///// Load Brand Color From Configurations File
-	static #load_color_brand(){
-		// Update CSS color main
-		const root_styles = document.querySelector(':root');
-
-		root_styles.style.setProperty("--color-main-hue", `${window.CONF.default.color.brand.hue || 230}deg`);
-		root_styles.style.setProperty("--color-main-saturation", `${window.CONF.default.color.brand.saturation || 13}%`);
-		root_styles.style.setProperty("--color-main-lightness", `${window.CONF.default.color.brand.lightness || 9}%`);
-	}
 
 	///// Color Mode
 	// Detect Color Mode

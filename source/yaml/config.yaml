@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.202.0.0014"
+version: "0.202.0.0015"
 
 
 ######### Flask
@@ -73,15 +73,7 @@ default:
   #   sub_domain: "www"
   #   domain_name: "localhost"
   #   domain_extension: "com"
-  #   port: "5000"
-
-  # For External Color Configurations
-  # HEX: #14151A
-  color:
-    brand:
-      hue: 230        # deg
-      saturation: 13  # %
-      lightness: 9    # %
+  #   port: "8000"
 
   # App Icon Settings
   icon:
