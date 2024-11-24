@@ -271,7 +271,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 
 \! echo "-------------------------- log_in_records";
 CREATE TABLE IF NOT EXISTS `log_in_records` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` BIGINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
 
 	-- NULL = Unsuccessful attempt
 	-- id = Successful login
@@ -293,6 +293,8 @@ CREATE TABLE IF NOT EXISTS `log_in_records` (
 
 \! echo "-------------------------- password_recoveries";
 CREATE TABLE IF NOT EXISTS `password_recoveries` (
+	`id` BIGINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+
 	`user` INT NULL,
 
 	`token` VARCHAR(100) NOT NULL UNIQUE,
@@ -310,7 +312,9 @@ CREATE TABLE IF NOT EXISTS `password_recoveries` (
 	`password_old` VARCHAR(100) NULL,
 	`password_new` VARCHAR(100) NULL,
 
-	FOREIGN KEY (user) REFERENCES users(id)
+	FOREIGN KEY (user) REFERENCES users(id),
+
+	PRIMARY KEY (`id`)
 );
 
 
@@ -322,7 +326,7 @@ CREATE TABLE IF NOT EXISTS `password_recoveries` (
 -- ------------------------------------
 \! echo "-------------------------- feedback";
 CREATE TABLE IF NOT EXISTS `feedback` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` BIGINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
 
 	`ip_address` VARCHAR(45),
 	`user_agent` TEXT,
