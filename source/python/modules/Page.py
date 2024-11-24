@@ -31,7 +31,7 @@ if __name__ != "__main__":
 						if request.method == "GET": return render_template("index.html", **globals())
 						else:
 							ret_val = func(*args, **kwargs, request=request)
-							if ret_val is None: return response(RAW=("No Response", 444, {'text/html': 'charset=utf-8'}))
+							if ret_val is None: return response(RAW=("No Response", 444, {'Content-Type': 'text/plain; charset=utf-8'}))
 							return ret_val
 
 					else: return guard_result
@@ -58,7 +58,7 @@ if __name__ != "__main__":
 		# Returns function if fails
 		@staticmethod
 		def guard(page):
-			if request.method not in ["POST", "GET"]: return response(RAW=("Method Not Allowed", 405, {'text/html': 'charset=utf-8'}))
+			if request.method not in ["POST", "GET"]: return response(RAW=("Method Not Allowed", 405, {'Content-Type': 'text/plain; charset=utf-8'}))
 
 			if "app_is_down" in Globals.CONF["tools"]:
 				Log.warning("App Is Down")
