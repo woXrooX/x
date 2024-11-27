@@ -50,6 +50,7 @@ export function parse_user_agent(user_agent_string){
 
 	for(const [OS_name, {pattern, process}] of Object.entries(OS_patterns)){
 		const match = user_agent_string.match(pattern);
+
 		if(match){
 			parse_result.OS = OS_name;
 			parse_result.OS_version = process(match);
@@ -65,6 +66,7 @@ export function parse_user_agent(user_agent_string){
 
 	for(const [engine, pattern] of Object.entries(engine_patterns)){
 		const match = user_agent_string.match(pattern);
+
 		if(match){
 			parse_result.engine = `${engine} ${match[1]}`;
 			break;
