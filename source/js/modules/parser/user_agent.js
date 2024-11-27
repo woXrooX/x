@@ -34,9 +34,9 @@ export function parse_user_agent(user_agent_string){
 			pattern: /Android (\d+(\.\d+)?)/,
 			process: (v)=>v[1]
 		},
-		"Mac OS X": {
-			pattern: /Mac OS X (\d+_\d+_\d+)/,
-			process: (v)=>v[1].replace(/_/g, ".")
+		"macOS": {
+			pattern: /(Mac OS X|Macintosh) (\d+[._]\d+[._]\d+)/,
+			process: (v)=>v[2].replace(/_/g, ".")
 		},
 		"Windows": {
 			pattern: /Windows NT (\d+\.\d+)/,
