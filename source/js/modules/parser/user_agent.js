@@ -7,7 +7,7 @@ export function parse_user_agent(user_agent_string){
 		OS: null,
 		OS_version: null,
 		engine: null,
-		device_type: null
+		device: null
 	};
 
 	const browser_patterns = {
@@ -73,9 +73,9 @@ export function parse_user_agent(user_agent_string){
 		}
 	}
 
-	if(user_agent_string.includes("Mobile")) parse_result.device_type = "mobile";
-	else if(user_agent_string.includes("Tablet")) parse_result.device_type = "tablet";
-	else parse_result.device_type = "desktop";
+	if(user_agent_string.includes("Mobile")) parse_result.device = "mobile";
+	else if(user_agent_string.includes("Tablet")) parse_result.device = "tablet";
+	else parse_result.device = "desktop";
 
 	return parse_result;
 }
