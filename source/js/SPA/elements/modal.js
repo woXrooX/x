@@ -5,6 +5,7 @@ export default class Modal extends HTMLElement{
 	static #element = null;
 	static element_main = null;
 	static #shown = false;
+	static #locked = false;
 	static #FUNC_POOL = {};
 
 	static {
@@ -26,6 +27,7 @@ export default class Modal extends HTMLElement{
 
 	static hide(){
 		if(Modal.#shown === false) return;
+		if(Modal.#locked === true) return;
 
 		Modal.#shown = false;
 
@@ -38,6 +40,10 @@ export default class Modal extends HTMLElement{
 
 		Cover.hide();
 	}
+
+	static lock(){ Modal.#locked = true; }
+
+	static unlock(){ Modal.#locked = false; }
 
 	static handle_commands(commands, type){
 		if(!!commands === false) return;
