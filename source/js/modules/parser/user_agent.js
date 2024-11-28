@@ -11,12 +11,12 @@ export function parse_user_agent(user_agent_string){
 	};
 
 	const browser_patterns = {
+		"Opera": /(OPR|Opera|Opera GX)\/(\d+\.\d+)/,
+		"Edge": /(EdgA?|Edge|Edg)\/(\d+\.\d+)/, // Added EdgA pattern
+		"SamsungBrowser": /SamsungBrowser\/(\d+\.\d+)/,
 		"Chrome": /Chrome\/(\d+\.\d+)/,
 		"Firefox": /Firefox\/(\d+\.\d+)/,
-		"Safari": /Safari\/(\d+\.\d+)/,
-		"Opera": /OPR\/(\d+\.\d+)/,
-		"Edge": /Edg\/(\d+\.\d+)/,
-		"SamsungBrowser": /SamsungBrowser\/(\d+\.\d+)/
+		"Safari": /Safari\/(\d+\.\d+)/
 	};
 
 	for(const [browser, pattern] of Object.entries(browser_patterns)){
@@ -24,7 +24,7 @@ export function parse_user_agent(user_agent_string){
 
 		if(match){
 			parse_result.browser = browser;
-			parse_result.browser_version = match[1];
+			parse_result.browser_version = ["Opera", "Edge"].includes(browser) ? match[2] : match[1];
 			break;
 		}
 	}
