@@ -1,6 +1,6 @@
 export default class Form{
 	static #FUNC_POOL = {};
-	static #flashDuration = 2000;
+	static #flash_duration = 2000;
 
 	/////////// APIs
 	static collect(element = null){
@@ -14,7 +14,7 @@ export default class Form{
 		const forms = element.querySelectorAll('form');
 
 		for(const form of forms){
-			if(Form.#formGuard(form) === false) continue;
+			if(Form.#form_guard(form) === false) continue;
 
 			Form.register(form);
 		}
@@ -24,33 +24,34 @@ export default class Form{
 		Log.info(`Form.register()`);
 
 		// Enable Events Listeners
-		Form.#onInput(form);
-		Form.#onSubmit(form);
+		Form.#on_input(form);
+		Form.#on_submit(form);
 	}
 
 	static push_func(func){ Form.#FUNC_POOL[func.name] = func; }
 
 	/////////// Helpers
-	static #onInput(form){
-	// check if onInput mode is enabled
-	if(!form.hasAttribute("oninputcheck")) return;
+	static #on_input(form){
+		// check if on_input mode is enabled
+		if(!form.hasAttribute("oninputcheck")) return;
 
-	form.querySelectorAll("label > input").forEach((input) => {
-		input.oninput = async ()=>{
-		let data = {
-			for: form.getAttribute("for"),
-			field: event.target.name,
-			fields: {}
-		}
-		data["fields"][event.target.name] = event.target.value;
+		form.querySelectorAll("label > input").forEach((input) => {
+			input.oninput = async ()=>{
+				let data = {
+					for: form.getAttribute("for"),
+					field: event.target.name,
+					fields: {}
+				}
 
-		let response = await window.bridge(data, `${form.getAttribute("for")}`);
-		if("field" in response) Form.#response(response["field"], response["type"], response["message"]);
-		};
-	});
+				data["fields"][event.target.name] = event.target.value;
+
+				let response = await window.bridge(data, `${form.getAttribute("for")}`);
+				if("field" in response) Form.#response(response["field"], response["type"], response["message"]);
+			};
+		});
 	}
 
-	static #onSubmit(form){
+	static #on_submit(form){
 		form.onsubmit = async (event)=>{
 			event.preventDefault();
 
@@ -74,18 +75,17 @@ export default class Form{
 			// Append for To FormData
 			formData.append("for", form.getAttribute("for"));
 
-			// Log FormData
-			for(const [key, value] of formData.entries())
-			console.log(`${key}: ${value}`);
+			// DEV: Log FormData
+			// for(const [key, value] of formData.entries()) console.log(`${key}: ${value}`);
 
 			// Send The Request
 			let response = await window.bridge(formData, form.action, form.enctype);
 
-			// Data From Back-End
-			Log.info(response);
+			// DEV: Data From Back-End
+			// Log.info(response);
 
 			// On invalid response
-			if(Form.#responseGuard(response) === false){
+			if(Form.#response_guard(response) === false){
 				Form.#response({
 					form: form,
 					type: "error",
@@ -164,13 +164,14 @@ export default class Form{
 		if(!!form === false) return;
 
 		// Element <p>
-		const elementP = form.querySelector(`p[for=${field}]`);
+		const element_p = form.querySelector(`p[for=${field}]`);
 
 		// Above Submit Button
-		if(!!message != false && !!elementP === true) elementP.innerHTML = `<${type}>${window.Lang.use(message)}</${type}>`;
+		if(!!message != false && !!element_p === true) element_p.innerHTML = `<${type}>${window.Lang.use(message)}</${type}>`;
 
 		// Focus & Flash The Border Color
 		const element = form.querySelector(`[name=${field}]`);
+
 		if(!!element === true && element.getAttribute("type") != "submit"){
 			// Focus
 			element.focus();
@@ -181,12 +182,11 @@ export default class Form{
 	}
 
 	static #flash(type, element){
-	// Activate Border Color
-	element.style.borderColor = getComputedStyle(document.body).getPropertyValue(`--color-${type}`);
+		// Activate Border Color
+		element.style.borderColor = getComputedStyle(document.body).getPropertyValue(`--color-${type}`);
 
-	// Flash Border Color
-	setTimeout(()=>{element.removeAttribute("style");}, Form.#flashDuration);
-
+		// Flash Border Color
+		setTimeout(()=>{element.removeAttribute("style");}, Form.#flash_duration);
 	}
 
 	static async #execute_on_response(func_name, response){
@@ -194,7 +194,7 @@ export default class Form{
 		await Form.#FUNC_POOL[func_name](response);
 	}
 
-	static #formGuard(form){
+	static #form_guard(form){
 		// form Value Is Falsy
 		if(!!form === false) return false;
 
@@ -207,7 +207,7 @@ export default class Form{
 		return true;
 	}
 
-	static #responseGuard(response){
+	static #response_guard(response){
 		if(!("type" in response)) return false;
 
 		return true;
