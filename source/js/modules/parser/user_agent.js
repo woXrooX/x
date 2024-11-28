@@ -30,6 +30,10 @@ export function parse_user_agent(user_agent_string){
 	}
 
 	const OS_patterns = {
+		"iOS": {
+			pattern: /CPU (?:iPhone |iPad )?OS (\d+_\d+(_\d+)?)/,
+			process: (v)=>v[1].replace(/_/g, ".")
+		},
 		"Android": {
 			pattern: /Android (\d+(\.\d+)?)/,
 			process: (v)=>v[1]
