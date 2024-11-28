@@ -10,6 +10,7 @@ source/python/modules/*
 !source/python/modules/Backup.py
 !source/python/modules/FileSystem.py
 !source/python/modules/Globals.py
+!source/python/modules/IP_address_tools.py
 !source/python/modules/Logger.py
 !source/python/modules/Log_In_Tools.py
 !source/python/modules/MongoDB.py

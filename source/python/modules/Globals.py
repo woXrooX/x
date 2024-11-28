@@ -28,6 +28,7 @@ if __name__ != "__main__":
 					"Backup.py",
 					"FileSystem.py",
 					"Globals.py",
+					"IP_address_tools.py",
 					"Logger.py",
 					"Log_In_Tools.py",
 					"MongoDB.py",
