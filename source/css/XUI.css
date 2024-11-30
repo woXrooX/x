@@ -395,10 +395,6 @@
 			.text-white-space-pre{white-space: pre;}
 		}
 
-		@layer font-family{
-			.font-family-Quicksand{font-family: Quicksand;}
-		}
-
 		/****** Other ******/
 		/* Drop cap style */
 		.text-drop-cap{
