@@ -669,6 +669,10 @@
 					}
 				}
 			}
+
+			&[type=range]{
+				padding: 0;
+			}
 		}
 
 		select{
