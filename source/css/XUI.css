@@ -671,6 +671,7 @@
 			}
 
 			&[type=range]{
+				cursor: pointer;
 				padding: 0;
 			}
 		}
