@@ -68,7 +68,7 @@ if __name__ != "__main__":
 			PAGE_CONF = Globals.CONF["pages"][page]
 
 			if PAGE_CONF["enabled"] == False:
-				if request.method == "GET": return redirect("/home")
+				if request.method == "GET": return redirect("/")
 				return response(type="error", message="404", redirect="/404")
 
 			# Validate POST request
