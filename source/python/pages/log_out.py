@@ -23,6 +23,6 @@ def log_out(request):
 			type="success",
 			message="success",
 			delete_session_user=True,
-			redirect="/home",
+			redirect="/",
 			dom_change=["menu"]
 		)

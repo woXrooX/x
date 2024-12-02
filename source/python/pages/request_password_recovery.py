@@ -35,7 +35,7 @@ def request_password_recovery(request):
 			fetch_one=True
 		)
 		if data is False: return response(type="error", message="database_error")
-		if data: return response(type="info", message="password_recovery_link_already_has_been_sent", redirect="/home")
+		if data: return response(type="info", message="password_recovery_link_already_has_been_sent", redirect="/")
 
 		#### The recovery link
 		token = secrets.token_urlsafe(32)
@@ -62,6 +62,6 @@ def request_password_recovery(request):
 		"""
 
 		if SendGrid.send("noreply", request.form["eMail"], eMail_content, "Password recovery") is not True:
-			return response(type="warning", message="Unable to send email. Your request has been saved. Please reach out to support for further assistance", redirect="/home")
+			return response(type="warning", message="Unable to send email. Your request has been saved. Please reach out to support for further assistance", redirect="/")
 
-		return response(type="success", message="An email with password reset instructions has been sent to your email", redirect="/home")
+		return response(type="success", message="An email with password reset instructions has been sent to your email", redirect="/")

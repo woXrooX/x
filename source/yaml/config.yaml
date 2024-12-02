@@ -3,7 +3,7 @@
 
 ######### Version
 # major.minor.patch.build
-version: "0.202.0.0036"
+version: "0.202.0.0037"
 
 
 ######### Flask
@@ -112,10 +112,14 @@ tools:
 
 ######### Pages
 pages:
-  home:
+  index:
     enabled: true
     endpoints:
       - "/"
+
+  home:
+    enabled: true
+    endpoints:
       - "/home"
 
 

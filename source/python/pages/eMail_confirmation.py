@@ -49,7 +49,7 @@ def eMail_confirmation(request):
 
 			User.update_session()
 
-			redirect = unquote(request.args.get("redirect")) if "redirect" in request.args else "/home"
+			redirect = unquote(request.args.get("redirect")) if "redirect" in request.args else "/"
 
 			return response(
 				type="success",

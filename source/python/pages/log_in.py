@@ -56,7 +56,7 @@ def log_in(request):
 
 		except ModuleNotFoundError: pass
 
-		redirect = unquote(request.args.get("redirect")) if "redirect" in request.args else "/home"
+		redirect = unquote(request.args.get("redirect")) if "redirect" in request.args else "/"
 
 		return response(
 			type="success",
