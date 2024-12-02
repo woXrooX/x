@@ -136,3 +136,24 @@ export function parse_time(time){
 		second: splitted[2].padStart(2, '0')
 	}
 }
+
+// Output: 13h 24m 13s
+export function milliseconds_to_human_readable_v1(milliseconds) {
+	let seconds = Math.floor(milliseconds / 1000);
+
+	const hours = Math.floor(seconds / 3600);
+	seconds %= 3600;
+
+	const minutes = Math.floor(seconds / 60);
+	seconds %= 60;
+
+	let formatted_time = '';
+
+	if (hours > 0) formatted_time += `${hours}h `;
+
+	if (minutes > 0 || hours > 0) formatted_time += `${minutes}m `;
+
+	formatted_time += `${seconds}s`;
+
+	return formatted_time;
+}
