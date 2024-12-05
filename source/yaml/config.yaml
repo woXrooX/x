@@ -214,16 +214,6 @@ pages:
     endpoints:
       - "/x/actions"
 
-  x_app_analytics:
-    enabled: false
-    roles:
-      - "root"
-    methods:
-      - "GET"
-      - "POST"
-    endpoints:
-      - "/x/app_analytics"
-
   x_feedback_leave:
     enabled: false
     methods:

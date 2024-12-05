@@ -47,7 +47,6 @@ source/python/pages/*.py
 !source/python/pages/reset_password.py
 !source/python/pages/sign_up.py
 !source/python/pages/x_actions.py
-!source/python/pages/x_app_analytics.py
 !source/python/pages/x_feedback_leave.py
 !source/python/pages/x_feedback.py
 !source/python/pages/x_log_in_records.py

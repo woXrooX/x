@@ -62,7 +62,6 @@ if __name__ != "__main__":
 					"reset_password.py",
 					"sign_up.py",
 					"x_actions.py",
-					"x_app_analytics.py",
 					"x_feedback_leave.py",
 					"x_feedback.py",
 					"x_log_in_records.py",
