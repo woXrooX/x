@@ -93,7 +93,9 @@ export default class Router{
 			if("CONF" in window && window.CONF.tools.debug === true){
 				window.DOM.render(Main.situational_content("error", error.name, error.stack));
 				console.trace(error);
-			}else window.DOM.render(Main.situational_content("warning", Lang.use("warning"), Lang.use("something_went_wrong")));
+			}
+
+			else window.DOM.render(Main.situational_content("warning", Lang.use("warning"), Lang.use("something_went_wrong")));
 
 			window.Footer.handle();
 		}finally{
