@@ -153,11 +153,25 @@ if __name__ != "__main__":
 			Log.center("Creating folders", '=')
 
 			# x/source/[folder]
-			x_folders = ["project_files/assets", "project_files/assets/private", "project_files/assets/public", "project_files/users", "Python/project/modules", "www", "www/HTML", "www/static"]
+			x_folders = [
+				"project_files/assets", "project_files/assets/private", "project_files/assets/public", "project_files/users",
+				"Python/project/modules",
+				"www", "www/HTML", "www/static"
+			]
 			for folder in x_folders: File_System.create_folder(f'{Globals.X_RUNNING_FROM}/{folder}/', strict=True)
 
 			# project/[folder]
-			project_folders = ["Backups", "CSS", "fonts", "HTML", "images", "JavaScript", "JavaScript/JSON", "JavaScript/libs", "JavaScript/modules", "pages", "pages/back", "pages/front", "Python", "SVG"]
+			project_folders = [
+				"Backups",
+				"CSS",
+				"fonts",
+				"HTML",
+				"images",
+				"JavaScript", "JavaScript/JSON", "JavaScript/libs", "JavaScript/modules",
+				"pages", "pages/back", "pages/front",
+				"Python",
+				"SVG"
+			]
 			for folder in project_folders: File_System.create_folder(f'{Globals.PROJECT_RUNNING_FROM}/{folder}/', strict=True)
 
 
@@ -239,7 +253,7 @@ if __name__ != "__main__":
 			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/CSS", f"{Globals.X_RUNNING_FROM}/www/static/CSS", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_RUNNING_FROM}/www/static/fonts", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_RUNNING_FROM}/www/static/images", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript", f"{Globals.X_RUNNING_FROM}/www/static/JavaScript/project", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript", f"{Globals.X_RUNNING_FROM}/www/static/JavaScript", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{Globals.X_RUNNING_FROM}/Python/live_pages", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{Globals.X_RUNNING_FROM}/www/static/JavaScript/pages", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/Python", f"{Globals.X_RUNNING_FROM}/Python/project/modules", strict=True)
