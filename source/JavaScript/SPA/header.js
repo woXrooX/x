@@ -1,0 +1,79 @@
+export default class Header{
+	static selector = "body > header";
+	static #element = null;
+	static #content_func = null;
+
+	static init(){
+		Header.#element = document.querySelector(Header.selector);
+	}
+
+	static async handle(func){
+		// Check If Page Scoped header() Defined
+		if(typeof func === "function"){
+			// If header() Doesn Return False Then Execute It
+			if(func() !== false) Header.#build(func());
+
+			// Else Hide Header On This Page
+			else Header.#hide();
+		}
+
+		// If No Talk To Default header.js
+		else{
+			try{
+				Header.#content_func = await import(`/JavaScript/modules/header.js`);
+			}catch(error){
+				Header.#hide();
+				return;
+			}
+
+			// Check If
+			if(
+				// JS/header.js Has Default Method To Call
+				typeof Header.#content_func.default === "function" &&
+				// And Doesn Return False
+				Header.#content_func.default() !== false
+			) Header.#build();
+
+			// Else Hide Header
+			else Header.#hide();
+		}
+	}
+
+	static #hide(){
+		// Check If "body > header" Exists
+		if(!!Header.#element === false) return;
+
+		Header.#element.classList.add("hide");
+	}
+
+	static #show(){
+		// Check If "body > header" Exists
+		if(!!Header.#element === false) return;
+
+		Header.#element.classList.remove("hide");
+	}
+
+	// When Called W/O Argument Will Update To Default Header View
+	static #build(content = null){
+		Log.info("Header.#build()");
+
+		// Check If "body > header" Exists
+		if(!!Header.#element === false) return;
+
+		// If No Content Passed Update To Default
+		if(!!content === false){
+			Header.#element.innerHTML = Header.#content_func.default();
+			Header.#show();
+
+			// Exit The Update
+			return;
+		}
+
+		// If Content Passed Update To Content
+		Header.#element.innerHTML = content;
+		Header.#show();
+	}
+}
+
+// Make Header Usable W/O Importing It
+window.Header = Header;

@@ -3,17 +3,19 @@ from flask import Flask, render_template, request, session, redirect, url_for, m
 
 
 #################################################### Clean up the terminal
-from python.modules.Logger import Log
+from Python.x.modules.Logger import Log
 Log.clear()
-
+Log.center('', '|')
+Log.center("Initializing x", '|')
+Log.center('', '|')
 
 #################################################### Initializing File Structure
-from python.modules.FileSystem import FileSystem
-FileSystem.init()
+from Python.x.modules.File_System import File_System
+File_System.init()
 
 
 #################################################### Globals
-from python.modules.Globals import Globals
+from Python.x.modules.Globals import Globals
 
 # Prints latest tracked version
 Log.center('', '-', type_name="bright_black")
@@ -26,12 +28,12 @@ Log.enabled = True if Globals.CONF.get("tools", {}).get("debug") is True else Fa
 
 
 #################################################### Initializing Up MySQL
-from python.modules.MySQL import MySQL
+from Python.x.modules.MySQL import MySQL
 MySQL.init()
 
 
 #################################################### Initializing Up Twilio
-from python.modules.Twilio import Twilio
+from Python.x.modules.Twilio import Twilio
 Twilio.init()
 
 
@@ -61,18 +63,18 @@ app.permanent_session_lifetime = timedelta(days=31)
 
 #################################################### On app start
 try:
-	from python.modules.on_app_start import init
+	from Python.project.modules.on_app_start import init
 	init()
 
 except Exception as e: Log.error(e)
 
 
 #################################################### Default Flask Decorations
-from python.modules.routeGuard import routeGuard, routeLogs
+from Python.x.modules.route_guard import route_logs
 
 def before_first_request():
 	try:
-		from python.modules.before_first_request import before_first_request
+		from Python.project.modules.before_first_request import before_first_request
 		before_first_request()
 
 	except Exception as e: Log.error(e)
@@ -81,8 +83,7 @@ with app.app_context(): before_first_request()
 
 @app.before_request
 def before_request():
-	routeLogs()
-	# routeGuard()
+	route_logs()
 
 # @app.after_request
 # def after_request(response):
@@ -94,7 +95,7 @@ def before_request():
 
 
 #################################################### Dynamically Imprting All Pages
-from python.pages import *
+from Python.live_pages import *
 
 
 #################################################### RUN using Flask (For Development)
