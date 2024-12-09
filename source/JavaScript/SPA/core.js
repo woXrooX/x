@@ -5,6 +5,7 @@
 import Logger from "/JavaScript/modules/logger.js";
 import bridge from "/JavaScript/modules/bridge.js";
 import XRequest from "/JavaScript/modules/XRequest.js";
+import x_String from "/JavaScript/modules/String.js";
 
 //// SPA Classes
 import Root from "/JavaScript/SPA/root.js";
@@ -25,9 +26,6 @@ import Form from "/JavaScript/SPA/form.js";
 import URL from "/JavaScript/SPA/URL.js";
 
 import Notification from "/JavaScript/SPA/notification.js";
-
-//// Tools
-import x_String from "/JavaScript/modules/String.js";
 
 //// Built-In X-Elements
 import Link from "/JavaScript/SPA/elements/Link.js";
