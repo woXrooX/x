@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+	<head>
+
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="manifest" href="/JavaScript/JSON/manifest.json">
+		<script src="/JavaScript/modules/PWA/SW.js"></script>
+		<link rel="apple-touch-icon" href="/images/PWA/logo_120.png"> <!-- App icon for apple devices, required -->
+		<meta name="color-schema" content="dark">
+		<!-- <meta name="theme-color" content="#14151A"> This tag overrides the manifest.json theme_color -->
+		<!-- <meta name="robots" content="noindex, nofollow"> TMP: Enabled -->
+		<!-- <meta name="description" content="Speeding Up Web App Creation Process"> Will be set from the HTML/head.html -->
+
+		<link
+			rel="icon"
+			type="{{Globals.CONF["default"]["icon"]["favicon"]["type"]}}"
+			sizes="{{Globals.CONF["default"]["icon"]["favicon"]["sizes"]}}"
+			href="/images/{{Globals.CONF["default"]["icon"]["favicon"]["dark"]}}"
+		>
+
+		<style media="all" for="X_CSS">
+			body{
+				& > menu{
+					display: none;
+				}
+
+				& > loading{
+					pointer-events: all;
+
+					opacity: 1;
+					background-color: var(--color-main-tint-1);
+
+					width: 100dvw;
+					height: 100dvh;
+
+					position: fixed;
+					inset: 0;
+					z-index: var(--z-loading);
+
+					transition: 250ms opacity ease-in-out;
+
+					display: grid;
+					place-content: center;
+
+					&.loaded{
+						pointer-events: none;
+						opacity: 0;
+
+						& > svg{
+							& > text{
+								animation: none;
+							}
+						}
+					}
+
+					& > svg{
+						width: 90dvw;
+						height: 90dvh;
+
+						& > text{
+							font-size: 3rem;
+							stroke: var(--color-text-primary);
+							stroke-width: 1px;
+							letter-spacing: 0.2rem;
+
+							animation: 2500ms infinite alternate loading;
+						}
+					}
+				}
+			}
+
+			@keyframes loading{
+				0%{
+					fill: transparent;
+					stroke: var(--color-text-primary);
+					stroke-width: 1px;
+					stroke-dashoffset: 25%;
+					stroke-dasharray: 0 27%;
+				}
+				50%{
+					fill: transparent;
+					stroke: var(--color-text-primary);
+					stroke-width: 1px;
+				}
+				100%{
+					fill: var(--color-text-primary);
+					stroke: transparent;
+					stroke-width: 0px;
+					stroke-dashoffset: -25%;
+					stroke-dasharray: 27% 0;
+				}
+			}
+		</style>
+
+		<link rel="preload stylesheet" href="/CSS/XUI.css" as="style">
+		<link rel="preload stylesheet" href="/CSS/master.css" as="style">
+		<link rel="preload stylesheet" href="/CSS/fonts.css" as="style">
+		<link rel="preload stylesheet" href="/CSS/x-elements.css" as="style">
+
+		<script>window.x = {};</script>
+		<script type="module" src="/JavaScript/main.js"></script>
+
+		{{Globals.PROJECT_HTML["head"] | safe}}
+
+	</head>
+
+	<body class="scrollbar-y">
+
+		<div id="root">
+			<main></main>
+			<footer></footer>
+		</div>
+
+		<header></header>
+
+		{% if Globals.CONF["menu"]["enabled"] == True %}
+			<x-svg for="show_menu" color="#ffffff" name="menu"></x-svg>
+
+			<menu>
+				<header>
+					<x-svg for="color_mode_switcher" color="#ffffff"></x-svg>
+					<x-svg for="toggle_always_open_mode" color="#ffffff" name="lockOpen" toggle="lockLocked"></x-svg>
+					<x-svg for="menu_close_button_on_mobile" color="#ffffff" name="x"></x-svg>
+				</header>
+
+				<main></main>
+
+				<footer></footer>
+			</menu>
+		{% endif %}
+
+		<cover></cover>
+
+		<modal>
+			<x-svg class="btn btn-primary btn-s" for="modal_close" name="x" color="ffffff"></x-svg>
+			<main></main>
+		</modal>
+
+		<toasts></toasts>
+
+		<loading><svg><text x="50%" y="50%" dy="0.5rem" text-anchor="middle">{{Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}}</text></svg></loading>
+
+		<x-offline></x-offline>
+
+		{{Globals.PROJECT_HTML["body"] | safe}}
+
+	</body>
+
+</html>
