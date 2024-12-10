@@ -18,7 +18,7 @@ import Main from "/JavaScript/SPA/main.js";
 import Footer from "/JavaScript/SPA/footer.js";
 import Hyperlink from "/JavaScript/SPA/hyperlink.js";
 import Router from "/JavaScript/SPA/router.js";
-import DOM from "/JavaScript/SPA/dom.js";
+import DOM from "/JavaScript/SPA/DOM.js";
 import Cover from "/JavaScript/SPA/cover.js";
 import Loading from "/JavaScript/SPA/loading.js";
 import Menu from "/JavaScript/SPA/menu.js";
