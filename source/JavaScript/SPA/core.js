@@ -49,7 +49,7 @@ export default class Core{
 				Core.#on_URL_change();
 				Core.#on_hash_change();
 				Core.#on_history_button_clicked();
-				Core.#on_dom_change();
+				Core.#on_DOM_change();
 				await Core.#on_user_session_change();
 				Core.#observe_mutations();
 			});
@@ -146,11 +146,11 @@ export default class Core{
 		});
 	}
 
-	static #on_dom_change(){
-		window.addEventListener('dom_change', ()=>{
-			// window.dispatchEvent(new CustomEvent('dom_change'));
-			// window.dispatchEvent(new CustomEvent("dom_change", {detail:"menu"}));
-			Log.info("Core.#on_dom_change()");
+	static #on_DOM_change(){
+		window.addEventListener('DOM_change', ()=>{
+			// window.dispatchEvent(new CustomEvent('DOM_change'));
+			// window.dispatchEvent(new CustomEvent("DOM_change", {detail:"menu"}));
+			Log.info("Core.#on_DOM_change()");
 
 			// Targets sample event.detail = ["menu", "main"...]
 			// If has target(s) then update the dom. body > target

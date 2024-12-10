@@ -31,5 +31,5 @@ def x_notifications(request):
 				)
 				if data is False: return response(type="error", message="database_error")
 
-				return response(type="success", message="deleted", dom_change=["main"])
+				return response(type="success", message="deleted", DOM_change=["main"])
 

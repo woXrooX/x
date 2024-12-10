@@ -55,7 +55,7 @@ def eMail_confirmation(request):
 				type="success",
 				message="eMail_verification_success",
 				set_session_user=True,
-				dom_change=["menu"],
+				DOM_change=["menu"],
 				redirect=redirect
 			)
 

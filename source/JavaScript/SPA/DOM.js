@@ -53,7 +53,7 @@ export default class DOM{
 		// If passed string like: "<x-form></x-from>"
 		else if(typeof dom === "string") window.Main.element.innerHTML = dom;
 
-		window.dispatchEvent(new CustomEvent("dom_change"));
+		window.dispatchEvent(new CustomEvent("DOM_change"));
 	}
 
 	static update(targets = []){

@@ -38,7 +38,7 @@ def x_user(request, id):
 
 
 			if request.get_json()["for"] == "delete_user":
-				if User.soft_delete(id) is not True: return response(type="warning", message="could_not_delete", dom_change=["main"])
+				if User.soft_delete(id) is not True: return response(type="warning", message="could_not_delete", DOM_change=["main"])
 
 				return response(type="success", message="deleted", redirect="/x/users")
 

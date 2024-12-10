@@ -45,7 +45,7 @@ export default class Language extends HTMLElement{
 		Language.#CURRENT = code;
 
 		// Update the DOM
-		window.dispatchEvent(new CustomEvent("dom_change", {detail: ["all"]}));
+		window.dispatchEvent(new CustomEvent("DOM_change", {detail: ["all"]}));
 	}
 
 	static code_to_flag(code){

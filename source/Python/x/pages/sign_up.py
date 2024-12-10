@@ -113,5 +113,5 @@ def sign_up(request):
 			message="eMail_confirmation_code_has_been_sent" if email_verification_sent_status is True else "Signed Up Without Email Verification!",
 			set_session_user=True,
 			redirect="/eMail_confirmation" if email_verification_sent_status is True else "/home",
-			dom_change=["menu"]
+			DOM_change=["menu"]
 		)

@@ -21,7 +21,7 @@ if __name__ != "__main__":
 		update_conf=False,
 		set_session_user=False,
 		delete_session_user=False,
-		dom_change=[],
+		DOM_change=[],
 		redirect=False,
 		reload=False,
 
@@ -70,7 +70,7 @@ if __name__ != "__main__":
 
 		if delete_session_user is True: actionsDict["delete_session_user"] = 0
 
-		if dom_change: actionsDict["dom_change"] = dom_change
+		if DOM_change: actionsDict["DOM_change"] = DOM_change
 
 		## redirect
 		if redirect: actionsDict["redirect"] = redirect
