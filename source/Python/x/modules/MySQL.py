@@ -10,16 +10,18 @@
 # In Python, a tuple containing a single value must include a comma.
 # For example, ('abc') is evaluated as a scalar while ('abc',) is evaluated as a tuple.
 
+# mysql.connector.set_charset_collation(charset, collation) is used to change charset, collation settings on an existing connection.
+
+
 if __name__ != "__main__":
 	import mysql.connector
 	from Python.x.modules.Logger import Log
 	from Python.x.modules.Globals import Globals
 
 	class MySQL:
-		user = password = host = database = charset = collate = None
+		user = password = host = database = charset = collate = connection_mode = None
 
 		connection = None
-		connected = False
 		cursor = None
 
 		enabled = False
@@ -42,6 +44,11 @@ if __name__ != "__main__":
 			MySQL.database = Globals.CONF["database"]["MySQL"]["name"]
 			MySQL.charset = Globals.CONF["database"]["MySQL"]["charset"]
 			MySQL.collate = Globals.CONF["database"]["MySQL"]["collate"]
+			MySQL.connection_mode = Globals.CONF["database"]["MySQL"].get("connection_mode", "per_query")
+
+			Log.info(f"MySQL.init(): Initializing MySQL in mode: {MySQL.connection_mode}")
+
+			if MySQL.connection_mode == "single" and MySQL.connect() is False: return
 
 			MySQL.enabled = True
 
@@ -51,8 +58,6 @@ if __name__ != "__main__":
 			MySQL.get_notification_types()
 			MySQL.get_notification_events()
 			MySQL.get_languages()
-
-			Log.success("MySQL.init(): MySQL has been initialized")
 
 
 		@staticmethod
@@ -67,8 +72,6 @@ if __name__ != "__main__":
 			many = False,
 
 			commit = False,
-			prepared = True,
-			dictionary = True,
 			fetch_one = False,
 
 			include_MySQL_data = False
@@ -86,30 +89,35 @@ if __name__ != "__main__":
 			row_count = None
 			last_row_id = None
 
-
 			# MySQL response data
 			data = None
 
 			# MySQL.execute results
 			result = None
 
-			# Check if connected successfully
-			if MySQL.connect(prepared, dictionary) is False: return False
-
-			# Execute
+			#### Execute
 			try:
+				#### Connection
+				# Connect on "per_query" mode
+				if MySQL.connection_mode == "per_query" and MySQL.connect() is False: return False
+
+				# For single mode, check if connection exists and is alive else try to reconnect
+				elif MySQL.connection_mode == "single":
+					if not MySQL.connection or not MySQL.connection.is_connected():
+						if MySQL.connect() is False: return False
+
 				# Start Transaction: Execute SQL statements within the transaction
-				if commit is True: MySQL.connection.start_transaction()
+				if MySQL.connection_mode == "per_query" and commit is True:	MySQL.connection.start_transaction()
 
 				# Check if params evaluated to True
 				params = params or []
 
+				#### Execution types
 				# Many execution
 				if many is True: MySQL.cursor.executemany(sql, params)
 
 				# Multi execution
 				elif multi is True: multi_execute_result = MySQL.cursor.execute(sql, params, multi=True)
-
 
 				# Default execution
 				else: MySQL.cursor.execute(sql, params)
@@ -158,9 +166,21 @@ if __name__ != "__main__":
 
 				else: result = data
 
+				# Commit the transaction to make the changes permanent
+				if MySQL.connection_mode == "per_query" and commit is True: MySQL.connection.commit()
+
 			except mysql.connector.Error as err:
 				# In case of errors, rollback the transaction
-				if commit is True: MySQL.connection.rollback()
+				if MySQL.connection_mode == "per_query" and commit is True: MySQL.connection.rollback()
+
+				# If connection lost in single mode, try to reconnect
+				if MySQL.connection_mode == "single":
+					if(
+						err.errno == mysql.connector.errorcode.CR_SERVER_LOST or
+						err.errno == mysql.connector.errorcode.CR_SERVER_GONE_ERROR
+					):
+						Log.fieldset("Connection lost. Attempting to reconnect...", "MySQL.execute()", "warning")
+						MySQL.connect()
 
 				Log.fieldset(f"ERROR: {str(err)}\nNO: {err.errno}\nSQL STATE: {err.sqlstate}\nMESSAGE: {err.msg}", "MySQL.execute()", "error")
 
@@ -177,27 +197,28 @@ if __name__ != "__main__":
 
 			except Exception as err:
 				# In case of errors, rollback the transaction
-				if commit is True: MySQL.connection.rollback()
+				if MySQL.connection_mode == "per_query" and commit is True: MySQL.connection.rollback()
 
 				Log.fieldset(f"ERROR: {err}", "MySQL.execute()", "error")
 
 				return False
 
 			finally:
-				# Commit the transaction to make the changes permanent
-				if commit is True: MySQL.connection.commit()
-
-				# Close The Connection
-				MySQL.disconnect()
+                # Only disconnect in "per_query" mode
+				if MySQL.connection_mode == "per_query": MySQL.disconnect()
 
 			return result
 
 		######### Helpers
 		@staticmethod
-		def connect(
-			prepared = True,
-			dictionary = True
-		):
+		def connect():
+			if MySQL.connection_mode == "single":
+				# If already connected in "single" mode, return True
+				if MySQL.connection and MySQL.connection.is_connected(): return True
+
+				# If connection exists but is dead, clean it up first
+				elif MySQL.connection: MySQL.clean_up()
+
 			try:
 				MySQL.connection = mysql.connector.connect(
 					user=MySQL.user,
@@ -207,19 +228,23 @@ if __name__ != "__main__":
 
 					# When use_pure = True, it enforces the use of pure Python implementation of the MySQL protocol,
 					# whereas use_pure = False uses the C Extension implementation.
-					use_pure=False
-				)
+					use_pure=False,
 
-				MySQL.connection.set_charset_collation(
 					charset=MySQL.charset,
 					collation=MySQL.collate
 				)
 
 				# Create Cursor
-				MySQL.cursor = MySQL.connection.cursor(
-					# prepared=prepared,
-					dictionary=dictionary
-				)
+				MySQL.cursor = MySQL.connection.cursor(dictionary = True)
+
+				# Set session variables for better connection handling
+				if MySQL.connection_mode == "single":
+					# For "single" connecton mode we use autocommit
+					MySQL.connection.autocommit = True
+
+					# 28800 seconds = 8 hours
+					MySQL.cursor.execute("SET SESSION wait_timeout = 28800;")
+					MySQL.cursor.execute("SET SESSION interactive_timeout = 28800;")
 
 				Log.fieldset(f"Connection ID: {MySQL.connection.connection_id}", "MySQL.connect()", "success")
 
@@ -229,16 +254,38 @@ if __name__ != "__main__":
 				Log.fieldset(f"ERROR: {e}", "MySQL.connect()", "error")
 				return False
 
+		# Check if connection is alive and reconnect if necessary
+		@staticmethod
+		def ping():
+			if MySQL.connection_mode != "single": return False
+
+			try:
+				if MySQL.connection:
+					Log.warning(f"MySQL.ping(): Trying to ping")
+					MySQL.connection.ping(reconnect=True, attempts=3, delay=5)
+					return MySQL.connection.is_connected()
+
+				return False
+
+			except Exception as e:
+				Log.fieldset(f"Ping failed: {e}", "MySQL.ping()", "error")
+				return False
+
 		@staticmethod
 		def disconnect():
-			MySQL.connection.close()
-			MySQL.cursor.close()
+			if MySQL.connection_mode == "per_query":
+				if MySQL.cursor: MySQL.cursor.close()
+				if MySQL.connection: MySQL.connection.close()
+
+		# Call when shutting down application
+		@staticmethod
+		def clean_up():
+			if MySQL.cursor: MySQL.cursor.close()
+			if MySQL.connection: MySQL.connection.close()
 
 
 
-
-
-		######### Helpers / DB getters
+		######### DB getters
 		@staticmethod
 		def get_user_authenticity_statuses():
 			data = MySQL.execute("SELECT * FROM user_authenticity_statuses")
