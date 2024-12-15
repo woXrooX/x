@@ -52,7 +52,7 @@ export default class Form{
 	}
 
 	static #on_submit(form){
-		form.onsubmit = async (event)=>{
+		form.addEventListener("submit", async (event) => {
 			event.preventDefault();
 
 			// The Submitter
@@ -149,7 +149,7 @@ export default class Form{
 				// Reload
 				if("reload" in response["actions"]) window.location.reload();
 			}
-		};
+		}, true);
 	}
 
 	// static #response(type, message, field, flash = false){
