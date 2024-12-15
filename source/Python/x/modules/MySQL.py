@@ -76,6 +76,8 @@ if __name__ != "__main__":
 
 			include_MySQL_data = False
 		):
+			# Log.info(f"MySQL.execute():\nsql: {sql}\nparams: {params}\ncommit: {commit}")
+
 			# Check If MySQL Is Enabled
 			if MySQL.enabled is False: return False
 
@@ -107,7 +109,9 @@ if __name__ != "__main__":
 						if MySQL.connect() is False: return False
 
 				# Start Transaction: Execute SQL statements within the transaction
-				if MySQL.connection_mode == "per_query" and commit is True:	MySQL.connection.start_transaction()
+				if MySQL.connection_mode == "per_query" and commit is True: MySQL.cursor.execute("START TRANSACTION;")
+
+
 
 				# Check if params evaluated to True
 				params = params or []
@@ -167,11 +171,11 @@ if __name__ != "__main__":
 				else: result = data
 
 				# Commit the transaction to make the changes permanent
-				if MySQL.connection_mode == "per_query" and commit is True: MySQL.connection.commit()
+				if MySQL.connection_mode == "per_query" and commit is True: MySQL.cursor.execute("COMMIT;")
 
 			except mysql.connector.Error as err:
 				# In case of errors, rollback the transaction
-				if MySQL.connection_mode == "per_query" and commit is True: MySQL.connection.rollback()
+				if MySQL.connection_mode == "per_query" and commit is True: MySQL.cursor.execute("ROLLBACK;")
 
 				# If connection lost in single mode, try to reconnect
 				if MySQL.connection_mode == "single":
@@ -197,14 +201,14 @@ if __name__ != "__main__":
 
 			except Exception as err:
 				# In case of errors, rollback the transaction
-				if MySQL.connection_mode == "per_query" and commit is True: MySQL.connection.rollback()
+				if MySQL.connection_mode == "per_query" and commit is True: MySQL.cursor.execute("ROLLBACK;")
 
 				Log.fieldset(f"ERROR: {err}", "MySQL.execute()", "error")
 
 				return False
 
 			finally:
-                # Only disconnect in "per_query" mode
+				# Only disconnect in "per_query" mode
 				if MySQL.connection_mode == "per_query": MySQL.disconnect()
 
 			return result
@@ -212,6 +216,8 @@ if __name__ != "__main__":
 		######### Helpers
 		@staticmethod
 		def connect():
+			# Log.info("MySQL.connect()")
+
 			if MySQL.connection_mode == "single":
 				# If already connected in "single" mode, return True
 				if MySQL.connection and MySQL.connection.is_connected(): return True
@@ -240,7 +246,8 @@ if __name__ != "__main__":
 				# Set session variables for better connection handling
 				if MySQL.connection_mode == "single":
 					# For "single" connecton mode we use autocommit
-					MySQL.connection.autocommit = True
+					MySQL.cursor.execute("SET autocommit = 1;")  # Enable autocommit
+					# MySQL.cursor.execute("SET autocommit = 0")  # Disable autocommit
 
 					# 28800 seconds = 8 hours
 					MySQL.cursor.execute("SET SESSION wait_timeout = 28800;")
@@ -257,6 +264,8 @@ if __name__ != "__main__":
 		# Check if connection is alive and reconnect if necessary
 		@staticmethod
 		def ping():
+			Log.info("MySQL.ping()")
+
 			if MySQL.connection_mode != "single": return False
 
 			try:
@@ -273,6 +282,8 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def disconnect():
+			# Log.info("MySQL.disconnect()")
+
 			if MySQL.connection_mode == "per_query":
 				if MySQL.cursor: MySQL.cursor.close()
 				if MySQL.connection: MySQL.connection.close()
@@ -280,6 +291,8 @@ if __name__ != "__main__":
 		# Call when shutting down application
 		@staticmethod
 		def clean_up():
+			# Log.info("MySQL.clean_up()")
+
 			if MySQL.cursor: MySQL.cursor.close()
 			if MySQL.connection: MySQL.connection.close()
 
