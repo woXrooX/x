@@ -1,7 +1,9 @@
 from main import session
+
 from Python.x.modules.Page import Page
 from Python.x.modules.response import response
 from Python.x.modules.Globals import Globals
+from Python.x.modules.Logger import Log
 
 @Page.build()
 def log_out(request):
@@ -16,7 +18,7 @@ def log_out(request):
 			from Python.project.modules.on_log_out import on_log_out
 			on_log_out()
 
-		except ModuleNotFoundError: pass
+		except Exception as err: Log.warning(f"log_out.py->on_log_out(): {err}")
 
 		# Redirect To Home
 		return response(

@@ -7,7 +7,7 @@ from Python.x.modules.response import response
 from Python.x.modules.User import User
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.Log_In_Tools import Log_In_Tools
-
+from Python.x.modules.Logger import Log
 
 @Page.build()
 def log_in(request):
@@ -28,7 +28,7 @@ def log_in(request):
 		######## Check If eMail And Password matching User Exist
 		data = MySQL.execute(
 			sql="SELECT id FROM users WHERE eMail=%s AND password=%s AND flag_deleted IS NULL LIMIT 1;",
-			params=(request.form["eMail"], password),
+			params=[request.form["eMail"], password],
 			fetch_one=True
 		)
 
@@ -54,7 +54,7 @@ def log_in(request):
 			from Python.project.modules.on_log_in import on_log_in
 			on_log_in()
 
-		except ModuleNotFoundError: pass
+		except Exception as err: Log.warning(f"log_in.py->on_log_in(): {err}")
 
 		redirect = unquote(request.args.get("redirect")) if "redirect" in request.args else "/"
 
