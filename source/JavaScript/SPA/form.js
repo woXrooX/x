@@ -1,15 +1,19 @@
 export default class Form{
 	static #FUNC_POOL = {};
 	static #flash_duration = 2000;
+	static #to_be_observed = [];
 
 	/////////// APIs
 	static collect(element = null){
-		if(!!element === false) element = document;
-
 		// Log.info(`Form.collect()`);
 
-		// Returns Live Collection
-		// const forms = element.getElementsByTagName("form");
+		if(!!element === false) element = document;
+
+		// Clean up the old listeners
+		for(const form of Form.#to_be_observed){
+			form.removeEventListener('submit', Form.#on_submit);
+			Form.#to_be_observed.pop(form);
+		}
 
 		const forms = element.querySelectorAll('form');
 
@@ -24,8 +28,10 @@ export default class Form{
 		Log.info(`Form.register()`);
 
 		// Enable Events Listeners
-		Form.#on_input(form);
-		Form.#on_submit(form);
+		// Form.#on_input(form);
+		form.addEventListener("submit", Form.#on_submit, true);
+
+		Form.#to_be_observed.push(form);
 	}
 
 	static push_func(func){ Form.#FUNC_POOL[func.name] = func; }
@@ -51,105 +57,103 @@ export default class Form{
 		});
 	}
 
-	static #on_submit(form){
-		form.addEventListener("submit", async (event) => {
-			event.preventDefault();
+	static async #on_submit(event){
+		event.preventDefault();
 
-			// The Submitter
-			const submitter = event.submitter;
+		// The Submitter
+		const submitter = event.submitter;
 
-			// Disable Submitter Button
-			submitter.disabled = true;
+		// Disable Submitter Button
+		submitter.disabled = true;
 
-			// After Submitting Form PLZW8
+		// After Submitting Form PLZW8
+		Form.#response({
+			form: event.target,
+			type: "info",
+			message: "plzW8",
+			field: event.target.getAttribute("for")
+		});
+
+		// Get FormData
+		let form_data = new FormData(event.target);
+
+		// Append for To FormData
+		form_data.append("for", event.target.getAttribute("for"));
+
+		// DEV: Log FormData
+		// for(const [key, value] of form_data.entries()) console.log(`${key}: ${value}`);
+
+		// Send The Request
+		let response = await window.bridge(form_data, event.target.action, event.target.enctype);
+
+		// DEV: Data From Back-End
+		// Log.info(response);
+
+		// On invalid response
+		if(Form.#response_guard(response) === false){
 			Form.#response({
-				form: form,
-				type: "info",
-				message: "plzW8",
-				field: form.getAttribute("for")
-			});
-
-			// Get FormData
-			let formData = new FormData(event.target);
-
-			// Append for To FormData
-			formData.append("for", form.getAttribute("for"));
-
-			// DEV: Log FormData
-			// for(const [key, value] of formData.entries()) console.log(`${key}: ${value}`);
-
-			// Send The Request
-			let response = await window.bridge(formData, form.action, form.enctype);
-
-			// DEV: Data From Back-End
-			// Log.info(response);
-
-			// On invalid response
-			if(Form.#response_guard(response) === false){
-				Form.#response({
-					form: form,
-					type: "error",
-					message: window.Lang.use("invalid_response"),
-					field: form.getAttribute("for")
-				});
-
-				// Enable Submitter Button
-				submitter.disabled = false;
-
-				return;
-			}
-
-			// Flash Above Input Field
-			if("field" in response)
-				Form.#response({
-					form: form,
-					type: response["type"],
-					message: null,
-					field: response["field"],
-					flash: true
-				});
-
-			// Text Above Submit Field
-			Form.#response({
-				form: form,
-				type: response["type"],
-				message: response["message"],
-				field: form.getAttribute("for")
+				form: event.target,
+				type: "error",
+				message: window.Lang.use("invalid_response"),
+				field: event.target.getAttribute("for")
 			});
 
 			// Enable Submitter Button
 			submitter.disabled = false;
 
-			////////// x-modal
-			Modal.handle_commands(form.getAttribute("x-modal"), response["type"]);
+			return;
+		}
 
-			////////// x-toast
-			Toast.handle_commands(form.getAttribute("x-toast"), response);
+		// Flash Above Input Field
+		if("field" in response)
+			Form.#response({
+				form: event.target,
+				type: response["type"],
+				message: null,
+				field: response["field"],
+				flash: true
+			});
 
-			////////// Callback
-			Form.#execute_on_response(form.getAttribute("form_func"), response);
+		// Text Above Submit Field
+		Form.#response({
+			form: event.target,
+			type: response["type"],
+			message: response["message"],
+			field: event.target.getAttribute("for")
+		});
 
-			////////// response["actions"]
-			if("actions" in response){
-				// Update window.conf
-				if("update_conf" in response["actions"]) window.conf = response["actions"]["update_conf"];
+		// Enable Submitter Button
+		submitter.disabled = false;
 
-				// Set window.session["user"]
-				if("set_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change", {detail: response["actions"]["set_session_user"]}));
+		////////// x-modal
+		Modal.handle_commands(event.target.getAttribute("x-modal"), response["type"]);
 
-				// Delete window.session["user"]
-				if("delete_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change"));
+		////////// x-toast
+		Toast.handle_commands(event.target.getAttribute("x-toast"), response);
 
-				// Dom Update
-				if("DOM_change" in response["actions"]) window.dispatchEvent(new CustomEvent("DOM_change", {detail: response["actions"]["DOM_change"]}));
+		////////// Callback
+		Form.#execute_on_response(event.target.getAttribute("form_func"), response);
 
-				// Redirect
-				if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
+		////////// response["actions"]
+		if("actions" in response){
+			// Update window.conf
+			if("update_conf" in response["actions"]) window.conf = response["actions"]["update_conf"];
 
-				// Reload
-				if("reload" in response["actions"]) window.location.reload();
-			}
-		}, true);
+			// Set window.session["user"]
+			if("set_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change", {detail: response["actions"]["set_session_user"]}));
+
+			// Delete window.session["user"]
+			if("delete_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change"));
+
+			// Dom Update
+			if("DOM_change" in response["actions"]) window.dispatchEvent(new CustomEvent("DOM_change", {detail: response["actions"]["DOM_change"]}));
+
+			// Redirect
+			if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
+
+			// Reload
+			if("reload" in response["actions"]) window.location.reload();
+		}
 	}
 
 	// static #response(type, message, field, flash = false){
