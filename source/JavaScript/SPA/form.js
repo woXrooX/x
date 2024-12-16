@@ -9,11 +9,7 @@ export default class Form{
 
 		if(!!element === false) element = document;
 
-		// Clean up the old listeners
-		for(const form of Form.#to_be_observed){
-			form.removeEventListener('submit', Form.#on_submit);
-			Form.#to_be_observed.pop(form);
-		}
+		Form.#unregister_all();
 
 		const forms = element.querySelectorAll('form');
 
@@ -27,11 +23,19 @@ export default class Form{
 	static register(form){
 		Log.info(`Form.register()`);
 
-		// Enable Events Listeners
+		// Enable events listeners
 		// Form.#on_input(form);
 		form.addEventListener("submit", Form.#on_submit, true);
 
 		Form.#to_be_observed.push(form);
+	}
+
+	static #unregister_all(){
+		// Clean up the old listeners
+		for(const form of Form.#to_be_observed) form.removeEventListener('submit', Form.#on_submit, true);
+
+		// Clear the array after removing listeners
+		Form.#to_be_observed = [];
 	}
 
 	static push_func(func){ Form.#FUNC_POOL[func.name] = func; }
