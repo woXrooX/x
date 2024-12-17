@@ -376,9 +376,9 @@ if __name__ != "__main__":
 		@staticmethod
 		def merge_configurations():
 			#### Merge
-			if "Twilio" in Globals.PROJECT: Globals.CONF["Twilio"].update(Globals.PROJECT["Twilio"])
+			if "Twilio" in Globals.PROJECT: Globals.CONF["Twilio"] = Globals.PROJECT["Twilio"]
 
-			if "Stripe" in Globals.PROJECT: Globals.CONF["Stripe"].update(Globals.PROJECT["Stripe"])
+			if "Stripe" in Globals.PROJECT: Globals.CONF["Stripe"] = Globals.PROJECT["Stripe"]
 
 			if "database" in Globals.PROJECT: Globals.CONF["database"] = Globals.PROJECT["database"]
 
