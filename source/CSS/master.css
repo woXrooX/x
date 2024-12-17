@@ -330,9 +330,6 @@ body{
 			padding: var(--padding);
 			padding-top: 2rem;
 
-			display: grid;
-			place-items: center;
-
 			@media (width <= 600px){
 				width: 90dvw;
 			}
