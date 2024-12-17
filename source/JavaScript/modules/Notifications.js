@@ -1,4 +1,4 @@
-import { timestamp_to_human_readable_v1 } from "/JavaScript/modules/datetime/datetime.js";
+import { timestamp_to_human_readable_v1, timestamp_to_human_readable_v2 } from "/JavaScript/modules/datetime/datetime.js";
 
 // in_app_s
 export async function notification_s_card_generator(notification){
@@ -6,13 +6,13 @@ export async function notification_s_card_generator(notification){
 		<a
 			href="/x/notification/${notification["id"]}"
 			class="
-				min-h-50px w-100 p-1 px-3 d-flex flex-row flex-x-between gap-0-5
+				min-h-50px w-100 p-1 px-2 d-flex flex-row flex-x-between gap-0-5
 				${notification["type"] != null ? `surface-${notification["type"]}` : "bg-2 bs-default"}
-				${notification["seen"] == 1 ? "filter-grayscale-90" : ''}
+				${notification["seen"] == 1 ? "filter_grayscale_90" : ''}
 			"
 		>
 			<p class="w-100 text-size-0-8">${Lang.use(notification["event"]+"_in_app_s")}</p>
-			<p class="w-auto text-size-0-6 text-color-secondary text-white-space-nowrap-important">${timestamp_to_human_readable_v1(notification["timestamp"])}</p>
+			<p class="w-auto text-size-0-6 text-color-secondary text-white-space-nowrap-important">${timestamp_to_human_readable_v2(notification["timestamp"])}</p>
 		</a>
 	`;
 }
