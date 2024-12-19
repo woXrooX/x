@@ -439,8 +439,8 @@
 		/** Common START **/
 		.scrollbar-x,
 		.scrollbar-y{ overflow: hidden; }
-		.scrollbar-x{ overflow-x: scroll; }
-		.scrollbar-y{ overflow-y: scroll; }
+		.scrollbar-x{ overflow-x: auto; }
+		.scrollbar-y{ overflow-y: auto; }
 		/** Common END **/
 
 		/********************* v1 START *********************/
