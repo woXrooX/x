@@ -239,8 +239,10 @@ if __name__ != "__main__":
 						flag_deleted_by_user = %s,
 						flag_deleted_username = username,
 						flag_deleted_eMail = eMail,
+						flag_deleted_phone_number = phone_number,
 						username = NULL,
-						eMail = NULL
+						eMail = NULL,
+						phone_number = NULL
 					WHERE id=%s AND flag_deleted IS NULL LIMIT 1;
 				""",
 				params=[session["user"]["id"], user_id],
