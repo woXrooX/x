@@ -32,6 +32,11 @@
 			"type": "image/png"
 		},
 		{
+			"src": "/images/PWA/logo_192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
 			"src": "/images/PWA/logo_180.png",
 			"sizes": "180x180",
 			"type": "image/png"
