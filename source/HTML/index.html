@@ -1,26 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="en" dir="ltr">
-
 	<head>
-
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-		<link rel="manifest" href="/JavaScript/JSON/manifest.json">
-		<script src="/JavaScript/modules/PWA/SW.js"></script>
-		<link rel="apple-touch-icon" href="/images/PWA/logo_120.png"> <!-- App icon for apple devices, required -->
 		<meta name="color-schema" content="dark">
-		<!-- <meta name="theme-color" content="#14151A"> This tag overrides the manifest.json theme_color -->
-		<!-- <meta name="robots" content="noindex, nofollow"> TMP: Enabled -->
-		<!-- <meta name="description" content="Speeding Up Web App Creation Process"> Will be set from the HTML/head.html -->
-
-		<link
-			rel="icon"
-			type="{{Globals.CONF["default"]["icon"]["favicon"]["type"]}}"
-			sizes="{{Globals.CONF["default"]["icon"]["favicon"]["sizes"]}}"
-			href="/images/{{Globals.CONF["default"]["icon"]["favicon"]["dark"]}}"
-		>
 
 		<style media="all" for="X_CSS">
 			body{
@@ -105,9 +88,7 @@
 		<script type="module" src="/JavaScript/main.js"></script>
 
 		{{Globals.PROJECT_HTML["head"] | safe}}
-
 	</head>
-
 	<body class="scrollbar-y">
 
 		<div id="root">
@@ -149,5 +130,4 @@
 		{{Globals.PROJECT_HTML["body"] | safe}}
 
 	</body>
-
 </html>

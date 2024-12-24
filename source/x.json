@@ -1,5 +1,5 @@
 {
-	"version": "0.203.0.0028",
+	"version": "0.203.0.0029",
 
 	"flask": {
 		"root_path": null,
@@ -27,15 +27,6 @@
 		"language": {
 			"fallback": "en",
 			"supported": ["en"]
-		},
-
-		"icon": {
-			"favicon": {
-			"sizes": "32x32",
-			"type": "image/png",
-			"dark": "favicon/favicon-32x32-dark.png",
-			"light": "favicon/favicon-32x32-light.png"
-			}
 		},
 
 		"URL": {
