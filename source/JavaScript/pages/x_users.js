@@ -1,6 +1,6 @@
 export const TITLE = window.Lang.use("users");
 
-export default async function main(){return `<container class="p-5 gap-1"></container>`;}
+export default async function main(){return `<container class="padding-5 gap-1"></container>`;}
 
 export async function after(){
 	const container = document.querySelector("container");
@@ -36,7 +36,7 @@ export async function after(){
 			}
 
 			return `
-				<x-table class="surface-v1 p-2 table-v1 table-zebra table-hover table-bordered table-thead-sticky w-100">
+				<x-table class="surface-v1 padding-2 table-v1 table-zebra table-hover table-bordered table-thead-sticky width-100">
 					{
 						"searchable": true,
 						"head": ${JSON.stringify(HEAD)},

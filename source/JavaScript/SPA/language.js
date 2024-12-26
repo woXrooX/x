@@ -69,7 +69,7 @@ export default class Language extends HTMLElement{
 		return `
 			<span id="header_language_modal">${Lang.code_to_flag(Lang.CURRENT)}</span>
 			<x-modal trigger_selector="span#header_language_modal" modal_func="change_language">
-				<column class="p-2 gap-1">${build_buttons_HTML()}</column>
+				<column class="padding-2 gap-1">${build_buttons_HTML()}</column>
 			</x-modal>
 		`;
 
@@ -77,7 +77,7 @@ export default class Language extends HTMLElement{
 			let HTML = '';
 
 			for(const code of window.CONF.default.language.supported) HTML += `
-				<button name="${code}" class="btn btn-primary d-flex flex-row gap-1 flex-x-between ${Lang.CURRENT == code ? '' : "btn-outline"} w-100">
+				<button name="${code}" class="btn btn-primary display-flex flex-row gap-1 flex-x-between ${Lang.CURRENT == code ? '' : "btn-outline"} width-100">
 					<span class="text-color-white">${Lang.use(code)}</span>
 					<span>${Lang.code_to_flag(code)}</span>
 				</button>

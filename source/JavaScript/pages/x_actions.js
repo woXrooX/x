@@ -2,8 +2,8 @@ export const TITLE = window.Lang.use("actions");
 
 export default async function main(){
 	return `
-		<container class="p-5 gap-1">
-			<row class="flex-row flex-x-start surface-v1 p-2 gap-0-5">
+		<container class="padding-5 gap-1">
+			<row class="flex-row flex-x-start surface-v1 padding-2 gap-0-5">
 				<x-svg
 					name="folder_settings"
 
@@ -19,7 +19,7 @@ export default async function main(){
 
 				<x-svg name="eMail" class="modal_eMail_write btn btn-info"></x-svg>
 				<x-modal trigger_selector="x-svg.modal_eMail_write">
-					<form for="eMail_send" class="p-1" x-modal="on:success:hide" x-toast="on:any:message">
+					<form for="eMail_send" class="padding-1" x-modal="on:success:hide" x-toast="on:any:message">
 						<label>
 							<p for="local_part">Local-part</p>
 							<input type="text" name="local_part">

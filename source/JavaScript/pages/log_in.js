@@ -2,8 +2,8 @@ export const TITLE = window.Lang.use("log_in");
 
 export default function main(){
 	return `
-		<container class="p-5 max-w-600px">
-			<form for="log_in" autocomplete="off" class="surface-v1 p-5">
+		<container class="padding-5 max-width-600px">
+			<form for="log_in" autocomplete="off" class="surface-v1 padding-5">
 
 				<h2 class="text-align-center">${window.Lang.use("log_in")}</h2>
 

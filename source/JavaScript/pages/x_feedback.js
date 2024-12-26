@@ -1,6 +1,6 @@
 export const TITLE = window.Lang.use("feedback");
 
-export default function main(){return `<container class="p-5 max-w-1500px"></container>`;}
+export default function main(){return `<container class="padding-5 max-width-1500px"></container>`;}
 
 export async function after(){
 	const container = document.querySelector("container");
@@ -12,7 +12,7 @@ export async function after(){
 	async function build_feedback_HTML(){
 		let feedback = await window.bridge({for:"get_all_feedback"});
 		if("data" in feedback) feedback = feedback["data"];
-		else return `<p class="w-100 text-size-0-8 surface-info p-1">No feedback</p>`;
+		else return `<p class="width-100 text-size-0-8 surface-info padding-1">No feedback</p>`;
 
 		let HTML = '';
 
@@ -21,7 +21,7 @@ export async function after(){
 			if(feedback_text.length > 10) feedback_text = `
 				<span id="modal_feedback_${cell["id"]}">${cell["feedback_text"].slice(0, 10)}...</span>
 				<x-modal trigger_selector="span#modal_feedback_${cell["id"]}">
-					<p class="text-size-0-8 p-2">${cell["feedback_text"]}</p>
+					<p class="text-size-0-8 padding-2">${cell["feedback_text"]}</p>
 				</x-modal>
 			`;
 
@@ -53,7 +53,7 @@ export async function after(){
 		}
 
 		return `
-			<div class="scrollbar-x w-100 surface-v1 p-1">
+			<div class="scrollbar-x width-100 surface-v1 padding-1">
 				<table class="table-v1 table-zebra table-hover table-bordered">
 					<caption>${Lang.use("feedback")}</caption>
 					<thead>

@@ -2,8 +2,8 @@ export const TITLE = 'Password recovery';
 
 export default function main(){
 	return `
-		<container class="p-5 max-w-600px">
-			<form for="request_password_recovery" autocomplete="off" class="surface-v1 p-5 gap-1" x-toast="on:any:message">
+		<container class="padding-5 max-width-600px">
+			<form for="request_password_recovery" autocomplete="off" class="surface-v1 padding-5 gap-1" x-toast="on:any:message">
 
 				<h2>Password recovery</h2>
 

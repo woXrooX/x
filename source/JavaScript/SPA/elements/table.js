@@ -43,8 +43,8 @@ export default class Table extends HTMLElement{
 		this.innerHTML = `
 			<container class="gap-0-5">
 
-				<header class="d-flex flex-row flex-y-center flex-x-between gap-0-5 w-100">
-					<select class="w-auto text-align-center">
+				<header class="display-flex flex-row flex-y-center flex-x-between gap-0-5 width-100">
+					<select class="width-auto text-align-center">
 						<option selected disabled>${this.page_size}</option>
 						<option value="10">10</option>
 						<option value="15">15</option>
@@ -55,19 +55,19 @@ export default class Table extends HTMLElement{
 						<option value="all">${window.Lang.use("all")}</option>
 					</select>
 
-					<column class="w-100">${!!this.JSON?.searchable === true ? '<input type="text" class="w-100">' : ""}</column>
+					<column class="width-100">${!!this.JSON?.searchable === true ? '<input type="text" class="width-100">' : ""}</column>
 				</header>
 
-				<main class="scrollbar-x scrollbar-y w-100" style="max-height: calc(90vh - var(--header-height) * 4)"></main>
+				<main class="scrollbar-x scrollbar-y width-100" style="max-height: calc(90vh - var(--header-height) * 4)"></main>
 
-				<footer class="d-flex flex-row s-flex-column flex-x-between gap-1 w-100">
-					<section class="d-flex flex-row flex-x-start flex-y-center gap-0-5 text-size-0-8">
+				<footer class="display-flex flex-row s-flex-column flex-x-between gap-1 width-100">
+					<section class="display-flex flex-row flex-x-start flex-y-center gap-0-5 text-size-0-8">
 						<span class="page_numbers"></span>
 						<span class="total_rows"></span>
 						<span class="matched_rows"></span>
 					</section>
 
-					<section class="d-flex flex-row flex-x-end gap-0-2"></section>
+					<section class="display-flex flex-row flex-x-end gap-0-2"></section>
 				</footer>
 
 			</container>
@@ -381,12 +381,12 @@ export default class Table extends HTMLElement{
 	#build_page_buttons_HTML = ()=>{
 		let buttons_HTML = "";
 
-		for(let i = 1; i <= this.body_values_in_chunks.length; i++) buttons_HTML += `<button class="btn btn-primary btn-s d-none" name="${i}">${i}</button>`;
+		for(let i = 1; i <= this.body_values_in_chunks.length; i++) buttons_HTML += `<button class="btn btn-primary btn-s display-none" name="${i}">${i}</button>`;
 
 		this.querySelector("container > footer > section:nth-child(2)").innerHTML = `
 			<button class="btn btn-primary btn-s text-transform-uppercase" name="first">${window.Lang.use("first")}</button>
 			<button class="btn btn-primary btn-s" name="previous"><x-svg name="arrow_back" color="white"></x-svg></button>
-			<section class="d-flex flex-row gap-0-2">${buttons_HTML}</section>
+			<section class="display-flex flex-row gap-0-2">${buttons_HTML}</section>
 			<button class="btn btn-primary btn-s" name="next"><x-svg name="arrow_forward" color="white"></x-svg></button>
 			<button class="btn btn-primary btn-s text-transform-uppercase" name="last">${window.Lang.use("last")}</button>
 		`;
@@ -422,7 +422,7 @@ export default class Table extends HTMLElement{
 	#hide_buttons = ()=>{
 		const buttons = this.querySelectorAll("container > footer > section:nth-child(2) > section > button");
 
-		for(const button of buttons) button.classList.add("d-none");
+		for(const button of buttons) button.classList.add("display-none");
 	}
 
 	#update_buttons = (id)=>{
@@ -453,7 +453,7 @@ export default class Table extends HTMLElement{
 			this.querySelector(`container > footer > section:nth-child(2) > section > button:nth-child(${id+1})`)
 		];
 
-		for(const button of buttons) button?.classList.remove("d-none", "disabled", "text-decoration-underline");
+		for(const button of buttons) button?.classList.remove("display-none", "disabled", "text-decoration-underline");
 
 		// Current
 		buttons[1]?.classList.add("disabled");

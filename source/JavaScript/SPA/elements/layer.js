@@ -33,7 +33,7 @@ window.customElements.define('x-layer', Layer);
 window.Layer = Layer;
 
 			/* <x-layer>
-				<column class="flex-x-center h-100">
+				<column class="flex-x-center height-100">
 					Layer One
 				</column>
 			</x-layer> */
