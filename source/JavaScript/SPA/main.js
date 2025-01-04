@@ -15,7 +15,7 @@ export default class Main{
 
 		return `
 			<container class="flex-y-center padding-5">
-				<column class="flex-center surface-${type}padding-8 gap-2">
+				<column class="flex-center surface-${type} padding-8 gap-2">
 					<p class="display-flex flex-row flex-y-center gap-0-2 text-color-${type} text-size-2">
 						<x-svg name="type_${type}" class="text-size-2-5" color="var(--color-${type})"></x-svg>
 						${content_title}
