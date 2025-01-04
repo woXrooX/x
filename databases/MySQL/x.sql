@@ -215,6 +215,20 @@ CREATE TABLE IF NOT EXISTS `notification_events` (
 -- 		(2, "event_name_B")
 -- ;
 
+CREATE TABLE IF NOT EXISTS `disabled_notification_events` (
+	`id` INT NOT NULL UNIQUE auto_increment,
+	`user` INT NOT NULL,
+	`event` INT NOT NULL,
+	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+	FOREIGN KEY (`user`) REFERENCES users(`id`) ON DELETE CASCADE,
+	FOREIGN KEY (`event`) REFERENCES notification_events(`id`) ON DELETE CASCADE,
+
+	UNIQUE KEY `unique_users_notification_events` (`user`, `event`),
+
+	PRIMARY KEY (`id`)
+);
+
 \! echo "-------------------------- notification_types";
 CREATE TABLE IF NOT EXISTS `notification_types` (
 	`id` INT NOT NULL UNIQUE auto_increment,
