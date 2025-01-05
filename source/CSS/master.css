@@ -46,7 +46,7 @@ body{
 		}
 
 		& > footer{
-			background-color: var(--color-main-tint-4);
+			background-color: var(--color-main-tint-2);
 
 			color: var(--color-text-primary);
 			font-size: 0.7rem;
