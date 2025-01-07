@@ -42,7 +42,7 @@ export async function after(){
 		return `
 			<row class="flex-row flex-x-end gap-0-5 p-2">
 				${build_delete_all_button_HTML()}
-				<a href="/x/notifications/settings" class="btn btn-primary"><x-svg name="gear" color="white"></x-svg></a>
+				${build_anchor_notificatons_settings_HTML()}
 			</row>
 		`;
 
@@ -57,6 +57,12 @@ export async function after(){
 					x-toast="on:any:message"
 				></x-svg>
 			`;
+		}
+
+		function build_anchor_notificatons_settings_HTML(){
+			if(!("x_notifications_settings" in window.CONF["pages"])) return '';
+
+			return `<a href="/x/notifications/settings" class="btn btn-primary"><x-svg name="gear" color="white"></x-svg></a>`;
 		}
 	}
 }
