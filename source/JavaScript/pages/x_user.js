@@ -39,12 +39,12 @@ export default function main(){
 export async function after(){
 	const container = document.querySelector("container");
 
-	Loading.on_element(container);
+	Loading.on_element_start(container);
 	container.insertAdjacentHTML("beforeend", `
 		${await build_user_data_HTML()}
 		${await build_user_log_in_records_HTML()}
 	`);
-	Loading.on_element(container);
+	Loading.on_element_end(container);
 
 	async function build_user_data_HTML(){
 		let resp = await window.bridge({for:"get_user"});

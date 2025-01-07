@@ -5,9 +5,9 @@ export default function main(){return '<container class="padding-5 gap-0-5 max-w
 export async function after(){
 	const container = document.querySelector("container");
 
-	Loading.on_element(container);
+	Loading.on_element_start(container);
 	container.insertAdjacentHTML("beforeend", await build_notification_event_togglers_HTML());
-	Loading.on_element(container);
+	Loading.on_element_end(container);
 
 	async function build_notification_event_togglers_HTML(){
 		let disabled_event_names = await window.bridge({for: "get_disabled_event_names"});

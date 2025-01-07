@@ -5,9 +5,9 @@ export default function main(){return `<container class="padding-5 max-width-150
 export async function after(){
 	const container = document.querySelector("container");
 
-	Loading.on_element(container);
+	Loading.on_element_start(container);
 	container.innerHTML = await build_feedback_HTML();
-	Loading.on_element(container);
+	Loading.on_element_end(container);
 
 	async function build_feedback_HTML(){
 		let feedback = await window.bridge({for:"get_all_feedback"});

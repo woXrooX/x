@@ -4,9 +4,9 @@ export default async function main(){return `<container class="padding-5 gap-1">
 
 export async function after(){
 	const container = document.querySelector("container");
-	Loading.on_element(container);
+	Loading.on_element_start(container);
 	container.insertAdjacentHTML("beforeend", await build_HTML());
-	Loading.on_element(container);
+	Loading.on_element_end(container);
 
 	async function build_HTML(){
 		return await log_in_records_HTML();

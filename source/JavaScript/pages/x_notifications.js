@@ -5,12 +5,12 @@ export default function main(){ return `<container class="padding-5 gap-0-5 max-
 export async function after(){
 	const container = document.querySelector("container");
 
-	Loading.on_element(container);
+	Loading.on_element_start(container);
 	container.insertAdjacentHTML("beforeend", `
 		${build_actions_row_HTML()}
 		${await build_notifications_HTML()}
 	`);
-	Loading.on_element(container);
+	Loading.on_element_end(container);
 
 	async function build_notifications_HTML(){
 		let notifications = await window.bridge({for: "get_all_notifications"});

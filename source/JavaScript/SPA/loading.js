@@ -20,9 +20,20 @@ export default class Loading{
 		Loading.#elementLoading.classList.add("loaded");
 	}
 
-	static on_element(element){
+
+	static on_element_toggle(element){
 		if(!!element === false) return;
 		element.classList.toggle('loading-on-element');
+	}
+
+	static on_element_start(element){
+		if(!!element === false) return;
+		element.classList.add('loading-on-element');
+	}
+
+	static on_element_end(element){
+		if(!!element === false) return;
+		element.classList.remove('loading-on-element');
 	}
 };
 

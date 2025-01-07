@@ -159,7 +159,7 @@ export default class XRequest{
 		this.#element.style.cursor = "pointer";
 
 		this.#element.onclick = async ()=>{
-			Loading.on_element(this.#element);
+			Loading.on_element_start(this.#element);
 
 			this.#response = await window.bridge(this.#data, this.#element.getAttribute("xr-post"));
 
@@ -175,7 +175,7 @@ export default class XRequest{
 
 			XRequest.#handle_response_actions(this.#response);
 
-			Loading.on_element(this.#element);
+			Loading.on_element_end(this.#element);
 		};
 	}
 };
