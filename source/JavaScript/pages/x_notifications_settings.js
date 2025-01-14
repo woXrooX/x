@@ -14,24 +14,42 @@ export async function after(){
 		if("data" in disabled_event_names) disabled_event_names = disabled_event_names["data"].split(", ");
 		else disabled_event_names = [];
 
+		const events = [
+			"event_name_one",
+			"event_name_two"
+		];
+
+		let HTML = '';
+
+		for (const event of events) HTML += `
+			<row class="flex-x-between flex-y-center">
+				<p class="text-size-0-8">${Lang.use(event+"_description")}</p>
+
+				<input
+					type="checkbox"
+					class="checkbox-v1"
+					${!disabled_event_names.includes(event) ? "checked" : ''}
+
+					xr-post
+					xr-for="toggle_disabled_notification_event"
+					xr-data='{"event": "${event}"}'
+
+					x-toast="on:any:message"
+				>
+			</row>
+		`;
+
 		return `
-			<column class="width-100 surface-v1 padding-2 gap-1">
-				<row class="flex-x-between flex-y-center">
-					<p class="text-size-0-8">${Lang.use("event_name_description")}</p>
+			<row class="flex-x-start">
+				<x-svg
+					name="arrow_left"
+					color="white"
+					onclick="history.back()"
+					class="btn btn-primary"
+				></x-svg>
+			</row>
 
-					<input
-						type="checkbox"
-						class="checkbox-v1"
-						${!disabled_event_names.includes("event_name") ? "checked" : ''}
-
-						xr-post
-						xr-for="toggle_disabled_notification_event"
-						xr-data='{"event": "${"event_name"}"}'
-
-						x-toast="on:any:message"
-					>
-				</row>
-			</column>
+			<column class="width-100 surface-v1 padding-2 gap-1">${HTML}</column>
 		`;
 	}
 }
