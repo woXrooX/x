@@ -21,8 +21,37 @@ if __name__ != "__main__":
 			via_eMail = False,
 			via_SMS = False
 		):
-			recipient = MySQL.execute("SELECT id, eMail, phone_number FROM users WHERE id = %s LIMIT 1;", [recipient], fetch_one = True)
+			# Validate "event_name"
+			if event_name not in Globals.NOTIFICATION_EVENTS:
+				Log.warning(f"Notifications.new() -> Event does not exist: {event_name}")
+				return False
+
+			# 1. Validate "recipient"
+			# 2. Get "recipient" infos
+			# 3. Check if "recipient" disabled the "event_name"
+			recipient = MySQL.execute(
+				sql="""
+					SELECT
+						users.id,
+						users.eMail,
+						users.phone_number,
+						CASE WHEN disabled_notification_events.id IS NOT NULL THEN 1 ELSE 0 END AS event_is_disabled
+					FROM users
+					LEFT JOIN disabled_notification_events ON
+						disabled_notification_events.event = %s AND
+						disabled_notification_events.user = users.id
+					WHERE users.id = %s LIMIT 1;
+				""",
+				params = [
+					Globals.NOTIFICATION_EVENTS[event_name]["id"],
+					recipient
+				],
+				fetch_one = True
+			)
 			if recipient is False or recipient is None: return False
+
+			# Successfully exit if event is disabled
+			if recipient["event_is_disabled"] is 1: return True
 
 			is_successfully = True
 
@@ -42,6 +71,10 @@ if __name__ != "__main__":
 					is_successfully = False
 
 			return is_successfully
+
+		#### Helpers
+		# Creates a notifications using Notifications.new() for any type of notification.
+		# Notifications.new() method validates whether notifications for the current event_name is enabled before sending.
 
 		@staticmethod
 		def new_in_app(
@@ -120,69 +153,3 @@ if __name__ != "__main__":
 				return False
 
 			Twilio.send_sms(content, Globals.CONF["Twilio"]["alphanumeric_sender_id"], recipient)
-
-
-		@staticmethod
-		def get_all(recipient = None):
-			data = MySQL.execute(
-				sql="""
-					SELECT
-						notifications.*,
-						notification_events.name as event,
-						notification_types.name as type
-					FROM notifications
-					LEFT JOIN notification_events ON notification_events.id = notifications.event
-					LEFT JOIN notification_types ON notification_types.id = notifications.type
-					WHERE notifications.flag_deleted IS NULL AND notifications.recipient=%s
-					ORDER BY timestamp DESC;
-				""",
-				params=[recipient]
-			)
-			return data
-
-		@staticmethod
-		def get_unseen_count(recipient = None):
-			data = MySQL.execute(
-				sql="""
-					SELECT COUNT(*) AS unseen_notifications_count
-					FROM notifications
-					WHERE notifications.flag_deleted IS NULL AND recipient=%s AND seen=0;
-				""",
-				params=[recipient],
-				fetch_one=True
-			)
-			return data
-
-		@staticmethod
-		def get_one(ID):
-			data = MySQL.execute(
-				sql="""
-					SELECT
-						notifications.*,
-						notification_events.name as event,
-						notification_types.name as type
-					FROM notifications
-					LEFT JOIN notification_events ON notification_events.id = notifications.event
-					LEFT JOIN notification_types ON notification_types.id = notifications.type
-					WHERE notifications.id = %s AND notifications.flag_deleted IS NULL AND notifications.recipient=%s LIMIT 1;
-				""",
-				params=[ID, session['user']['id']],
-				fetch_one=True
-			)
-			return data
-
-		@staticmethod
-		def set_seen(ID):
-			data = MySQL.execute("UPDATE notifications SET seen=1 WHERE id=%s AND notifications.flag_deleted IS NULL;", [ID], commit=True)
-			if data is False: return False
-			return True
-
-		@staticmethod
-		def delete(ID):
-			data = MySQL.execute(
-				sql="UPDATE notifications SET flag_deleted = NOW(), flag_deleted_by_user = %s WHERE id=%s AND recipient=%s;",
-				params=[session["user"]["id"], ID, session["user"]["id"]],
-				commit=True
-			)
-			if data is False: return False
-			return True

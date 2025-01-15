@@ -31,7 +31,7 @@ export async function after(){
 			return `<p class="width-100 text-size-0-8 surface-error padding-1">${Lang.use("unknown_error")}</p>`;
 		}
 
-		let HTML = build_delete_all_button_HTML();
+		let HTML = '';
 
 		for(const notification of notifications) HTML += await Notifications_module.notification_s_card_generator(notification);
 
