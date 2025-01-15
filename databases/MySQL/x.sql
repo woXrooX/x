@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `disabled_notification_events` (
 	FOREIGN KEY (`user`) REFERENCES users(`id`) ON DELETE CASCADE,
 	FOREIGN KEY (`event`) REFERENCES notification_events(`id`) ON DELETE CASCADE,
 
-	UNIQUE KEY `unique_users_notification_events` (`user`, `event`),
+	UNIQUE KEY `unique_user_event` (`user`, `event`),
 
 	PRIMARY KEY (`id`)
 );
