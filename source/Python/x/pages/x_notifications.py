@@ -2,7 +2,6 @@ from main import session
 
 from Python.x.modules.Page import Page
 from Python.x.modules.response import response
-from Python.x.modules.Notifications import Notifications
 from Python.x.modules.MySQL import MySQL
 import time
 
@@ -11,14 +10,6 @@ def x_notifications(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":
 			if request.get_json()["for"] == "get_all_notifications":
-				Notifications.new(
-					recipient=session['user']['id'],
-					event_name="DPP_welcome_after_sign_up",
-					type_name="success",
-					via_in_app=True,
-					via_eMail=True
-				)
-
 				data = MySQL.execute(
 					sql="""
 						SELECT
