@@ -22,8 +22,8 @@ export async function after(){
 		let HTML = '';
 
 		for (const event of events) HTML += `
-			<row class="flex-x-between flex-y-center">
-				<p class="text-size-0-8">${Lang.use(event+"_description")}</p>
+			<row class="flex-row flex-x-between flex-y-center">
+				<p class="text-size-0-8">${Lang.use(event+"_event_description")}</p>
 
 				<input
 					type="checkbox"
