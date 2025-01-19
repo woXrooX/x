@@ -329,10 +329,6 @@ body{
 
 			padding: var(--padding);
 			padding-top: 2rem;
-
-			@media (width <= 600px){
-				width: 90dvw;
-			}
 		}
 	}
 
