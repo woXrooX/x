@@ -33,8 +33,9 @@ export default class Offline extends HTMLElement{
 					}
 
 					&[open]{
-						display: grid;
-						place-items: center;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
 					}
 				}
 			</style>
