@@ -13,7 +13,7 @@ if __name__ != "__main__":
 			Log.warning(f"Robots.generate(): Generating robots.txt file.")
 
 			try:
-				project_URL = f"{Globals.CONF["default"]["URL"]["prefix"]}://{Globals.CONF["default"]["URL"]["sub_domain"]}.{Globals.CONF["default"]["URL"]["domain_name"]}.{Globals.CONF["default"]["URL"]["domain_extension"]}"
+				project_URL = f'{Globals.CONF["default"]["URL"]["prefix"]}://{Globals.CONF["default"]["URL"]["sub_domain"]}.{Globals.CONF["default"]["URL"]["domain_name"]}.{Globals.CONF["default"]["URL"]["domain_extension"]}'
 
 				File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/robots.txt", f"User-agent: *\nAllow: /\nSitemap: {project_URL}/sitemap.xml", strict=True, overwrite=True)
 

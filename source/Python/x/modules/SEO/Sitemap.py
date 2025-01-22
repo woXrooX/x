@@ -25,7 +25,7 @@ if __name__ != "__main__":
 				# Current date for lastmod
 				today = datetime.now().strftime('%Y-%m-%d')
 
-				project_URL = f"{Globals.CONF["default"]["URL"]["prefix"]}://{Globals.CONF["default"]["URL"]["sub_domain"]}.{Globals.CONF["default"]["URL"]["domain_name"]}.{Globals.CONF["default"]["URL"]["domain_extension"]}"
+				project_URL = f'{Globals.CONF["default"]["URL"]["prefix"]}://{Globals.CONF["default"]["URL"]["sub_domain"]}.{Globals.CONF["default"]["URL"]["domain_name"]}.{Globals.CONF["default"]["URL"]["domain_extension"]}'
 
 				for page in Globals.CONF["pages"]:
 					# Page must be enabled
@@ -66,10 +66,10 @@ if __name__ != "__main__":
 						priority.text = "0.8"  # Default value, can be customized for different pages
 
 				# Create the XML string with proper formatting
-				xml_str = minidom.parseString(ET.tostring(urlset)).toprettyxml(indent="    ")
+				XML_string = minidom.parseString(ET.tostring(urlset)).toprettyxml(indent="    ")
 
-				File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/sitemap.xml", xml_str, strict=True, overwrite=True)
+				File_System.create_file(f'{Globals.PROJECT_RUNNING_FROM}/sitemap.xml', XML_string, strict=True, overwrite=True)
 
-				File_System.copy_file(Globals.PROJECT_RUNNING_FROM, f"{Globals.X_RUNNING_FROM}/www/static", "sitemap.xml", strict=True)
+				File_System.copy_file(Globals.PROJECT_RUNNING_FROM, f'{Globals.X_RUNNING_FROM}/www/static', "sitemap.xml", strict=True)
 
 			except Exception as e: Log.error(f"Sitemap.generate(): Could not generate sitemap.xml file: {e}")
