@@ -28,22 +28,25 @@ if __name__ != "__main__":
 				return False
 
 		@staticmethod
-		def create_file(path_name_extension, content = "", strict = False):
-			if not os.path.exists(f"{path_name_extension}"):
-				try:
-					Log.info(f"File: {path_name_extension}")
+		def create_file(path_name_extension, content = "", strict = False, overwrite = False):
+			if os.path.exists(f"{path_name_extension}") and not overwrite:
+				Log.info(f"File_System.create_file(): File already exists: {path_name_extension}")
+				return
 
-					with open(f'{path_name_extension}', 'w') as f:
-						f.write(f"{content}")
+			try:
+				Log.info(f"File: {path_name_extension}")
 
-					return True
+				with open(f'{path_name_extension}', 'w') as f:
+					f.write(f"{content}")
 
-				except:
-					Log.error(f"Could Not Create The File: {path}")
+				return True
 
-					if strict is True: sys.exit()
+			except Exception as e:
+				Log.error(f"File_System.create_file(): Error: {e}")
 
-					return False
+				if strict is True: sys.exit()
+
+				return False
 
 		@staticmethod
 		def copy_folder(source, destination, strict = False):

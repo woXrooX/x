@@ -14,6 +14,16 @@ from Python.x.modules.File_System import File_System
 File_System.init()
 
 
+#################################################### Generating sitemap
+from Python.x.modules.SEO.Sitemap import Sitemap
+Sitemap.generate()
+
+
+#################################################### Generating sitemap
+from Python.x.modules.SEO.Robots import Robots
+Robots.generate()
+
+
 #################################################### Globals
 from Python.x.modules.Globals import Globals
 
