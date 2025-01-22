@@ -31,7 +31,13 @@ if __name__ != "__main__":
 					# Page must be enabled
 					if not Globals.CONF["pages"][page].get("enabled", False): continue
 
-					# Allow pages with "GET" methods
+					# Skip pages with roles, roles_not, plans or url_args required
+					if "roles" in Globals.CONF["pages"][page]: continue
+					if "roles_not" in Globals.CONF["pages"][page]: continue
+					if "plans" in Globals.CONF["pages"][page]: continue
+					if "url_args" in Globals.CONF["pages"][page]: continue
+
+					# Allow pages only with "GET" methods
 					if(
 						"methods" in Globals.CONF["pages"][page] and
 						"GET" not in Globals.CONF["pages"][page]["methods"]
