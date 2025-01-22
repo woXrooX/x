@@ -32,7 +32,10 @@ if __name__ != "__main__":
 					if not Globals.CONF["pages"][page].get("enabled", False): continue
 
 					# Allow pages with "GET" methods
-					if "GET" not in Globals.CONF["pages"][page].get("methods", []): continue
+					if(
+						"methods" in Globals.CONF["pages"][page] and
+						"GET" not in Globals.CONF["pages"][page]["methods"]
+					): continue
 
 					# Allow pages that not require users to be logged in "unauthenticated"
 					if(
