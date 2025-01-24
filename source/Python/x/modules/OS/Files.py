@@ -2,7 +2,7 @@ if __name__ != "__main__":
 	from Python.x.modules.Logger import Log
 
 	# Identifies file size from the "request.files" in Flask
-    def file_size_from_multipart_form_data(file_object):
+	def file_size_from_multipart_form_data(file_object):
 		try:
 			file_object.seek(0, 2)
 			file_size = file_object.tell()
