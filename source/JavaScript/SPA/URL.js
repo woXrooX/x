@@ -35,14 +35,12 @@ export default class URL{
 
 		if(!!window.location.hash === false) return;
 
-		const hashed_element = document.querySelector(window.location.hash);
-
-		if(!!hashed_element === false) return;
-
 		// Check if div#root > main has finished aniomation then scroll
 		window.Main.element.ontransitionend = ()=>{
 			window.Main.element.ontransitionend = null;
-			hashed_element.scrollIntoView();
+
+			const hashed_element = document.getElementById(window.location.hash.substring(1));
+			if(!!hashed_element === true) hashed_element.scrollIntoView();
 		};
 	}
 
