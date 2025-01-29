@@ -33,9 +33,9 @@ export default class XRequest{
 
 		if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
 
-		if("DOM_change" in response["actions"]) window.dispatchEvent(new CustomEvent("DOM_change", {detail: response["actions"]["DOM_change"]}));
-
 		if("reload" in response["actions"]) window.location.reload();
+
+		if("DOM_change" in response["actions"]) window.dispatchEvent(new CustomEvent("DOM_change", {detail: response["actions"]["DOM_change"]}));
 	}
 
 	static async #execute_on_response(func_name, response, element){

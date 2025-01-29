@@ -140,23 +140,17 @@ export default class Form{
 
 		////////// response["actions"]
 		if("actions" in response){
-			// Update window.conf
 			if("update_conf" in response["actions"]) window.conf = response["actions"]["update_conf"];
 
-			// Set window.session["user"]
 			if("set_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change", {detail: response["actions"]["set_session_user"]}));
 
-			// Delete window.session["user"]
 			if("delete_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change"));
 
-			// Redirect
 			if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
 
-			// Dom Update
-			if("DOM_change" in response["actions"]) window.dispatchEvent(new CustomEvent("DOM_change", {detail: response["actions"]["DOM_change"]}));
-
-			// Reload
 			if("reload" in response["actions"]) window.location.reload();
+
+			if("DOM_change" in response["actions"]) window.dispatchEvent(new CustomEvent("DOM_change", {detail: response["actions"]["DOM_change"]}));
 		}
 	}
 
