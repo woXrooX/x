@@ -7,7 +7,7 @@ export default class Router{
 	}
 
 	static async handle(){
-		// Check If App Is Down If So Stop Handling Set app_is_down As Current Page
+		// Check if app is down if so stop handling and set app_is_down as a current page
 		if("app_is_down" in window.CONF["tools"]){
 			Router.current_page.name = "app_is_down";
 			Router.#load_page_file();
@@ -21,16 +21,14 @@ export default class Router{
 		}
 
 		// NOTE: We have much efficient way of detecting "if page exists" if we give up on endpoints system
-		// Loop Through Pages
-		loop_pages:
-		for(const page in window.CONF["pages"]){
+		loop_pages: for(const page in window.CONF["pages"]){
 			if(Router.guard(page) === false) continue;
 
 			// Window Path Name
 			let pathname = window.location.pathname;
 
 			if("url_args" in window.CONF.pages[page]){
-				//// NOTE: Order Matters In This Scope
+				//// NOTE: Order matters in this scope
 
 				// Create array of URL arguments from the "pathname"
 				const args = pathname.split('/').splice(-window.CONF.pages[page].url_args.length);
@@ -42,12 +40,10 @@ export default class Router{
 				pathname = pathname.split('/').slice(0, -window.CONF.pages[page].url_args.length).join('/');
 			}
 
-			// Endpoints
-			loop_endpoints:
-			for(const endpoint of window.CONF["pages"][page]["endpoints"])
-				// Check If Page Endpoint Equals To Currnt Endpoint
+			loop_endpoints: for(const endpoint of window.CONF["pages"][page]["endpoints"])
+				// Check if page endpoint equals to currnt endpoint
 				if(endpoint == pathname){
-					//// Check If Page Is Not Current Loaded Page
+					//// Check if page is not the current loaded page
 					// TODO: We need to create a endpoints matching loop like in thr  Menu.set_active() in order to fix issues like "/" and "/home" are being rendered even the page is thesame
 					// NOTE: endpoint should be unique.
 					// Page a and page b can not have the same endpoint. It may seem working but there will be bugs. It will make return false the expression below in rare cases.
@@ -58,15 +54,14 @@ export default class Router{
 					Router.current_page.endpoint = endpoint;
 					Router.current_page.full_URL = window.location.href;
 
-					// Break Out The Loops
 					break loop_pages;
 				}
 		}
 
-		// If Still No Endpoint Matched Then Set It To "404"
+		// If still no endpoint matched then set it to "404"
 		if(Router.current_page.name === null) Router.current_page.name = "404";
 
-		// Load Page File
+		// Load page file
 		Router.#load_page_file();
 	}
 
@@ -74,13 +69,15 @@ export default class Router{
 		window.Log.info(`Page file is loading: ${Router.current_page.name}.js`);
 
 		try{
-			// Start Loading Effects
+			// Start loading effects
 			window.Loading.start();
 			window.Main.animation_start();
 
-			// Load The Page
+			// Load page file
 			await window.DOM.set_page(await import(`/JavaScript/pages/${Router.current_page.name}.js`));
-		}catch(error){
+		}
+
+		catch(error){
 			// Log.line();
 			// Log.error(error);
 			// Log.error(error.name);
@@ -98,8 +95,10 @@ export default class Router{
 			else window.DOM.render(Main.situational_content("warning", Lang.use("warning"), Lang.use("something_went_wrong")));
 
 			window.Footer.handle();
-		}finally{
-			// End Loading Effects
+		}
+
+		finally{
+			// End loading effects
 			window.Loading.end();
 			window.Main.animation_end();
 			window.x.URL.handle_scroll_to_hash();
@@ -114,7 +113,7 @@ export default class Router{
 
 			case "/403":
 				Router.current_page.name = "403";
-				return;
+				return true;
 
 			case "/404":
 				Router.current_page.name = "404";
