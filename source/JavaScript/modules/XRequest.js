@@ -31,9 +31,9 @@ export default class XRequest{
 
 		if("delete_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change"));
 
-		if("DOM_change" in response["actions"]) window.dispatchEvent(new CustomEvent("DOM_change", {detail: response["actions"]["DOM_change"]}));
-
 		if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
+
+		if("DOM_change" in response["actions"]) window.dispatchEvent(new CustomEvent("DOM_change", {detail: response["actions"]["DOM_change"]}));
 
 		if("reload" in response["actions"]) window.location.reload();
 	}

@@ -149,11 +149,11 @@ export default class Form{
 			// Delete window.session["user"]
 			if("delete_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change"));
 
-			// Dom Update
-			if("DOM_change" in response["actions"]) window.dispatchEvent(new CustomEvent("DOM_change", {detail: response["actions"]["DOM_change"]}));
-
 			// Redirect
 			if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
+
+			// Dom Update
+			if("DOM_change" in response["actions"]) window.dispatchEvent(new CustomEvent("DOM_change", {detail: response["actions"]["DOM_change"]}));
 
 			// Reload
 			if("reload" in response["actions"]) window.location.reload();
