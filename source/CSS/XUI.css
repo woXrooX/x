@@ -1303,6 +1303,14 @@
 		}
 	}
 
+	@layer lists{
+		/* Handle any level of nesting */
+		ul, ol {
+			& ul,
+			& ol { padding-left: 1em; }
+		}
+	}
+
 	@layer surfaces{
 		.surface-v1{
 			background-color: var(--color-main-tint-2);
