@@ -1,17 +1,22 @@
 \! clear
 \! echo "============================== x ==============================";
 \W
-
 DROP DATABASE IF EXISTS [NAME];
-CREATE DATABASE IF NOT EXISTS [NAME] CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE DATABASE IF NOT EXISTS [NAME]
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_0900_ai_ci;
 USE [NAME];
 
+-- Set the session level
 SET NAMES utf8mb4;
+SET character_set_client = utf8mb4;
+SET character_set_connection = utf8mb4;
+SET character_set_database = utf8mb4;
+SET character_set_server = utf8mb4;
+SET character_set_results = utf8mb4;
+SET collation_connection = utf8mb4_0900_ai_ci;
 
-
-
-
-
+-- If you need case-sensitive comparisons (then use utf8mb4_0900_as_cs)
 
 -- ------------------------------------
 -- ------------------------------------ App settings
@@ -31,7 +36,8 @@ CREATE TABLE IF NOT EXISTS `currencies` (
 	`symbol` VARCHAR(3) NULL,
 	`native_name` VARCHAR(30) NULL,
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 INSERT INTO currencies (id, code, decimal_digits, fractional_unit, symbol, native_name)
 	VALUES
 		(1, "UZS", 2, "Tiyin", NULL, "Oʻzbek soʻmi"),
@@ -45,7 +51,8 @@ CREATE TABLE IF NOT EXISTS `languages` (
 	`code` VARCHAR(3) NOT NULL UNIQUE,
 	`native_name` VARCHAR(50) NULL,
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 INSERT INTO languages (id, code, native_name)
 	VALUES
 		(1, "en", "English"),
@@ -62,7 +69,8 @@ CREATE TABLE IF NOT EXISTS `app_color_modes` (
 	`id` INT NOT NULL UNIQUE auto_increment,
 	`name` VARCHAR(10) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 INSERT INTO app_color_modes (id, name)
 	VALUES
 		(1, "dark"),
@@ -82,7 +90,8 @@ CREATE TABLE IF NOT EXISTS `user_authenticity_statuses` (
 	`id` INT NOT NULL UNIQUE auto_increment,
 	`name` VARCHAR(20) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 INSERT INTO user_authenticity_statuses (id, name)
 	VALUES
 		(1, "unauthenticated"),
@@ -95,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `user_plans` (
 	`id` INT NOT NULL UNIQUE auto_increment,
 	`name` VARCHAR(10) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 \! echo "-------------------------- users";
 CREATE TABLE IF NOT EXISTS `users` (
@@ -153,14 +162,15 @@ CREATE TABLE IF NOT EXISTS `users` (
 	FOREIGN KEY (app_color_mode) REFERENCES app_color_modes(id) ON DELETE SET NULL,
 
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 \! echo "-------------------------- user_roles";
 CREATE TABLE IF NOT EXISTS `user_roles` (
 	`id` INT NOT NULL UNIQUE auto_increment,
 	`name` VARCHAR(20) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 INSERT INTO user_roles (id, name)
 	VALUES
 		(1, "root"),
@@ -177,14 +187,14 @@ CREATE TABLE IF NOT EXISTS `users_roles` (
 	FOREIGN KEY (`role`) REFERENCES user_roles(`id`) ON DELETE CASCADE,
 
 	CONSTRAINT `unique_users_roles` UNIQUE (`user`, `role`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 \! echo "-------------------------- user_occupations";
 CREATE TABLE IF NOT EXISTS `user_occupations` (
 	`id` INT NOT NULL UNIQUE auto_increment,
 	`name` VARCHAR(20) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 \! echo "-------------------------- users_occupations";
 CREATE TABLE IF NOT EXISTS `users_occupations` (
@@ -195,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `users_occupations` (
 	FOREIGN KEY (`occupation`) REFERENCES user_occupations(`id`) ON DELETE CASCADE,
 
 	CONSTRAINT `unique_users_occupations` UNIQUE (`user`, `occupation`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 
@@ -208,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `notification_events` (
 	`id` INT NOT NULL UNIQUE auto_increment,
 	`name` VARCHAR(500) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 -- INSERT INTO notification_events (id, name)
 -- 	VALUES
 -- 		(1, "event_name_A"),
@@ -227,14 +237,15 @@ CREATE TABLE IF NOT EXISTS `disabled_notification_events` (
 	UNIQUE KEY `unique_user_event` (`user`, `event`),
 
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 \! echo "-------------------------- notification_types";
 CREATE TABLE IF NOT EXISTS `notification_types` (
 	`id` INT NOT NULL UNIQUE auto_increment,
 	`name` VARCHAR(20) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 INSERT INTO notification_types (id, name)
 	VALUES
 		(1, "success"),
@@ -274,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 	FOREIGN KEY (`type`) REFERENCES notification_types(`id`),
 
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 
@@ -303,7 +314,7 @@ CREATE TABLE IF NOT EXISTS `log_in_records` (
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 \! echo "-------------------------- password_recoveries";
 CREATE TABLE IF NOT EXISTS `password_recoveries` (
@@ -329,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `password_recoveries` (
 	FOREIGN KEY (user) REFERENCES users(id),
 
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 
@@ -355,4 +366,4 @@ CREATE TABLE IF NOT EXISTS `feedback` (
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
