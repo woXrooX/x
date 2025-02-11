@@ -109,22 +109,29 @@ export default class Table extends HTMLElement{
 	}
 
 	#listen_to_search_typing = ()=>{
-		this.querySelector("container > header > column > input").oninput = ()=>{
-			// Fixes issues when you are on page N and the search generated page numbers are less than N
-			this.#update_buttons((this.current_page = 1));
 
-			if(event.target.value == ""){
-				this.body_values = this.JSON["body"];
+		let debounce_timeout;
+		this.querySelector("container > header > column > input").oninput = (event)=>{
+			clearTimeout(debounce_timeout);
+			
+			debounce_timeout = setTimeout(() => {
+				// Fixes issues when you are on page N and the search generated page numbers are less than N
+				this.#update_buttons((this.current_page = 1));
+				
+				if(event.target.value == ""){
+					this.body_values = this.JSON["body"];
+					this.#build_body();
+					this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
+					this.#build_page_buttons_HTML();
+					return;
+				}
+	
+				this.#find_matches(event.target.value);
 				this.#build_body();
-				this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
 				this.#build_page_buttons_HTML();
-				return;
-			}
+				this.#build_matched_rows_HTML();
 
-			this.#find_matches(event.target.value);
-			this.#build_body();
-			this.#build_page_buttons_HTML();
-			this.#build_matched_rows_HTML();
+			}, 500)
 		}
 	}
 
