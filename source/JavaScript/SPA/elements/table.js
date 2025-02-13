@@ -111,7 +111,7 @@ export default class Table extends HTMLElement{
 	#listen_to_search_typing = ()=>{
 
 		let debounce_timeout;
-		this.querySelector("container > header > column > input").oninput = ()=>{
+		this.querySelector("container > header > column > input").oninput = (event)=>{
 			clearTimeout(debounce_timeout);
 
 			debounce_timeout = setTimeout(() => {
