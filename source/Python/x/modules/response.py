@@ -62,24 +62,24 @@ if __name__ != "__main__":
 		if data: response_dict["data"] = data
 
 		######## Actions
-		actionsDict = {}
+		actions_dict = {}
 
-		if update_conf: actionsDict["update_conf"] = PUBLIC_CONF
+		if update_conf: actions_dict["update_conf"] = PUBLIC_CONF
 
-		if set_session_user is True: actionsDict["set_session_user"] = User.generate_public_session()
+		if set_session_user is True: actions_dict["set_session_user"] = User.generate_public_session()
 
-		if delete_session_user is True: actionsDict["delete_session_user"] = 0
+		if delete_session_user is True: actions_dict["delete_session_user"] = 0
 
-		if DOM_change: actionsDict["DOM_change"] = DOM_change
+		if DOM_change: actions_dict["DOM_change"] = DOM_change
 
 		## redirect
-		if redirect: actionsDict["redirect"] = redirect
+		if redirect: actions_dict["redirect"] = redirect
 
 		## reload
-		if reload: actionsDict["reload"] = 0
+		if reload: actions_dict["reload"] = 0
 
 		# Check If Actions Has At Least One Object
-		if actionsDict: response_dict["actions"] = actionsDict
+		if actions_dict: response_dict["actions"] = actions_dict
 
 
 		# print("----------------------- response_dict -----------------------")
