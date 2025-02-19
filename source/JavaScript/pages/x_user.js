@@ -71,8 +71,10 @@ export async function after(){
 					<column id="roles" class="padding-2 gap-1">
 						<form for="update_roles" x-modal="on:success:hide" x-toast="on:any:message">
 							${HTML}
-							<input class="btn btn-primary" type='submit' name='save' value="save">
-							<p for='update_roles'></p>
+							<label>
+								<input class="btn btn-primary" type='submit' name='save' value="save">
+								<p for='update_roles'></p>
+							</label>
 						</form>
 					</column>
 				</x-modal>

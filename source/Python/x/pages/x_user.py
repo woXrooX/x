@@ -16,10 +16,9 @@ def x_user(request, id):
 
 				# Prep the params
 				params = []
-				for role in roles:
-					if role not in ["dev", "root", "admin"]: return response(type="error", message="invalid_request")
-
-					params.append((id, Globals.USER_ROLES[role]["id"]))
+				for role in roles: 
+					if role in Globals.USER_ROLES:
+						params.append((id, Globals.USER_ROLES[role]["id"]))
 
 				# Delete all old user roles
 				data = MySQL.execute(
