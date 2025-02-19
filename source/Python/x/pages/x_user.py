@@ -1,5 +1,6 @@
 import random
 
+from main import session
 from Python.x.modules.Page import Page
 from Python.x.modules.response import response
 from Python.x.modules.MySQL import MySQL
@@ -10,8 +11,35 @@ from Python.x.modules.Globals import Globals
 @Page.build()
 def x_user(request, id):
 	if request.method == "POST":
-		# if "multipart/form-data" in request.content_type.split(';'):
-		# 	pass
+		if "multipart/form-data" in request.content_type.split(';'):
+			if request.form["for"] == "assign_roles":
+				roles = request.form.getlist("roles") if "roles" in request.form and request.form["roles"] else []
+
+				# Prep the params
+				params = []
+				for role in roles:
+					if role not in ["dev", "root", "admin"]: return response(type="error", message="invalid_request")
+
+					params.append((id, Globals.USER_ROLES[role]["id"]))
+
+				# Delete all old user roles
+				data = MySQL.execute(
+					sql="DELETE FROM users_roles WHERE user = %s;",
+					params=[id],
+					commit=True
+				)
+				if data is False: return response(type="error", message="database_error")
+
+				if len(params) > 0:
+					data = MySQL.execute(
+						sql="INSERT INTO users_roles (user, role) VALUES (%s, %s);",
+						params=params,
+						commit=True,
+						many=True
+					)
+					if data is False: return response(type="error", message="database_error")
+
+				return response(type="success", message="saved", DOM_change=["main"])
 
 		if request.content_type == "application/json":
 			if request.get_json()["for"] == "get_user":
@@ -32,6 +60,23 @@ def x_user(request, id):
 				if data is False: return response(type="error", message="database_error")
 
 				return response(type="success", message="success", data=data, default_serializer_func=str)
+			
+			if request.get_json()["for"] == "get_user_roles":
+				data = MySQL.execute(
+					sql="""
+						SELECT 
+							user_roles.name, 
+							IF(users_roles.user IS NOT NULL, 1, 0) AS assigned
+						FROM user_roles
+						LEFT JOIN users_roles 
+							ON user_roles.id = users_roles.role 
+							AND users_roles.user = %s;
+					""",
+					params=[id]
+				)
+				if data is False: return response(type="error", message="database_error")
+				
+				return response(type="success", message="success", data=data)
 
 			if request.get_json()["for"] == "get_user_log_in_records":
 				data = MySQL.execute("SELECT ip_address, user_agent, timestamp FROM log_in_records WHERE user = %s;", [id])

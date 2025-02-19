@@ -1,5 +1,35 @@
 export const TITLE = window.Lang.use("user");
 
+Modal.push_func(async function modal_user_roles(){
+	const roles_element = Modal.element_main.querySelector("column#roles");
+	
+	let user_roles = await window.bridge({"for": "get_user_roles"})
+	if("data" in user_roles) user_roles = user_roles["data"];
+	else return `<p class="width-100 text-size-0-8 surface-info padding-1">No user roles</p>`;
+
+	console.log(user_roles);
+	
+	let HTML = '';
+	for (const user_role of user_roles) {
+		HTML += `
+			<label class="d-flex flex-row gap-0-5">
+				<input type="checkbox" name="roles" value="${user_role['name']}" ${user_role["assigned"] === 1 ? "checked" : ''} >
+				<p for="checkbox">${user_role['name']}</p>
+			</label>
+		`;
+		
+	}
+	roles_element.innerHTML = `
+		<form for="assign_roles">
+			${HTML}
+			<label>
+				<input class="btn btn-primary" type='submit' name='save' value="save">
+				<p for='assign_roles'></p>
+			</label>
+		</form>
+	`
+})
+
 export default function main(){
 	return `
 		<container class="padding-5 gap-1">
@@ -20,6 +50,11 @@ export default function main(){
 
 					class="btn btn-info"
 				></x-svg>
+
+				<x-svg name="gear" id="modal_user_roles" class="btn btn-info"></x-svg>
+				<x-modal trigger_selector="x-svg#modal_user_roles" modal_func="modal_user_roles">
+					<column id="roles" class="padding-2 gap-1"></column>
+				</x-modal>
 
 				<x-svg
 					name="delete"
