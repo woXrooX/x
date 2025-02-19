@@ -10,6 +10,9 @@ from Python.x.modules.Globals import Globals
 @Page.build()
 def x_user(request, id):
 	if request.method == "POST":
+		# if "multipart/form-data" in request.content_type.split(';'):
+		# 	pass
+
 		if request.content_type == "application/json":
 			if request.get_json()["for"] == "get_user":
 				data = MySQL.execute(
@@ -35,7 +38,6 @@ def x_user(request, id):
 				if data is False: return response(type="error", message="database_error")
 
 				return response(type="success", message="success", data=data, default_serializer_func=str)
-
 
 			if request.get_json()["for"] == "delete_user":
 				if User.soft_delete(id) is not True: return response(type="warning", message="could_not_delete", DOM_change=["main"])
