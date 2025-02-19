@@ -27,7 +27,7 @@ export default class Modal extends HTMLElement{
 
 	static hide(){
 		if(Modal.#shown === false) return;
-		if(Modal.#locked === true) return;
+		if(Modal.#locked === true) return Modal.flash();
 
 		Modal.#shown = false;
 
@@ -41,9 +41,26 @@ export default class Modal extends HTMLElement{
 		Cover.hide();
 	}
 
+	static show(DOM, func_name = null, data = null){
+		if(Modal.#shown === true) return;
+
+		Modal.#shown = true;
+
+		Modal.#element.classList.add("show");
+		Modal.element_main.innerHTML = DOM;
+		Modal.#execute_on_show(func_name, data);
+
+		Cover.show();
+	}
+
 	static lock(){ Modal.#locked = true; }
 
 	static unlock(){ Modal.#locked = false; }
+
+	static flash(type = "error"){
+		Modal.#element.style = `border: 2px solid ${window.x.CSS.get_value("--color-"+type)};`;
+		setTimeout(()=>{Modal.#element.removeAttribute("style");}, 1000);
+	}
 
 	static handle_commands(commands, type){
 		if(!!commands === false) return;
@@ -57,18 +74,6 @@ export default class Modal extends HTMLElement{
 				break;
 			}
 		}
-	}
-
-	static show(DOM, func_name = null, data = null){
-		if(Modal.#shown === true) return;
-
-		Modal.#shown = true;
-
-		Modal.#element.classList.add("show");
-		Modal.element_main.innerHTML = DOM;
-		Modal.#execute_on_show(func_name, data);
-
-		Cover.show();
 	}
 
 	/////////// Helpers

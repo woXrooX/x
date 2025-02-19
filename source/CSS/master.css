@@ -292,7 +292,7 @@ body{
 		background-color: var(--color-main-tint-2);
 
 		min-width: 40px;
-		border: 0px;
+		border: 2px solid transparent;
 		border-radius: var(--radius);
 		box-shadow: var(--shadow);
 
@@ -303,7 +303,7 @@ body{
 		z-index: var(--z-modal);
 
 		transition: var(--transition-velocity) ease-in-out;
-		transition-property: transform, opacity;
+		transition-property: transform, opacity, border;
 
 		&.show{
 			pointer-events: all;

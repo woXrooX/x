@@ -70,6 +70,8 @@ export default class Form{
 		// Disable Submitter Button
 		submitter.disabled = true;
 
+		window.Modal.lock();
+
 		// After Submitting Form PLZW8
 		Form.#response({
 			form: event.target,
@@ -130,6 +132,7 @@ export default class Form{
 		submitter.disabled = false;
 
 		////////// x-modal
+		window.Modal.unlock();
 		Modal.handle_commands(event.target.getAttribute("x-modal"), response["type"]);
 
 		////////// x-toast

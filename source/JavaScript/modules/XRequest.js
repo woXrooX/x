@@ -161,6 +161,8 @@ export default class XRequest{
 		this.#element.onclick = async ()=>{
 			Loading.on_element_start(this.#element);
 
+			window.Modal.lock();
+
 			this.#response = await window.bridge(this.#data, this.#element.getAttribute("xr-post"));
 
 			if(!("type" in this.#response)) return;
@@ -171,6 +173,7 @@ export default class XRequest{
 
 			Toast.handle_commands(this.#element.getAttribute("x-toast"), this.#response);
 
+			window.Modal.unlock();
 			Modal.handle_commands(this.#element.getAttribute("x-modal"), this.#response["type"]);
 
 			XRequest.#handle_response_actions(this.#response);
