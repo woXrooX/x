@@ -1,13 +1,25 @@
 export const TITLE = window.Lang.use("user");
 
 export default function main(){
-	return `
-		<container class="padding-5 gap-1">
-			${actions_HTML()}
-		</container>
-	`;
+	return `<container class="padding-5 gap-1"></container>`;
+}
 
-	function actions_HTML(){
+export async function after(){
+	const container = document.querySelector("container");
+	Loading.on_element_start(container);
+
+	let user = await window.bridge({for:"get_user"});
+	if("data" in user) user = user["data"];
+	else return `<p class="width-100 text-size-0-8 surface-info padding-1">No data to show.</p>`;
+
+	container.insertAdjacentHTML("beforeend", `
+		${build_actions_HTML()}
+		${await build_user_data_HTML()}
+		${await build_user_log_in_records_HTML()}
+	`);
+	Loading.on_element_end(container);
+
+	function build_actions_HTML(){
 		return `
 			<row class="padding-1 surface-v1 gap-0-5 flex-row flex-x-start">
 				<x-svg
@@ -21,6 +33,10 @@ export default function main(){
 					class="btn btn-info"
 				></x-svg>
 
+
+				${build_modal_form_update_roles_HTML()}
+
+
 				<x-svg
 					name="delete"
 
@@ -33,32 +49,34 @@ export default function main(){
 				></x-svg>
 			</row>
 		`;
+
+		function build_modal_form_update_roles_HTML(){
+			let HTML = '';
+
+			return `
+				<x-svg name="gear" id="modal_user_roles" class="btn btn-info"></x-svg>
+				<x-modal trigger_selector="x-svg#modal_user_roles">
+					<column id="roles" class="padding-2 gap-1">
+						<form for="update_roles" x-modal="on:success:hide" x-toast="on:any:message">
+							${HTML}
+							<input class="btn btn-primary" type='submit' name='save' value="save">
+							<p for='update_roles'></p>
+						</form>
+					</column>
+				</x-modal>
+			`;
+		}
 	}
-}
-
-export async function after(){
-	const container = document.querySelector("container");
-
-	Loading.on_element_start(container);
-	container.insertAdjacentHTML("beforeend", `
-		${await build_user_data_HTML()}
-		${await build_user_log_in_records_HTML()}
-	`);
-	Loading.on_element_end(container);
 
 	async function build_user_data_HTML(){
-		let resp = await window.bridge({for:"get_user"});
-		if("data" in resp) resp = resp["data"];
-		else return `<p class="width-100 text-size-0-8 surface-info padding-1">No data to show.</p>`;
-
 		let HTML = '';
-		for(const key in resp) HTML += `<p class="text-size-0-8"><span class="text-weight-bold">${key}</span>: ${resp[key]}</p>`;
-		return `<column class="flex-y-start surface-v1 padding-1 width-100">${HTML}</column>`;
+		for(const key in user) HTML += `<p class="text-size-1"><span class="text-weight-bold text-color-secondary text-size-0-7">${key}:</span> ${user[key]}</p>`;
+
+		return `<column class="flex-y-start surface-v1 padding-2 gap-0-3 width-100">${HTML}</column>`;
 	}
 
 	async function build_user_log_in_records_HTML(){
 		let resp = await window.bridge({for:"get_user_log_in_records"});
-		console.log(resp);
 
 		if("data" in resp) resp = resp["data"];
 		else return `<p class="width-100 text-size-0-8 surface-info padding-1">No data to show.</p>`;
