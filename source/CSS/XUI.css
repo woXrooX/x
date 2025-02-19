@@ -2233,8 +2233,8 @@
 
 			/* s */
 			@media (width <= 600px){
-				.s-d-inline-flex{display: inline-flex;}
-				.s-d-flex{display: flex;}
+				.s-display-inline-flex{display: inline-flex;}
+				.s-display-flex{display: flex;}
 
 				/* Directions */
 				.s-flex-row{flex-direction: row;}
