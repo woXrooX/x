@@ -11,15 +11,15 @@ export async function after(){
 	let user = await window.bridge({for:"get_user"});
 	if("data" in user) user = user["data"];
 	else return `<p class="width-100 text-size-0-8 surface-info padding-1">No data to show.</p>`;
-
+	
 	container.insertAdjacentHTML("beforeend", `
-		${build_actions_HTML()}
+		${await build_actions_HTML()}
 		${await build_user_data_HTML()}
 		${await build_user_log_in_records_HTML()}
 	`);
 	Loading.on_element_end(container);
 
-	function build_actions_HTML(){
+	async function build_actions_HTML(){
 		return `
 			<row class="padding-1 surface-v1 gap-0-5 flex-row flex-x-start">
 				<x-svg
@@ -34,7 +34,7 @@ export async function after(){
 				></x-svg>
 
 
-				${build_modal_form_update_roles_HTML()}
+				${await build_modal_form_update_roles_HTML()}
 
 
 				<x-svg
@@ -50,8 +50,20 @@ export async function after(){
 			</row>
 		`;
 
-		function build_modal_form_update_roles_HTML(){
+		async function build_modal_form_update_roles_HTML(){
+			let user_roles = await window.bridge({for:"get_user_roles"});
+			if("data" in user_roles) user_roles = user_roles["data"];
+			else return `<p class="width-100 text-size-0-8 surface-info padding-1">${window.Lang.use("no_roles")}</p>`;
+			
+			let assigned_roles = (user.roles_list || "").split(", ");
+			
 			let HTML = '';
+			for (const user_role in user_roles) HTML += `
+				<label class="d-flex flex-row gap-0-5">
+					<input type="checkbox" name="roles" value="${user_role}" ${assigned_roles.includes(user_role) ? "checked" : ""}>
+					<p for="checkbox">${user_role}</p>
+				</label>
+			`;				
 
 			return `
 				<x-svg name="gear" id="modal_user_roles" class="btn btn-info"></x-svg>
