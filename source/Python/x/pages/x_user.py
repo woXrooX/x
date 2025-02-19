@@ -10,8 +10,34 @@ from Python.x.modules.Globals import Globals
 @Page.build()
 def x_user(request, id):
 	if request.method == "POST":
-		# if "multipart/form-data" in request.content_type.split(';'):
-		# 	pass
+		if "multipart/form-data" in request.content_type.split(';'):
+			if request.form["for"] == "update_roles":
+				roles = request.form.getlist("roles") if "roles" in request.form and request.form["roles"] else []
+
+				# Prep the params
+				params = []
+				for role in roles: 
+					if role in Globals.USER_ROLES:
+						params.append((id, Globals.USER_ROLES[role]["id"]))
+
+				# Delete all old user roles
+				data = MySQL.execute(
+					sql="DELETE FROM users_roles WHERE user = %s;",
+					params=[id],
+					commit=True
+				)
+				if data is False: return response(type="error", message="database_error")
+
+				if len(params) > 0:
+					data = MySQL.execute(
+						sql="INSERT INTO users_roles (user, role) VALUES (%s, %s);",
+						params=params,
+						commit=True,
+						many=True
+					)
+					if data is False: return response(type="error", message="database_error")
+
+				return response(type="success", message="saved", DOM_change=["main"])
 
 		if request.content_type == "application/json":
 			if request.get_json()["for"] == "get_user":
@@ -32,6 +58,8 @@ def x_user(request, id):
 				if data is False: return response(type="error", message="database_error")
 
 				return response(type="success", message="success", data=data, default_serializer_func=str)
+
+			if request.get_json()["for"] == "get_user_roles": return response(type="success", message="success", data=Globals.USER_ROLES)
 
 			if request.get_json()["for"] == "get_user_log_in_records":
 				data = MySQL.execute("SELECT ip_address, user_agent, timestamp FROM log_in_records WHERE user = %s;", [id])

@@ -13,13 +13,13 @@ export async function after(){
 	else return `<p class="width-100 text-size-0-8 surface-info padding-1">No data to show.</p>`;
 
 	container.insertAdjacentHTML("beforeend", `
-		${build_actions_HTML()}
+		${await build_actions_HTML()}
 		${await build_user_data_HTML()}
 		${await build_user_log_in_records_HTML()}
 	`);
 	Loading.on_element_end(container);
 
-	function build_actions_HTML(){
+	async function build_actions_HTML(){
 		return `
 			<row class="padding-1 surface-v1 gap-0-5 flex-row flex-x-start">
 				<x-svg
@@ -34,7 +34,7 @@ export async function after(){
 				></x-svg>
 
 
-				${build_modal_form_update_roles_HTML()}
+				${await build_modal_form_update_roles_HTML()}
 
 
 				<x-svg
@@ -50,19 +50,28 @@ export async function after(){
 			</row>
 		`;
 
-		function build_modal_form_update_roles_HTML(){
+		async function build_modal_form_update_roles_HTML(){
+			let user_roles = await window.bridge({for:"get_user_roles"});
+			if("data" in user_roles) user_roles = user_roles["data"];
+			else return '';
+
+			let assigned_roles = (user.roles_list || "").split(", ");
+
 			let HTML = '';
+			for (const user_role in user_roles) HTML += `
+				<label>
+					<input type="checkbox" name="roles" value="${user_role}" ${assigned_roles.includes(user_role) ? "checked" : ""}>
+					<p for="roles">${user_role}</p>
+				</label>
+			`;
 
 			return `
-				<x-svg name="gear" id="modal_user_roles" class="btn btn-info"></x-svg>
+				<x-svg name="gear_account_box" id="modal_user_roles" class="btn btn-info"></x-svg>
 				<x-modal trigger_selector="x-svg#modal_user_roles">
-					<column id="roles" class="padding-2 gap-1">
-						<form for="update_roles" x-modal="on:success:hide" x-toast="on:any:message">
-							${HTML}
-							<input class="btn btn-primary" type='submit' name='save' value="save">
-							<p for='update_roles'></p>
-						</form>
-					</column>
+					<form for="update_roles" class="padding-2 gap-0-5" x-modal="on:success:hide" x-toast="on:any:message">
+						${HTML}
+						<button type="submit" class="btn btn-primary"><x-svg name="save" color="white"></x-svg></button>
+					</form>
 				</x-modal>
 			`;
 		}
