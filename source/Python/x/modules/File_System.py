@@ -167,6 +167,7 @@ if __name__ != "__main__":
 			project_folders = [
 				"Backups",
 				"CSS",
+				"files",
 				"fonts",
 				"HTML",
 				"images",
@@ -179,7 +180,7 @@ if __name__ != "__main__":
 
 
 
-			################################ CleanUp
+			################################ Clean up
 			Log.center("Clean up", '=')
 
 			Log.center("Pages (Back-End)", '-')
@@ -254,6 +255,7 @@ if __name__ != "__main__":
 			################################ Copying "project" folders/files
 			Log.center('Copying "project" folders', '=')
 			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/CSS", f"{Globals.X_RUNNING_FROM}/www/static/CSS", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/files", f"{Globals.X_RUNNING_FROM}/www/static/files", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_RUNNING_FROM}/www/static/fonts", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_RUNNING_FROM}/www/static/images", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript", f"{Globals.X_RUNNING_FROM}/www/static/JavaScript", strict=True)
