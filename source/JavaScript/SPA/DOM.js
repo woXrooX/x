@@ -6,14 +6,14 @@
 // else if(DOM.page.before.constructor.name === 'Function') DOM.page.before();
 
 export default class DOM{
-	static #page = null;
+	static page = null;
 
 	static async set_page(page){
 		// Check If Page Is Valid
 		if(!!page == false) return;
 
 		// Update "page" Variable
-		DOM.#page = page;
+		DOM.page = page;
 
 		// Start The Page's Life Cycle
 		await DOM.life_cycle();
@@ -23,23 +23,23 @@ export default class DOM{
 		Log.info("DOM.life_cycle()");
 
 		// Title
-		window.Title.set(DOM.#page.TITLE);
+		window.Title.set(DOM.page.TITLE);
 
 		// Before
-		if(!!DOM.#page.before === true) await DOM.#page.before();
+		if(!!DOM.page.before === true) await DOM.page.before();
 
 		// Header
-		await window.Header.handle(DOM.#page.header);
+		await window.Header.handle(DOM.page.header);
 
 		// Default/Main - Render the main function
-		if(typeof DOM.#page.default === "function") await DOM.render(await DOM.#page.default());
+		if(typeof DOM.page.default === "function") await DOM.render(await DOM.page.default());
 		else await DOM.render(Main.situational_content("error", "ERROR", "DOM.life_cycle() -> No default function defined!"));
 
 		// Footer
-		await window.Footer.handle(DOM.#page.footer);
+		await window.Footer.handle(DOM.page.footer);
 
 		// After
-		if(!!DOM.#page.after === true) await DOM.#page.after();
+		if(!!DOM.page.after === true) await DOM.page.after();
 
 		// Scroll to top after DOM is ready
 		window.scrollTo(0, 0); // For desktop

@@ -69,6 +69,8 @@ export default class Router{
 		window.Log.info(`Page file is loading: ${Router.current_page.name}.js`);
 
 		try{
+			if(DOM.page !== null && !!DOM.page.on_page_unmount === true) await window.DOM.page.on_page_unmount();
+
 			// Start loading effects
 			window.Loading.start();
 			window.Main.animation_start();
