@@ -26,15 +26,14 @@ if __name__ != "__main__":
 				def wrapper(*args, **kwargs):
 					guard_result = Page.guard(page_name)
 
-					if guard_result is True:
-						# If it is a "GET" request, it will always just returns the "index.html"
-						if request.method == "GET": return render_template("index.html", **globals())
-						else:
-							ret_val = func(*args, **kwargs, request=request)
-							if ret_val is None: return response(RAW=("No Response", 444, {'Content-Type': 'text/plain; charset=utf-8'}))
-							return ret_val
+					if guard_result is not True: return guard_result
 
-					else: return guard_result
+					# If it is a "GET" request, it will always just returns the "index.html"
+					if request.method == "GET": return render_template("index.html", **globals())
+
+					ret_val = func(*args, **kwargs, request=request)
+					if ret_val is None: return response(RAW=("No Response", 444, {'Content-Type': 'text/plain; charset=utf-8'}))
+					return ret_val
 
 				# Check if page exists In CONF["pages"] the ncreate the routes
 				if page_name in Globals.CONF["pages"]:
