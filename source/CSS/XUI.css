@@ -531,10 +531,11 @@
 			[type=number],
 			[type=color],
 			[type=file],
-			[type=date],
-			[type=month],
 			[type=tel],
 			[type=range],
+			[type=date],
+			[type=month],
+			[type=datetime-local],
 			[type=time]
 		){
 			background-color: var(--color-main-tint-3);
