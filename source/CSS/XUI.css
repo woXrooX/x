@@ -2959,6 +2959,8 @@
 
 		/**************************** HR START ****************************/
 		hr{
+			width: 100%;
+
 			&.v1{
 				border: none;
 				border-top:1px solid var(--color-main-tint-4);
