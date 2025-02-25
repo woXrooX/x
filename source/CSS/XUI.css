@@ -1434,6 +1434,8 @@
 		.object-fit-fill{object-fit: fill;}
 		.object-fit-none{object-fit: none;}
 		.object-fit-scale-down{object-fit: scale-down;}
+
+		.aspect-ratio-3-to-1 { aspect-ratio: 3 / 1; }
 	}
 
 	@layer layout{
@@ -2221,6 +2223,7 @@
 			.flex-basis-150px{flex-basis: 150px;}
 			.flex-basis-200px{flex-basis: 200px;}
 			.flex-basis-250px{flex-basis: 250px;}
+			.flex-basis-400px{flex-basis: 400px;}
 			.flex-basis-500px{flex-basis: 500px;}
 			.flex-basis-550px{flex-basis: 550px;}
 
