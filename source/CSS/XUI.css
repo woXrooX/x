@@ -714,7 +714,7 @@
 				gap: calc(var(--gap) / 4);
 				vertical-align:middle;
 
-				height: calc(1em + 0.4em * 2);
+				height: calc(1em + 0.5em * 2);
 				min-width: fit-content;
 
 				padding-inline: 0.6em;
