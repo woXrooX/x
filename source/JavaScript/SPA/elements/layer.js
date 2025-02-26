@@ -28,23 +28,12 @@ export default class Layer extends HTMLElement {
         Layer.#active_layers.set(trigger_element, layer);
 
         // Manage layer visibility
-        Layer.#update_layers();
+        Layer.#on_show_update_layers("show");
 
         // Hide on click close button
-        layer.querySelector("x-svg[for=layer_close]").onclick = () => Layer.hide(layer, trigger_element);
+        layer.querySelector("x-svg[for=layer_close]").onclick = () => Layer.#on_hide_update_layers(layer, trigger_element);
     }
 
-    static hide(layer, trigger_element) {
-        layer.remove();
-        Layer.#id--;
-        
-        // Remove from tracking
-        Layer.#active_layers.delete(trigger_element);
-
-        // Update layers to show the next hidden one
-        Layer.#update_layers();
-    }
-    
     #DOM = null;
 
     constructor() {
@@ -58,8 +47,49 @@ export default class Layer extends HTMLElement {
 
         this.#handle_trigger_click();
     }
+
+    static #on_hide_update_layers(layer, trigger_element){
+        Layer.#id--;
+        Layer.#active_layers.delete(trigger_element);
+        
+
+        layer.style.bottom = "0";
+        layer.style.transform = "translate(-50%, 100%) scale(1)";
+        layer.style.transition = "bottom 0.4s ease-in-out, transform 0.4s ease-in-out";
+
+        setTimeout(() => {
+            layer.remove();
+
+            const layers = [...Layer.#container.querySelectorAll("layer")];
+        
+            // Keep only the last 3 layers visible
+            const visible_layers = layers.slice(-3);
+        
+            // Distance between stacked layers
+            const stacked_layers_spacing = 30;
+            const layer_base_scale = 1;
+            const layers_shrink = 0.05;
+
+            visible_layers.forEach((layer, index) => {
+                layer.classList.add("show");
+                
+                if (index === visible_layers.length - 1) layer.style.bottom = "0";
+                else layer.style.bottom = `calc(${(visible_layers.length - 1 - index) * stacked_layers_spacing}px)`;
     
-    static #update_layers() {
+                // Apply scaling effect for depth illusion
+                const scale_value = layer_base_scale - ((visible_layers.length - 1 - index) * layers_shrink);
+                layer.style.transform = `translate(-50%, 0) scale(${scale_value})`;
+    
+                // Set stacking order
+                layer.style.zIndex = 10 + index;
+    
+                // Smooth transition effect
+                layer.style.transition = "bottom 0.2s ease-in-out, transform 0.2s ease-in-out";
+            });
+        }, 200);
+    }
+    
+    static #on_show_update_layers() {
         const layers = [...Layer.#container.querySelectorAll("layer")];
     
         // Keep only the last 3 layers visible
@@ -73,40 +103,31 @@ export default class Layer extends HTMLElement {
         // Loop through all layers, setting initial hidden state for non-visible ones
         layers.forEach(layer => {
             if (!visible_layers.includes(layer)) {
-                layer.style.top = "0"; // Start below the screen
-                layer.style.transform = "translate(-50%, 30%) scale(0.2)";
+                layer.style.bottom = "0"; // Start below the screen
+                layer.style.transform = "translate(-50%, 100%) scale(0.2)";
                 layer.classList.remove("show");
             }
         });
     
         visible_layers.forEach((layer, index) => {
             layer.classList.add("show");
-    
+            
             // Set the position transition smoothly from bottom to center
             setTimeout(() => {
-                if (index === visible_layers.length - 1) layer.style.top = "50%";
-                else layer.style.top = `calc(50% - ${(visible_layers.length - 1 - index) * stacked_layers_spacing}px)`;
+                if (index === visible_layers.length - 1) layer.style.bottom = "0";
+                else layer.style.bottom = `calc(${(visible_layers.length - 1 - index) * stacked_layers_spacing}px)`;
     
                 // Apply scaling effect for depth illusion
                 const scale_value = layer_base_scale - ((visible_layers.length - 1 - index) * layers_shrink);
-                layer.style.transform = `translate(-50%, -50%) scale(${scale_value})`;
+                layer.style.transform = `translate(-50%, 0) scale(${scale_value})`;
     
                 // Set stacking order
                 layer.style.zIndex = 10 + index;
     
                 // Smooth transition effect
-                layer.style.transition = "top 0.4s ease-in-out, transform 0.4s ease-in-out";
+                layer.style.transition = "bottom 0.4s ease-in-out, transform 0.4s ease-in-out";
             }, 10); // Small timeout ensures transition applies after style changes
         });
-
-        // When a layer is removed, animate it down before removing
-        // layers.forEach(layer => {
-        //     if (!visible_layers.includes(layer) && layer.classList.contains("show")) {
-        //         layer.style.top = "100%";
-        //         layer.style.transform = "translate(-50%, 0%) scale(1)";
-        //         setTimeout(() => layer.classList.remove("show"), 400);
-        //     }
-        // });
     }
     
 

@@ -265,10 +265,9 @@ body{
 	}
 
 	& > layers{
-		
 		& > layer {
-			width: 80%;
-			height: 70%;
+			width: 98%;
+			height: 90%;
 
 			padding: var(--padding);
 			border-radius: var(--radius);
@@ -285,7 +284,6 @@ body{
 			opacity: 0;
 
 			transform: translate(-50%, 100%) scale(1);
-
 			&.show{
 				pointer-events: all;
 				opacity: 1;
