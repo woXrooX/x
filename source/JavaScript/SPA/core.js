@@ -30,6 +30,7 @@ import Notification from "/JavaScript/SPA/notification.js";
 //// Built-In X-Elements
 import Link from "/JavaScript/SPA/elements/Link.js";
 import XSVG from "/JavaScript/SPA/elements/XSVG.js";
+import Layer from "/JavaScript/SPA/elements/layer.js";
 import Modal from "/JavaScript/SPA/elements/modal.js";
 import Toast from "/JavaScript/SPA/elements/toast.js";
 import Share from "/JavaScript/SPA/elements/share.js"; // Share depends on modal
