@@ -13,7 +13,9 @@ export default class XSVG extends HTMLElement{
 					display: inline-block;
 					vertical-align:middle;
 
-					width: 1em;
+					width: 100%;
+					max-width: 1em;
+
 					height: 1em;
 
 					cursor: pointer;
