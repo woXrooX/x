@@ -264,37 +264,53 @@ body{
 		}
 	}
 
-	& > layers{
-
+	& > layers {
 		& > layer {
-			width: 98%;
+			width: 95%;
 			height: 88%;
-
+			/* height: calc(100% - var(--header-height)); */
 			padding: var(--padding);
 			border-radius: var(--radius);
 			border: 2px solid transparent;
-	
+
+
 			position: fixed;
 			left: 50%;
+
 			z-index: var(--z-layer);
-
 			background-color: var(--color-main-tint-2);
-
 			pointer-events: none;
 			opacity: 0;
-
 			transform: translate(-50%, 100%) scale(1);
-
-			&:nth-last-child(-n+3){
-				box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.3);
+			
+			&:nth-last-child(-n+3) {
+				background-color: var(--color-main-tint-2);
+				
 			}
 
-			&.show{
+			&::before{
+				content: '';
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%) scale(1.2);
+				width: 100vw;
+				height: 100dvh;
+				background: rgba(0, 0, 0, 0.2);
+				z-index: -1;
+			}
+			
+			
+			&.cover {
+				background-color: rgb(0, 0, 0, 0.5);
+			}
+			
+			&.show {
 				pointer-events: all;
 				opacity: 1;
 			}
 			
-			& > x-svg{
+			& > x-svg {
 				position: absolute;
 				top: 5px;
 				right: 5px;
