@@ -1,7 +1,6 @@
 export default class Layer extends HTMLElement {
     static #container_selector = "body > layers";
     static #container = null;
-    static #id = 0;
 
     // Distance between stacked layers
     static #stacked_layers_spacing = 40;
@@ -23,7 +22,6 @@ export default class Layer extends HTMLElement {
                 ${DOM}
             </column>
         `;
-        layer.id = `layer_${Layer.#id++}`;
 
         // Append
         Layer.#container.appendChild(layer);
@@ -47,7 +45,6 @@ export default class Layer extends HTMLElement {
     static #on_hide_update_layers(layer, trigger_element){
         // Manage layer invisibility on close button click
         layer.querySelector("x-svg[for=layer_close]").onclick = () => {
-            Layer.#id--;
             Layer.#active_layers.delete(trigger_element);
             
             // Stacked layers appearance
@@ -120,8 +117,6 @@ export default class Layer extends HTMLElement {
         this.#DOM = this.innerHTML;
         Layer.#container = document.querySelector(Layer.#container_selector);
         this.replaceChildren();
-
-        Layer.#id++;
 
         this.#handle_trigger_click();
     }
