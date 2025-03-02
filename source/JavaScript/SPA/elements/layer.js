@@ -11,51 +11,55 @@ export default class Layer extends HTMLElement {
     // Tracking active layers for each clicked button
     static #active_layers = new Map(); 
 
-    static #build_layer(DOM, trigger_element) { 
+    static #init_layers(DOM, trigger_element) {
         // Prevent duplicate layer on button click
-        if (Layer.#active_layers.has(trigger_element)) return; 
-
-		// Create layer
+        if (Layer.#active_layers.has(trigger_element)) return;
+        
+        // Create the new layer
         const layer = document.createElement("layer");
         layer.innerHTML = `
             <column class="gap-2 padding-2">
                 <x-svg class="btn btn-primary btn-s" for="layer_close" name="x" color="ffffff"></x-svg>
-                Layer ${Layer.#id}
+                ${DOM}
             </column>
         `;
         layer.id = `layer_${Layer.#id++}`;
-       
+
+        // Append
         Layer.#container.appendChild(layer);
 
         // Store the active layer for this button
         Layer.#active_layers.set(trigger_element, layer);
 
-        // Manage layer visibility
+        // Update layers and handle close button
         Layer.#on_show_update_layers();
+        Layer.#on_hide_update_layers(layer, trigger_element);
 
-        // Manage layer invisibility on click close button
-        layer.querySelector("x-svg[for=layer_close]").onclick = () => Layer.#on_hide_update_layers(layer, trigger_element);
+        // Initialize triggers inside the newly added layer
+        Layer.#init_nested_triggers(layer);
+    }
+
+    static #on_show_update_layers(){
+        // Manage layer visibility on click
+        setTimeout(() => { Layer.#render_layers();}, 10); 
     }
 
     static #on_hide_update_layers(layer, trigger_element){
-        Layer.#id--;
-        Layer.#active_layers.delete(trigger_element);
+        // Manage layer invisibility on close button click
+        layer.querySelector("x-svg[for=layer_close]").onclick = () => {
+            Layer.#id--;
+            Layer.#active_layers.delete(trigger_element);
+            
+            // Stacked layers appearance
+            layer.style.bottom = "0";
+            layer.style.transform = "translate(-50%, 100%) scale(1)";
+            layer.style.transition = "bottom 0.4s ease-in-out, transform 0.4s ease-in-out";
         
-        // Stacked layers appearance
-        layer.style.bottom = "0";
-        layer.style.transform = "translate(-50%, 100%) scale(1)";
-        layer.style.transition = "bottom 0.4s ease-in-out, transform 0.4s ease-in-out";
-
-        setTimeout(() => {
-            layer.remove();
-            Layer.#render_layers();
-        }, 200);
-    }
-    
-    static #on_show_update_layers() {
-        // Set the position transition smoothly from bottom to center
-        // Small timeout ensures transition applies after style changes
-        setTimeout(() => { Layer.#render_layers();}, 10); 
+            setTimeout(() => {
+                layer.remove();
+                Layer.#render_layers();
+            }, 200);
+        };
     }
 
     static #render_layers(){
@@ -65,6 +69,7 @@ export default class Layer extends HTMLElement {
 
         for (const index in visible_layers) {
             visible_layers[index].classList.add("show");
+
             if (index === visible_layers.length - 1) visible_layers[index].style.bottom = "0";
             else visible_layers[index].style.bottom = `calc(${(visible_layers.length - 1 - index) * Layer.#stacked_layers_spacing}px)`;
     
@@ -80,6 +85,33 @@ export default class Layer extends HTMLElement {
         }
     }
 
+    static #init_nested_triggers(layer) {
+        const triggers = layer.querySelectorAll("[trigger_selector]");
+        for (const trigger of triggers) {
+            const selector = trigger.getAttribute("trigger_selector");
+            const nested_triggers = layer.querySelectorAll(selector);
+    
+            for (const nested_trigger of nested_triggers) {
+                nested_trigger.onclick = (event) => {
+                    // Prevent triggering parent layers
+                    event.stopPropagation(); 
+                    
+                    // Find the corresponding x-layer inside the current layer
+                    const nested_layer = layer.querySelector(`x-layer[trigger_selector="${selector}"]`);
+                    if (!nested_layer) return;
+                    
+                    // Use the getContent method to get the original content
+                    const nested_content = nested_layer.getContent ? nested_layer.getContent() : "";
+                    
+                    Layer.#init_layers(nested_content, nested_trigger);
+                };
+            }
+        }
+    }
+
+    // Add this instance method to your Layer class
+    getContent() { return this.#DOM; }
+        
     #DOM = null;
 
     constructor() {
@@ -95,10 +127,16 @@ export default class Layer extends HTMLElement {
     }
 
     #handle_trigger_click = ()=> {
-        const trigger_elements = document.querySelectorAll(this.getAttribute("trigger_selector"));
-        if (!!trigger_elements === false) return;
+        const triggers = document.querySelectorAll(this.getAttribute("trigger_selector"));
+        if (!triggers.length) return;
 
-        for (const element of trigger_elements) element.onclick = () => Layer.#build_layer(this.#DOM, element);
+        for (const trigger of triggers) {
+            trigger.onclick = (event) => {
+                // Prevent triggering parent layers
+                event.stopPropagation();
+                Layer.#init_layers(this.#DOM, trigger);
+            };
+        }
     };
 }
 
