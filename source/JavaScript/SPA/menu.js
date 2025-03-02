@@ -3,7 +3,7 @@ export default class Menu{
 	static #selector_menu_hyperlinks = `${Menu.selector} > main a`;
 
 	static #element = null;
-	static #show_menu_button = null;
+	static #menu_show_button = null;
 	static #always_open_mode_toggler = null;
 
 	static #shown = false;
@@ -26,7 +26,7 @@ export default class Menu{
 		// Check If "body > menu" Exists
 		if(!!Menu.#element === false) return;
 
-		Menu.#show_menu_button = document.querySelector("body > x-svg[for=show_menu]");
+		Menu.#menu_show_button = document.querySelector("body > x-svg[for=menu_show]");
 		Menu.#always_open_mode_toggler = document.querySelector(`${Menu.selector} > header > x-svg[for=toggle_always_open_mode]`);
 
 		Menu.#detect_current_mode();
@@ -39,7 +39,7 @@ export default class Menu{
 
 		//// Listen To The Events
 		// Show menu event
-		Menu.#show_menu_button.onclick = Menu.#show;
+		Menu.#menu_show_button.onclick = Menu.#show;
 		// On Mobile menu close event
 		document.querySelector(`${Menu.selector} > header > x-svg[for=menu_close_button_on_mobile]`).onclick = Menu.#hide;
 		Menu.#toggle_always_open_mode();
