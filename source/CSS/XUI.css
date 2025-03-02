@@ -712,7 +712,7 @@
 				align-items: center;
 				justify-content: center;
 				gap: calc(var(--gap) / 4);
-				vertical-align:middle;
+				vertical-align: middle;
 
 				height: calc(1em + 0.5em * 2);
 				min-width: fit-content;
