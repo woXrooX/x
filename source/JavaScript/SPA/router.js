@@ -3,7 +3,7 @@ export default class Router{
 		"name": null,
 		"endpoint": null,
 		"full_URL": null,
-		"url_args": {}
+		"URL_args": {}
 	}
 
 	static async handle(){
@@ -27,17 +27,17 @@ export default class Router{
 			// Window Path Name
 			let pathname = window.location.pathname;
 
-			if("url_args" in window.CONF.pages[page]){
+			if("URL_args" in window.CONF.pages[page]){
 				//// NOTE: Order matters in this scope
 
 				// Create array of URL arguments from the "pathname"
-				const args = pathname.split('/').splice(-window.CONF.pages[page].url_args.length);
+				const args = pathname.split('/').splice(-window.CONF.pages[page].URL_args.length);
 
-				// Assign key value pairs of URL arguments inside "Router.current_page.url_args"
-				for(let index = 0; index < args.length; index++) Router.current_page.url_args[window.CONF.pages[page].url_args[index]] = args[index];
+				// Assign key value pairs of URL arguments inside "Router.current_page.URL_args"
+				for(let index = 0; index < args.length; index++) Router.current_page.URL_args[window.CONF.pages[page].URL_args[index]] = args[index];
 
 				// Extract URL arguments from the "pathname"
-				pathname = pathname.split('/').slice(0, -window.CONF.pages[page].url_args.length).join('/');
+				pathname = pathname.split('/').slice(0, -window.CONF.pages[page].URL_args.length).join('/');
 			}
 
 			loop_endpoints: for(const endpoint of window.CONF["pages"][page]["endpoints"])

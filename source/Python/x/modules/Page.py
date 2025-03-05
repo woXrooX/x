@@ -44,8 +44,8 @@ if __name__ != "__main__":
 					# @app.route("/page/<arg1>/<arg2>", methods=["GET", "POST"])
 					args = ""
 
-					# If the "url_args" key exists then loop and construct the "args" for the page "page_name"
-					for arg in Globals.CONF["pages"][page_name].get("url_args", []): args = f"{args}/<{arg}>"
+					# If the "URL_args" key exists then loop and construct the "args" for the page "page_name"
+					for arg in Globals.CONF["pages"][page_name].get("URL_args", []): args = f"{args}/<{arg}>"
 
 					for endpoint in Globals.CONF["pages"][page_name]["endpoints"]: app.add_url_rule(f"{endpoint}{args}", view_func=wrapper, methods=methods)
 
