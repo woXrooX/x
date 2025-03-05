@@ -7,6 +7,7 @@ export default class Modal extends HTMLElement{
 	static element_main = null;
 	static #shown = false;
 	static #locked = false;
+	static #function_prevent_unload = (event) => event.preventDefault();
 	static #FUNC_POOL = {};
 
 	static {
@@ -58,11 +59,17 @@ export default class Modal extends HTMLElement{
 	static lock(){
 		Modal.#locked = true;
 		Modal.#element_close_button.classList.add("display-none");
+
+		// Prevent reload
+		window.addEventListener("beforeunload", Modal.#function_prevent_unload);
 	}
 
 	static unlock(){
 		Modal.#locked = false;
 		Modal.#element_close_button.classList.remove("display-none");
+
+		// Remove reload restriction
+		window.removeEventListener("beforeunload", Modal.#function_prevent_unload);
 	}
 
 	static flash(type = "error"){
