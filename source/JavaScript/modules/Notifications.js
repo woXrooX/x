@@ -2,6 +2,13 @@ import { timestamp_to_human_readable_v1, timestamp_to_human_readable_v2 } from "
 
 // in_app_s
 export async function notification_s_card_generator(notification){
+	let content_JSON = {};
+	try{
+		content_JSON = JSON.parse(notification["content_JSON"]);
+		if("timestamp" in content_JSON) content_JSON["timestamp"] = new Date(content_JSON["timestamp"]).toLocaleDateString('en-GB');
+	}
+	catch(error){}
+
 	return `
 		<a
 			href="/x/notification/${notification["id"]}"
@@ -11,7 +18,12 @@ export async function notification_s_card_generator(notification){
 				${notification["seen"] == 1 ? "filter_grayscale_90" : ''}
 			"
 		>
-			<p class="width-100 text-size-0-8">${Lang.use(notification["event"]+"_in_app_s")}</p>
+			<p class="width-100 text-size-0-8">${Lang.use(notification["event"]+"_in_app_s").x_format({
+				"recipient": notification["recipient"],
+				"sender": notification["sender"],
+				"content_TEXT": notification["content_TEXT"],
+				...content_JSON
+			})}</p>
 			<p class="width-auto text-size-0-6 text-color-secondary text-white-space-nowrap-important">${timestamp_to_human_readable_v2(notification["timestamp"])}</p>
 		</a>
 	`;
