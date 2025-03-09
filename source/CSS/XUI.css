@@ -1436,6 +1436,11 @@
 		.object-fit-scale-down{object-fit: scale-down;}
 
 		.aspect-ratio-3-to-1 { aspect-ratio: 3 / 1; }
+		.aspect-ratio-3-to-2 { aspect-ratio: 3 / 2; }
+		.aspect-ratio-4-to-3 { aspect-ratio: 4 / 3; }
+		.aspect-ratio-16-to-9 { aspect-ratio: 16 / 9; }
+		.aspect-ratio-16-to-10 { aspect-ratio: 16 / 10; }
+		.aspect-ratio-21-to-9 { aspect-ratio: 21 / 9; }
 	}
 
 	@layer layout{
