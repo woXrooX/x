@@ -1,30 +1,21 @@
 export default class Layer extends HTMLElement {
-    static init_nested_triggers(layer) {
-		const x_layers = layer.querySelectorAll("[trigger_selector]");
+	static init_nested_triggers(layer) {
+		const x_layers = layer.querySelectorAll("x-layer");
 
 		for (const x_layer of x_layers) {
 			const selector = x_layer.getAttribute("trigger_selector");
+			const trigger_element = layer.querySelector(selector);
 
-			const nested_triggers = layer.querySelectorAll(selector);
+			trigger_element.onclick = (event) => {
+				event.stopPropagation();
 
-			for (const nested_trigger of nested_triggers) {
-				nested_trigger.onclick = (event) => {
-					event.stopPropagation();
+				const targeted_layer = layer.querySelector(`x-layer[trigger_selector="${selector}"]`);
+				if (!!targeted_layer === false) return;
 
-					// Find the corresponding x-layer inside the current layer
-					const nested_layer = layer.querySelector(`x-layer[trigger_selector="${selector}"]`);
-					if (!nested_layer) return;
-
-					// Use the getContent method to get the original content
-					const nested_content = nested_layer.getContent ? nested_layer.getContent() : "";
-
-					Layers.init(nested_content, nested_trigger);
-				};
-			}
+				Layers.init(targeted_layer.innerHTML, trigger_element);
+			};
 		}
 	}
-
-	getContent() { return this.#DOM; }
 
 	#DOM = null;
 
@@ -37,10 +28,10 @@ export default class Layer extends HTMLElement {
 	}
 
 	#handle_trigger_click = ()=> {
-		const trigger_elements = document.querySelectorAll(this.getAttribute("trigger_selector"));
-		if (!trigger_elements.length) return;
+		const trigger_element = document.querySelector(this.getAttribute("trigger_selector"));
+		if(!!trigger_element === false) return;
 
-		for (const element of trigger_elements) element.onclick = (event) => Layers.init(this.#DOM, element);
+		trigger_element.onclick = ()=> Layers.init(this.#DOM, trigger_element);
 	};
 }
 
@@ -48,26 +39,3 @@ window.customElements.define('x-layer', Layer);
 
 // Make Layer Usable W/O Importing It
 window.Layer = Layer;
-
-// export default class Layer extends HTMLElement {
-// 	#DOM = null;
-
-// 	constructor() {
-// 		super();
-// 		this.shadow = this.attachShadow({ mode: 'closed' });
-// 		this.#DOM = this.innerHTML;
-// 		this.#init_triggers();
-// 	}
-
-// 	#init_triggers = () =>{
-// 		const button = document.querySelector(this.getAttribute("trigger_selector"));
-// 		console.log(button);
-
-// 		button.onclick = (event) => {
-// 			event.stopPropagation();
-// 			Layers.init(this.#DOM, button);
-// 		};
-// 	}
-// }
-
-// window.customElements.define('x-layer', Layer);

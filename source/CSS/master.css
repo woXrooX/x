@@ -268,7 +268,7 @@ body{
 
 		& > layer {
 			width: 95%;
-			height: 88%;
+			height: 90%;
 
 			padding: var(--padding);
 			border-radius: var(--radius);
@@ -288,26 +288,26 @@ body{
 				opacity: 1;
 
 				&:nth-last-of-type(1) {
-					bottom: 10px;
+					bottom: 0%;
 					transform: translate(-50%, 0) scale(0.9);
 					z-index: 12;
 				}
 
 				&:nth-last-of-type(2) {
-					bottom: 45px;
+					bottom: 5%;
 					transform: translate(-50%, 0) scale(0.85);
 					z-index: 11;
 				}
 
 				&:nth-last-of-type(3) {
-					bottom: 80px;
+					bottom: 10%;
 					transform: translate(-50%, 0) scale(0.8);
 					z-index: 10;
 				}
 
 				&:nth-last-of-type(n+4) {
 					transition: none;
-					bottom: 80px;
+					bottom: 10%;
 					transform: translate(-50%, 0) scale(0.8);
 					z-index: 9;
 				}
