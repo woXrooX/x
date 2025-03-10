@@ -3,17 +3,20 @@ export default class Modal extends HTMLElement{
 
 	static #selector = "body > modal";
 	static #element = null;
+	static #element_close_button = null;
 	static element_main = null;
 	static #shown = false;
 	static #locked = false;
+	static #function_prevent_unload = (event) => event.preventDefault();
 	static #FUNC_POOL = {};
 
 	static {
 		Modal.#element = document.querySelector(Modal.#selector);
 		Modal.element_main = Modal.#element.querySelector("main");
+		Modal.#element_close_button = Modal.#element.querySelector("x-svg[for=modal_close]");
 
 		// Hide on click close button
-		Modal.#element.querySelector("x-svg[for=modal_close]").onclick = Modal.hide;
+		Modal.#element_close_button.onclick = Modal.hide;
 
 		// Close on click the cover
 		Cover.onClickExecute(Modal.hide);
@@ -53,9 +56,21 @@ export default class Modal extends HTMLElement{
 		Cover.show();
 	}
 
-	static lock(){ Modal.#locked = true; }
+	static lock(){
+		Modal.#locked = true;
+		Modal.#element_close_button.classList.add("display-none");
 
-	static unlock(){ Modal.#locked = false; }
+		// Prevent reload
+		window.addEventListener("beforeunload", Modal.#function_prevent_unload);
+	}
+
+	static unlock(){
+		Modal.#locked = false;
+		Modal.#element_close_button.classList.remove("display-none");
+
+		// Remove reload restriction
+		window.removeEventListener("beforeunload", Modal.#function_prevent_unload);
+	}
 
 	static flash(type = "error"){
 		Modal.#element.style = `border: 2px solid ${window.x.CSS.get_value("--color-"+type)};`;

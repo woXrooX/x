@@ -8,7 +8,7 @@ export default class Notification_Bell extends HTMLElement {
 
 		this.shadowRoot.innerHTML = `
 			<main>
-				<x-svg name="notifications_bell"></x-svg>
+				<x-svg name="notifications_bell" color="white"></x-svg>
 				<span></span>
 			</main>
 			<style>

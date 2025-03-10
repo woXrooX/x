@@ -11,9 +11,11 @@ export default class XSVG extends HTMLElement{
 			<style>
 				:host{
 					display: inline-block;
-					vertical-align:middle;
+					vertical-align: middle;
 
-					width: 1em;
+					width: 100%;
+					max-width: 1em;
+
 					height: 1em;
 
 					cursor: pointer;

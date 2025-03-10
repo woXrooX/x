@@ -531,10 +531,11 @@
 			[type=number],
 			[type=color],
 			[type=file],
-			[type=date],
-			[type=month],
 			[type=tel],
 			[type=range],
+			[type=date],
+			[type=month],
+			[type=datetime-local],
 			[type=time]
 		){
 			background-color: var(--color-main-tint-3);
@@ -711,9 +712,9 @@
 				align-items: center;
 				justify-content: center;
 				gap: calc(var(--gap) / 4);
-				vertical-align:middle;
+				vertical-align: middle;
 
-				height: calc(1em + 0.4em * 2);
+				height: calc(1em + 0.5em * 2);
 				min-width: fit-content;
 
 				padding-inline: 0.6em;
@@ -1433,6 +1434,13 @@
 		.object-fit-fill{object-fit: fill;}
 		.object-fit-none{object-fit: none;}
 		.object-fit-scale-down{object-fit: scale-down;}
+
+		.aspect-ratio-3-to-1 { aspect-ratio: 3 / 1; }
+		.aspect-ratio-3-to-2 { aspect-ratio: 3 / 2; }
+		.aspect-ratio-4-to-3 { aspect-ratio: 4 / 3; }
+		.aspect-ratio-16-to-9 { aspect-ratio: 16 / 9; }
+		.aspect-ratio-16-to-10 { aspect-ratio: 16 / 10; }
+		.aspect-ratio-21-to-9 { aspect-ratio: 21 / 9; }
 	}
 
 	@layer layout{
@@ -2220,6 +2228,7 @@
 			.flex-basis-150px{flex-basis: 150px;}
 			.flex-basis-200px{flex-basis: 200px;}
 			.flex-basis-250px{flex-basis: 250px;}
+			.flex-basis-400px{flex-basis: 400px;}
 			.flex-basis-500px{flex-basis: 500px;}
 			.flex-basis-550px{flex-basis: 550px;}
 
@@ -2959,6 +2968,8 @@
 
 		/**************************** HR START ****************************/
 		hr{
+			width: 100%;
+
 			&.v1{
 				border: none;
 				border-top:1px solid var(--color-main-tint-4);

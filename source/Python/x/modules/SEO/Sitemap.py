@@ -31,11 +31,11 @@ if __name__ != "__main__":
 					# Page must be enabled
 					if not Globals.CONF["pages"][page].get("enabled", False): continue
 
-					# Skip pages with roles, roles_not, plans or url_args required
+					# Skip pages with roles, roles_not, plans or URL_args required
 					if "roles" in Globals.CONF["pages"][page]: continue
 					if "roles_not" in Globals.CONF["pages"][page]: continue
 					if "plans" in Globals.CONF["pages"][page]: continue
-					if "url_args" in Globals.CONF["pages"][page]: continue
+					if "URL_args" in Globals.CONF["pages"][page]: continue
 
 					# Allow pages only with "GET" methods
 					if(
@@ -74,8 +74,6 @@ if __name__ != "__main__":
 				# Create the XML string with proper formatting
 				XML_string = minidom.parseString(ET.tostring(urlset)).toprettyxml(indent="    ")
 
-				File_System.create_file(f'{Globals.PROJECT_RUNNING_FROM}/sitemap.xml', XML_string, strict=True, overwrite=True)
-
-				File_System.copy_file(Globals.PROJECT_RUNNING_FROM, f'{Globals.X_RUNNING_FROM}/www/static', "sitemap.xml", strict=True)
+				File_System.create_file(f'{Globals.X_RUNNING_FROM}/www/static/sitemap.xml', XML_string, strict=True, overwrite=True)
 
 			except Exception as e: Log.error(f"Sitemap.generate(): Could not generate sitemap.xml file: {e}")

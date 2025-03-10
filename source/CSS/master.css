@@ -4,7 +4,7 @@
 	--z-footer: 2;
 	--z-main: 3;
 	--z-header: 4;
-	--z-menuHamburgerButton: 5;
+	--z-menu_show_button: 5;
 	--z-layers: 6;
 	--z-cover: 7;
 	--z-modal: 8;
@@ -97,12 +97,12 @@ body{
 	}
 
 	& > x-svg{
-		&[for=show_menu]{
+		&[for=menu_show]{
 			font-size: 2rem;
 			position: fixed;
 			top: 0px;
 			left: 0px;
-			z-index: var(--z-menuHamburgerButton);
+			z-index: var(--z-menu_show_button);
 		}
 	}
 
