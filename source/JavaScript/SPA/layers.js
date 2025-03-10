@@ -48,7 +48,7 @@ export default class Layers{
 			setTimeout(() => {
 				cover.remove();
 				layer.remove();
-			}, 400);
+			}, 300);
 		};
 	}
 };
