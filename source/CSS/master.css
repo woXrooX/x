@@ -266,7 +266,7 @@ body{
 
 	& > x-layers {
 
-		& > layer {
+		& layer {
 			width: 95%;
 			height: 90%;
 
@@ -332,7 +332,7 @@ body{
 			}
 		}
 
-		& > cover {
+		& cover {
 			position: fixed;
 			top: 0;
 			left: 0;

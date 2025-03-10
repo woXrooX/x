@@ -1,10 +1,10 @@
 export default class Layers{
-	static selector = "body > x-layers";
+	static selector = "body > x-layers > main";
 	static #main_element = null;
 
 	static { Layers.#main_element = document.querySelector(Layers.selector); }
 
-	static init(DOM, trigger_element){
+	static build_layer(DOM, trigger_element){
 		// Disable the button after triggered
 		trigger_element.disabled = true;
 
@@ -14,8 +14,10 @@ export default class Layers{
 
 		// Insert
 		layer.innerHTML = `
-			<x-svg class="btn btn-primary btn-s" for="layer_close" name="x" color="ffffff"></x-svg>
-			${DOM}
+			<column class="gap-1">
+				<x-svg class="btn btn-primary btn-s" for="layer_close" name="x" color="ffffff"></x-svg>
+				${DOM}
+			</column>
 		`;
 
 		// Append
@@ -25,7 +27,7 @@ export default class Layers{
 		Layers.show(cover, layer);
 		Layers.hide(cover, layer, trigger_element);
 
-		Layer.init_nested_triggers(layer);
+		Layer.handle_nested_triggers(layer);
 	}
 
 	static show(cover, layer){

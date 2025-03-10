@@ -1,5 +1,5 @@
 export default class Layer extends HTMLElement {
-	static init_nested_triggers(layer) {
+	static handle_nested_triggers(layer) {
 		const x_layers = layer.querySelectorAll("x-layer");
 
 		for (const x_layer of x_layers) {
@@ -12,7 +12,7 @@ export default class Layer extends HTMLElement {
 				const targeted_layer = layer.querySelector(`x-layer[trigger_selector="${selector}"]`);
 				if (!!targeted_layer === false) return;
 
-				Layers.init(targeted_layer.innerHTML, trigger_element);
+				Layers.build_layer(targeted_layer.innerHTML, trigger_element);
 			};
 		}
 	}
@@ -31,7 +31,7 @@ export default class Layer extends HTMLElement {
 		const trigger_element = document.querySelector(this.getAttribute("trigger_selector"));
 		if(!!trigger_element === false) return;
 
-		trigger_element.onclick = ()=> Layers.init(this.#DOM, trigger_element);
+		trigger_element.onclick = ()=> Layers.build_layer(this.#DOM, trigger_element);
 	};
 }
 
