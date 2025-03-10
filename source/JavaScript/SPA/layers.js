@@ -1,8 +1,8 @@
 export default class Layers{
 	static selector = "body > x-layers";
-	static #container = null;
+	static #main_element = null;
 
-	static { Layers.#container = document.querySelector(Layers.selector); }
+	static { Layers.#main_element = document.querySelector(Layers.selector); }
 
 	static init(DOM, trigger_element){
 		// Disable the button after triggered
@@ -13,35 +13,14 @@ export default class Layers{
 		const layer = document.createElement("layer");
 
 		// Insert
-		layer.innerHTML = `export default class Layer extends HTMLElement {
-	#DOM = null;
-
-	constructor() {
-		super();
-		this.shadow = this.attachShadow({ mode: 'closed' });
-		this.#DOM = this.innerHTML;
-		this.#init_triggers();
-	}
-
-	#init_triggers = () =>{
-		const button = document.querySelector(this.getAttribute("trigger_selector"));
-		console.log(button);
-
-		button.onclick = (event) => {
-			event.stopPropagation();
-			Layers.init(this.#DOM, button);
-		};
-	}
-}
-
-window.customElements.define('x-layer', Layer);
+		layer.innerHTML = `
 			<x-svg class="btn btn-primary btn-s" for="layer_close" name="x" color="ffffff"></x-svg>
 			${DOM}
 		`;
 
 		// Append
-		Layers.#container.appendChild(cover);
-		Layers.#container.appendChild(layer);
+		Layers.#main_element.appendChild(cover);
+		Layers.#main_element.appendChild(layer);
 
 		Layers.show(cover, layer);
 		Layers.hide(cover, layer, trigger_element);
@@ -50,7 +29,7 @@ window.customElements.define('x-layer', Layer);
 	}
 
 	static show(cover, layer){
-		// Add show class after a small delay to trigger CSS transitions
+		// Small delay to trigger CSS transitions
 		setTimeout(() => {
 			cover.classList.add("show");
 			layer.classList.add("show");
@@ -62,8 +41,8 @@ window.customElements.define('x-layer', Layer);
 			trigger_element.disabled = false;
 
 			// Exit layer animation
-			layer.classList.add("closing");
-			cover.classList.add("closing");
+			layer.classList.add("closed");
+			cover.classList.add("closed");
 
 			// Remove after animation
 			setTimeout(() => {

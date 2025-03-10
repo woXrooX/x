@@ -37,16 +37,10 @@ export default class Layer extends HTMLElement {
 	}
 
 	#handle_trigger_click = ()=> {
-		const triggers = document.querySelectorAll(this.getAttribute("trigger_selector"));
-		if (!triggers.length) return;
+		const trigger_elements = document.querySelectorAll(this.getAttribute("trigger_selector"));
+		if (!trigger_elements.length) return;
 
-		for (const trigger of triggers) {
-			trigger.onclick = (event) => {
-				// Prevent triggering parent layers
-				event.stopPropagation();
-				Layers.init(this.#DOM, trigger);
-			};
-		}
+		for (const element of trigger_elements) element.onclick = (event) => Layers.init(this.#DOM, element);
 	};
 }
 
