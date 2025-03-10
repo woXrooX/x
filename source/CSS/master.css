@@ -264,7 +264,7 @@ body{
 		}
 	}
 
-	& > layers {
+	& > x-layers {
 
 		& > layer {
 			width: 95%;

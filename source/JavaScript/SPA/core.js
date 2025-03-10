@@ -21,6 +21,7 @@ import Router from "/JavaScript/SPA/router.js";
 import DOM from "/JavaScript/SPA/DOM.js";
 import Cover from "/JavaScript/SPA/cover.js";
 import Loading from "/JavaScript/SPA/loading.js";
+import Layers from "/JavaScript/SPA/layers.js";
 import Menu from "/JavaScript/SPA/menu.js";
 import Form from "/JavaScript/SPA/form.js";
 import URL from "/JavaScript/SPA/URL.js";

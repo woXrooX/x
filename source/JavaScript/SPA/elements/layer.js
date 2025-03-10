@@ -1,104 +1,79 @@
 export default class Layer extends HTMLElement {
-    static #container_selector = "body > layers";
-    static #container = null;
+    static init_nested_triggers(layer) {
+		const x_layers = layer.querySelectorAll("[trigger_selector]");
 
-	static #init_layers(DOM, trigger_element) {
-		trigger_element.disabled = true;
+		for (const x_layer of x_layers) {
+			const selector = x_layer.getAttribute("trigger_selector");
 
-		// Create the new layer
-		const layer = document.createElement("layer");
-		layer.innerHTML = `
-			<column class="gap-2 padding-2">
-				<x-svg class="btn btn-primary btn-s" for="layer_close" name="x" color="ffffff"></x-svg>
-				${DOM}
-			</column>
-		`;
+			const nested_triggers = layer.querySelectorAll(selector);
 
-		// Create a cover
-		const cover = document.createElement("cover");
+			for (const nested_trigger of nested_triggers) {
+				nested_trigger.onclick = (event) => {
+					event.stopPropagation();
 
-		// Append cover first, then the layer
-		Layer.#container.appendChild(cover);
-		Layer.#container.appendChild(layer);
+					// Find the corresponding x-layer inside the current layer
+					const nested_layer = layer.querySelector(`x-layer[trigger_selector="${selector}"]`);
+					if (!nested_layer) return;
 
-		// Add show class after a small delay to trigger CSS transitions
-		setTimeout(() => {
-			cover.classList.add("show");
-			layer.classList.add("show");
-		}, 10);
+					// Use the getContent method to get the original content
+					const nested_content = nested_layer.getContent ? nested_layer.getContent() : "";
 
-		// Handle close layer
-		layer.querySelector("x-svg[for=layer_close]").onclick = () => {
-			trigger_element.disabled = false;
-
-			// Exit layer animation
-			layer.classList.add("closing");
-			cover.classList.add("closing");
-
-			// Remove after animation
-			setTimeout(() => {
-				cover.remove();
-				layer.remove();
-			}, 400);
-		};
-
-		// Initialize nested triggers
-		Layer.#init_nested_triggers(layer);
+					Layers.init(nested_content, nested_trigger);
+				};
+			}
+		}
 	}
 
-    static #init_nested_triggers(layer) {
-        const triggers = layer.querySelectorAll("[trigger_selector]");
-        for (const trigger of triggers) {
-            const selector = trigger.getAttribute("trigger_selector");
-            const nested_triggers = layer.querySelectorAll(selector);
+	getContent() { return this.#DOM; }
 
-            for (const nested_trigger of nested_triggers) {
-                nested_trigger.onclick = (event) => {
-                    // Prevent triggering parent layers
-                    event.stopPropagation();
+	#DOM = null;
 
-                    // Find the corresponding x-layer inside the current layer
-                    const nested_layer = layer.querySelector(`x-layer[trigger_selector="${selector}"]`);
-                    if (!nested_layer) return;
+	constructor() {
+		super();
+		this.shadow = this.attachShadow({ mode: 'closed' });
+		this.#DOM = this.innerHTML;
 
-                    // Use the getContent method to get the original content
-                    const nested_content = nested_layer.getContent ? nested_layer.getContent() : "";
+		this.#handle_trigger_click();
+	}
 
-                    Layer.#init_layers(nested_content, nested_trigger);
-                };
-            }
-        }
-    }
+	#handle_trigger_click = ()=> {
+		const triggers = document.querySelectorAll(this.getAttribute("trigger_selector"));
+		if (!triggers.length) return;
 
-    getContent() { return this.#DOM; }
-
-    #DOM = null;
-
-    constructor() {
-        super();
-        this.shadow = this.attachShadow({ mode: 'closed' });
-        this.#DOM = this.innerHTML;
-        Layer.#container = document.querySelector(Layer.#container_selector);
-        this.replaceChildren();
-
-        this.#handle_trigger_click();
-    }
-
-    #handle_trigger_click = ()=> {
-        const triggers = document.querySelectorAll(this.getAttribute("trigger_selector"));
-        if (!triggers.length) return;
-
-        for (const trigger of triggers) {
-            trigger.onclick = (event) => {
-                // Prevent triggering parent layers
-                event.stopPropagation();
-                Layer.#init_layers(this.#DOM, trigger);
-            };
-        }
-    };
+		for (const trigger of triggers) {
+			trigger.onclick = (event) => {
+				// Prevent triggering parent layers
+				event.stopPropagation();
+				Layers.init(this.#DOM, trigger);
+			};
+		}
+	};
 }
 
 window.customElements.define('x-layer', Layer);
 
 // Make Layer Usable W/O Importing It
 window.Layer = Layer;
+
+// export default class Layer extends HTMLElement {
+// 	#DOM = null;
+
+// 	constructor() {
+// 		super();
+// 		this.shadow = this.attachShadow({ mode: 'closed' });
+// 		this.#DOM = this.innerHTML;
+// 		this.#init_triggers();
+// 	}
+
+// 	#init_triggers = () =>{
+// 		const button = document.querySelector(this.getAttribute("trigger_selector"));
+// 		console.log(button);
+
+// 		button.onclick = (event) => {
+// 			event.stopPropagation();
+// 			Layers.init(this.#DOM, button);
+// 		};
+// 	}
+// }
+
+// window.customElements.define('x-layer', Layer);
