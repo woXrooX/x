@@ -98,6 +98,8 @@
 
 		<header></header>
 
+		<cover></cover>
+
 		{% if Globals.CONF["menu"]["enabled"] == True %}
 			<x-svg for="menu_show" color="#ffffff" name="menu"></x-svg>
 
@@ -114,12 +116,12 @@
 			</menu>
 		{% endif %}
 
-		<cover></cover>
-
 		<modal>
 			<x-svg class="btn btn-primary btn-s" for="modal_close" name="x" color="ffffff"></x-svg>
 			<main></main>
 		</modal>
+
+		<x-layers></x-layers>
 
 		<toasts></toasts>
 

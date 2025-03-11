@@ -5,10 +5,10 @@
 	--z-main: 3;
 	--z-header: 4;
 	--z-menu_show_button: 5;
-	--z-layers: 6;
-	--z-cover: 7;
+	--z-cover: 6;
+	--z-menu: 7;
 	--z-modal: 8;
-	--z-menu: 9;
+	--z-layers: 9;
 	--z-tooltip: 10; /* Will move to css anchor positioning */
 	--z-toasts: 11;
 	--z-loading: 12;
@@ -264,7 +264,101 @@ body{
 		}
 	}
 
-	& > layers{}
+	& > x-layers {
+		--x-layers-stack-gap: 45px;
+		--x-layers-bottom-gap: 10px;
+		--x-layers-animation-velocity: 300ms;
+		--x-layers-animation-timing-function: ease-in-out;
+		--x-layers-scale-gap: 0.05;
+
+		& > container {
+			width: 100vw;
+			height: 100vh;
+
+			position: fixed;
+			inset: 0;
+			z-index: var(--z-layers);
+
+			&.removing {
+				& > cover {
+					animation: x_layer_cover_fade_out var(--x-layers-animation-velocity) var(--x-layers-animation-timing-function) forwards;
+				}
+
+				& > layer {
+					animation: x_layer_fade_out var(--x-layers-animation-velocity) var(--x-layers-animation-timing-function) forwards;
+				}
+			}
+
+			& > cover {
+				pointer-events: none;
+
+				background-color: rgba(0, 0, 0, 0.4);
+				opacity: 0;
+
+				position: fixed;
+				inset: 0;
+
+				animation: x_layer_cover_fade_in var(--x-layers-animation-velocity) var(--x-layers-animation-timing-function) forwards;
+			}
+
+			& > layer {
+				opacity: 0;
+
+				width: 95%;
+				height: 90%;
+				padding: var(--padding);
+
+				position: fixed;
+				left: 50%;
+				top: 100%;
+				transform: translate(-50%, 0%) scale(1);
+
+				transition:
+					transform var(--x-layers-animation-velocity) var(--x-layers-animation-timing-function),
+					opacity var(--x-layers-animation-velocity) var(--x-layers-animation-timing-function);
+
+				will-change: transform, opacity;
+			}
+
+			&:nth-last-child(1) {
+				&.adding {
+					& > layer {
+						animation: x_layer_fade_in var(--x-layers-animation-velocity) var(--x-layers-animation-timing-function) forwards;
+					}
+				}
+
+				& > layer {
+					opacity: 1;
+					transform: translate(-50%, calc(-100% - var(--x-layers-bottom-gap))) scale(1);
+				}
+			}
+
+			&:nth-last-child(2) {
+				& > layer {
+					opacity: 1;
+					transform: translate(-50%, calc(-100% - var(--x-layers-bottom-gap) - var(--x-layers-stack-gap))) scale(calc(1 - var(--x-layers-scale-gap)));
+				}
+			}
+
+			&:nth-last-child(3) {
+				& > layer {
+					opacity: 1;
+					transform: translate(-50%, calc(-100% - var(--x-layers-bottom-gap) - var(--x-layers-stack-gap) * 2 )) scale(calc(1 - var(--x-layers-scale-gap) * 2));
+				}
+			}
+
+			&:nth-last-child(n+4) {
+				& > layer {
+					opacity: 0;
+					transform: translate(-50%, calc(-100% - var(--x-layers-bottom-gap) - var(--x-layers-stack-gap) * 3 )) scale(calc(1 - var(--x-layers-scale-gap) * 3));
+				}
+			}
+		}
+	}
+
+	&:has(x-layers:not(:empty)){
+		overflow: hidden;
+	}
 
 	& > cover{
 		pointer-events:auto;
@@ -356,9 +450,8 @@ body{
 		z-index: var(--z-toasts);
 
 		&:empty{
-		padding: 0px;
+			padding: 0px;
 		}
-
 	}
 }
 
@@ -378,13 +471,13 @@ body{
 
 @layer observer_animations{
 	.observe{
-		--duration: 500ms;
-		--timing-function: ease-in-out;
-		--delay: 250ms;
+		--observe-duration: 500ms;
+		--observe-timing-function: ease-in-out;
+		--observe-delay: 250ms;
 
-		transition-duration: var(--duration);
-		transition-timing-function: var(--timing-function);
-		transition-delay: var(--delay);
+		transition-duration: var(--observe-duration);
+		transition-timing-function: var(--observe-timing-function);
+		transition-delay: var(--observe-delay);
 		transition-property: opacity transform;
 
 		&.observer_animation_v1{
@@ -453,5 +546,41 @@ body{
 	@keyframes HTML_loading_spin {
 		0% {transform: translate(-50%, -50%) rotate(0deg);}
 		100% {transform: translate(-50%, -50%) rotate(360deg);}
+	}
+}
+
+@layer x_layers_keyframes {
+	@keyframes x_layer_cover_fade_in {
+		from { opacity: 0; }
+		to { opacity: 1; }
+	}
+
+	@keyframes x_layer_cover_fade_out {
+		from { opacity: 1; }
+		to { opacity: 0; }
+	}
+
+	@keyframes x_layer_fade_in {
+		from {
+			opacity: 0;
+			transform: translate(-50%, 0%) scale(1);
+		}
+
+		to {
+			opacity: 1;
+			transform: translate(-50%, calc(-100% - 10px)) scale(1);
+		}
+	}
+
+	@keyframes x_layer_fade_out {
+		from {
+			opacity: 1;
+			transform: translate(-50%, calc(-100% - 10px)) scale(1);
+		}
+
+		to {
+			opacity: 0;
+			transform: translate(-50%, 0%) scale(1);
+		}
 	}
 }

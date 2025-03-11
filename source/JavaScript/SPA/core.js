@@ -21,6 +21,7 @@ import Router from "/JavaScript/SPA/router.js";
 import DOM from "/JavaScript/SPA/DOM.js";
 import Cover from "/JavaScript/SPA/cover.js";
 import Loading from "/JavaScript/SPA/loading.js";
+import Layers from "/JavaScript/SPA/Layers.js";
 import Menu from "/JavaScript/SPA/menu.js";
 import Form from "/JavaScript/SPA/form.js";
 import URL from "/JavaScript/SPA/URL.js";
@@ -38,6 +39,7 @@ import Notification_Bell from "/JavaScript/SPA/elements/Notification_Bell.js";
 import Table from "/JavaScript/SPA/elements/table.js";
 import Tooltip from "/JavaScript/SPA/elements/tooltip.js";
 import Select from "/JavaScript/SPA/elements/select.js";
+import Layer from "/JavaScript/SPA/elements/Layer.js";
 
 export default class Core{
 	static {
