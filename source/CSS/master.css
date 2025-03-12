@@ -318,6 +318,20 @@ body{
 					opacity var(--x-layers-animation-velocity) var(--x-layers-animation-timing-function);
 
 				will-change: transform, opacity;
+
+				& > main{
+					padding: var(--padding);
+					padding-top: 2rem;
+
+					display: flex;
+					justify-content: center;
+				}
+
+				& > x-svg{
+					position: fixed;
+					top: 5px;
+					right: 5px;
+				}
 			}
 
 			&:nth-last-child(1) {
