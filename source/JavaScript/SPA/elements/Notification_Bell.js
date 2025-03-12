@@ -31,9 +31,7 @@ export default class Notification_Bell extends HTMLElement {
 						font-size: 0.5em;
 						text-align: center;
 
-						padding: 3px;
-						padding-top: 0;
-						padding-bottom: 0;
+						padding: 0 5px;
 						border-radius: 5px;
 
 						grid-area: 1 / 1 / 2 / 2;
