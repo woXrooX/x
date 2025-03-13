@@ -306,6 +306,7 @@ body{
 
 				width: 95%;
 				height: 90%;
+				border: 2px solid transparent;
 				padding: var(--padding);
 
 				position: fixed;
@@ -319,18 +320,21 @@ body{
 
 				will-change: transform, opacity;
 
-				& > main{
-					padding: var(--padding);
-					padding-top: 2rem;
-
-					display: flex;
-					justify-content: center;
-				}
-
 				& > x-svg{
 					position: fixed;
 					top: 5px;
 					right: 5px;
+				}
+
+				& > main{
+					height: auto;
+					max-height: 88dvh;
+
+					overflow: hidden;
+					overflow-y: scroll;
+
+					padding: var(--padding);
+					padding-top: 2rem;
 				}
 			}
 
