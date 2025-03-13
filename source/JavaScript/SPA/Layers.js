@@ -15,9 +15,26 @@ export default class Layers{
 		Layers.#element.insertAdjacentHTML("beforeend", `
 			<container id="layer_${Layers.#id}" class="adding">
 				<cover></cover>
-				<layer class="surface-v1">
-					<x-svg class="btn btn-primary btn-s" for="layer_remove" name="x" color="ffffff"></x-svg>
-					<main>${DOM}</main>
+				<layer class="surface-v1 overflow-hidden">
+					<x-svg
+						class="
+							btn	btn-primary btn-s
+
+							position-fixed
+							top-5px
+							right-5px
+						"
+						for="layer_remove"
+						name="x"
+						color="ffffff"
+					></x-svg>
+					<main
+						class="
+							width-100 height-100
+							padding-1
+							overflow-y-scroll
+						"
+					>${DOM}</main>
 				</layer>
 			</container>
 		`);
