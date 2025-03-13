@@ -12,6 +12,8 @@ export default class Layers{
 	static add(DOM){
 		Layers.#id += 1;
 
+		if(Layers.#id === 1) window.x.Body.lock_scroll_y_axis();
+
 		Layers.#element.insertAdjacentHTML("beforeend", `
 			<container id="layer_${Layers.#id}" class="adding">
 				<cover></cover>
@@ -41,9 +43,8 @@ export default class Layers{
 
 		// Clean up the layer adding effect
 		const container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
-		container.addEventListener('animationend', () => {
-			container.classList.remove('adding');
-		}, { once: true });
+
+		container.addEventListener('animationend', () => container.classList.remove('adding'), { once: true });
 
 		Layers.#build_remove_listener(Layers.#id);
 	}
@@ -52,21 +53,19 @@ export default class Layers{
 	/////////// Helpers
 
 	static #build_remove_listener(id){
-		Layers.#element.querySelector(`container#layer_${id} > layer > x-svg`).addEventListener("click", ()=>{
-			Layers.#remove(id);
-		});
+		Layers.#element.querySelector(`container#layer_${id} > layer > x-svg`).addEventListener("click", () => Layers.#remove(id));
 	}
 
 	static #remove(id){
 		Layers.#id -= 1;
 
+		if(Layers.#id === 0) window.x.Body.unlock_scroll_y_axis();
+
 		const container = Layers.#element.querySelector(`container#layer_${id}`);
 
 		container.classList.add('removing');
 
-		container.addEventListener('animationend', () => {
-			container.remove();
-		}, { once: true });
+		container.addEventListener('animationend', () => container.remove(), { once: true });
 	}
 };
 

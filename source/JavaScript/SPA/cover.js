@@ -17,8 +17,7 @@ export default class Cover{
 		Cover.#element.style.opacity = 1;
 		Cover.#element.style.zIndex = z_index;
 
-		// disable scrolling
-		document.body.style = "overflow: hidden";
+		window.x.Body.lock_scroll_y_axis();
 	}
 
 	static hide(){
@@ -32,11 +31,10 @@ export default class Cover{
 			Cover.#element.ontransitionend = null;
 		};
 
-		// enable scrolling
-		document.body.removeAttribute("style");
+		window.x.Body.unlock_scroll_y_axis();
 	}
 
-	static onClickExecute(func){
+	static on_click_execute(func){
 		// Execute External Function
 		Cover.#element.addEventListener("click", func);
 	}

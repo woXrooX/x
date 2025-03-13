@@ -8,6 +8,7 @@ import XRequest from "/JavaScript/modules/XRequest.js";
 import x_String from "/JavaScript/modules/String.js";
 
 //// SPA Classes
+import Body from "/JavaScript/SPA/Body.js";
 import Root from "/JavaScript/SPA/root.js";
 import Language from "/JavaScript/SPA/language.js";
 import Title from "/JavaScript/SPA/title.js";
