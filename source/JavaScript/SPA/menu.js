@@ -43,7 +43,7 @@ export default class Menu{
 		// On Mobile menu close event
 		document.querySelector(`${Menu.selector} > header > x-svg[for=menu_close_button_on_mobile]`).onclick = Menu.#hide;
 		Menu.#toggle_always_open_mode();
-		Cover.onClickExecute(Menu.#hide);
+		Cover.on_click_execute(Menu.#hide);
 	}
 
 	static build(){

@@ -355,10 +355,6 @@ body{
 		}
 	}
 
-	&:has(x-layers:not(:empty)){
-		overflow: hidden;
-	}
-
 	& > cover{
 		pointer-events:auto;
 
