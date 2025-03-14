@@ -165,6 +165,14 @@
 		*::selection{
 			color: var(--color-text-primary);
 			background-color: var(--color-brand);
+
+			/* color: color-contrast(
+				currentcolor vs
+				var(--color-text-primary),
+				var(--color-text-secondary),
+				var(--color-text-accent)
+			);
+			background-color: var(--color-brand);*/
 		}
 
 		/* <a> basic active & hover effects */
