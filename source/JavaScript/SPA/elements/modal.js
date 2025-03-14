@@ -94,6 +94,9 @@ export default class Modal extends HTMLElement{
 	/////////// Helpers
 	static async #execute_on_show(func_name, data = null){
 		if(!!func_name === false) return;
+
+		if (!(func_name in Modal.#FUNC_POOL)) return console.error(`Modal.#execute_on_show(): Invalid func_name: ${func_name}`);
+
 		await Modal.#FUNC_POOL[func_name](data);
 	}
 
