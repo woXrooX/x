@@ -50,7 +50,7 @@ export default class Layers{
 
 		Layers.#build_remove_listener(Layers.#id);
 
-		Layers.#execute_on_add(func_name, data, Layers.#id, container);
+		Layers.#execute_on_add(func_name, data, container.querySelector("layer > main"), Layers.#id);
 	}
 
 	/////////// Helpers
@@ -71,12 +71,12 @@ export default class Layers{
 		container.addEventListener('animationend', () => container.remove(), { once: true });
 	}
 
-	static async #execute_on_add(func_name, data, id, container){
+	static async #execute_on_add(func_name, data, layer_main_element, id){
 		if(!!func_name === false) return;
 
 		if (!(func_name in Layers.#FUNC_POOL)) return console.error(`Layers.#execute_on_add(): Invalid func_name: ${func_name}`);
 
-		await Layers.#FUNC_POOL[func_name](data, id, container);
+		await Layers.#FUNC_POOL[func_name](data, layer_main_element, id);
 	}
 };
 
