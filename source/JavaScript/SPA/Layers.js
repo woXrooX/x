@@ -44,9 +44,9 @@ export default class Layers{
 			</container>
 		`);
 
-		// Layers.layers_container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
-
 		// Clean up the layer adding effect
+		Layers.layers_container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
+
 		Layers.layers_container.addEventListener('animationend', () => Layers.layers_container.classList.remove('adding'), { once: true });
 
 		Layers.#build_remove_listener(Layers.#id);
