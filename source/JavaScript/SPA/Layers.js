@@ -1,6 +1,7 @@
 export default class Layers{
 	static selector = "body > x-layers";
 	static #element = null;
+	static layers_container = null;
 	static #id = 0;
 	static #FUNC_POOL = {};
 
@@ -10,8 +11,6 @@ export default class Layers{
 
 	/////////// APIs
 	static push_func(func){ Layers.#FUNC_POOL[func.name] = func; }
-
-
 
 	static add(DOM, func_name = null, data = null){
 		Layers.#id += 1;
@@ -45,12 +44,15 @@ export default class Layers{
 			</container>
 		`);
 
+		Layers.layers_container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
+
 		// Clean up the layer adding effect
 		const container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
 
 		container.addEventListener('animationend', () => container.classList.remove('adding'), { once: true });
 
 		Layers.#build_remove_listener(Layers.#id);
+
 		Layers.#execute_on_add(func_name, data);
 
 	}
