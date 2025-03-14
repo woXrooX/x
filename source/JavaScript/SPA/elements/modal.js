@@ -36,7 +36,8 @@ export default class Modal extends HTMLElement{
 
 		Modal.#element.classList.remove("show");
 
-		Modal.#element.ontransitionend = ()=>{
+		Modal.#element.ontransitionend = (event)=>{
+			if (event.target !== Modal.#element) return;
 			Modal.element_main.replaceChildren();
 			Modal.#element.ontransitionend = null;
 		};
