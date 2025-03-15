@@ -7,7 +7,6 @@
 // let currentColorScheme = root.getAttribute('color-scheme');
 // console.log(root);
 // console.log(currentColorScheme);
-// console.log(getComputedStyle(document.body).getPropertyValue('--z-minus'));
 
 
 // prefers-color-scheme TMP
@@ -33,15 +32,17 @@
 // background -> middleground -> foreground
 
 export default class CSS{
-	// Color Modes
+	// Color modes
 	static color_modes = Object.freeze({DARK: 1, LIGHT: 2});
 
-	// Color Mode Default: Dark Mode
+	// Default color mode: Dark
 	static current_color_mode = CSS.color_modes.DARK;
 
 	static color_mode_switcher_icon = null;
 
-	//////////// APIs
+
+
+	//////////////////////// APIs
 	// Init
 	static init(){
 		Log.info("CSS.init()");
@@ -56,8 +57,6 @@ export default class CSS{
 	// Get CSS value
 	static get_value(variable){ return getComputedStyle(document.querySelector(':root')).getPropertyValue(variable); }
 
-	///// Color Mode
-	// Detect Color Mode
 	static detect_color_mode(){
 		Log.info("CSS.detect_color_mode()");
 
@@ -114,23 +113,31 @@ export default class CSS{
 		}
 	}
 
-	// On System Color Mode Changes - Listen To Color Mode Changes
-	static #on_color_mode_change(){window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", CSS.detect_color_mode);}
 
-	// Handles color mode switching to dark and light modes using x-svg in menu
+
+	//////////////////////// Helpers
+
+	// On system color mode changes - listen to color mode changes
+	static #on_color_mode_change(){
+		window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", CSS.detect_color_mode);
+	}
+
+	// Handles color mode switching to dark and light modes using x-svg[for=color_mode_switcher] in menu
 	static #handle_color_mode_toggle(){
-		// A Reminder to My Future Self :)
-		// We do not have to apply name and toggle values like we did in CSS.detect_color_mode().
-		// Default toggler handles well icon changes since we are only using x-svg to toggle the color modes in this method
-
-		if(!!CSS.color_mode_switcher_icon === false) return;
+		if (!!CSS.color_mode_switcher_icon === false) return;
 
 		CSS.color_mode_switcher_icon.addEventListener("click", ()=>{
 			switch(CSS.current_color_mode){
-				case CSS.color_modes.DARK: CSS.#light(); break;
-				// If we add more color modes we will uncommend the code below and add more cases
-				// case CSS.color_modes.LIGHT:CSS.#dark(); break;
-				default: CSS.#dark();
+				case CSS.color_modes.DARK:
+					CSS.#light();
+					break;
+
+				case CSS.color_modes.LIGHT:
+					CSS.#dark();
+					break;
+
+				default:
+					CSS.#dark();
 			}
 
 			CSS.#save_color_mode();
@@ -140,15 +147,19 @@ export default class CSS{
 	// Save color mode to the database or to the local storage
 	static async #save_color_mode(){
 		// If user is logged in, update user color mode on database
-		if("user" in window.session){
-			const req = await window.bridge({for: "change_user_app_color_mode", color_mode: CSS.current_color_mode}, "/API", "application/json");
+		if ("user" in window.session){
+			const data = await window.bridge({for: "change_user_app_color_mode", color_mode: CSS.current_color_mode}, "/API");
+
 			// Update the session
-			if("type" in req && req["type"] === "success"){
+			if("type" in data && data["type"] === "success"){
 				window.session["user"]["app_color_mode"] = CSS.current_color_mode;
 				localStorage.setItem('x.color_mode', CSS.current_color_mode);
 				Log.success(`CSS.#save_color_mode(): session.user.app_color_mode = ${CSS.current_color_mode}`);
 			}
-		}else localStorage.setItem('x.color_mode', CSS.current_color_mode);
+
+		}
+
+		else localStorage.setItem('x.color_mode', CSS.current_color_mode);
 	}
 
 	//////////// Modes
