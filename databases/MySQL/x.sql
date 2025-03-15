@@ -2,9 +2,11 @@
 \! echo "============================== x ==============================";
 \W
 DROP DATABASE IF EXISTS [NAME];
-CREATE DATABASE IF NOT EXISTS [NAME];
-CHARACTER SET utf8mb4;
+
+CREATE DATABASE IF NOT EXISTS [NAME]
+CHARACTER SET utf8mb4
 COLLATE utf8mb4_0900_ai_ci;
+
 USE [NAME];
 
 -- Set the session level
