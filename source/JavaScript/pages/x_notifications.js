@@ -40,7 +40,7 @@ export async function after(){
 
 	function build_actions_row_HTML(){
 		return `
-			<row class="flex-row flex-x-end gap-0-5 p-2">
+			<row class="flex-row flex-x-end gap-0-5 padding-2">
 				${build_delete_all_button_HTML()}
 				${build_anchor_notificatons_settings_HTML()}
 			</row>
