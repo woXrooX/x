@@ -2,8 +2,8 @@ export const TITLE = window.Lang.use('sign_up');
 
 export default function main(){
 	return `
-		<container class="padding-5 max-width-600px">
-			<form for="sign_up" autocomplete="off" class="surface-v1 padding-5">
+		<container class="padding-5 flex-x-center bg-animated-gradient-v1">
+			<form for="sign_up" autocomplete="off" class="max-width-600px surface-v1 padding-5">
 
 				<h2 class="text-align-center">${window.Lang.use('sign_up')}</h2>
 
