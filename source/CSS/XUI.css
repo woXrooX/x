@@ -1425,7 +1425,7 @@
 		.bg-animated-gradient-v1 {
 			background: linear-gradient(-45deg, var(--color-main-tint-1), var(--color-main-tint-3), var(--color-main-tint-5));
 			background-size: 400% 400%;
-			animation: keyframes-bg-animated-gradient-v1 10s linear infinite;
+			animation: keyframes-bg-animated-gradient-v1 30s linear infinite;
 		}
 
 		@keyframes keyframes-bg-animated-gradient-v1 {
@@ -1434,19 +1434,6 @@
 			100% { background-position: 0% 50%; }
 		}
 
-
-
-		.bg-animated-gradient-v2 {
-			background: linear-gradient(-45deg, #ee5425, #e71364, #089acf, #0bcea0, #7e6bf9);
-			background-size: 400% 400%;
-			animation: keyframes-bg-animated-gradient-v2 10s ease infinite;
-		}
-
-		@keyframes keyframes-bg-animated-gradient-v2 {
-			0% { background-position: 0% 50%; }
-			50% { background-position: 100% 50%; }
-			100% { background-position: 0% 50%; }
-		}
 
 		@layer Hover{
 			.on-hover-bg-brand { &:hover { background-color: var(--color-main); } }
