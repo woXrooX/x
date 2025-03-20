@@ -3,7 +3,7 @@ import re, random
 from main import session
 
 from Python.x.modules.Page import Page
-from Python.x.modules.SendGrid import SendGrid
+from Python.x.modules.Notifications import Notifications
 from Python.x.modules.response import response
 from Python.x.modules.Globals import Globals
 from Python.x.modules.Log_In_Tools import Log_In_Tools
@@ -83,16 +83,11 @@ def sign_up(request):
 		if not User.init_folders(): Log.warning("sign_up.py->User.init_folders()")
 
 		#### Check If Verification Code Sent Successfully
-		eMail_content = f"""
-			Dear User,
-			<h2>Welcome to {Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}!</h2>
-			<p>Please verify your email address using the code below:</p>
-			<h2>{eMail_verification_code}</h2>
-			<p>If you did not create an account using this email address, please ignore this message.</p>
-			<p>{Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
-		"""
-
-		email_verification_sent_status = SendGrid.send("noreply", request.form["eMail"], eMail_content, "Sign Up")
+		email_verification_sent_status = Notifications.new_eMail(
+			recipient=request.form["eMail"],
+			content_JSON={"eMail_verification_code": eMail_verification_code},
+			event_name="sign_up_eMail_verification",
+		)
 
 		try:
 			from Python.project.modules.on_sign_up import on_sign_up
@@ -104,9 +99,9 @@ def sign_up(request):
 		Log_In_Tools.new_record(request, "success")
 
 		return response(
-			type="success" if email_verification_sent_status is True else "info",
-			message="eMail_confirmation_code_has_been_sent" if email_verification_sent_status is True else "Signed Up Without Email Verification!",
-			set_session_user=True,
-			redirect="/eMail_confirmation" if email_verification_sent_status is True else "/",
-			DOM_change=["menu"]
+			type = "success" if email_verification_sent_status is True else "info",
+			message = "eMail_confirmation_code_has_been_sent" if email_verification_sent_status is True else "Signed Up Without Email Verification!",
+			set_session_user = True,
+			redirect = "/eMail_confirmation" if email_verification_sent_status is True else "/",
+			DOM_change = ["menu"]
 		)
