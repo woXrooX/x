@@ -108,7 +108,7 @@ if __name__ != "__main__":
 			content_JSON = None,
 			event_name = None
 		):
-			if recipient is None: return
+			if recipient is None: return False
 
 			eMail_subject_LANG_DICT_key = f"{event_name}_eMail_subject"
 			eMail_content_LANG_DICT_key = f"{event_name}_eMail_content"
@@ -129,7 +129,7 @@ if __name__ != "__main__":
 				Log.error(f"Notifications.new_eMail()->content: {e}")
 				return False
 
-			SendGrid.send("noreply", recipient, content, subject)
+			return SendGrid.send("noreply", recipient, content, subject)
 
 		@staticmethod
 		def new_SMS(

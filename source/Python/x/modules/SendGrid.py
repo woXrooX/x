@@ -6,6 +6,9 @@
 # SendGrid.send("woXrooX@gmail.com", "My Subject", "My Content")
 
 if __name__ != "__main__":
+	import sendgrid
+	from sendgrid.helpers.mail import Mail, Email, To, Content
+
 	from Python.x.modules.Globals import Globals
 	from Python.x.modules.Logger import Log
 
@@ -27,9 +30,6 @@ if __name__ != "__main__":
 
 			# Check If Subject Is Passed
 			if not subject: subject = Globals.CONF["eMail"]["subject"]
-
-			import sendgrid
-			from sendgrid.helpers.mail import Mail, Email, To, Content
 
 			# Load The API Key
 			sg = sendgrid.SendGridAPIClient(api_key=Globals.CONF["eMail"]["SendGrid"]["api_key"])
