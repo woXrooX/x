@@ -34,9 +34,10 @@ export default class Layers{
 					></x-svg>
 					<main
 						class="
-							width-100 height-100
-							padding-1
 							overflow-y-scroll
+							width-100
+							height-100
+							padding-top-2rem
 						"
 					>${DOM}</main>
 				</layer>
