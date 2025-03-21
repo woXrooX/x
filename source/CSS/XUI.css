@@ -2492,6 +2492,10 @@
 			.padding-top-10{padding-top: calc(var(--padding) * 10);}
 			.padding-top-20{padding-top: calc(var(--padding) * 20);}
 
+			.padding-top-1rem { padding-top: 1rem; }
+			.padding-top-2rem { padding-top: 2rem; }
+			.padding-top-3rem { padding-top: 3rem; }
+
 			/* Right */
 			.padding-right-0{padding-right: 0px;}
 			.padding-right-1{padding-right: var(--padding);}
