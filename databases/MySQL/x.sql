@@ -307,8 +307,6 @@ CREATE TABLE IF NOT EXISTS `log_in_records` (
 
 	`ip_address` VARCHAR(45) NULL DEFAULT NULL,
 
-	`x_forwarded_for` TEXT NULL DEFAULT NULL,
-
 	`user_agent` TEXT NULL DEFAULT NULL,
 
 	`message` VARCHAR(1000) NULL DEFAULT NULL,
