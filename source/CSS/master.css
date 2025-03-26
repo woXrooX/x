@@ -294,6 +294,7 @@ body{
 
 				background-color: rgba(0, 0, 0, 0.4);
 				opacity: 0;
+				backdrop-filter: blur(1px);
 
 				position: fixed;
 				inset: 0;
