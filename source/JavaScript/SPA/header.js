@@ -8,33 +8,37 @@ export default class Header{
 	}
 
 	static async handle(func){
-		// Check If Page Scoped header() Defined
+		// Check if page scoped header() defined
 		if(typeof func === "function"){
-			// If header() Doesn Return False Then Execute It
-			if(func() !== false) Header.#build(func());
+			// If header() doesn return false then execute tt
+			const func_return_value = await func();
+			if(func_return_value !== false) await Header.#build(func_return_value);
 
-			// Else Hide Header On This Page
+			// Else hide header on this page
 			else Header.#hide();
 		}
 
-		// If No Talk To Default header.js
+		// If no talk to default header.js
 		else{
-			try{
+			try {
 				Header.#content_func = await import(`/JavaScript/modules/header.js`);
-			}catch(error){
+			}
+
+			catch(error){
 				Header.#hide();
 				return;
 			}
 
-			// Check If
+			// Check if
 			if(
-				// JS/header.js Has Default Method To Call
+				// header.js has default method to call
 				typeof Header.#content_func.default === "function" &&
-				// And Doesn Return False
-				Header.#content_func.default() !== false
-			) Header.#build();
 
-			// Else Hide Header
+				// And does not return false
+				Header.#content_func.default() !== false
+			) await Header.#build();
+
+			// Else hide header
 			else Header.#hide();
 		}
 	}
@@ -53,23 +57,23 @@ export default class Header{
 		Header.#element.classList.remove("hide");
 	}
 
-	// When Called W/O Argument Will Update To Default Header View
-	static #build(content = null){
+	// When called W/O argument will update to default header view
+	static async #build(content = null){
 		Log.info("Header.#build()");
 
-		// Check If "body > header" Exists
+		// Check if "body > header" exists
 		if(!!Header.#element === false) return;
 
-		// If No Content Passed Update To Default
+		// If no content passed update to default
 		if(!!content === false){
-			Header.#element.innerHTML = Header.#content_func.default();
+			Header.#element.innerHTML = await Header.#content_func.default();
 			Header.#show();
 
-			// Exit The Update
+			// Exit the update
 			return;
 		}
 
-		// If Content Passed Update To Content
+		// If content passed update to content
 		Header.#element.innerHTML = content;
 		Header.#show();
 	}
