@@ -265,9 +265,19 @@
 		"uz": "Mos kelmadi"
 	},
 	"not_found": {
-		"en": "Not found",
+		"en": "Not Found",
 		"ru": "Не найдена",
 		"uz": "Topilmadi"
+	},
+	"bad_request": {
+		"en": "Bad Request",
+		"ru": "Плохой запрос",
+		"uz": "Noto'g'ri so'rov"
+	},
+	"forbidden": {
+		"en": "Forbidden",
+		"ru": "Запрещенный",
+		"uz": "Taqiqlangan"
 	},
 	"no_notifications": {
 		"en": "No notifications",
