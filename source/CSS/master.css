@@ -9,8 +9,8 @@
 	--z-menu: 7;
 	--z-modal: 8;
 	--z-layers: 9;
-	--z-tooltip: 10; /* Will move to css anchor positioning */
-	--z-toasts: 11;
+	--z-toasts: 10;
+	--z-tooltip: 11;
 	--z-loading: 12;
 	--z-urgent: 13;
 

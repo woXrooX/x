@@ -212,19 +212,22 @@ x-tooltip {
 	position: absolute;
 	top: anchor(bottom);
 	left: anchor(center);
-	transform: translate(-50%) scale(0.5);
+	z-index: var(--z-tooltip);
+	transform: translate(-50%, var(--padding)) scale(0.5);
 
 	overflow: hidden;
 	pointer-events: none;
 	opacity: 0;
 	transition: var(--transition-velocity);
 	transition-property: opacity, transform;
-	will-change: transform, opacity;
+	will-change: opacity, transform;
 
-	background-color: var(--color-main-tint-2);
+	background-color: var(--color-hsla-0-0-100-0-1);
 	color: var(--color-text-primary);
 	border-radius: var(--radius);
+	border: 1px solid var(--color-main-tint-2);
 	box-shadow: var(--shadow);
+	backdrop-filter: blur(var(--blur));
 
 	display: grid;
 	place-items: center;
@@ -232,6 +235,6 @@ x-tooltip {
 	&.show {
 		pointer-events: all;
 		opacity: 1;
-		transform: translateX(-50%) scale(1);
+		transform: translate(-50%, var(--padding)) scale(1);
 	}
 }
