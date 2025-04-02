@@ -77,6 +77,9 @@
 				--color-urgent-lightness: 10%;
 				--color-urgent: hsla(var(--color-urgent-hue), var(--color-urgent-saturation), var(--color-urgent-lightness), 1);
 
+				--color-hsla-0-0-100-0-1: color: hsla(0deg, 0%, 100%, 0.1);
+				--color-hsla-0-0-100-0-3: color: hsla(0deg, 0%, 100%, 0.3);
+				--color-hsla-0-0-100-0-5: color: hsla(0deg, 0%, 100%, 0.5);
 
 
 				color-scheme: dark;
@@ -241,8 +244,8 @@
 			.text-color-transparent{color: transparent;}
 			.text-color-inherit{color: inherit;}
 
-			.text-color-hsla-0-0-100-0-3 { color: hsla(0deg, 0%, 100%, 0.3); }
-			.text-color-hsla-0-0-100-0-5 { color: hsla(0deg, 0%, 100%, 0.5); }
+			.text-color-hsla-0-0-100-0-3 { color: var(--color-hsla-0-0-100-0-3); }
+			.text-color-hsla-0-0-100-0-5 { color: var(--color-hsla-0-0-100-0-5); }
 
 			.text-color-success{color: var(--color-success);}
 			.text-color-info{color: var(--color-info);}
