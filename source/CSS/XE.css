@@ -208,3 +208,30 @@ x-link{
 	}
 }
 
+x-tooltip {
+	position: absolute;
+	top: anchor(bottom);
+	left: anchor(center);
+	transform: translate(-50%) scale(0.5);
+
+	overflow: hidden;
+	pointer-events: none;
+	opacity: 0;
+	transition: var(--transition-velocity);
+	transition-property: opacity, transform;
+	will-change: transform, opacity;
+
+	background-color: var(--color-main-tint-2);
+	color: var(--color-text-primary);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow);
+
+	display: grid;
+	place-items: center;
+
+	&.show {
+		pointer-events: all;
+		opacity: 1;
+		transform: translateX(-50%) scale(1);
+	}
+}

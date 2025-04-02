@@ -38,7 +38,7 @@ import Share from "/JavaScript/SPA/elements/share.js"; // Share depends on modal
 import Offline from "/JavaScript/SPA/elements/Offline.js";
 import Notification_Bell from "/JavaScript/SPA/elements/Notification_Bell.js";
 import Table from "/JavaScript/SPA/elements/table.js";
-import Tooltip from "/JavaScript/SPA/elements/tooltip.js";
+import Tooltip from "/JavaScript/SPA/elements/Tooltip.js";
 import Select from "/JavaScript/SPA/elements/select.js";
 import Layer from "/JavaScript/SPA/elements/Layer.js";
 
