@@ -2891,6 +2891,8 @@
 		.filter_grayscale_80{filter: grayscale(80%);}
 		.filter_grayscale_90{filter: grayscale(90%);}
 		.filter_grayscale_100{filter: grayscale(100%);}
+
+		.mix-blend-mode-multiply { mix-blend-mode: multiply; }
 	}
 
 	@layer backdrop_filters{
