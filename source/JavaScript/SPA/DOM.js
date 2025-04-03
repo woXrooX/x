@@ -91,5 +91,4 @@ export default class DOM{
 	}
 }
 
-// Make DOM usable W/O importing it
 window.DOM = DOM;

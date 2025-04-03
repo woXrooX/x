@@ -28,5 +28,4 @@ export default class Main{
 
 }
 
-// Make Main Usable W/O Importing It
 window.Main = Main;

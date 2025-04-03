@@ -182,5 +182,4 @@ export default class CSS{
 	}
 }
 
-// Make CSS Usable W/O Importing It
 window.x["CSS"] = CSS;

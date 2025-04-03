@@ -40,5 +40,4 @@ export default class Cover{
 	}
 }
 
-// Make Cover Usable W/O Importing It
 window.Cover = Cover;

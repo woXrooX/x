@@ -88,5 +88,4 @@ export default class SVG{
 	}
 }
 
-// Make SVG Usable W/O Importing It
 window.SVG = SVG;

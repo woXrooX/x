@@ -174,5 +174,4 @@ export default class Router{
 	}
 }
 
-// Make Router Usable W/O Importing It
 window.Router = Router;

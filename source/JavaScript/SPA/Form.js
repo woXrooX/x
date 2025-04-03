@@ -219,5 +219,4 @@ export default class Form{
 	}
 }
 
-// Make Form Usable W/O Importing It
 window.Form = Form;

@@ -79,5 +79,4 @@ export default class Header{
 	}
 }
 
-// Make Header Usable W/O Importing It
 window.Header = Header;

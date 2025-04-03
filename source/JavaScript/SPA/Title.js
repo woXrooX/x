@@ -5,5 +5,4 @@ export default class Title{
 	}
 }
 
-// Make Title Usable W/O Importing It
 window.Title = Title;

@@ -75,5 +75,4 @@ export default class Footer{
 	}
 }
 
-// Make Footer Usable W/O Importing It
 window.Footer = Footer;

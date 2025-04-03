@@ -53,5 +53,4 @@ export default class Hyperlink{
 	}
 }
 
-// Make Hyperlink Usable W/O Importing It
 window.Hyperlink = Hyperlink;

@@ -5,5 +5,4 @@ export default class Root{
 	static element = Root.element = document.querySelector(Root.selector);
 }
 
-// Make Root Usable W/O Importing It
 window.x["Root"] = Root;

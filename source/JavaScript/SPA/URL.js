@@ -53,5 +53,4 @@ export default class URL{
 	}
 }
 
-
 window.x["URL"] = URL;
