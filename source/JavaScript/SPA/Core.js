@@ -9,38 +9,37 @@ import x_String from "/JavaScript/modules/String.js";
 
 //// SPA Classes
 import Body from "/JavaScript/SPA/Body.js";
-import Root from "/JavaScript/SPA/root.js";
-import Language from "/JavaScript/SPA/language.js";
-import Title from "/JavaScript/SPA/title.js";
-import SVG from "/JavaScript/SPA/svg.js";
-import CSS from "/JavaScript/SPA/CSS.js";
-import Header from "/JavaScript/SPA/header.js";
-import Main from "/JavaScript/SPA/main.js";
-import Footer from "/JavaScript/SPA/footer.js";
-import Hyperlink from "/JavaScript/SPA/hyperlink.js";
-import Router from "/JavaScript/SPA/router.js";
-import DOM from "/JavaScript/SPA/DOM.js";
 import Cover from "/JavaScript/SPA/cover.js";
-import Loading from "/JavaScript/SPA/loading.js";
-import Layers from "/JavaScript/SPA/Layers.js";
-import Menu from "/JavaScript/SPA/menu.js";
+import CSS from "/JavaScript/SPA/CSS.js";
+import DOM from "/JavaScript/SPA/DOM.js";
+import Footer from "/JavaScript/SPA/footer.js";
 import Form from "/JavaScript/SPA/form.js";
+import Header from "/JavaScript/SPA/header.js";
+import Hyperlink from "/JavaScript/SPA/hyperlink.js";
+import Language from "/JavaScript/SPA/language.js";
+import Loading from "/JavaScript/SPA/loading.js";
+import Main from "/JavaScript/SPA/main.js";
+import Menu from "/JavaScript/SPA/menu.js";
+import Notification from "/JavaScript/SPA/notification.js";
+import Root from "/JavaScript/SPA/root.js";
+import Router from "/JavaScript/SPA/router.js";
+import SVG from "/JavaScript/SPA/svg.js";
+import Title from "/JavaScript/SPA/title.js";
 import URL from "/JavaScript/SPA/URL.js";
 
-import Notification from "/JavaScript/SPA/notification.js";
 
-//// Built-In X-Elements
-import Link from "/JavaScript/SPA/elements/Link.js";
-import XSVG from "/JavaScript/SPA/elements/XSVG.js";
-import Modal from "/JavaScript/SPA/elements/modal.js";
-import Toast from "/JavaScript/SPA/elements/toast.js";
-import Share from "/JavaScript/SPA/elements/share.js"; // Share depends on modal
-import Offline from "/JavaScript/SPA/elements/Offline.js";
-import Notification_Bell from "/JavaScript/SPA/elements/Notification_Bell.js";
-import Table from "/JavaScript/SPA/elements/table.js";
-import Tooltip from "/JavaScript/SPA/elements/Tooltip.js";
-import Select from "/JavaScript/SPA/elements/select.js";
-import Layer from "/JavaScript/SPA/elements/Layer.js";
+//// Built-in XEs
+import Layers from "/JavaScript/libs/XE/Layers/Layers.js";
+import Modal from "/JavaScript/libs/XE/Modal.js";
+import Notification_Bell from "/JavaScript/libs/XE/Notification_Bell.js";
+import Offline from "/JavaScript/libs/XE/Offline.js";
+import Table from "/JavaScript/libs/XE/Table.js";
+import Toast from "/JavaScript/libs/XE/Toast.js";
+import Tooltip from "/JavaScript/libs/XE/Tooltip.js";
+import XSVG from "/JavaScript/libs/XE/XSVG.js";
+
+//// Non built-in XEs will be manually imported on head section of the index.html
+// <script type="module" src="/JavaScript/libs/XE/Sample_XE.js"></script>
 
 export default class Core{
 	static {
