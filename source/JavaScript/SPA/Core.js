@@ -7,7 +7,8 @@ import bridge from "/JavaScript/modules/bridge.js";
 import XRequest from "/JavaScript/modules/XRequest.js";
 import x_String from "/JavaScript/modules/String.js";
 
-//// SPA Classes
+///////////////////////////// SPA Classes
+// Order matters
 import Body from "/JavaScript/SPA/Body.js";
 import Cover from "/JavaScript/SPA/Cover.js";
 import CSS from "/JavaScript/SPA/CSS.js";
@@ -18,10 +19,10 @@ import Header from "/JavaScript/SPA/Header.js";
 import Hyperlink from "/JavaScript/SPA/Hyperlink.js";
 import Language from "/JavaScript/SPA/Language.js";
 import Loading from "/JavaScript/SPA/Loading.js";
+import Root from "/JavaScript/SPA/Root.js";
 import Main from "/JavaScript/SPA/Main.js";
 import Menu from "/JavaScript/SPA/Menu.js";
 import Notification from "/JavaScript/SPA/Notification.js";
-import Root from "/JavaScript/SPA/Root.js";
 import Router from "/JavaScript/SPA/Router.js";
 import SVG from "/JavaScript/SPA/SVG.js";
 import Title from "/JavaScript/SPA/Title.js";
