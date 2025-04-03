@@ -1,2 +1,2 @@
 ///////////////////////////// SPA / Core
-import Core from "./SPA/core.js";
+import Core from "./SPA/Core.js";
