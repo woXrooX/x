@@ -2,29 +2,29 @@
 
 ///////////////////////////// Modules
 // Order matters
-import Logger from "/JavaScript/modules/logger.js";
+import Logger from "/JavaScript/modules/Logger.js";
 import bridge from "/JavaScript/modules/bridge.js";
 import XRequest from "/JavaScript/modules/XRequest.js";
 import x_String from "/JavaScript/modules/String.js";
 
 //// SPA Classes
 import Body from "/JavaScript/SPA/Body.js";
-import Cover from "/JavaScript/SPA/cover.js";
+import Cover from "/JavaScript/SPA/Cover.js";
 import CSS from "/JavaScript/SPA/CSS.js";
 import DOM from "/JavaScript/SPA/DOM.js";
-import Footer from "/JavaScript/SPA/footer.js";
-import Form from "/JavaScript/SPA/form.js";
-import Header from "/JavaScript/SPA/header.js";
-import Hyperlink from "/JavaScript/SPA/hyperlink.js";
-import Language from "/JavaScript/SPA/language.js";
-import Loading from "/JavaScript/SPA/loading.js";
-import Main from "/JavaScript/SPA/main.js";
-import Menu from "/JavaScript/SPA/menu.js";
-import Notification from "/JavaScript/SPA/notification.js";
-import Root from "/JavaScript/SPA/root.js";
-import Router from "/JavaScript/SPA/router.js";
-import SVG from "/JavaScript/SPA/svg.js";
-import Title from "/JavaScript/SPA/title.js";
+import Footer from "/JavaScript/SPA/Footer.js";
+import Form from "/JavaScript/SPA/Form.js";
+import Header from "/JavaScript/SPA/Header.js";
+import Hyperlink from "/JavaScript/SPA/Hyperlink.js";
+import Language from "/JavaScript/SPA/Language.js";
+import Loading from "/JavaScript/SPA/Loading.js";
+import Main from "/JavaScript/SPA/Main.js";
+import Menu from "/JavaScript/SPA/Menu.js";
+import Notification from "/JavaScript/SPA/Notification.js";
+import Root from "/JavaScript/SPA/Root.js";
+import Router from "/JavaScript/SPA/Router.js";
+import SVG from "/JavaScript/SPA/SVG.js";
+import Title from "/JavaScript/SPA/Title.js";
 import URL from "/JavaScript/SPA/URL.js";
 
 

@@ -1,4 +1,4 @@
-import Layer from "Layer.js";
+import Layer from "./Layer.js";
 
 export default class Layers{
 	static selector = "body > x-layers";
