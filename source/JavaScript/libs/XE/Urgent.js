@@ -1,4 +1,4 @@
-export default class Modal extends HTMLElement{
+export default class Urgent extends HTMLElement{
 	constructor(){
 		super();
 
@@ -82,7 +82,6 @@ export default class Modal extends HTMLElement{
 	}
 };
 
-window.customElements.define('x-modal', Modal);
+window.customElements.define('x-urgent', Urgent);
 
-// Make Modal Usable W/O Importing It
-window.Modal = Modal;
+window.Urgent = Urgent;
