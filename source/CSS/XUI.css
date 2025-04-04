@@ -2893,6 +2893,10 @@
 		.filter_grayscale_100{filter: grayscale(100%);}
 
 		.mix-blend-mode-multiply { mix-blend-mode: multiply; }
+
+		.opacity-0 { opacity: 0; }
+		.opacity-0-5 { opacity: 0.5; }
+		.opacity-1 { opacity: 1; }
 	}
 
 	@layer backdrop_filters{
