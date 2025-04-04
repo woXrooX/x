@@ -392,9 +392,9 @@ export default class Table extends HTMLElement{
 
 		this.querySelector("container > footer > section:nth-child(2)").innerHTML = `
 			<button class="btn btn-primary btn-s text-transform-uppercase" name="first">${window.Lang.use("first")}</button>
-			<button class="btn btn-primary btn-s" name="previous"><x-svg name="arrow_back" color="white"></x-svg></button>
+			<button class="btn btn-primary btn-s" name="previous"><x-svg name="arrow_back_v1" color="white"></x-svg></button>
 			<section class="display-flex flex-row gap-0-2">${buttons_HTML}</section>
-			<button class="btn btn-primary btn-s" name="next"><x-svg name="arrow_forward" color="white"></x-svg></button>
+			<button class="btn btn-primary btn-s" name="next"><x-svg name="arrow_forward_v1" color="white"></x-svg></button>
 			<button class="btn btn-primary btn-s text-transform-uppercase" name="last">${window.Lang.use("last")}</button>
 		`;
 
