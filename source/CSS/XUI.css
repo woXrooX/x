@@ -77,9 +77,9 @@
 				--color-urgent-lightness: 10%;
 				--color-urgent: hsla(var(--color-urgent-hue), var(--color-urgent-saturation), var(--color-urgent-lightness), 1);
 
-				--color-hsla-0-0-100-0-1: color: hsla(0deg, 0%, 100%, 0.1);
-				--color-hsla-0-0-100-0-3: color: hsla(0deg, 0%, 100%, 0.3);
-				--color-hsla-0-0-100-0-5: color: hsla(0deg, 0%, 100%, 0.5);
+				--color-hsla-0-0-100-0-1: hsla(0deg, 0%, 100%, 0.1);
+				--color-hsla-0-0-100-0-3: hsla(0deg, 0%, 100%, 0.3);
+				--color-hsla-0-0-100-0-5: hsla(0deg, 0%, 100%, 0.5);
 
 
 				color-scheme: dark;
