@@ -120,6 +120,7 @@ export default class Core{
 			Log.info("Core.#on_URL_change()");
 
 			URL.handle_change();
+			Modal.hide();
 		});
 	}
 
