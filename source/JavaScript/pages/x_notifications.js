@@ -48,14 +48,23 @@ export async function after(){
 
 		function build_delete_all_button_HTML(){
 			return `
-				<x-svg
-					class="btn btn-error"
-					name="delete"
-					color="white"
-					xr-post
-					xr-for="delete_all_notifications"
-					x-toast="on:any:message"
-				></x-svg>
+				<x-svg id="modal_delete_all_notifications" name="delete" class="btn btn-error" color="white"></x-svg>
+				<x-modal trigger_selector="x-svg#modal_delete_all_notifications">
+					<column class="gap-1 padding-2">
+						<p class="text-align-center text-size-1-2">Are you sure you want to delete all notifications?</p>
+
+						<button
+							xr-post
+							xr-for="delete_all_notifications"
+
+							x-toast="on:any:message"
+
+							x-modal="on:success:hide"
+
+							class="btn btn-error"
+						>Yes, delete!</button>
+					</column>
+				</x-modal>
 			`;
 		}
 
