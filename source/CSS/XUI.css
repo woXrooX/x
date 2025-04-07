@@ -3051,4 +3051,54 @@
 		}
 		/**************************** HR END ****************************/
 	}
+
+	@layer overrides {
+		@layer root {
+			:root:has(div#root > main > .foce-root-color-mode-dark) {
+				color-scheme: dark !important;
+
+				--color-main-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1) !important;
+
+				--color-main-tint-1: hsla(var(--color-main-hue), 10%, 10%, 1) !important;
+				--color-main-tint-2: hsla(var(--color-main-hue), 10%, 15%, 1) !important;
+				--color-main-tint-3: hsla(var(--color-main-hue), 10%, 20%, 1) !important;
+				--color-main-tint-4: hsla(var(--color-main-hue), 10%, 25%, 1) !important;
+				--color-main-tint-5: hsla(var(--color-main-hue), 10%, 30%, 1) !important;
+				--color-main-tint-6: hsla(var(--color-main-hue), 10%, 35%, 1) !important;
+				--color-main-tint-7: hsla(var(--color-main-hue), 10%, 50%, 1) !important;
+				--color-main-tint-8: hsla(var(--color-main-hue), 10%, 65%, 1) !important;
+				--color-main-tint-9: hsla(var(--color-main-hue), 10%, 80%, 1) !important;
+				--color-main-tint-10: hsla(var(--color-main-hue), 10%, 95%, 1) !important;
+
+				--color-text-primary: hsla(var(--color-main-hue), 15%, 95%, 1) !important;
+				--color-text-secondary: hsla(var(--color-main-hue), 5%, 75%, 1) !important;
+				--color-text-accent: var(--color-main-accent) !important;
+
+				--shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 50% 3% / 0.3) !important;
+			}
+
+			:root:has(div#root > main > .foce-root-color-mode-light) {
+				color-scheme: light !important;
+
+				--color-main-accent: hsla(var(--color-main-hue), 15%, 95%, 1) !important;
+
+				--color-main-tint-1: hsla(var(--color-main-hue), 20%, 100%, 1) !important;
+				--color-main-tint-2: hsla(var(--color-main-hue), 20%, 95%, 1) !important;
+				--color-main-tint-3: hsla(var(--color-main-hue), 20%, 90%, 1) !important;
+				--color-main-tint-4: hsla(var(--color-main-hue), 20%, 85%, 1) !important;
+				--color-main-tint-5: hsla(var(--color-main-hue), 20%, 80%, 1) !important;
+				--color-main-tint-6: hsla(var(--color-main-hue), 20%, 75%, 1) !important;
+				--color-main-tint-7: hsla(var(--color-main-hue), 20%, 60%, 1) !important;
+				--color-main-tint-8: hsla(var(--color-main-hue), 20%, 45%, 1) !important;
+				--color-main-tint-9: hsla(var(--color-main-hue), 20%, 30%, 1) !important;
+				--color-main-tint-10: hsla(var(--color-main-hue), 20%, 15%, 1) !important;
+
+				--color-text-primary: hsla(var(--color-main-hue), var(--color-main-saturation), 10%, 1) !important;
+				--color-text-secondary: hsla(var(--color-main-hue), 30%, 30%, 1) !important;
+				--color-text-accent: var(--color-main-accent) !important;
+
+				--shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 10% 2% / 0.2) !important;
+			}
+		}
+	}
 }

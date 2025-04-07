@@ -43,7 +43,7 @@ export default class CSS{
 
 
 	//////////////////////// APIs
-	// Init
+
 	static init(){
 		Log.info("CSS.init()");
 
@@ -54,7 +54,6 @@ export default class CSS{
 		CSS.#handle_color_mode_toggle();
 	}
 
-	// Get CSS value
 	static get_value(variable){ return getComputedStyle(document.querySelector(':root')).getPropertyValue(variable); }
 
 	static detect_color_mode(){
@@ -112,7 +111,6 @@ export default class CSS{
 				CSS.color_mode_switcher_icon.toggle = "dark_mode";
 		}
 	}
-
 
 
 	//////////////////////// Helpers
