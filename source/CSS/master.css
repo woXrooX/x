@@ -467,10 +467,12 @@ body{
 
 @layer observer_animations{
 	.observe{
+		--observe-behaviour: normal;
 		--observe-duration: 500ms;
 		--observe-timing-function: ease-in-out;
 		--observe-delay: 250ms;
 
+		transition-behavior: var(--observe-behaviour);
 		transition-duration: var(--observe-duration);
 		transition-timing-function: var(--observe-timing-function);
 		transition-delay: var(--observe-delay);
@@ -493,6 +495,20 @@ body{
 
 			&.observed {
 				opacity: 1;
+			}
+		}
+
+		&.observer_animation_v3 {
+			--observe-duration: 1.3s;
+			--observe-timing-function: ease;
+			--observe-delay: 300ms;
+
+			opacity: 0;
+			transform: translateY(-25px);
+
+			&.observed {
+				opacity: 1;
+				transform: translateY(0);
 			}
 		}
 	}
