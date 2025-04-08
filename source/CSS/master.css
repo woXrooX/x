@@ -495,6 +495,20 @@ body{
 				opacity: 1;
 			}
 		}
+
+		&.observer_animation_v3 {
+			--observe-duration: 1.3s;
+			--observe-timing-function: ease;
+			--observe-delay: 300ms;
+
+			opacity: 0;
+			transform: translateY(-25px);
+
+			&.observed {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
 	}
 }
 
