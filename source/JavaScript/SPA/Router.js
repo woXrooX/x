@@ -69,14 +69,14 @@ export default class Router{
 		window.Log.info(`Page file is loading: ${Router.current_page.name}.js`);
 
 		try{
-			if(DOM.page !== null && !!DOM.page.on_page_unmount === true) await window.DOM.page.on_page_unmount();
+			if(window.x.Page.current_page !== null && !!window.x.Page.current_page.on_page_unmount === true) await window.x.Page.current_page.on_page_unmount();
 
 			// Start loading effects
 			window.Loading.start();
 			window.Main.animation_start();
 
 			// Load page file
-			await window.DOM.set_page(await import(`/JavaScript/pages/${Router.current_page.name}.js`));
+			await window.x.Page.load(Router.current_page.name);
 		}
 
 		catch(error){
@@ -90,11 +90,11 @@ export default class Router{
 			window.Header.handle();
 
 			if("CONF" in window && window.CONF.tools.debug === true){
-				window.DOM.render(Main.situational_content("error", error.name, error.stack));
+				window.Main.render(Main.situational_content("error", error.name, error.stack));
 				console.trace(error);
 			}
 
-			else window.DOM.render(Main.situational_content("warning", Lang.use("warning"), Lang.use("something_went_wrong")));
+			else window.Main.render(Main.situational_content("warning", Lang.use("warning"), Lang.use("something_went_wrong")));
 
 			window.Footer.handle();
 		}

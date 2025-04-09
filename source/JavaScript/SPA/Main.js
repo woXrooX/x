@@ -1,17 +1,26 @@
 export default class Main{
 	static selector = "body > div#root > main";
 
-	// As index.html Already Has body > main Element We Do Not Have To Wait For DOM Creation To Use Query Selector
-	static element = window.x["Root"].element.querySelector("main");
+	static element = window.x.Root.element.querySelector("main");
 
 	static animation_start(){ Main.element.classList.remove("show"); }
 
 	static animation_end(){ Main.element.classList.add("show"); }
 
+	static async render(DOM){
+		// If passed object like: createElement("x-form")
+		if(typeof DOM === "object") window.Main.element.replaceChildren(DOM);
+
+		// If passed string like: "<x-form></x-from>"
+		else if(typeof DOM === "string") window.Main.element.innerHTML = DOM;
+
+		window.dispatchEvent(new CustomEvent("DOM_change"));
+	}
+
 	static situational_content(type = "error", content_title = "ERROR", content = "ERROR", document_title = null){
 		if(document_title === null) document_title = type.toUpperCase();
 
-		Title.set(document_title);
+		window.x.Head.set_title(document_title);
 
 		return `
 			<container class="flex-y-center padding-5">
