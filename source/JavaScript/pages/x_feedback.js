@@ -1,6 +1,8 @@
-export const TITLE = window.Lang.use("feedback");
+export function before(){
+	window.x.Head.set_title("feedback");
+}
 
-export default function main(){return `<container class="padding-5 max-width-1500px"></container>`;}
+export default function main(){ return `<container class="padding-5 max-width-1500px"></container>`; }
 
 export async function after(){
 	const container = document.querySelector("container");

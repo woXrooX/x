@@ -9,9 +9,11 @@ import x_String from "/JavaScript/modules/String.js";
 
 ///////////////////////////// SPA Classes
 // Order matters
+import Head from "/JavaScript/SPA/Head.js";
 import Body from "/JavaScript/SPA/Body.js";
 import Cover from "/JavaScript/SPA/Cover.js";
 import CSS from "/JavaScript/SPA/CSS.js";
+import Page from "/JavaScript/SPA/Page.js";
 import DOM from "/JavaScript/SPA/DOM.js";
 import Footer from "/JavaScript/SPA/Footer.js";
 import Form from "/JavaScript/SPA/Form.js";
@@ -25,7 +27,6 @@ import Menu from "/JavaScript/SPA/Menu.js";
 import Notification from "/JavaScript/SPA/Notification.js";
 import Router from "/JavaScript/SPA/Router.js";
 import SVG from "/JavaScript/SPA/SVG.js";
-import Title from "/JavaScript/SPA/Title.js";
 import URL from "/JavaScript/SPA/URL.js";
 
 
@@ -43,8 +44,9 @@ import XSVG from "/JavaScript/libs/XE/XSVG.js";
 // <script type="module" src="/JavaScript/libs/XE/Sample_XE.js"></script>
 
 export default class Core{
+	/////////////////////////// Static
+
 	static {
-		// Try To Get Initial Data Then Init The Methods
 		Core.#get_initial_data()
 			.then(async ()=>{
 				await Core.#init();
@@ -58,7 +60,6 @@ export default class Core{
 			});
 	}
 
-	/////// Initial Data
 	static async #get_initial_data(){
 		return new Promise( async (resolve, reject) => {
 			let response = await window.bridge({for: "initial_data"}, "/API");
@@ -84,7 +85,6 @@ export default class Core{
 		});
 	}
 
-	// Initialize all the initial methods
 	static async #init(){
 		Log.info("Core.#init()");
 
@@ -98,7 +98,8 @@ export default class Core{
 		await x.Notification.init();
 	}
 
-	/////// Event Handlers
+	/////////// Event Handlers
+
 	static #on_load(){
 		// Works On The First Visit
 		document.addEventListener('readystatechange', ()=>{

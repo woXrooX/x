@@ -1,7 +1,8 @@
-export const TITLE = window.Lang.use("log_out");
+export function before(){
+	window.x.Head.set_title("log_out");
+}
 
 export default function main(){
-
 	return `
 		<container class="padding-5 gap-1">
 			<p class="text-size-0-8 text-align-center">${window.Lang.use("if_log_out_wont_be_able_to")}</p>

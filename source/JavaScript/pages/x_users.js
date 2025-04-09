@@ -1,6 +1,8 @@
-export const TITLE = window.Lang.use("users");
+export function before(){
+	window.x.Head.set_title("users");
+}
 
-export default async function main(){return `<container class="padding-5 gap-1"></container>`;}
+export default async function main(){ return `<container class="padding-5 gap-1"></container>`; }
 
 export async function after(){
 	const container = document.querySelector("container");

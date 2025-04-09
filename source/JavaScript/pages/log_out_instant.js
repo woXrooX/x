@@ -1,6 +1,6 @@
-export const TITLE = window.Lang.use("log_out");
-
 export async function before(){
+	window.x.Head.set_title("log_out");
+
 	const resp = await window.bridge({for:"log_out_instant"}, "/log_out_instant");
 
 	if("type" in resp && resp["type"] == "success"){

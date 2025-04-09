@@ -1,4 +1,6 @@
-export const TITLE = window.Lang.use("eMail_confirmation");
+export function before(){
+	window.x.Head.set_title("eMail_confirmation");
+}
 
 export default function main(){
 	return `

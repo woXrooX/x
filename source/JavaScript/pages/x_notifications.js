@@ -1,4 +1,6 @@
-export const TITLE = window.Lang.use("notifications");
+export function before(){
+	window.x.Head.set_title("notifications");
+}
 
 export default function main(){ return `<container class="padding-5 gap-0-5 max-width-1200px"></container>`; }
 

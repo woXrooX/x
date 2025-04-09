@@ -1,4 +1,6 @@
-export const TITLE = 400;
+export function before(){
+	window.x.Head.set_title("400");
+}
 
 export default function main(){
 	return `

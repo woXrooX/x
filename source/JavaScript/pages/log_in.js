@@ -1,4 +1,6 @@
-export const TITLE = window.Lang.use("log_in");
+export function before(){
+	window.x.Head.set_title("log_in");
+}
 
 export default function main(){
 	return `

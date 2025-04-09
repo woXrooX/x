@@ -1,4 +1,6 @@
-export const TITLE = 'Reset password';
+export function before(){
+	window.x.Head.set_title("reset_password");
+}
 
 export default function main(){
 	return `

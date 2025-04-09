@@ -1,4 +1,6 @@
-export const TITLE = window.Lang.use('sign_up');
+export function before(){
+	window.x.Head.set_title("sign_up");
+}
 
 export default function main(){
 	return `

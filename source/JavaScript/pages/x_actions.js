@@ -1,4 +1,6 @@
-export const TITLE = window.Lang.use("actions");
+export function before(){
+	window.x.Head.set_title("actions");
+}
 
 export default async function main(){
 	return `

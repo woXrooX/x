@@ -1,4 +1,6 @@
-export const TITLE = Lang.use("app_is_down");
+export function before(){
+	window.x.Head.set_title("app_is_down");
+}
 
 export function header(){ return false; }
 

@@ -1,4 +1,6 @@
-export const TITLE = window.Lang.use("user");
+export function before(){
+	window.x.Head.set_title("user");
+}
 
 export default function main(){
 	return `<container class="padding-5 gap-1"></container>`;

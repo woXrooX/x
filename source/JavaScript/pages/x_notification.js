@@ -1,6 +1,8 @@
-export const TITLE = window.Lang.use("notification");
+export function before(){
+	window.x.Head.set_title("notification");
+}
 
-export default function main(){return '<container class="padding-5 max-width-1000px"></container>';}
+export default function main(){ return '<container class="padding-5 max-width-1000px"></container>'; }
 
 export async function after(){
 	const container = document.querySelector("container");

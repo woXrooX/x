@@ -1,4 +1,6 @@
-export const TITLE = 404;
+export function before(){
+	window.x.Head.set_title("404");
+}
 
 export default function main(){
 	return `
