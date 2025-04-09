@@ -202,7 +202,7 @@ if __name__ != "__main__":
 			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/header.js", 'export default function header(){\n\treturn "Header";\n}', strict=True)
 			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/footer.js", 'export default function footer(){\n\treturn Lang.use("powered_by_woXrooX");\n}', strict=True)
 			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py", 'from Python.x.modules.Page import Page\n\n@Page.build()\ndef home(): pass', strict=True)
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/pages/front/home.js", 'export const TITLE = window.Lang.use("home");\n\nexport default function main(){\n\treturn "Home";\n}', strict=True)
+			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/pages/front/home.js", 'export function before(){ window.x.Head.set_title("home"); }\n\nexport default function main(){\n\treturn "Home";\n}', strict=True)
 			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/Python/before_first_request.py", 'if __name__ != "__main__":\n\tdef before_first_request(): pass')
 			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/Python/on_app_start.py", 'if __name__ != "__main__":\n\tdef init(): pass')
 			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/Python/on_sign_up.py", 'if __name__ != "__main__":\n\tdef on_sign_up(): pass')
@@ -381,6 +381,8 @@ if __name__ != "__main__":
 		@staticmethod
 		def merge_configurations():
 			#### Merge
+			if "project_name" in Globals.PROJECT: Globals.CONF["project_name"] = Globals.PROJECT["project_name"]
+
 			if "Twilio" in Globals.PROJECT: Globals.CONF["Twilio"] = Globals.PROJECT["Twilio"]
 
 			if "Stripe" in Globals.PROJECT: Globals.CONF["Stripe"] = Globals.PROJECT["Stripe"]
@@ -400,6 +402,7 @@ if __name__ != "__main__":
 			if "menu" in Globals.PROJECT: Globals.CONF["menu"] = Globals.PROJECT["menu"]
 
 			#### Public Configurations
+			Globals.PUBLIC_CONF["project_name"] = Globals.CONF["project_name"]
 			Globals.PUBLIC_CONF["default"] = Globals.CONF["default"]
 			Globals.PUBLIC_CONF["tools"] = Globals.CONF["tools"]
 			Globals.PUBLIC_CONF["pages"] = Globals.CONF["pages"]
