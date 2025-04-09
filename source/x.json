@@ -1,5 +1,6 @@
 {
-	"version": "0.210.0.0022",
+	"version": "0.211.0.0000",
+	"project_name": "x",
 
 	"flask": {
 		"root_path": null,
@@ -20,7 +21,6 @@
 	},
 
 	"default": {
-		"title": "x",
 		"charset": "utf-8",
 		"currency": "USD",
 

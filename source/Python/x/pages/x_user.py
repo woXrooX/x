@@ -16,7 +16,7 @@ def x_user(request, id):
 
 				# Prep the params
 				params = []
-				for role in roles: 
+				for role in roles:
 					if role in Globals.USER_ROLES:
 						params.append((id, Globals.USER_ROLES[role]["id"]))
 
@@ -85,7 +85,7 @@ def x_user(request, id):
 				eMail_content = f"""
 					Dear User,
 
-					<h2>Welcome to {Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}!</h2>
+					<h2>Welcome to {Globals.PROJECT_LANG_DICT.get(Globals.CONF["project_name"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}!</h2>
 
 					<p>Please verify your email address using the code below:</p>
 
@@ -93,7 +93,7 @@ def x_user(request, id):
 
 					<p>If you did not create an account using this email address, please ignore this message.</p>
 
-					<p>{Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
+					<p>{Globals.PROJECT_LANG_DICT.get(Globals.CONF["project_name"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
 				"""
 
 				if SendGrid.send("noreply", user["eMail"], eMail_content, "Email verification") is False: return response(type="error", message="could_not_send_eMail_verification_code")

@@ -58,7 +58,7 @@ def request_password_recovery(request):
 			<p>If you did not request a password reset, please ignore this email. Your account will remain secure.</p>
 
 			<p>Warm regards,</p>
-			<p>The {Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
+			<p>The {Globals.PROJECT_LANG_DICT.get(Globals.CONF["project_name"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
 		"""
 
 		if SendGrid.send("noreply", request.form["eMail"], eMail_content, "Password recovery") is not True:

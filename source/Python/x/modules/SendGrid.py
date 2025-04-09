@@ -44,11 +44,11 @@ if __name__ != "__main__":
 						<meta charset="UTF-8">
 						<meta name="viewport" content="width=device-width, initial-scale=1.0">
 						<meta http-equiv="Content-Type" content="text/html charset=UTF-8">
-						<title>{Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}</title>
+						<title>{Globals.PROJECT_LANG_DICT.get(Globals.CONF["project_name"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}</title>
 					</head>
 					<body style="height: 100% !important; width: 100% !important; padding: 10px; margin: 0;">
 						<header style="text-aligment:center; color: white; padding:5px; width:100%;">
-							{Globals.PROJECT_LANG_DICT.get(Globals.CONF["default"]["title"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}
+							{Globals.PROJECT_LANG_DICT.get(Globals.CONF["project_name"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}
 						</header>
 						<main>{content}</main>
 						<footer></footer>
