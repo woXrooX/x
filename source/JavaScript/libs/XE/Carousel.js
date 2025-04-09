@@ -81,7 +81,7 @@ export default class Carousel extends HTMLElement {
 	#init_buttons(){
 		previous: {
 			this.#previous_button = document.createElement("button");
-			this.#previous_button.innerHTML = `<x-svg name="arrow_back_v2"></x-svg>`;
+			this.#previous_button.innerHTML = `<x-svg name="arrow_back_v2" color="white"></x-svg>`;
 			this.#previous_button.className = "btn btn-primary position-absolute width-auto height-auto padding-2 left-20px opacity-0 radius-circle";
 			this.#previous_button.style = `
 				top: 50%;
@@ -94,7 +94,7 @@ export default class Carousel extends HTMLElement {
 
 		next: {
 			this.#next_button = document.createElement("button");
-			this.#next_button.innerHTML = `<x-svg name="arrow_forward_v2"></x-svg>`;
+			this.#next_button.innerHTML = `<x-svg name="arrow_forward_v2" color="white"></x-svg>`;
 			this.#next_button.className = "btn btn-primary position-absolute width-auto height-auto padding-2 right-20px opacity-0 radius-circle";
 			this.#next_button.style = `
 				top: 50%;
