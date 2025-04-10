@@ -17,9 +17,6 @@ export default class Marquee extends HTMLElement {
 		this.shadowRoot.innerHTML = `
 			<style>
 				:host {
-					pointer-events: none;
-
-					display: block;
 					width: 100%;
 					height: 100%;
 					max-width: 100dvw;
@@ -31,19 +28,21 @@ export default class Marquee extends HTMLElement {
 					gap: 30px;
 					white-space: nowrap;
 					mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent 100%);
+
+					&:hover {
+						section {
+							animation-play-state: paused;
+						}
+					}
+
+					& > section {
+						display: flex;
+						gap: 30px;
+						animation: scroll_left 15s linear infinite;
+					}
 				}
 
-				main:hover section {
-					animation-play-state: paused;
-				}
-
-				section {
-					display: flex;
-					gap: 30px;
-					animation: marquee 15s linear infinite;
-				}
-
-				@keyframes marquee {
+				@keyframes scroll_left {
 					0% {
 						transform: translateX(0);
 					}
