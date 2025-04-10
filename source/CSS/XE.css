@@ -208,6 +208,35 @@ x-link{
 	}
 }
 
+@layer x_marquee {
+	x-marquee {
+		width: 100%;
+		overflow: hidden;
+		mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent 100%);
+
+		&:hover {
+			& > row {
+				animation-play-state: paused;
+			}
+		}
+
+		& > row {
+			animation: x_marquee_animation linear infinite;
+			animation-duration: 4s;
+
+			& > * {
+				flex-shrink: 0;
+			}
+		}
+	}
+
+	@keyframes x_marquee_animation {
+		0% { transform: translateX(0);  }
+		100% { transform: translateX(-100%); }
+	}
+}
+
+
 x-tooltip {
 	position: absolute;
 	top: anchor(bottom);
@@ -238,3 +267,91 @@ x-tooltip {
 		transform: translate(-50%, var(--padding)) scale(1);
 	}
 }
+
+
+/* <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple CSS-Only Horizontal Scroll</title>
+  <style>
+    /* The scroll container */
+    .scroll-container {
+      width: 100%;
+      overflow: hidden; /* Hide the scrollbar but keep overflow content */
+      position: relative;
+      margin: 20px 0;
+    }
+
+    /* The inner content that will be animated */
+    .scroll-content {
+      display: flex;
+      animation: scrollX 20s linear infinite; /* Change 20s to adjust speed */
+    }
+
+    /* Animation keyframes for horizontal movement */
+    @keyframes scrollX {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-100%); /* Move left by the width of content */
+      }
+    }
+
+    /* Optional: Pause animation on hover */
+    .scroll-container:hover .scroll-content {
+      animation-play-state: paused;
+    }
+
+    /* Demo items styling */
+    .item {
+      flex: 0 0 auto;
+      width: 250px;
+      height: 150px;
+      margin-right: 20px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+    }
+
+    /* For a seamless loop, we duplicate the content */
+    .scroll-content {
+      padding-right: 20px; /* Match the margin-right of items */
+    }
+
+    .scroll-content .item {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Simple CSS-Only Horizontal Scroll Animation</h1>
+
+  <div class="scroll-container">
+    <div class="scroll-content">
+      <!-- Original items -->
+      <div class="item" style="background-color: #3498db;">Item 1</div>
+      <div class="item" style="background-color: #e74c3c;">Item 2</div>
+      <div class="item" style="background-color: #2ecc71;">Item 3</div>
+      <div class="item" style="background-color: #f39c12;">Item 4</div>
+      <div class="item" style="background-color: #9b59b6;">Item 5</div>
+      <div class="item" style="background-color: #1abc9c;">Item 6</div>
+
+      <!-- Duplicated items for seamless loop -->
+      <div class="item" style="background-color: #3498db;">Item 1</div>
+      <div class="item" style="background-color: #e74c3c;">Item 2</div>
+      <div class="item" style="background-color: #2ecc71;">Item 3</div>
+      <div class="item" style="background-color: #f39c12;">Item 4</div>
+      <div class="item" style="background-color: #9b59b6;">Item 5</div>
+      <div class="item" style="background-color: #1abc9c;">Item 6</div>
+    </div>
+  </div>
+
+  <p>Hover over the scrolling items to pause the animation.</p>
+</body>
+</html> */
