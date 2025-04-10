@@ -6,49 +6,38 @@ export default class Marquee extends HTMLElement {
 		this.shadowRoot.innerHTML = `
 			<style>
 				:host {
+					pointer-events: none;
+
 					display: block;
 					width: 100%;
-					overflow: hidden;
+					height: 100%;
+					max-width: 100dvw;
+					max-height: 100dvh;
 				}
 
 				main {
-					position: relative;
-					width: 100%;
-					overflow: hidden;
-					mask-image: linear-gradient(
-						to right,
-						transparent,
-						black 10%,
-						black 90%,
-						transparent 100%
-					);
-					-webkit-mask-image: linear-gradient(
-						to right,
-						transparent,
-						black 10%,
-						black 90%,
-						transparent 100%
-					);
+					display: flex;
+					gap: 30px;
+					white-space: nowrap;
+					mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent 100%);
+				}
+
+				main:hover section {
+					animation-play-state: paused;
 				}
 
 				section {
 					display: flex;
 					gap: 30px;
 					animation: marquee 15s linear infinite;
-					position: relative;
-					white-space: nowrap;
-				}
-
-				section:hover {
-					animation-play-state: paused;
 				}
 
 				@keyframes marquee {
 					0% {
-						transform: translateX(100%);
+						transform: translateX(0);
 					}
 					100% {
-						transform: translateX(-100%);
+						transform: translateX(calc(-100% - 30px));
 					}
 				}
 			</style>
@@ -57,10 +46,24 @@ export default class Marquee extends HTMLElement {
 				<section>
 					<slot></slot>
 				</section>
+				<section>
+					<slot name="duplicate"></slot>
+				</section>
 			</main>
 		`;
 	}
+
+	connectedCallback() {
+		// Create a static copy of children
+		const child_elements = Array.from(this.children);
+
+		// Clone the children, add them as duplicates and append
+		for (const child of child_elements) {
+			const clone = child.cloneNode(true);
+			clone.setAttribute('slot', 'duplicate');
+			this.appendChild(clone);
+		}
+	}
 }
 
-// Define the custom element
 window.customElements.define('x-marquee', Marquee);
