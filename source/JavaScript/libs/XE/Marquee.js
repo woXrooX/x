@@ -1,3 +1,14 @@
+// Usage:
+// <x-marquee>
+// 	<column class="padding-5 surface-v1 bg-3 width-200px">Connexion</column>
+// 	<column class="padding-5 surface-v1 bg-3 width-200px">woXrooX</column>
+// 	<column class="padding-5 surface-v1 bg-3 width-200px">Datalyse</column>
+// 	<column class="padding-5 surface-v1 bg-3 width-200px">XE elements</column>
+// 	<column class="padding-5 surface-v1 bg-3 width-200px">XUI</column>
+// 	<column class="padding-5 surface-v1 bg-3 width-200px">SooqPro</column>
+// 	<column class="padding-5 surface-v1 bg-3 width-200px">X</column>
+// </x-marquee>
+
 export default class Marquee extends HTMLElement {
 	constructor() {
 		super();
