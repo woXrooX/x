@@ -2434,6 +2434,13 @@
 			.margin-left-3{margin-left: calc(var(--margin) * 3);}
 			.margin-left-4{margin-left: calc(var(--margin) * 4);}
 			.margin-left-5{margin-left: calc(var(--margin) * 5);}
+			.margin-left-6{margin-left: calc(var(--margin) * 6);}
+			.margin-left-7{margin-left: calc(var(--margin) * 7);}
+			.margin-left-8{margin-left: calc(var(--margin) * 8);}
+			.margin-left-9{margin-left: calc(var(--margin) * 9);}
+			.margin-left-10{margin-left: calc(var(--margin) * 10);}
+			.margin-left-20{margin-left: calc(var(--margin) * 20);}
+			.margin-left-30{margin-left: calc(var(--margin) * 30);}
 
 			/* X, Left To Right */
 			.margin-x-0{
