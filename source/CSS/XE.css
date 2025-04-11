@@ -1,3 +1,23 @@
+@layer x_marquee {
+	x-marquee {
+		--x-marquee-gap: var(--gap);
+		--x-marquee-animation-duration: 20s;
+
+		overflow: hidden;
+		mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent 100%);
+
+		& > div {
+			width: max-content;
+			display: flex;
+			padding-left: var(--x-marquee-gap);
+			gap: var(--x-marquee-gap);
+			animation: x_marquee_animation var(--x-marquee-animation-duration) linear infinite forwards;
+		}
+	}
+
+	@keyframes x_marquee_animation { to { transform: translateX(-50%); } }
+}
+
 x-select{
 	& > button{
 		width: 100%;
