@@ -208,37 +208,6 @@ x-link{
 	}
 }
 
-@layer x_marquee {
-	x-marquee {
-		width: 100%;
-		overflow: hidden;
-		mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent 100%);
-
-		&:hover {
-			& > row {
-				animation-play-state: paused;
-			}
-		}
-
-		& > row {
-			padding-left: var(--gap);
-			width: max-content;
-			animation: x_marquee_animation linear infinite;
-			animation-duration: 7s;
-
-			& > * {
-				flex-shrink: 0;
-			}
-		}
-	}
-
-	@keyframes x_marquee_animation {
-		0% { transform: translateX(0);  }
-		100% { transform: translateX(-50%); }
-	}
-}
-
-
 x-tooltip {
 	position: absolute;
 	top: anchor(bottom);
