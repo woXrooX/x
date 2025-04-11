@@ -3,6 +3,7 @@
 		--x-marquee-gap: var(--gap);
 		--x-marquee-animation-duration: 20s;
 
+		width: 100%;
 		overflow: hidden;
 		mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent 100%);
 
