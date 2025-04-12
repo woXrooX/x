@@ -5,6 +5,8 @@
 
 		width: 100%;
 		overflow: hidden;
+		position: relative;
+
 		mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent 100%);
 
 		& > div {
@@ -13,6 +15,15 @@
 			padding-left: var(--x-marquee-gap);
 			gap: var(--x-marquee-gap);
 			animation: x_marquee_animation var(--x-marquee-animation-duration) linear infinite forwards;
+		}
+
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+
+			backdrop-filter: blur(2px);
+			mask-image: linear-gradient(to right, black 0%, black 5%, transparent 20%, transparent 80%, black 95%, black 100%);
 		}
 	}
 
