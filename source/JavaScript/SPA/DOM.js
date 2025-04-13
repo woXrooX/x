@@ -15,7 +15,7 @@ export default class DOM{
 
 				case "main":
 					Log.info(`DOM.update() - target: ${target}`);
-					DOM.life_cycle();
+					window.x.Page.life_cycle();
 					break;
 
 				case "footer":
@@ -25,7 +25,7 @@ export default class DOM{
 				case "all":
 					Log.info(`DOM.update() - target: ${target}`);
 					Menu.build();
-					DOM.life_cycle();
+					window.x.Page.life_cycle();
 					break;
 
 				default:
