@@ -1361,6 +1361,16 @@
 			border-radius: 12px;
 		}
 
+		.surface-v4 {
+			background-color: var(--color-main-tint-2);
+			border-radius: 20px;
+			border: 1px solid var(--color-main-tint-3);
+			box-shadow:
+				0px 4px 4px -4px rgba(0 0 0 / 0.1),
+				0px 2px 13px -5px rgba(0 0 0 / 0.2)
+			;
+		}
+
 		/*** Situational ***/
 		.surface-success{
 			background-color: hsla(var(--color-success-hue), var(--color-success-saturation), var(--color-success-lightness), 0.1);
