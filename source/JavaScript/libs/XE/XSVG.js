@@ -43,7 +43,7 @@ export default class XSVG extends HTMLElement{
 						transition-property: transform;
 
 						&:hover{
-							transform: scale(1.3);
+							transform: scale(1.1);
 						}
 
 						&:active{
