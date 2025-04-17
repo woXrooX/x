@@ -2,7 +2,6 @@ from main import session
 
 from Python.x.modules.Page import Page
 from Python.x.modules.response import response
-from Python.x.modules.Globals import Globals
 from Python.x.modules.Logger import Log
 
 # Allow only POST methods

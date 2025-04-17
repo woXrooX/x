@@ -1,14 +1,14 @@
 export async function before(){
 	window.x.Head.set_title("log_out");
 
-	const resp = await window.bridge({for:"log_out_instant"}, "/log_out_instant");
+	const resp = await window.bridge({for:"log_out_instant"});
+	if (!("type" in resp)) return;
+	if (resp["type"] != "success") return;
 
-	if("type" in resp && resp["type"] == "success"){
-		delete window.session["user"];
-		window.x.CSS.detect_color_mode();
-		window.dispatchEvent(new CustomEvent("DOM_change", {detail: ["all"]}));
-		Hyperlink.locate("home");
-	}
+	delete window.session["user"];
+	window.x.CSS.detect_color_mode();
+	window.dispatchEvent(new CustomEvent("DOM_change", {detail: ["all"]}));
+	Hyperlink.locate("/");
 }
 
 export default function main(){
