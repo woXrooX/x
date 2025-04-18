@@ -32,6 +32,7 @@ import URL from "/JavaScript/SPA/URL.js";
 
 //// Built-in XEs
 import Layers from "/JavaScript/libs/XE/Layers/Layers.js";
+import Link from "/JavaScript/libs/XE/Link.js";
 import Modal from "/JavaScript/libs/XE/Modal.js";
 import Notification_Bell from "/JavaScript/libs/XE/Notification_Bell.js";
 import Offline from "/JavaScript/libs/XE/Offline.js";

@@ -3,17 +3,52 @@ export default class Link extends HTMLElement{
 
 	constructor(){ super(); }
 
-	connectedCallback(){
-		if(this.hasAttribute("href") !== true) return;
-		this.#href = this.getAttribute("href");
-		this.addEventListener("click", this.#handle_click);
+	connectedCallback(){ this.addEventListener("click", this.#event_handler_click); }
+
+	disconnectedCallback(){ this.removeEventListener("click", this.#event_handler_click); }
+
+	#event_handler_click(event){
+		event.stopPropagation();
+		this.#handle_go();
 	}
 
-	disconnectedCallback(){ this.removeEventListener("click", this.#handle_click); }
+	#handle_go(){
+		if(this.hasAttribute("go") !== true) return;
 
-	#handle_click(event){
-		event.stopPropagation();
-		window.Hyperlink.locate(this.#href);
+		const parts = this.getAttribute("go").split(':', 2);
+
+		switch (parts[0]) {
+			case "URL":
+				handle_URL(parts[1]);
+				break;
+
+			case "history":
+				handle_history(parts[1]);
+				break;
+		}
+
+		function handle_URL(URL){
+			if(!!URL === false) return false;
+			window.Hyperlink.locate(URL);
+		}
+
+		function handle_history(history){
+			if(!!history === false) return false;
+
+			switch (history) {
+				case "back":
+					window.history.back();
+					break;
+
+				case "forth":
+					window.history.forward();
+					break;
+
+				default:
+					window.history.go(parseInt(history));
+					break;
+			}
+		}
 	}
 };
 
