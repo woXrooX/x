@@ -52,7 +52,7 @@ body{
 			font-size: 0.7rem;
 
 			width: 100%;
-			height: var(--footer-height);
+			min-height: var(--footer-height);
 
 			display: grid;
 			place-items: center;
@@ -68,7 +68,7 @@ body{
 		/* NOTE: We need to make header text color dynamic. We use contrast-color(). This feature is coming soon. */
 
 		width: 100%;
-		height: var(--header-height);
+		min-height: var(--header-height);
 
 		position: fixed;
 		top: 0px;

@@ -20,9 +20,8 @@ export function feedback_leave_button(){
 			<x-svg name="feedback" color="white"></x-svg>
 		</column>
 		<x-modal trigger_selector="column#modal_feedback_button">
-			<h2>Report a problem</h2>
-
 			<form action="/x/feedback/leave" for="leave_feedback" class="padding-2" x-modal="on:success:hide" x-toast="on:any:message">
+				<p class="text-align-center text-size-1-5">Report a problem</p>
 
 				<input type="hidden" name="feedback_left_page" value="${window.location.pathname}">
 
@@ -34,10 +33,9 @@ export function feedback_leave_button(){
 				</label>
 
 				<label>
-					<input class="btn btn-primary" type="submit" name="leaveFeedback" value="Submit">
-					<p for="leaveFeedback"></p>
+					<input class="btn btn-primary" type="submit" name="leave_feedback" value="Submit">
+					<p for="leave_feedback"></p>
 				</label>
-
 			</form>
 		</x-modal>
 	`;
