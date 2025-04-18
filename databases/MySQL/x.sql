@@ -31,7 +31,7 @@ USE [NAME];
 -- RUB https://en.wikipedia.org/wiki/Russian_ruble
 
 CREATE TABLE IF NOT EXISTS `currencies` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
 	`code` VARCHAR(3) NOT NULL UNIQUE,
 	`decimal_digits` INT NULL,
 	`fractional_unit` VARCHAR(10) NULL,
@@ -49,7 +49,7 @@ INSERT INTO currencies (id, code, decimal_digits, fractional_unit, symbol, nativ
 
 \! echo "-------------------------- languages";
 CREATE TABLE IF NOT EXISTS `languages` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
 	`code` VARCHAR(3) NOT NULL UNIQUE,
 	`native_name` VARCHAR(50) NULL,
 	PRIMARY KEY (`id`)
@@ -68,7 +68,7 @@ INSERT INTO languages (id, code, native_name)
 -- 2 Is For Light Mode
 
 CREATE TABLE IF NOT EXISTS `app_color_modes` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
 	`name` VARCHAR(10) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -89,7 +89,7 @@ INSERT INTO app_color_modes (id, name)
 
 \! echo "-------------------------- user_authenticity_statuses";
 CREATE TABLE IF NOT EXISTS `user_authenticity_statuses` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
 	`name` VARCHAR(20) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -103,14 +103,14 @@ INSERT INTO user_authenticity_statuses (id, name)
 
 \! echo "-------------------------- user_plans";
 CREATE TABLE IF NOT EXISTS `user_plans` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
 	`name` VARCHAR(10) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 \! echo "-------------------------- users";
 CREATE TABLE IF NOT EXISTS `users` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
 	`username` VARCHAR(100) NULL UNIQUE,
 	`password` VARCHAR(100) NOT NULL,
 	`password_salt` VARCHAR(100),
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 \! echo "-------------------------- user_roles";
 CREATE TABLE IF NOT EXISTS `user_roles` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
 	`name` VARCHAR(20) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -193,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `users_roles` (
 
 \! echo "-------------------------- user_occupations";
 CREATE TABLE IF NOT EXISTS `user_occupations` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
 	`name` VARCHAR(20) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `users_occupations` (
 -- ------------------------------------
 \! echo "-------------------------- notification_events";
 CREATE TABLE IF NOT EXISTS `notification_events` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
 	`name` VARCHAR(500) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `notification_events` (
 -- ;
 
 CREATE TABLE IF NOT EXISTS `disabled_notification_events` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
 	`user` INT NOT NULL,
 	`event` INT NOT NULL,
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -243,7 +243,7 @@ CREATE TABLE IF NOT EXISTS `disabled_notification_events` (
 
 \! echo "-------------------------- notification_types";
 CREATE TABLE IF NOT EXISTS `notification_types` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
 	`name` VARCHAR(20) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -260,7 +260,7 @@ INSERT INTO notification_types (id, name)
 
 \! echo "-------------------------- notifications";
 CREATE TABLE IF NOT EXISTS `notifications` (
-	`id` INT NOT NULL UNIQUE auto_increment,
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
 
 	-- NULL = System
 	`sender` INT NULL,
