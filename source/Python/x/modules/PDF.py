@@ -21,9 +21,9 @@
 # sudo apt-get install wkhtmltopdf
 
 if __name__ != "__main__":
-    import pdfkit
+	import pdfkit
 
-    class PDF:
+	class PDF:
 		@staticmethod
 		def generate(content, path_to_save, file_name_to_save, options = {}):
 			# Check For Invalid Arguments
