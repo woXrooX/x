@@ -24,12 +24,12 @@ if __name__ != "__main__":
     import pdfkit
 
     class PDF:
-        @staticmethod
-        def generate(content, pathToSave, fileNameToSave, options = {}):
-            # Check For Invalid Arguments
-            if not content or not pathToSave or not fileNameToSave: return False
+		@staticmethod
+		def generate(content, path_to_save, file_name_to_save, options = {}):
+			# Check For Invalid Arguments
+			if not content or not path_to_save or not file_name_to_save: return False
 
-            file_path_and_name = f"{pathToSave}/{fileNameToSave}.pdf"
-            
-            # Returns True If Creation Successful Else False
-            return pdfkit.from_string(content, file_path_and_name, options=options)        
+			file_path_and_name = f"{path_to_save}/{file_name_to_save}.pdf"
+
+			# Returns True If Creation Successful Else False
+			return pdfkit.from_string(content, file_path_and_name, options=options)
