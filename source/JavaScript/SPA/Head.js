@@ -3,6 +3,7 @@ export default class Head{
 
 	static #title = '';
 	static #description = '';
+	static #URL = '';
 
 	static {
 		Head.#save_defaults();
@@ -37,11 +38,23 @@ export default class Head{
 		Head.set_description(Head.#description);
 	}
 
+	static set_URL(URL){
+		if (!!URL === false) return;
+
+		document.querySelector('link[rel="canonical"]')?.setAttribute('href', URL);
+		document.querySelector('meta[property="og:url"]')?.setAttribute("content", URL);
+	}
+
+	static reset_URL(){
+		Head.set_URL(Head.#URL);
+	}
+
 	/////////// Helpers
 
 	static #save_defaults(){
 		Head.#title = document.querySelector('title')?.textContent || '';
 		Head.#description = document.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+		Head.#URL = document.querySelector('link[rel="canonical"]')?.getAttribute('href') || '';
 	}
 }
 
