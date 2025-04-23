@@ -14,6 +14,7 @@ export default class Page{
 
 		window.x.Head.reset_title();
 		window.x.Head.reset_description();
+		window.x.Head.reset_URL();
 
 		// Before
 		if(!!Page.current_page.before === true) await Page.current_page.before();
