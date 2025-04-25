@@ -176,7 +176,7 @@ if __name__ != "__main__":
 				"Python",
 				"SVG"
 			]
-			for folder in project_folders: File_System.create_folder(f'{Globals.PROJECT_RUNNING_FROM}/{folder}/', strict=True)
+			for folder in project_folders: File_System.create_folder(f'{Globals.PROJECT_PATH}/{folder}/', strict=True)
 
 
 
@@ -196,20 +196,20 @@ if __name__ != "__main__":
 
 			################ Files
 			Log.center("Creating files", '=')
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/CSS/styles.css", strict=True)
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/HTML/head.html", strict=True)
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/HTML/body.html", strict=True)
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/header.js", 'export default function header(){\n\treturn "Header";\n}', strict=True)
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript/modules/footer.js", 'export default function footer(){\n\treturn Lang.use("powered_by_woXrooX");\n}', strict=True)
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/pages/back/home.py", 'from Python.x.modules.Page import Page\n\n@Page.build()\ndef home(): pass', strict=True)
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/pages/front/home.js", 'export function before(){ window.x.Head.set_title("home"); }\n\nexport default function main(){\n\treturn "Home";\n}', strict=True)
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/Python/before_first_request.py", 'if __name__ != "__main__":\n\tdef before_first_request(): pass')
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/Python/on_app_start.py", 'if __name__ != "__main__":\n\tdef init(): pass')
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/Python/on_sign_up.py", 'if __name__ != "__main__":\n\tdef on_sign_up(): pass')
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/Python/on_log_in.py", 'if __name__ != "__main__":\n\tdef on_log_in(): pass')
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/Python/on_log_out.py", 'if __name__ != "__main__":\n\tdef on_log_out(): pass')
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/language_dictionary.json", '{"x": {"en": "x"}}', strict=True)
-			File_System.create_file(f"{Globals.PROJECT_RUNNING_FROM}/project.json", "{}", strict=True)
+			File_System.create_file(f"{Globals.PROJECT_PATH}/CSS/styles.css", strict=True)
+			File_System.create_file(f"{Globals.PROJECT_PATH}/HTML/head.html", strict=True)
+			File_System.create_file(f"{Globals.PROJECT_PATH}/HTML/body.html", strict=True)
+			File_System.create_file(f"{Globals.PROJECT_PATH}/JavaScript/modules/header.js", 'export default function header(){\n\treturn "Header";\n}', strict=True)
+			File_System.create_file(f"{Globals.PROJECT_PATH}/JavaScript/modules/footer.js", 'export default function footer(){\n\treturn Lang.use("powered_by_woXrooX");\n}', strict=True)
+			File_System.create_file(f"{Globals.PROJECT_PATH}/pages/back/home.py", 'from Python.x.modules.Page import Page\n\n@Page.build()\ndef home(): pass', strict=True)
+			File_System.create_file(f"{Globals.PROJECT_PATH}/pages/front/home.js", 'export function before(){ window.x.Head.set_title("home"); }\n\nexport default function main(){\n\treturn "Home";\n}', strict=True)
+			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/before_first_request.py", 'if __name__ != "__main__":\n\tdef before_first_request(): pass')
+			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/on_app_start.py", 'if __name__ != "__main__":\n\tdef init(): pass')
+			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/on_sign_up.py", 'if __name__ != "__main__":\n\tdef on_sign_up(): pass')
+			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/on_log_in.py", 'if __name__ != "__main__":\n\tdef on_log_in(): pass')
+			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/on_log_out.py", 'if __name__ != "__main__":\n\tdef on_log_out(): pass')
+			File_System.create_file(f"{Globals.PROJECT_PATH}/language_dictionary.json", '{"x": {"en": "x"}}', strict=True)
+			File_System.create_file(f"{Globals.PROJECT_PATH}/project.json", "{}", strict=True)
 
 
 			################################ Loading/Reading Files
@@ -254,14 +254,14 @@ if __name__ != "__main__":
 
 			################################ Copying "project" folders/files
 			Log.center('Copying "project" folders', '=')
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/CSS", f"{Globals.X_PATH}/www/static/CSS", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/files", f"{Globals.X_PATH}/www/static/files", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_PATH}/www/static/fonts", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_PATH}/www/static/images", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript", f"{Globals.X_PATH}/www/static/JavaScript", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{Globals.X_PATH}/Python/live_pages", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{Globals.X_PATH}/www/static/JavaScript/pages", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/Python", f"{Globals.X_PATH}/Python/project/modules", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_PATH}/CSS", f"{Globals.X_PATH}/www/static/CSS", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_PATH}/files", f"{Globals.X_PATH}/www/static/files", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_PATH}/fonts", f"{Globals.X_PATH}/www/static/fonts", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_PATH}/images", f"{Globals.X_PATH}/www/static/images", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_PATH}/JavaScript", f"{Globals.X_PATH}/www/static/JavaScript", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_PATH}/pages/back", f"{Globals.X_PATH}/Python/live_pages", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_PATH}/pages/front", f"{Globals.X_PATH}/www/static/JavaScript/pages", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_PATH}/Python", f"{Globals.X_PATH}/Python/project/modules", strict=True)
 
 		################# Methods for File_system.init()
 		####### CleanUp
@@ -325,7 +325,7 @@ if __name__ != "__main__":
 		@staticmethod
 		def load_project_configurations():
 			try:
-				with open(f"{Globals.PROJECT_RUNNING_FROM}/project.json", 'r') as file:
+				with open(f"{Globals.PROJECT_PATH}/project.json", 'r') as file:
 					Globals.PROJECT = json.load(file)
 
 				Log.success("Loaded: project.json")
@@ -336,12 +336,12 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def load_external_HTML():
-			for file in os.listdir(f'{Globals.PROJECT_RUNNING_FROM}/HTML'):
+			for file in os.listdir(f'{Globals.PROJECT_PATH}/HTML'):
 				# Check if file is a HTML file
 				if not file.endswith(".html"): continue
 
 				try:
-					with open(f'{Globals.PROJECT_RUNNING_FROM}/HTML/{file}', "r") as HTML:
+					with open(f'{Globals.PROJECT_PATH}/HTML/{file}', "r") as HTML:
 						Globals.PROJECT_HTML[os.path.splitext(file)[0]] = HTML.read()
 
 					Log.success(f"HTML loaded: {file}")
@@ -350,12 +350,12 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def load_external_SVG():
-			for file in os.listdir(f'{Globals.PROJECT_RUNNING_FROM}/SVG'):
+			for file in os.listdir(f'{Globals.PROJECT_PATH}/SVG'):
 				# Check If File Is A SVG File
 				if not file.endswith(".svg"): continue
 
 				try:
-					with open(f'{Globals.PROJECT_RUNNING_FROM}/SVG/{file}', "r") as svg:
+					with open(f'{Globals.PROJECT_PATH}/SVG/{file}', "r") as svg:
 						Globals.PROJECT_SVG[os.path.splitext(file)[0]] = svg.read()
 
 					Log.success(f"SVG Loaded: {file}")
@@ -366,7 +366,7 @@ if __name__ != "__main__":
 		@staticmethod
 		def load_external_language_dictionary():
 			try:
-				with open(f"{Globals.PROJECT_RUNNING_FROM}/language_dictionary.json", 'r') as file:
+				with open(f"{Globals.PROJECT_PATH}/language_dictionary.json", 'r') as file:
 					Globals.PROJECT_LANG_DICT = json.load(file)
 
 				Log.success("External language_dictionary.json Is Loaded")
