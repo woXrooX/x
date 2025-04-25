@@ -197,9 +197,6 @@ if __name__ != "__main__":
 
 			else: return False
 
-
-			# Must match w/ the path in .gitignore
-			# source/project_files/users/...
 			path = f'{Globals.PROJECT_PATH}/Files/users/{ID}/'
 
 			# Try to create user folders
