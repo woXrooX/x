@@ -157,7 +157,6 @@ if __name__ != "__main__":
 
 			# x/source/[folder]
 			x_folders = [
-				"project_files/assets", "project_files/assets/private", "project_files/assets/public", "project_files/users",
 				"Python/project/modules",
 				"www", "www/HTML", "www/static"
 			]
@@ -167,7 +166,7 @@ if __name__ != "__main__":
 			project_folders = [
 				"Backups",
 				"CSS",
-				"files",
+				"Files", "Files/assets", "Files/assets/private", "Files/assets/public", "Files/static", "Files/users",
 				"fonts",
 				"HTML",
 				"images",
@@ -255,7 +254,7 @@ if __name__ != "__main__":
 			################################ Copying "project" folders/files
 			Log.center('Copying "project" folders', '=')
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/CSS", f"{Globals.X_PATH}/www/static/CSS", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_PATH}/files", f"{Globals.X_PATH}/www/static/files", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_PATH}/Files/static", f"{Globals.X_PATH}/www/static/static", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/fonts", f"{Globals.X_PATH}/www/static/fonts", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/images", f"{Globals.X_PATH}/www/static/images", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/JavaScript", f"{Globals.X_PATH}/www/static/JavaScript", strict=True)

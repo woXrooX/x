@@ -10,7 +10,7 @@ def files_assets(PRIVATE_PUBLIC, PATH_AND_FILE):
 
 	elif PRIVATE_PUBLIC == "public":
 
-			try: return send_from_directory(f"{Globals.X_PATH}/project_files/assets/public/", path=PATH_AND_FILE, as_attachment=False)
+			try: return send_from_directory(f"{Globals.PROJECT_PATH}/Files/assets/public/", path=PATH_AND_FILE, as_attachment=False)
 			except: return abort(404)
 
 	else: return abort(400)
