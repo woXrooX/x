@@ -7,10 +7,10 @@ if __name__ != "__main__":
 
 	class Globals():
 		#### Paths
-		X_RUNNING_FROM = pathlib.Path(main.__file__).parent.absolute()
+		X_PATH = pathlib.Path(main.__file__).parent.absolute()
 
 		# Go back two times from "X_RUNNING_FROM"
-		PROJECT_RUNNING_FROM = os.path.abspath(os.path.join(X_RUNNING_FROM, '../..'))
+		PROJECT_PATH = os.path.abspath(os.path.join(X_PATH, '../..'))
 
 		#### x
 		CONF = {}

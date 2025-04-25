@@ -18,7 +18,7 @@ def x_actions(request):
 				user_IDs = [user["id"] for user in users]
 
 				# Delete non-existing user folders
-				for folder in os.scandir(f'{Globals.X_RUNNING_FROM}/project_files/users/'):
+				for folder in os.scandir(f'{Globals.PROJECT_PATH}/Files/users/'):
 					# Check if folder
 					if folder.is_dir() is False: continue
 
