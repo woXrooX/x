@@ -1,7 +1,6 @@
 # Py Cache
 __pycache__/
 
-source/project_files/*
 source/www/*
 
 source/Python/live_pages/*
