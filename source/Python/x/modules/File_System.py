@@ -161,7 +161,7 @@ if __name__ != "__main__":
 				"Python/project/modules",
 				"www", "www/HTML", "www/static"
 			]
-			for folder in x_folders: File_System.create_folder(f'{Globals.X_RUNNING_FROM}/{folder}/', strict=True)
+			for folder in x_folders: File_System.create_folder(f'{Globals.X_PATH}/{folder}/', strict=True)
 
 			# project/[folder]
 			project_folders = [
@@ -190,7 +190,7 @@ if __name__ != "__main__":
 			File_System.clean_external_copied_Python_modules()
 
 			Log.center("Removing: x/source/www", '-')
-			File_System.remove_folder(f'{Globals.X_RUNNING_FROM}/www/')
+			File_System.remove_folder(f'{Globals.X_PATH}/www/')
 
 
 
@@ -245,30 +245,30 @@ if __name__ != "__main__":
 
 			################################ Copying "x" folders
 			Log.center('Copying "x" folders', '=')
-			File_System.copy_folder(f"{Globals.X_RUNNING_FROM}/CSS", f"{Globals.X_RUNNING_FROM}/www/static/CSS", strict=True)
-			File_System.copy_folder(f"{Globals.X_RUNNING_FROM}/fonts", f"{Globals.X_RUNNING_FROM}/www/static/fonts", strict=True)
-			File_System.copy_folder(f"{Globals.X_RUNNING_FROM}/HTML", f"{Globals.X_RUNNING_FROM}/www/HTML", strict=True)
-			File_System.copy_folder(f"{Globals.X_RUNNING_FROM}/images", f"{Globals.X_RUNNING_FROM}/www/static/images", strict=True)
-			File_System.copy_folder(f"{Globals.X_RUNNING_FROM}/JavaScript", f"{Globals.X_RUNNING_FROM}/www/static/JavaScript", strict=True)
-			File_System.copy_folder(f"{Globals.X_RUNNING_FROM}/Python/x/pages", f"{Globals.X_RUNNING_FROM}/Python/live_pages", strict=True)
+			File_System.copy_folder(f"{Globals.X_PATH}/CSS", f"{Globals.X_PATH}/www/static/CSS", strict=True)
+			File_System.copy_folder(f"{Globals.X_PATH}/fonts", f"{Globals.X_PATH}/www/static/fonts", strict=True)
+			File_System.copy_folder(f"{Globals.X_PATH}/HTML", f"{Globals.X_PATH}/www/HTML", strict=True)
+			File_System.copy_folder(f"{Globals.X_PATH}/images", f"{Globals.X_PATH}/www/static/images", strict=True)
+			File_System.copy_folder(f"{Globals.X_PATH}/JavaScript", f"{Globals.X_PATH}/www/static/JavaScript", strict=True)
+			File_System.copy_folder(f"{Globals.X_PATH}/Python/x/pages", f"{Globals.X_PATH}/Python/live_pages", strict=True)
 
 			################################ Copying "project" folders/files
 			Log.center('Copying "project" folders', '=')
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/CSS", f"{Globals.X_RUNNING_FROM}/www/static/CSS", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/files", f"{Globals.X_RUNNING_FROM}/www/static/files", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_RUNNING_FROM}/www/static/fonts", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_RUNNING_FROM}/www/static/images", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript", f"{Globals.X_RUNNING_FROM}/www/static/JavaScript", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{Globals.X_RUNNING_FROM}/Python/live_pages", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{Globals.X_RUNNING_FROM}/www/static/JavaScript/pages", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/Python", f"{Globals.X_RUNNING_FROM}/Python/project/modules", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/CSS", f"{Globals.X_PATH}/www/static/CSS", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/files", f"{Globals.X_PATH}/www/static/files", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/fonts", f"{Globals.X_PATH}/www/static/fonts", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/images", f"{Globals.X_PATH}/www/static/images", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/JavaScript", f"{Globals.X_PATH}/www/static/JavaScript", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/pages/back", f"{Globals.X_PATH}/Python/live_pages", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/pages/front", f"{Globals.X_PATH}/www/static/JavaScript/pages", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_RUNNING_FROM}/Python", f"{Globals.X_PATH}/Python/project/modules", strict=True)
 
 		################# Methods for File_system.init()
 		####### CleanUp
 		# Pages (Back-End)
 		@staticmethod
 		def clean_live_pages():
-			path = f"{Globals.X_RUNNING_FROM}/Python/live_pages/"
+			path = f"{Globals.X_PATH}/Python/live_pages/"
 
 			files = os.listdir(path)
 
@@ -282,7 +282,7 @@ if __name__ != "__main__":
 		# Python (Modules)
 		@staticmethod
 		def clean_external_copied_Python_modules():
-			path = f"{Globals.X_RUNNING_FROM}/Python/project/modules/"
+			path = f"{Globals.X_PATH}/Python/project/modules/"
 
 			files = os.listdir(path)
 
@@ -299,7 +299,7 @@ if __name__ != "__main__":
 		@staticmethod
 		def load_internal_configurations():
 			try:
-				with open(f"{Globals.X_RUNNING_FROM}/x.json", 'r') as file:
+				with open(f"{Globals.X_PATH}/x.json", 'r') as file:
 					Globals.CONF = json.load(file)
 
 				Log.success("Loaded: x.json")
@@ -311,7 +311,7 @@ if __name__ != "__main__":
 		@staticmethod
 		def load_internal_language_dictionary():
 			try:
-				with open(f'{Globals.X_RUNNING_FROM}/language_dictionary.json', encoding="utf8") as file:
+				with open(f'{Globals.X_PATH}/language_dictionary.json', encoding="utf8") as file:
 					Globals.LANG_DICT = json.load(file)
 
 				Log.success("Internal language_dictionary.json Is Loaded")

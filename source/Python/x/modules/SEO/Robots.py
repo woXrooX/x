@@ -15,6 +15,6 @@ if __name__ != "__main__":
 			try:
 				project_URL = f'{Globals.CONF["default"]["URL"]["prefix"]}://{Globals.CONF["default"]["URL"]["sub_domain"]}.{Globals.CONF["default"]["URL"]["domain_name"]}.{Globals.CONF["default"]["URL"]["domain_extension"]}'
 
-				File_System.create_file(f"{Globals.X_RUNNING_FROM}/www/static/robots.txt", f"User-agent: *\nAllow: /\nSitemap: {project_URL}/sitemap.xml", strict=True, overwrite=True)
+				File_System.create_file(f"{Globals.X_PATH}/www/static/robots.txt", f"User-agent: *\nAllow: /\nSitemap: {project_URL}/sitemap.xml", strict=True, overwrite=True)
 
 			except Exception as e: Log.error(f"Robots.generate(): Could not generate robots.txt file: {e}")

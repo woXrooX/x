@@ -74,6 +74,6 @@ if __name__ != "__main__":
 				# Create the XML string with proper formatting
 				XML_string = minidom.parseString(ET.tostring(urlset)).toprettyxml(indent="    ")
 
-				File_System.create_file(f'{Globals.X_RUNNING_FROM}/www/static/sitemap.xml', XML_string, strict=True, overwrite=True)
+				File_System.create_file(f'{Globals.X_PATH}/www/static/sitemap.xml', XML_string, strict=True, overwrite=True)
 
 			except Exception as e: Log.error(f"Sitemap.generate(): Could not generate sitemap.xml file: {e}")

@@ -42,12 +42,12 @@ if __name__ != "__main__":
 		# Assets folder
 		@staticmethod
 		def assets():
-			return File_System.copy_folder(f'{Globals.X_RUNNING_FROM}/assets', f'{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/assets')
+			return File_System.copy_folder(f'{Globals.X_PATH}/assets', f'{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/assets')
 
 		# Users folder
 		@staticmethod
 		def users():
-			return File_System.copy_folder(f'{Globals.X_RUNNING_FROM}/users', f'{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/users')
+			return File_System.copy_folder(f'{Globals.X_PATH}/users', f'{Globals.PROJECT_RUNNING_FROM}/Backups/{Backup.timestamp}/users')
 
 		@staticmethod
 		def generateTimestampFolder():
