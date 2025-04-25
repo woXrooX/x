@@ -135,6 +135,11 @@ export default class Form{
 		window.Modal.unlock();
 		Modal.handle_commands(event.target.getAttribute("x-modal"), response["type"]);
 
+		////////// x-layer
+		const container_element = event.target.closest('container[id^="layer_"]');
+		let form_element = container_element.querySelector(`layer > main > form`);
+		window.x["Layers"].handle_commands(form_element.getAttribute("x-layer"), response["type"]);
+
 		////////// x-toast
 		Toast.handle_commands(event.target.getAttribute("x-toast"), response);
 
