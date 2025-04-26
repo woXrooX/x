@@ -20,14 +20,14 @@ export default class Head{
 	/////////// APIs
 
 	static reset_all(){
-		window.x.Head.reset_title();
-		window.x.Head.reset_description();
-		window.x.Head.reset_URL();
-		window.x.Head.reset_author();
-		window.x.Head.reset_article_published_time();
-		window.x.Head.reset_article_modified_time();
-		window.x.Head.reset_keywords();
-		window.x.Head.reset_og_type();
+		Head.set_title(Head.#title);
+		Head.set_description(Head.#description);
+		Head.set_URL(Head.#URL);
+		Head.set_author(Head.#author);
+		Head.set_article_published_time(Head.#article_published_time);
+		Head.set_article_modified_time(Head.#article_modified_time);
+		Head.set_keywords(Head.#keywords);
+		Head.set_og_type(Head.#og_type);
 	}
 
 
@@ -42,10 +42,6 @@ export default class Head{
 		document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", final_title);
 	}
 
-	static reset_title(){
-		Head.set_title(Head.#title);
-	}
-
 	static set_description(description){
 		if (!!description === false) return;
 
@@ -54,19 +50,11 @@ export default class Head{
 		document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", description);
 	}
 
-	static reset_description(){
-		Head.set_description(Head.#description);
-	}
-
 	static set_URL(URL){
 		if (!!URL === false) return;
 
 		document.querySelector('link[rel="canonical"]')?.setAttribute('href', URL);
 		document.querySelector('meta[property="og:url"]')?.setAttribute("content", URL);
-	}
-
-	static reset_URL(){
-		Head.set_URL(Head.#URL);
 	}
 
 	static set_author(content){
@@ -83,10 +71,6 @@ export default class Head{
 		element.setAttribute('content', content);
 	}
 
-	static reset_author(){
-		Head.set_author(Head.#author);
-	}
-
 	static set_article_published_time(content) {
 		if (content === undefined) return document.querySelector('meta[property="article:published_time"]')?.remove();
 
@@ -99,10 +83,6 @@ export default class Head{
 		}
 
 		element.setAttribute('content', content);
-	}
-
-	static reset_article_published_time() {
-		Head.set_article_published_time(Head.#article_published_time);
 	}
 
 	static set_article_modified_time(content) {
@@ -119,10 +99,6 @@ export default class Head{
 		element.setAttribute('content', content);
 	}
 
-	static reset_article_modified_time() {
-		Head.set_article_modified_time(Head.#article_modified_time);
-	}
-
 	static set_keywords(content) {
 		if (content === undefined) return document.querySelector('meta[name="keywords"]')?.remove();
 
@@ -137,10 +113,6 @@ export default class Head{
 		element.setAttribute('content', content);
 	}
 
-	static reset_keywords() {
-		Head.set_keywords(Head.#keywords);
-	}
-
 	static set_og_type(content) {
 		if (content === undefined) return document.querySelector('meta[property="og:type"]')?.remove();
 
@@ -153,10 +125,6 @@ export default class Head{
 		}
 
 		element.setAttribute('content', content);
-	}
-
-	static reset_og_type() {
-		Head.set_og_type(Head.#og_type);
 	}
 
 
