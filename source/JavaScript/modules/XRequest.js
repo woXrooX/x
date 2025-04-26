@@ -8,6 +8,7 @@ export default class XRequest{
 	/////////// APIs
 	// Collecting happens whenever Core.#observeMutations() -> observes any DOM change
 	// NOTE: If page has zero change on initial load, the XRequest.collect() will not be called and the first XRequest attached elements will not be listened
+
 	static collect(){
 		// Log.info("XRequest.collect()");
 
@@ -18,14 +19,13 @@ export default class XRequest{
 		for(const element of XRequest.XR_ELEMENTS) XRequest.#OBJECTS.push(new XRequest(element));
 	}
 
-	/////////// APIs
 	static push_func(func) { XRequest.#FUNC_POOL[func.name] = func; }
 
 	/////////// Helpers
 	static #handle_response_actions(response){
 		if(!("actions" in response)) return;
 
-		if("update_conf" in response["actions"]) window.conf = response["actions"]["update_conf"];
+		if("update_conf" in response["actions"]) window.x["CONF"] = response["actions"]["update_conf"];
 
 		if("set_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change", {detail: response["actions"]["set_session_user"]}));
 
@@ -65,9 +65,7 @@ export default class XRequest{
 
 	constructor(element){
 		this.#element = element;
-		this.#trigger = this.#element.getAttribute("xr-trigger") ?? "click";
-		this.#commands = this.#element.getAttribute("xr-commands");
-		this.#target = this.#element.getAttribute("xr-target") ? document.querySelector(this.#element.getAttribute("xr-target")) : null;
+		this.#target = this.#element.getAttribute("xr-target") ? document.querySelector(this.#element.getAttribute("xr-target")) : this.#element;
 
 		this.#construct_data();
 		this.#handle_trigger();
@@ -75,8 +73,8 @@ export default class XRequest{
 	}
 
 	#construct_data(){
-		try{this.#data = JSON.parse(this.#element.getAttribute("xr-data"));}
-		catch(error){this.#data = null;}
+		try{ this.#data = JSON.parse(this.#element.getAttribute("xr-data")); }
+		catch(error){ this.#data = null; }
 
 		this.#data = {
 			...(this.#element.hasAttribute("xr-for") ? {"for": this.#element.getAttribute("xr-for")} : {}),
@@ -85,7 +83,10 @@ export default class XRequest{
 	}
 
 	/////////// Handlers
+
 	#handle_trigger(){
+		this.#trigger = this.#element.getAttribute("xr-trigger") ?? "click";
+
 		switch(this.#trigger){
 			case "click":
 				this.#on_click();
@@ -98,8 +99,10 @@ export default class XRequest{
 	}
 
 	#parse_commands(){
-		if(!!this.#commands === false) return;
+		this.#commands = this.#element.getAttribute("xr-commands");
+
 		if(!!this.#target === false) return;
+		if(!!this.#commands === false) return;
 
 		const commands = this.#commands.split(' ');
 
@@ -135,7 +138,7 @@ export default class XRequest{
 	}
 
 	#handle_actions(){
-		if(!!this.#source === false) return;
+		if(!!this.#action === false) return;
 
 		if(this.#action === "innerHTML") this.#target.innerHTML = this.#source;
 		else if(this.#action === "outerHTML") this.#target.outerHTML = this.#source;
@@ -145,16 +148,17 @@ export default class XRequest{
 
 	#handle_set_attribute(){
 		let arr = this.#action
-					.slice(
-						this.#action.indexOf("[")+1,
-						this.#action.indexOf("]")
-					)
-					.split(',');
+			.slice(
+				this.#action.indexOf("[")+1,
+				this.#action.indexOf("]")
+			)
+			.split(',');
 
 		if(arr.length > 0) this.#target.setAttribute(arr[0], this.#source ?? arr[1] ?? '');
 	}
 
 	/////////// Event listeners
+
 	#on_click(){
 		this.#element.style.cursor = "pointer";
 
@@ -164,6 +168,9 @@ export default class XRequest{
 			window.Modal.lock();
 
 			this.#response = await window.bridge(this.#data, this.#element.getAttribute("xr-post"));
+
+			console.log(this.#response);
+
 
 			if(!("type" in this.#response)) return;
 

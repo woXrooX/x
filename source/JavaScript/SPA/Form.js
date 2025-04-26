@@ -143,7 +143,7 @@ export default class Form{
 
 		////////// response["actions"]
 		if("actions" in response){
-			if("update_conf" in response["actions"]) window.conf = response["actions"]["update_conf"];
+			if("update_conf" in response["actions"]) window.x["CONF"] = response["actions"]["update_conf"];
 
 			if("set_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change", {detail: response["actions"]["set_session_user"]}));
 
