@@ -171,13 +171,13 @@ export default class Core{
 			Log.info("Core.#on_user_session_change()");
 
 			// User session on
-			if("detail" in event && event.detail !== null){
+			if ("detail" in event && event.detail !== null){
 				window.session["user"] = event.detail;
 				await x.Notification.init();
 			}
 
 			// User session off
-			else{
+			else {
 				delete window.session["user"];
 				clearInterval(x.Notification.poll_interval_func);
 			}
