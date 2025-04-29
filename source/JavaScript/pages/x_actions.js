@@ -9,9 +9,9 @@ export default async function main(){
 				<x-svg
 					name="folder_settings"
 
-					xr-post
-					xr-for="sanitize_users_folders"
-					xr-trigger="click"
+					XR-post
+					XR-for="sanitize_users_folders"
+					XR-trigger="click"
 
 					x-toast="on:any:message"
 

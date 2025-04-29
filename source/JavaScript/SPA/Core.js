@@ -4,7 +4,8 @@
 // Order matters
 import Logger from "/JavaScript/modules/Logger.js";
 import bridge from "/JavaScript/modules/bridge.js";
-import XRequest from "/JavaScript/modules/XRequest.js";
+import Response from "/JavaScript/modules/Response.js";
+import XR from "/JavaScript/modules/XR/XR.js";
 import x_String from "/JavaScript/modules/String.js";
 
 ///////////////////////////// SPA Classes
@@ -207,7 +208,7 @@ export default class Core{
 				// The ${mutation.attributeName} attribute was modified.
 				// else if(mutation.type === "attributes"){}
 
-				XRequest.collect();
+				window.x.XR.collect();
 			}
 		};
 

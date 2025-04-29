@@ -58,8 +58,8 @@ export async function notification_m_card_generator(notification){
 						color="white"
 						class="btn btn-error"
 
-						xr-post
-						xr-for="delete_notification"
+						XR-post
+						XR-for="delete_notification"
 
 						x-toast="on:any:message"
 					></x-svg>

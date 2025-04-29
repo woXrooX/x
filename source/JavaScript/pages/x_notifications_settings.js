@@ -32,9 +32,9 @@ export async function after(){
 					class="checkbox-v1"
 					${!disabled_event_names.includes(event) ? "checked" : ''}
 
-					xr-post
-					xr-for="toggle_disabled_notification_event"
-					xr-data='{"event": "${event}"}'
+					XR-post
+					XR-for="toggle_disabled_notification_event"
+					XR-data='{"event": "${event}"}'
 
 					x-toast="on:any:message"
 				>

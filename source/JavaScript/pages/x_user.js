@@ -27,8 +27,8 @@ export async function after(){
 				<x-svg
 					name="mark_eMail_read"
 
-					xr-post
-					xr-for="resend_eMail_confirmation"
+					XR-post
+					XR-for="resend_eMail_confirmation"
 
 					x-toast="on:any:message"
 
@@ -42,8 +42,8 @@ export async function after(){
 				<x-svg
 					name="delete"
 
-					xr-post
-					xr-for="delete_user"
+					XR-post
+					XR-for="delete_user"
 
 					x-toast="on:any:message"
 

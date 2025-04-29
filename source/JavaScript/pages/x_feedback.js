@@ -38,9 +38,9 @@ export async function after(){
 
 					<td>
 						<x-svg
-							xr-post
-							xr-for="delete"
-							xr-data='{"id": "${cell["id"]}"}'
+							XR-post
+							XR-for="delete"
+							XR-data='{"id": "${cell["id"]}"}'
 
 							x-toast="on:any:message"
 

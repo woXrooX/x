@@ -56,8 +56,8 @@ export async function after(){
 						<p class="text-align-center text-size-1-2">Are you sure you want to delete all notifications?</p>
 
 						<button
-							xr-post
-							xr-for="delete_all_notifications"
+							XR-post
+							XR-for="delete_all_notifications"
 
 							x-toast="on:any:message"
 

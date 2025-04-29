@@ -1,48 +1,4 @@
-export default class XRequest{
-	/////////////////////////// Static
-
-	static XR_ELEMENTS = null;
-	static #OBJECTS = [];
-	static #FUNC_POOL = {};
-
-	/////////// APIs
-	// Collecting happens whenever Core.#observeMutations() -> observes any DOM change
-	// NOTE: If page has zero change on initial load, the XRequest.collect() will not be called and the first XRequest attached elements will not be listened
-
-	static collect(){
-		// Log.info("XRequest.collect()");
-
-		XRequest.#OBJECTS = [];
-
-		XRequest.XR_ELEMENTS = document.querySelectorAll("[xr-post]");
-
-		for(const element of XRequest.XR_ELEMENTS) XRequest.#OBJECTS.push(new XRequest(element));
-	}
-
-	static push_func(func) { XRequest.#FUNC_POOL[func.name] = func; }
-
-	/////////// Helpers
-	static #handle_response_actions(response){
-		if(!("actions" in response)) return;
-
-		if("update_conf" in response["actions"]) window.x["CONF"] = response["actions"]["update_conf"];
-
-		if("set_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change", {detail: response["actions"]["set_session_user"]}));
-
-		if("delete_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change"));
-
-		if("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
-
-		if("reload" in response["actions"]) window.location.reload();
-
-		if("DOM_change" in response["actions"]) window.dispatchEvent(new CustomEvent("DOM_change", {detail: response["actions"]["DOM_change"]}));
-	}
-
-	static async #execute_on_response(func_name, response, element){
-		if(!!func_name === false) return;
-		await XRequest.#FUNC_POOL[func_name](response, element);
-	}
-
+export default class Post {
 	/////////////////////////// Object
 
 	#element;
@@ -65,7 +21,7 @@ export default class XRequest{
 
 	constructor(element){
 		this.#element = element;
-		this.#target = this.#element.getAttribute("xr-target") ? document.querySelector(this.#element.getAttribute("xr-target")) : this.#element;
+		this.#target = this.#element.getAttribute("XR-target") ? document.querySelector(this.#element.getAttribute("XR-target")) : this.#element;
 
 		this.#construct_data();
 		this.#handle_trigger();
@@ -73,11 +29,11 @@ export default class XRequest{
 	}
 
 	#construct_data(){
-		try{ this.#data = JSON.parse(this.#element.getAttribute("xr-data")); }
+		try{ this.#data = JSON.parse(this.#element.getAttribute("XR-data")); }
 		catch(error){ this.#data = null; }
 
 		this.#data = {
-			...(this.#element.hasAttribute("xr-for") ? {"for": this.#element.getAttribute("xr-for")} : {}),
+			...(this.#element.hasAttribute("XR-for") ? {"for": this.#element.getAttribute("XR-for")} : {}),
 			...this.#data
 		}
 	}
@@ -85,7 +41,7 @@ export default class XRequest{
 	/////////// Handlers
 
 	#handle_trigger(){
-		this.#trigger = this.#element.getAttribute("xr-trigger") ?? "click";
+		this.#trigger = this.#element.getAttribute("XR-trigger") ?? "click";
 
 		switch(this.#trigger){
 			case "click":
@@ -99,7 +55,7 @@ export default class XRequest{
 	}
 
 	#parse_commands(){
-		this.#commands = this.#element.getAttribute("xr-commands");
+		this.#commands = this.#element.getAttribute("XR-commands");
 
 		if(!!this.#target === false) return;
 		if(!!this.#commands === false) return;
@@ -167,14 +123,14 @@ export default class XRequest{
 
 			window.Modal.lock();
 
-			this.#response = await window.bridge(this.#data, this.#element.getAttribute("xr-post"));
+			this.#response = await window.bridge(this.#data, this.#element.getAttribute("XR-post"));
 
 			console.log(this.#response);
 
 
 			if(!("type" in this.#response)) return;
 
-			XRequest.#execute_on_response(this.#element.getAttribute("xr-func"), this.#response, this.#element);
+			window.x.XR.execute_on_response(this.#element.getAttribute("XR-func"), this.#response, this.#element);
 
 			this.#handle_commands();
 
@@ -183,12 +139,9 @@ export default class XRequest{
 			window.Modal.unlock();
 			Modal.handle_commands(this.#element.getAttribute("x-modal"), this.#response["type"]);
 
-			XRequest.#handle_response_actions(this.#response);
+			window.x.Response.handle_actions(this.#response);
 
 			Loading.on_element_end(this.#element);
 		};
 	}
-};
-
-// Make XRequest Usable W/O Importing It
-window.XRequest = XRequest;
+}
