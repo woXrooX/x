@@ -26,16 +26,26 @@ export default class Share extends HTMLElement{
 						<x-svg name="facebook_original"></x-svg>
 					</a>
 
-					<a href="https://www.instagram.com/share?url=${data.URL}&caption=${data.content}" target="_blank">
-						<x-svg name="instagram_original"></x-svg>
-					</a>
-
 					<a href="https://t.me/share/url?url=${data.URL}&text=${data.content}" target="_blank">
 						<x-svg name="telegram_original"></x-svg>
 					</a>
 
 					<a href="https://www.reddit.com/submit?selftext=${data.content}&title=${data.title}&url=${data.URL}" target="_blank">
 						<x-svg name="reddit_original"></x-svg>
+					</a>
+
+					<a>
+						<x-svg
+							name="link"
+							onclick="
+								try {
+									navigator.clipboard.writeText(window.location.href);
+									window.Toast.new('success', 'Link copied!');
+								}
+
+								catch(err) { window.Toast.new('error', 'Copy failed: ' + err); }
+							"
+						></x-svg>
 					</a>
 				</row>
 			</x-modal>
