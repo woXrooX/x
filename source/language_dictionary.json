@@ -354,11 +354,6 @@
 		"ru": "Сохранено",
 		"uz": "Saqlandi"
 	},
-	"share_default_text": {
-		"en": "Hey there, do you have a minute? I found something really cool that I wanted to share. Check it out!",
-		"ru": "Эй, у тебя есть минутка? Я нашел кое-что действительно классное, чем хотел поделиться. Проверьте это!",
-		"uz": "Salom, bir daqiqa vaqtingiz bormi? Men baham ko`rmoqchi bo`lgan ajoyib narsani topdim. Tekshirib ko`r!"
-	},
 	"sign_up": {
 		"en": "Sign up",
 		"ru": "Регистрироваться",
