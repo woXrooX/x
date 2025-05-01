@@ -2336,6 +2336,22 @@
 			.display-grid { display: grid;}
 			.grid-area-1-slash-1 { grid-area: 1 / 1;}
 		}
+
+		@layer order {
+			.order-1 { order: 1; }
+			.order-2 { order: 2; }
+			.order-3 { order: 3; }
+			.order-4 { order: 4; }
+			.order-5 { order: 5; }
+
+			@media (width <= 600px){
+				.s-order-1 { order: 1; }
+				.s-order-2 { order: 2; }
+				.s-order-3 { order: 3; }
+				.s-order-4 { order: 4; }
+				.s-order-5 { order: 5; }
+			}
+		}
 	}
 
 	@layer position{
