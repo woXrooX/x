@@ -18,6 +18,9 @@ export default class Table extends HTMLElement{
 		this.body_values_in_chunks = [];
 		this.matched_rows_count = 0;
 
+		this.original_body = this.JSON["body"];
+		this.current_search_string = '';
+		this.search_index = [];
 
 		// Sortable column IDs
 		this.sortable_column_ids = [];
@@ -38,6 +41,8 @@ export default class Table extends HTMLElement{
 	}
 
 	#init = ()=>{
+		this.#build_search_index();
+
 		this.#set_initial_page_size();
 
 		this.innerHTML = `
@@ -118,7 +123,9 @@ export default class Table extends HTMLElement{
 				// Fixes issues when you are on page N and the search generated page numbers are less than N
 				this.#update_buttons((this.current_page = 1));
 
-				if(event.target.value == ""){
+				this.current_search_string = event.target.value.toLowerCase();
+
+				if(this.current_search_string === ""){
 					this.body_values = this.JSON["body"];
 					this.#build_body();
 					this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
@@ -126,12 +133,12 @@ export default class Table extends HTMLElement{
 					return;
 				}
 
-				this.#find_matches(event.target.value);
+				this.#find_matches();
 				this.#build_body();
 				this.#build_page_buttons_HTML();
 				this.#build_matched_rows_HTML();
 
-			}, 500)
+			}, 200);
 		}
 	}
 
@@ -221,6 +228,21 @@ export default class Table extends HTMLElement{
 
 	//////////////////////////// Helpers
 
+	#build_search_index = () => {
+		for (let row = 0; row < this.original_body.length; row++) {
+			let row_string = '';
+
+			for (let cell = 0; cell < this.original_body[row].length; cell++) {
+				const cell_value = String(this.original_body[row][cell]).toLowerCase();
+
+				if(cell > 0) row_string += "\x01";
+				row_string += cell_value;
+			}
+
+			this.search_index.push(row_string);
+		}
+	}
+
 	////////// Sort
 	#listen_to_the_sort_clicks = ()=>{
 		for(const id of this.sortable_column_ids){
@@ -278,67 +300,62 @@ export default class Table extends HTMLElement{
 		});
 	}
 
-	#find_matches = (value)=>{
-		this.body_values = [];
+	#find_matches = ()=>{
+		const TITLE_AND_VALUE = this.current_search_string.match(/^(.*?):(.*)$/);
 
-		const ROWS = structuredClone(this.JSON["body"]);
-		const VALUE_LOWER_CASE = value.toLowerCase();
-
-		this.#match_values_by_columns(VALUE_LOWER_CASE, ROWS);
-		this.#match_values_by_cells(VALUE_LOWER_CASE, ROWS);
+		if (!!TITLE_AND_VALUE) this.#match_values_by_column(TITLE_AND_VALUE[1], TITLE_AND_VALUE[2]);
+		else this.#match_values_by_cells();
 
 		this.matched_rows_count = this.body_values.length;
 		if(this.body_values.length === 0) this.body_values = [[window.Lang.use("no_matches")]];
 	}
 
-	#match_values_by_columns = (VALUE_LOWER_CASE, ROWS)=>{
-		const TITLE_AND_VALUE = VALUE_LOWER_CASE.match(/^(.*?):(.*)$/);
-		if(TITLE_AND_VALUE === null) return;
-
-		const TITLE = TITLE_AND_VALUE[1];
-		const VALUE = TITLE_AND_VALUE[2];
-
+	#match_values_by_column = (TITLE, VALUE) => {
 		let matched_title_index = null;
 
 		// Getting the index of an title in this.JSON["head"] that contains the "title"
-		loop_columns: for(let i = 0; i < this.JSON["head"].length; i++)
-			if(this.JSON["head"][i]["title"].toLowerCase().includes(TITLE)){
+		for (let i = 0; i < this.JSON.head.length; i++)
+			if (this.JSON.head[i].title.toLowerCase().includes(TITLE.toLowerCase())) {
 				matched_title_index = i;
-				break loop_columns;
+				break;
 			}
 
-		if(matched_title_index === null) return;
-		if(this.encoded_columns[matched_title_index] === true) return;
+		if(matched_title_index == null || this.encoded_columns[matched_title_index]) return;
 
+		this.body_values = [];
 		const re_VALUE = new RegExp(VALUE, 'gi');
 
-		for(const ROW of ROWS){
-			const STRING_CELL = String(ROW[matched_title_index]);
+		for (let i = 0; i < this.original_body.length; i++) {
+			const STRING_CELL = String(this.original_body[i][matched_title_index]).toLowerCase();
 
-			if(STRING_CELL.toLowerCase().includes(VALUE)){
-				ROW[matched_title_index] = Table.match_and_highlight(STRING_CELL, re_VALUE);
-				this.body_values.push(ROW);
+			if (STRING_CELL.includes(VALUE.toLowerCase())) {
+				const row = structuredClone(this.original_body[i]);
+				row[matched_title_index] = Table.match_and_highlight(String(row[matched_title_index]), re_VALUE);
+				this.body_values.push(row);
 			}
 		}
 	}
 
-	#match_values_by_cells = (VALUE_LOWER_CASE, ROWS)=>{
-		const re_VALUE_LOWER_CASE = new RegExp(VALUE_LOWER_CASE, 'gi');
+	#match_values_by_cells = () => {
+		// Regular search across all columns using pre-computed search index
+		this.body_values = [];
+		const escaped_current_search_string = this.current_search_string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+		const re_current_search_string = new RegExp(escaped_current_search_string, 'gi');
 
-		for(const ROW of ROWS){
-			let is_anything_in_row_matched = false;
-			loop_cells: for(let i = 0; i < ROW.length; i++){
-				if(this.encoded_columns[i] === true) continue loop_cells;
+		for (let i = 0; i < this.search_index.length; i++)
+			if (this.search_index[i].includes(this.current_search_string)) {
+				const ROW = structuredClone(this.original_body[i]);
 
-				const STRING_CELL = String(ROW[i]);
-				if(STRING_CELL.toLowerCase().includes(VALUE_LOWER_CASE)){
-					ROW[i] = Table.match_and_highlight(STRING_CELL, re_VALUE_LOWER_CASE);
-					is_anything_in_row_matched = true;
+				loop_cells: for (let i = 0; i < ROW.length; i++) {
+					if (this.encoded_columns[i] === true) continue loop_cells;
+
+					const STRING_CELL = String(ROW[i]);
+					if (STRING_CELL.toLowerCase().includes(this.current_search_string))
+						ROW[i] = Table.match_and_highlight(STRING_CELL, re_current_search_string);
 				}
-			}
 
-			if(is_anything_in_row_matched === true) this.body_values.push(ROW);
-		}
+				this.body_values.push(ROW);
+			}
 	}
 
 
