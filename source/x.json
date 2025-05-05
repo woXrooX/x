@@ -148,6 +148,30 @@
 			"endpoints": ["/x/notifications"]
 		},
 
+		"x_pay_cancel": {
+			"enabled": false,
+			"methods": ["GET"],
+			"endpoints": ["/x/pay/cancel"]
+		},
+
+		"x_pay_failure": {
+			"enabled": false,
+			"methods": ["GET"],
+			"endpoints": ["/x/pay/failure"]
+		},
+
+		"x_pay_success": {
+			"enabled": false,
+			"methods": ["GET"],
+			"endpoints": ["/x/pay/success"]
+		},
+
+		"x_pay": {
+			"enabled": false,
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/pay"]
+		},
+
 		"x_user": {
 			"enabled": false,
 			"roles": ["root"],
