@@ -7,10 +7,10 @@ export async function before(){
 export default function main(){
 	return `
 		<container class="max-width-1500px padding-5">
-			<form id="x_payment_form">
+			<form id="x_payment_form" class="max-width-600px surface-v1 bg-white padding-2">
 				<div id="x_payment_element" style="color:red;"></div>
 				<button class="btn btn-primary">Pay now</button>
-				<div id="x_payment_error_messages"></div>
+				<div id="x_payment_error_messages" class="text-color-error"></div>
 			</form>
 		</container>
 	`;
@@ -26,8 +26,8 @@ export async function after(){
 		const stripe = Stripe(PK["data"]);
 
 		let client_secret = await bridge({"for": "create_payment_intent"}, "/x/pay");
-		if(!("data" in client_secret)) return console.log("Error: client_secret");
-		client_secret = client_secret["data"];
+		if("data" in client_secret) client_secret = client_secret["data"];
+		else return;
 
 		const elements = stripe.elements({"clientSecret": client_secret});
 		const payment_element = elements.create("payment");
