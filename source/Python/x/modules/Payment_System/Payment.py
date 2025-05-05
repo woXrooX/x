@@ -4,7 +4,7 @@ if __name__ != "__main__":
 	from Python.x.modules.response import response
 	from Python.x.modules.Globals import Globals
 	from Python.x.modules.Logger import Log
-	from Python.x.modulesPayment_System.Customer import Customer
+	from Python.x.modules.Payment_System.Customer import Customer
 
 	import stripe
 	stripe.api_key = Globals.CONF["Stripe"]["secret_key"]
@@ -17,22 +17,18 @@ if __name__ != "__main__":
 			automatic_payment_methods={'enabled': True}
 		):
 			try:
-				customer_id = 1
-				customer_id = Customer.find_customer_by_id(customer_id)
-				if customer_id is False or customer_id is None:
-					fullname = None
-					if session["user"]["firstname"] and session["user"]["lastname"]: fullname = f"{session["user"]["firstname"]} {session["user"]["lastname"]}"
+				fullname = None
+				if session["user"]["firstname"] and session["user"]["lastname"]: fullname = f"{session["user"]["firstname"]} {session["user"]["lastname"]}"
 
-					customer_id = Customer.create_customer(
-						session["user"]["eMail"],
-						session["user"]["id"],
-						fullname
-					)
+				customer_id = Customer.create_customer(
+					session["user"]["eMail"],
+					session["user"]["id"],
+					fullname
+				)
 
-					if customer_id is False:
-						Log.error(f"Payment.create_payment_intent(): Could not create customer id")
-						return response(type="error", message=str(e), HTTP_response_status_code=500)
-
+				if customer_id is False:
+					Log.error(f"Payment.create_payment_intent(): could_not_create_customer")
+					return response(type="error", message=str(e), HTTP_response_status_code=500)
 
 				params = {
 					"amount": amount,
