@@ -4,6 +4,7 @@ if __name__ != "__main__":
 	from Python.x.modules.response import response
 	from Python.x.modules.Globals import Globals
 	from Python.x.modules.Logger import Log
+	from Python.x.modules.MySQL import MySQL
 
 	import stripe
 	stripe.api_key = Globals.CONF["Stripe"]["secret_key"]
@@ -18,8 +19,11 @@ if __name__ != "__main__":
 			payment_method=None
 		):
 			try:
+				existing_customer = Customer.get_customer_id_by_user_id(user_id)
+				if existing_customer is not None: return existing_customer
+
 				if metadata is None: metadata = {}
-				metadata['user_id'] = str(user_id)
+				metadata["user_id"] = str(user_id)
 
 				params = {
 					"email": eMail,
@@ -30,7 +34,20 @@ if __name__ != "__main__":
 
 				customer = stripe.Customer.create(**params)
 
+				link_users_Stripe_customers = MySQL.execute(
+					sql="INSERT INTO users_Stripe_customers (user, Stripe_customer_id) VALUES (%s, %s);",
+					params=[
+						user_id,
+						customer.id
+					],
+					commit=True
+				)
+				if link_users_Stripe_customers is False:
+					Log.error(f"Payment.create_customer(): database_error")
+					return False
+
 				Log.success("Payment.create_customer(): customer_created")
+
 				return customer.id
 
 			except stripe.error.StripeError as e:
@@ -42,11 +59,23 @@ if __name__ != "__main__":
 				return False
 
 		@staticmethod
-		def find_customer_by_id(user_id):
+		def get_customer_id_by_user_id(user_id):
+			data = MySQL.execute(
+				sql="SELECT Stripe_customer_id FROM users_Stripe_customers WHERE user = %s LIMIT 1;",
+				params=[user_id],
+				fetch_one=True
+			)
+			if data is False: return False
+			if data is None: return None
+
+			return data["Stripe_customer_id"]
+
+		@staticmethod
+		def find_customer_by_user_id(user_id, limit=100):
 			str_user_id = str(user_id)
 
 			try:
-				customers = stripe.Customer.list(limit=100)
+				customers = stripe.Customer.list(limit=limit)
 
 				for customer in customers.data:
 					if customer.metadata and customer.metadata.get('user_id') == str_user_id:
@@ -62,36 +91,3 @@ if __name__ != "__main__":
 			except Exception as e:
 				Log.error(f"Payment.find_customer_by_id(): Exception -> {e}")
 				return False
-
-		@staticmethod
-		def create_subscription(
-			customer_id,
-			price_id,
-			payment_method_id=None,
-			metadata=None,
-			trial_days=None
-		):
-			try:
-				subscription_params = {
-					"customer": customer_id,
-					"items": [{"price": price_id}],
-					"metadata": metadata or {}
-				}
-
-				if payment_method_id: subscription_params["default_payment_method"] = payment_method_id
-				if trial_days: subscription_params["trial_period_days"] = trial_days
-
-				subscription = stripe.Subscription.create(**subscription_params)
-
-				return response(
-					type="success",
-					message="subscription_created",
-					data={
-						"id": subscription.id,
-						"status": subscription.status,
-						"current_period_end": subscription.current_period_end
-					}
-				)
-
-			except stripe.error.StripeError as e: return response(type="error", message=str(e), HTTP_response_status_code=400)
-			except Exception as e: return response(type="error", message=str(e), HTTP_response_status_code=500)
