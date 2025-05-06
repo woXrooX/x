@@ -200,13 +200,13 @@ export default class Table extends HTMLElement{
 			return;
 		}
 
-		tbody.innerHTML = '';
+		this.querySelector("table > tbody").innerHTML = '';
 		this.next_row_index = 0;
 		this.#append_batch(rows);
 
-		main.removeEventListener("scroll", this.on_scroll);
+		this.querySelector("main").removeEventListener("scroll", this.on_scroll);
 		this.on_scroll = () => this.#load_more(rows);
-		main.addEventListener("scroll", this.on_scroll);
+		this.querySelector("main").addEventListener("scroll", this.on_scroll);
 	}
 
 	#append_batch = (rows) => {
@@ -233,10 +233,10 @@ export default class Table extends HTMLElement{
 		if (this.next_row_index >= rows.length) return;
 
 		let main = this.querySelector("main");
-		const threshold_px = this.scroll_threshold_rows * tbody.firstChild.offsetHeight;
+		const threshold_px = this.scroll_threshold_rows * this.querySelector("table > tbody").firstChild.offsetHeight;
 		const remaining_scroll_space_px = main.scrollHeight - main.scrollTop - main.clientHeight;
 
-		if (remaining_scroll_space_px <= threshold_px) this.#append_batch(tbody, rows);
+		if (remaining_scroll_space_px <= threshold_px) this.#append_batch(rows);
 	}
 
 	#build_foot = ()=>{
