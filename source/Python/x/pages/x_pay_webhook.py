@@ -1,6 +1,6 @@
 from main import app, request
 
-from Python.x.modules.Payment_System.Webhook import Webhook
+from Python.x.modules.Stripe.Webhook import Webhook
 
 @app.route("/x/pay/webhook", methods=["POST"])
 def x_pay_webhook():
