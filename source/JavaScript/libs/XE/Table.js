@@ -196,7 +196,7 @@ export default class Table extends HTMLElement{
 		const rows = this.body_values_in_chunks[this.current_page - 1] ?? [];
 
 		if (rows.length === 0) {
-			tbody.innerHTML = `<tr><td>${window.Lang.use("no_data")}</td></tr>`;
+			this.querySelector("table > tbody").innerHTML = `<tr><td>${window.Lang.use("no_data")}</td></tr>`;
 			return;
 		}
 
