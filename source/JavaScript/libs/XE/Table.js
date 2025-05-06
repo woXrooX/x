@@ -216,6 +216,31 @@ export default class Table extends HTMLElement{
 		this.querySelector("main").addEventListener("scroll", this.on_scroll);
 	}
 
+	#build_foot = ()=>{
+		if(!("foot" in this.JSON)) return;
+		let HTML = "";
+		for(const cell of this.JSON["foot"]) HTML += `<td>${cell}</td>`;
+
+		this.querySelector("table > tfoot > tr").innerHTML = HTML;
+	}
+
+	//////////////////////////// Helpers
+
+	#build_search_index = () => {
+		for (let row = 0; row < this.original_body.length; row++) {
+			let row_string = '';
+
+			for (let cell = 0; cell < this.original_body[row].length; cell++) {
+				const cell_value = String(this.original_body[row][cell]).toLowerCase();
+
+				if(cell > 0) row_string += "\x01";
+				row_string += cell_value;
+			}
+
+			this.search_index.push(row_string);
+		}
+	}
+
 	#append_batch = (rows) => {
 		const fragment = document.createDocumentFragment();
 		const end = Math.min(this.next_row_index + this.batch_size, rows.length);
@@ -244,31 +269,6 @@ export default class Table extends HTMLElement{
 		const remaining_scroll_space_px = main.scrollHeight - main.scrollTop - main.clientHeight;
 
 		if (remaining_scroll_space_px <= threshold_px) this.#append_batch(rows);
-	}
-
-	#build_foot = ()=>{
-		if(!("foot" in this.JSON)) return;
-		let HTML = "";
-		for(const cell of this.JSON["foot"]) HTML += `<td>${cell}</td>`;
-
-		this.querySelector("table > tfoot > tr").innerHTML = HTML;
-	}
-
-	//////////////////////////// Helpers
-
-	#build_search_index = () => {
-		for (let row = 0; row < this.original_body.length; row++) {
-			let row_string = '';
-
-			for (let cell = 0; cell < this.original_body[row].length; cell++) {
-				const cell_value = String(this.original_body[row][cell]).toLowerCase();
-
-				if(cell > 0) row_string += "\x01";
-				row_string += cell_value;
-			}
-
-			this.search_index.push(row_string);
-		}
 	}
 
 	////////// Sort
