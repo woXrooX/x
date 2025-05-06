@@ -1,7 +1,7 @@
 from main import session
 
 from Python.x.modules.Page import Page
-from Python.x.modules.Payment_System.Payment import Payment
+from Python.x.modules.Stripe.Payment import Payment
 from Python.x.modules.response import response
 from Python.x.modules.Globals import Globals
 
