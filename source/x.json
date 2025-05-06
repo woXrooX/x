@@ -202,7 +202,8 @@
 		"x_pay_subscription": {
 			"enabled": false,
 			"methods": ["GET", "POST"],
-			"endpoints": ["/x/pay/subscription"]
+			"endpoints": ["/x/pay/subscription"],
+			"URL_args": ["subscription_name"]
 		},
 
 		"x_pay_success": {
