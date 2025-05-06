@@ -202,10 +202,10 @@ export default class Table extends HTMLElement{
 
 		this.querySelector("table > tbody").innerHTML = '';
 		this.next_row_index = 0;
-		this.#append_batch(rows);
+		this.#append_batch_to_body(rows);
 
 		this.querySelector("main").removeEventListener("scroll", this.on_scroll);
-		this.on_scroll = () => this.#load_more(rows);
+		this.on_scroll = () => this.#load_next_batch(rows);
 		this.querySelector("main").addEventListener("scroll", this.on_scroll);
 	}
 
@@ -220,7 +220,7 @@ export default class Table extends HTMLElement{
 	//////////////////////////// Helpers
 
 	////////// Building content
-	#append_batch = (rows) => {
+	#append_batch_to_body = (rows) => {
 		const fragment = document.createDocumentFragment();
 		const end = Math.min(this.next_row_index + this.batch_size, rows.length);
 
@@ -240,14 +240,14 @@ export default class Table extends HTMLElement{
 		this.next_row_index = end;
 	}
 
-	#load_more = (rows) => {
+	#load_next_batch = (rows) => {
 		if (this.next_row_index >= rows.length) return;
 
 		let main = this.querySelector("main");
 		const threshold_px = this.scroll_threshold_rows * this.querySelector("table > tbody").firstChild.offsetHeight;
 		const remaining_scroll_space_px = main.scrollHeight - main.scrollTop - main.clientHeight;
 
-		if (remaining_scroll_space_px <= threshold_px) this.#append_batch(rows);
+		if (remaining_scroll_space_px <= threshold_px) this.#append_batch_to_body(rows);
 	}
 
 	////////// Sort
