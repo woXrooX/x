@@ -9,6 +9,20 @@
 		"static_url_path": "/"
 	},
 
+	"database": {
+		"enabled": false,
+		"MySQL": {
+			"enabled": false,
+			"name": "user$DB_name",
+			"user": "user",
+			"password": "DB_password",
+			"host": "127.0.0.1",
+			"port": "33060",
+			"charset": "utf8mb4",
+			"collate": "utf8mb4_0900_ai_ci"
+		}
+	},
+
 	"eMail": {
 		"regEx": "^[a-zA-Z0-9][a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]{0,62}[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9](?:\\.[a-zA-Z]+)+$",
 		"subject": "x",
@@ -18,6 +32,25 @@
 			"domain": null,
 			"api_key": null
 		}
+	},
+
+	"Twilio": {
+		"enabled": false,
+		"api_key": null,
+		"api_secret": null,
+		"account_sid": "ACCOUNT_SID",
+		"auth_token": "AUTH_TOKEN",
+		"region": null,
+		"edge": null,
+		"alphanumeric_sender_id": "x"
+	},
+
+	"Stripe": {
+		"enabled": false,
+		"secret_key": "sk_test_...",
+		"publishable_key": "pk_test_...",
+		"restricted_key": null,
+		"webhook_secret": "whsec_..."
 	},
 
 	"default": {
