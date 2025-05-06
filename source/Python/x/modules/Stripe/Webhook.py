@@ -66,7 +66,7 @@ if __name__ != "__main__":
 			# print(event)
 			# Log.line('<')
 
-			Webhook.execute_event_handler(event)
+			Webhook.execute_handler_on_event(event)
 
 			return "OK", 200
 
@@ -169,5 +169,5 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def default_handler(event):
-			Log.info(f"No handler for event: {event['type']}")
+			Log.warning(f"No handler for event: {event['type']}")
 
