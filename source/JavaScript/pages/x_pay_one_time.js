@@ -25,7 +25,7 @@ export async function after(){
 
 		const stripe = Stripe(PK["data"]);
 
-		let client_secret = await bridge({"for": "create_payment_intent"});
+		let client_secret = await bridge({"for": "create_intent"});
 		if("data" in client_secret) client_secret = client_secret["data"];
 		else return;
 

@@ -25,11 +25,11 @@ export async function after(){
 
 		const stripe = Stripe(PK["data"]);
 
-		let client_secret = await bridge({"for": "create_payment_intent"});
-		if("data" in client_secret) client_secret = client_secret["data"];
+		let response_data = await bridge({"for": "create_subscription"});
+		if("data" in response_data) response_data = response_data["data"];
 		else return;
 
-		const elements = stripe.elements({"clientSecret": client_secret});
+		const elements = stripe.elements({"clientSecret": response_data["clientSecret"]});
 		const payment_element = elements.create("payment");
 		payment_element.mount("#x_payment_element");
 
