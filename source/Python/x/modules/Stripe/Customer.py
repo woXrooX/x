@@ -5,9 +5,9 @@ if __name__ != "__main__":
 	from Python.x.modules.Globals import Globals
 	from Python.x.modules.Logger import Log
 	from Python.x.modules.MySQL import MySQL
+	from Python.x.modules.Stripe.Stripe import Stripe
 
 	import stripe
-	stripe.api_key = Globals.CONF["Stripe"]["secret_key"]
 
 	class Customer:
 		@staticmethod
@@ -18,6 +18,10 @@ if __name__ != "__main__":
 			metadata=None,
 			payment_method=None
 		):
+			if Stripe.initialized is not True:
+				Log.warning("Payment.create_customer(): Stripe_is_not_initialized")
+				return False
+
 			try:
 				existing_customer = Customer.get_customer_id_by_user_id(user_id)
 				if existing_customer is not None: return existing_customer
@@ -60,6 +64,10 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def get_customer_id_by_user_id(user_id):
+			if Stripe.initialized is not True:
+				Log.warning("Payment.get_customer_id_by_user_id(): Stripe_is_not_initialized")
+				return False
+
 			data = MySQL.execute(
 				sql="SELECT Stripe_customer_id FROM Stripe_customers_users WHERE user = %s LIMIT 1;",
 				params=[user_id],
@@ -72,6 +80,10 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def find_customer_by_user_id(user_id, limit=100):
+			if Stripe.initialized is not True:
+				Log.warning("Payment.find_customer_by_user_id(): Stripe_is_not_initialized")
+				return False
+
 			str_user_id = str(user_id)
 
 			try:

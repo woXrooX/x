@@ -4,10 +4,10 @@ if __name__ != "__main__":
 	from Python.x.modules.response import response
 	from Python.x.modules.Globals import Globals
 	from Python.x.modules.Logger import Log
-	from Python.x.modules.Payment_System.Customer import Customer
+	from Python.x.modules.Stripe.Stripe import Stripe
+	from Python.x.modules.Stripe.Customer import Customer
 
 	import stripe
-	stripe.api_key = Globals.CONF["Stripe"]["secret_key"]
 
 	class Payment:
 		@staticmethod
@@ -16,6 +16,8 @@ if __name__ != "__main__":
 			currency="usd",
 			automatic_payment_methods={'enabled': True}
 		):
+			if Stripe.initialized is not True: return response(type="error", message="Stripe_is_not_initialized", HTTP_response_status_code=401)
+
 			try:
 				fullname = None
 				if session["user"]["firstname"] and session["user"]["lastname"]: fullname = f"{session["user"]["firstname"]} {session["user"]["lastname"]}"
@@ -61,6 +63,8 @@ if __name__ != "__main__":
 			metadata=None,
 			trial_days=None
 		):
+			if Stripe.initialized is not True: return response(type="error", message="Stripe_is_not_initialized", HTTP_response_status_code=401)
+
 			try:
 				subscription_params = {
 					"customer": customer_id,
@@ -88,6 +92,8 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def get_payment_method(payment_method_id):
+			if Stripe.initialized is not True: return response(type="error", message="Stripe_is_not_initialized", HTTP_response_status_code=401)
+
 			try:
 				payment_method = stripe.PaymentMethod.retrieve(payment_method_id)
 				return response(type="success", message="payment_method_retrieved", data=payment_method)
@@ -97,6 +103,8 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def attach_payment_method_to_customer(payment_method_id, customer_id):
+			if Stripe.initialized is not True: return response(type="error", message="Stripe_is_not_initialized", HTTP_response_status_code=401)
+
 			try:
 				payment_method = stripe.PaymentMethod.attach(
 					payment_method_id,
