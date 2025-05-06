@@ -34,15 +34,15 @@ if __name__ != "__main__":
 
 				customer = stripe.Customer.create(**params)
 
-				link_users_Stripe_customers = MySQL.execute(
-					sql="INSERT INTO users_Stripe_customers (user, Stripe_customer_id) VALUES (%s, %s);",
+				link_Stripe_customers_users = MySQL.execute(
+					sql="INSERT INTO Stripe_customers_users (user, Stripe_customer_id) VALUES (%s, %s);",
 					params=[
 						user_id,
 						customer.id
 					],
 					commit=True
 				)
-				if link_users_Stripe_customers is False:
+				if link_Stripe_customers_users is False:
 					Log.error(f"Payment.create_customer(): database_error")
 					return False
 
@@ -61,7 +61,7 @@ if __name__ != "__main__":
 		@staticmethod
 		def get_customer_id_by_user_id(user_id):
 			data = MySQL.execute(
-				sql="SELECT Stripe_customer_id FROM users_Stripe_customers WHERE user = %s LIMIT 1;",
+				sql="SELECT Stripe_customer_id FROM Stripe_customers_users WHERE user = %s LIMIT 1;",
 				params=[user_id],
 				fetch_one=True
 			)
