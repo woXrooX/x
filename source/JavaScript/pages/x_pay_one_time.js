@@ -20,12 +20,12 @@ export async function after(){
 	await handle_payment_form();
 
 	async function handle_payment_form(){
-		const PK = await bridge({"for": "get_publishable_key"}, "/x/pay");
+		const PK = await bridge({"for": "get_publishable_key"});
 		if(!("data" in PK)) return console.log("Error: PK");
 
 		const stripe = Stripe(PK["data"]);
 
-		let client_secret = await bridge({"for": "create_payment_intent"}, "/x/pay");
+		let client_secret = await bridge({"for": "create_payment_intent"});
 		if("data" in client_secret) client_secret = client_secret["data"];
 		else return;
 

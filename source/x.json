@@ -193,16 +193,22 @@
 			"endpoints": ["/x/pay/failure"]
 		},
 
+		"x_pay_one_time": {
+			"enabled": false,
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/pay/one_time"]
+		},
+
+		"x_pay_subscription": {
+			"enabled": false,
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/pay/subscription"]
+		},
+
 		"x_pay_success": {
 			"enabled": false,
 			"methods": ["GET"],
 			"endpoints": ["/x/pay/success"]
-		},
-
-		"x_pay": {
-			"enabled": false,
-			"methods": ["GET", "POST"],
-			"endpoints": ["/x/pay"]
 		},
 
 		"x_user": {
