@@ -10,11 +10,10 @@ if __name__ != "__main__":
 	import stripe
 
 	class Customer:
+
+		# Returns existing customer_id if already exists
 		@staticmethod
 		def create_customer(
-			eMail,
-			user_id,
-			fullname=None,
 			metadata=None,
 			payment_method=None
 		):
@@ -22,12 +21,17 @@ if __name__ != "__main__":
 				Log.warning("Payment.create_customer(): Stripe_is_not_initialized")
 				return False
 
+			#### Session user data
+			if "user" not in session: return False
+			fullname = None
+			if session["user"]["firstname"] and session["user"]["lastname"]: fullname = f"{session["user"]["firstname"]} {session["user"]["lastname"]}"
+
 			try:
-				existing_customer = Customer.get_customer_id_by_user_id(user_id)
+				existing_customer = Customer.get_customer_id_by_user_id(session["user"]["id"])
 				if existing_customer is not None: return existing_customer
 
 				if metadata is None: metadata = {}
-				metadata["user_id"] = str(user_id)
+				metadata["user_id"] = str(session["user"]["id"])
 
 				params = {
 					"email": eMail,
@@ -41,7 +45,7 @@ if __name__ != "__main__":
 				link_Stripe_customers_users = MySQL.execute(
 					sql="INSERT INTO Stripe_customers_users (user, Stripe_customer_id) VALUES (%s, %s);",
 					params=[
-						user_id,
+						session["user"]["id"],
 						customer.id
 					],
 					commit=True
