@@ -209,6 +209,17 @@ export default class Table extends HTMLElement{
 		this.querySelector("main").addEventListener("scroll", this.on_scroll);
 	}
 
+	#build_foot = ()=>{
+		if(!("foot" in this.JSON)) return;
+		let HTML = "";
+		for(const cell of this.JSON["foot"]) HTML += `<td>${cell}</td>`;
+
+		this.querySelector("table > tfoot > tr").innerHTML = HTML;
+	}
+
+	//////////////////////////// Helpers
+
+	////////// Building content
 	#append_batch = (rows) => {
 		const fragment = document.createDocumentFragment();
 		const end = Math.min(this.next_row_index + this.batch_size, rows.length);
@@ -238,16 +249,6 @@ export default class Table extends HTMLElement{
 
 		if (remaining_scroll_space_px <= threshold_px) this.#append_batch(rows);
 	}
-
-	#build_foot = ()=>{
-		if(!("foot" in this.JSON)) return;
-		let HTML = "";
-		for(const cell of this.JSON["foot"]) HTML += `<td>${cell}</td>`;
-
-		this.querySelector("table > tfoot > tr").innerHTML = HTML;
-	}
-
-	//////////////////////////// Helpers
 
 	////////// Sort
 	#listen_to_the_sort_clicks = ()=>{
