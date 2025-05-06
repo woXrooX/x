@@ -30,6 +30,9 @@ export default class Table extends HTMLElement{
 		// Encoded columns info holder
 		this.encoded_columns = [];
 
+		this.batch_size = 100;
+		this.scroll_threshold_rows = 5;
+		this.next_row_index = 0;
 
 		// Init table
 		this.#init();
@@ -188,27 +191,52 @@ export default class Table extends HTMLElement{
 		this.querySelector("table > thead > tr").innerHTML = HTML;
 	}
 
-	#build_body = ()=>{
-		let HTML = "";
-
+	#build_body = () => {
 		this.#divide_data_into_chunks();
+		const rows = this.body_values_in_chunks[this.current_page - 1] ?? [];
 
-		if(this.body_values_in_chunks.length === 0){
-			this.querySelector("table > tbody").innerHTML = `<tr><td>${window.Lang.use("no_data")}</td></tr>`;
+		if (rows.length === 0) {
+			tbody.innerHTML = `<tr><td>${window.Lang.use("no_data")}</td></tr>`;
 			return;
 		}
 
-		for(const row of this.body_values_in_chunks[this.current_page-1]){
-			HTML += "<tr>";
+		tbody.innerHTML = '';
+		this.next_row_index = 0;
+		this.#append_batch(rows);
 
-			for(let index = 0; index < row.length; index++)
-				if(this.encoded_columns[index] === true) HTML += `<td>${decodeURIComponent(row[index])}</td>`;
-				else HTML += `<td>${row[index]}</td>`;
+		main.removeEventListener("scroll", this.on_scroll);
+		this.on_scroll = () => this.#load_more(rows);
+		main.addEventListener("scroll", this.on_scroll);
+	}
 
-			HTML += "</tr>";
+	#append_batch = (rows) => {
+		const fragment = document.createDocumentFragment();
+		const end = Math.min(this.next_row_index + this.batch_size, rows.length);
+
+		for (let r = this.next_row_index; r < end; r++) {
+			const tr = document.createElement("tr");
+			const row = rows[r];
+
+			for (let c = 0; c < row.length; c++) {
+				const td = document.createElement("td");
+				td.innerHTML = this.encoded_columns[c] ? decodeURIComponent(row[c]) : row[c];
+				tr.appendChild(td);
+			}
+			fragment.appendChild(tr);
 		}
 
-		this.querySelector("table > tbody").innerHTML = HTML;
+		this.querySelector("table > tbody").appendChild(fragment);
+		this.next_row_index = end;
+	}
+
+	#load_more = (rows) => {
+		if (this.next_row_index >= rows.length) return;
+
+		let main = this.querySelector("main");
+		const threshold_px = this.scroll_threshold_rows * tbody.firstChild.offsetHeight;
+		const remaining_scroll_space_px = main.scrollHeight - main.scrollTop - main.clientHeight;
+
+		if (remaining_scroll_space_px <= threshold_px) this.#append_batch(tbody, rows);
 	}
 
 	#build_foot = ()=>{
