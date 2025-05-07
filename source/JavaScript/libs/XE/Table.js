@@ -6,6 +6,11 @@ export default class Table extends HTMLElement{
 	////////////// Helpers
 	static match_and_highlight(string, regex){ return string.replace(regex, `<span class="bg-error text-color-white">$&</span>`); }
 
+	#lazy_draw_batch_size = 100;
+	#lazy_draw_next_batch_index = 0;
+	#lazy_draw_observer = null;
+	#lazy_draw_loader_element = null;
+
 	constructor(){
 		super();
 
@@ -17,12 +22,6 @@ export default class Table extends HTMLElement{
 		this.body_values = this.JSON["body"];
 		this.body_values_in_chunks = [];
 		this.matched_rows_count = 0;
-
-		this.#lazy_draw_batch_size = 100;
-		this.#lazy_draw_next_batch_index = 0;
-		this.#lazy_draw_observer = null;
-		this.#lazy_draw_loader_element = null;
-
 
 		// Sortable column IDs
 		this.sortable_column_ids = [];
