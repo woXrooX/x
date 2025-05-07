@@ -1,5 +1,5 @@
 {
-	"version": "0.215.1.0002",
+	"version": "0.216.0.0000",
 	"project_name": "x",
 
 	"flask": {
@@ -7,6 +7,20 @@
 		"template_folder": "www/HTML",
 		"static_folder": "www/static",
 		"static_url_path": "/"
+	},
+
+	"database": {
+		"enabled": false,
+		"MySQL": {
+			"enabled": false,
+			"name": "user$DB_name",
+			"user": "user",
+			"password": "DB_password",
+			"host": "127.0.0.1",
+			"port": "33060",
+			"charset": "utf8mb4",
+			"collate": "utf8mb4_0900_ai_ci"
+		}
 	},
 
 	"eMail": {
@@ -18,6 +32,25 @@
 			"domain": null,
 			"api_key": null
 		}
+	},
+
+	"Twilio": {
+		"enabled": false,
+		"api_key": null,
+		"api_secret": null,
+		"account_sid": "ACCOUNT_SID",
+		"auth_token": "AUTH_TOKEN",
+		"region": null,
+		"edge": null,
+		"alphanumeric_sender_id": "x"
+	},
+
+	"Stripe": {
+		"enabled": false,
+		"secret_key": "sk_test_...",
+		"publishable_key": "pk_test_...",
+		"restricted_key": null,
+		"webhook_secret": "whsec_..."
 	},
 
 	"default": {
@@ -146,6 +179,37 @@
 			"authenticity_statuses": ["unauthorized", "authorized"],
 			"methods": ["GET", "POST"],
 			"endpoints": ["/x/notifications"]
+		},
+
+		"x_pay_cancel": {
+			"enabled": false,
+			"methods": ["GET"],
+			"endpoints": ["/x/pay/cancel"]
+		},
+
+		"x_pay_failure": {
+			"enabled": false,
+			"methods": ["GET"],
+			"endpoints": ["/x/pay/failure"]
+		},
+
+		"x_pay_one_time": {
+			"enabled": false,
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/pay/one_time"]
+		},
+
+		"x_pay_subscription": {
+			"enabled": false,
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/pay/subscription"],
+			"URL_args": ["subscription_name"]
+		},
+
+		"x_pay_success": {
+			"enabled": false,
+			"methods": ["GET"],
+			"endpoints": ["/x/pay/success"]
 		},
 
 		"x_user": {

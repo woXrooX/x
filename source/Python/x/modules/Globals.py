@@ -15,12 +15,16 @@ if __name__ != "__main__":
 		#### x
 		CONF = {}
 		LANG_DICT = {}
+
+		CURRENCIES = {}
 		LANGUAGES = {}
 		USER_AUTHENTICITY_STATUSES = {}
 		USER_ROLES = {}
 		USER_OCCUPATIONS = {}
-		NOTIFICATION_TYPES = {}
 		NOTIFICATION_EVENTS = {}
+		NOTIFICATION_TYPES = {}
+		STRIPE_EVENT_TYPES = {}
+		STRIPE_OBJECT_TYPES = {}
 
 		#### Project
 		PROJECT = {}
