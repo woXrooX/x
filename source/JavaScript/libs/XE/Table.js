@@ -17,10 +17,11 @@ export default class Table extends HTMLElement{
 		this.body_values = this.JSON["body"];
 		this.body_values_in_chunks = [];
 		this.matched_rows_count = 0;
+
 		this.body_values_batch_size = 100;
-		this.scroll_threshold_rows = 5;
 		this.body_next_batch_starts_at = 0;
-		this.on_scroll = null;
+		this.intersection_observer = null;
+		this.loader_element = null;
 
 
 		// Sortable column IDs
@@ -204,9 +205,7 @@ export default class Table extends HTMLElement{
 		this.body_next_batch_starts_at = 0;
 		this.#body_append_batch(rows);
 
-		this.querySelector("main").removeEventListener("scroll", this.on_scroll);
-		this.on_scroll = () => this.#body_load_next_batch(rows);
-		this.querySelector("main").addEventListener("scroll", this.on_scroll);
+		this.#setup_intersection_observer(rows);
 	}
 
 	#build_foot = ()=>{
@@ -227,9 +226,9 @@ export default class Table extends HTMLElement{
 		for (let row = this.body_next_batch_starts_at; row < end; row++) {
 			const tr = document.createElement("tr");
 
-			for (let c = 0; c < rows[row].length; c++) {
+			for (let cell = 0; cell < rows[row].length; cell++) {
 				const td = document.createElement("td");
-				td.innerHTML = this.encoded_columns[c] ? decodeURIComponent(rows[row][c]) : rows[row][c];
+				td.innerHTML = this.encoded_columns[cell] ? decodeURIComponent(rows[row][cell]) : rows[row][cell];
 				tr.appendChild(td);
 			}
 			fragment.appendChild(tr);
@@ -239,14 +238,37 @@ export default class Table extends HTMLElement{
 		this.body_next_batch_starts_at = end;
 	}
 
-	#body_load_next_batch = (rows) => {
-		if (this.body_next_batch_starts_at >= rows.length) return;
+	#setup_intersection_observer = (rows) => {
+		if (this.intersection_observer != null) {
+			this.intersection_observer.disconnect();
+			this.intersection_observer = null;
+		}
 
-		let main = this.querySelector("main");
-		const threshold_px = this.scroll_threshold_rows * this.querySelector("table > tbody").firstChild.offsetHeight;
-		const remaining_scroll_space_px = main.scrollHeight - main.scrollTop - main.clientHeight;
+		if (!this.loader_element) {
+			this.loader_element = document.createElement("tr");
+			this.loader_element.innerHTML = `<td colspan="999" class="width-100 height-50px padding-5 loading-on-element loading-on-element-bg-unset"></td>`;
+		}
 
-		if (remaining_scroll_space_px <= threshold_px) this.#body_append_batch(rows);
+		const tbody = this.querySelector("table > tbody");
+		tbody.appendChild(this.loader_element);
+
+		this.intersection_observer = new IntersectionObserver(
+			(entries) => {
+				if (!entries[0].isIntersecting) return;
+
+				this.#body_append_batch(rows);
+				tbody.appendChild(this.loader_element);
+
+				if (this.body_next_batch_starts_at >= rows.length) {
+					this.intersection_observer.disconnect();
+					this.loader_element.remove();
+				}
+			},
+
+			{ root: this.querySelector("main"), rootMargin: "0px", threshold: 1.0 }
+		);
+
+		this.intersection_observer.observe(this.loader_element);
 	}
 
 	////////// Sort
