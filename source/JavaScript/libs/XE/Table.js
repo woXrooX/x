@@ -17,6 +17,10 @@ export default class Table extends HTMLElement{
 		this.body_values = this.JSON["body"];
 		this.body_values_in_chunks = [];
 		this.matched_rows_count = 0;
+		this.body_values_batch_size = 100;
+		this.scroll_threshold_rows = 5;
+		this.body_next_batch_starts_at = 0;
+		this.on_scroll = null;
 
 
 		// Sortable column IDs
@@ -29,10 +33,6 @@ export default class Table extends HTMLElement{
 
 		// Encoded columns info holder
 		this.encoded_columns = [];
-
-		this.batch_size = 100;
-		this.scroll_threshold_rows = 5;
-		this.next_row_index = 0;
 
 		// Init table
 		this.#init();
@@ -201,11 +201,11 @@ export default class Table extends HTMLElement{
 		}
 
 		this.querySelector("table > tbody").innerHTML = '';
-		this.next_row_index = 0;
-		this.#append_batch_to_body(rows);
+		this.body_next_batch_starts_at = 0;
+		this.#body_append_batch(rows);
 
 		this.querySelector("main").removeEventListener("scroll", this.on_scroll);
-		this.on_scroll = () => this.#load_next_batch(rows);
+		this.on_scroll = () => this.#body_load_next_batch(rows);
 		this.querySelector("main").addEventListener("scroll", this.on_scroll);
 	}
 
@@ -220,34 +220,33 @@ export default class Table extends HTMLElement{
 	//////////////////////////// Helpers
 
 	////////// Building content
-	#append_batch_to_body = (rows) => {
+	#body_append_batch = (rows) => {
 		const fragment = document.createDocumentFragment();
-		const end = Math.min(this.next_row_index + this.batch_size, rows.length);
+		const end = Math.min(this.body_next_batch_starts_at + this.body_values_batch_size, rows.length);
 
-		for (let r = this.next_row_index; r < end; r++) {
+		for (let row = this.body_next_batch_starts_at; row < end; row++) {
 			const tr = document.createElement("tr");
-			const row = rows[r];
 
-			for (let c = 0; c < row.length; c++) {
+			for (let c = 0; c < rows[row].length; c++) {
 				const td = document.createElement("td");
-				td.innerHTML = this.encoded_columns[c] ? decodeURIComponent(row[c]) : row[c];
+				td.innerHTML = this.encoded_columns[c] ? decodeURIComponent(rows[row][c]) : rows[row][c];
 				tr.appendChild(td);
 			}
 			fragment.appendChild(tr);
 		}
 
 		this.querySelector("table > tbody").appendChild(fragment);
-		this.next_row_index = end;
+		this.body_next_batch_starts_at = end;
 	}
 
-	#load_next_batch = (rows) => {
-		if (this.next_row_index >= rows.length) return;
+	#body_load_next_batch = (rows) => {
+		if (this.body_next_batch_starts_at >= rows.length) return;
 
 		let main = this.querySelector("main");
 		const threshold_px = this.scroll_threshold_rows * this.querySelector("table > tbody").firstChild.offsetHeight;
 		const remaining_scroll_space_px = main.scrollHeight - main.scrollTop - main.clientHeight;
 
-		if (remaining_scroll_space_px <= threshold_px) this.#append_batch_to_body(rows);
+		if (remaining_scroll_space_px <= threshold_px) this.#body_append_batch(rows);
 	}
 
 	////////// Sort
