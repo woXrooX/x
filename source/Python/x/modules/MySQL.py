@@ -46,8 +46,6 @@ if __name__ != "__main__":
 			MySQL.collate = Globals.CONF["database"]["MySQL"]["collate"]
 			MySQL.connection_mode = Globals.CONF["database"]["MySQL"].get("connection_mode", "per_query")
 
-			Log.info(f"MySQL.init(): Initializing MySQL in mode: {MySQL.connection_mode}")
-
 			if MySQL.connection_mode == "single" and MySQL.connect() is False: return
 
 			MySQL.enabled = True
@@ -59,6 +57,8 @@ if __name__ != "__main__":
 			MySQL.get_user_occupations()
 			MySQL.get_notification_events()
 			MySQL.get_notification_types()
+
+			Log.success(f"MySQL.init(): Mode -> {MySQL.connection_mode}")
 
 
 		@staticmethod
