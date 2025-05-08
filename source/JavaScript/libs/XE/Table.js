@@ -360,7 +360,7 @@ export default class Table extends HTMLElement{
 	#find_matches = ()=>{
 		const TITLE_AND_VALUE = this.current_search_string.match(/^(.*?):(.*)$/);
 
-		if (!!TITLE_AND_VALUE) this.#match_values_by_column(TITLE_AND_VALUE[1], TITLE_AND_VALUE[2]);
+		if (TITLE_AND_VALUE != null) this.#match_values_by_column(TITLE_AND_VALUE[1], TITLE_AND_VALUE[2]);
 		else this.#match_values_by_cells();
 
 		this.matched_rows_count = this.body_values.length;
@@ -399,7 +399,7 @@ export default class Table extends HTMLElement{
 		const escaped_current_search_string = this.current_search_string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 		const re_current_search_string = new RegExp(escaped_current_search_string, 'gi');
 
-		for (let i = 0; i < this.search_index.length; i++)
+		for (let i = 0; i < this.original_body.length; i++)
 			if (this.search_index[i].includes(this.current_search_string)) {
 				const ROW = structuredClone(this.original_body[i]);
 
