@@ -14,8 +14,8 @@ export default class Share extends HTMLElement{
 			<x-svg name="share" id="modal_x_share"></x-svg>
 			<x-modal trigger_selector="x-svg#modal_x_share">
 				<row class="flex-row flex-x-between padding-2 gap-1 text-size-2">
-					<a href="https://twitter.com/intent/tweet?url=${data.URL}&text=${data.content}" target="_blank">
-						<x-svg name="twitter_bird_original"></x-svg>
+					<a href="https://x.com/intent/tweet?url=${data.URL}&text=${data.content}" target="_blank">
+						<x-svg name="x_original"></x-svg>
 					</a>
 
 					<a href="https://www.linkedin.com/sharing/share-offsite/?url=${data.URL}&title=${data.title}&summary=${data.content}&source=${data.URL}" target="_blank">
@@ -26,12 +26,12 @@ export default class Share extends HTMLElement{
 						<x-svg name="facebook_original"></x-svg>
 					</a>
 
-					<a href="https://t.me/share/url?url=${data.URL}&text=${data.content}" target="_blank">
-						<x-svg name="telegram_original"></x-svg>
-					</a>
-
 					<a href="https://www.reddit.com/submit?selftext=${data.content}&title=${data.title}&url=${data.URL}" target="_blank">
 						<x-svg name="reddit_original"></x-svg>
+					</a>
+
+					<a href="https://t.me/share/url?url=${data.URL}&text=${data.content}" target="_blank">
+						<x-svg name="telegram_original"></x-svg>
 					</a>
 
 					<a>

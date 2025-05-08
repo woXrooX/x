@@ -3017,6 +3017,25 @@
 					cursor: pointer;
 					user-select: none;
 				}
+
+				&.details-v1{
+					interpolate-size: allow-keywords;
+
+					&::details-content {
+						overflow: hidden;
+						block-size: 0;
+
+						transition:
+							content-visibility var(--transition-velocity) allow-discrete ease-in-out,
+							block-size var(--transition-velocity) ease-in-out;
+					}
+
+					&[open] {
+						&::details-content {
+							block-size: auto;
+						}
+					}
+				}
 			}
 		}
 

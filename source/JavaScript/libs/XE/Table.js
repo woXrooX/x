@@ -6,6 +6,11 @@ export default class Table extends HTMLElement{
 	////////////// Helpers
 	static match_and_highlight(string, regex){ return string.replace(regex, `<span class="bg-error text-color-white">$&</span>`); }
 
+	#lazy_draw_batch_size = 100;
+	#lazy_draw_next_batch_index = 0;
+	#lazy_draw_observer = null;
+	#lazy_draw_loader_element = null;
+
 	constructor(){
 		super();
 
@@ -32,7 +37,6 @@ export default class Table extends HTMLElement{
 
 		// Encoded columns info holder
 		this.encoded_columns = [];
-
 
 		// Init table
 		this.#init();
@@ -92,6 +96,7 @@ export default class Table extends HTMLElement{
 
 
 	//////////////////////////// Header
+
 	#listen_to_page_size_select = ()=>{
 		this.querySelector("container > header > select").onchange = ()=>{
 			const selected_page_size = event.target.value;
@@ -147,6 +152,7 @@ export default class Table extends HTMLElement{
 
 
 	//////////////////////////// Main
+
 	#build_table = ()=>{
 		this.querySelector("container > main").innerHTML = `
 			<table class="${this.getAttribute("class") || ""}">
@@ -196,26 +202,20 @@ export default class Table extends HTMLElement{
 	}
 
 	#build_body = ()=>{
-		let HTML = "";
-
 		this.#divide_data_into_chunks();
+		const rows = this.body_values_in_chunks[this.current_page - 1] ?? [];
 
-		if(this.body_values_in_chunks.length === 0){
+		if (rows.length === 0) {
 			this.querySelector("table > tbody").innerHTML = `<tr><td>${window.Lang.use("no_data")}</td></tr>`;
 			return;
 		}
 
-		for(const row of this.body_values_in_chunks[this.current_page-1]){
-			HTML += "<tr>";
+		this.#lazy_draw_next_batch_index = 0;
+		this.querySelector("table > tbody").replaceChildren();
+		this.#lazy_draw_batch(rows);
+		this.#init_observer_lazy_draw(rows);
 
-			for(let index = 0; index < row.length; index++)
-				if(this.encoded_columns[index] === true) HTML += `<td>${decodeURIComponent(row[index])}</td>`;
-				else HTML += `<td>${row[index]}</td>`;
 
-			HTML += "</tr>";
-		}
-
-		this.querySelector("table > tbody").innerHTML = HTML;
 	}
 
 	#build_foot = ()=>{
@@ -241,6 +241,63 @@ export default class Table extends HTMLElement{
 
 			this.search_index.push(row_string);
 		}
+	}
+
+	////////// Lazy draw
+
+	#lazy_draw_batch = (rows)=>{
+		let batch_last_index = this.#lazy_draw_next_batch_index + this.#lazy_draw_batch_size;
+		if (rows.length < batch_last_index) batch_last_index = rows.length;
+
+		const fragment = document.createDocumentFragment();
+
+		for (let row = this.#lazy_draw_next_batch_index; row < batch_last_index; row++) {
+			const tr = document.createElement("tr");
+
+			for (let cell = 0; cell < rows[row].length; cell++) {
+				const td = document.createElement("td");
+				td.innerHTML = this.encoded_columns[cell] ? decodeURIComponent(rows[row][cell]) : rows[row][cell];
+				tr.appendChild(td);
+			}
+
+			fragment.appendChild(tr);
+		}
+
+		this.querySelector("table > tbody").appendChild(fragment);
+
+		this.#lazy_draw_next_batch_index = batch_last_index;
+	}
+
+	#init_observer_lazy_draw = (rows)=>{
+		if (this.#lazy_draw_observer != null) {
+			this.#lazy_draw_observer.disconnect();
+			this.#lazy_draw_observer = null;
+		}
+
+		if (this.#lazy_draw_loader_element == null) {
+			this.#lazy_draw_loader_element = document.createElement("tr");
+			this.#lazy_draw_loader_element.innerHTML = `<td colspan="1000" class="width-100 height-50px padding-5 loading-on-element loading-on-element-bg-unset"></td>`;
+		}
+
+		const tbody = this.querySelector("table > tbody");
+		tbody.appendChild(this.#lazy_draw_loader_element);
+
+		this.#lazy_draw_observer = new IntersectionObserver(
+			(entries) => {
+				if (!entries[0].isIntersecting) return;
+
+				this.#lazy_draw_batch(rows);
+				tbody.appendChild(this.#lazy_draw_loader_element);
+
+				if (this.#lazy_draw_next_batch_index >= rows.length) {
+					this.#lazy_draw_observer.disconnect();
+					this.#lazy_draw_loader_element.remove();
+				}
+			},
+			{ root: this.querySelector("main"), rootMargin: "0px", threshold: 1.0 }
+		);
+
+		this.#lazy_draw_observer.observe(this.#lazy_draw_loader_element);
 	}
 
 	////////// Sort
@@ -368,7 +425,7 @@ export default class Table extends HTMLElement{
 			this.body_values_in_chunks.push(this.body_values.slice(i, i + this.page_size));
 	}
 
-	#set_initial_page_size = () => {
+	#set_initial_page_size = ()=>{
 		if(this.page_size === "all") return this.page_size = this.JSON["body"].length;
 
 		if(isNaN(parseInt(this.page_size))) return this.page_size = 10;
@@ -496,4 +553,3 @@ export default class Table extends HTMLElement{
 };
 
 window.customElements.define('x-table', Table);
-window.x["Table"] = Table;

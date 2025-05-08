@@ -1,3 +1,6 @@
+-- Use "mysql -u user -p --system-command" to allow "\! commands"
+-- NOTE:  Disable system commands in production for safety.
+
 \! clear
 \! echo "============================== x ==============================";
 \W
@@ -35,17 +38,42 @@ CREATE TABLE IF NOT EXISTS `currencies` (
 	`code` VARCHAR(3) NOT NULL UNIQUE,
 	`decimal_digits` INT NULL,
 	`fractional_unit` VARCHAR(10) NULL,
-	`symbol` VARCHAR(3) NULL,
+	`symbol` VARCHAR(10) NULL,
 	`native_name` VARCHAR(30) NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO currencies (id, code, decimal_digits, fractional_unit, symbol, native_name)
-	VALUES
-		(1, "UZS", 2, "Tiyin", NULL, "Oʻzbek soʻmi"),
-		(2, "USD", 2, "Cent", "$", "United States dollar"),
-		(3, "RUB", 2, "Копейка", "₽", "Российский рубль")
-;
+INSERT INTO currencies (id, code, decimal_digits, fractional_unit, symbol, native_name) VALUES
+(1, "UZS", 2, "Tiyin", NULL, "Oʻzbek soʻmi"),
+(2, "USD", 2, "Cent", "$", "United States dollar"),
+(3, "RUB", 2, "Копейка", "₽", "Российский рубль"),
+(4, 'EUR', 2, 'Cent', '€', 'Euro'),
+(5, 'GBP', 2, 'Penny', '£', 'Pound sterling'),
+(6, 'JPY', 0, 'Sen', '¥', '日本円'),
+(7, 'CAD', 2, 'Cent', '$', 'Canadian dollar'),
+(8, 'AUD', 2, 'Cent', '$', 'Australian dollar'),
+(9, 'CHF', 2, 'Rappen', 'Fr', 'Schweizer Franken'),
+(10, 'CNY', 2, 'Fen', '¥', '人民币'),
+(11, 'KRW', 0, 'Jeon', '₩', '대한민국 원'),
+(12, 'SEK', 2, 'Öre', 'kr', 'Svensk krona'),
+(13, 'NZD', 2, 'Cent', '$', 'New Zealand dollar'),
+(14, 'INR', 2, 'Paisa', '₹', 'भारतीय रुपया'),
+(15, 'SGD', 2, 'Cent', '$', 'Singapore dollar'),
+(16, 'HKD', 2, 'Cent', '$', '港元'),
+(17, 'NOK', 2, 'Øre', 'kr', 'Norske kroner'),
+(18, 'MXN', 2, 'Centavo', '$', 'Peso mexicano'),
+(19, 'KWD', 3, 'Fils', 'د.ك', 'دينار كويتي'),
+(20, 'BHD', 3, 'Fils', 'BD', 'دينار بحريني'),
+(21, 'OMR', 3, 'Baisa', 'ر.ع.', 'ريال عماني'),
+(22, 'TND', 3, 'Millime', 'د.ت', 'دينار تونسي'),
+(23, 'DKK', 2, 'Øre', 'kr', 'Danske kroner'),
+(24, 'PLN', 2, 'Grosz', 'zł', 'Polski złoty'),
+(25, 'CZK', 2, 'Haléř', 'Kč', 'Koruna česká'),
+(26, 'HUF', 0, 'Fillér', 'Ft', 'Magyar forint'),
+(27, 'THB', 2, 'Satang', '฿', 'บาทไทย'),
+(28, 'TRY', 2, 'Kuruş', '₺', 'Türk lirası'),
+(29, 'ZAR', 2, 'Cent', 'R', 'South African rand'),
+(30, 'BRL', 2, 'Centavo', 'R$', 'Real brasileiro');
 
 \! echo "-------------------------- languages";
 CREATE TABLE IF NOT EXISTS `languages` (
@@ -55,13 +83,11 @@ CREATE TABLE IF NOT EXISTS `languages` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO languages (id, code, native_name)
-	VALUES
-		(1, "en", "English"),
-		(2, "uz", "Uzbek, Ўзбек, أۇزبېك‎"),
-		(3, "ru", "Русский язык"),
-		(4, "ja", "日本語 (にほんご／にっぽんご)")
-;
+INSERT INTO languages (id, code, native_name) VALUES
+(1, "en", "English"),
+(2, "uz", "Uzbek, Ўзбек, أۇزبېك‎"),
+(3, "ru", "Русский язык"),
+(4, "ja", "日本語 (にほんご／にっぽんご)");
 
 \! echo "-------------------------- app_color_modes";
 -- 1 Is For Dark Mode
@@ -73,11 +99,9 @@ CREATE TABLE IF NOT EXISTS `app_color_modes` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO app_color_modes (id, name)
-	VALUES
-		(1, "dark"),
-		(2, "light")
-;
+INSERT INTO app_color_modes (id, name) VALUES
+(1, "dark"),
+(2, "light");
 
 
 
@@ -94,12 +118,10 @@ CREATE TABLE IF NOT EXISTS `user_authenticity_statuses` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO user_authenticity_statuses (id, name)
-	VALUES
-		(1, "unauthenticated"),
-		(2, "unauthorized"),
-		(3, "authorized")
-;
+INSERT INTO user_authenticity_statuses (id, name) VALUES
+(1, "unauthenticated"),
+(2, "unauthorized"),
+(3, "authorized");
 
 \! echo "-------------------------- user_plans";
 CREATE TABLE IF NOT EXISTS `user_plans` (
@@ -173,12 +195,10 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO user_roles (id, name)
-	VALUES
-		(1, "root"),
-		(2, "dev"),
-		(3, "admin")
-;
+INSERT INTO user_roles (id, name) VALUES
+(1, "root"),
+(2, "dev"),
+(3, "admin");
 
 \! echo "-------------------------- users_roles";
 CREATE TABLE IF NOT EXISTS `users_roles` (
@@ -221,11 +241,9 @@ CREATE TABLE IF NOT EXISTS `notification_events` (
 	`name` VARCHAR(500) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
--- INSERT INTO notification_events (id, name)
--- 	VALUES
--- 		(1, "event_name_A"),
--- 		(2, "event_name_B")
--- ;
+-- INSERT INTO notification_events (id, name) VALUES
+-- (1, "event_name_A"),
+-- (2, "event_name_B");
 
 CREATE TABLE IF NOT EXISTS `disabled_notification_events` (
 	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
@@ -248,15 +266,13 @@ CREATE TABLE IF NOT EXISTS `notification_types` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO notification_types (id, name)
-	VALUES
-		(1, "success"),
-		(2, "info"),
-		(3, "warning"),
-		(4, "error"),
-		(5, "important"),
-		(6, "urgent")
-;
+INSERT INTO notification_types (id, name) VALUES
+(1, "success"),
+(2, "info"),
+(3, "warning"),
+(4, "error"),
+(5, "important"),
+(6, "urgent");
 
 \! echo "-------------------------- notifications";
 CREATE TABLE IF NOT EXISTS `notifications` (
@@ -364,6 +380,134 @@ CREATE TABLE IF NOT EXISTS `feedback` (
 	`feedback_text` LONGTEXT NOT NULL,
 
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
+
+-- ------------------------------------
+-- ------------------------------------ Stripe
+-- ------------------------------------
+
+\! echo "-------------------------- Stripe_customers_users";
+CREATE TABLE IF NOT EXISTS `Stripe_customers_users` (
+	`id` BIGINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+	`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+	`user` INT NOT NULL UNIQUE,
+	`Stripe_customer_id` VARCHAR(255) NOT NULL UNIQUE,
+
+	FOREIGN KEY (`user`) REFERENCES `users`(`id`),
+
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+\! echo "-------------------------- Stripe_event_types";
+CREATE TABLE IF NOT EXISTS `Stripe_event_types` (
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
+
+	-- e.g., 'payment_intent.succeeded'
+	`name` VARCHAR(100) NOT NULL UNIQUE,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO Stripe_event_types (id, name) VALUES
+(1, 'payment_intent.created'),
+(2, 'payment_intent.succeeded'),
+(3, 'payment_intent.payment_failed'),
+(4, 'charge.succeeded'),
+(5, 'charge.failed'),
+(6, 'charge.refunded'),
+(7, 'customer.created'),
+(8, 'customer.updated'),
+(9, 'customer.subscription.created'),
+(10, 'customer.subscription.updated'),
+(11, 'customer.subscription.deleted'),
+(12, 'customer.subscription.trial_will_end'),
+(13, 'invoice.created'),
+(14, 'invoice.finalized'),
+(15, 'invoice.payment_succeeded'),
+(16, 'invoice.payment_failed'),
+(17, 'invoice.voided'),
+(18, 'checkout.session.completed'),
+(19, 'refund.created');
+
+
+\! echo "-------------------------- Stripe_object_types";
+CREATE TABLE IF NOT EXISTS `Stripe_object_types` (
+	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
+
+	-- 'payment_intent', 'subscription', etc.
+	`name` VARCHAR(50) NOT NULL UNIQUE,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO Stripe_object_types (id, name) VALUES
+(1, 'payment_intent'),
+(2, 'charge'),
+(3, 'subscription'),
+(4, 'invoice'),
+(5, 'refund'),
+(6, 'customer'),
+(7, 'checkout.session'),
+(8, 'price'),
+(9, 'product');
+
+
+\! echo "-------------------------- Stripe_webhook_logs";
+CREATE TABLE IF NOT EXISTS `Stripe_webhook_logs` (
+	`id` BIGINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+	`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+
+	--
+	-- Event
+	--
+
+	-- Stripe's event ID (evt_...)
+	`event_id` VARCHAR(255) NOT NULL UNIQUE,
+	`event_type` INT NULL,
+
+	-- Full event data as JSON
+	`event_data` JSON,
+
+	-- Test vs live mode
+	`livemode` BIT(1) NOT NULL DEFAULT b'0',
+
+ 	-- When the event was created
+	`created` DATETIME NOT NULL,
+
+
+	--
+	-- Object
+	--
+
+	-- ID of the object (pi_..., sub_..., etc.)
+	`object_id` VARCHAR(255),
+	`object_type` INT NULL,
+	`object_status` VARCHAR(50),
+	`customer_id` VARCHAR(255),
+
+	-- Stripe stores all amounts in the smallest currency unit in integer type
+	`amount` BIGINT,
+	`currency` INT NULL,
+
+
+	FOREIGN KEY (`event_type`) REFERENCES `Stripe_event_types`(`id`),
+	FOREIGN KEY (`object_type`) REFERENCES `Stripe_object_types`(`id`),
+	FOREIGN KEY (`currency`) REFERENCES `currencies`(`id`),
+
+
+	INDEX index_event_type (event_type),
+	INDEX index_created (created),
+	INDEX index_object_id (object_id),
+	INDEX index_object_type (object_type),
+	INDEX index_customer_id (customer_id),
 
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

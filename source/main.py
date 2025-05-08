@@ -37,14 +37,19 @@ Log.center('', '-', type_name="bright_black")
 Log.enabled = True if Globals.CONF.get("tools", {}).get("debug") is True else False
 
 
-#################################################### Initializing Up MySQL
+#################################################### Initializing MySQL
 from Python.x.modules.MySQL import MySQL
 MySQL.init()
 
 
-#################################################### Initializing Up Twilio
+#################################################### Initializing Twilio
 from Python.x.modules.Twilio import Twilio
 Twilio.init()
+
+
+#################################################### Initializing Stripe
+from Python.x.modules.Stripe.Stripe import Stripe
+Stripe.init()
 
 
 #################################################### Flask APP
