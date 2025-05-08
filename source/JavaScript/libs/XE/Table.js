@@ -528,10 +528,6 @@ export default class Table extends HTMLElement{
 		// Update page numbers
 		this.#build_page_numbers_HTML();
 	}
-
-
-
-
 };
 
 window.customElements.define('x-table', Table);
