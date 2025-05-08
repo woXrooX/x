@@ -271,7 +271,7 @@ export default class Table extends HTMLElement{
 					this.#lazy_draw_loader_element.remove();
 				}
 			},
-			{ root: this.querySelector("main"), rootMargin: "0px", threshold: 1.0 }
+			{ root: this.querySelector("main"), rootMargin: "0px", threshold: 0.5 }
 		);
 
 		this.#lazy_draw_observer.observe(this.#lazy_draw_loader_element);
