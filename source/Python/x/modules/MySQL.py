@@ -66,9 +66,6 @@ if __name__ != "__main__":
 			sql,
 			params = None,
 
-			# Enables multi-statement queries
-			multi = False,
-
 			# If True triggers executemany with many params
 			many = False,
 
@@ -82,21 +79,8 @@ if __name__ != "__main__":
 			# Check If MySQL Is Enabled
 			if MySQL.enabled is False: return False
 
-			# Many and multi can not work together
-			if multi is True and many is True: return False
-
-			# Variable for the results of multi execution
-			multi_execute_result = None
-
-			query = None
-			row_count = None
-			last_row_id = None
-
-			# MySQL response data
-			data = None
-
 			# MySQL.execute results
-			result = None
+			result = []
 
 			#### Execute
 			try:
@@ -112,51 +96,44 @@ if __name__ != "__main__":
 				# Start Transaction: Execute SQL statements within the transaction
 				if MySQL.connection_mode == "per_query" and commit is True: MySQL.cursor.execute("START TRANSACTION;")
 
-
-
 				# Check if params evaluated to True
 				params = params or []
 
 				#### Execution types
-				# Many execution
 				if many is True: MySQL.cursor.executemany(sql, params)
-
-				# Multi execution
-				elif multi is True: multi_execute_result = MySQL.cursor.execute(sql, params, multi=True)
 
 				# Default execution
 				else: MySQL.cursor.execute(sql, params)
 
 				query = MySQL.cursor.statement
-				row_count = MySQL.cursor.rowcount
-				last_row_id = MySQL.cursor.lastrowid
+				row_count = [MySQL.cursor.rowcount]
+				last_row_id = [MySQL.cursor.lastrowid]
 
+				if fetch_one is True:
+					result = [MySQL.cursor.fetchone()]
 
-				# Multi
-				if multi is True:
-					data = []
-					query = []
-					row_count = []
-					last_row_id = []
-
-					for cur in multi_execute_result:
-						data.extend(cur.fetchall())
-						query.append(MySQL.cursor.statement)
+					while MySQL.cursor.nextset() is not None:
+						result.append(MySQL.cursor.fetchone())
 						row_count.append(MySQL.cursor.rowcount)
 						last_row_id.append(MySQL.cursor.lastrowid)
 
-				# "fetch_one" enabled
-				# NOTE: In case multi=True and fetch_one=True will execute the code above.
-				elif fetch_one is True: data = MySQL.cursor.fetchone()
-
 				# Default "fetchall"
-				else: data = MySQL.cursor.fetchall()
+				else:
+					result = [MySQL.cursor.fetchall()]
+
+					while MySQL.cursor.nextset() is not None:
+						result.append(MySQL.cursor.fetchall())
+						row_count.append(MySQL.cursor.rowcount)
+						last_row_id.append(MySQL.cursor.lastrowid)
+
+				if len(result) == 1: result = result[0]
+				if len(row_count) == 1: row_count = row_count[0]
+				if len(last_row_id) == 1: last_row_id = last_row_id[0]
 
 				#### Save execution information before MySQL.disconnect() cleans them up
-				# Construct the result
 				if include_MySQL_data is True:
 					result = {
-						"data": data,
+						"data": result,
 						"query": query,
 
 						# This read-only property returns the number of rows returned for SELECT statements,
@@ -168,8 +145,6 @@ if __name__ != "__main__":
 						# NOTE: For regular UPDATE operations that don't change the primary key, lastrowid won't provide the ID of the updated row.
 						"last_row_id": last_row_id
 					}
-
-				else: result = data
 
 				# Commit the transaction to make the changes permanent
 				if MySQL.connection_mode == "per_query" and commit is True: MySQL.cursor.execute("COMMIT;")
