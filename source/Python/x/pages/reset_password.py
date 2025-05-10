@@ -34,33 +34,47 @@ def reset_password(request, TOKEN):
 		password = Log_In_Tools.password_hash(request.form["password"])
 
 		######## Token validation
-		# prd = password recovery data
-		prd = MySQL.execute(
+		# PRD = password recovery data
+		PRD = MySQL.execute(
 			sql="""
 				SELECT
-					user, timestamp_first, password_new FROM password_recoveries
-				WHERE token=%s AND TIMESTAMPDIFF(MINUTE, password_recoveries.timestamp_first, NOW()) < %s LIMIT 1;
+					user,
+					timestamp_first,
+					password_new
+				FROM password_recoveries
+				WHERE
+					token=%s AND
+					TIMESTAMPDIFF(MINUTE, password_recoveries.timestamp_first, NOW()) < %s
+				LIMIT 1;
 			""",
-			params=(TOKEN, Globals.CONF["password"]["recovery_link_validity_duration"]),
+			params=[
+				TOKEN,
+				Globals.CONF["password"]["recovery_link_validity_duration"]
+			],
 			fetch_one=True
 		)
-		if prd is False: return response(type="error", message="database_error")
+		if PRD is False: return response(type="error", message="database_error")
 
 		# No matching token
-		if not prd: return response(type="error", message="invalid_token", redirect="/400")
+		if not PRD: return response(type="error", message="invalid_token", redirect="/400")
 
 		# Already recovered
-		if prd["password_new"] is not None: return response(type="info", message="token_aready_used", redirect="/log_in")
+		if PRD["password_new"] is not None: return response(type="info", message="token_aready_used", redirect="/log_in")
 
 		# Set the new users passowrd and update password_recoveries
 		data = MySQL.execute(
 			sql="""
-				UPDATE users SET password=%s WHERE id=%s;
-
+				UPDATE users SET password = %s WHERE id = %s;
 				UPDATE password_recoveries SET ip_address_last = %s, user_agent_last = %s, timestamp_last = NOW(), password_new = %s WHERE token = %s;
 			""",
-			params=(password, prd['user'], request.remote_addr, request.headers.get('User-Agent'), password, TOKEN),
-			multi=True,
+			params=[
+				password,
+				PRD['user'],
+				request.remote_addr,
+				request.headers.get('User-Agent'),
+				password,
+				TOKEN
+			],
 			commit=True
 		)
 		if data is False: return response(type="error", message="database_error")
