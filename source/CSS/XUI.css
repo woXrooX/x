@@ -3039,50 +3039,6 @@
 			}
 		}
 
-		/**************************** Info, Success, Warning, Error START ****************************/
-		success{
-			color: var(--color-success);
-
-			&::before{
-				content:"\2713";
-			}
-		}
-
-		info{
-			color: var(--color-info);
-
-			&::before{
-				content:"\2139";
-			}
-		}
-
-		warning{
-			color: var(--color-warning);
-
-			&::before{
-				content:"\26A0";
-			}
-		}
-
-		error{
-			color: var(--color-error);
-
-			&::before{
-				content: "\2715";
-			}
-		}
-
-		info, success, warning, error{
-			&::before{
-				margin-right:5px;
-			}
-
-			&:empty{
-			}
-		}
-		/**************************** Info, Success, Warning, Error END ****************************/
-
-		/**************************** Disabled START ****************************/
 		*{
 			&.disabled, [disabled], :disabled{
 				pointer-events: none !important;
@@ -3095,37 +3051,22 @@
 				}
 			}
 		}
-		/**************************** Disabled END ****************************/
 
-		/**************************** Disable selecting START ****************************/
-		.no-select{
-			user-select: none;
-		}
-		/**************************** Disable selecting END ****************************/
+		.user-select-none{ user-select: none; }
 
-		/**************************** Overflow START ****************************/
-		.overflow-hidden{
-			overflow: hidden;
-		}
-		.overflow-x-hidden{
-			overflow-x: hidden;
-		}
-		.overflow-y-hidden{
-			overflow-y: hidden;
+		.empty-display-none { &:empty { display: none; } }
+
+		@layer overflow{
+			.overflow-hidden{ overflow: hidden; }
+			.overflow-scroll{ overflow: scroll; }
+
+			.overflow-y-hidden{ overflow-y: hidden; }
+			.overflow-y-scroll{ overflow-y: scroll; }
+
+			.overflow-x-hidden{ overflow-x: hidden; }
+			.overflow-x-scroll{ overflow-x: scroll; }
 		}
 
-		.overflow-scroll{
-			overflow: scroll;
-		}
-		.overflow-x-scroll{
-			overflow-x: scroll;
-		}
-		.overflow-y-scroll{
-			overflow-y: scroll;
-		}
-		/**************************** Overflow selecting END ****************************/
-
-		/**************************** HR START ****************************/
 		hr{
 			width: 100%;
 
@@ -3145,7 +3086,6 @@
 				border-top: 1px solid var(--color-main-tint-4);
 			}
 		}
-		/**************************** HR END ****************************/
 	}
 
 	@layer overrides {
