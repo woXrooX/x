@@ -82,6 +82,11 @@
 				--color-hsla-0-0-100-0-5: hsla(0deg, 0%, 100%, 0.5);
 
 
+				/* Basics */
+				--color-black: black;
+				--color-white: white;
+				--color-grey: grey;
+
 				color-scheme: dark;
 				accent-color: var(--color-main);
 
@@ -1431,7 +1436,7 @@
 		.bg-none{background-color: none;}
 		.bg-black{background-color: black;}
 		.bg-white{background-color: white;}
-		.bg-grey{background-color: grey;}
+		.bg-grey{background-color: var(--color-grey);}
 		.bg-transparent{background-color: transparent;}
 
 		/* Situational */
