@@ -2390,7 +2390,7 @@
 		@layer grid{
 			.display-grid { display: grid; }
 
-			/* Fraction-based Grid Column Classes */
+			/* Fraction-based Grid Columns */
 			.grid-cols-1 { grid-template-columns: 1fr; }
 			.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
 			.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
@@ -2399,7 +2399,7 @@
 			.grid-cols-6 { grid-template-columns: repeat(6, 1fr); }
 			.grid-cols-12 { grid-template-columns: repeat(12, 1fr); }
 
-			/* Pixel-based Grid Column Classes */
+			/* Pixel-based Grid Columns */
 			.grid-cols-50px { grid-template-columns: repeat(auto-fill, 50px); }
 			.grid-cols-100px { grid-template-columns: repeat(auto-fill, 100px); }
 			.grid-cols-150px { grid-template-columns: repeat(auto-fill, 150px); }
@@ -2423,7 +2423,7 @@
 			.grid-cols-3-300px { grid-template-columns: repeat(3, 300px); }
 			.grid-cols-4-300px { grid-template-columns: repeat(4, 300px); }
 
-			/* Auto columns and rows */
+			/* Auto columns */
 			.grid-cols-auto { grid-template-columns: auto; }
 			.grid-cols-auto-fill { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
 			.grid-cols-auto-fit { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
@@ -2437,7 +2437,7 @@
 			.grid-rows-5 { grid-template-rows: repeat(5, 1fr); }
 			.grid-rows-6 { grid-template-rows: repeat(6, 1fr); }
 
-			/* Pixel-based Grid Row Classes */
+			/* Pixel-based Grid Rows */
 			.grid-rows-50px { grid-template-rows: repeat(auto-fill, 50px); }
 			.grid-rows-100px { grid-template-rows: repeat(auto-fill, 100px); }
 			.grid-rows-150px { grid-template-rows: repeat(auto-fill, 150px); }
@@ -2467,6 +2467,7 @@
 			.grid-rows-mixed-1 { grid-template-rows: 100px 1fr 100px; }
 			.grid-rows-mixed-2 { grid-template-rows: 1fr 300px 1fr; }
 
+			/* Auto rows */
 			.grid-rows-auto { grid-template-rows: auto; }
 			.grid-rows-auto-fill { grid-template-rows: repeat(auto-fill, minmax(100px, 1fr)); }
 			.grid-rows-auto-fit { grid-template-rows: repeat(auto-fit, minmax(400px, 1fr)); }
@@ -2518,23 +2519,6 @@
 			.row-span-6 { grid-row: span 6; }
 			.row-span-full { grid-row: 1 / -1; }
 
-			/* Shift the items within its cell */
-			.justify-items-start { justify-items: start; }
-			.justify-items-end { justify-items: end; }
-			.justify-items-center { justify-items: center; }
-			.justify-items-stretch { justify-items: stretch; }
-
-			.align-items-start { align-items: start; }
-			.align-items-end { align-items: end; }
-			.align-items-center { align-items: center; }
-			.align-items-stretch { align-items: stretch; }
-
-			/* Shorthand for both for align-items and justif-items */
-			.place-items-start {place-items: start;}
-			.place-items-center {place-items: center;}
-			.place-items-end {place-items: end;}
-			.place-items-stretch {place-items: stretch;}
-
 			/* Shifts the entire grid within its parent */
 			.justify-content-start { justify-content: start; }
 			.justify-content-end { justify-content: end; }
@@ -2551,6 +2535,29 @@
 			.align-content-space-around { align-content: space-around; }
 			.align-content-space-between { align-content: space-between; }
 			.align-content-space-evenly { align-content: space-evenly; }
+
+			/* Shorthand for both for align-content and justif-content */
+			.grid-content-center {
+				align-content: center;
+				justify-content: center;
+			}
+
+			/* Shift the items within its cell */
+			.justify-items-start { justify-items: start; }
+			.justify-items-end { justify-items: end; }
+			.justify-items-center { justify-items: center; }
+			.justify-items-stretch { justify-items: stretch; }
+
+			.align-items-start { align-items: start; }
+			.align-items-end { align-items: end; }
+			.align-items-center { align-items: center; }
+			.align-items-stretch { align-items: stretch; }
+
+			/* Shorthand for both for align-items and justif-items */
+			.place-items-start {place-items: start;}
+			.place-items-center {place-items: center;}
+			.place-items-end {place-items: end;}
+			.place-items-stretch {place-items: stretch;}
 
 			/* Item self-alignment utilities in its cell */
 			.justify-self-auto { justify-self: auto; }
