@@ -227,6 +227,7 @@
 
 	@layer cursor{
 		.cursor-pointer{ cursor: pointer; }
+		.cursor-text{ cursor: text; }
 		.cursor-not-allowed{ cursor: not-allowed; }
 	}
 
