@@ -36,6 +36,7 @@ export default class Editable {
 			if (!("type" in this.#response)) return this.#set_state_indicator("error");
 
 			this.#set_state_indicator(this.#response["type"]);
+
 			setTimeout(()=>{ this.#set_state_indicator(null); }, 2000);
 
 			window.x.XR.execute_on_response(this.#element.getAttribute("XR-func"), this.#response, this.#element);
@@ -70,7 +71,7 @@ export default class Editable {
 	}
 
 	#set_state_indicator = (state)=>{
-		if (state === null) this.#element.setAttribute("XR-state", '');
+		if (state === null) this.#element.removeAttribute("XR-state");
 		else this.#element.setAttribute("XR-state", state);
 	};
 
