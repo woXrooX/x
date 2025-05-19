@@ -1493,45 +1493,10 @@
 		.aspect-ratio-21-to-9 { aspect-ratio: 21 / 9; }
 	}
 
-	/* @layer layout{
-		container{
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-
-			width: 100%;
-			height: auto;
-		}
-
-		row, column{
-			display: flex;
-		}
-
-		row{
-			width: 100%;
-			flex-direction: row;
-			justify-content: center;
-		}
-
-		column{
-			flex-direction: column;
-			align-items: center;
-		}
-
-		@media (width <= 600px) {
-			row{
-				flex-direction: column;
-				width: 100%;
-			}
-			column{
-				width: 100%;
-			}
-		}
-	} */
-
 	@layer layout{
 		container {
 			width: 100%;
+			height: auto;
 		}
 
 		container:not(.display-grid) {
@@ -1541,8 +1506,8 @@
 		}
 
 		row:not(.display-grid) {
-			display: flex;
 			width: 100%;
+			display: flex;
 			flex-direction: row;
 			justify-content: center;
 		}
@@ -1552,22 +1517,6 @@
 			flex-direction: column;
 			align-items: center;
 		}
-
-		container.display-grid { display: grid; }
-
-		row.display-grid {
-			display: grid;
-			width: 100%;
-			grid-auto-flow: column;
-			gap: 1rem;
-		}
-
-		column.display-grid {
-			display: grid;
-			grid-auto-flow: row;
-			gap: 1rem;
-		}
-
 
 		@media (width <= 600px) {
 			row:not(.display-grid) {
@@ -2428,7 +2377,6 @@
 			.grid-cols-auto-fill { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
 			.grid-cols-auto-fit { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
 
-
 			/* Fraction-based Rows */
 			.grid-rows-1 { grid-template-rows: 1fr; }
 			.grid-rows-2 { grid-template-rows: repeat(2, 1fr); }
@@ -2438,12 +2386,10 @@
 			.grid-rows-6 { grid-template-rows: repeat(6, 1fr); }
 
 			/* Pixel-based Rows */
-			.grid-rows-50px { grid-template-rows: repeat(auto-fill, 50px); }
 			.grid-rows-100px { grid-template-rows: repeat(auto-fill, 100px); }
-			.grid-rows-150px { grid-template-rows: repeat(auto-fill, 150px); }
 			.grid-rows-200px { grid-template-rows: repeat(auto-fill, 200px); }
-			.grid-rows-250px { grid-template-rows: repeat(auto-fill, 250px); }
 			.grid-rows-300px { grid-template-rows: repeat(auto-fill, 300px); }
+			.grid-rows-400px { grid-template-rows: repeat(auto-fill, 400px); }
 
 			/* Fixed Row Count with Pixel Height */
 			.grid-rows-1-100px { grid-template-rows: 100px; }
