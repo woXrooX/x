@@ -160,7 +160,7 @@ export default class Form{
 		const element_p = form.querySelector(`p[for=${field}]`);
 
 		// Above Submit Button
-		if(!!message != false && !!element_p === true) element_p.innerHTML = `<${type}>${window.Lang.use(message)}</${type}>`;
+		if(!!message != false && !!element_p === true) element_p.innerHTML = `<span class="text-color-${type}">${window.Lang.use(message)}</span>`;
 
 		// Focus & Flash The Border Color
 		const element = form.querySelector(`[name=${field}]`);

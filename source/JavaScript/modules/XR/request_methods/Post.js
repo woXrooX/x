@@ -125,9 +125,6 @@ export default class Post {
 
 			this.#response = await window.bridge(this.#data, this.#element.getAttribute("XR-post"));
 
-			console.log(this.#response);
-
-
 			if(!("type" in this.#response)) return;
 
 			window.x.XR.execute_on_response(this.#element.getAttribute("XR-func"), this.#response, this.#element);

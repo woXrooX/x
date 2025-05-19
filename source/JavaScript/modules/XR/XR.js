@@ -1,6 +1,7 @@
 // XR = XRequest
 
 import Post from "./request_methods/Post.js";
+import Editable from "./request_methods/Editable.js";
 
 export default class XR {
 	/////////////////////////// Static
@@ -19,8 +20,8 @@ export default class XR {
 		}
 
 		Editable_elements: {
-			const post_elements = document.querySelectorAll("[XR-post]");
-			for (const element of post_elements) new Post(element);
+			const editable_elements = document.querySelectorAll("[XR-editable]");
+			for (const element of editable_elements) new Editable(element);
 		}
 	}
 

@@ -270,3 +270,31 @@ x-tooltip {
 		transform: translate(-50%, var(--padding)) scale(1);
 	}
 }
+
+@layer XR {
+	[XR-editable] {
+		&[XR-state] {
+			border: 1px solid !important;
+			border-color: transparent !important;
+
+			&[XR-state=editing] { border-color: var(--color-text-primary) !important; }
+			&[XR-state=in_progress] {
+				border-color: var(--color-warning) !important;
+				animation: XR_editable_state_editing_indicator_pulse 1s infinite !important;
+				pointer-events: none !important;
+			}
+
+			&[XR-state=success] { border-color: var(--color-success) !important; }
+			&[XR-state=info] { border-color: var(--color-info) !important; }
+			&[XR-state=warning] { border-color: var(--color-warning) !important; }
+			&[XR-state=important] { border-color: var(--color-important) !important; }
+			&[XR-state=error] { border-color: var(--color-error) !important; }
+			&[XR-state=urgent] { border-color: var(--color-urgent) !important; }
+		}
+	}
+
+	@keyframes XR_editable_state_editing_indicator_pulse {
+		0%, 100% { border-color: var(--color-warning); }
+		50% { border-color: transparent; }
+	}
+}

@@ -82,6 +82,11 @@
 				--color-hsla-0-0-100-0-5: hsla(0deg, 0%, 100%, 0.5);
 
 
+				/* Basics */
+				--color-black: black;
+				--color-white: white;
+				--color-grey: grey;
+
 				color-scheme: dark;
 				accent-color: var(--color-main);
 
@@ -222,6 +227,7 @@
 
 	@layer cursor{
 		.cursor-pointer{ cursor: pointer; }
+		.cursor-text{ cursor: text; }
 		.cursor-not-allowed{ cursor: not-allowed; }
 	}
 
@@ -1431,7 +1437,7 @@
 		.bg-none{background-color: none;}
 		.bg-black{background-color: black;}
 		.bg-white{background-color: white;}
-		.bg-grey{background-color: grey;}
+		.bg-grey{background-color: var(--color-grey);}
 		.bg-transparent{background-color: transparent;}
 
 		/* Situational */
@@ -3287,50 +3293,6 @@
 			}
 		}
 
-		/**************************** Info, Success, Warning, Error START ****************************/
-		success{
-			color: var(--color-success);
-
-			&::before{
-				content:"\2713";
-			}
-		}
-
-		info{
-			color: var(--color-info);
-
-			&::before{
-				content:"\2139";
-			}
-		}
-
-		warning{
-			color: var(--color-warning);
-
-			&::before{
-				content:"\26A0";
-			}
-		}
-
-		error{
-			color: var(--color-error);
-
-			&::before{
-				content: "\2715";
-			}
-		}
-
-		info, success, warning, error{
-			&::before{
-				margin-right:5px;
-			}
-
-			&:empty{
-			}
-		}
-		/**************************** Info, Success, Warning, Error END ****************************/
-
-		/**************************** Disabled START ****************************/
 		*{
 			&.disabled, [disabled], :disabled{
 				pointer-events: none !important;
@@ -3343,37 +3305,22 @@
 				}
 			}
 		}
-		/**************************** Disabled END ****************************/
 
-		/**************************** Disable selecting START ****************************/
-		.no-select{
-			user-select: none;
-		}
-		/**************************** Disable selecting END ****************************/
+		.user-select-none{ user-select: none; }
 
-		/**************************** Overflow START ****************************/
-		.overflow-hidden{
-			overflow: hidden;
-		}
-		.overflow-x-hidden{
-			overflow-x: hidden;
-		}
-		.overflow-y-hidden{
-			overflow-y: hidden;
+		.empty-display-none { &:empty { display: none; } }
+
+		@layer overflow{
+			.overflow-hidden{ overflow: hidden; }
+			.overflow-scroll{ overflow: scroll; }
+
+			.overflow-y-hidden{ overflow-y: hidden; }
+			.overflow-y-scroll{ overflow-y: scroll; }
+
+			.overflow-x-hidden{ overflow-x: hidden; }
+			.overflow-x-scroll{ overflow-x: scroll; }
 		}
 
-		.overflow-scroll{
-			overflow: scroll;
-		}
-		.overflow-x-scroll{
-			overflow-x: scroll;
-		}
-		.overflow-y-scroll{
-			overflow-y: scroll;
-		}
-		/**************************** Overflow selecting END ****************************/
-
-		/**************************** HR START ****************************/
 		hr{
 			width: 100%;
 
@@ -3393,12 +3340,11 @@
 				border-top: 1px solid var(--color-main-tint-4);
 			}
 		}
-		/**************************** HR END ****************************/
 	}
 
 	@layer overrides {
 		@layer root {
-			:root:has(div#root > main > .foce-root-color-mode-dark) {
+			:root:has(div#root > main > .force-root-color-mode-dark) {
 				color-scheme: dark !important;
 
 				--color-main-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1) !important;
@@ -3421,7 +3367,7 @@
 				--shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 50% 3% / 0.3) !important;
 			}
 
-			:root:has(div#root > main > .foce-root-color-mode-light) {
+			:root:has(div#root > main > .force-root-color-mode-light) {
 				color-scheme: light !important;
 
 				--color-main-accent: hsla(var(--color-main-hue), 15%, 95%, 1) !important;
