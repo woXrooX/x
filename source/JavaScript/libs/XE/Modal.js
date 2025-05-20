@@ -148,9 +148,9 @@ export default class Modal extends HTMLElement{
 			style.textContent = `:host {display: none;}`;
 			this.shadow.appendChild(style);
 		}
-
-		this.#handle_trigger();
 	}
+
+	connectedCallback(){ this.#handle_trigger(); }
 
 	#handle_trigger = ()=>{
 		switch (this.getAttribute("trigger_type")){
