@@ -1,33 +1,45 @@
 #################################################### Clean up the terminal
-from python.modules.Logger import Log
+from Python.x.modules.Logger import Log
 Log.clear()
-
+Log.center('', '|')
+Log.center("Initializing x", '|')
+Log.center('', '|')
 
 #################################################### Initializing File Structure
-from python.modules.FileSystem import FileSystem
-FileSystem.init()
+from Python.x.modules.File_System import File_System
+File_System.init()
+
+
+#################################################### Generating sitemap
+from Python.x.modules.SEO.Sitemap import Sitemap
+Sitemap.generate()
+
+
+#################################################### Generating sitemap
+from Python.x.modules.SEO.Robots import Robots
+Robots.generate()
 
 
 #################################################### Globals
-from python.modules.Globals import Globals
+from Python.x.modules.Globals import Globals
 
 # Prints latest tracked version
-Log.center('', '-')
-Log.center(Globals.CONF["version"], '-')
-Log.center('', '-')
+Log.center('', '-', type_name="bright_black")
+Log.center(f"x version: {Globals.CONF['version']}", ' ')
+Log.center('', '-', type_name="bright_black")
 
 
 #################################################### Update Logger enabled/disabled after project.json has been loaded
 Log.enabled = True if Globals.CONF.get("tools", {}).get("debug") is True else False
 
 
-#################################################### Initializing Up MySQL
-from python.modules.MySQL import MySQL
+#################################################### Initializing MySQL
+from Python.x.modules.MySQL import MySQL
 MySQL.init()
 
 
-#################################################### Initializing Up Twilio
-from python.modules.Twilio import Twilio
+#################################################### Initializing Twilio
+from Python.x.modules.Twilio import Twilio
 Twilio.init()
 
 
@@ -40,6 +52,9 @@ app = BEE()
 # template_folder = Globals.CONF["flask"]["template_folder"],
 # static_folder = Globals.CONF["flask"]["static_folder"],
 # static_url_path = Globals.CONF["flask"]["static_url_path"]
+#################################################### Initializing Stripe
+from Python.x.modules.Stripe.Stripe import Stripe
+Stripe.init()
 
 
 #################################################### Secret Key
@@ -58,18 +73,18 @@ app.permanent_session_lifetime = timedelta(days=31)
 
 #################################################### On app start
 try:
-	from python.modules.on_app_start import init
+	from Python.project.modules.on_app_start import init
 	init()
 
 except Exception as e: Log.error(e)
 
 
 #################################################### Default Flask Decorations
-from python.modules.routeGuard import routeGuard, routeLogs
+from Python.x.modules.route_guard import route_logs
 
 def before_first_request():
 	try:
-		from python.modules.before_first_request import before_first_request
+		from Python.project.modules.before_first_request import before_first_request
 		before_first_request()
 
 	except Exception as e: Log.error(e)
@@ -78,8 +93,7 @@ with app.app_context(): before_first_request()
 
 @app.before_request
 def before_request():
-	routeLogs()
-	# routeGuard()
+	route_logs()
 
 # @app.after_request
 # def after_request(response):
@@ -91,4 +105,14 @@ def before_request():
 
 
 #################################################### Dynamically Imprting All Pages
-from python.pages import *
+from Python.live_pages import *
+
+
+#################################################### RUN using Flask (For Development)
+### Flask server
+# if __name__ == "__main__":
+	# No SSL
+	# app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True)
+
+	# OpenSSL
+	# app.run(host=CONF["URL"]["domain_name"], port=CONF["URL"]["port"], debug=True, threaded=True, ssl_context=('SSL/cert.pem', 'SSL/key.pem'))

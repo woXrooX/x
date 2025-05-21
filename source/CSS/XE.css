@@ -1,0 +1,300 @@
+@layer x_marquee {
+	x-marquee {
+		--x-marquee-gap: var(--gap);
+		--x-marquee-animation-duration: 20s;
+
+		width: 100%;
+		overflow: hidden;
+		position: relative;
+
+		mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent 100%);
+
+		& > div {
+			width: max-content;
+			display: flex;
+			padding-left: var(--x-marquee-gap);
+			gap: var(--x-marquee-gap);
+			animation: x_marquee_animation var(--x-marquee-animation-duration) linear infinite forwards;
+		}
+
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+
+			backdrop-filter: blur(2px);
+			mask-image: linear-gradient(to right, black 0%, black 5%, transparent 20%, transparent 80%, black 95%, black 100%);
+		}
+	}
+
+	@keyframes x_marquee_animation { to { transform: translateX(-50%); } }
+}
+
+x-select{
+	& > button{
+		width: 100%;
+		margin-bottom: calc(var(--padding) * 2);
+	}
+
+	& > main{
+		background-color: var(--color-main-tint-1);
+		width: 100%;
+		padding: var(--padding);
+		border-radius: var(--radius);
+
+		display: none;
+		flex-direction: column;
+		gap: calc(var(--gap) / 2);
+
+		&.show{
+			display: flex;
+		}
+
+		& > section{
+			background-color: var(--color-main-tint-2);
+			padding: var(--padding);
+			border-radius: var(--radius);
+
+			&#optionsSelected{
+				display: none;
+				flex-wrap: wrap;
+				flex-direction: row;
+				gap: calc(var(--gap) / 2);
+
+				&.show{
+					display: flex;
+				}
+
+				& > div{
+					cursor: pointer;
+					display: none;
+					background-color: var(--color-main-tint-3);
+					width: auto;
+					height: auto;
+					padding: var(--padding);
+					border-radius: var(--radius);
+					transition: var(--transition-velocity) ease-in-out background-color;
+
+					&:hover{
+						user-select: none;
+						background-color: var(--color-main-tint-4);
+					}
+				}
+			}
+
+			&#search{
+			}
+
+			&#optionsToSelect{
+				max-height: 250px;
+				overflow: scroll;
+
+				display: flex;
+				flex-direction: column;
+				gap: calc(var(--gap) / 2);
+
+				&.hide{
+				display: none;
+				}
+
+				& > div{
+					cursor: pointer;
+					background-color: var(--color-main-tint-3);
+					width: auto;
+					height: auto;
+					padding: var(--padding);
+					border-radius: var(--radius);
+					transition: var(--transition-velocity) ease-in-out background-color;
+
+					&:hover{
+						user-select: none;
+						background-color: var(--color-main-tint-4);
+					}
+				}
+			}
+		}
+	}
+}
+
+x-urgent{
+	& > dialog{
+		pointer-events: none;
+
+		opacity: 0;
+
+		background-color: var(--color-main-tint-4);
+
+		min-width: 40px;
+		border: 0px;
+		border-radius: var(--radius);
+		box-shadow: var(--shadow);
+
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) scale(0.8);
+
+		transition: var(--transition-velocity) ease-in-out;
+		transition-property: transform, opacity;
+
+		&::backdrop{
+			/* No access to css variables inside ::backdrop */
+			transition: 200ms ease-in-out;
+			transition-property: opacity;
+
+			opacity: 0;
+			background-color: rgba(0, 0, 0, 0.6);
+			backdrop-filter: blur(10px);
+		}
+
+		&[opening]{
+			pointer-events: all;
+
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1);
+
+			&::backdrop{
+				opacity: 1;
+			}
+		}
+
+		& > button{
+			width: 30px;
+			height: 30px;
+
+			padding: 2px;
+
+			position: fixed;
+			top: 5px;
+			right: 5px;
+		}
+
+		& > main{
+			width: auto;
+			max-width: 80vw;
+
+			height: auto;
+			max-height: 80vh;
+
+			overflow: hidden;
+			overflow-y: scroll;
+
+			padding: var(--padding);
+			padding-top: 40px;
+
+			display: grid;
+			place-items: center;
+
+			@media (width <= 600px){
+				max-width: 90dvw;
+				max-height: 90dvh;
+			}
+		}
+	}
+
+	& > trigger{
+		cursor: pointer;
+
+		&:empty{
+			pointer-events: none;
+		}
+	}
+}
+
+x-tooltip{
+	& > content{
+		pointer-events: none;
+
+		display: block;
+		opacity: 0;
+		background-color: hsla(var(--color-main-hue), 10%, 10%, 1);
+		color: white;
+		font-size: 0.7rem;
+
+		max-width: 40vw;
+		width: max-content;
+		height: max-content;
+
+		padding: var(--padding);
+		border-radius: var(--radius);
+		box-shadow: var(--shadow);
+
+		position: absolute;
+		z-index: var(--z-tooltip);
+
+		transition: var(--transition-velocity) ease-in-out;
+		transition-property: opacity;
+
+		&.show{
+			pointer-events: all;
+			opacity: 1;
+		}
+	}
+}
+
+x-link{
+	cursor: pointer;
+	&:not([class]){
+		color: var(--color-text-secondary);
+		&:hover{ color: var(--color-text-error); }
+	}
+}
+
+x-tooltip {
+	position: absolute;
+	top: anchor(bottom);
+	left: anchor(center);
+	z-index: var(--z-tooltip);
+	transform: translate(-50%, var(--padding)) scale(0.5);
+
+	overflow: hidden;
+	pointer-events: none;
+	opacity: 0;
+	transition: var(--transition-velocity);
+	transition-property: opacity, transform;
+	will-change: opacity, transform;
+
+	background-color: var(--color-hsla-0-0-100-0-1);
+	color: var(--color-text-primary);
+	border-radius: var(--radius);
+	border: 1px solid var(--color-main-tint-2);
+	box-shadow: var(--shadow);
+	backdrop-filter: blur(var(--blur));
+
+	display: grid;
+	place-items: center;
+
+	&.show {
+		pointer-events: all;
+		opacity: 1;
+		transform: translate(-50%, var(--padding)) scale(1);
+	}
+}
+
+@layer XR {
+	[XR-editable] {
+		&[XR-state] {
+			border: 1px solid !important;
+			border-color: transparent !important;
+
+			&[XR-state=editing] { border-color: var(--color-text-primary) !important; }
+			&[XR-state=in_progress] {
+				border-color: var(--color-warning) !important;
+				animation: XR_editable_state_editing_indicator_pulse 1s infinite !important;
+				pointer-events: none !important;
+			}
+
+			&[XR-state=success] { border-color: var(--color-success) !important; }
+			&[XR-state=info] { border-color: var(--color-info) !important; }
+			&[XR-state=warning] { border-color: var(--color-warning) !important; }
+			&[XR-state=important] { border-color: var(--color-important) !important; }
+			&[XR-state=error] { border-color: var(--color-error) !important; }
+			&[XR-state=urgent] { border-color: var(--color-urgent) !important; }
+		}
+	}
+
+	@keyframes XR_editable_state_editing_indicator_pulse {
+		0%, 100% { border-color: var(--color-warning); }
+		50% { border-color: transparent; }
+	}
+}

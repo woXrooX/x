@@ -1,0 +1,258 @@
+{
+	"version": "0.217.2.0000",
+	"project_name": "x",
+
+	"flask": {
+		"root_path": null,
+		"template_folder": "www/HTML",
+		"static_folder": "www/static",
+		"static_url_path": "/"
+	},
+
+	"database": {
+		"enabled": false,
+		"MySQL": {
+			"enabled": false,
+			"name": "user$DB_name",
+			"user": "user",
+			"password": "DB_password",
+			"host": "127.0.0.1",
+			"port": "33060",
+			"charset": "utf8mb4",
+			"collate": "utf8mb4_0900_ai_ci"
+		}
+	},
+
+	"eMail": {
+		"regEx": "^[a-zA-Z0-9][a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]{0,62}[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9](?:\\.[a-zA-Z]+)+$",
+		"subject": "x",
+
+		"SendGrid": {
+			"enabled": false,
+			"domain": null,
+			"api_key": null
+		}
+	},
+
+	"Twilio": {
+		"enabled": false,
+		"api_key": null,
+		"api_secret": null,
+		"account_sid": "ACCOUNT_SID",
+		"auth_token": "AUTH_TOKEN",
+		"region": null,
+		"edge": null,
+		"alphanumeric_sender_id": "x"
+	},
+
+	"Stripe": {
+		"enabled": false,
+		"secret_key": "sk_test_...",
+		"publishable_key": "pk_test_...",
+		"restricted_key": null,
+		"webhook_secret": "whsec_..."
+	},
+
+	"default": {
+		"charset": "utf-8",
+		"currency": "USD",
+
+		"language": {
+			"fallback": "en",
+			"supported": ["en"]
+		},
+
+		"URL": {
+			"prefix": "https",
+			"sub_domain": "www",
+			"domain_name": "woXrooX",
+			"domain_extension": "com",
+			"port": null
+		}
+	},
+
+	"tools": {
+		"debug": true,
+
+		"log_in_tools": {
+			"enable_recording": false
+		}
+	},
+
+	"pages": {
+		"index": {
+			"enabled": true,
+			"endpoints": ["/"]
+		},
+
+		"home": {
+			"enabled": true,
+			"endpoints": ["/home"]
+		},
+
+		"sign_up": {
+			"enabled": false,
+			"authenticity_statuses": ["unauthenticated"],
+			"methods": ["GET", "POST"],
+			"endpoints": ["/sign_up"]
+		},
+
+		"log_in": {
+			"enabled": false,
+			"authenticity_statuses": ["unauthenticated"],
+			"methods": ["GET", "POST"],
+			"endpoints": ["/log_in"]
+		},
+
+		"eMail_confirmation": {
+			"enabled": false,
+			"authenticity_statuses": ["unauthorized"],
+			"methods": ["GET", "POST"],
+			"endpoints": ["/eMail_confirmation"]
+		},
+
+		"log_out": {
+			"enabled": false,
+			"authenticity_statuses": ["unauthorized", "authorized"],
+			"methods": ["GET", "POST"],
+			"endpoints": ["/log_out"]
+		},
+
+		"log_out_instant": {
+			"enabled": false,
+			"authenticity_statuses": ["unauthorized", "authorized"],
+			"methods": ["GET", "POST"],
+			"endpoints": ["/log_out_instant"]
+		},
+
+		"request_password_recovery": {
+			"enabled": false,
+			"authenticity_statuses": ["unauthenticated"],
+			"methods": ["GET", "POST"],
+			"endpoints": ["/request_password_recovery"]
+		},
+
+		"reset_password": {
+			"enabled": false,
+			"authenticity_statuses": ["unauthenticated"],
+			"methods": ["GET", "POST"],
+			"endpoints": ["/reset_password"],
+			"URL_args": ["TOKEN"]
+		},
+
+		"x_actions": {
+			"enabled": false,
+			"roles": ["root"],
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/actions"]
+		},
+
+		"x_feedback_leave": {
+			"enabled": false,
+			"methods": ["POST"],
+			"endpoints": ["/x/feedback/leave"]
+		},
+
+		"x_feedback": {
+			"enabled": false,
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/feedback"]
+		},
+
+		"x_log_in_records": {
+			"enabled": false,
+			"roles": ["root"],
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/log_in_records"]
+		},
+
+		"x_notification": {
+			"enabled": false,
+			"authenticity_statuses": ["unauthorized", "authorized"],
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/notification"],
+			"URL_args": ["ID"]
+		},
+
+		"x_notifications": {
+			"enabled": false,
+			"authenticity_statuses": ["unauthorized", "authorized"],
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/notifications"]
+		},
+
+		"x_pay_cancel": {
+			"enabled": false,
+			"methods": ["GET"],
+			"endpoints": ["/x/pay/cancel"]
+		},
+
+		"x_pay_failure": {
+			"enabled": false,
+			"methods": ["GET"],
+			"endpoints": ["/x/pay/failure"]
+		},
+
+		"x_pay_one_time": {
+			"enabled": false,
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/pay/one_time"]
+		},
+
+		"x_pay_subscription": {
+			"enabled": false,
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/pay/subscription"],
+			"URL_args": ["subscription_name"]
+		},
+
+		"x_pay_success": {
+			"enabled": false,
+			"methods": ["GET"],
+			"endpoints": ["/x/pay/success"]
+		},
+
+		"x_user": {
+			"enabled": false,
+			"roles": ["root"],
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/user"],
+			"URL_args": ["id"]
+		},
+
+		"x_users": {
+			"enabled": false,
+			"roles": ["root"],
+			"methods": ["GET", "POST"],
+			"endpoints": ["/x/users"]
+		}
+	},
+
+	"menu": {
+		"enabled": true,
+		"menus": [
+			{"page": "home", "icon": "home"},
+			{"page": "sign_up"},
+			{"page": "log_in"},
+			{"page": "log_out"}
+		]
+	},
+
+	"username": {
+		"min_length": 6,
+		"max_length": 50,
+		"regEx": "^[a-zA-Z0-9'_-]+$"
+	},
+
+	"password": {
+		"min_length": 6,
+		"max_length": 50,
+		"regEx": "^[a-zA-Z0-9!@#$%^&*-_+]+$",
+		"hashing_algorithm": null,
+		"recovery_link_validity_duration": 15
+	},
+
+	"phone_number": {
+		"regEx": "^[+]{1,1}[0-9]{11,11}$"
+	}
+}
