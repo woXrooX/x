@@ -273,6 +273,10 @@ x-tooltip {
 
 @layer XR {
 	[XR-editable] {
+		border: 1px solid !important;
+		border-color: transparent !important;
+		transition: border-color 0.3s ease;
+
 		&[XR-state] {
 			border: 1px solid !important;
 			border-color: transparent !important;
@@ -290,6 +294,11 @@ x-tooltip {
 			&[XR-state=important] { border-color: var(--color-important) !important; }
 			&[XR-state=error] { border-color: var(--color-error) !important; }
 			&[XR-state=urgent] { border-color: var(--color-urgent) !important; }
+		}
+
+		&:hover{
+			cursor: pointer;
+			border-color:rgba(0, 0, 0, 0.3) !important;
 		}
 	}
 
