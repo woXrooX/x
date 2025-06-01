@@ -275,12 +275,9 @@ x-tooltip {
 	[XR-editable] {
 		border: 1px solid !important;
 		border-color: transparent !important;
-		transition: border-color 0.3s ease;
+		transition: border-color 0.4s ease !important;
 
 		&[XR-state] {
-			border: 1px solid !important;
-			border-color: transparent !important;
-
 			&[XR-state=editing] { border-color: var(--color-text-primary) !important; }
 			&[XR-state=in_progress] {
 				border-color: var(--color-warning) !important;
@@ -298,7 +295,7 @@ x-tooltip {
 
 		&:hover{
 			cursor: pointer;
-			border-color:rgba(0, 0, 0, 0.3) !important;
+			border-color:rgba(0, 0, 0, 0.4) !important;
 		}
 	}
 
