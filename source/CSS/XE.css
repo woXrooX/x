@@ -278,6 +278,9 @@ x-tooltip {
 		transition: border-color 0.4s ease !important;
 
 		&[XR-state] {
+			border: 1px solid !important;
+			border-color: transparent !important;
+
 			&[XR-state=editing] { border-color: var(--color-text-primary) !important; }
 			&[XR-state=in_progress] {
 				border-color: var(--color-warning) !important;
