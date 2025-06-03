@@ -275,6 +275,7 @@ x-tooltip {
 	[XR-editable] {
 		cursor: pointer;
 		outline: 1px solid transparent;
+		transition: outline-color var(--transition-velocity) ease-in-out;
 
 		&:hover { outline-color: var(--color-text-secondary); }
 		&:focus, &:focus-visible, &:active { outline-color: var(--color-text-primary); }
