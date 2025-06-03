@@ -273,28 +273,31 @@ x-tooltip {
 
 @layer XR {
 	[XR-editable] {
-		&[XR-state] {
-			border: 1px solid !important;
-			border-color: transparent !important;
+		cursor: pointer;
+		outline: 1px solid transparent;
 
-			&[XR-state=editing] { border-color: var(--color-text-primary) !important; }
-			&[XR-state=in_progress] {
-				border-color: var(--color-warning) !important;
-				animation: XR_editable_state_editing_indicator_pulse 1s infinite !important;
-				pointer-events: none !important;
+		&:hover { outline-color: var(--color-text-secondary); }
+		&:focus, &:focus-visible, &:active { outline-color: var(--color-text-primary); }
+
+		&[XR-state] {
+			&[XR-state="editing"] { outline-color: var(--color-text-primary); }
+
+			&[XR-state="in_progress"] {
+				animation: XR_editable_pulse 1s infinite;
+				pointer-events: none;
 			}
 
-			&[XR-state=success] { border-color: var(--color-success) !important; }
-			&[XR-state=info] { border-color: var(--color-info) !important; }
-			&[XR-state=warning] { border-color: var(--color-warning) !important; }
-			&[XR-state=important] { border-color: var(--color-important) !important; }
-			&[XR-state=error] { border-color: var(--color-error) !important; }
-			&[XR-state=urgent] { border-color: var(--color-urgent) !important; }
+			&[XR-state="success"] { outline-color: var(--color-success); }
+			&[XR-state="info"] { outline-color: var(--color-info); }
+			&[XR-state="warning"] { outline-color: var(--color-warning); }
+			&[XR-state="important"] { outline-color: var(--color-important); }
+			&[XR-state="error"] { outline-color: var(--color-error); }
+			&[XR-state="urgent"] { outline-color: var(--color-urgent); }
 		}
 	}
 
-	@keyframes XR_editable_state_editing_indicator_pulse {
-		0%, 100% { border-color: var(--color-warning); }
-		50% { border-color: transparent; }
+	@keyframes XR_editable_pulse {
+		0%, 100% { outline-color: var(--color-warning); }
+		50% { outline-color: transparent; }
 	}
 }
