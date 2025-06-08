@@ -12,7 +12,7 @@ export default class Marquee extends HTMLElement {
 
 	connectedCallback() {
 		if (this.getAttribute('direction') === 'right') this.querySelector('div').style.animationDirection = 'reverse';
-		if (this.getAttribute("speed")) this.style.setProperty('--x-marquee-animation-duration', `${this.getAttribute("speed")}s`);
+		if (this.getAttribute("duration")) this.style.setProperty('--x-marquee-animation-duration', `${this.getAttribute("duration")}s`);
 	}
 }
 
