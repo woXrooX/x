@@ -11,13 +11,8 @@ export default class Marquee extends HTMLElement {
 	}
 
 	connectedCallback() {
-		// const classes = this.getAttribute("class");
-
-		// this.#DOM = this.innerHTML;
-		// this.replaceChildren();
-		// this.insertAdjacentHTML("beforeend", `<row class="${classes}">${this.#DOM + this.#DOM}</row>`);
-
-
+		if (this.hasAttribute("x-marquee-animation-duration"))
+			this.style.setProperty("--x-marquee-animation-duration", this.getAttribute("x-marquee-animation-duration"));
 	}
 }
 
