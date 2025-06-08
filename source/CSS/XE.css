@@ -2,6 +2,7 @@
 	x-marquee {
 		--x-marquee-gap: var(--gap);
 		--x-marquee-animation-duration: 20s;
+		--x-marquee-animation-direction: forwards;
 
 		width: 100%;
 		overflow: hidden;
@@ -9,12 +10,14 @@
 
 		mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent 100%);
 
+		&.x-marquee-animation-direction-reverse { --x-marquee-animation-direction: reverse; }
+
 		& > div {
 			width: max-content;
 			display: flex;
 			padding-left: var(--x-marquee-gap);
 			gap: var(--x-marquee-gap);
-			animation: x_marquee_animation var(--x-marquee-animation-duration) linear infinite forwards;
+			animation: x_marquee_animation var(--x-marquee-animation-duration) linear infinite var(--x-marquee-animation-direction);
 		}
 
 		&::after {
