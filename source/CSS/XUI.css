@@ -2373,6 +2373,10 @@
 
 		@layer left{
 			.left-0{left: 0;}
+
+			.left-50 { left: 50%; }
+			.left-100 { left: 100%; }
+
 			.left-5px{left: 5px;}
 			.left-10px{left: 10px;}
 			.left-15px{left: 15px;}
@@ -2388,6 +2392,10 @@
 
 		@layer top{
 			.top-0{top: 0;}
+
+			.top-50 { top: 50%; }
+			.top-100 { top: 100%; }
+
 			.top-5px{top: 5px;}
 			.top-10px{top: 10px;}
 			.top-15px{top: 15px;}
@@ -2403,6 +2411,10 @@
 
 		@layer right{
 			.right-0{right: 0;}
+
+			.right-50 { right: 50%; }
+			.right-100 { right: 100%; }
+
 			.right-5px{right: 5px;}
 			.right-10px{right: 10px;}
 			.right-15px{right: 15px;}
@@ -2418,6 +2430,10 @@
 
 		@layer bottom{
 			.bottom-0{bottom: 0;}
+
+			.bottom-50 { bottom: 50%; }
+			.bottom-100 { bottom: 100%; }
+
 			.bottom-5px{bottom: 5px;}
 			.bottom-10px{bottom: 10px;}
 			.bottom-15px{bottom: 15px;}
@@ -2559,6 +2575,9 @@
 			.padding-9{padding: calc(var(--padding) * 9);}
 			.padding-10{padding: calc(var(--padding) * 10);}
 			.padding-20{padding: calc(var(--padding) * 20);}
+			.padding-30{padding: calc(var(--padding) * 30);}
+			.padding-40{padding: calc(var(--padding) * 40);}
+			.padding-50{padding: calc(var(--padding) * 50);}
 
 			/* Top */
 			.padding-top-0{padding-top: 0px;}
