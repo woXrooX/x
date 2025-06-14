@@ -1,4 +1,0 @@
-\! clear
-\W
-
-USE [NAME];
