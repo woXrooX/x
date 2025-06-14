@@ -16,6 +16,7 @@ def x_users(request):
 							users.lastname,
 							users.eMail,
 							GROUP_CONCAT(DISTINCT user_roles.name ORDER BY user_roles.name ASC SEPARATOR ', ') AS roles_list,
+							users.last_heartbeat_at,
 							users.last_update,
 							users.timestamp
 						FROM users
