@@ -29,6 +29,7 @@ import Notification from "/JavaScript/SPA/Notification.js";
 import Router from "/JavaScript/SPA/Router.js";
 import SVG from "/JavaScript/SPA/SVG.js";
 import URL from "/JavaScript/SPA/URL.js";
+import User from "/JavaScript/SPA/User.js";
 
 
 //// Built-in XEs
@@ -97,6 +98,7 @@ export default class Core{
 		Footer.init();
 		Router.handle();
 
+		await x.User.init_set_last_heartbeat_at();
 		await x.Notification.init();
 	}
 
@@ -174,12 +176,14 @@ export default class Core{
 			// User session on
 			if ("detail" in event && event.detail !== null){
 				window.session["user"] = event.detail;
+				await x.User.init_set_last_heartbeat_at();
 				await x.Notification.init();
 			}
 
 			// User session off
 			else {
 				delete window.session["user"];
+				clearInterval(x.User.poll_func_set_last_heartbeat_at);
 				clearInterval(x.Notification.poll_interval_func);
 			}
 

@@ -27,3 +27,9 @@ def x_users(request):
 				if users is False: return response(type="error", message="database_error")
 
 				return response(type="success", message="success", data=users, default_serializer_func=str)
+
+			if request.get_json()["for"] == "get_live_users_count":
+				live_users = MySQL.execute("SELECT COUNT(id) AS live_users FROM users WHERE (last_heartbeat_at >= NOW() - INTERVAL 30 SECOND);", fetch_one=True)
+				if live_users is False: return response(type="error", message="database_error")
+
+				return response(type="success", message="success", data=live_users)

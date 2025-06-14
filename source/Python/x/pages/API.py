@@ -42,5 +42,10 @@ def API():
 
 			return response(type="success", message="saved")
 
+		if request.get_json()["for"] == "set_last_heartbeat_at":
+			if not User.set_last_heartbeat_at(): return response(type="error", message="something_went_wrong")
+
+			return response(type="success", message="saved")
+
 	# If no matches, return "invalid_request"
 	return ("Bad Request", 400, {'Content-Type': 'text/plain; charset=utf-8'})

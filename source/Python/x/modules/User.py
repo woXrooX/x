@@ -141,6 +141,16 @@ if __name__ != "__main__":
 
 		@staticmethod
 		@check_if_user_in_session
+		def set_last_heartbeat_at():
+			data = MySQL.execute("UPDATE users SET last_heartbeat_at = NOW() WHERE id = %s LIMIT 1;", [session["user"]["id"]], commit=True)
+			if data is False: return False
+
+			Log.success("User.set_last_heartbeat_at()")
+
+			return True
+
+		@staticmethod
+		@check_if_user_in_session
 		def set_app_color_mode(color_mode):
 			# Replace the [1, 2] with the data retrived from the database "app_color_modes"
 			if color_mode not in [1, 2]: return False
