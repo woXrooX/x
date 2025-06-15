@@ -343,12 +343,12 @@ CREATE TABLE IF NOT EXISTS `password_recoveries` (
 
 	-- Details of requester
 	`ip_address_first` VARCHAR(45),
-	`user_agent_first` TEXT,
+	`user_agent_first` TEXT NULL DEFAULT NULL,
 	`timestamp_first` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
 	-- Details of eMail owner
 	`ip_address_last` VARCHAR(45),
-	`user_agent_last` TEXT,
+	`user_agent_last` TEXT NULL DEFAULT NULL,
 	`timestamp_last` TIMESTAMP NULL,
 
 	`password_old` VARCHAR(100) NULL,
@@ -371,7 +371,7 @@ CREATE TABLE IF NOT EXISTS `feedback` (
 	`id` BIGINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
 
 	`ip_address` VARCHAR(45),
-	`user_agent` TEXT,
+	`user_agent` TEXT NULL DEFAULT NULL,
 	`feedback_left_page` VARCHAR(500) NULL,
 
 	`created_by_user` INT NULL,

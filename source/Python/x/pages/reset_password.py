@@ -5,6 +5,7 @@ from Python.x.modules.response import response
 from Python.x.modules.Log_In_Tools import Log_In_Tools
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.Globals import Globals
+from Python.x.modules.IP_address_tools import extract_IP_address_from_request
 
 @Page.build()
 def reset_password(request, TOKEN):
@@ -70,8 +71,8 @@ def reset_password(request, TOKEN):
 			params=[
 				password,
 				PRD['user'],
-				request.remote_addr,
-				request.headers.get('User-Agent'),
+				extract_IP_address_from_request(request),
+				request.headers.get('User-Agent', None),
 				password,
 				TOKEN
 			],

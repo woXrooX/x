@@ -6,6 +6,7 @@ from Python.x.modules.Page import Page
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.response import response
 from Python.x.modules.Globals import Globals
+from Python.x.modules.IP_address_tools import extract_IP_address_from_request
 
 @Page.build()
 def x_feedback_leave(request):
@@ -39,8 +40,8 @@ def x_feedback_leave(request):
 						VALUES (%s, %s, %s, %s, %s, %s, %s);
 					""",
 					params=[
-						request.remote_addr,
-						request.headers.get('User-Agent'),
+						extract_IP_address_from_request(request),
+						request.headers.get('User-Agent', None),
 						request.form["feedback_left_page"],
 						created_by_user,
 						fullname,

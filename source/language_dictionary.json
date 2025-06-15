@@ -329,6 +329,11 @@
 		"ru": "Ссылка для восстановления пароля уже отправлена",
 		"uz": "Parolni tiklash linki allaqachon yuborilgan"
 	},
+	"password_recovery_link_has_been_sent": {
+		"en": "An email with password reset instructions has been sent to your email",
+		"ru": "Ссылка для восстановления пароля отправлен",
+		"uz": "Parolni tiklash linki yuborildi"
+	},
 	"plzW8": {
 		"en": "Please wait",
 		"ru": "Пожалуйста, подождите",
