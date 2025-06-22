@@ -3082,6 +3082,16 @@
 
 		.empty-display-none { &:empty { display: none; } }
 
+		&.on-target-display-flex {
+			& > * {
+				display:none;
+
+				&:first-child:not(:target):not(:has(~ :target)) { display: flex; }
+
+				&:target{ display: flex; }
+			}
+		}
+
 		@layer overflow{
 			.overflow-hidden{ overflow: hidden; }
 			.overflow-scroll{ overflow: scroll; }
