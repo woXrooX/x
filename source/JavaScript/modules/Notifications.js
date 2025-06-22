@@ -24,7 +24,7 @@ export async function notification_s_card_generator(notification){
 				"content_TEXT": notification["content_TEXT"],
 				...content_JSON
 			})}</p>
-			<p class="width-auto text-size-0-6 text-color-secondary text-white-space-nowrap-important">${timestamp_to_human_readable_v2(notification["timestamp"])}</p>
+			<p class="width-auto text-size-0-6 text-color-secondary white-space-nowrap-important">${timestamp_to_human_readable_v2(notification["timestamp"])}</p>
 		</a>
 	`;
 }
@@ -73,7 +73,7 @@ export async function notification_m_card_generator(notification){
 				})}</main>
 
 				<footer class="width-100 display-flex flex-row flex-x-end">
-					<p class="width-auto text-size-0-7 text-color-secondary text-white-space-nowrap-important">${timestamp_to_human_readable_v1(notification["timestamp"])}</p>
+					<p class="width-auto text-size-0-7 text-color-secondary white-space-nowrap-important">${timestamp_to_human_readable_v1(notification["timestamp"])}</p>
 				</footer>
 			</column>
 		</row>

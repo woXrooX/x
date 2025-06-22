@@ -414,10 +414,10 @@
 		}
 
 		@layer white-space{
-			.text-white-space-nowrap{white-space: nowrap;}
-			.text-white-space-nowrap-important{white-space: nowrap !important;}
-			.text-white-space-pre{white-space: pre;}
-			.text-white-space-pre-wrap { white-space: pre-wrap; }
+			.white-space-nowrap{white-space: nowrap;}
+			.white-space-nowrap-important{white-space: nowrap !important;}
+			.white-space-pre{white-space: pre;}
+			.white-space-pre-wrap { white-space: pre-wrap; }
 		}
 
 		/****** Other ******/
