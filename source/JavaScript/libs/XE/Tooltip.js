@@ -18,8 +18,8 @@ export default class Tooltip extends HTMLElement {
 	}
 
 	connectedCallback() {
-		this.#setup_this_element();
-		this.#setup_trigger_element();
+		this.#set_up_this_element();
+		this.#set_up_trigger_element();
 		this.#handle_trigger();
 	}
 
@@ -29,12 +29,12 @@ export default class Tooltip extends HTMLElement {
 
 	/////////// Helpers
 
-	#setup_trigger_element(){
+	#set_up_trigger_element(){
 		this.#trigger_element = document.querySelector(this.getAttribute('trigger_selector'));
 		this.#trigger_element.style = `anchor-name: ${this.#anchor_name};`;
 	}
 
-	#setup_this_element(){
+	#set_up_this_element(){
 		this.style = `position-anchor: ${this.#anchor_name};`;
 	}
 
