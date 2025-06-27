@@ -281,7 +281,15 @@ x-tooltip {
 		transition: outline-color var(--transition-velocity) ease-in-out;
 
 		&:hover { outline-color: var(--color-text-secondary); }
+
 		&:focus, &:focus-visible, &:active { outline-color: var(--color-text-primary); }
+
+		&::before{
+			pointer-events: none;
+			content: attr(XR-placeholder);
+			color: var(--color-text-secondary);
+		}
+		&:not(:empty)::before { display: none; }
 
 		&[XR-state] {
 			&[XR-state="editing"] { outline-color: var(--color-text-primary); }
