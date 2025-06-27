@@ -18,9 +18,7 @@ export default class Editable {
 
 
 	/////////// Helpers
-	#on_click(){
-		this.#element.onclick = ()=>{ this.#editing_view(); };
-	}
+	#on_click(){ this.#element.onclick = ()=>{ this.#editing_view(); }; }
 
 	#request_to_back_end = async ()=>{
 		if (this.#in_progress) return;
@@ -34,6 +32,8 @@ export default class Editable {
 			this.#response = await window.bridge(this.#data, this.#element.getAttribute("XR-editable"));
 
 			if (!("type" in this.#response)) return this.#set_state_indicator("error");
+
+			if (this.#response["type"] === "success") this.#old_text_content = this.#updated_text_content;
 
 			this.#set_state_indicator(this.#response["type"]);
 
@@ -56,13 +56,13 @@ export default class Editable {
 		}
 	};
 
-	#construct_data(){
-		try{
+	#construct_data() {
+		try {
 			this.#data = JSON.parse(this.#element.getAttribute("XR-data")) || {};
 			this.#data["value"] = this.#updated_text_content;
 		}
 
-		catch(error){ this.#data = {}; }
+		catch(error) { this.#data = {}; }
 
 		this.#data = {
 			...(this.#element.hasAttribute("XR-for") ? {"for": this.#element.getAttribute("XR-for")} : {}),
@@ -99,8 +99,6 @@ export default class Editable {
 			else this.#request_to_back_end();
 		};
 
-		this.#element.addEventListener("blur", on_blur);
-
 		const on_key = (event) => {
 			if (event.key === "Escape") {
 				event.preventDefault();
@@ -114,6 +112,7 @@ export default class Editable {
 			}
 		};
 
+		this.#element.addEventListener("blur", on_blur);
 		this.#element.addEventListener("keydown", on_key);
 	};
 
