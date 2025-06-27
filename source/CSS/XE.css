@@ -287,7 +287,7 @@ x-tooltip {
 		&::before{
 			pointer-events: none;
 			content: attr(XR-placeholder);
-			color: var(--color-text-secondary);
+			color: hsla(var(--color-main-hue), 10%, var(--color-main-lightness), 0.5);
 		}
 		&:not(:empty)::before { display: none; }
 
