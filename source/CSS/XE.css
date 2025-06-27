@@ -283,6 +283,14 @@ x-tooltip {
 		&:hover { outline-color: var(--color-text-secondary); }
 		&:focus, &:focus-visible, &:active { outline-color: var(--color-text-primary); }
 
+		&::before{
+			content: attr(x-placeholder);
+			color: var(--color-text-secondary);
+			font-style: italic;
+		}
+		&:focus::before { display: none; }
+		&:not(:empty)::before { display: none; }
+
 		&[XR-state] {
 			&[XR-state="editing"] { outline-color: var(--color-text-primary); }
 
