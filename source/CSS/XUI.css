@@ -2552,6 +2552,13 @@
 			}
 
 			@media (width <= 600px){
+				.s-margin-left-0{margin-left: 0px;}
+				.s-margin-left-1{margin-left: var(--margin);}
+				.s-margin-left-2{margin-left: calc(var(--margin) * 2);}
+				.s-margin-left-3{margin-left: calc(var(--margin) * 3);}
+				.s-margin-left-4{margin-left: calc(var(--margin) * 4);}
+				.s-margin-left-5{margin-left: calc(var(--margin) * 5);}
+
 				.s-margin-right-0{margin-right: 0px;}
 				.s-margin-right-1{margin-right: var(--margin);}
 				.s-margin-right-2{margin-right: calc(var(--margin) * 2);}
