@@ -98,10 +98,6 @@ body{
 
 	& > x-svg{
 		&[for=menu_show]{
-			font-size: 2rem;
-			position: fixed;
-			top: 0px;
-			left: 0px;
 			z-index: var(--z-menu_show_button);
 		}
 	}
