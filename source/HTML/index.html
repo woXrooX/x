@@ -101,7 +101,20 @@
 		<cover></cover>
 
 		{% if Globals.CONF["menu"]["enabled"] == True %}
-			<x-svg for="menu_show" color="#ffffff" name="menu"></x-svg>
+			<x-svg
+				for="menu_show"
+				name="menu"
+				color="#ffffff"
+
+				class="
+					text-size-2
+					position-fixed
+					top-0
+					left-0
+
+					s-margin-left-2
+				"
+			></x-svg>
 
 			<menu>
 				<header>
