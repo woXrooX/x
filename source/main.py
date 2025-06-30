@@ -28,7 +28,7 @@ Log.center('', '-', type_name="bright_black")
 
 
 #################################################### Initializing File Structure
-# File_System.init()
+File_System.init()
 
 
 #################################################### Generating sitemap
