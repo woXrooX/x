@@ -2,16 +2,33 @@
 from flask import Flask, render_template, request, session, redirect, url_for, make_response, send_from_directory, abort
 
 
-#################################################### Clean up the terminal
+from Python.x.modules.Globals import Globals
 from Python.x.modules.Logger import Log
+from Python.x.modules.File_System import File_System
+
+#################################################### Initializing CONF
+File_System.init_CONF()
+
+
+#################################################### Update Logger enabled/disabled after project.json has been loaded
+Log.enabled = True if Globals.CONF.get("tools", {}).get("debug") is True else False
+
+
+#################################################### Clean up the terminal
 Log.clear()
 Log.center('', '|')
 Log.center("Initializing x", '|')
 Log.center('', '|')
 
+
+#################################################### Prints latest tracked version
+Log.center('', '-', type_name="bright_black")
+Log.center(f"x version: {Globals.CONF['version']}", ' ')
+Log.center('', '-', type_name="bright_black")
+
+
 #################################################### Initializing File Structure
-from Python.x.modules.File_System import File_System
-File_System.init()
+# File_System.init()
 
 
 #################################################### Generating sitemap
@@ -19,22 +36,9 @@ from Python.x.modules.SEO.Sitemap import Sitemap
 Sitemap.generate()
 
 
-#################################################### Generating sitemap
+#################################################### Generating robots
 from Python.x.modules.SEO.Robots import Robots
 Robots.generate()
-
-
-#################################################### Globals
-from Python.x.modules.Globals import Globals
-
-# Prints latest tracked version
-Log.center('', '-', type_name="bright_black")
-Log.center(f"x version: {Globals.CONF['version']}", ' ')
-Log.center('', '-', type_name="bright_black")
-
-
-#################################################### Update Logger enabled/disabled after project.json has been loaded
-Log.enabled = True if Globals.CONF.get("tools", {}).get("debug") is True else False
 
 
 #################################################### Initializing MySQL

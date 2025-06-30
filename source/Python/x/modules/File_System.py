@@ -145,6 +145,11 @@ if __name__ != "__main__":
 				return False
 
 
+		################# CONF
+		def init_CONF():
+			File_System.load_internal_configurations()
+			File_System.load_project_configurations()
+			File_System.merge_configurations()
 
 
 		################# System
@@ -216,14 +221,14 @@ if __name__ != "__main__":
 
 			######### Internals
 			# x.json
-			File_System.load_internal_configurations()
+			# File_System.load_internal_configurations()
 
 			# language_dictionary.json
 			File_System.load_internal_language_dictionary()
 
 			######### Externals
 			# project.json
-			File_System.load_project_configurations()
+			# File_System.load_project_configurations()
 
 			# HTML
 			File_System.load_external_HTML()
@@ -236,7 +241,7 @@ if __name__ != "__main__":
 
 			######### Merge
 			# Merge Configurations
-			File_System.merge_configurations()
+			# File_System.merge_configurations()
 
 			# Merge Configurations
 			File_System.merge_language_dictionaries()
@@ -301,10 +306,10 @@ if __name__ != "__main__":
 				with open(f"{Globals.X_PATH}/x.json", 'r') as file:
 					Globals.CONF = json.load(file)
 
-				Log.success("Loaded: x.json")
+				# Log.success("Loaded: x.json")
 
 			except Exception as err:
-				Log.error(f"File_System.load_internal_configurations(): {err}")
+				# Log.error(f"File_System.load_internal_configurations(): {err}")
 				sys.exit()
 
 		@staticmethod
@@ -327,10 +332,10 @@ if __name__ != "__main__":
 				with open(f"{Globals.PROJECT_PATH}/project.json", 'r') as file:
 					Globals.PROJECT = json.load(file)
 
-				Log.success("Loaded: project.json")
+				# Log.success("Loaded: project.json")
 
 			except:
-				Log.error("Could Not Load The project.json")
+				# Log.error("Could Not Load The project.json")
 				sys.exit()
 
 		@staticmethod
