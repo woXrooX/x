@@ -6,7 +6,7 @@ if __name__ != "__main__":
 
 	class Logger:
 		#### Variables
-		enabled = True
+		enabled = False
 		columns, lines = shutil.get_terminal_size()
 		lineLength = columns - 1
 

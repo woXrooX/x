@@ -6,19 +6,32 @@ from Python.x.modules.Globals import Globals
 from Python.x.modules.Logger import Log
 from Python.x.modules.File_System import File_System
 
-#################################################### Initializing CONF
-File_System.init_CONF()
+#################################################### Init Globals
+Globals.init_CONF()
 
-
-#################################################### Update Logger enabled/disabled after project.json has been loaded
+# Once CONF is ready
+# Update Logger enabled/disabled after project.json has been loaded
 Log.enabled = True if Globals.CONF.get("tools", {}).get("debug") is True else False
+
+Globals.init_LANG_DICT()
+
+
 
 
 #################################################### Clean up the terminal
 Log.clear()
 Log.center('', '|')
-Log.center("Initializing x", '|')
+Log.center("x is running", '|')
 Log.center('', '|')
+
+
+
+
+#################################################### Initializing File_System_Operations
+from Python.x.modules.File_System_Operations import File_System_Operations
+File_System_Operations.init()
+
+
 
 
 #################################################### Prints latest tracked version
@@ -27,8 +40,6 @@ Log.center(f"x version: {Globals.CONF['version']}", ' ')
 Log.center('', '-', type_name="bright_black")
 
 
-#################################################### Initializing File Structure
-File_System.init()
 
 
 #################################################### Generating sitemap
