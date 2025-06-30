@@ -3,6 +3,7 @@ if __name__ != "__main__":
 	from datetime import datetime
 	import shutil
 	import random
+	import sys
 
 	class Logger:
 		#### Variables
@@ -68,7 +69,7 @@ if __name__ != "__main__":
 
 		@staticmethod
 		@guard
-		def raw(data, force = False): print(data)
+		def raw(data, force = False): print(data, file=sys.stderr, flush=True)
 
 		@staticmethod
 		@guard
@@ -77,10 +78,18 @@ if __name__ != "__main__":
 			padding = (Logger.columns - 2 - len(text)) // 2
 
 			# If Empty Text Passed Then Draw Full Line
-			if text == '': print(f"{Logger.colors.get(type_name, Logger.colors['custom'])}{fill_char * Logger.columns}\033[0m")
+			if text == '': print(
+				f"{Logger.colors.get(type_name, Logger.colors['custom'])}{fill_char * Logger.columns}\033[0m",
+				file=sys.stderr,
+				flush=True
+			)
 
 			# Else Normal Line With Space In The Center
-			else: print(f"{Logger.colors.get(type_name, Logger.colors['custom'])}{fill_char * padding} {text} {fill_char * padding}\033[0m")
+			else: print(
+				f"{Logger.colors.get(type_name, Logger.colors['custom'])}{fill_char * padding} {text} {fill_char * padding}\033[0m",
+				file=sys.stderr,
+				flush=True
+			)
 
 		@staticmethod
 		def fieldset(content, legend="", type_name="bright_white", fill_char = '-', force = False):
@@ -101,12 +110,20 @@ if __name__ != "__main__":
 		@staticmethod
 		@guard
 		def log(type_name, text, force = False):
-			print(f"{Logger.colors.get(type_name, Logger.colors['custom'])}[{Logger.timestamp()}] [{type_name.upper()}]\033[0m {text}")
+			print(
+				f"{Logger.colors.get(type_name, Logger.colors['custom'])}[{Logger.timestamp()}] [{type_name.upper()}]\033[0m {text}",
+				file=sys.stderr,
+				flush=True
+			)
 
 
 		@staticmethod
 		@guard
-		def clear(): print("\033[H\033[J")
+		def clear(): print(
+			"\033[H\033[J",
+			file=sys.stderr,
+			flush=True
+		)
 
 		@staticmethod
 		def colored_text(color, text): return f"{Logger.colors[color]}{text}{Logger.colors['reset']}"
