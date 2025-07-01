@@ -20,7 +20,7 @@ def API():
 				{
 					"CONF": Globals.PUBLIC_CONF,
 					"session": {"user": User.generate_public_session()} if "user" in session else {},
-					"LANG_DICT": Globals.LANG_DICT,
+					"LANGUAGE_DICTIONARY": Globals.LANGUAGE_DICTIONARY,
 					"USER_AUTHENTICITY_STATUSES": Globals.USER_AUTHENTICITY_STATUSES,
 					"USER_ROLES": Globals.USER_ROLES,
 					"USER_OCCUPATIONS": Globals.USER_OCCUPATIONS,

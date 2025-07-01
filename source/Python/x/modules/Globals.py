@@ -16,7 +16,7 @@ if __name__ != "__main__":
 
 		#### x
 		CONF = {}
-		LANG_DICT = {}
+		LANGUAGE_DICTIONARY = {}
 
 		CURRENCIES = {}
 		LANGUAGES = {}
@@ -31,7 +31,7 @@ if __name__ != "__main__":
 		#### Project
 		PROJECT = {}
 		PROJECT_SVG = {}
-		PROJECT_LANG_DICT = {}
+		PROJECT_LANGUAGE_DICTIONARY = {}
 		PROJECT_HTML = {}
 
 		# Global empty data holder to be used by project
@@ -115,18 +115,18 @@ if __name__ != "__main__":
 			# print(json.dumps(Globals.PUBLIC_CONF, indent=4))
 
 
-		################# LANG_DICT
+		################# LANGUAGE_DICTIONARY
 		@staticmethod
-		def init_LANG_DICT():
-			Globals.load_internal_language_dictionary()
-			Globals.load_external_language_dictionary()
+		def init_LANGUAGE_DICTIONARY():
+			Globals.load_x_LANGUAGE_DICTIONARY()
+			Globals.load_PROJECT_LANGUAGE_DICTIONARY()
 			Globals.merge_language_dictionaries()
 
 		@staticmethod
-		def load_internal_language_dictionary():
+		def load_x_LANGUAGE_DICTIONARY():
 			try:
 				with open(f'{Globals.X_PATH}/language_dictionary.json', encoding="utf8") as file:
-					Globals.LANG_DICT = json.load(file)
+					Globals.LANGUAGE_DICTIONARY = json.load(file)
 
 				Log.success("Internal language_dictionary.json Is Loaded")
 
@@ -134,18 +134,18 @@ if __name__ != "__main__":
 				Log.error("Could Not Read The Internal language_dictionary.json")
 
 		@staticmethod
-		def load_external_language_dictionary():
+		def load_PROJECT_LANGUAGE_DICTIONARY():
 			try:
 				with open(f"{Globals.PROJECT_PATH}/language_dictionary.json", 'r') as file:
-					Globals.PROJECT_LANG_DICT = json.load(file)
+					Globals.PROJECT_LANGUAGE_DICTIONARY = json.load(file)
 
 				Log.success("External language_dictionary.json Is Loaded")
 
 			except:
 				Log.error("Could Not Read The External language_dictionary.json")
 
-		# Override The LANG_DICT w/ The PROJECT_LANG_DICT
+		# Override The LANGUAGE_DICTIONARY w/ The PROJECT_LANGUAGE_DICTIONARY
 		@staticmethod
 		def merge_language_dictionaries():
-			Globals.LANG_DICT.update(Globals.PROJECT_LANG_DICT)
+			Globals.LANGUAGE_DICTIONARY.update(Globals.PROJECT_LANGUAGE_DICTIONARY)
 

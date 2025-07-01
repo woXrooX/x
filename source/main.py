@@ -13,7 +13,7 @@ Globals.init_CONF()
 # Update Logger enabled/disabled after project.json has been loaded
 Log.enabled = True if Globals.CONF.get("tools", {}).get("debug") is True else False
 
-Globals.init_LANG_DICT()
+Globals.init_LANGUAGE_DICTIONARY()
 
 
 

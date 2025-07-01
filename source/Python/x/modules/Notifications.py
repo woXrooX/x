@@ -110,21 +110,21 @@ if __name__ != "__main__":
 		):
 			if recipient is None: return False
 
-			eMail_subject_LANG_DICT_key = f"{event_name}_eMail_subject"
-			eMail_content_LANG_DICT_key = f"{event_name}_eMail_content"
+			eMail_subject_LANGUAGE_DICTIONARY_key = f"{event_name}_eMail_subject"
+			eMail_content_LANGUAGE_DICTIONARY_key = f"{event_name}_eMail_content"
 
 
-			if eMail_subject_LANG_DICT_key not in Globals.LANG_DICT: return False
-			if eMail_content_LANG_DICT_key not in Globals.LANG_DICT: return False
+			if eMail_subject_LANGUAGE_DICTIONARY_key not in Globals.LANGUAGE_DICTIONARY: return False
+			if eMail_content_LANGUAGE_DICTIONARY_key not in Globals.LANGUAGE_DICTIONARY: return False
 
 			content_JSON = content_JSON if isinstance(content_JSON, dict) else {}
 
-			try: subject = Globals.LANG_DICT[eMail_subject_LANG_DICT_key]["en"].format(sender=sender, recipient=recipient, content_TEXT=content_TEXT, **content_JSON)
+			try: subject = Globals.LANGUAGE_DICTIONARY[eMail_subject_LANGUAGE_DICTIONARY_key]["en"].format(sender=sender, recipient=recipient, content_TEXT=content_TEXT, **content_JSON)
 			except Exception as e:
 				Log.error(f"Notifications.new_eMail()->subject: {e}")
 				return False
 
-			try: content = Globals.LANG_DICT[eMail_content_LANG_DICT_key]["en"].format(sender=sender, recipient=recipient, content_TEXT=content_TEXT, **content_JSON)
+			try: content = Globals.LANGUAGE_DICTIONARY[eMail_content_LANGUAGE_DICTIONARY_key]["en"].format(sender=sender, recipient=recipient, content_TEXT=content_TEXT, **content_JSON)
 			except Exception as e:
 				Log.error(f"Notifications.new_eMail()->content: {e}")
 				return False
@@ -141,13 +141,13 @@ if __name__ != "__main__":
 		):
 			if recipient is None: return
 
-			SMS_body_LANG_DICT_key = f"{event_name}_SMS_body"
+			SMS_body_LANGUAGE_DICTIONARY_key = f"{event_name}_SMS_body"
 
-			if SMS_body_LANG_DICT_key not in Globals.LANG_DICT: return False
+			if SMS_body_LANGUAGE_DICTIONARY_key not in Globals.LANGUAGE_DICTIONARY: return False
 
 			content_JSON = content_JSON if isinstance(content_JSON, dict) else {}
 
-			try: content = Globals.LANG_DICT[SMS_body_LANG_DICT_key]["en"].format(recipient=recipient, sender=sender, content_TEXT=content_TEXT, **content_JSON)
+			try: content = Globals.LANGUAGE_DICTIONARY[SMS_body_LANGUAGE_DICTIONARY_key]["en"].format(recipient=recipient, sender=sender, content_TEXT=content_TEXT, **content_JSON)
 			except Exception as e:
 				Log.error(f"Notifications.new_SMS()->content: {e}")
 				return False
