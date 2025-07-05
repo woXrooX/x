@@ -139,7 +139,7 @@ export default class Form{
 		Toast.handle_commands(event.target.getAttribute("x-toast"), response);
 
 		////////// Callback
-		Form.#execute_on_response(event.target.getAttribute("form_func"), response);
+		Form.#execute_on_response(event.target.getAttribute("form_func"), response, form_data);
 
 		////////// response["actions"]
 		window.x.Response.handle_actions(response);
@@ -182,9 +182,9 @@ export default class Form{
 		setTimeout(()=>{element.removeAttribute("style");}, Form.#flash_duration);
 	}
 
-	static async #execute_on_response(func_name, response){
+	static async #execute_on_response(func_name, response, form_data){
 		if(!!func_name === false || typeof func_name != "string") return;
-		await Form.#FUNC_POOL[func_name](response);
+		await Form.#FUNC_POOL[func_name](response, form_data);
 	}
 
 	static #form_guard(form){
