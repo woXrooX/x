@@ -382,6 +382,9 @@ CREATE TABLE IF NOT EXISTS `feedback` (
 
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
+	`flag_deleted` TIMESTAMP NULL DEFAULT NULL,
+	`flag_deleted_by_user` INT NULL,
+
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

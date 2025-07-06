@@ -15,7 +15,8 @@ def x_feedback(request):
 						CONCAT(users.firstname, ' ', users.lastname) AS users_fullname,
 						users.eMail AS users_eMail
 					FROM feedback
-					LEFT JOIN users ON users.id = feedback.created_by_user;
+					LEFT JOIN users ON users.id = feedback.created_by_user
+					WHERE feedback.flag_deleted IS NULL;
 				""")
 				if data == False: return response(type="error", message="database_error")
 
@@ -25,8 +26,20 @@ def x_feedback(request):
 				if "id" not in request.get_json(): return response(type="error",message="invalid_request")
 
 				data = MySQL.execute(
-					sql="DELETE FROM feedback WHERE id=%s;",
-					params=[request.get_json()["id"]],
+					sql="""
+						UPDATE feedback
+						SET
+							feedback.flag_deleted = NOW(),
+							feedback.flag_deleted_by_user = %s
+						WHERE
+							feedback.id = %s AND
+							feedback.flag_deleted IS NULL
+						LIMIT 1;
+					""",
+					params=[
+						session["user"]["id"],
+						request.get_json()["id"]
+					],
 					commit=True
 				)
 				if data is False: return response(type="error", message="database_error")
