@@ -25,11 +25,9 @@ def x_feedback_leave(request):
 
 					if "eMail" not in request.form or not request.form["eMail"]: return response(type="error", message="invalid_value", field="eMail")
 					if not re.match(Globals.CONF["eMail"]["regEx"], request.form["eMail"]): return response(type="error", message="eMailInvalid", field="eMail")
-					eMail =request.form["eMail"]
+					eMail = request.form["eMail"]
 
-
-				if "user" in session:
-					created_by_user = session["user"]["id"]
+				if "user" in session: created_by_user = session["user"]["id"]
 
 				if "feedback_text" not in request.form or not request.form["feedback_text"]: return response(type="error", message="invalid_value", field="feedback_text")
 
