@@ -26,7 +26,6 @@ if __name__ != "__main__":
 
 			# project/[folder]
 			project_folders = [
-				"Backups",
 				"CSS",
 				"Files", "Files/assets", "Files/assets/private", "Files/assets/public", "Files/static", "Files/users",
 				"fonts",
