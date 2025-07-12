@@ -32,7 +32,7 @@ export async function after(){
 					<td>${cell["id"]}</td>
 					<td>${cell["created_by_user"] ?? "N/A"}</td>
 					<td>${cell["created_by_user"] != null ? cell["users_fullname"] : cell["fullname"]}</td>
-					<td>${cell["created_by_user"] != null ? cell["users_eMail"] : cell["eMail"]}</td>
+					<td>${cell["eMail"] || "N/S"}</td>
 					<td>${feedback_text}</td>
 					<td>${cell["feedback_left_page"] || "N/A"}</td>
 					<td>${cell["timestamp"]}</td>
