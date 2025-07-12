@@ -4,7 +4,7 @@ from Python.x.modules.Page import Page
 from Python.x.modules.response import response
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.User import User
-from Python.x.modules.SendGrid import SendGrid
+from Python.x.modules.Notifications import Notifications
 from Python.x.modules.Globals import Globals
 
 @Page.build()
@@ -75,26 +75,32 @@ def x_user(request, id):
 			if request.get_json()["for"] == "resend_eMail_confirmation":
 				user = MySQL.execute("SELECT eMail, eMail_verified FROM users WHERE id=%s LIMIT 1;", [id], fetch_one=True)
 				if user is False or user is None: return response(type="error", message="database_error")
-				if user["eMail"] is None or user["eMail_verified"] == 1: return response(type="info", message="Email is already verified")
+				if user["eMail"] is None: return response(type="warning", message="This user has no eMail address")
+				if user["eMail_verified"] == 1: return response(type="info", message="Email is already verified")
 
 				eMail_verification_code = random.randint(100000, 999999)
 
-				data = MySQL.execute("UPDATE users SET eMail_verification_code=%s WHERE id=%s LIMIT 1", [eMail_verification_code, id], commit=True)
+				data = MySQL.execute(
+					sql="""
+						UPDATE users
+						SET
+							eMail_verification_code = %s,
+							eMail_verification_attempts_count = 0,
+							authenticity_status = 2
+						WHERE
+							id = %s AND
+							flag_deleted IS NULL
+						LIMIT 1;
+					""",
+					params=[eMail_verification_code, id],
+					commit=True
+				)
 				if data is False: return response(type="error", message="database_error")
 
-				eMail_content = f"""
-					Dear User,
+				if Notifications.new_eMail(
+					recipient=user["eMail"],
+					content_JSON={"eMail_verification_code": eMail_verification_code},
+					event_name="sign_up_eMail_verification"
+				) is not True: return response(type="error", message="could_not_send_eMail_verification_code")
 
-					<h2>Welcome to {Globals.PROJECT_LANGUAGE_DICTIONARY.get(Globals.CONF["project_name"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")}!</h2>
-
-					<p>Please verify your email address using the code below:</p>
-
-					<h2>{eMail_verification_code}</h2>
-
-					<p>If you did not create an account using this email address, please ignore this message.</p>
-
-					<p>{Globals.PROJECT_LANGUAGE_DICTIONARY.get(Globals.CONF["project_name"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
-				"""
-
-				if SendGrid.send("noreply", user["eMail"], eMail_content, "Email verification") is False: return response(type="error", message="could_not_send_eMail_verification_code")
-				return response(type="success", message="Email verification code has been sent")
+				return response(type="success", message="eMail_confirmation_code_has_been_sent")
