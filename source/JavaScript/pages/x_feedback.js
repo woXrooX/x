@@ -29,6 +29,7 @@ export async function after(){
 
 			HTML += `
 				<tr>
+					<td>${cell["id"]}</td>
 					<td>${cell["created_by_user"] ?? "N/A"}</td>
 					<td>${cell["created_by_user"] != null ? cell["users_fullname"] : cell["fullname"]}</td>
 					<td>${cell["created_by_user"] != null ? cell["users_eMail"] : cell["eMail"]}</td>
@@ -37,18 +38,25 @@ export async function after(){
 					<td>${cell["timestamp"]}</td>
 
 					<td>
-						<x-svg
-							XR-post
-							XR-for="delete"
-							XR-data='{"id": "${cell["id"]}"}'
+						<x-svg id="modal_XR_delete_${cell["id"]}" name="delete" class="btn btn-error" color="white"></x-svg>
+						<x-modal trigger_selector="x-svg#modal_XR_delete_${cell["id"]}">
+							<column class="gap-1 padding-2">
+								<p class="text-align-center text-size-1-2">Are you sure you want to delete this feedback?</p>
 
-							x-toast="on:any:message"
+								<button
+									XR-post
+									XR-for="delete"
+									XR-data='{"id": "${cell["id"]}"}'
 
-							name="delete"
-							color="white"
+									x-toast="on:any:message"
 
-							class="btn btn-error"
-						></x-svg>
+									x-modal="on:success:hide"
+
+									class="btn btn-error"
+								>Yes, delete!</button>
+							</column>
+						</x-modal>
+
 					</td>
 				</tr>
 			`;
@@ -60,6 +68,7 @@ export async function after(){
 					<caption>${Lang.use("feedback")}</caption>
 					<thead>
 						<tr>
+							<th>Feedback ID</th>
 							<th>User ID</th>
 							<th>${window.Lang.use("fullname")}</th>
 							<th>${window.Lang.use("eMail")}</th>
