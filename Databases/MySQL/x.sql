@@ -250,6 +250,11 @@ CREATE TABLE IF NOT EXISTS `disabled_notification_events` (
 	`id` INT NOT NULL UNIQUE AUTO_INCREMENT,
 	`user` INT NOT NULL,
 	`event` INT NOT NULL,
+
+	`via_in_app` BIT(1) NOT NULL DEFAULT b'0',
+	`via_eMail` BIT(1) NOT NULL DEFAULT b'0',
+	`via_SMS` BIT(1) NOT NULL DEFAULT b'0',
+
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
 	FOREIGN KEY (`user`) REFERENCES users(`id`) ON DELETE CASCADE,
