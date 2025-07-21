@@ -36,21 +36,18 @@ def x_notifications_settings(request):
 				sql = ''
 				match request.get_json()["method"]:
 					case "in_app":
-						sql_enable_method = """
-							INSERT INTO disabled_notification_events (user, event, via_in_app)
-							VALUES (%s, %s, b'1')
+						sql = """
+							INSERT INTO disabled_notification_events (user, event, via_in_app) VALUES (%s, %s, b'1')
 							ON DUPLICATE KEY UPDATE via_in_app = via_in_app ^ b'1';
 						"""
 					case "eMail":
-						sql_enable_method = """
-							INSERT INTO disabled_notification_events (user, event, via_eMail)
-							VALUES (%s, %s, b'1')
+						sql = """
+							INSERT INTO disabled_notification_events (user, event, via_eMail) VALUES (%s, %s, b'1')
 							ON DUPLICATE KEY UPDATE via_eMail = via_eMail ^ b'1';
 						"""
 					case "SMS":
-						sql_enable_method = """
-							INSERT INTO disabled_notification_events (user, event, via_SMS)
-							VALUES (%s, %s, b'1')
+						sql = """
+							INSERT INTO disabled_notification_events (user, event, via_SMS) VALUES (%s, %s, b'1')
 							ON DUPLICATE KEY UPDATE via_SMS = via_SMS ^ b'1';
 						"""
 					case _:

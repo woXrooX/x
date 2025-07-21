@@ -21,7 +21,7 @@ export async function after(){
 		else events = {};
 
 		const disabled_events_obj = {};
-		for (const event of disabled_events) disabled_events_obj[event.event_name] = event;
+		for (const event of disabled_events) disabled_events_obj[event.name] = event;
 
 		let HTML = '';
 
