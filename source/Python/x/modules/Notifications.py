@@ -17,9 +17,9 @@ if __name__ != "__main__":
 			content_JSON = None,
 			event_name = None,
 			type_name = None,
-			via_in_app = False,
-			via_eMail = False,
-			via_SMS = False
+			method_in_app = False,
+			method_eMail = False,
+			method_SMS = False
 		):
 			# Validate "event_name"
 			if event_name not in Globals.NOTIFICATION_EVENTS:
@@ -35,9 +35,9 @@ if __name__ != "__main__":
 						users.id,
 						users.eMail,
 						users.phone_number,
-						disabled_notification_events.via_in_app,
-						disabled_notification_events.via_eMail,
-						disabled_notification_events.via_SMS
+						disabled_notification_events.method_in_app,
+						disabled_notification_events.method_eMail,
+						disabled_notification_events.method_SMS
 					FROM users
 					LEFT JOIN disabled_notification_events ON
 						disabled_notification_events.event = %s AND
@@ -54,17 +54,17 @@ if __name__ != "__main__":
 
 			is_successfully = True
 
-			if via_in_app is True:
+			if method_in_app is True:
 				if Notifications.new_in_app(recipient, sender, content_TEXT, content_JSON, event_name, type_name) is False:
 					Log.warning("Notifications.new() -> Could not create: new_in_app()")
 					is_successfully = False
 
-			if via_eMail is True:
+			if method_eMail is True:
 				if Notifications.new_eMail(recipient, sender, content_TEXT, content_JSON, event_name) is False:
 					Log.warning("Notifications.new() -> Could not send: new_eMail()")
 					is_successfully = False
 
-			if via_SMS is True:
+			if method_SMS is True:
 				if Notifications.new_SMS(recipient, sender, content_TEXT, content_JSON, event_name) is False:
 					Log.warning("Notifications.new() -> Could not send: new_SMS()")
 					is_successfully = False
@@ -84,7 +84,7 @@ if __name__ != "__main__":
 			event_name = None,
 			type_name = None
 		):
-			if "via_in_app" in recipient and recipient["via_in_app"] == 1: return True
+			if "method_in_app" in recipient and recipient["method_in_app"] == 1: return True
 
 			data = MySQL.execute(
 				sql="INSERT INTO notifications (sender, recipient, content_TEXT, content_JSON, event, type) VALUES (%s, %s, %s, %s, %s, %s);",
@@ -109,7 +109,7 @@ if __name__ != "__main__":
 			content_JSON = None,
 			event_name = None
 		):
-			if "via_eMail" in recipient and recipient["via_eMail"] == 1: return True
+			if "method_eMail" in recipient and recipient["method_eMail"] == 1: return True
 
 			if recipient["eMail"] is None: return False
 
@@ -142,7 +142,7 @@ if __name__ != "__main__":
 			content_JSON = None,
 			event_name = None
 		):
-			if "via_SMS" in recipient and recipient["via_SMS"] == 1: return True
+			if "method_SMS" in recipient and recipient["method_SMS"] == 1: return True
 
 			if recipient["phone_number"] is None: return
 

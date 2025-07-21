@@ -12,7 +12,7 @@ export async function after(){
 	Loading.on_element_end(container);
 
 	async function build_notification_event_togglers_HTML(){
-		let disabled_events = await window.bridge({for: "get_disabled_events"});
+		let disabled_events = await window.bridge({for: "get_disabled_notification_events"});
 		if("data" in disabled_events) disabled_events = disabled_events["data"];
 		else disabled_events = [];
 
@@ -33,10 +33,10 @@ export async function after(){
 					<input
 						type="checkbox"
 						class="checkbox-v1"
-						${event in disabled_events_obj && disabled_events_obj[event]["via_in_app"] == 1 ? '' : "checked"}
+						${event in disabled_events_obj && disabled_events_obj[event]["method_in_app"] == 1 ? '' : "checked"}
 
 						XR-post
-						XR-for="toggle_notification_method"
+						XR-for="toggle_disabled_notification_event_method"
 						XR-data='{"event": "${event}", "method": "in_app"}'
 
 						x-toast="on:any:message"
@@ -45,10 +45,10 @@ export async function after(){
 					<input
 						type="checkbox"
 						class="checkbox-v1"
-						${event in disabled_events_obj && disabled_events_obj[event]["via_eMail"] == 1 ? '' : "checked"}
+						${event in disabled_events_obj && disabled_events_obj[event]["method_eMail"] == 1 ? '' : "checked"}
 
 						XR-post
-						XR-for="toggle_notification_method"
+						XR-for="toggle_disabled_notification_event_method"
 						XR-data='{"event": "${event}", "method": "eMail"}'
 
 						x-toast="on:any:message"
@@ -57,10 +57,10 @@ export async function after(){
 					<input
 						type="checkbox"
 						class="checkbox-v1"
-						${event in disabled_events_obj && disabled_events_obj[event]["via_SMS"] == 1 ? '' : "checked"}
+						${event in disabled_events_obj && disabled_events_obj[event]["method_SMS"] == 1 ? '' : "checked"}
 
 						XR-post
-						XR-for="toggle_notification_method"
+						XR-for="toggle_disabled_notification_event_method"
 						XR-data='{"event": "${event}", "method": "SMS"}'
 
 						x-toast="on:any:message"
@@ -84,8 +84,8 @@ export async function after(){
 					<p>Events</p>
 
 					<row class="flex-row gap-1 width-auto">
-						<p>in_app</p>
-						<p>eMail</p>
+						<p>App</p>
+						<p>Email</p>
 						<p>SMS</p>
 					</row>
 				</row>
