@@ -5,8 +5,6 @@ from Python.x.modules.response import response
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.Globals import Globals
 
-from Python.x.modules.Notifications import Notifications
-
 @Page.build()
 def x_notifications_settings(request):
 	if request.method == "POST":
