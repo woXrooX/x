@@ -84,7 +84,7 @@ export async function after(){
 					<p>Events</p>
 
 					<row class="flex-row gap-1 width-auto">
-						<p>In App</p>
+						<p>in_app</p>
 						<p>eMail</p>
 						<p>SMS</p>
 					</row>
