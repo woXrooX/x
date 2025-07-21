@@ -251,9 +251,9 @@ CREATE TABLE IF NOT EXISTS `disabled_notification_events` (
 	`user` INT NOT NULL,
 	`event` INT NOT NULL,
 
-	`via_in_app` BIT(1) NOT NULL DEFAULT b'0',
-	`via_eMail` BIT(1) NOT NULL DEFAULT b'0',
-	`via_SMS` BIT(1) NOT NULL DEFAULT b'0',
+	`method_in_app` BIT(1) NOT NULL DEFAULT b'0',
+	`method_eMail` BIT(1) NOT NULL DEFAULT b'0',
+	`method_SMS` BIT(1) NOT NULL DEFAULT b'0',
 
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
