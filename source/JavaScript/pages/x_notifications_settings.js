@@ -16,14 +16,14 @@ export async function after(){
 		if("data" in disabled_event_names) disabled_event_names = disabled_event_names["data"].split(", ");
 		else disabled_event_names = [];
 
-		let all_event_names = await window.bridge({for: "get_all_event_names"});
-		if("data" in all_event_names) all_event_names = all_event_names["data"];
-		else all_event_names = [];
+		let events = await window.bridge({for: "get_all_events"});
+		if("data" in events) events = events["data"];
+		else events = {};
 
 
 		let HTML = '';
 
-		for (const event in all_event_names) HTML += `
+		for (const event in events) HTML += `
 			<row class="flex-row flex-x-between flex-y-center">
 				<p class="text-size-0-8">${Lang.use(event+"_event_description")}</p>
 

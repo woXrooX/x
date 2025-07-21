@@ -56,4 +56,4 @@ def x_notifications_settings(request):
 
 				return response(type="success", message="saved")
 
-			if request.get_json()["for"] == "get_all_event_names": return response(type="success", message="success", data=Globals.NOTIFICATION_EVENTS)
+			if request.get_json()["for"] == "get_all_events": return response(type="success", message="success", data=Globals.NOTIFICATION_EVENTS)
