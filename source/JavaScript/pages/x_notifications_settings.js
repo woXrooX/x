@@ -21,11 +21,7 @@ export async function after(){
 		else events = {};
 
 		const disabled_events_obj = {};
-		for (const event of disabled_events) disabled_events_obj[event.event_name] = {
-			"via_in_app": event["via_in_app"],
-			"via_eMail": event["via_eMail"],
-			"via_SMS": event["via_SMS"]
-		}
+		for (const event of disabled_events) disabled_events_obj[event.event_name] = event;
 
 		let HTML = '';
 
@@ -40,8 +36,8 @@ export async function after(){
 						${event in disabled_events_obj && disabled_events_obj[event]["via_in_app"] == 1 ? '' : "checked"}
 
 						XR-post
-						XR-for="toggle_notification_channel"
-						XR-data='{"event": "${event}", "channel": "app"}'
+						XR-for="toggle_notification_method"
+						XR-data='{"event": "${event}", "method": "in_app"}'
 
 						x-toast="on:any:message"
 					>
@@ -52,8 +48,8 @@ export async function after(){
 						${event in disabled_events_obj && disabled_events_obj[event]["via_eMail"] == 1 ? '' : "checked"}
 
 						XR-post
-						XR-for="toggle_notification_channel"
-						XR-data='{"event": "${event}", "channel": "eMail"}'
+						XR-for="toggle_notification_method"
+						XR-data='{"event": "${event}", "method": "eMail"}'
 
 						x-toast="on:any:message"
 					>
@@ -64,8 +60,8 @@ export async function after(){
 						${event in disabled_events_obj && disabled_events_obj[event]["via_SMS"] == 1 ? '' : "checked"}
 
 						XR-post
-						XR-for="toggle_notification_channel"
-						XR-data='{"event": "${event}", "channel": "SMS"}'
+						XR-for="toggle_notification_method"
+						XR-data='{"event": "${event}", "method": "SMS"}'
 
 						x-toast="on:any:message"
 					>
@@ -88,7 +84,7 @@ export async function after(){
 					<p>Events</p>
 
 					<row class="flex-row gap-1 width-auto">
-						<p>App</p>
+						<p>In App</p>
 						<p>eMail</p>
 						<p>SMS</p>
 					</row>
