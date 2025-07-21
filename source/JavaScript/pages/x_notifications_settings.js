@@ -27,7 +27,7 @@ export async function after(){
 
 		for (const event in events) HTML += `
 			<row class="flex-row flex-x-between flex-y-center">
-				<p class="text-size-0-8">${Lang.use(event+"_event_description")}</p>
+				<p class="text-size-0-8">${Lang.use(event+"_notification_event_description")}</p>
 
 				<row class="flex-row width-auto gap-1">
 					<input
