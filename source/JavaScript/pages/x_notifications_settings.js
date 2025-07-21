@@ -12,21 +12,20 @@ export async function after(){
 	Loading.on_element_end(container);
 
 	async function build_notification_event_togglers_HTML(){
-		let disabled_events = await window.bridge({for: "get_disabled_event_names"});
+		let disabled_events = await window.bridge({for: "get_disabled_events"});
 		if("data" in disabled_events) disabled_events = disabled_events["data"];
 		else disabled_events = [];
-
-		const disabled_events_obj = {};
-		for (const event of disabled_events) disabled_events_obj[event.event_name] = {
-			"via_in_app": event.via_in_app === 0 ? "checked" : '',
-			"via_eMail": event.via_eMail === 0 ? "checked" : '',
-			"via_SMS": event.via_SMS === 0 ? "checked" : ''
-		}
 
 		let events = await window.bridge({for: "get_all_events"});
 		if("data" in events) events = events["data"];
 		else events = {};
 
+		const disabled_events_obj = {};
+		for (const event of disabled_events) disabled_events_obj[event.event_name] = {
+			"via_in_app": event["via_in_app"],
+			"via_eMail": event["via_eMail"],
+			"via_SMS": event["via_SMS"]
+		}
 
 		let HTML = '';
 
@@ -38,11 +37,11 @@ export async function after(){
 					<input
 						type="checkbox"
 						class="checkbox-v1"
-						${event in disabled_events_obj ? disabled_events_obj[event]["via_in_app"] : "checked"}
+						${event in disabled_events_obj && disabled_events_obj[event]["via_in_app"] == 1 ? '' : "checked"}
 
 						XR-post
-						XR-for="toggle_via_in_app"
-						XR-data='{"event": "${event}"}'
+						XR-for="toggle_notification_channel"
+						XR-data='{"event": "${event}", "channel": "app"}'
 
 						x-toast="on:any:message"
 					>
@@ -50,11 +49,11 @@ export async function after(){
 					<input
 						type="checkbox"
 						class="checkbox-v1"
-						${event in disabled_events_obj ? disabled_events_obj[event]["via_eMail"] : "checked"}
+						${event in disabled_events_obj && disabled_events_obj[event]["via_eMail"] == 1 ? '' : "checked"}
 
 						XR-post
-						XR-for="toggle_via_eMail"
-						XR-data='{"event": "${event}"}'
+						XR-for="toggle_notification_channel"
+						XR-data='{"event": "${event}", "channel": "eMail"}'
 
 						x-toast="on:any:message"
 					>
@@ -62,11 +61,11 @@ export async function after(){
 					<input
 						type="checkbox"
 						class="checkbox-v1"
-						${event in disabled_events_obj ? disabled_events_obj[event]["via_SMS"] : "checked"}
+						${event in disabled_events_obj && disabled_events_obj[event]["via_SMS"] == 1 ? '' : "checked"}
 
 						XR-post
-						XR-for="toggle_via_SMS"
-						XR-data='{"event": "${event}"}'
+						XR-for="toggle_notification_channel"
+						XR-data='{"event": "${event}", "channel": "SMS"}'
 
 						x-toast="on:any:message"
 					>
