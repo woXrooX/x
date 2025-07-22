@@ -9,6 +9,8 @@ from Python.x.modules.Globals import Globals
 def x_notifications_settings(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":
+			if request.get_json()["for"] == "get_all_events": return response(type="success", message="success", data=Globals.NOTIFICATION_EVENTS)
+
 			if request.get_json()["for"] == "get_disabled_notification_events":
 				data = MySQL.execute(
 					sql="""
@@ -66,5 +68,3 @@ def x_notifications_settings(request):
 				if data is False: return response(type="error", message="database_error")
 
 				return response(type="success", message="saved")
-
-			if request.get_json()["for"] == "get_all_events": return response(type="success", message="success", data=Globals.NOTIFICATION_EVENTS)
