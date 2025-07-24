@@ -61,18 +61,18 @@ def sign_up(request):
 		if data is False: return response(type="error", message="database_error")
 
 		# Get user data
-		data = MySQL.execute(
-			sql="SELECT id FROM users WHERE eMail=%s AND password=%s LIMIT 1;",
+		user_data = MySQL.execute(
+			sql="SELECT id, eMail FROM users WHERE eMail=%s AND password=%s LIMIT 1;",
 			params=[
 				request.form["eMail"],
 				password
 			],
 			fetch_one=True
 		)
-		if not data: return response(type="error", message="database_error")
+		if not user_data: return response(type="error", message="database_error")
 
 		# Set session user data
-		session["user"] = data
+		session["user"] = user_data
 		session.permanent = True
 
 		# Handle the session update error
@@ -82,9 +82,9 @@ def sign_up(request):
 		# Handle Folder Creation Errors
 		if not User.init_folders(): Log.warning("sign_up.py->User.init_folders()")
 
-		#### Check If Verification Code Sent Successfully
+		#### Check if verification code sent successfully
 		email_verification_sent_status = Notifications.new_eMail(
-			recipient=request.form["eMail"],
+			recipient=user_data,
 			content_JSON={"eMail_verification_code": eMail_verification_code},
 			event_name="sign_up_eMail_verification",
 		)
@@ -100,7 +100,7 @@ def sign_up(request):
 
 		return response(
 			type = "success" if email_verification_sent_status is True else "info",
-			message = "eMail_confirmation_code_has_been_sent" if email_verification_sent_status is True else "Signed Up Without Email Verification!",
+			message = "eMail_confirmation_code_has_been_sent" if email_verification_sent_status is True else "Signed up but could not send email verification code. Please contact support!",
 			set_session_user = True,
 			redirect = "/eMail_confirmation" if email_verification_sent_status is True else "/",
 			DOM_change = ["menu"]
