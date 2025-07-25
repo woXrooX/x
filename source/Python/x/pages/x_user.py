@@ -98,7 +98,7 @@ def x_user(request, id):
 				if data is False: return response(type="error", message="database_error")
 
 				if Notifications.new_eMail(
-					recipient=user["eMail"],
+					recipient=user,
 					content_JSON={"eMail_verification_code": eMail_verification_code},
 					event_name="sign_up_eMail_verification"
 				) is not True: return response(type="error", message="could_not_send_eMail_verification_code")
