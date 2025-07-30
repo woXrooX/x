@@ -110,7 +110,7 @@ DROP TRIGGER x_trigger_delete_table_name;
 
 -- Sample automation for trigger delete and re creating when new columns added to tables
 
--- DELIMITER $$
+-- DELIMITER //
 
 -- CREATE PROCEDURE regen_user_update_trigger()
 -- BEGIN
@@ -158,6 +158,6 @@ DROP TRIGGER x_trigger_delete_table_name;
 -- 	PREPARE stmt FROM @sql;
 -- 	EXECUTE stmt;
 -- 	DEALLOCATE PREPARE stmt;
--- END$$
+-- END //
 
 -- DELIMITER ;
