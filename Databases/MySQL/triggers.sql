@@ -102,3 +102,62 @@ END //
 DELIMITER ;
 
 DROP TRIGGER x_trigger_delete_table_name;
+
+
+
+
+
+
+-- Sample automation for trigger delete and re creating when new columns added to tables
+
+-- DELIMITER $$
+
+-- CREATE PROCEDURE regen_user_update_trigger()
+-- BEGIN
+-- 	DECLARE v_cols   TEXT DEFAULT '';
+-- 	DECLARE v_done   BOOL DEFAULT FALSE;
+-- 	DECLARE cur CURSOR FOR
+-- 		SELECT COLUMN_NAME
+-- 		FROM   INFORMATION_SCHEMA.COLUMNS
+-- 		WHERE  TABLE_SCHEMA = DATABASE()
+-- 		AND  TABLE_NAME   = 'users'
+
+-- 		-- skip sensitive column
+-- 		AND  COLUMN_NAME <> 'password';
+
+-- 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET v_done = TRUE;
+
+-- 	OPEN cur;
+-- 	read_loop:
+-- 	LOOP
+-- 		FETCH cur INTO @c;
+-- 		IF v_done THEN LEAVE read_loop; END IF;
+
+-- 		SET v_cols = CONCAT(
+-- 			v_cols,
+-- 			'IF NOT (OLD.', @c, ' <=> NEW.', @c, ') THEN ',
+-- 				'SET j = JSON_SET(j, ''$.', @c, ''', JSON_ARRAY(OLD.', @c, ', NEW.', @c, ')); ',
+-- 			'END IF; '
+-- 		);
+-- 	END LOOP;
+-- 	CLOSE cur;
+
+-- 	SET @sql = CONCAT(
+-- 		'CREATE TRIGGER trg_users_upd AFTER UPDATE ON users FOR EACH ROW ',
+-- 		'BEGIN ',
+-- 			' DECLARE j JSON DEFAULT JSON_OBJECT(); ',
+-- 			v_cols,
+-- 			' IF JSON_LENGTH(j) > 0 THEN ',
+-- 				'   INSERT INTO x_audit_log(by_user,event,table_name,table_primary_key,table_columns) ',
+-- 				'   VALUES (COALESCE(@x_triggered_by_user,NULL),2,''users'',OLD.id,j); ',
+-- 			' END IF; ',
+-- 		'END'
+-- 	);
+
+-- 	DROP TRIGGER IF EXISTS trg_users_upd;
+-- 	PREPARE stmt FROM @sql;
+-- 	EXECUTE stmt;
+-- 	DEALLOCATE PREPARE stmt;
+-- END$$
+
+-- DELIMITER ;
