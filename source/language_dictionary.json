@@ -400,6 +400,41 @@
 		"uz": "Ogohlantirish"
 	},
 
+	"not_applicable": {
+		"en": "Not Applicable",
+		"ru": "Н/П",
+		"uz": "Tatbiq etilmaydi"
+	},
+	"not_applicable_abbreviated": {
+		"en": "N/A",
+		"ru": "Н/П",
+		"uz": "Tatbiq etilmaydi"
+	},
+
+	"not_specified": {
+		"en": "Not Specified",
+		"ru": "Не указано",
+		"uz": "Ko'rsatilmagan"
+	},
+	"not_specified_abbreviated": {
+		"en": "N/S",
+		"ru": "Н/У",
+		"uz": "Ko'rsatilmagan"
+	},
+
+	"to_be_determined": {
+		"en": "To Be Determined",
+		"ru": "Подлежит определению",
+		"uz": "Keyin aniqlanadi"
+	},
+	"to_be_determined_abbreviated": {
+		"en": "TBD",
+		"ru": "п.о.",
+		"uz": "K/A"
+	},
+
+
+
 	"x": {
 		"en": "x"
 	},
