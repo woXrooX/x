@@ -20,8 +20,6 @@ CREATE TABLE IF NOT EXISTS `x_audit_log` (
 
 	`timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-	FOREIGN KEY (`by_user`) REFERENCES users(`id`),
-
 	PRIMARY KEY (`id`)
 
 -- ENGINE = ARCHIVE -> Makes a table “append‑only” so that rows can be inserted but never updated or deleted.
