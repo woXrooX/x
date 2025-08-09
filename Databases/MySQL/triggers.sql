@@ -6,7 +6,7 @@
 
 \! echo "-------------------------- x_audit_log";
 CREATE TABLE IF NOT EXISTS `x_audit_log` (
-	`id` BIGINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`by_user` INT NULL,
 
 	-- 1 = INSERT
@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `x_audit_log` (
 -- ENGINE = ARCHIVE -> Makes a table “append‑only” so that rows can be inserted but never updated or deleted.
 ) ENGINE = ARCHIVE;
 
+-- DROP TABLE x_audit_log;
 
 
 \! echo "-------------------------- x_trigger_insert_table_name";
@@ -48,7 +49,7 @@ END //
 
 DELIMITER ;
 
-DROP TRIGGER x_trigger_insert_table_name;
+-- DROP TRIGGER x_trigger_insert_table_name;
 
 
 
@@ -74,7 +75,7 @@ END //
 
 DELIMITER;
 
-DROP TRIGGER x_trigger_update_table_name;
+-- DROP TRIGGER x_trigger_update_table_name;
 
 
 
@@ -99,4 +100,4 @@ END //
 
 DELIMITER ;
 
-DROP TRIGGER x_trigger_delete_table_name;
+-- DROP TRIGGER x_trigger_delete_table_name;
