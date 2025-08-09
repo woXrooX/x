@@ -7,7 +7,7 @@
 \! echo "-------------------------- x_audit_log";
 CREATE TABLE IF NOT EXISTS `x_audit_log` (
 	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`by_user` INT NULL,
+	`triggered_by_user` INT NULL,
 
 	-- 1 = INSERT
 	-- 2 = UPDATE
@@ -35,7 +35,7 @@ CREATE TRIGGER x_trigger_insert_table_name
 AFTER INSERT ON table_name
 FOR EACH ROW
 BEGIN
-	INSERT INTO x_audit_log (by_user, event, table_name, table_primary_key, table_columns)
+	INSERT INTO x_audit_log (triggered_by_user, event, table_name, table_primary_key, table_columns)
 	VALUES (
 		COALESCE(@x_triggered_by_user, NULL),
 		1,
@@ -68,7 +68,7 @@ BEGIN
 	END IF;
 
 	IF JSON_LENGTH(JSON_TMP) > 0 THEN
-		INSERT INTO x_audit_log (by_user, event, table_name, primary_key, table_columns)
+		INSERT INTO x_audit_log (triggered_by_user, event, table_name, primary_key, table_columns)
 		VALUES (COALESCE(@x_triggered_by_user, NULL), 2, 'table_name', OLD.id, JSON_TMP);
 	END IF;
 END //
@@ -86,7 +86,7 @@ CREATE TRIGGER x_trigger_delete_table_name
 AFTER DELETE ON table_name
 FOR EACH ROW
 BEGIN
-	INSERT INTO x_audit_log (by_user, event, table_name, table_primary_key, table_columns)
+	INSERT INTO x_audit_log (triggered_by_user, event, table_name, table_primary_key, table_columns)
 	VALUES (
 		COALESCE(@x_triggered_by_user, NULL),
 		3,
