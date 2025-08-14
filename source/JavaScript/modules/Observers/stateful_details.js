@@ -1,6 +1,6 @@
 export function stateful_details() {
 	const param_name = "x_details_id";
-	const details_list = Array.from(document.querySelectorAll("details"));
+	const details_list = Array.from(document.querySelectorAll("div#root > main details"));
 
 	// Wire up toggle events with deterministic IDs
 	for (let i = 0; i < details_list.length; i++) {
