@@ -1,7 +1,6 @@
 export default class Footer{
 	static selector = "body > div#root > footer";
 	static #element = null;
-	static #content_func = null;
 
 	static init(){
 		Footer.#element = document.querySelector(Footer.selector);

@@ -1,45 +1,27 @@
 export default class Header{
 	static selector = "body > header";
 	static #element = null;
-	static #content_func = null;
 
 	static init(){
 		Header.#element = document.querySelector(Header.selector);
 	}
 
-	static async handle(func){
-		// Check if page scoped header() defined
-		if(typeof func === "function"){
-			// If header() doesn return false then execute tt
-			const func_return_value = await func();
-			if(func_return_value !== false) await Header.#build(func_return_value);
+	static async handle(){
+		//// Page level header
+		if (typeof window.x.Page.current_page.header === "function") return Header.#build(window.x.Page.current_page.header());
 
-			// Else hide header on this page
-			else Header.#hide();
+		//// Project level header
+		// Project level header will be always created by x during initialization the x
+		try {
+			const project_header = await import(`/JavaScript/modules/header.js`);
+
+			if (typeof project_header.default === "function") return Header.#build(project_header.default());
+			else return Header.#hide();
 		}
 
-		// If no talk to default header.js
-		else{
-			try {
-				Header.#content_func = await import(`/JavaScript/modules/header.js`);
-			}
-
-			catch(error){
-				Header.#hide();
-				return;
-			}
-
-			// Check if
-			if(
-				// header.js has default method to call
-				typeof Header.#content_func.default === "function" &&
-
-				// And does not return false
-				Header.#content_func.default() !== false
-			) await Header.#build();
-
-			// Else hide header
-			else Header.#hide();
+		catch (error) {
+			Header.#hide();
+			return;
 		}
 	}
 
@@ -47,33 +29,21 @@ export default class Header{
 		// Check If "body > header" Exists
 		if(!!Header.#element === false) return;
 
-		Header.#element.classList.add("hide");
+		Header.#element.classList.add("display-none");
 	}
 
 	static #show(){
 		// Check If "body > header" Exists
 		if(!!Header.#element === false) return;
 
-		Header.#element.classList.remove("hide");
+		Header.#element.classList.remove("display-none");
 	}
 
-	// When called W/O argument will update to default header view
-	static async #build(content = null){
+	static #build(content){
 		Log.info("Header.#build()");
 
-		// Check if "body > header" exists
-		if(!!Header.#element === false) return;
+		if (content === false) return Header.#hide();
 
-		// If no content passed update to default
-		if(!!content === false){
-			Header.#element.innerHTML = await Header.#content_func.default();
-			Header.#show();
-
-			// Exit the update
-			return;
-		}
-
-		// If content passed update to content
 		Header.#element.innerHTML = content;
 		Header.#show();
 	}

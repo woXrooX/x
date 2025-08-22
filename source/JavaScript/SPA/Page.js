@@ -18,7 +18,7 @@ export default class Page{
 		if(!!Page.current_page.before === true) await Page.current_page.before();
 
 		// Header
-		await window.Header.handle(Page.current_page.header);
+		await window.Header.handle();
 
 		// Default/Main
 		if(typeof Page.current_page.default === "function") await window.Main.render(await Page.current_page.default());

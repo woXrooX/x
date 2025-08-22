@@ -75,10 +75,6 @@ body{
 
 		display: grid;
 		place-items: center;
-
-		&.hide{
-			display: none;
-		}
 	}
 
 	/* If header is empty */
