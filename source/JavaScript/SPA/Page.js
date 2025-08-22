@@ -25,7 +25,7 @@ export default class Page{
 		else await window.Main.render(Main.situational_content("error", "ERROR", "Page.life_cycle() -> No default function defined!"));
 
 		// Footer
-		await window.Footer.handle(Page.current_page.footer);
+		await window.Footer.handle();
 
 		// After
 		if(!!Page.current_page.after === true) await Page.current_page.after();

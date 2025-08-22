@@ -7,35 +7,22 @@ export default class Footer{
 		Footer.#element = document.querySelector(Footer.selector);
 	}
 
-	static async handle(func){
-		// Check If Page Scoped footer() Defined
-		if(typeof func === "function"){
-			// If footer() Doesn Return False Then Execute It
-			if(func() !== false) Footer.#build(func());
+	static async handle(){
+		//// Page level footer
+		if (typeof window.x.Page.current_page.footer === "function") return Footer.#build(window.x.Page.current_page.footer());
 
-			// Else Hide Footer On This Page
-			else Footer.#hide();
+		//// Project level footer
+		// Project level footer will be always created by x during initialization the x
+		try {
+			const project_footer = await import(`/JavaScript/modules/footer.js`);
+
+			if (typeof project_footer.default === "function") return Footer.#build(project_footer.default());
+			else return Footer.#hide();
 		}
 
-		// If No Talk To Default footer.js
-		else{
-			try{
-				Footer.#content_func = await import(`/JavaScript/modules/footer.js`);
-			}catch(error){
-				Footer.#hide();
-				return;
-			}
-
-			// Check If
-			if(
-				// footer.js Has Default Method To Call
-				typeof Footer.#content_func.default === "function" &&
-				// And Doesn Return False
-				Footer.#content_func.default() !== false
-			) Footer.#build();
-
-			// Else Hide Footer
-			else Footer.#hide();
+		catch (error) {
+			Footer.#hide();
+			return;
 		}
 	}
 
@@ -43,33 +30,21 @@ export default class Footer{
 		// Check If "body > footer" Exists
 		if(!!Footer.#element === false) return;
 
-		Footer.#element.classList.add("hide");
+		Footer.#element.classList.add("display-none");
 	}
 
 	static #show(){
 		// Check If "body > footer" Exists
 		if(!!Footer.#element === false) return;
 
-		Footer.#element.classList.remove("hide");
+		Footer.#element.classList.remove("display-none");
 	}
 
-	// When Called W/O Argument Will Update To Default Footer View
-	static #build(content = null){
+	static #build(content){
 		Log.info("Footer.#build()");
 
-		// Check If "body > footer" Exists
-		if(!!Footer.#element === false) return;
+		if (content === false) return Footer.#hide();
 
-		// If No Content Passed Update To Default
-		if(!!content === false){
-			Footer.#element.innerHTML = Footer.#content_func.default();
-			Footer.#show();
-
-			// Exit The Update
-			return;
-		}
-
-		// If Content Passed Update To Content
 		Footer.#element.innerHTML = content;
 		Footer.#show();
 	}

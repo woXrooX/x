@@ -56,8 +56,6 @@ body{
 
 			display: grid;
 			place-items: center;
-
-			&.hide{ display: none; }
 		}
 	}
 
@@ -252,7 +250,9 @@ body{
 
 	/* If menu is on always open mode */
 	&:has(menu.always_open_mode){
-		& > div#root > main, & > header, & > footer{
+		& > div#root > main,
+		& > header,
+		& > footer{
 			@media (width > 600px){
 				width: calc(100% - var(--menu-width));
 				margin-left: var(--menu-width);
