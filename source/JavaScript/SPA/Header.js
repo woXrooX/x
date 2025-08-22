@@ -8,14 +8,14 @@ export default class Header{
 
 	static async handle(){
 		//// Page level header
-		if (typeof window.x.Page.current_page.header === "function") return Header.#build(window.x.Page.current_page.header());
+		if (typeof window.x.Page.current_page.header === "function") return Header.#build(await window.x.Page.current_page.header());
 
 		//// Project level header
 		// Project level header will be always created by x during initialization the x
 		try {
 			const project_header = await import(`/JavaScript/modules/header.js`);
 
-			if (typeof project_header.default === "function") return Header.#build(project_header.default());
+			if (typeof project_header.default === "function") return Header.#build(await project_header.default());
 			else return Header.#hide();
 		}
 

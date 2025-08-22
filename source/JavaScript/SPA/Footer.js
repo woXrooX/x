@@ -8,14 +8,14 @@ export default class Footer{
 
 	static async handle(){
 		//// Page level footer
-		if (typeof window.x.Page.current_page.footer === "function") return Footer.#build(window.x.Page.current_page.footer());
+		if (typeof window.x.Page.current_page.footer === "function") return Footer.#build(await window.x.Page.current_page.footer());
 
 		//// Project level footer
 		// Project level footer will be always created by x during initialization the x
 		try {
 			const project_footer = await import(`/JavaScript/modules/footer.js`);
 
-			if (typeof project_footer.default === "function") return Footer.#build(project_footer.default());
+			if (typeof project_footer.default === "function") return Footer.#build(await project_footer.default());
 			else return Footer.#hide();
 		}
 
