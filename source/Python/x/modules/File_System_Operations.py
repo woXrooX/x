@@ -70,8 +70,6 @@ if __name__ != "__main__":
 			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/on_sign_up.py", 'if __name__ != "__main__":\n\tdef on_sign_up(): pass')
 			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/on_log_in.py", 'if __name__ != "__main__":\n\tdef on_log_in(): pass')
 			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/on_log_out.py", 'if __name__ != "__main__":\n\tdef on_log_out(): pass')
-			File_System.create_file(f"{Globals.PROJECT_PATH}/language_dictionary.json", '{"x": {"en": "x"}}', strict=True)
-			File_System.create_file(f"{Globals.PROJECT_PATH}/project.json", "{}", strict=True)
 
 
 

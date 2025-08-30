@@ -2,10 +2,12 @@ if __name__ != "__main__":
 	import pathlib
 	import os
 	import json
+	import sys
 
 	import main
 
 	from Python.x.modules.Logger import Log
+	from Python.x.modules.File_System import File_System
 
 	class Globals():
 		#### Paths
@@ -68,6 +70,8 @@ if __name__ != "__main__":
 		@staticmethod
 		def load_project_configurations():
 			try:
+				File_System.create_file(f"{Globals.PROJECT_PATH}/project.json", "{}", strict=True)
+
 				with open(f"{Globals.PROJECT_PATH}/project.json", 'r') as file:
 					Globals.PROJECT = json.load(file)
 
@@ -136,6 +140,8 @@ if __name__ != "__main__":
 		@staticmethod
 		def load_PROJECT_LANGUAGE_DICTIONARY():
 			try:
+				File_System.create_file(f"{Globals.PROJECT_PATH}/language_dictionary.json", '{"x": {"en": "x"}}', strict=True)
+
 				with open(f"{Globals.PROJECT_PATH}/language_dictionary.json", 'r') as file:
 					Globals.PROJECT_LANGUAGE_DICTIONARY = json.load(file)
 
