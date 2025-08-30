@@ -106,9 +106,19 @@ export default class Editable {
 				this.#original_view();
 			}
 
-			if (event.key === "Enter") {
+			if (event.key === "Enter" && !event.ctrlKey && !event.metaKey) {
 				event.preventDefault();
 				on_blur();
+			}
+
+			if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
+				event.preventDefault();
+
+				const cursor_location = window.getSelection().getRangeAt(0);
+
+				const newline = document.createTextNode("\n");
+				cursor_location.insertNode(newline);
+				cursor_location.setStartAfter(newline);
 			}
 		};
 
