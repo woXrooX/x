@@ -106,16 +106,14 @@ export default class Editable {
 				this.#original_view();
 			}
 
-			if (event.key === "Enter" && !event.ctrlKey && !event.metaKey) {
-				event.preventDefault();
-				on_blur();
-			}
-
-			if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
+			if (event.key === "Enter") {
 				event.preventDefault();
 
+				// If only enter is pressed
+				if (!event.ctrlKey && !event.metaKey) return on_blur();
+
+				// If ctrl or MacOS command key is pressed, then add new line
 				const cursor_location = window.getSelection().getRangeAt(0);
-
 				const newline = document.createTextNode("\n");
 				cursor_location.insertNode(newline);
 				cursor_location.setStartAfter(newline);
