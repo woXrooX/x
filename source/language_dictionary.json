@@ -400,6 +400,12 @@
 		"uz": "Ogohlantirish"
 	},
 
+	"not_selected": {
+		"en": "Not selected",
+		"ru": "Не выбрано",
+		"uz": "Tanlanmagan"
+	},
+
 	"not_applicable": {
 		"en": "Not Applicable",
 		"ru": "Н/П",
