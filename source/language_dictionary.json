@@ -374,6 +374,11 @@
 		"ru": "Успех",
 		"uz": "Muvaffaqiyat"
 	},
+	"timestamp": {
+		"en": "Timestamp",
+		"ru": "Vaqt muhri",
+		"uz": "Метка времени"
+	},
 	"token_aready_used": {
 		"en": "Token has already used",
 		"ru": "Токен уже использован",
