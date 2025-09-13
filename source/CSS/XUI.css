@@ -1967,6 +1967,10 @@
 				.min-height-2000px{min-height: 2000px;}
 				.min-height-2200px{min-height: 2200px;}
 				.min-height-2500px{min-height: 2500px;}
+
+				.min-height-1rem{ min-height: 1rem; }
+				.min-height-2rem{ min-height: 2rem; }
+				.min-height-3rem{ min-height: 3rem; }
 			}
 
 			@layer max_height{
