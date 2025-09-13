@@ -1,39 +1,44 @@
 export default class Loading{
 	static selector = "body > loading";
-	static #elementLoading = null;
+	static #element_loading = null;
 
 	static {
-		Loading.#elementLoading = document.querySelector(Loading.selector);
+		Loading.#element_loading = document.querySelector(Loading.selector);
 	}
 
 	static start(){
 		// Check if body > loading exists
-		if(!!Loading.#elementLoading === false) return;
+		if (!!Loading.#element_loading === false) return;
 
-		Loading.#elementLoading.classList.remove("loaded");
+		Loading.#element_loading.classList.remove("loaded");
 	}
 
 	static end(){
 		// Check if body > loading exists
-		if(!!Loading.#elementLoading === false) return;
+		if (!!Loading.#element_loading === false) return;
 
-		Loading.#elementLoading.classList.add("loaded");
+		Loading.#element_loading.classList.add("loaded");
 	}
 
 
 	static on_element_toggle(element){
-		if(!!element === false) return;
+		if (!!element === false) return;
 		element.classList.toggle('loading-on-element');
 	}
 
-	static on_element_start(element){
-		if(!!element === false) return;
+	static on_element_start(element, use_BG_unset = false) {
+		if (!!element === false) return;
+
 		element.classList.add('loading-on-element');
+
+		if (use_BG_unset === true) element.classList.add('loading-on-element-bg-unset');
 	}
 
-	static on_element_end(element){
-		if(!!element === false) return;
+	static on_element_end(element) {
+		if (!!element === false) return;
+
 		element.classList.remove('loading-on-element');
+		element.classList.remove('loading-on-element-bg-unset');
 	}
 };
 
