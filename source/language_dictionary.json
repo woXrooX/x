@@ -376,8 +376,8 @@
 	},
 	"timestamp": {
 		"en": "Timestamp",
-		"ru": "Vaqt muhri",
-		"uz": "Метка времени"
+		"ru": "Метка времени",
+		"uz": "Vaqt muhri"
 	},
 	"token_aready_used": {
 		"en": "Token has already used",
