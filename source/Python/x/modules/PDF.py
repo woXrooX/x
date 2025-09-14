@@ -1,35 +1,23 @@
-# options = {
-#     'page-size': 'Letter',
-#     'margin-top': '0.75in',
-#     'margin-right': '0.75in',
-#     'margin-bottom': '0.75in',
-#     'margin-left': '0.75in',
-#     'encoding': "UTF-8",
-#     'custom-header': [
-#         ('Accept-Encoding', 'gzip')
-#     ],
-#     'cookie': [
-#         ('cookie-empty-value', '""')
-#         ('cookie-name1', 'cookie-value1'),
-#         ('cookie-name2', 'cookie-value2'),
-#     ],
-#     'no-outline': None
-# }
+# NOTE: Update the dependencies page of the woXrooX.com
 
-# https://pypi.org/project/pdfkit/
-# pip install pdfkit
-# sudo apt-get install wkhtmltopdf
+# https://weasyprint.org/
+# pip install weasyprint
 
 if __name__ != "__main__":
-	import pdfkit
+	from weasyprint import HTML
+
+	from Python.x.modules.Globals import Globals
 
 	class PDF:
 		@staticmethod
-		def generate(content, path_to_save, file_name_to_save, options = {}):
-			# Check For Invalid Arguments
-			if not content or not path_to_save or not file_name_to_save: return False
+		def generate(content, file_path_and_name_and_extension):
+			if not content or not file_path_and_name_and_extension: return False
 
-			file_path_and_name = f"{path_to_save}/{file_name_to_save}.pdf"
+			try: HTML(
+				string=content,
+				base_url=Globals.PROJECT_PATH
+			).write_pdf(f"{Globals.PROJECT_PATH}{file_path_and_name_and_extension}")
 
-			# Returns True If Creation Successful Else False
-			return pdfkit.from_string(content, file_path_and_name, options=options)
+			except: return False
+
+			return True
