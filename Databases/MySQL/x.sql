@@ -90,9 +90,6 @@ INSERT INTO languages (id, code, native_name) VALUES
 (4, "ja", "日本語 (にほんご／にっぽんご)");
 
 \! echo "-------------------------- app_color_modes";
--- 1 Is For Dark Mode
--- 2 Is For Light Mode
-
 CREATE TABLE IF NOT EXISTS `app_color_modes` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(10) NOT NULL UNIQUE,
