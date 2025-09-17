@@ -30,13 +30,65 @@ export default class Layers{
 		Layers.#execute_on_add(func_name, data, container.querySelector("layer > main"), Layers.#id);
 	}
 
+	static handle_commands(commands, type){
+		console.log(commands, type);
+
+
+		if(!!commands === false) return;
+		if(!!type === false) return;
+
+		const instructions = Layers.#parse_commands(commands);
+
+		for(const instruction of instructions){
+			if(instruction["types"].includes("any") || instruction["types"].includes(type)){
+				Layers.#handle_command_action(instruction["action"]);
+				break;
+			}
+		}
+	}
+
 	/////////// Helpers
+
+	static #parse_commands(commands){
+		const instructions = [];
+
+		commands = commands.split(' ');
+
+		for(const command of commands){
+			const parts = command.split(':');
+
+			// Invalid command
+			if(parts.length !== 3) continue;
+
+			instructions.push({
+				"types": parts[1].split('|'),
+				"action": parts[2]
+			});
+		}
+
+		return instructions;
+	}
+
+	static #handle_command_action(command){
+		switch(command){
+			case "remove":
+				Layers.#remove();
+				break;
+
+			default:
+				Log.warning("Modal.handle_commands(): Invalid action");
+				break;
+		}
+	}
 
 	static #build_remove_listener(id){
 		Layers.#element.querySelector(`container#layer_${id} > layer > x-svg`).addEventListener("click", () => Layers.#remove(id));
 	}
 
-	static #remove(id){
+	static #remove(id = null){
+		// If no id provided, close the latest open layer
+		if (id === null) id = Layers.#id;
+
 		Layers.#id -= 1;
 
 		if (Layers.#id === 0) window.x.Body.unlock_scroll_y_axis();

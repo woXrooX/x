@@ -125,17 +125,24 @@ export default class Post {
 
 			this.#response = await window.bridge(this.#data, this.#element.getAttribute("XR-post"));
 
-			if(!("type" in this.#response)) return;
+			if (!("type" in this.#response)) return;
 
+			////////// Callback
 			window.x.XR.execute_on_response(this.#element.getAttribute("XR-func"), this.#response, this.#element);
 
 			this.#handle_commands();
 
+			////////// x-toast
 			Toast.handle_commands(this.#element.getAttribute("x-toast"), this.#response);
 
+			////////// x-modal
 			window.Modal.unlock();
 			Modal.handle_commands(this.#element.getAttribute("x-modal"), this.#response["type"]);
 
+			////////// x-layers
+			x.Layers.handle_commands(this.#element.getAttribute("x-layer"), this.#response["type"]);
+
+			////////// this.#response["actions"]
 			window.x.Response.handle_actions(this.#response);
 
 			Loading.on_element_end(this.#element);

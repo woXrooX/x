@@ -131,15 +131,18 @@ export default class Form{
 		// Enable Submitter Button
 		submitter.disabled = false;
 
-		////////// x-modal
-		window.Modal.unlock();
-		Modal.handle_commands(event.target.getAttribute("x-modal"), response["type"]);
+		////////// Callback
+		Form.#execute_on_response(event.target.getAttribute("form_func"), response, form_data);
 
 		////////// x-toast
 		Toast.handle_commands(event.target.getAttribute("x-toast"), response);
 
-		////////// Callback
-		Form.#execute_on_response(event.target.getAttribute("form_func"), response, form_data);
+		////////// x-modal
+		window.Modal.unlock();
+		Modal.handle_commands(event.target.getAttribute("x-modal"), response["type"]);
+
+		////////// x-layers
+		x.Layers.handle_commands(event.target.getAttribute("x-layer"), response["type"]);
 
 		////////// response["actions"]
 		window.x.Response.handle_actions(response);
