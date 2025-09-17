@@ -56,6 +56,21 @@ export default class Layers{
 		Layers.#execute_on_add(func_name, data, container.querySelector("layer > main"), Layers.#id);
 	}
 
+	static handle_commands(commands, type){
+		if(!!commands === false) return;
+		if(!!type === false) return;
+
+		const instructions = Layers.#parse_commands(commands);
+		console.log(instructions);
+
+		for(const instruction of instructions){
+			if(instruction["types"].includes("any") || instruction["types"].includes(type)){
+				Layers.#handle_command_action(instruction["action"]);
+				break;
+			}
+		}
+	}
+
 	/////////// Helpers
 
 	static #build_remove_listener(id){
@@ -80,6 +95,38 @@ export default class Layers{
 		if (!(func_name in Layers.#FUNC_POOL)) return console.error(`Layers.#execute_on_add(): Invalid func_name: ${func_name}`);
 
 		await Layers.#FUNC_POOL[func_name](data, layer_main_element, id);
+	}
+
+	static #parse_commands(commands){
+		const instructions = [];
+
+		commands = commands.split(' ');
+
+		for(const command of commands){
+			const parts = command.split(':');
+
+			// Invalid command
+			if(parts.length !== 3) continue;
+
+			instructions.push({
+				"types": parts[1].split('|'),
+				"action": parts[2]
+			});
+		}
+
+		return instructions;
+	}
+
+	static #handle_command_action(command){
+		switch(command){
+			case "hide":
+				Layers.#remove(Layers.#id);
+				break;
+
+			default:
+				Log.warning("Layers.handle_commands(): Invalid action");
+				break;
+		}
 	}
 };
 

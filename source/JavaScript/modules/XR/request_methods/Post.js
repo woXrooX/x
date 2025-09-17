@@ -118,7 +118,7 @@ export default class Post {
 	#on_click(){
 		this.#element.style.cursor = "pointer";
 
-		this.#element.onclick = async ()=>{
+		this.#element.onclick = async (event)=>{
 			Loading.on_element_start(this.#element);
 
 			window.Modal.lock();
@@ -135,6 +135,11 @@ export default class Post {
 
 			window.Modal.unlock();
 			Modal.handle_commands(this.#element.getAttribute("x-modal"), this.#response["type"]);
+
+			// x-layer
+			const container_element = event.target.closest('container[id^="layer_"]');
+			let xr_button = container_element.querySelector("layer > main > column > button");
+			window.x["Layers"].handle_commands(xr_button.getAttribute("x-layer"), this.#response["type"]);
 
 			window.x.Response.handle_actions(this.#response);
 
