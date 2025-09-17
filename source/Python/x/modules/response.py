@@ -17,13 +17,18 @@ if __name__ != "__main__":
 		# Custom Data
 		data={},
 
-		# Actions
+		#### Actions
+
 		update_conf=False,
+
 		set_session_user=False,
 		delete_session_user=False,
+
 		DOM_change=[],
+
 		redirect=False,
 		reload=False,
+		open_URL_in_new_tab=False,
 
 		# Function to use for converting non-serializable objects to a serializable JSON format.
 		default_serializer_func=None,
@@ -67,16 +72,13 @@ if __name__ != "__main__":
 		if update_conf: actions_dict["update_conf"] = PUBLIC_CONF
 
 		if set_session_user is True: actions_dict["set_session_user"] = User.generate_public_session()
-
 		if delete_session_user is True: actions_dict["delete_session_user"] = 0
 
 		if DOM_change: actions_dict["DOM_change"] = DOM_change
 
-		## redirect
 		if redirect: actions_dict["redirect"] = redirect
-
-		## reload
 		if reload: actions_dict["reload"] = 0
+		if open_URL_in_new_tab: actions_dict["open_URL_in_new_tab"] = open_URL_in_new_tab
 
 		# Check If Actions Has At Least One Object
 		if actions_dict: response_dict["actions"] = actions_dict
