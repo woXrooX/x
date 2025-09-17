@@ -61,7 +61,6 @@ export default class Layers{
 		if(!!type === false) return;
 
 		const instructions = Layers.#parse_commands(commands);
-		console.log(instructions);
 
 		for(const instruction of instructions){
 			if(instruction["types"].includes("any") || instruction["types"].includes(type)){
