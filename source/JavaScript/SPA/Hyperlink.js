@@ -51,6 +51,11 @@ export default class Hyperlink{
 
 		window.location.replace(completed_URL);
 	}
+
+	static open_URL_in_new_tab(url){
+		const completed_URL = new URL(url, window.location.origin);
+		window.open(completed_URL, '_blank', 'noopener,noreferrer');
+	}
 }
 
 window.Hyperlink = Hyperlink;

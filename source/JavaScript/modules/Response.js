@@ -11,7 +11,7 @@ export default class Response{
 
 		if ("redirect" in response["actions"]) window.Hyperlink.locate(response["actions"]["redirect"]);
 		if ("reload" in response["actions"]) window.location.reload();
-		if ("open_URL_in_new_tab" in response["actions"]) window.open(response["actions"]["open_URL_in_new_tab"], '_blank', 'noopener,noreferrer');
+		if ("open_URL_in_new_tab" in response["actions"]) window.Hyperlink.open_URL_in_new_tab(response["actions"]["open_URL_in_new_tab"]);
 	}
 }
 
