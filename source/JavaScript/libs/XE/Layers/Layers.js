@@ -1,9 +1,14 @@
 import Layer from "./Layer.js";
 
 export default class Layers{
+	static DATA = {};
 	static selector = "body > x-layers";
+
 	static #element = null;
+
+	// Active layer ID
 	static #id = 0;
+
 	static #FUNC_POOL = {};
 
 	static {
@@ -13,21 +18,38 @@ export default class Layers{
 	/////////// APIs
 	static push_func(func){ Layers.#FUNC_POOL[func.name] = func; }
 
-	static async add(DOM, func_name = null, data = null){
+	static async add(
+		DOM,
+		layer_func_execute_on_add = null,
+		layer_func_execute_on_activated = null,
+		layer_data = null
+	){
 		Layers.#id += 1;
 
 		if (Layers.#id === 1) window.x.Body.lock_scroll_y_axis();
 
-		Layers.#element.insertAdjacentHTML("beforeend", Layer.build_DOM_HTML(Layers.#id, DOM));
+		Layers.#element.insertAdjacentHTML("beforeend", Layers.#build_from_template_HTML(
+			Layers.#id,
+			DOM,
+			layer_func_execute_on_add,
+			layer_func_execute_on_activated,
+			layer_data
+		));
 
 		const container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
+		if (container === null) return;
 
 		// Clean up the layer adding effect
 		container.addEventListener('animationend', () => container.classList.remove('adding'), { once: true });
 
 		Layers.#build_remove_listener(Layers.#id);
 
-		Layers.#execute_on_add(func_name, data, container.querySelector("layer > main"), Layers.#id);
+		Layers.#execute_func_on(
+			container.getAttribute("layer_func_execute_on_add"),
+			container.getAttribute("layer_data"),
+			container.querySelector("layer > main"),
+			Layers.#id
+		);
 	}
 
 	static handle_commands(commands, type){
@@ -48,6 +70,50 @@ export default class Layers{
 	}
 
 	/////////// Helpers
+
+	static #build_from_template_HTML(
+		id,
+		DOM,
+		layer_func_execute_on_add,
+		layer_func_execute_on_activated,
+		layer_data
+	){
+		return `
+			<container
+				id="layer_${id}"
+
+				class="adding"
+
+				${layer_func_execute_on_add ? `layer_func_execute_on_add="${layer_func_execute_on_add}"` : ''}
+				${layer_func_execute_on_activated ? `layer_func_execute_on_activated="${layer_func_execute_on_activated}"` : ''}
+				${layer_data ? `layer_data="${layer_data}"` : ''}
+			>
+				<cover></cover>
+				<layer class="surface-v1 overflow-hidden">
+					<x-svg
+						class="
+							btn	btn-primary btn-s
+
+							position-fixed
+							top-5px
+							right-5px
+						"
+						for="layer_remove"
+						name="x"
+						color="ffffff"
+					></x-svg>
+					<main
+						class="
+							overflow-y-scroll
+							width-100
+							height-100
+							padding-top-2rem
+						"
+					>${DOM}</main>
+				</layer>
+			</container>
+		`;
+	}
 
 	static #parse_commands(commands){
 		const instructions = [];
@@ -86,26 +152,50 @@ export default class Layers{
 	}
 
 	static #remove(id = null){
+		if (id === 0) return;
+
 		// If no id provided, close the latest open layer
 		if (id === null) id = Layers.#id;
 
+		Removing_Layer: {
+			const container = Layers.#element.querySelector(`container#layer_${id}`);
+			if (container === null) return;
+
+			container.classList.add('removing');
+			container.addEventListener('animationend', () => container.remove(), { once: true });
+		}
+
 		Layers.#id -= 1;
 
-		if (Layers.#id === 0) window.x.Body.unlock_scroll_y_axis();
+		if (Layers.#id === 0) {
+			Layers.DATA = {};
+			window.x.Body.unlock_scroll_y_axis();
+			return;
+		}
 
-		const container = Layers.#element.querySelector(`container#layer_${id}`);
+		// NOTE: If the Layers.#remove(layer_id) method will be used to remove layers from middle, the execute on activated will work incorrectly
+		Activating_Layer: {
+			const container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
+			if (container === null) return;
 
-		container.classList.add('removing');
-
-		container.addEventListener('animationend', () => container.remove(), { once: true });
+			Layers.#execute_func_on(
+				container.getAttribute("layer_func_execute_on_activated"),
+				container.getAttribute("layer_data"),
+				container.querySelector("layer > main"),
+				Layers.#id
+			);
+		}
 	}
 
-	static async #execute_on_add(func_name, data, layer_main_element, id){
+	static async #execute_func_on(
+		func_name,
+		layer_data,
+		layer_main_element,
+		id
+	){
 		if (!!func_name === false) return;
-
 		if (!(func_name in Layers.#FUNC_POOL)) return console.error(`Layers.#execute_on_add(): Invalid func_name: ${func_name}`);
-
-		await Layers.#FUNC_POOL[func_name](data, layer_main_element, id);
+		await Layers.#FUNC_POOL[func_name](layer_data, layer_main_element, id);
 	}
 };
 

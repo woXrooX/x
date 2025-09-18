@@ -1,39 +1,4 @@
 export default class Layer extends HTMLElement {
-	/////////////////////////// Static
-
-	/////////// APIs
-
-	static build_DOM_HTML(id, content){
-		return `
-			<container id="layer_${id}" class="adding">
-				<cover></cover>
-				<layer class="surface-v1 overflow-hidden">
-					<x-svg
-						class="
-							btn	btn-primary btn-s
-
-							position-fixed
-							top-5px
-							right-5px
-						"
-						for="layer_remove"
-						name="x"
-						color="ffffff"
-					></x-svg>
-					<main
-						class="
-							overflow-y-scroll
-							width-100
-							height-100
-							padding-top-2rem
-						"
-					>${content}</main>
-				</layer>
-			</container>
-		`;
-	}
-
-
 	/////////////////////////// Object
 
 	#DOM = null;
@@ -59,7 +24,8 @@ export default class Layer extends HTMLElement {
 
 		trigger_element.onclick = ()=> window.x.Layers.add(
 			this.#DOM,
-			this.getAttribute("layer_func"),
+			this.getAttribute("layer_func_execute_on_add"),
+			this.getAttribute("layer_func_execute_on_activated"),
 			this.getAttribute("layer_data")
 		);
 	};
