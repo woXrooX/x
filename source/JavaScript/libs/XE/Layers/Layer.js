@@ -44,6 +44,12 @@ export default class Layer extends HTMLElement {
 		this.#DOM = this.innerHTML;
 		this.replaceChildren();
 
+		CSS: {
+			const style = document.createElement('style');
+			style.textContent = `:host {display: none;}`;
+			this.shadow.appendChild(style);
+		}
+
 		this.#handle_trigger_click();
 	}
 
