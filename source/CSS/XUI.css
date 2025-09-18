@@ -426,6 +426,15 @@
 			.white-space-pre-wrap { white-space: pre-wrap; }
 		}
 
+		@layer word_wrap {
+			.word-wrap-nowrap { word-wrap: nowrap; }
+		}
+
+		@layer text_overflow {
+			.text-overflow-clip { text-overflow: clip; }
+			.text-overflow-ellipsis { text-overflow: ellipsis; }
+		}
+
 		/****** Other ******/
 		/* Drop cap style */
 		.text-drop-cap{
