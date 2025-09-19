@@ -52,6 +52,36 @@ export default class Layers{
 		);
 	}
 
+	static pop(){
+		Popping_Layer: {
+			const container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
+			if (container === null) return;
+
+			container.classList.add('removing');
+			container.addEventListener('animationend', () => container.remove(), { once: true });
+		}
+
+		Layers.#id -= 1;
+
+		if (Layers.#id === 0) {
+			Layers.DATA = {};
+			window.x.Body.unlock_scroll_y_axis();
+			return;
+		}
+
+		Activating_Layer: {
+			const container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
+			if (container === null) return;
+
+			Layers.#execute_func_on(
+				container.getAttribute("layer_func_execute_on_activated"),
+				container.getAttribute("layer_data"),
+				container.querySelector("layer > main"),
+				Layers.#id
+			);
+		}
+	}
+
 	static handle_commands(commands, type){
 		if(!!commands === false) return;
 		if(!!type === false) return;
@@ -137,7 +167,7 @@ export default class Layers{
 	static #handle_command_action(command){
 		switch(command){
 			case "pop":
-				Layers.#pop();
+				Layers.pop();
 				break;
 
 			default:
@@ -147,37 +177,7 @@ export default class Layers{
 	}
 
 	static #build_pop_listener(id){
-		Layers.#element.querySelector(`container#layer_${id} > layer > x-svg[for=layer_pop]`).addEventListener("click", () => Layers.#pop());
-	}
-
-	static #pop(){
-		Popping_Layer: {
-			const container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
-			if (container === null) return;
-
-			container.classList.add('removing');
-			container.addEventListener('animationend', () => container.remove(), { once: true });
-		}
-
-		Layers.#id -= 1;
-
-		if (Layers.#id === 0) {
-			Layers.DATA = {};
-			window.x.Body.unlock_scroll_y_axis();
-			return;
-		}
-
-		Activating_Layer: {
-			const container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
-			if (container === null) return;
-
-			Layers.#execute_func_on(
-				container.getAttribute("layer_func_execute_on_activated"),
-				container.getAttribute("layer_data"),
-				container.querySelector("layer > main"),
-				Layers.#id
-			);
-		}
+		Layers.#element.querySelector(`container#layer_${id} > layer > x-svg[for=layer_pop]`).addEventListener("click", () => Layers.pop());
 	}
 
 	static async #execute_func_on(
