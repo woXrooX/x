@@ -22,9 +22,9 @@ export default class Layer extends HTMLElement {
 		const trigger_element = document.querySelector(this.getAttribute("trigger_selector"));
 		if (!!trigger_element === false) return;
 
-		trigger_element.onclick = ()=> window.x.Layers.add(
+		trigger_element.onclick = ()=> window.x.Layers.push(
 			this.#DOM,
-			this.getAttribute("layer_func_execute_on_add"),
+			this.getAttribute("layer_func_execute_on_push"),
 			this.getAttribute("layer_func_execute_on_activated"),
 			this.getAttribute("layer_data")
 		);

@@ -18,9 +18,9 @@ export default class Layers{
 	/////////// APIs
 	static push_func(func){ Layers.#FUNC_POOL[func.name] = func; }
 
-	static async add(
+	static async push(
 		DOM,
-		layer_func_execute_on_add = null,
+		layer_func_execute_on_push = null,
 		layer_func_execute_on_activated = null,
 		layer_data = null
 	){
@@ -31,7 +31,7 @@ export default class Layers{
 		Layers.#element.insertAdjacentHTML("beforeend", Layers.#build_from_template_HTML(
 			Layers.#id,
 			DOM,
-			layer_func_execute_on_add,
+			layer_func_execute_on_push,
 			layer_func_execute_on_activated,
 			layer_data
 		));
@@ -42,10 +42,10 @@ export default class Layers{
 		// Clean up the layer adding effect
 		container.addEventListener('animationend', () => container.classList.remove('adding'), { once: true });
 
-		Layers.#build_remove_listener(Layers.#id);
+		Layers.#build_pop_listener(Layers.#id);
 
 		Layers.#execute_func_on(
-			container.getAttribute("layer_func_execute_on_add"),
+			container.getAttribute("layer_func_execute_on_push"),
 			container.getAttribute("layer_data"),
 			container.querySelector("layer > main"),
 			Layers.#id
@@ -53,9 +53,6 @@ export default class Layers{
 	}
 
 	static handle_commands(commands, type){
-		console.log(commands, type);
-
-
 		if(!!commands === false) return;
 		if(!!type === false) return;
 
@@ -74,7 +71,7 @@ export default class Layers{
 	static #build_from_template_HTML(
 		id,
 		DOM,
-		layer_func_execute_on_add,
+		layer_func_execute_on_push,
 		layer_func_execute_on_activated,
 		layer_data
 	){
@@ -84,7 +81,7 @@ export default class Layers{
 
 				class="adding"
 
-				${layer_func_execute_on_add ? `layer_func_execute_on_add="${layer_func_execute_on_add}"` : ''}
+				${layer_func_execute_on_push ? `layer_func_execute_on_push="${layer_func_execute_on_push}"` : ''}
 				${layer_func_execute_on_activated ? `layer_func_execute_on_activated="${layer_func_execute_on_activated}"` : ''}
 				${layer_data ? `layer_data="${layer_data}"` : ''}
 			>
@@ -98,7 +95,9 @@ export default class Layers{
 							top-5px
 							right-5px
 						"
-						for="layer_remove"
+
+						for="layer_pop"
+
 						name="x"
 						color="ffffff"
 					></x-svg>
@@ -137,8 +136,8 @@ export default class Layers{
 
 	static #handle_command_action(command){
 		switch(command){
-			case "remove":
-				Layers.#remove();
+			case "pop":
+				Layers.#pop();
 				break;
 
 			default:
@@ -147,18 +146,13 @@ export default class Layers{
 		}
 	}
 
-	static #build_remove_listener(id){
-		Layers.#element.querySelector(`container#layer_${id} > layer > x-svg`).addEventListener("click", () => Layers.#remove(id));
+	static #build_pop_listener(id){
+		Layers.#element.querySelector(`container#layer_${id} > layer > x-svg[for=layer_pop]`).addEventListener("click", () => Layers.#pop());
 	}
 
-	static #remove(id = null){
-		if (id === 0) return;
-
-		// If no id provided, close the latest open layer
-		if (id === null) id = Layers.#id;
-
-		Removing_Layer: {
-			const container = Layers.#element.querySelector(`container#layer_${id}`);
+	static #pop(){
+		Popping_Layer: {
+			const container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
 			if (container === null) return;
 
 			container.classList.add('removing');
@@ -173,7 +167,6 @@ export default class Layers{
 			return;
 		}
 
-		// NOTE: If the Layers.#remove(layer_id) method will be used to remove layers from middle, the execute on activated will work incorrectly
 		Activating_Layer: {
 			const container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
 			if (container === null) return;
