@@ -30,7 +30,7 @@ export default class Modal extends HTMLElement{
 
 	static hide(){
 		if(Modal.#shown === false) return;
-		if(Modal.#locked === true) return Modal.flash();
+		if(Modal.#locked === true) return x.VFX.border_flash(Modal.#element, "error")
 
 		Modal.#shown = false;
 
@@ -71,11 +71,6 @@ export default class Modal extends HTMLElement{
 
 		// Remove reload restriction
 		window.removeEventListener("beforeunload", Modal.#function_prevent_unload);
-	}
-
-	static flash(type = "error"){
-		Modal.#element.style = `border: 2px solid ${window.x.CSS.get_value("--color-"+type)};`;
-		setTimeout(()=>{Modal.#element.removeAttribute("style");}, 1000);
 	}
 
 	static handle_commands(commands, type){

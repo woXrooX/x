@@ -173,16 +173,8 @@ export default class Form{
 			element.focus();
 
 			// Flash Border Color
-			if(flash === true) Form.#flash(type, element);
+			if (flash === true) x.VFX.border_flash(element, type, Form.#flash_duration);
 		}
-	}
-
-	static #flash(type, element){
-		// Activate Border Color
-		element.style.borderColor = getComputedStyle(document.body).getPropertyValue(`--color-${type}`);
-
-		// Flash Border Color
-		setTimeout(()=>{element.removeAttribute("style");}, Form.#flash_duration);
 	}
 
 	static async #execute_on_response(func_name, response, form_data){
