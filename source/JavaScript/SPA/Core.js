@@ -14,6 +14,7 @@ import Head from "/JavaScript/SPA/Head.js";
 import Body from "/JavaScript/SPA/Body.js";
 import Cover from "/JavaScript/SPA/Cover.js";
 import CSS from "/JavaScript/SPA/CSS.js";
+import Color_Mode from "/JavaScript/SPA/Color_Mode.js";
 import Page from "/JavaScript/SPA/Page.js";
 import DOM from "/JavaScript/SPA/DOM.js";
 import Footer from "/JavaScript/SPA/Footer.js";
@@ -42,6 +43,9 @@ import Table from "/JavaScript/libs/XE/Table.js";
 import Toast from "/JavaScript/libs/XE/Toast.js";
 import Tooltip from "/JavaScript/libs/XE/Tooltip.js";
 import XSVG from "/JavaScript/libs/XE/XSVG.js";
+
+///////////////////////////// Modules (Least important)
+import VFX from "/JavaScript/modules/FX/VFX.js";
 
 //// Non built-in XEs will be manually imported on head section of the index.html
 // <script type="module" src="/JavaScript/libs/XE/Sample_XE.js"></script>
@@ -92,7 +96,7 @@ export default class Core{
 		Log.info("Core.#init()");
 
 		Language.init();
-		x.CSS.init();
+		x.Color_Mode.init();
 		Menu.init();
 		Header.init();
 		Footer.init();
@@ -187,7 +191,7 @@ export default class Core{
 				clearInterval(x.Notification.poll_interval_func);
 			}
 
-			x.CSS.detect_color_mode();
+			x.Color_Mode.detect_color_mode();
 		});
 	}
 
