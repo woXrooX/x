@@ -25,7 +25,7 @@ export default class Layer extends HTMLElement {
 		trigger_element.onclick = ()=> window.x.Layers.push(
 			this.#DOM,
 			this.getAttribute("layer_func_execute_on_push"),
-			this.getAttribute("layer_func_execute_on_activated"),
+			this.getAttribute("layer_func_execute_when_top"),
 			this.getAttribute("layer_data")
 		);
 	};

@@ -21,7 +21,9 @@ export default class Layers{
 	static async push(
 		DOM,
 		layer_func_execute_on_push = null,
-		layer_func_execute_on_activated = null,
+
+		// Executes when the layer becomes on top of the stack
+		layer_func_execute_when_top = null,
 		layer_data = null
 	){
 		Layers.#id += 1;
@@ -32,7 +34,7 @@ export default class Layers{
 			Layers.#id,
 			DOM,
 			layer_func_execute_on_push,
-			layer_func_execute_on_activated,
+			layer_func_execute_when_top,
 			layer_data
 		));
 
@@ -46,6 +48,13 @@ export default class Layers{
 
 		Layers.#execute_func_on(
 			container.getAttribute("layer_func_execute_on_push"),
+			container.getAttribute("layer_data"),
+			container.querySelector("layer > main"),
+			Layers.#id
+		);
+
+		Layers.#execute_func_on(
+			container.getAttribute("layer_func_execute_when_top"),
 			container.getAttribute("layer_data"),
 			container.querySelector("layer > main"),
 			Layers.#id
@@ -74,7 +83,7 @@ export default class Layers{
 			if (container === null) return;
 
 			Layers.#execute_func_on(
-				container.getAttribute("layer_func_execute_on_activated"),
+				container.getAttribute("layer_func_execute_when_top"),
 				container.getAttribute("layer_data"),
 				container.querySelector("layer > main"),
 				Layers.#id
@@ -102,7 +111,7 @@ export default class Layers{
 		id,
 		DOM,
 		layer_func_execute_on_push,
-		layer_func_execute_on_activated,
+		layer_func_execute_when_top,
 		layer_data
 	){
 		return `
@@ -112,7 +121,7 @@ export default class Layers{
 				class="adding"
 
 				${layer_func_execute_on_push ? `layer_func_execute_on_push="${layer_func_execute_on_push}"` : ''}
-				${layer_func_execute_on_activated ? `layer_func_execute_on_activated="${layer_func_execute_on_activated}"` : ''}
+				${layer_func_execute_when_top ? `layer_func_execute_when_top="${layer_func_execute_when_top}"` : ''}
 				${layer_data ? `layer_data="${layer_data}"` : ''}
 			>
 				<cover></cover>
