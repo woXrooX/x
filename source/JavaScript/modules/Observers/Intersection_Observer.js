@@ -1,4 +1,4 @@
-export default function observe({
+export default function Intersection_Observer({
 	selector = ".observe",
 	observe_once = false,
 	delay = 0,
