@@ -133,7 +133,7 @@ export default class Post {
 			this.#handle_commands();
 
 			////////// x-toast
-			Toast.handle_commands(this.#element.getAttribute("x-toast"), this.#response);
+			x.Toast.handle_commands(this.#element.getAttribute("x-toast"), this.#response);
 
 			////////// x-modal
 			window.Modal.unlock();

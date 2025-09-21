@@ -131,7 +131,7 @@ export default class Form{
 		Form.#execute_on_response(event.target.getAttribute("form_func"), response, form_data);
 
 		////////// x-toast
-		Toast.handle_commands(event.target.getAttribute("x-toast"), response);
+		x.Toast.handle_commands(event.target.getAttribute("x-toast"), response);
 
 		////////// x-modal
 		window.Modal.unlock();

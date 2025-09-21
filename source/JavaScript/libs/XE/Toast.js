@@ -124,5 +124,4 @@ export default class Toast extends HTMLElement{
 
 customElements.define('x-toast', Toast);
 
-// Make Toast Usable W/O Importing It
-window.Toast = Toast;
+window.x["Toast"] = Toast;

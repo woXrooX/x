@@ -113,7 +113,7 @@ constructor(){
 			option.addEventListener("click", ()=>{
 				// Check If Exceed The Max
 				if(count >= this.MAX){
-					window.Toast.new("info", "Maximum number of options you can select is: " + this.getAttribute('max'))
+					x.Toast.new("info", "Maximum number of options you can select is: " + this.getAttribute('max'))
 					return;
 				}
 

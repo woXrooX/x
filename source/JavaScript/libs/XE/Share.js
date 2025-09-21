@@ -40,10 +40,10 @@ export default class Share extends HTMLElement{
 							onclick="
 								try {
 									navigator.clipboard.writeText(window.location.href);
-									window.Toast.new('success', 'Link copied!');
+									x.Toast.new('success', 'Link copied!');
 								}
 
-								catch(err) { window.Toast.new('error', 'Copy failed: ' + err); }
+								catch(err) { x.Toast.new('error', 'Copy failed: ' + err); }
 							"
 						></x-svg>
 					</a>

@@ -41,7 +41,7 @@ export default class Editable {
 
 			window.x.XR.execute_on_response(this.#element.getAttribute("XR-func"), this.#response, this.#element);
 
-			Toast.handle_commands(this.#element.getAttribute("x-toast"), this.#response);
+			x.Toast.handle_commands(this.#element.getAttribute("x-toast"), this.#response);
 
 			window.x.Response.handle_actions(this.#response);
 		}
