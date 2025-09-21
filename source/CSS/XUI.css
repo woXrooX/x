@@ -733,10 +733,11 @@
 		}
 
 		textarea{
-			height: unset;
 			font-size: calc(1rem / 1.5);
+			height: unset;
 			resize: vertical;
 			padding: calc(var(--padding) * 2);
+			border: none;
 		}
 
 		@layer buttons{

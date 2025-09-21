@@ -64,15 +64,14 @@ export default class Form{
 	static async #on_submit(event){
 		event.preventDefault();
 
-		// The Submitter
 		const submitter = event.submitter;
 
-		// Disable Submitter Button
+		// Disable submitter button
 		submitter.disabled = true;
 
 		window.Modal.lock();
 
-		// After Submitting Form PLZW8
+		// PLZW8
 		Form.#response({
 			form: event.target,
 			type: "info",
@@ -80,19 +79,16 @@ export default class Form{
 			field: event.target.getAttribute("for")
 		});
 
-		// Get FormData
 		let form_data = new FormData(event.target);
 
-		// Append for To FormData
 		form_data.append("for", event.target.getAttribute("for"));
 
 		// DEV: Log FormData
 		// for(const [key, value] of form_data.entries()) console.log(`${key}: ${value}`);
 
-		// Send The Request
 		let response = await window.bridge(form_data, event.target.action, event.target.enctype);
 
-		// DEV: Data From Back-End
+		// DEV: Data from Back-End
 		// Log.info(response);
 
 		// On invalid response
@@ -110,17 +106,17 @@ export default class Form{
 			return;
 		}
 
-		// Flash Above Input Field
+		// Flash above input field
 		if("field" in response)
 			Form.#response({
 				form: event.target,
 				type: response["type"],
-				message: null,
 				field: response["field"],
-				flash: true
+				border_flash: true,
+				shake: true
 			});
 
-		// Text Above Submit Field
+		// Text above submit field
 		Form.#response({
 			form: event.target,
 			type: response["type"],
@@ -128,7 +124,7 @@ export default class Form{
 			field: event.target.getAttribute("for")
 		});
 
-		// Enable Submitter Button
+		// Enable submitter button
 		submitter.disabled = false;
 
 		////////// Callback
@@ -150,31 +146,30 @@ export default class Form{
 
 	// static #response(type, message, field, flash = false){
 	static #response({
-		form = null,
+		form,
 		type,
-		message,
+		message = null,
 		field,
-		flash = false,
+		border_flash = false,
+		shake = false,
 	}){
-		// Check If Form Element Passed
-		if(!!form === false) return;
+		// Check if form element passed
+		if (!!form === false) return;
 
-		// Element <p>
-		const element_p = form.querySelector(`p[for=${field}]`);
+		const p_element = form.querySelector(`p[for=${field}]`);
 
-		// Above Submit Button
-		if(!!message != false && !!element_p === true) element_p.innerHTML = `<span class="text-color-${type}">${window.Lang.use(message)}</span>`;
+		// Above submit button
+		if (!!message != false && !!p_element === true) p_element.innerHTML = `<span class="text-color-${type}">${window.Lang.use(message)}</span>`;
 
-		// Focus & Flash The Border Color
-		const element = form.querySelector(`[name=${field}]`);
+		const field_element = form.querySelector(`[name=${field}]`);
 
-		if(!!element === true && element.getAttribute("type") != "submit"){
-			// Focus
-			element.focus();
+		if (!!field_element === false) return;
+		if (field_element.getAttribute("type") == "submit") return;
 
-			// Flash Border Color
-			if (flash === true) x.VFX.border_flash(element, type, Form.#flash_duration);
-		}
+		field_element.focus();
+
+		if (border_flash === true) x.VFX.border_flash(field_element, type, Form.#flash_duration);
+		if (shake === true) x.VFX.shake(field_element);
 	}
 
 	static async #execute_on_response(func_name, response, form_data){
