@@ -6,7 +6,6 @@ import Logger from "/JavaScript/modules/Logger.js";
 import bridge from "/JavaScript/modules/bridge.js";
 import Response from "/JavaScript/modules/Response.js";
 import XR from "/JavaScript/modules/XR/XR.js";
-import XF from "/JavaScript/modules/XR/XF.js";
 import x_String from "/JavaScript/modules/String.js";
 
 ///////////////////////////// SPA Classes

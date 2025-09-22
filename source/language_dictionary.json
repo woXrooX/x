@@ -14,6 +14,11 @@
 		"ru": "Все изменения вступят в силу после следующего входа в систему",
 		"uz": "Barcha o`zgarishlar keyingi tizimga kirgandan keyin kuchga kiradi"
 	},
+	"already_exists": {
+		"en": "Already exists",
+		"ru": "Уже существует",
+		"uz": "Allaqachon mavjud"
+	},
 	"app_is_down": {
 		"en": "App is down!",
 		"ru": "Приложение не работает!",
