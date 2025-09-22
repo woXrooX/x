@@ -3175,7 +3175,7 @@
 
 		.empty-display-none { &:empty { display: none; } }
 
-		&.on-target-display-flex {
+		.on-target-display-flex {
 			& > * {
 				display:none;
 
