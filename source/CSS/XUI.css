@@ -526,7 +526,7 @@
 		fieldset{
 			padding: calc(var(--padding) * 2);
 			border-radius: var(--radius);
-			outline: var(--form-outline);
+			border: var(--form-outline);
 
 			display: flex;
 			flex-direction: column;
@@ -583,6 +583,7 @@
 			width: 100%;
 			height: 2rem;
 			padding: 0 calc(var(--padding) * 2);
+			border: none;
 			border-radius: var(--radius);
 			outline: var(--form-outline);
 
@@ -610,7 +611,7 @@
 
 				/* Chrome Y */
 				&::-webkit-color-swatch {
-					outline: none;
+					border: none;
 					border-radius: var(--radius);
 					height: 100%;
 				}
@@ -623,7 +624,7 @@
 
 				/* Firefox Y */
 				::-moz-color-swatch{
-					outline: none;
+					border: none;
 					border-radius: var(--radius);
 					height: 100%;
 				}
@@ -642,7 +643,7 @@
 
 					padding: 4px 1em;
 
-					outline: none;
+					border: none;
 					border-radius: var(--radius);
 
 					cursor: pointer;
@@ -723,11 +724,17 @@
 			&[type=range]{
 				cursor: pointer;
 				padding: 0;
+				outline: none;
+
+				&:hover, &:focus, &:active{
+					outline: none;
+				}
 			}
 		}
 
 		select{
 			appearance: none;
+			border: none;
 			-webkit-appearance: none;
 			-moz-appearance: none;
 		}
