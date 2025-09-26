@@ -1403,6 +1403,34 @@
 			;
 		}
 
+		.surface-v5 {
+			background-color: var(--color-main-tint-2);
+
+			--border-primary-color: var(--color-main-tint-8);
+			--border-primary-width: 1px;
+			--border-primary-length: 5px;
+
+			--border-secondary-color: var(--color-main-tint-6);
+			--border-secondary-width: 0.5px;
+
+			background:
+				/* Primary border: four L-caps */
+				linear-gradient(var(--border-primary-color) 0 0) top left / var(--border-primary-length) var(--border-primary-width) no-repeat,
+				linear-gradient(var(--border-primary-color) 0 0) top left / var(--border-primary-width) var(--border-primary-length) no-repeat,
+				linear-gradient(var(--border-primary-color) 0 0) top right / var(--border-primary-length) var(--border-primary-width) no-repeat,
+				linear-gradient(var(--border-primary-color) 0 0) top right / var(--border-primary-width) var(--border-primary-length) no-repeat,
+				linear-gradient(var(--border-primary-color) 0 0) bottom left / var(--border-primary-length) var(--border-primary-width) no-repeat,
+				linear-gradient(var(--border-primary-color) 0 0) bottom left / var(--border-primary-width) var(--border-primary-length) no-repeat,
+				linear-gradient(var(--border-primary-color) 0 0) bottom right / var(--border-primary-length) var(--border-primary-width) no-repeat,
+				linear-gradient(var(--border-primary-color) 0 0) bottom right / var(--border-primary-width) var(--border-primary-length) no-repeat,
+
+				/* Secondary border */
+				linear-gradient(var(--border-secondary-color) 0 0) top / 100% var(--border-secondary-width) no-repeat,
+				linear-gradient(var(--border-secondary-color) 0 0) bottom / 100% var(--border-secondary-width) no-repeat,
+				linear-gradient(var(--border-secondary-color) 0 0) left / var(--border-secondary-width) 100% no-repeat,
+				linear-gradient(var(--border-secondary-color) 0 0) right / var(--border-secondary-width) 100% no-repeat;
+		}
+
 		/*** Situational ***/
 		.surface-success{
 			background-color: hsla(var(--color-success-hue), var(--color-success-saturation), var(--color-success-lightness), 0.1);
