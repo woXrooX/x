@@ -3250,6 +3250,37 @@
 				border-top: 1px solid var(--color-main-tint-4);
 			}
 		}
+
+		.anchor-highlight:has(a:is(:hover, :focus-visible)) { --intent: 1; }
+		.anchor-highlight::after {
+			--transition: 0.1s;
+
+			z-index: -1;
+			content: '';
+			position: absolute;
+			pointer-events: none;
+
+			border-radius: var(--radius);
+			opacity: var(--intent, 0);
+			background: var(--color-main-tint-4);
+			transition: top var(--transition), left var(--transition), width var(--transition), height var(--transition), opacity var(--transition);
+
+			transition-timing-function: ease-in-out;
+		}
+
+		@supports (anchor-name: --a) {
+			.anchor-highlight a:hover,
+			.anchor-highlight a:focus-visible { anchor-name: --target; }
+
+			.anchor-highlight::after {
+				position-anchor: --target;
+				left: anchor(left);
+				top: anchor(top);
+				width: anchor-size(width);
+				height: anchor-size(height);
+				opacity: 1;
+			}
+		}
 	}
 
 	@layer overrides {
