@@ -47,7 +47,7 @@ export default class Table extends HTMLElement{
 			<container class="gap-0-5">
 
 				<header class="display-flex flex-row flex-y-center flex-x-between gap-0-5 width-100">
-					<select class="width-auto text-align-center">
+					<select class="width-auto text-align-center" style="outline-offset: -1px;">
 						<option selected disabled>${this.page_size}</option>
 						<option value="10">10</option>
 						<option value="15">15</option>
@@ -58,7 +58,11 @@ export default class Table extends HTMLElement{
 						<option value="all">${window.Lang.use("all")}</option>
 					</select>
 
-					<column class="width-100">${!!this.JSON?.searchable === true ? '<input type="text" class="width-100">' : ""}</column>
+					<column class="width-100">${
+						!!this.JSON?.searchable === true ?
+						'<input type="text" class="width-100" style="outline-offset: -1px;">' :
+						''
+					}</column>
 				</header>
 
 				<main class="scrollbar-x scrollbar-y width-100" style="max-height: calc(90vh - var(--header-height) * 4)"></main>
