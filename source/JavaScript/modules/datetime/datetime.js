@@ -122,6 +122,61 @@ export function time_difference(time_1, time_2){
 	return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
+// time = HH:mm:ss.fraction
+export function time_to_milliseconds(time) {
+	if (typeof time !== "string") return false;
+
+	const matches = time.match(/^\s*(\d+):([0-5]\d):([0-5]\d)(?:\.(\d+))?\s*$/);
+	if (!matches) return false;
+
+	const hours = parseInt(matches[1], 10);
+	const minutes = parseInt(matches[2], 10);
+	const seconds = parseInt(matches[3], 10);
+	const fraction = matches[4] || '';
+
+	// Convert fractional seconds to milliseconds (truncate beyond 3 digits)
+	let ms = 0;
+	if (fraction.length > 0) {
+
+		ms = fraction.length <= 3 ?
+			// e.g. .5 -> 500, .12 -> 120
+			Number(fraction.padEnd(3, "0")) :
+
+			// e.g. .123456 -> 123 ms (truncated)
+			Number(fraction.slice(0, 3));
+	}
+
+	return ((hours * 60 + minutes) * 60 + seconds) * 1000 + ms;
+}
+
+// Converts a duration in milliseconds to "HH:mm:ss[.fraction]"
+export function milliseconds_to_time(milliseconds) {
+	const milliseconds_number = Number(milliseconds);
+	if (!Number.isFinite(milliseconds_number)) return false;
+
+	const sign = milliseconds_number < 0 ? '-' : '';
+
+	// Drop sub-ms if present
+	let ms = Math.abs(Math.trunc(milliseconds_number));
+
+	const hours = Math.floor(ms / 3_600_000); ms -= hours * 3_600_000;
+	const minutes = Math.floor(ms / 60_000); ms -= minutes * 60_000;
+	const seconds = Math.floor(ms / 1_000); ms -= seconds * 1_000;
+
+	const hh = String(hours).padStart(2, '0');
+	const mm = String(minutes).padStart(2, '0');
+	const ss = String(seconds).padStart(2, '0');
+
+	// If there's no fractional part, omit it entirely
+	if (ms === 0) return `${sign}${hh}:${mm}:${ss}`;
+
+	// Otherwise show trimmed fractional seconds (1–3 digits)
+	const fraction = String(ms).padStart(3, '0').replace(/0+$/, '');
+	return `${sign}${hh}:${mm}:${ss}.${fraction}`;
+}
+
+
+
 // Exptected input: type->string, format->HH:mm:ss
 export function parse_time(time){
 	if(typeof time !== "string") return false;
