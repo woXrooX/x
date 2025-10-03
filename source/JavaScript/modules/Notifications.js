@@ -14,7 +14,7 @@ export async function notification_s_card_generator(notification){
 			href="/x/notification/${notification["id"]}"
 			class="
 				min-height-50px width-100 padding-1 padding-x-2 display-flex flex-row flex-x-between gap-0-5
-				${notification["type"] != null ? `surface-${notification["type"]}` : "bg-2 bs-default"}
+				${notification["type"] != null ? `surface-${notification["type"]}` : "bg-2 box-shadow-v0"}
 				${notification["seen"] == 1 ? "filter_grayscale_90" : ''}
 			"
 		>
