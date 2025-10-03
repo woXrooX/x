@@ -2883,6 +2883,21 @@
 		.box-shadow-v3{
 			box-shadow: 0px 2px 3px 1px  hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.3);
 		}
+
+		.box-shadow-v4{
+			box-shadow:
+				inset
+
+				/* Top */
+				0px 1px 2px var(--color-main-tint-6),
+
+				/* Bottom hard */
+				0px 1px 2px var(--color-main-tint-1),
+
+				/* Bottom soft */
+				0px 2px 4px var(--color-main-tint-2)
+			;
+		}
 	}
 
 	@layer border{
