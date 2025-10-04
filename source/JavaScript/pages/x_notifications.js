@@ -17,7 +17,7 @@ export async function after(){
 	async function build_notifications_HTML(){
 		let notifications = await window.bridge({for: "get_all_notifications"});
 		if("data" in notifications) notifications = notifications["data"];
-		else return `<p class="width-100 text-size-0-8 surface-info padding-1">${Lang.use("no_notifications")}</p>`;
+		else return `<p class="surface-info width-100 padding-2">${Lang.use("no_notifications")}</p>`;
 
 		let Notifications_module;
 

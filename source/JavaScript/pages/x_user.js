@@ -12,7 +12,7 @@ export async function after(){
 
 	let user = await window.bridge({for:"get_user"});
 	if("data" in user) user = user["data"];
-	else return `<p class="width-100 text-size-0-8 surface-info padding-1">No data to show.</p>`;
+	else return `<p class="surface-info width-100 padding-2">No data to show.</p>`;
 
 	container.insertAdjacentHTML("beforeend", `
 		${await build_actions_HTML()}
@@ -90,7 +90,7 @@ export async function after(){
 		let resp = await window.bridge({for:"get_user_log_in_records"});
 
 		if("data" in resp) resp = resp["data"];
-		else return `<p class="width-100 text-size-0-8 surface-info padding-1">No data to show.</p>`;
+		else return `<p class="surface-info width-100 padding-2">No data to show.</p>`;
 
 		const HEAD = [];
 		const BODY = [];

@@ -14,7 +14,7 @@ export async function after(){
 	async function build_feedback_HTML(){
 		let feedback = await window.bridge({for:"get_all_feedback"});
 		if("data" in feedback) feedback = feedback["data"];
-		else return `<p class="width-100 text-size-0-8 surface-info padding-1">No feedback</p>`;
+		else return `<p class="surface-info width-100 padding-2">No feedback</p>`;
 
 		let HTML = '';
 
