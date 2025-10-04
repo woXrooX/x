@@ -451,17 +451,17 @@ export default class Table extends HTMLElement{
 		for(let i = 1; i <= this.body_values_in_chunks.length; i++) buttons_HTML += `<button class="btn btn-primary btn-s display-none" name="${i}">${i}</button>`;
 
 		this.querySelector("container > footer > section:nth-child(2)").innerHTML = `
-			<button class="btn btn-primary btn-s text-transform-uppercase" name="first">${window.Lang.use("first")}</button>
-			<button class="btn btn-primary btn-s" name="previous"><x-svg name="arrow_back_v1" color="white"></x-svg></button>
+			<x-svg name="arrow_left_first_page" color="white" class="btn btn-primary btn-s"></x-svg>
+			<x-svg name="arrow_back_v1" color="white" class="btn btn-primary btn-s"></x-svg>
 			<section class="display-flex flex-row gap-0-2">${buttons_HTML}</section>
-			<button class="btn btn-primary btn-s" name="next"><x-svg name="arrow_forward_v1" color="white"></x-svg></button>
-			<button class="btn btn-primary btn-s text-transform-uppercase" name="last">${window.Lang.use("last")}</button>
+			<x-svg name="arrow_forward_v1" color="white" class="btn btn-primary btn-s"></x-svg>
+			<x-svg name="arrow_right_last_page" color="white" class="btn btn-primary btn-s"></x-svg>
 		`;
 
-		this.first_button = this.querySelector(`container > footer > section:nth-child(2) > button[name=first]`);
-		this.previous_button = this.querySelector(`container > footer > section:nth-child(2) > button[name=previous]`);
-		this.next_button = this.querySelector(`container > footer > section:nth-child(2) > button[name=next]`);
-		this.last_button = this.querySelector(`container > footer > section:nth-child(2) > button[name=last]`);
+		this.first_button = this.querySelector(`container > footer > section:nth-child(2) > x-svg[name=arrow_left_first_page]`);
+		this.previous_button = this.querySelector(`container > footer > section:nth-child(2) > x-svg[name=arrow_back_v1]`);
+		this.next_button = this.querySelector(`container > footer > section:nth-child(2) > x-svg[name=arrow_forward_v1]`);
+		this.last_button = this.querySelector(`container > footer > section:nth-child(2) > x-svg[name=arrow_right_last_page]`);
 
 		this.#update_buttons(this.current_page);
 		this.#listen_to_page_buttons_clicks();
@@ -498,20 +498,20 @@ export default class Table extends HTMLElement{
 
 		//// Enable/Disable main buttons
 		// Enable/Disable "first" button
-		if(id == 1) this.first_button.disabled = true;
-		else this.first_button.disabled = false;
+		if (id == 1) this.first_button.classList.add("disabled");
+		else this.first_button.classList.remove("disabled");
 
 		// Enable/Disable "previous" button
-		if(id > 1) this.previous_button.disabled = false;
-		else this.previous_button.disabled = true;
+		if(id > 1) this.previous_button.classList.remove("disabled");
+		else this.previous_button.classList.add("disabled");
 
 		// Enable/Disable "next" button
-		if(id == this.body_values_in_chunks.length) this.next_button.disabled = true;
-		else this.next_button.disabled = false;
+		if(id == this.body_values_in_chunks.length) this.next_button.classList.add("disabled");
+		else this.next_button.classList.remove("disabled");
 
 		// Enable/Disable "last" button
-		if(id == this.body_values_in_chunks.length) this.last_button.disabled = true;
-		else this.last_button.disabled = false;
+		if(id == this.body_values_in_chunks.length) this.last_button.classList.add("disabled");
+		else this.last_button.classList.remove("disabled");
 
 
 		const buttons = [
