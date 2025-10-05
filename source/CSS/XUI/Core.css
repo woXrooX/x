@@ -3178,36 +3178,35 @@
 		}
 	}
 
-	/* Everything with no specific layer or could not name or too small to have own section/layer goes under other */
-	@layer other{
-		@layer details{
-			details{
-				& > summary{
-					cursor: pointer;
-					user-select: none;
+	@layer details{
+		details{
+			& > summary{
+				cursor: pointer;
+				user-select: none;
+			}
+
+			&.details-v1{
+				interpolate-size: allow-keywords;
+
+				&::details-content {
+					overflow: hidden;
+					block-size: 0;
+
+					transition:
+						content-visibility var(--transition-velocity) allow-discrete ease-in-out,
+						block-size var(--transition-velocity) ease-in-out;
 				}
 
-				&.details-v1{
-					interpolate-size: allow-keywords;
-
+				&[open] {
 					&::details-content {
-						overflow: hidden;
-						block-size: 0;
-
-						transition:
-							content-visibility var(--transition-velocity) allow-discrete ease-in-out,
-							block-size var(--transition-velocity) ease-in-out;
-					}
-
-					&[open] {
-						&::details-content {
-							block-size: auto;
-						}
+						block-size: auto;
 					}
 				}
 			}
 		}
+	}
 
+	@layer disabled {
 		*{
 			&.disabled, [disabled], :disabled{
 				pointer-events: none !important;
@@ -3220,32 +3219,20 @@
 				}
 			}
 		}
+	}
 
-		.user-select-none{ user-select: none; }
+	@layer overflow{
+		.overflow-hidden{ overflow: hidden; }
+		.overflow-scroll{ overflow: scroll; }
 
-		.empty-display-none { &:empty { display: none; } }
+		.overflow-y-hidden{ overflow-y: hidden; }
+		.overflow-y-scroll{ overflow-y: scroll; }
 
-		.on-target-display-flex {
-			& > * {
-				display:none;
+		.overflow-x-hidden{ overflow-x: hidden; }
+		.overflow-x-scroll{ overflow-x: scroll; }
+	}
 
-				&:first-child:not(:target):not(:has(~ :target)) { display: flex; }
-
-				&:target{ display: flex; }
-			}
-		}
-
-		@layer overflow{
-			.overflow-hidden{ overflow: hidden; }
-			.overflow-scroll{ overflow: scroll; }
-
-			.overflow-y-hidden{ overflow-y: hidden; }
-			.overflow-y-scroll{ overflow-y: scroll; }
-
-			.overflow-x-hidden{ overflow-x: hidden; }
-			.overflow-x-scroll{ overflow-x: scroll; }
-		}
-
+	@layer hr {
 		hr{
 			width: 100%;
 
