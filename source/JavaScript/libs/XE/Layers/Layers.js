@@ -13,6 +13,9 @@ export default class Layers{
 
 	static {
 		Layers.#element = document.querySelector(Layers.selector);
+
+		// Pop most recent layer on "Escape" press
+		document.addEventListener('keydown', ()=> { if(event.key === "Escape") Layers.pop(); });
 	}
 
 	/////////// APIs
