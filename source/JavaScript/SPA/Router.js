@@ -15,8 +15,6 @@ export default class Router {
 	/////////// APIs
 
 	static async handle() {
-		console.log(1212);
-
 		// Check if app is down if so stop handling and set app_is_down as a current page
 		if ("app_is_down" in window.CONF["tools"]) {
 			Router.current_route.name = "app_is_down";
