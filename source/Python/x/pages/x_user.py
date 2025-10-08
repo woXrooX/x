@@ -7,12 +7,13 @@ from Python.x.modules.User import User
 from Python.x.modules.Notifications import Notifications
 from Python.x.modules.Globals import Globals
 
-@Page.build({
-	"enabled": False,
-	"roles": ["root"],
-	"methods": ["GET", "POST"],
-	"endpoints": ["/x/user/<id>"]
-})
+# @Page.build({
+# 	"enabled": False,
+# 	"roles": ["root"],
+# 	"methods": ["GET", "POST"],
+# 	"endpoints": ["/x/user/<id>"]
+# })
+@Page.build()
 def x_user(request, id):
 	if request.method == "POST":
 		if "multipart/form-data" in request.content_type.split(';'):

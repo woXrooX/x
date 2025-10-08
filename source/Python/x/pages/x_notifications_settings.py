@@ -5,6 +5,12 @@ from Python.x.modules.response import response
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.Globals import Globals
 
+# @Page.build({
+# 	"enabled": False,
+# 	"authenticity_statuses": ["unauthorized", "authorized"],
+# 	"endpoints": ["/x/notifications/settings"],
+# 	"methods": ["GET", "POST"]
+# })
 @Page.build()
 def x_notifications_settings(request):
 	if request.method == "POST":

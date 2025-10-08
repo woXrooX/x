@@ -9,12 +9,13 @@ from Python.x.modules.MySQL import MySQL
 from Python.x.modules.Log_In_Tools import Log_In_Tools
 from Python.x.modules.Logger import Log
 
-@Page.build({
-	"enabled": False,
-	"authenticity_statuses": ["unauthenticated"],
-	"methods": ["GET", "POST"],
-	"endpoints": ["/log_in"]
-})
+# @Page.build({
+# 	"enabled": False,
+# 	"authenticity_statuses": ["unauthenticated"],
+# 	"methods": ["GET", "POST"],
+# 	"endpoints": ["/log_in"]
+# })
+@Page.build()
 def log_in(request):
 	if request.method == "POST":
 		# unknown_error

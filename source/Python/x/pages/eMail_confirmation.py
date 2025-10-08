@@ -8,12 +8,13 @@ from Python.x.modules.Globals import Globals
 from Python.x.modules.User import User
 from Python.x.modules.MySQL import MySQL
 
-@Page.build({
-	"enabled": False,
-	"authenticity_statuses": ["unauthorized"],
-	"methods": ["GET", "POST"],
-	"endpoints": ["/eMail_confirmation"]
-})
+# @Page.build({
+# 	"enabled": False,
+# 	"authenticity_statuses": ["unauthorized"],
+# 	"methods": ["GET", "POST"],
+# 	"endpoints": ["/eMail_confirmation"]
+# })
+@Page.build()
 def eMail_confirmation(request):
 	if request.method == "POST":
 		# I/ data validations

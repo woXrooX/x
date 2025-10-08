@@ -7,12 +7,13 @@ from Python.x.modules.MySQL import MySQL
 from Python.x.modules.Globals import Globals
 from Python.x.modules.IP_address_tools import extract_IP_address_from_request
 
-@Page.build({
-	"enabled": False,
-	"authenticity_statuses": ["unauthenticated"],
-	"methods": ["GET", "POST"],
-	"endpoints": ["/request_password_recovery"]
-})
+# @Page.build({
+# 	"enabled": False,
+# 	"authenticity_statuses": ["unauthenticated"],
+# 	"methods": ["GET", "POST"],
+# 	"endpoints": ["/request_password_recovery"]
+# })
+@Page.build()
 def request_password_recovery(request):
 	if request.method == "POST":
 		# unknown_error

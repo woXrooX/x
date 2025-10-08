@@ -4,12 +4,13 @@ from Python.x.modules.Page import Page
 from Python.x.modules.response import response
 from Python.x.modules.MySQL import MySQL
 
-@Page.build({
-	"enabled": False,
-	"authenticity_statuses": ["unauthorized", "authorized"],
-	"methods": ["GET", "POST"],
-	"endpoints": ["/x/notification/<id>"]
-})
+# @Page.build({
+# 	"enabled": False,
+# 	"authenticity_statuses": ["unauthorized", "authorized"],
+# 	"methods": ["GET", "POST"],
+# 	"endpoints": ["/x/notification/<id>"]
+# })
+@Page.build()
 def x_notification(request, id):
 	if request.method == "POST":
 		if request.content_type == "application/json":

@@ -8,11 +8,12 @@ from Python.x.modules.response import response
 from Python.x.modules.Globals import Globals
 from Python.x.modules.IP_address_tools import extract_IP_address_from_request
 
-@Page.build({
-	"enabled": False,
-	"methods": ["POST"],
-	"endpoints": ["/x/feedback/leave"]
-})
+# @Page.build({
+# 	"enabled": False,
+# 	"methods": ["POST"],
+# 	"endpoints": ["/x/feedback/leave"]
+# })
+@Page.build()
 def x_feedback_leave(request):
 	if request.method == "POST":
 		if "multipart/form-data" in request.content_type.split(';'):

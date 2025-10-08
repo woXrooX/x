@@ -5,12 +5,13 @@ from Python.x.modules.response import response
 from Python.x.modules.Globals import Globals
 from Python.x.modules.Logger import Log
 
-@Page.build({
-	"enabled": False,
-	"authenticity_statuses": ["unauthorized", "authorized"],
-	"methods": ["GET", "POST"],
-	"endpoints": ["/log_out"]
-})
+# @Page.build({
+# 	"enabled": False,
+# 	"authenticity_statuses": ["unauthorized", "authorized"],
+# 	"methods": ["GET", "POST"],
+# 	"endpoints": ["/log_out"]
+# })
+@Page.build()
 def log_out(request):
 	if request.method == "POST":
 		# unknown_error

@@ -11,12 +11,13 @@ from Python.x.modules.User import User
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.Logger import Log
 
-@Page.build({
-	"enabled": False,
-	"authenticity_statuses": ["unauthenticated"],
-	"methods": ["GET", "POST"],
-	"endpoints": ["/sign_up"]
-})
+# @Page.build({
+# 	"enabled": False,
+# 	"authenticity_statuses": ["unauthenticated"],
+# 	"methods": ["GET", "POST"],
+# 	"endpoints": ["/sign_up"]
+# })
+@Page.build()
 def sign_up(request):
 	if request.method == "POST":
 		# unknown_error

@@ -10,11 +10,12 @@ from Python.x.modules.Globals import Globals
 from Python.x.modules.Stripe.Payment import Payment
 from Python.x.modules.Stripe.Product import Product
 
-@Page.build({
-	"enabled": False,
-	"methods": ["GET", "POST"],
-	"endpoints": ["/x/pay/one_time"]
-})
+# @Page.build({
+# 	"enabled": False,
+# 	"methods": ["GET", "POST"],
+# 	"endpoints": ["/x/pay/one_time"]
+# })
+@Page.build()
 def x_pay_one_time(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":

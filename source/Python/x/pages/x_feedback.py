@@ -4,11 +4,12 @@ from Python.x.modules.Page import Page
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.response import response
 
-@Page.build({
-	"enabled": False,
-	"methods": ["GET", "POST"],
-	"endpoints": ["/x/feedback"]
-})
+# @Page.build({
+# 	"enabled": False,
+# 	"methods": ["GET", "POST"],
+# 	"endpoints": ["/x/feedback"]
+# })
+@Page.build()
 def x_feedback(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":

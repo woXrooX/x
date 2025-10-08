@@ -3,12 +3,13 @@ from Python.x.modules.response import response
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.User import User
 
-@Page.build({
-	"enabled": False,
-	"roles": ["root"],
-	"methods": ["GET", "POST"],
-	"endpoints": ["/x/users"]
-})
+# @Page.build({
+# 	"enabled": False,
+# 	"roles": ["root"],
+# 	"methods": ["GET", "POST"],
+# 	"endpoints": ["/x/users"]
+# })
+@Page.build()
 def x_users(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":

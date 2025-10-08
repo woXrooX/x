@@ -4,12 +4,13 @@ from Python.x.modules.Page import Page
 from Python.x.modules.response import response
 from Python.x.modules.Logger import Log
 
-@Page.build({
-	"enabled": False,
-	"authenticity_statuses": ["unauthorized", "authorized"],
-	"methods": ["POST"],
-	"endpoints": ["/log_out_instant"]
-})
+# @Page.build({
+# 	"enabled": False,
+# 	"authenticity_statuses": ["unauthorized", "authorized"],
+# 	"methods": ["POST"],
+# 	"endpoints": ["/log_out_instant"]
+# })
+@Page.build()
 def log_out_instant(request):
 	if request.method != "POST": return response(type="error", message="invalid_request")
 
