@@ -7,7 +7,12 @@ from Python.x.modules.MySQL import MySQL
 from Python.x.modules.User import User
 from Python.x.modules.SendGrid import SendGrid
 
-@Page.build()
+@Page.build({
+	"enabled": False,
+	"roles": ["root"],
+	"methods": ["GET", "POST"],
+	"endpoints": ["/x/actions"]
+})
 def x_actions(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":

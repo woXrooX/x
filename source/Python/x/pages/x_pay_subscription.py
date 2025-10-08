@@ -11,7 +11,11 @@ from Python.x.modules.Globals import Globals
 from Python.x.modules.Stripe.Payment import Payment
 from Python.x.modules.Stripe.Product import Product
 
-@Page.build()
+@Page.build({
+	"enabled": False,
+	"methods": ["GET", "POST"],
+	"endpoints": ["/x/pay/subscription/<subscription_name>"]
+})
 def x_pay_subscription(request, subscription_name):
 	if subscription_name not in Product.subscription_products: return response(type="error", message="invalid_request")
 

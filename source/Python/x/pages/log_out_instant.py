@@ -4,8 +4,12 @@ from Python.x.modules.Page import Page
 from Python.x.modules.response import response
 from Python.x.modules.Logger import Log
 
-# Allow only POST methods
-@Page.build()
+@Page.build({
+	"enabled": False,
+	"authenticity_statuses": ["unauthorized", "authorized"],
+	"methods": ["POST"],
+	"endpoints": ["/log_out_instant"]
+})
 def log_out_instant(request):
 	if request.method != "POST": return response(type="error", message="invalid_request")
 

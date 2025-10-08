@@ -5,7 +5,12 @@ from Python.x.modules.response import response
 from Python.x.modules.MySQL import MySQL
 import time
 
-@Page.build()
+@Page.build({
+	"enabled": False,
+	"authenticity_statuses": ["unauthorized", "authorized"],
+	"methods": ["GET", "POST"],
+	"endpoints": ["/x/notifications"]
+})
 def x_notifications(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":

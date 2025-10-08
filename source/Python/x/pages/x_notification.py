@@ -4,8 +4,13 @@ from Python.x.modules.Page import Page
 from Python.x.modules.response import response
 from Python.x.modules.MySQL import MySQL
 
-@Page.build()
-def x_notification(request, ID):
+@Page.build({
+	"enabled": False,
+	"authenticity_statuses": ["unauthorized", "authorized"],
+	"methods": ["GET", "POST"],
+	"endpoints": ["/x/notification/<id>"]
+})
+def x_notification(request, id):
 	if request.method == "POST":
 		if request.content_type == "application/json":
 			if request.get_json()["for"] == "get_notification":
@@ -20,12 +25,12 @@ def x_notification(request, ID):
 						LEFT JOIN notification_types ON notification_types.id = notifications.type
 						WHERE notifications.id = %s AND notifications.flag_deleted IS NULL AND notifications.recipient = %s LIMIT 1;
 					""",
-					params=[ID, session['user']['id']],
+					params=[id, session['user']['id']],
 					fetch_one=True
 				)
 				if data is False: return response(type="error", message="database_error")
 
-				if data is not None: MySQL.execute("UPDATE notifications SET seen=1 WHERE id = %s AND notifications.flag_deleted IS NULL LIMIT 1;", [ID], commit=True)
+				if data is not None: MySQL.execute("UPDATE notifications SET seen=1 WHERE id = %s AND notifications.flag_deleted IS NULL LIMIT 1;", [id], commit=True)
 
 				return response(type="success", message="success", data=data, default_serializer_func=str)
 
@@ -34,7 +39,7 @@ def x_notification(request, ID):
 					sql="UPDATE notifications SET flag_deleted = NOW(), flag_deleted_by_user = %s WHERE id = %s AND recipient=%s LIMIT 1;",
 					params=[
 						session["user"]["id"],
-						ID,
+						id,
 						session["user"]["id"]
 					],
 					commit=True

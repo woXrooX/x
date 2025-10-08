@@ -3,7 +3,12 @@ from Python.x.modules.response import response
 from Python.x.modules.Globals import Globals
 from Python.x.modules.MySQL import MySQL
 
-@Page.build()
+@Page.build({
+	"enabled": False,
+	"roles": ["root"],
+	"methods": ["GET", "POST"],
+	"endpoints": ["/x/log_in_records"]
+})
 def x_log_in_records(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":
