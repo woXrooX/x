@@ -19,9 +19,12 @@ if __name__ != "__main__":
 
 	class Page():
 		@staticmethod
-		def build():
+		def build(configuration = False):
 			def decorator(func):
 				page_name = func.__name__
+
+				Page.configure(page_name, configuration)
+
 				@wraps(func)
 				def wrapper(*args, **kwargs):
 					guard_result = Page.guard(page_name)
@@ -126,3 +129,10 @@ if __name__ != "__main__":
 					return response(type="error", message="400", redirect=f"/log_in?redirect={quote(request.path, safe='')}")
 
 			return True
+
+		@staticmethod
+		def configure(page_name, configuration):
+			if page_name in Globals.CONF["pages"]: return
+			if not isinstance(configuration, dict): return
+
+			Globals.CONF["pages"][page_name] = configuration
