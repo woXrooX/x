@@ -28,19 +28,21 @@ export default class Router {
 			return;
 		}
 
+		Router.#reset_current_route();
+
 		// NOTE: We have much efficient way of detecting "if page exists" if we give up on endpoints system
 		loop_pages: for (const page in window.CONF["pages"]) {
 			if (Router.guard(page) === false) continue;
 
-			let pathname = window.location.pathname;
+			const pathname = window.location.pathname;
 
 			loop_endpoints: for (const endpoint of window.CONF["pages"][page]["endpoints"]) {
-				const params = Router.#match_endpoint(endpoint, pathname);
+				const URL_args = Router.#match_endpoint(endpoint, pathname);
 
-				if (params) {
+				if (URL_args) {
 					Router.current_route.name = page;
 					Router.current_route.endpoint = endpoint;
-					Router.current_route.URL_args = params;
+					Router.current_route.URL_args = URL_args;
 					Router.current_route.full_URL = window.location.href;
 
 					break loop_pages;
@@ -165,6 +167,15 @@ export default class Router {
 		}
 	}
 
+	static #reset_current_route() {
+		Router.current_route = {
+			"name": null,
+			"endpoint": null,
+			"full_URL": null,
+			"URL_args": {}
+		}
+	}
+
 	// Convert "/path1/<arg1>/path2/<arg2>" to ^/path1/(?<arg1>[^/]+)/path2/(?<arg2>[^/]+)/?$ and cache it
 	static #endpoint_to_RegEx(pattern) {
 		// Return cached compiled RegEx if available
@@ -209,12 +220,16 @@ export default class Router {
 	static #match_endpoint(pattern, pathname) {
 		const RegEx = Router.#endpoint_to_RegEx(pattern);
 		const match = RegEx.exec(pathname);
+
 		if (!match) return null;
 
 		const groups = match.groups || {};
-		const params = {};
-		for (const [k, v] of Object.entries(groups)) params[k] = decodeURIComponent(v);
-		return params;
+
+		const URL_args = {};
+
+		for (const [key, value] of Object.entries(groups)) URL_args[key] = decodeURIComponent(value);
+
+		return URL_args;
 	}
 }
 
