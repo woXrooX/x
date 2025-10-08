@@ -97,7 +97,7 @@ export default class Core{
 
 		Language.init();
 		x.Color_Mode.init();
-		Menu.init();
+		x.Menu.init();
 		Header.init();
 		Footer.init();
 		x.Router.handle();
@@ -119,7 +119,7 @@ export default class Core{
 			Log.info("on_load");
 
 			x.Router.handle();
-			Menu.set_active();
+			x.Menu.set_active();
 		});
 	}
 

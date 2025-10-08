@@ -6,7 +6,7 @@ export default class DOM{
 			switch(target){
 				case "menu":
 					Log.info(`DOM.update() - target: ${target}`);
-					Menu.build();
+					window.x.Menu.build();
 					break;
 
 				case "header":
@@ -24,7 +24,7 @@ export default class DOM{
 
 				case "all":
 					Log.info(`DOM.update() - target: ${target}`);
-					Menu.build();
+					window.x.Menu.build();
 					window.x.Page.life_cycle();
 					break;
 

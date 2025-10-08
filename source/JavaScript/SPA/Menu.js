@@ -1,4 +1,6 @@
-export default class Menu{
+export default class Menu {
+	/////////////////////////// Static
+
 	static selector = "body > menu";
 	static #selector_menu_hyperlinks = `${Menu.selector} > main a`;
 
@@ -90,20 +92,6 @@ export default class Menu{
 			if (matched_endpoints.includes(hyperlink.getAttribute("href"))) hyperlink.parentElement.setAttribute("active", "");
 		}
 	}
-
-	// static set_active() {
-	// 	// Hyperlinks
-	// 	const hyperlinks = document.querySelectorAll(Menu.#selector_menu_hyperlinks);
-
-	// 	// loop Through All The Hyperlinks Of Parent Menu
-	// 	for (const hyperlink of hyperlinks) {
-	// 		// De-Activate All
-	// 		hyperlink.parentElement.removeAttribute("active");
-
-	// 		// Activate section.parentMenu if href matches
-	// 		if (hyperlink.getAttribute("href") == window.location.pathname) hyperlink.parentElement.setAttribute("active", "");
-	// 	}
-	// }
 
 	/////////// Helpers
 	static #recursive_builder(menus) {
@@ -263,4 +251,4 @@ export default class Menu{
 	}
 }
 
-window.Menu = Menu;
+window.x["Menu"] = Menu;

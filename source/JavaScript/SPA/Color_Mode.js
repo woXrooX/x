@@ -49,7 +49,7 @@ export default class Color_Mode{
 	static init(){
 		Log.info("CSS.init()");
 
-		Color_Mode.color_mode_switcher_icon = document.querySelector(`${Menu.selector} > header > x-svg[for=color_mode_switcher]`);
+		Color_Mode.color_mode_switcher_icon = document.querySelector(`${window.x.Menu.selector} > header > x-svg[for=color_mode_switcher]`);
 
 		Color_Mode.detect_color_mode();
 		Color_Mode.#on_color_mode_change();

@@ -24,7 +24,7 @@ export default class URL{
 
 		if(window.location.pathname != URL.previous_location.pathname){
 			window.x.Router.handle();
-			Menu.set_active();
+			window.x.Menu.set_active();
 		}
 
 		if(window.location.href !== URL.previous_location.href) URL.previous_location = structuredClone(URL.current_location);
