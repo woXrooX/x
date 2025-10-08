@@ -10,7 +10,7 @@ export default async function bridge(data=null, url=null, contentType=null, meth
 
 	const completed_url = new URL(url, window.location.origin);
 
-	window.Log.info(`bridge request to: ${completed_url.href}`);
+	// window.Log.info(`bridge request to: ${completed_url.href}`);
 
 	try{
 		const response = await fetch(completed_url, {

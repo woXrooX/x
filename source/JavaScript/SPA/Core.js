@@ -57,7 +57,7 @@ export default class Core{
 		Core.#get_initial_data()
 			.then(async ()=>{
 				await Core.#init();
-				Core.#on_load();
+				// Core.#on_load();
 				Core.#on_URL_change();
 				Core.#on_hash_change();
 				Core.#on_history_button_clicked();
@@ -101,6 +101,7 @@ export default class Core{
 		Header.init();
 		Footer.init();
 		x.Router.handle();
+		x.Menu.set_active();
 
 		await x.User.init_set_last_heartbeat_at();
 		await x.Notification.init();
@@ -117,9 +118,6 @@ export default class Core{
 
 			// window.dispatchEvent(new Event('load'));
 			Log.info("on_load");
-
-			x.Router.handle();
-			x.Menu.set_active();
 		});
 	}
 
