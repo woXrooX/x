@@ -28,9 +28,6 @@ export default class Router {
 			return;
 		}
 
-		Router.#reset_current_route();
-
-		// NOTE: We have much efficient way of detecting "if page exists" if we give up on endpoints system
 		loop_pages: for (const page in window.CONF["pages"]) {
 			if (Router.guard(page) === false) continue;
 
@@ -40,20 +37,25 @@ export default class Router {
 				const URL_args = Router.#match_endpoint(endpoint, pathname);
 
 				if (URL_args) {
+					if (
+						Router.current_route.name == page &&
+						Object.keys(Router.current_route.URL_args).length === 0
+					) return;
+
 					Router.current_route.name = page;
 					Router.current_route.endpoint = endpoint;
 					Router.current_route.URL_args = URL_args;
 					Router.current_route.full_URL = window.location.href;
 
-					break loop_pages;
+					Router.#load_page_file();
+					return;
 				}
 			}
 		}
 
-		// If still no endpoint matched then set it to "404"
-		if (Router.current_route.name === null) Router.current_route.name = "404";
-
-		// Load page file
+		// If no match, reset the "current_route" and load the "404" page
+		Router.#reset_current_route();
+		Router.current_route.name = "404";
 		Router.#load_page_file();
 	}
 
@@ -126,7 +128,7 @@ export default class Router {
 	/////////// Helpers
 
 	static async #load_page_file() {
-		window.Log.info(`Page file is loading: ${Router.current_route.name}.js`);
+		window.Log.info(`load_page_file(): ${Router.current_route.name}.js`);
 
 		try{
 			if (window.x.Page.current_page !== null && !!window.x.Page.current_page.on_page_unmount === true) await window.x.Page.current_page.on_page_unmount();
