@@ -1,85 +1,145 @@
-export default class Router{
-	static current_page = {
+// NOTE: Static (literal) URLs (e.g. "/page/test") can be swallowed by dynamic ones ("/page/<arg>").
+
+export default class Router {
+	/////////////////////////// Static
+
+	static #endpoint_Regex_cache = new Map();
+
+	static current_route = {
 		"name": null,
 		"endpoint": null,
 		"full_URL": null,
 		"URL_args": {}
 	}
 
-	static async handle(){
+	/////////// APIs
+
+	static async handle() {
+		console.log(1212);
+
 		// Check if app is down if so stop handling and set app_is_down as a current page
-		if("app_is_down" in window.CONF["tools"]){
-			Router.current_page.name = "app_is_down";
+		if ("app_is_down" in window.CONF["tools"]) {
+			Router.current_route.name = "app_is_down";
 			Router.#load_page_file();
 			return;
 		}
 
 		// Check the "window.location.pathname" for the error URLs
-		if(Router.error_handlers() === true){
+		if (Router.error_handlers() === true) {
 			Router.#load_page_file();
 			return;
 		}
 
 		// NOTE: We have much efficient way of detecting "if page exists" if we give up on endpoints system
-		loop_pages: for(const page in window.CONF["pages"]){
-			if(Router.guard(page) === false) continue;
+		loop_pages: for (const page in window.CONF["pages"]) {
+			if (Router.guard(page) === false) continue;
 
-			// Window Path Name
 			let pathname = window.location.pathname;
 
-			if("URL_args" in window.CONF.pages[page]){
-				//// NOTE: Order matters in this scope
+			loop_endpoints: for (const endpoint of window.CONF["pages"][page]["endpoints"]) {
+				const params = Router.#match_endpoint(endpoint, pathname);
 
-				// Create array of URL arguments from the "pathname"
-				const args = pathname.split('/').splice(-window.CONF.pages[page].URL_args.length);
-
-				// Assign key value pairs of URL arguments inside "Router.current_page.URL_args"
-				for(let index = 0; index < args.length; index++) Router.current_page.URL_args[window.CONF.pages[page].URL_args[index]] = args[index];
-
-				// Extract URL arguments from the "pathname"
-				pathname = pathname.split('/').slice(0, -window.CONF.pages[page].URL_args.length).join('/');
-			}
-
-			loop_endpoints: for(const endpoint of window.CONF["pages"][page]["endpoints"])
-				// Check if page endpoint equals to currnt endpoint
-				if(endpoint == pathname){
-					//// Check if page is not the current loaded page
-					// TODO: We need to create a endpoints matching loop like in thr  Menu.set_active() in order to fix issues like "/" and "/home" are being rendered even the page is thesame
-					// NOTE: endpoint should be unique.
-					// Page a and page b can not have the same endpoint. It may seem working but there will be bugs. It will make return false the expression below in rare cases.
-					// If yes then exit this method
-					if(Router.current_page.full_URL === window.location.href) return;
-
-					Router.current_page.name = page;
-					Router.current_page.endpoint = endpoint;
-					Router.current_page.full_URL = window.location.href;
+				if (params) {
+					Router.current_route.name = page;
+					Router.current_route.endpoint = endpoint;
+					Router.current_route.URL_args = params;
+					Router.current_route.full_URL = window.location.href;
 
 					break loop_pages;
 				}
+			}
 		}
 
 		// If still no endpoint matched then set it to "404"
-		if(Router.current_page.name === null) Router.current_page.name = "404";
+		if (Router.current_route.name === null) Router.current_route.name = "404";
 
 		// Load page file
 		Router.#load_page_file();
 	}
 
-	static async #load_page_file(){
-		window.Log.info(`Page file is loading: ${Router.current_page.name}.js`);
+	static error_handlers() {
+		switch(window.location.pathname) {
+			case "/400":
+				Router.current_route.name = "400";
+				return true;
+
+			case "/403":
+				Router.current_route.name = "403";
+				return true;
+
+			case "/404":
+				Router.current_route.name = "404";
+				return true;
+
+			default: return false;
+		}
+	}
+
+	static guard(page) {
+		const PAGE_CONF = window.CONF["pages"][page]
+
+		if (PAGE_CONF["enabled"] === false) return false;
+
+		if ("user" in window.session) {
+			if (window.session["user"]["roles"].includes("root")) return true;
+
+			if ("authenticity_statuses" in PAGE_CONF) {
+				if (PAGE_CONF["authenticity_statuses"].includes("unauthenticated")) return false;
+				if (!PAGE_CONF["authenticity_statuses"].includes(session["user"]["authenticity_status"])) return false;
+			}
+
+			if ("roles" in PAGE_CONF) {
+				let result = false;
+				for (let i = 0; i < PAGE_CONF["roles"].length; i++) if (window.session["user"]["roles"].includes(PAGE_CONF["roles"][i])) result = true;
+				if (result === false) return false;
+			}
+
+			if ("roles_not" in PAGE_CONF) {
+				for (let role_not of PAGE_CONF["roles_not"]) if (window.session["user"]["roles"].includes(role_not)) return false;
+			}
+
+			if ("plans" in PAGE_CONF) {
+				let result = false;
+				for (let i = 0; i < PAGE_CONF["plans"].length; i++) if (window.session["user"]["plans"].includes(PAGE_CONF["plans"][i])) result = true;
+				if (result === false) return false;
+			}
+
+			return true;
+		}
+
+		if (!("user" in window.session)) {
+			if (
+				(
+					!("authenticity_statuses" in PAGE_CONF) ||
+					"authenticity_statuses" in PAGE_CONF &&
+					PAGE_CONF["authenticity_statuses"].includes("unauthenticated")
+				) &&
+				!("roles" in PAGE_CONF) &&
+				!("plans" in PAGE_CONF)
+			) return true;
+			else return false;
+		}
+
+		return true
+	}
+
+	/////////// Helpers
+
+	static async #load_page_file() {
+		window.Log.info(`Page file is loading: ${Router.current_route.name}.js`);
 
 		try{
-			if(window.x.Page.current_page !== null && !!window.x.Page.current_page.on_page_unmount === true) await window.x.Page.current_page.on_page_unmount();
+			if (window.x.Page.current_page !== null && !!window.x.Page.current_page.on_page_unmount === true) await window.x.Page.current_page.on_page_unmount();
 
 			// Start loading effects
 			window.Loading.start();
 			window.Main.animation_start();
 
 			// Load page file
-			await window.x.Page.load(Router.current_page.name);
+			await window.x.Page.load(Router.current_route.name);
 		}
 
-		catch(error){
+		catch(error) {
 			// Log.line();
 			// Log.error(error);
 			// Log.error(error.name);
@@ -89,7 +149,7 @@ export default class Router{
 
 			window.Header.handle();
 
-			if("CONF" in window && window.CONF.tools.debug === true){
+			if ("CONF" in window && window.CONF.tools.debug === true) {
 				window.Main.render(Main.situational_content("error", error.name, error.stack));
 				console.trace(error);
 			}
@@ -107,71 +167,57 @@ export default class Router{
 		}
 	}
 
-	static error_handlers(){
-		switch(window.location.pathname){
-			case "/400":
-				Router.current_page.name = "400";
-				return true;
+	// Convert "/path1/<arg1>/path2/<arg2>" to ^/path1/(?<arg1>[^/]+)/path2/(?<arg2>[^/]+)/?$ and cache it
+	static #endpoint_to_RegEx(pattern) {
+		// Return cached compiled RegEx if available
+		const cached = Router.#endpoint_Regex_cache.get(pattern);
+		if (cached) return cached;
 
-			case "/403":
-				Router.current_page.name = "403";
-				return true;
+		let src = "^";
+		for (let i = 0; i < pattern.length; ) {
+			const character = pattern[i];
 
-			case "/404":
-				Router.current_page.name = "404";
-				return true;
+			if (character === "<") {
+				const end = pattern.indexOf(">", i + 1);
 
-			default: return false;
+				// Unclosed param in endpoint
+				if (end === -1) return false;
+
+				const name = pattern.slice(i + 1, end).trim();
+
+				// Empty param name in endpoint
+				if (!name) return false;
+
+				// One path segment (no slashes)
+				src += `(?<${name}>[^/]+)`;
+				i = end + 1;
+			}
+
+			else {
+				// Escape regex specials in literal text
+				const specials = "\\.^$|?*+()[]{}";
+				src += specials.includes(character) ? `\\${character}` : character;
+				i++;
+			}
 		}
+
+		src += "/?$";
+
+		const RegEx = new RegExp(src);
+		Router.#endpoint_Regex_cache.set(pattern, RegEx);
+		return RegEx;
 	}
 
-	static guard(page){
-		const PAGE_CONF = window.CONF["pages"][page]
+	static #match_endpoint(pattern, pathname) {
+		const RegEx = Router.#endpoint_to_RegEx(pattern);
+		const match = RegEx.exec(pathname);
+		if (!match) return null;
 
-		if(PAGE_CONF["enabled"] === false) return false;
-
-		if("user" in window.session){
-			if(window.session["user"]["roles"].includes("root")) return true;
-
-			if("authenticity_statuses" in PAGE_CONF){
-				if(PAGE_CONF["authenticity_statuses"].includes("unauthenticated")) return false;
-				if(!PAGE_CONF["authenticity_statuses"].includes(session["user"]["authenticity_status"])) return false;
-			}
-
-			if("roles" in PAGE_CONF){
-				let result = false;
-				for(let i = 0; i < PAGE_CONF["roles"].length; i++) if(window.session["user"]["roles"].includes(PAGE_CONF["roles"][i])) result = true;
-				if(result === false) return false;
-			}
-
-			if("roles_not" in PAGE_CONF){
-				for(let role_not of PAGE_CONF["roles_not"]) if(window.session["user"]["roles"].includes(role_not)) return false;
-			}
-
-			if("plans" in PAGE_CONF){
-				let result = false;
-				for(let i = 0; i < PAGE_CONF["plans"].length; i++) if(window.session["user"]["plans"].includes(PAGE_CONF["plans"][i])) result = true;
-				if(result === false) return false;
-			}
-
-			return true;
-		}
-
-		if(!("user" in window.session)){
-			if(
-				(
-					!("authenticity_statuses" in PAGE_CONF) ||
-					"authenticity_statuses" in PAGE_CONF &&
-					PAGE_CONF["authenticity_statuses"].includes("unauthenticated")
-				) &&
-				!("roles" in PAGE_CONF) &&
-				!("plans" in PAGE_CONF)
-			) return true;
-			else return false;
-		}
-
-		return true
+		const groups = match.groups || {};
+		const params = {};
+		for (const [k, v] of Object.entries(groups)) params[k] = decodeURIComponent(v);
+		return params;
 	}
 }
 
-window.Router = Router;
+window.x["Router"] = Router;

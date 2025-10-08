@@ -100,7 +100,7 @@ export default class Core{
 		Menu.init();
 		Header.init();
 		Footer.init();
-		Router.handle();
+		x.Router.handle();
 
 		await x.User.init_set_last_heartbeat_at();
 		await x.Notification.init();
@@ -118,7 +118,7 @@ export default class Core{
 			// window.dispatchEvent(new Event('load'));
 			Log.info("on_load");
 
-			Router.handle();
+			x.Router.handle();
 			Menu.set_active();
 		});
 	}

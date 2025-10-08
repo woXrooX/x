@@ -5,7 +5,7 @@ export function before(){
 export default function main(){
 	return `
 		<container class="padding-5 max-width-600px">
-			<form action="/reset_password/${window.Router.current_page["URL_args"]["TOKEN"]}" for="reset_password" autocomplete="off" class="surface-v1 padding-5 gap-1" x-toast="on:any:message">
+			<form action="/reset_password/${window.x.Router.current_route["URL_args"]["TOKEN"]}" for="reset_password" autocomplete="off" class="surface-v1 padding-5 gap-1" x-toast="on:any:message">
 
 				<h2>Reset your password</h2>
 

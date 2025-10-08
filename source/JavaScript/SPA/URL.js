@@ -23,7 +23,7 @@ export default class URL{
 		URL.#update_current_URL();
 
 		if(window.location.pathname != URL.previous_location.pathname){
-			Router.handle();
+			window.x.Router.handle();
 			Menu.set_active();
 		}
 
