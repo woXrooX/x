@@ -29,14 +29,14 @@ export default class Footer{
 		// Check If "body > footer" Exists
 		if(!!Footer.#element === false) return;
 
-		Footer.#element.classList.add("display-none");
+		Footer.#element.classList.add("display-none-important");
 	}
 
 	static #show(){
 		// Check If "body > footer" Exists
 		if(!!Footer.#element === false) return;
 
-		Footer.#element.classList.remove("display-none");
+		Footer.#element.classList.remove("display-none-important");
 	}
 
 	static #build(content){
