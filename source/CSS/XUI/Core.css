@@ -2286,6 +2286,7 @@
 	@layer display{
 		/* none */
 		.display-none{display: none;}
+		.display-none-important{display: none !important;}
 
 		/* block */
 		.display-block{display: block;}
