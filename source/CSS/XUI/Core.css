@@ -3231,6 +3231,8 @@
 
 		.overflow-x-hidden{ overflow-x: hidden; }
 		.overflow-x-scroll{ overflow-x: scroll; }
+
+		.overscroll-behavior-contain { overscroll-behavior: contain; }
 	}
 
 	@layer hr {
