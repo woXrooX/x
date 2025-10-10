@@ -1,5 +1,5 @@
 {
-	"version": "0.226.0.0012",
+	"version": "0.226.0.0013",
 	"project_name": "x",
 
 	"flask": {
@@ -84,10 +84,7 @@
 	"menu": {
 		"enabled": true,
 		"menus": [
-			{"page": "home", "icon": "home"},
-			{"page": "sign_up"},
-			{"page": "log_in"},
-			{"page": "log_out"}
+			{"page": "home", "icon": "home"}
 		]
 	},
 
