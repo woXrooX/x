@@ -18,8 +18,8 @@ def x_users(request):
 					sql="""
 						SELECT
 							users.id,
-							users.firstname,
-							users.lastname,
+							users.first_name,
+							users.last_name,
 							users.eMail,
 							GROUP_CONCAT(DISTINCT user_roles.name ORDER BY user_roles.name ASC SEPARATOR ', ') AS roles_list,
 							users.last_heartbeat_at,

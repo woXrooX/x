@@ -24,7 +24,7 @@ if __name__ != "__main__":
 			#### Session user data
 			if "user" not in session: return False
 			fullname = None
-			if session["user"]["firstname"] and session["user"]["lastname"]: fullname = f'{session["user"]["firstname"]} {session["user"]["lastname"]}'
+			if session["user"]["first_name"] and session["user"]["last_name"]: fullname = f'{session["user"]["first_name"]} {session["user"]["last_name"]}'
 
 			try:
 				existing_customer = Customer.get_customer_id_by_user_id(session["user"]["id"])

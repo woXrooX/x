@@ -144,8 +144,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 	`phone_number_verification_code` INT NULL,
 	`phone_number_verification_attempt` INT NOT NULL DEFAULT 0,
 
-	`firstname` VARCHAR(100),
-	`lastname` VARCHAR(100),
+	`first_name` VARCHAR(100),
+	`last_name` VARCHAR(100),
 	`birth_date` DATE NULL,
 
 	-- 0 = Male

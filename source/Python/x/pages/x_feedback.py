@@ -17,7 +17,7 @@ def x_feedback(request):
 				data = MySQL.execute("""
 					SELECT
 						feedback.*,
-						CONCAT(users.firstname, ' ', users.lastname) AS users_fullname,
+						CONCAT(users.first_name, ' ', users.last_name) AS users_fullname,
 						users.eMail AS users_eMail
 					FROM feedback
 					LEFT JOIN users ON users.id = feedback.created_by_user
