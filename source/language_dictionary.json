@@ -149,7 +149,7 @@
 		"ru": "Ошибка",
 		"uz": "Xato"
 	},
-	"firstname": {
+	"first_name": {
 		"en": "First name",
 		"ru": "Имя",
 		"uz": "Ism"
@@ -239,7 +239,7 @@
 		"ru": "Неправильное использование метода: 'bridge()'",
 		"uz": "Funktsiyadan noto`g`ri foydalanildi: 'bridge()'"
 	},
-	"lastname": {
+	"last_name": {
 		"en": "Last name",
 		"ru": "Фамилия",
 		"uz": "Familiya"
