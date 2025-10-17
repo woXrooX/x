@@ -1,12 +1,10 @@
 import { timestamp_to_human_readable_v2 } from "/JavaScript/modules/datetime/datetime.js";
 
-export function before(){
-	window.x.Head.set_title("notifications");
-}
+export function before() { window.x.Head.set_title("notifications"); }
 
-export default function main(){ return `<container class="padding-5 gap-0-5 max-width-1200px"></container>`; }
+export default function main() { return `<container class="padding-5 gap-0-5 max-width-1200px"></container>`; }
 
-export async function after(){
+export async function after() {
 	const container = document.querySelector("container");
 
 	Loading.on_element_start(container);
@@ -16,7 +14,7 @@ export async function after(){
 	`);
 	Loading.on_element_end(container);
 
-	function build_actions_row_HTML(){
+	function build_actions_row_HTML() {
 		return `
 			<row class="flex-row flex-x-end gap-0-5 padding-2">
 				${build_delete_all_button_HTML()}
@@ -24,7 +22,7 @@ export async function after(){
 			</row>
 		`;
 
-		function build_delete_all_button_HTML(){
+		function build_delete_all_button_HTML() {
 			return `
 				<x-svg id="modal_delete_all_notifications" name="delete" class="btn btn-error" color="white"></x-svg>
 				<x-modal trigger_selector="x-svg#modal_delete_all_notifications">
@@ -46,7 +44,7 @@ export async function after(){
 			`;
 		}
 
-		function build_anchor_notificatons_settings_HTML(){
+		function build_anchor_notificatons_settings_HTML() {
 			if (!("x_notifications_settings" in window.CONF["pages"])) return '';
 
 			return `<a href="/x/notifications/settings" class="btn btn-primary"><x-svg name="gear" color="white"></x-svg></a>`;
@@ -67,10 +65,7 @@ export async function after(){
 		function build_notification_HTML(notification) {
 			let content_JSON = {};
 
-			try{
-				content_JSON = JSON.parse(notification["content_JSON"]);
-				if("timestamp" in content_JSON) content_JSON["timestamp"] = new Date(content_JSON["timestamp"]).toLocaleDateString('en-GB');
-			}
+			try { content_JSON = JSON.parse(notification["content_JSON"]); }
 			catch(error){}
 
 			return `

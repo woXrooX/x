@@ -66,6 +66,5 @@ export async function after() {
 				</column>
 			</row>
 		`;
-
 	}
 }
