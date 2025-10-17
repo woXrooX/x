@@ -1,3 +1,5 @@
+import { timestamp_to_human_readable_v2 } from "/JavaScript/modules/datetime/datetime.js";
+
 export function before(){
 	window.x.Head.set_title("notifications");
 }
@@ -13,32 +15,6 @@ export async function after(){
 		${await build_notifications_HTML()}
 	`);
 	Loading.on_element_end(container);
-
-	async function build_notifications_HTML(){
-		let notifications = await window.bridge({for: "get_all_notifications"});
-		if("data" in notifications) notifications = notifications["data"];
-		else return `<p class="surface-info width-100 padding-2">${Lang.use("no_notifications")}</p>`;
-
-		let Notifications_module;
-
-		try{
-			Notifications_module = await import("/JavaScript/modules/Notifications.js");
-		}catch(error){
-			// Log.line();
-			// Log.error(error);
-			// Log.error(error.name);
-			// Log.error(error.stack);
-			// Log.line();
-
-			return `<p class="width-100 text-size-0-8 surface-error padding-1">${Lang.use("unknown_error")}</p>`;
-		}
-
-		let HTML = '';
-
-		for(const notification of notifications) HTML += await Notifications_module.notification_s_card_generator(notification);
-
-		return HTML;
-	}
 
 	function build_actions_row_HTML(){
 		return `
@@ -71,9 +47,50 @@ export async function after(){
 		}
 
 		function build_anchor_notificatons_settings_HTML(){
-			if(!("x_notifications_settings" in window.CONF["pages"])) return '';
+			if (!("x_notifications_settings" in window.CONF["pages"])) return '';
 
 			return `<a href="/x/notifications/settings" class="btn btn-primary"><x-svg name="gear" color="white"></x-svg></a>`;
+		}
+	}
+
+	async function build_notifications_HTML(){
+		let notifications = await window.bridge({for: "get_all_notifications"});
+		if("data" in notifications) notifications = notifications["data"];
+		else return `<p class="surface-info width-100 padding-2">${Lang.use("no_notifications")}</p>`;
+
+		let HTML = '';
+
+		for (const notification of notifications) HTML += build_notification_HTML(notification);
+
+		return HTML;
+
+		function build_notification_HTML(notification) {
+			let content_JSON = {};
+
+			try{
+				content_JSON = JSON.parse(notification["content_JSON"]);
+				if("timestamp" in content_JSON) content_JSON["timestamp"] = new Date(content_JSON["timestamp"]).toLocaleDateString('en-GB');
+			}
+			catch(error){}
+
+			return `
+				<a
+					href="/x/notification/${notification["id"]}"
+					class="
+						min-height-50px width-100 padding-1 padding-x-2 display-flex flex-row flex-x-between gap-0-5
+						${notification["type"] != null ? `surface-${notification["type"]}` : "bg-2 box-shadow-v0"}
+						${notification["seen"] == 1 ? "filter_grayscale_90" : ''}
+					"
+				>
+					<p class="width-100 text-size-0-8">${Lang.use(notification["event"]+"_in_app_s").x_format({
+						"recipient": notification["recipient"],
+						"sender": notification["sender"],
+						"content_TEXT": notification["content_TEXT"],
+						...content_JSON
+					})}</p>
+					<p class="width-auto text-size-0-6 text-color-secondary white-space-nowrap-important">${timestamp_to_human_readable_v2(notification["timestamp"])}</p>
+				</a>
+			`;
 		}
 	}
 }
