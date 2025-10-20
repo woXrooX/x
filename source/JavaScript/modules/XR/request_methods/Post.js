@@ -85,7 +85,7 @@ export default class Post {
 			if ("value" in element) return element.value;
 			if (element.hasAttribute("value")) return element.getAttribute("value");
 
-			return '';
+			return element.innerText;
 		}
 	}
 
