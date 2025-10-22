@@ -1521,8 +1521,13 @@
 			100% { background-position: 0% 50%; }
 		}
 
-
-		@layer Hover{
+		/*
+			NOTE:
+			Cascade layer ordering issue.
+			Hover classes won't be applied when we have bg class applied.
+			So layer has been removed
+		*/
+		/* @layer Hover{ */
 			.on-hover-bg-brand { &:hover { background-color: var(--color-main); } }
 
 			.on-hover-bg-1 { &:hover { background-color: var(--color-main-tint-1); } }
@@ -1535,7 +1540,7 @@
 			.on-hover-bg-8 { &:hover { background-color: var(--color-main-tint-8); } }
 			.on-hover-bg-9 { &:hover { background-color: var(--color-main-tint-9); } }
 			.on-hover-bg-10 { &:hover { background-color: var(--color-main-tint-10); } }
-		}
+		/* } */
 	}
 
 	@layer image{
