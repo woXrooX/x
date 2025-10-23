@@ -38,8 +38,18 @@ export default class DOM{
 		if (!parent_element) return Log.error(`DOM.build(): Parent element does not exist: ${parent_selector}`);
 
 		Loading.on_element_start(parent_element);
-		parent_element.innerHTML = await callback(...args);
-		Loading.on_element_end(parent_element);
+
+		try {
+			parent_element.innerHTML = await callback(...args);
+		}
+
+		catch (error) {
+			Log.error(`DOM.build(): ${error}`);
+		}
+
+		finally {
+			Loading.on_element_end(parent_element);
+		}
 	}
 }
 
