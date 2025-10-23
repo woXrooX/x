@@ -9,8 +9,8 @@ from Python.x.modules.SendGrid import SendGrid
 
 # @Page.build({
 # 	"enabled": False,
-# 	"roles": ["root"],
 # 	"methods": ["GET", "POST"],
+# 	"roles": ["root"],
 # 	"endpoints": ["/x/actions"]
 # })
 @Page.build()

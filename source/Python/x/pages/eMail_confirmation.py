@@ -10,8 +10,8 @@ from Python.x.modules.MySQL import MySQL
 
 # @Page.build({
 # 	"enabled": False,
-# 	"authenticity_statuses": ["unauthorized"],
 # 	"methods": ["GET", "POST"],
+# 	"authenticity_statuses": ["unauthorized"],
 # 	"endpoints": ["/eMail_confirmation"]
 # })
 @Page.build()

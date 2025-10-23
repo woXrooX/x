@@ -6,8 +6,8 @@ from Python.x.modules.MySQL import MySQL
 
 # @Page.build({
 # 	"enabled": False,
-# 	"authenticity_statuses": ["unauthorized", "authorized"],
 # 	"methods": ["GET", "POST"],
+# 	"authenticity_statuses": ["unauthorized", "authorized"],
 # 	"endpoints": ["/x/notification/<id>"]
 # })
 @Page.build()

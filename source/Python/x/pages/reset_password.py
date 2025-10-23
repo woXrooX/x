@@ -9,8 +9,8 @@ from Python.x.modules.IP_address_tools import extract_IP_address_from_request
 
 # @Page.build({
 # 	"enabled": False,
-# 	"authenticity_statuses": ["unauthenticated"],
 # 	"methods": ["GET", "POST"],
+# 	"authenticity_statuses": ["unauthenticated"],
 # 	"endpoints": ["/reset_password/<TOKEN>"]
 # })
 @Page.build()

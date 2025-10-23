@@ -9,8 +9,8 @@ from Python.x.modules.Globals import Globals
 
 # @Page.build({
 # 	"enabled": False,
-# 	"roles": ["root"],
 # 	"methods": ["GET", "POST"],
+# 	"roles": ["root"],
 # 	"endpoints": ["/x/user/<id>"]
 # })
 @Page.build()

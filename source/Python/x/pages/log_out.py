@@ -7,8 +7,8 @@ from Python.x.modules.Logger import Log
 
 # @Page.build({
 # 	"enabled": False,
-# 	"authenticity_statuses": ["unauthorized", "authorized"],
 # 	"methods": ["GET", "POST"],
+# 	"authenticity_statuses": ["unauthorized", "authorized"],
 # 	"endpoints": ["/log_out"]
 # })
 @Page.build()

@@ -13,8 +13,8 @@ from Python.x.modules.Logger import Log
 
 # @Page.build({
 # 	"enabled": False,
-# 	"authenticity_statuses": ["unauthenticated"],
 # 	"methods": ["GET", "POST"],
+# 	"authenticity_statuses": ["unauthenticated"],
 # 	"endpoints": ["/sign_up"]
 # })
 @Page.build()

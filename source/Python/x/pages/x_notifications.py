@@ -7,8 +7,8 @@ import time
 
 # @Page.build({
 # 	"enabled": False,
-# 	"authenticity_statuses": ["unauthorized", "authorized"],
 # 	"methods": ["GET", "POST"],
+# 	"authenticity_statuses": ["unauthorized", "authorized"],
 # 	"endpoints": ["/x/notifications"]
 # })
 @Page.build()

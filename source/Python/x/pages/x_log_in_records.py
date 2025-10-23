@@ -5,8 +5,8 @@ from Python.x.modules.MySQL import MySQL
 
 # @Page.build({
 # 	"enabled": False,
-# 	"roles": ["root"],
 # 	"methods": ["GET", "POST"],
+# 	"roles": ["root"],
 # 	"endpoints": ["/x/log_in_records"]
 # })
 @Page.build()

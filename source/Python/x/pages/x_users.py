@@ -5,8 +5,8 @@ from Python.x.modules.User import User
 
 # @Page.build({
 # 	"enabled": False,
-# 	"roles": ["root"],
 # 	"methods": ["GET", "POST"],
+# 	"roles": ["root"],
 # 	"endpoints": ["/x/users"]
 # })
 @Page.build()

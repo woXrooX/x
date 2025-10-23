@@ -11,9 +11,9 @@ from Python.x.modules.Logger import Log
 
 # @Page.build({
 # 	"enabled": False,
+# 	"endpoints": ["/log_in"],
 # 	"authenticity_statuses": ["unauthenticated"],
-# 	"methods": ["GET", "POST"],
-# 	"endpoints": ["/log_in"]
+# 	"methods": ["GET", "POST"]
 # })
 @Page.build()
 def log_in(request):

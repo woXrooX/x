@@ -7,9 +7,9 @@ from Python.x.modules.Globals import Globals
 
 # @Page.build({
 # 	"enabled": False,
+# 	"methods": ["GET", "POST"],
 # 	"authenticity_statuses": ["unauthorized", "authorized"],
-# 	"endpoints": ["/x/notifications/settings"],
-# 	"methods": ["GET", "POST"]
+# 	"endpoints": ["/x/notifications/settings"]
 # })
 @Page.build()
 def x_notifications_settings(request):
