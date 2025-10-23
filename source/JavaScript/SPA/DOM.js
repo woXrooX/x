@@ -32,6 +32,15 @@ export default class DOM{
 					Log.warning(`DOM.update() - Unknown Target For Dom Change: ${target}`);
 			}
 	}
+
+	static async build(parent_selector, callback, ...args) {
+		const parent_element = document.querySelector(parent_selector);
+		if (!parent_element) return Log.error(`DOM.build(): Parent element does not exist: ${parent_selector}`);
+
+		Loading.on_element_start(parent_element);
+		parent_element.innerHTML = await callback(...args);
+		Loading.on_element_end(parent_element);
+	}
 }
 
 window.DOM = DOM;
