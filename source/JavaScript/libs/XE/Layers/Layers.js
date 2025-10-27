@@ -196,11 +196,11 @@ export default class Layers{
 		func_name,
 		layer_data,
 		layer_main_element,
-		id
+		layer_id
 	){
 		if (!!func_name === false) return;
 		if (!(func_name in Layers.#FUNC_POOL)) return console.error(`Layers.#execute_on_add(): Invalid func_name: ${func_name}`);
-		await Layers.#FUNC_POOL[func_name](layer_data, layer_main_element, id);
+		await Layers.#FUNC_POOL[func_name](layer_data, layer_main_element, layer_id);
 	}
 };
 
