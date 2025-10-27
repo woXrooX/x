@@ -33,14 +33,32 @@ export default class DOM{
 			}
 	}
 
-	static async build(parent_selector, callback, ...args) {
+	static async build(
+		parent_selector,
+		callback,
+		options = {
+			"method": "innerHTML",
+			// "method": "insertAdjacentHTML",
+
+			"position": '='
+			// "position": "+="
+			// "position": "afterbegin"
+			// "position": "beforeend"
+		},
+		...args
+	) {
 		const parent_element = document.querySelector(parent_selector);
 		if (!parent_element) return Log.error(`DOM.build(): Parent element does not exist: ${parent_selector}`);
 
 		Loading.on_element_start(parent_element);
 
 		try {
-			parent_element.innerHTML = await callback(...args);
+			if (options["method"] == "innerHTML") {
+				if (options["position"] == '=') parent_element.innerHTML = await callback(...args);
+				if (options["position"] == "+=") parent_element.innerHTML += await callback(...args);
+			}
+
+			else if (options["method"] == "insertAdjacentHTML") parent_element.insertAdjacentHTML(options["position"], await callback(...args));
 		}
 
 		catch (error) {
