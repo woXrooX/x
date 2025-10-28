@@ -63,6 +63,7 @@ export default class DOM{
 
 		catch (error) {
 			Log.error(`DOM.build(): ${error}`);
+			console.log(error);
 		}
 
 		finally {
