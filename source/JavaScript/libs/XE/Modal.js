@@ -60,6 +60,7 @@ export default class Modal extends HTMLElement{
 	static lock(){
 		Modal.#locked = true;
 		Modal.#element_close_button.classList.add("display-none");
+		Modal.element_main.style.paddingTop = "var(--padding)";
 
 		// Prevent reload
 		window.addEventListener("beforeunload", Modal.#function_prevent_unload);
@@ -68,6 +69,7 @@ export default class Modal extends HTMLElement{
 	static unlock(){
 		Modal.#locked = false;
 		Modal.#element_close_button.classList.remove("display-none");
+		Modal.element_main.style.removeProperty('padding-top');
 
 		// Remove reload restriction
 		window.removeEventListener("beforeunload", Modal.#function_prevent_unload);
