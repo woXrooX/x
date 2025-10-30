@@ -21,7 +21,7 @@ def x_actions(request):
 				users = MySQL.execute("SELECT id FROM users;")
 				if users is False: return response(type="error", message="database_error")
 
-				user_IDs = [user["id"] for user in users]
+				user_ids = [user["id"] for user in users]
 
 				# Delete non-existing user folders
 				for folder in os.scandir(f'{Globals.PROJECT_PATH}/Files/users/'):
@@ -32,14 +32,14 @@ def x_actions(request):
 					try: folder_name_int = int(folder.name)
 					except: continue
 
-					# If folder is in user_IDs skip
-					if folder_name_int in user_IDs: continue
+					# If folder is in user_ids skip
+					if folder_name_int in user_ids: continue
 
 					if User.delete_files(folder_name_int) is False: return response(type="warning", message=f"Could not delete folder: {folder_name_int}")
 
 				# Create user folders
-				for userID in user_IDs:
-					if User.init_folders(userID) is False: return response(type="warning", message=f"Could not create user folder: {userID}")
+				for user_id in user_ids:
+					if User.init_folders(user_id) is False: return response(type="warning", message=f"Could not create user folder: {user_id}")
 
 				return response(type="success", message="success")
 
