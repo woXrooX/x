@@ -54,15 +54,16 @@ export default class DOM{
 
 		try {
 			if (options["method"] == "innerHTML") {
-				if (options["position"] == '=') parent_element.innerHTML = await callback(...args);
-				if (options["position"] == "+=") parent_element.innerHTML += await callback(...args);
+				if (options["position"] == '=') parent_element.innerHTML = await callback(parent_element, ...args);
+				if (options["position"] == "+=") parent_element.innerHTML += await callback(parent_element, ...args);
 			}
 
-			else if (options["method"] == "insertAdjacentHTML") parent_element.insertAdjacentHTML(options["position"], await callback(...args));
+			else if (options["method"] == "insertAdjacentHTML") parent_element.insertAdjacentHTML(options["position"], await callback(parent_element, ...args));
 		}
 
 		catch (error) {
-			Log.error(`DOM.build(): ${error}`);
+			parent_element.innerHTML = `<p class="surface-error width-100 padding-2">${error}</p>`;
+			Log.error(`DOM.build(): ERROR`);
 			console.log(error);
 		}
 
