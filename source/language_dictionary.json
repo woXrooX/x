@@ -64,6 +64,11 @@
 		"ru": "Не удалось отправить код подтверждения по электронной почте!",
 		"uz": "Tasdiqlash kodini elektron pochtaga yuborib bo`lmadi!"
 	},
+	"copied": {
+		"en": "Copied",
+		"ru": "Скопировано",
+		"uz": "Nusxalandi"
+	},
 	"credits": {
 		"en": "Credits",
 		"ru": "Благодарности",

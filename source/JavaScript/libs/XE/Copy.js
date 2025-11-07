@@ -1,29 +1,18 @@
-// v0.1.1
-
-"use strict";
-
 export default class Copy extends HTMLElement{
-	static #template = document.createElement("template");
-
-	static {
-		Copy.#template.innerHTML = `
-			<copy></copy>
-		`;
-	}
-
 	constructor(){
 		super();
 
-		// Closed
 		this.shadow = this.attachShadow({mode: 'closed'});
 
-		Selector: {
-			if(this.hasAttribute("selector")) this.selector = this.getAttribute("selector");
-		}
+		if (!this.hasAttribute("selector")) return;
 
-		CSS: {
-			const style = document.createElement('style');
-			style.textContent = `
+		const target_element = document.querySelector(this.getAttribute("selector"));
+
+		if (!!target_element === false) return;
+
+		// Clone And Append Template
+		this.shadow.innerHTML = `
+			<style>
 				copy{
 					cursor: pointer;
 
@@ -39,59 +28,39 @@ export default class Copy extends HTMLElement{
 					background-size: contain;
 					background-repeat: no-repeat;
 					background-color: transparent;
-					background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 0 24 24' width='24px' fill='%23FFFFFF'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M19 2h-4.18C14.4.84 13.3 0 12 0S9.6.84 9.18 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 18H5V4h2v3h10V4h2v16z'/%3E%3C/svg%3E");
+					background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="%23e8eaed"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h167q11-35 43-57.5t70-22.5q40 0 71.5 22.5T594-840h166q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560h-80v80q0 17-11.5 28.5T640-640H320q-17 0-28.5-11.5T280-680v-80h-80v560Zm280-560q17 0 28.5-11.5T520-800q0-17-11.5-28.5T480-840q-17 0-28.5 11.5T440-800q0 17 11.5 28.5T480-760Z"/></svg>');
 				}
-			`;
+			</style>
+			<copy></copy>
+		`;
 
-			this.shadow.appendChild(style);
-		}
+		this.copy_element = this.shadow.querySelector("copy");
+		this.is_clicked = false;
 
-		// Clone And Append Template
-		this.shadow.appendChild(Copy.#template.content.cloneNode(true));
+		this.onclick = ()=>{
+			if (!!this.is_clicked === true) return;
 
-		ClickEvents: {
+			this.is_clicked = true;
 
-			this.copyElement = this.shadow.querySelector("copy");
-			this.isClicked = false;
+			window.x.Toast.new("success", "copied");
 
-			this.onclick = ()=>{
-				// Check If Selector Passed As Argument
-				if(!!this.selector === false) return;
+			// Copy value of the target element
+			navigator.clipboard.writeText(target_element.innerText);
 
-				// Select The Element
-				const element = document.querySelector(this.selector);
+			this.copy_element.setAttribute("disabled", '');
 
-				// Check If Corresponding Element To The Selector Exists
-				if(!!element === false) return;
+			// Copied icon
+			this.copy_element.style = `background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="%2300820a"><path d="m620-275 198-198q11-11 28-11t28 11q11 11 11 28t-11 28L648-191q-12 12-28 12t-28-12L478-305q-11-11-11-28t11-28q11-11 28-11t28 11l86 86ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h167q11-35 43-57.5t70-22.5q40 0 71.5 22.5T594-840h166q33 0 56.5 23.5T840-760v160q0 17-11.5 28.5T800-560q-17 0-28.5-11.5T760-600v-160h-80v80q0 17-11.5 28.5T640-640H320q-17 0-28.5-11.5T280-680v-80h-80v560h200q17 0 28.5 11.5T440-160q0 17-11.5 28.5T400-120H200Zm280-640q17 0 28.5-11.5T520-800q0-17-11.5-28.5T480-840q-17 0-28.5 11.5T440-800q0 17 11.5 28.5T480-760Z"/></svg>');`;
 
-				// Check If Already Clicked
-				if(!!this.isClicked === true) return;
+			setTimeout(()=>{
+				this.copy_element.removeAttribute("disabled");
 
-				// State: Clicked
-				this.isClicked = true;
+				// Copy icon
+				this.copy_element.style = `background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="%23e8eaed"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h167q11-35 43-57.5t70-22.5q40 0 71.5 22.5T594-840h166q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560h-80v80q0 17-11.5 28.5T640-640H320q-17 0-28.5-11.5T280-680v-80h-80v560Zm280-560q17 0 28.5-11.5T520-800q0-17-11.5-28.5T480-840q-17 0-28.5 11.5T440-800q0 17 11.5 28.5T480-760Z"/></svg>');`;
 
-				// Copy The Value
-				navigator.clipboard.writeText(element.innerText);
-
-				// Disable The Copy Button
-				this.copyElement.setAttribute("disabled", "");
-
-				// Change The Copy Icon To Done
-				this.copyElement.style = `background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' enable-background='new 0 0 24 24' height='24px' viewBox='0 0 24 24' width='24px' fill='%2300820a'%3E%3Cg%3E%3Crect fill='none' height='24' width='24'/%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Cpath d='M5,5h2v3h10V5h2v5h2V5c0-1.1-0.9-2-2-2h-4.18C14.4,1.84,13.3,1,12,1S9.6,1.84,9.18,3H5C3.9,3,3,3.9,3,5v14 c0,1.1,0.9,2,2,2h6v-2H5V5z M12,3c0.55,0,1,0.45,1,1s-0.45,1-1,1s-1-0.45-1-1S11.45,3,12,3z'/%3E%3Cpolygon points='21,11.5 15.51,17 12.5,14 11,15.5 15.51,20 22.5,13'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");`;
-
-				// Restore The Un-Clicked State
-				setTimeout(()=>{
-					// Enable The Copy Button
-					this.copyElement.removeAttribute("disabled");
-
-					// Back To Copy Icon
-					this.copyElement.style = `background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 0 24 24' width='24px' fill='%23FFFFFF'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M19 2h-4.18C14.4.84 13.3 0 12 0S9.6.84 9.18 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 18H5V4h2v3h10V4h2v16z'/%3E%3C/svg%3E");`;
-
-					// State: Un-Clicked
-					this.isClicked = false;
-				}, 5000);
-			};
-		}
+				this.is_clicked = false;
+			}, 5000);
+		};
 	}
 };
 
