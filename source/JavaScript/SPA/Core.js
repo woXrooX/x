@@ -1,15 +1,12 @@
 ////////////////////////////////////////////////////////// SPA - Single Page Application
 
-///////////////////////////// Modules
-// Order matters
+///////////////////////////// Core Classes and Modules (Order matters)
+
 import Logger from "/JavaScript/modules/Logger.js";
-import bridge from "/JavaScript/modules/bridge.js";
-import Response from "/JavaScript/modules/Response.js";
+import Response from "/JavaScript/SPA/Response.js";
+import Request from "/JavaScript/SPA/Request.js";
 import XR from "/JavaScript/modules/XR/XR.js";
 import x_String from "/JavaScript/modules/String.js";
-
-///////////////////////////// SPA Classes
-// Order matters
 import Head from "/JavaScript/SPA/Head.js";
 import Body from "/JavaScript/SPA/Body.js";
 import Cover from "/JavaScript/SPA/Cover.js";
@@ -69,7 +66,7 @@ export default class Core{
 
 	static async #get_initial_data(){
 		return new Promise( async (resolve, reject) => {
-			let response = await window.bridge({for: "initial_data"}, "/API");
+			let response = await window.x.Request.make({for: "initial_data"}, "/API");
 
 			if(typeof response === "object"){
 				Log.success(response);

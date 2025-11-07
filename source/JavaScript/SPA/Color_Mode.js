@@ -146,7 +146,7 @@ export default class Color_Mode{
 	static async #save_color_mode(){
 		// If user is logged in, update user color mode on database
 		if ("user" in window.session){
-			const data = await window.bridge({for: "change_user_app_color_mode", color_mode: Color_Mode.current_color_mode}, "/API");
+			const data = await window.x.Request.make({for: "change_user_app_color_mode", color_mode: Color_Mode.current_color_mode}, "/API");
 
 			// Update the session
 			if("type" in data && data["type"] === "success"){

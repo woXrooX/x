@@ -18,7 +18,7 @@ export default class User{
 	static async set_last_heartbeat_at(){
 		if(!("user" in window.session)) return;
 
-		let data = await window.bridge({for: "set_last_heartbeat_at"}, "/API");
+		let data = await window.x.Request.make({for: "set_last_heartbeat_at"}, "/API");
 		if("error" in data) return;
 
 		Log.success("User.set_last_heartbeat_at()");

@@ -12,7 +12,7 @@ export async function after() {
 	Loading.on_element_end(container);
 
 	async function build_notification_HTML() {
-		let notification = await window.bridge({for: "get_notification"});
+		let notification = await window.x.Request.make({for: "get_notification"});
 		if("data" in notification) notification = notification["data"];
 		else return `<p class="surface-info width-100 padding-2">${Lang.use("no_notification")}</p>`;
 

@@ -14,7 +14,7 @@ export async function after(){
 	Loading.on_element_end(container);
 
 	async function build_live_users_count_HTML(){
-		const live_users_count = await window.bridge({for:"get_live_users_count"});
+		const live_users_count = await window.x.Request.make({for:"get_live_users_count"});
 
 		if(!("data" in live_users_count)) return '';
 
@@ -27,7 +27,7 @@ export async function after(){
 	}
 
 	async function build_all_users_HTML(){
-		const USERS = await window.bridge({for:"get_all_users"});
+		const USERS = await window.x.Request.make({for:"get_all_users"});
 
 		if(!("data" in USERS)) return '';
 

@@ -1,5 +1,5 @@
-export default class Response{
-	static handle_actions(response){
+export default class Response {
+	static handle_actions(response) {
 		if (!("actions" in response)) return;
 
 		if ("update_conf" in response["actions"]) window.x["CONF"] = response["actions"]["update_conf"];

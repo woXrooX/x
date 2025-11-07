@@ -55,7 +55,7 @@ export default class Form{
 
 				data["fields"][event.target.name] = event.target.value;
 
-				let response = await window.bridge(data, `${form.getAttribute("for")}`);
+				let response = await window.x.Request.make(data, `${form.getAttribute("for")}`);
 				if("field" in response) Form.#response(response["field"], response["type"], response["message"]);
 			};
 		});
@@ -86,7 +86,7 @@ export default class Form{
 		// DEV: Log FormData
 		// for(const [key, value] of form_data.entries()) console.log(`${key}: ${value}`);
 
-		let response = await window.bridge(form_data, event.target.action, event.target.enctype);
+		let response = await window.x.Request.make(form_data, event.target.action, event.target.enctype);
 
 		// DEV: Data from Back-End
 		// Log.info(response);

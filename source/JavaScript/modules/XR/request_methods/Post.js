@@ -199,7 +199,7 @@ export default class Post {
 
 			window.Modal.lock();
 
-			this.#response = await window.bridge(this.#data, this.#element.getAttribute("XR-post"));
+			this.#response = await window.x.Request.make(this.#data, this.#element.getAttribute("XR-post"));
 
 			window.Modal.unlock();
 

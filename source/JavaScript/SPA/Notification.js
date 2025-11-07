@@ -27,7 +27,7 @@ export default class Notification{
 	static async update_unseen_count(){
 		if(!("user" in window.session)) return;
 
-		let data = await window.bridge({for: "get_unseen_count"}, "/x/notifications");
+		let data = await window.x.Request.make({for: "get_unseen_count"}, "/x/notifications");
 		if("error" in data) return;
 
 		// No unseen notifications

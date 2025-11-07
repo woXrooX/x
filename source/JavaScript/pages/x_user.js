@@ -10,7 +10,7 @@ export async function after(){
 	const container = document.querySelector("container");
 	Loading.on_element_start(container);
 
-	let user = await window.bridge({for:"get_user"});
+	let user = await window.x.Request.make({for:"get_user"});
 	if("data" in user) user = user["data"];
 	else return `<p class="surface-info width-100 padding-2">No data to show.</p>`;
 
@@ -53,7 +53,7 @@ export async function after(){
 		`;
 
 		async function build_modal_form_update_roles_HTML(){
-			let user_roles = await window.bridge({for:"get_user_roles"});
+			let user_roles = await window.x.Request.make({for:"get_user_roles"});
 			if("data" in user_roles) user_roles = user_roles["data"];
 			else return '';
 
@@ -87,7 +87,7 @@ export async function after(){
 	}
 
 	async function build_user_log_in_records_HTML(){
-		let resp = await window.bridge({for:"get_user_log_in_records"});
+		let resp = await window.x.Request.make({for:"get_user_log_in_records"});
 
 		if("data" in resp) resp = resp["data"];
 		else return `<p class="surface-info width-100 padding-2">No data to show.</p>`;

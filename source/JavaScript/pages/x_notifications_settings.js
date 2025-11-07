@@ -12,11 +12,11 @@ export async function after(){
 	Loading.on_element_end(container);
 
 	async function build_notification_event_togglers_HTML(){
-		let disabled_events = await window.bridge({for: "get_disabled_notification_events"});
+		let disabled_events = await window.x.Request.make({for: "get_disabled_notification_events"});
 		if("data" in disabled_events) disabled_events = disabled_events["data"];
 		else disabled_events = [];
 
-		let events = await window.bridge({for: "get_all_events"});
+		let events = await window.x.Request.make({for: "get_all_events"});
 		if("data" in events) events = events["data"];
 		else events = {};
 

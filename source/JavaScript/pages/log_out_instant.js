@@ -1,7 +1,7 @@
 export async function before(){
 	window.x.Head.set_title("log_out");
 
-	const resp = await window.bridge({for:"log_out_instant"});
+	const resp = await window.x.Request.make({for:"log_out_instant"});
 	if (!("type" in resp) || resp["type"] != "success") return;
 
 	window.dispatchEvent(new CustomEvent("user_session_change"));

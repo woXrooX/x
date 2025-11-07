@@ -52,7 +52,7 @@ export async function after() {
 	}
 
 	async function build_notifications_HTML(){
-		let notifications = await window.bridge({for: "get_all_notifications"});
+		let notifications = await window.x.Request.make({for: "get_all_notifications"});
 		if("data" in notifications) notifications = notifications["data"];
 		else return `<p class="surface-info width-100 padding-2">${Lang.use("no_notifications")}</p>`;
 
