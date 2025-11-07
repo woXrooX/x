@@ -11,7 +11,7 @@ export default class Toast extends HTMLElement{
 			content = "Toast: " + Lang.use("invalid_value");
 		}
 
-		document.querySelector(Toast.#selector).innerHTML += `<x-toast type="${type}">${content}</x-toast>`;
+		document.querySelector(Toast.#selector).innerHTML += `<x-toast type="${type}">${window.Lang.use(content)}</x-toast>`;
 
 		// Auto Remove After N Seconds
 		setTimeout(()=>{document.querySelector(Toast.#selector).firstChild?.remove();}, Toast.#auto_dismiss_timer);

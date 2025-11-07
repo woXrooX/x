@@ -167,14 +167,14 @@ export default class Post {
 		window.x.XR.execute_on_response(this.#element.getAttribute("XR-func"), this.#response, this.#element);
 
 		if ("field" in this.#response && this.#response["field"] in this.#input_elements) {
-			x.Toast.new(this.#response["type"], Lang.use(this.#response["message"]));
+			x.Toast.new(this.#response["type"], this.#response["message"]);
 			x.VFX.border_flash(this.#input_elements[this.#response["field"]]["element"], this.#response["type"]);
 			x.VFX.shake(this.#input_elements[this.#response["field"]]["element"]);
 
 			return;
 		}
 
-		if (this.#response["type"] == "error") return x.Toast.new("error", Lang.use(this.#response["message"]));
+		if (this.#response["type"] == "error") return x.Toast.new("error", this.#response["message"]);
 
 		////////// x-toast
 		x.Toast.handle_commands(this.#element.getAttribute("x-toast"), this.#response);
@@ -203,7 +203,7 @@ export default class Post {
 
 			window.Modal.unlock();
 
-			if (!("type" in this.#response)) return x.Toast.new("error", Lang.use("invalid_response"));
+			if (!("type" in this.#response)) return x.Toast.new("error", "invalid_response");
 			else this.#handle_response();
 
 			this.#handle_commands();
