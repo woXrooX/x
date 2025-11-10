@@ -11,13 +11,12 @@ from Python.x.modules.IP_address_tools import extract_IP_address_from_request
 # 	"enabled": False,
 # 	"methods": ["GET", "POST"],
 # 	"authenticity_statuses": ["unauthenticated"],
-# 	"endpoints": ["/request_password_recovery"]
+# 	"endpoints": ["/password_reset_request"]
 # })
 @Page.build()
-def request_password_recovery(request):
+def password_reset_request(request):
 	if request.method == "POST":
-		# unknown_error
-		if request.form["for"] != "request_password_recovery": return response(type="warning", message="unknown_error")
+		if request.form["for"] != "password_reset_request": return response(type="warning", message="unknown_error")
 
 		# eMail_empty
 		if "eMail" not in request.form or not request.form["eMail"]: return response(type="error", message="eMail_empty", field="eMail")
@@ -35,8 +34,8 @@ def request_password_recovery(request):
 		data = MySQL.execute(
 			sql="""
 				SELECT 1
-				FROM password_recoveries
-				WHERE password_recoveries.user = %s AND TIMESTAMPDIFF(MINUTE, password_recoveries.timestamp_first, NOW()) < %s LIMIT 1;
+				FROM password_reset_requests
+				WHERE password_reset_requests.user = %s AND TIMESTAMPDIFF(MINUTE, password_reset_requests.timestamp_first, NOW()) < %s LIMIT 1;
 			""",
 			params = [
 				user['id'],
@@ -52,7 +51,7 @@ def request_password_recovery(request):
 
 		# Save the token to database
 		data = MySQL.execute(
-			sql="INSERT INTO password_recoveries (user, token, ip_address_first, user_agent_first, password_old) VALUES (%s, %s, %s, %s, %s);",
+			sql="INSERT INTO password_reset_requests (user, token, ip_address_first, user_agent_first, old_password) VALUES (%s, %s, %s, %s, %s);",
 			params=[
 				user['id'],
 				token,
@@ -67,13 +66,13 @@ def request_password_recovery(request):
 		eMail_content = f"""
 			<h3>Dear user</h3>
 			<p>We have received your request to reset your password. Please click the link below to set a new password for your account.</p>
-			<p>Password recovery link: {request.url_root}reset_password/{token}</p>
+			<p>Reset password link: {request.url_root}reset_password/{token}</p>
 			<p>If you did not request a password reset, please ignore this email. Your account will remain secure.</p>
 			<p>Warm regards,</p>
 			<p>The {Globals.PROJECT_LANGUAGE_DICTIONARY.get(Globals.CONF["project_name"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
 		"""
 
-		if SendGrid.send("noreply", request.form["eMail"], eMail_content, "Password recovery") is not True:
+		if SendGrid.send("noreply", request.form["eMail"], eMail_content, "Reset password") is not True:
 			return response(type="warning", message="Unable to send email. Your request has been saved. Please reach out to support for further assistance", redirect="/")
 
 		return response(type="success", message="password_recovery_link_has_been_sent", redirect="/")

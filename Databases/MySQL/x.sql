@@ -335,8 +335,8 @@ CREATE TABLE IF NOT EXISTS `log_in_records` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-\! echo "-------------------------- password_recoveries";
-CREATE TABLE IF NOT EXISTS `password_recoveries` (
+\! echo "-------------------------- password_reset_requests";
+CREATE TABLE IF NOT EXISTS `password_reset_requests` (
 	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
 
 	`user` INT NULL,
@@ -353,8 +353,8 @@ CREATE TABLE IF NOT EXISTS `password_recoveries` (
 	`user_agent_last` TEXT NULL DEFAULT NULL,
 	`timestamp_last` TIMESTAMP NULL,
 
-	`password_old` VARCHAR(100) NULL,
-	`password_new` VARCHAR(100) NULL,
+	`old_password` VARCHAR(100) NULL,
+	`new_password` VARCHAR(100) NULL,
 
 	FOREIGN KEY (user) REFERENCES users(id),
 

@@ -39,6 +39,11 @@
 		"ru": "Изменить",
 		"uz": "O`zgartirish"
 	},
+	"confirm_new_password": {
+		"en": "Confirm new password",
+		"ru": "Подтвердите новый пароль",
+		"uz": "Yangi parolni tasdiqlang"
+	},
 	"could_not_delete_file": {
 		"en": "Could not delete the file!",
 		"ru": "Не удалось удалить файл!",
@@ -359,6 +364,11 @@
 		"ru": "Политика конфиденциальности",
 		"uz": "Maxfiylik siyosati"
 	},
+	"reset_password": {
+		"en": "Reset password",
+		"ru": "Сбросить пароль",
+		"uz": "Parolni tiklash"
+	},
 	"save": {
 		"en": "Save",
 		"ru": "Сохранить",
@@ -413,6 +423,11 @@
 		"en": "Warning",
 		"ru": "Предупреждение",
 		"uz": "Ogohlantirish"
+	},
+	"new_password": {
+		"en": "New password",
+		"ru": "Новый пароль",
+		"uz": "Yangi parol"
 	},
 
 	"not_selected": {

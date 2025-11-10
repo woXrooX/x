@@ -6,7 +6,6 @@ export default function main(){
 	return `
 		<container class="padding-5 flex-x-center bg-animated-gradient-v1">
 			<form for="sign_up" autocomplete="off" class="max-width-600px surface-v1 padding-5">
-
 				<h2 class="text-align-center">${window.Lang.use('sign_up')}</h2>
 
 				<label>
@@ -25,7 +24,6 @@ export default function main(){
 				</label>
 
 				<a href="/log_in" class="text-align-center text-size-0-7">${window.Lang.use('have_account_go_to_log_in')}</a>
-
 			</form>
 		</container>
 	`;
