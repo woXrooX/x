@@ -6,10 +6,6 @@ export default class Copy extends HTMLElement{
 
 		if (!this.hasAttribute("selector")) return;
 
-		const target_element = document.querySelector(this.getAttribute("selector"));
-
-		if (!!target_element === false) return;
-
 		// Clone And Append Template
 		this.shadow.innerHTML = `
 			<style>
@@ -39,6 +35,10 @@ export default class Copy extends HTMLElement{
 
 		this.onclick = ()=>{
 			if (!!this.is_clicked === true) return;
+
+			const target_element = document.querySelector(this.getAttribute("selector"));
+
+			if (!!target_element === false) return;
 
 			this.is_clicked = true;
 
