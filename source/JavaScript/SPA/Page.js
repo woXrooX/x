@@ -1,8 +1,10 @@
 export default class Page{
 	static current_page = null;
 
-	static async load(page){
-		if(!!page == false) return;
+	static async load_file(page){
+		if (!!page == false) return;
+
+		window.Log.info(`x.Page.load_file(): ${page}.js`);
 
 		Page.current_page = await import(`/JavaScript/pages/${page}.js`)
 
@@ -15,20 +17,20 @@ export default class Page{
 		window.x.Head.reset_all();
 
 		// Before
-		if(!!Page.current_page.before === true) await Page.current_page.before();
+		if (!!Page.current_page.before === true) await Page.current_page.before();
 
 		// Header
 		await window.Header.handle();
 
 		// Default/Main
-		if(typeof Page.current_page.default === "function") await window.Main.render(await Page.current_page.default());
+		if (typeof Page.current_page.default === "function") await window.Main.render(await Page.current_page.default());
 		else await window.Main.render(Main.situational_content("error", "ERROR", "Page.life_cycle() -> No default function defined!"));
 
 		// Footer
 		await window.Footer.handle();
 
 		// After
-		if(!!Page.current_page.after === true) await Page.current_page.after();
+		if (!!Page.current_page.after === true) await Page.current_page.after();
 
 		//// Scroll to top after page is ready
 

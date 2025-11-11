@@ -18,13 +18,13 @@ export default class Router {
 		// Check if app is down if so stop handling and set app_is_down as a current page
 		if ("app_is_down" in window.CONF["tools"]) {
 			Router.current_route.name = "app_is_down";
-			Router.#load_page_file();
+			Router.#init_load_page();
 			return;
 		}
 
 		// Check the "window.location.pathname" for the error URLs
 		if (Router.error_handlers() === true) {
-			Router.#load_page_file();
+			Router.#init_load_page();
 			return;
 		}
 
@@ -47,7 +47,7 @@ export default class Router {
 					Router.current_route.URL_args = URL_args;
 					Router.current_route.full_URL = window.location.href;
 
-					Router.#load_page_file();
+					Router.#init_load_page();
 					return;
 				}
 			}
@@ -56,7 +56,7 @@ export default class Router {
 		// If no match, reset the "current_route" and load the "404" page
 		Router.#reset_current_route();
 		Router.current_route.name = "404";
-		Router.#load_page_file();
+		Router.#init_load_page();
 	}
 
 	static error_handlers() {
@@ -127,9 +127,7 @@ export default class Router {
 
 	/////////// Helpers
 
-	static async #load_page_file() {
-		window.Log.info(`load_page_file(): ${Router.current_route.name}.js`);
-
+	static async #init_load_page() {
 		try{
 			if (window.x.Page.current_page !== null && !!window.x.Page.current_page.on_page_unmount === true) await window.x.Page.current_page.on_page_unmount();
 
@@ -138,7 +136,7 @@ export default class Router {
 			window.Main.animation_start();
 
 			// Load page file
-			await window.x.Page.load(Router.current_route.name);
+			await window.x.Page.load_file(Router.current_route.name);
 		}
 
 		catch(error) {
