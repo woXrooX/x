@@ -2919,6 +2919,9 @@
 
 
 		@layer color{
+			.border-color-none { border-color: none; }
+			.border-color-transparent { border-color: transparent; }
+
 			.border-color-main{border-color: var(--color-main);}
 
 			.border-color-1{border-color: var(--color-main-tint-1);}
@@ -2943,6 +2946,19 @@
 
 			.border-color-black{border-color: var(--color-black);}
 			.border-color-white{border-color: var(--color-white);}
+
+			/* @layer Hover { */
+				.on-hover-border-color-1 { &:hover { border-color: var(--color-main-tint-1); } }
+				.on-hover-border-color-2 { &:hover { border-color: var(--color-main-tint-2); } }
+				.on-hover-border-color-3 { &:hover { border-color: var(--color-main-tint-3); } }
+				.on-hover-border-color-4 { &:hover { border-color: var(--color-main-tint-4); } }
+				.on-hover-border-color-5 { &:hover { border-color: var(--color-main-tint-5); } }
+				.on-hover-border-color-6 { &:hover { border-color: var(--color-main-tint-6); } }
+				.on-hover-border-color-7 { &:hover { border-color: var(--color-main-tint-7); } }
+				.on-hover-border-color-8 { &:hover { border-color: var(--color-main-tint-8); } }
+				.on-hover-border-color-9 { &:hover { border-color: var(--color-main-tint-9); } }
+				.on-hover-border-color-10 { &:hover { border-color: var(--color-main-tint-10); } }
+			/* } */
 		}
 
 		@layer style{
