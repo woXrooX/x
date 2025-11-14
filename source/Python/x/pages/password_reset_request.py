@@ -66,7 +66,7 @@ def password_reset_request(request):
 		eMail_content = f"""
 			<h3>Dear user</h3>
 			<p>We have received your request to reset your password. Please click the link below to set a new password for your account.</p>
-			<p>Reset password link: {request.url_root}reset_password/{token}</p>
+			<p>Reset password link: {request.url_root}password_reset/{token}</p>
 			<p>If you did not request a password reset, please ignore this email. Your account will remain secure.</p>
 			<p>Warm regards,</p>
 			<p>The {Globals.PROJECT_LANGUAGE_DICTIONARY.get(Globals.CONF["project_name"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
