@@ -3,7 +3,7 @@ from urllib.parse import unquote
 from main import session
 
 from Python.x.modules.Page import Page
-from Python.x.modules.response import response
+from Python.x.modules.Response import Response
 from Python.x.modules.Globals import Globals
 from Python.x.modules.User import User
 from Python.x.modules.MySQL import MySQL
@@ -20,8 +20,8 @@ def eMail_confirmation(request):
 		# I/ data validations
 
 		# Check if "for" neant to go to here
-		if request.form["for"] != "eMail_confirmation": return response(type="warning", message="invalid_request")
-		if "verification_code" not in request.form or not request.form["verification_code"]: return response(type="warning", message="eMail_confirmation_code_empty", field="verification_code")
+		if request.form["for"] != "eMail_confirmation": return Response.make(type="warning", message="invalid_request")
+		if "verification_code" not in request.form or not request.form["verification_code"]: return Response.make(type="warning", message="eMail_confirmation_code_empty", field="verification_code")
 
 		int_verification_code = int(request.form["verification_code"])
 
@@ -32,11 +32,11 @@ def eMail_confirmation(request):
 				params=[session["user"]["id"]],
 				commit=True
 			)
-			if data is False: return response(type="error", message="database_error")
+			if data is False: return Response.make(type="error", message="database_error")
 
 			User.update_session()
 
-			return response(type="warning", message="eMail_confirmation_code_did_not_match", field="verification_code")
+			return Response.make(type="warning", message="eMail_confirmation_code_did_not_match", field="verification_code")
 
 		# Success | Match
 		if int_verification_code == session["user"]["eMail_verification_code"]:
@@ -51,13 +51,13 @@ def eMail_confirmation(request):
 				params=[Globals.USER_AUTHENTICITY_STATUSES["authorized"]["id"], session["user"]["id"]],
 				commit=True
 			)
-			if data is False: return response(type="error", message="database_error")
+			if data is False: return Response.make(type="error", message="database_error")
 
 			User.update_session()
 
 			redirect = unquote(request.args.get("redirect")) if "redirect" in request.args else "/"
 
-			return response(
+			return Response.make(
 				type="success",
 				message="eMail_verification_success",
 				set_session_user=True,
@@ -65,4 +65,4 @@ def eMail_confirmation(request):
 				redirect=redirect
 			)
 
-		return response(type="error", message="unknown_error")
+		return Response.make(type="error", message="unknown_error")

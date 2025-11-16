@@ -1,7 +1,7 @@
 if __name__ != "__main__":
 	from main import session
 
-	from Python.x.modules.response import response
+	from Python.x.modules.Response import Response
 	from Python.x.modules.Globals import Globals
 	from Python.x.modules.Logger import Log
 	from Python.x.modules.MySQL import MySQL
