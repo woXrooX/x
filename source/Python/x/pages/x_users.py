@@ -1,5 +1,5 @@
 from Python.x.modules.Page import Page
-from Python.x.modules.response import response
+from Python.x.modules.Response import Response
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.User import User
 
@@ -31,12 +31,12 @@ def x_users(request):
 						GROUP BY users.id;
 					"""
 				)
-				if users is False: return response(type="error", message="database_error")
+				if users is False: return Response.make(type="error", message="database_error")
 
-				return response(type="success", message="success", data=users, default_serializer_func=str)
+				return Response.make(type="success", message="success", data=users, default_serializer_func=str)
 
 			if request.get_json()["for"] == "get_live_users_count":
 				live_users = MySQL.execute("SELECT COUNT(id) AS live_users FROM users WHERE (last_heartbeat_at >= NOW() - INTERVAL 30 SECOND);", fetch_one=True)
-				if live_users is False: return response(type="error", message="database_error")
+				if live_users is False: return Response.make(type="error", message="database_error")
 
-				return response(type="success", message="success", data=live_users)
+				return Response.make(type="success", message="success", data=live_users)

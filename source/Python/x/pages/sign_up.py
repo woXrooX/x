@@ -4,7 +4,7 @@ from main import session
 
 from Python.x.modules.Page import Page
 from Python.x.modules.Notifications import Notifications
-from Python.x.modules.response import response
+from Python.x.modules.Response import Response
 from Python.x.modules.Globals import Globals
 from Python.x.modules.Log_In_Tools import Log_In_Tools
 from Python.x.modules.User import User
@@ -21,31 +21,31 @@ from Python.x.modules.Logger import Log
 def sign_up(request):
 	if request.method == "POST":
 		# unknown_error
-		if request.form["for"] != "sign_up": return response(type="warning", message="unknown_error")
+		if request.form["for"] != "sign_up": return Response.make(type="warning", message="unknown_error")
 
 		######## eMail
 		# eMail_empty
-		if "eMail" not in request.form or not request.form["eMail"]: return response(type="error", message="eMail_empty", field="eMail")
+		if "eMail" not in request.form or not request.form["eMail"]: return Response.make(type="error", message="eMail_empty", field="eMail")
 
 		# eMail_invalid
-		if not re.match(Globals.CONF["eMail"]["regEx"], request.form["eMail"]): return response(type="error", message="eMail_invalid", field="eMail")
+		if not re.match(Globals.CONF["eMail"]["regEx"], request.form["eMail"]): return Response.make(type="error", message="eMail_invalid", field="eMail")
 
 		######## password
 		# password_empty
-		if "password" not in request.form or not request.form["password"]: return response(type="error", message="password_empty", field="password")
+		if "password" not in request.form or not request.form["password"]: return Response.make(type="error", message="password_empty", field="password")
 
 		# password_min_length
-		if len(request.form["password"]) < Globals.CONF["password"]["min_length"]: return response(type="error", message="password_min_length", field="password")
+		if len(request.form["password"]) < Globals.CONF["password"]["min_length"]: return Response.make(type="error", message="password_min_length", field="password")
 
 		# password_max_length
-		if len(request.form["password"]) > Globals.CONF["password"]["max_length"]: return response(type="error", message="password_max_length", field="password")
+		if len(request.form["password"]) > Globals.CONF["password"]["max_length"]: return Response.make(type="error", message="password_max_length", field="password")
 
 		# password_allowed_chars
-		if not re.match(Globals.CONF["password"]["regEx"], request.form["password"]): return response(type="error", message="password_allowed_chars", field="password")
+		if not re.match(Globals.CONF["password"]["regEx"], request.form["password"]): return Response.make(type="error", message="password_allowed_chars", field="password")
 
 		# eMail_in_use
 		data = MySQL.execute(sql="SELECT id FROM users WHERE eMail=%s LIMIT 1;", params=[request.form["eMail"]], fetch_one=True)
-		if data: return response(type="error", message="eMail_in_use", field="eMail")
+		if data: return Response.make(type="error", message="eMail_in_use", field="eMail")
 
 		######## Success
 		# Generate Randome Verification Code
@@ -64,7 +64,7 @@ def sign_up(request):
 			],
 			commit=True
 		)
-		if data is False: return response(type="error", message="database_error")
+		if data is False: return Response.make(type="error", message="database_error")
 
 		# Get user data
 		user_data = MySQL.execute(
@@ -75,7 +75,7 @@ def sign_up(request):
 			],
 			fetch_one=True
 		)
-		if not user_data: return response(type="error", message="database_error")
+		if not user_data: return Response.make(type="error", message="database_error")
 
 		# Set session user data
 		session["user"] = user_data
@@ -104,7 +104,7 @@ def sign_up(request):
 		# Success
 		Log_In_Tools.new_record(request, "success")
 
-		return response(
+		return Response.make(
 			type = "success" if email_verification_sent_status is True else "info",
 			message = "eMail_confirmation_code_has_been_sent" if email_verification_sent_status is True else "Signed up but could not send email verification code. Please contact support!",
 			set_session_user = True,

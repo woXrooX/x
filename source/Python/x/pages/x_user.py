@@ -1,7 +1,7 @@
 import random
 
 from Python.x.modules.Page import Page
-from Python.x.modules.response import response
+from Python.x.modules.Response import Response
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.User import User
 from Python.x.modules.Notifications import Notifications
@@ -32,7 +32,7 @@ def x_user(request, id):
 					params=[id],
 					commit=True
 				)
-				if data is False: return response(type="error", message="database_error")
+				if data is False: return Response.make(type="error", message="database_error")
 
 				if len(params) > 0:
 					data = MySQL.execute(
@@ -41,9 +41,9 @@ def x_user(request, id):
 						commit=True,
 						many=True
 					)
-					if data is False: return response(type="error", message="database_error")
+					if data is False: return Response.make(type="error", message="database_error")
 
-				return response(type="success", message="saved", DOM_change=["main"])
+				return Response.make(type="success", message="saved", DOM_change=["main"])
 
 		if request.content_type == "application/json":
 			if request.get_json()["for"] == "get_user":
@@ -61,28 +61,28 @@ def x_user(request, id):
 					[id],
 					fetch_one=True
 				)
-				if data is False: return response(type="error", message="database_error")
+				if data is False: return Response.make(type="error", message="database_error")
 
-				return response(type="success", message="success", data=data, default_serializer_func=str)
+				return Response.make(type="success", message="success", data=data, default_serializer_func=str)
 
-			if request.get_json()["for"] == "get_user_roles": return response(type="success", message="success", data=Globals.USER_ROLES)
+			if request.get_json()["for"] == "get_user_roles": return Response.make(type="success", message="success", data=Globals.USER_ROLES)
 
 			if request.get_json()["for"] == "get_user_log_in_records":
 				data = MySQL.execute("SELECT ip_address, user_agent, timestamp FROM log_in_records WHERE user = %s;", [id])
-				if data is False: return response(type="error", message="database_error")
+				if data is False: return Response.make(type="error", message="database_error")
 
-				return response(type="success", message="success", data=data, default_serializer_func=str)
+				return Response.make(type="success", message="success", data=data, default_serializer_func=str)
 
 			if request.get_json()["for"] == "delete_user":
-				if User.soft_delete(id) is not True: return response(type="warning", message="could_not_delete", DOM_change=["main"])
+				if User.soft_delete(id) is not True: return Response.make(type="warning", message="could_not_delete", DOM_change=["main"])
 
-				return response(type="success", message="deleted", redirect="/x/users")
+				return Response.make(type="success", message="deleted", redirect="/x/users")
 
 			if request.get_json()["for"] == "resend_eMail_confirmation":
 				user = MySQL.execute("SELECT eMail, eMail_verified FROM users WHERE id=%s LIMIT 1;", [id], fetch_one=True)
-				if user is False or user is None: return response(type="error", message="database_error")
-				if user["eMail"] is None: return response(type="warning", message="This user has no eMail address")
-				if user["eMail_verified"] == 1: return response(type="info", message="Email is already verified")
+				if user is False or user is None: return Response.make(type="error", message="database_error")
+				if user["eMail"] is None: return Response.make(type="warning", message="This user has no eMail address")
+				if user["eMail_verified"] == 1: return Response.make(type="info", message="Email is already verified")
 
 				eMail_verification_code = random.randint(100000, 999999)
 
@@ -101,12 +101,12 @@ def x_user(request, id):
 					params=[eMail_verification_code, id],
 					commit=True
 				)
-				if data is False: return response(type="error", message="database_error")
+				if data is False: return Response.make(type="error", message="database_error")
 
 				if Notifications.new_eMail(
 					recipient=user,
 					content_JSON={"eMail_verification_code": eMail_verification_code},
 					event_name="sign_up_eMail_verification"
-				) is not True: return response(type="error", message="could_not_send_eMail_verification_code")
+				) is not True: return Response.make(type="error", message="could_not_send_eMail_verification_code")
 
-				return response(type="success", message="eMail_confirmation_code_has_been_sent")
+				return Response.make(type="success", message="eMail_confirmation_code_has_been_sent")

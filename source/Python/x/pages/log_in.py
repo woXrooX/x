@@ -3,7 +3,7 @@ from urllib.parse import unquote
 from main import session
 
 from Python.x.modules.Page import Page
-from Python.x.modules.response import response
+from Python.x.modules.Response import Response
 from Python.x.modules.User import User
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.Log_In_Tools import Log_In_Tools
@@ -19,15 +19,15 @@ from Python.x.modules.Logger import Log
 def log_in(request):
 	if request.method == "POST":
 		# unknown_error
-		if request.form["for"] != "log_in": return response(type="warning", message="unknown_error")
+		if request.form["for"] != "log_in": return Response.make(type="warning", message="unknown_error")
 
 		######## eMail
 		# eMail_empty
-		if "eMail" not in request.form or not request.form["eMail"]: return response(type="error", message="eMail_empty", field="eMail")
+		if "eMail" not in request.form or not request.form["eMail"]: return Response.make(type="error", message="eMail_empty", field="eMail")
 
 		######## password
 		# password_empty
-		if "password" not in request.form or not request.form["password"]: return response(type="error", message="password_empty", field="password")
+		if "password" not in request.form or not request.form["password"]: return Response.make(type="error", message="password_empty", field="password")
 
 		password = Log_In_Tools.password_hash(request.form["password"])
 
@@ -38,12 +38,12 @@ def log_in(request):
 			fetch_one=True
 		)
 
-		if data is False: return response(type="error", message="database_error")
+		if data is False: return Response.make(type="error", message="database_error")
 
 		# No Match
 		if not data:
 			Log_In_Tools.new_record(request, "eMail_or_password_incorrect")
-			return response(type="error", message="eMail_or_password_incorrect")
+			return Response.make(type="error", message="eMail_or_password_incorrect")
 
 		# Set Session User ID
 		session["user"] = data
@@ -64,7 +64,7 @@ def log_in(request):
 
 		redirect = unquote(request.args.get("redirect")) if "redirect" in request.args else "/"
 
-		return response(
+		return Response.make(
 			type="success",
 			message="success",
 			set_session_user=True,

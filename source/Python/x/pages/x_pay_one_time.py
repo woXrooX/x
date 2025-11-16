@@ -5,7 +5,7 @@
 from main import session
 
 from Python.x.modules.Page import Page
-from Python.x.modules.response import response
+from Python.x.modules.Response import Response
 from Python.x.modules.Globals import Globals
 from Python.x.modules.Stripe.Payment import Payment
 from Python.x.modules.Stripe.Product import Product
@@ -21,9 +21,9 @@ def x_pay_one_time(request):
 		if request.content_type == "application/json":
 			if request.get_json()["for"] == "get_product":
 				# Your logic goes here
-				return response(type="success", message="success", data=Product.one_time_products["sample_one"])
+				return Response.make(type="success", message="success", data=Product.one_time_products["sample_one"])
 
-			if request.get_json()["for"] == "get_publishable_key": return response(type="success", message="success", data=Globals.CONF["Stripe"]["publishable_key"])
+			if request.get_json()["for"] == "get_publishable_key": return Response.make(type="success", message="success", data=Globals.CONF["Stripe"]["publishable_key"])
 
 			if request.get_json()["for"] == "create_intent":
 				return Payment.create_intent(

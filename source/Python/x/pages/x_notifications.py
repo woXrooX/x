@@ -1,7 +1,7 @@
 from main import session
 
 from Python.x.modules.Page import Page
-from Python.x.modules.response import response
+from Python.x.modules.Response import Response
 from Python.x.modules.MySQL import MySQL
 import time
 
@@ -30,9 +30,9 @@ def x_notifications(request):
 					""",
 					params=[session['user']['id']]
 				)
-				if data is False: return response(type="error", message="database_error")
+				if data is False: return Response.make(type="error", message="database_error")
 
-				return response(type="success", message="success", data=data, default_serializer_func=str)
+				return Response.make(type="success", message="success", data=data, default_serializer_func=str)
 
 			if request.get_json()["for"] == "get_unseen_count":
 				data = MySQL.execute(
@@ -44,10 +44,10 @@ def x_notifications(request):
 					params=[session['user']['id']],
 					fetch_one=True
 				)
-				if data is False: return response(type="error", message="database_error")
-				if "unseen_notifications_count" in data: return response(type="success", message="success", data=data["unseen_notifications_count"])
+				if data is False: return Response.make(type="error", message="database_error")
+				if "unseen_notifications_count" in data: return Response.make(type="success", message="success", data=data["unseen_notifications_count"])
 
-				return response(type="success", message="success")
+				return Response.make(type="success", message="success")
 
 			if request.get_json()["for"] == "delete_all_notifications":
 				data = MySQL.execute(
@@ -55,7 +55,7 @@ def x_notifications(request):
 					params=[session["user"]["id"], session["user"]["id"]],
 					commit=True
 				)
-				if data is False: return response(type="error", message="database_error")
+				if data is False: return Response.make(type="error", message="database_error")
 
-				return response(type="success", message="deleted", DOM_change=["main"])
+				return Response.make(type="success", message="deleted", DOM_change=["main"])
 

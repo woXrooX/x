@@ -4,7 +4,7 @@ from main import session
 
 from Python.x.modules.Page import Page
 from Python.x.modules.MySQL import MySQL
-from Python.x.modules.response import response
+from Python.x.modules.Response import Response
 from Python.x.modules.Globals import Globals
 from Python.x.modules.IP_address_tools import extract_IP_address_from_request
 
@@ -18,25 +18,25 @@ def x_feedback_leave(request):
 	if request.method == "POST":
 		if "multipart/form-data" in request.content_type.split(';'):
 			if request.form["for"] == "leave_feedback":
-				if "feedback_left_page" not in request.form or not request.form["feedback_left_page"]: return response(type="error", message="invalid_request")
+				if "feedback_left_page" not in request.form or not request.form["feedback_left_page"]: return Response.make(type="error", message="invalid_request")
 
 				created_by_user = None
 				fullname = None
 				eMail = None
 
 				if "user" not in session:
-					if "fullname" not in request.form or not request.form["fullname"]: return response(type="error", message="invalid_value", field="fullname")
+					if "fullname" not in request.form or not request.form["fullname"]: return Response.make(type="error", message="invalid_value", field="fullname")
 					fullname = request.form["fullname"]
 
-					if "eMail" not in request.form or not request.form["eMail"]: return response(type="error", message="invalid_value", field="eMail")
-					if not re.match(Globals.CONF["eMail"]["regEx"], request.form["eMail"]): return response(type="error", message="eMailInvalid", field="eMail")
+					if "eMail" not in request.form or not request.form["eMail"]: return Response.make(type="error", message="invalid_value", field="eMail")
+					if not re.match(Globals.CONF["eMail"]["regEx"], request.form["eMail"]): return Response.make(type="error", message="eMailInvalid", field="eMail")
 					eMail = request.form["eMail"]
 
 				if "user" in session:
 					created_by_user = session["user"]["id"]
 					eMail = session["user"]["eMail"]
 
-				if "feedback_text" not in request.form or not request.form["feedback_text"]: return response(type="error", message="invalid_value", field="feedback_text")
+				if "feedback_text" not in request.form or not request.form["feedback_text"]: return Response.make(type="error", message="invalid_value", field="feedback_text")
 
 				data = MySQL.execute(
 					sql="""
@@ -55,6 +55,6 @@ def x_feedback_leave(request):
 					],
 					commit=True
 				)
-				if data is False: return response(type="error", message="database_error")
+				if data is False: return Response.make(type="error", message="database_error")
 
-				return response(type="success", message="saved")
+				return Response.make(type="success", message="saved")

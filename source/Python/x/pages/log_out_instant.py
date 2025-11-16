@@ -1,7 +1,7 @@
 from main import session
 
 from Python.x.modules.Page import Page
-from Python.x.modules.response import response
+from Python.x.modules.Response import Response
 from Python.x.modules.Logger import Log
 
 # @Page.build({
@@ -12,9 +12,9 @@ from Python.x.modules.Logger import Log
 # })
 @Page.build()
 def log_out_instant(request):
-	if request.method != "POST": return response(type="error", message="invalid_request")
+	if request.method != "POST": return Response.make(type="error", message="invalid_request")
 
-	if request.get_json()["for"] != "log_out_instant": return response(type="error", message="invalid_request")
+	if request.get_json()["for"] != "log_out_instant": return Response.make(type="error", message="invalid_request")
 
 	session.pop('user')
 
@@ -24,4 +24,4 @@ def log_out_instant(request):
 
 	except Exception as err: Log.warning(f"log_out_instant.py->on_log_out(): {err}")
 
-	return response(type="success", message="success")
+	return Response.make(type="success", message="success")

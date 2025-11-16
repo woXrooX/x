@@ -1,7 +1,7 @@
 from main import session
 
 from Python.x.modules.Page import Page
-from Python.x.modules.response import response
+from Python.x.modules.Response import Response
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.Globals import Globals
 
@@ -15,7 +15,7 @@ from Python.x.modules.Globals import Globals
 def x_notifications_settings(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":
-			if request.get_json()["for"] == "get_all_events": return response(type="success", message="success", data=Globals.NOTIFICATION_EVENTS)
+			if request.get_json()["for"] == "get_all_events": return Response.make(type="success", message="success", data=Globals.NOTIFICATION_EVENTS)
 
 			if request.get_json()["for"] == "get_disabled_notification_events":
 				data = MySQL.execute(
@@ -31,15 +31,15 @@ def x_notifications_settings(request):
 					""",
 					params=[session["user"]["id"]]
 				)
-				if data is False: return response(type="error", message="database_error")
+				if data is False: return Response.make(type="error", message="database_error")
 
-				return response(type="success", message="success", data=data)
+				return Response.make(type="success", message="success", data=data)
 
 			if request.get_json()["for"] == "toggle_disabled_notification_event_method":
-				if "event" not in request.get_json() or not request.get_json()["event"]: return response(type="error", message="invalid_request")
-				if request.get_json()["event"] not in Globals.NOTIFICATION_EVENTS: return response(type="error", message="invalid_request")
+				if "event" not in request.get_json() or not request.get_json()["event"]: return Response.make(type="error", message="invalid_request")
+				if request.get_json()["event"] not in Globals.NOTIFICATION_EVENTS: return Response.make(type="error", message="invalid_request")
 
-				if "method" not in request.get_json() or not request.get_json()["method"]: return response(type="error", message="invalid_request")
+				if "method" not in request.get_json() or not request.get_json()["method"]: return Response.make(type="error", message="invalid_request")
 
 				sql = ''
 				match request.get_json()["method"]:
@@ -61,7 +61,7 @@ def x_notifications_settings(request):
 							ON DUPLICATE KEY UPDATE method_SMS = method_SMS ^ b'1';
 						"""
 
-					case _: return response(type="error", message="invalid_request")
+					case _: return Response.make(type="error", message="invalid_request")
 
 				data = MySQL.execute(
 					sql=sql,
@@ -71,6 +71,6 @@ def x_notifications_settings(request):
 					],
 					commit=True
 				)
-				if data is False: return response(type="error", message="database_error")
+				if data is False: return Response.make(type="error", message="database_error")
 
-				return response(type="success", message="saved")
+				return Response.make(type="success", message="saved")

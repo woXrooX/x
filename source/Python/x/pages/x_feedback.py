@@ -2,7 +2,7 @@ from main import session
 
 from Python.x.modules.Page import Page
 from Python.x.modules.MySQL import MySQL
-from Python.x.modules.response import response
+from Python.x.modules.Response import Response
 
 # @Page.build({
 # 	"enabled": False,
@@ -23,12 +23,12 @@ def x_feedback(request):
 					LEFT JOIN users ON users.id = feedback.created_by_user
 					WHERE feedback.flag_deleted IS NULL;
 				""")
-				if data == False: return response(type="error", message="database_error")
+				if data == False: return Response.make(type="error", message="database_error")
 
-				return response(type="success", message="success", data=data, default_serializer_func=str)
+				return Response.make(type="success", message="success", data=data, default_serializer_func=str)
 
 			if request.get_json()["for"] == "delete":
-				if "id" not in request.get_json(): return response(type="error",message="invalid_request")
+				if "id" not in request.get_json(): return Response.make(type="error",message="invalid_request")
 
 				data = MySQL.execute(
 					sql="""
@@ -47,6 +47,6 @@ def x_feedback(request):
 					],
 					commit=True
 				)
-				if data is False: return response(type="error", message="database_error")
+				if data is False: return Response.make(type="error", message="database_error")
 
-				return response(type="success", message="deleted", DOM_change=["main"])
+				return Response.make(type="success", message="deleted", DOM_change=["main"])

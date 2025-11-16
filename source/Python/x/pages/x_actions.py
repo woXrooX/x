@@ -1,7 +1,7 @@
 import os
 
 from Python.x.modules.Page import Page
-from Python.x.modules.response import response
+from Python.x.modules.Response import Response
 from Python.x.modules.Globals import Globals
 from Python.x.modules.MySQL import MySQL
 from Python.x.modules.User import User
@@ -19,7 +19,7 @@ def x_actions(request):
 		if request.content_type == "application/json":
 			if request.get_json()["for"] == "sanitize_users_folders":
 				users = MySQL.execute("SELECT id FROM users;")
-				if users is False: return response(type="error", message="database_error")
+				if users is False: return Response.make(type="error", message="database_error")
 
 				user_ids = [user["id"] for user in users]
 
@@ -35,21 +35,21 @@ def x_actions(request):
 					# If folder is in user_ids skip
 					if folder_name_int in user_ids: continue
 
-					if User.delete_files(folder_name_int) is False: return response(type="warning", message=f"Could not delete folder: {folder_name_int}")
+					if User.delete_files(folder_name_int) is False: return Response.make(type="warning", message=f"Could not delete folder: {folder_name_int}")
 
 				# Create user folders
 				for user_id in user_ids:
-					if User.init_folders(user_id) is False: return response(type="warning", message=f"Could not create user folder: {user_id}")
+					if User.init_folders(user_id) is False: return Response.make(type="warning", message=f"Could not create user folder: {user_id}")
 
-				return response(type="success", message="success")
+				return Response.make(type="success", message="success")
 
 		if "multipart/form-data" in request.content_type.split(';'):
 			if request.form["for"] == "eMail_send":
 				# I/ data validations
 				from_email = request.form["local_part"] if "local_part" in request.form and request.form["local_part"] else "noreply"
-				if "to_email" not in request.form or not request.form["to_email"]: return response(type="error", message="invalid_value", field="to_email")
+				if "to_email" not in request.form or not request.form["to_email"]: return Response.make(type="error", message="invalid_value", field="to_email")
 				subject = request.form["subject"] if "subject" in request.form and request.form["subject"] else None
-				if "content" not in request.form or not request.form["content"]: return response(type="error", message="invalid_value", field="content")
+				if "content" not in request.form or not request.form["content"]: return Response.make(type="error", message="invalid_value", field="content")
 
-				if SendGrid.send(from_email, request.form["to_email"], request.form["content"], subject) is False: return response(type="error", message="Could not send email")
-				return response(type="success", message="Email has been sent")
+				if SendGrid.send(from_email, request.form["to_email"], request.form["content"], subject) is False: return Response.make(type="error", message="Could not send email")
+				return Response.make(type="success", message="Email has been sent")
