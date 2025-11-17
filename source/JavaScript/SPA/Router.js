@@ -18,13 +18,13 @@ export default class Router {
 		// Check if app is down if so stop handling and set app_is_down as a current page
 		if ("app_is_down" in window.CONF["tools"]) {
 			Router.current_route.name = "app_is_down";
-			Router.#init_load_page();
+			await window.x.Page.handle(Router.current_route.name);
 			return;
 		}
 
 		// Check the "window.location.pathname" for the error URLs
 		if (Router.error_handlers() === true) {
-			Router.#init_load_page();
+			await window.x.Page.handle(Router.current_route.name);
 			return;
 		}
 
@@ -47,7 +47,7 @@ export default class Router {
 					Router.current_route.URL_args = URL_args;
 					Router.current_route.full_URL = window.location.href;
 
-					Router.#init_load_page();
+					await window.x.Page.handle(Router.current_route.name);
 					return;
 				}
 			}
@@ -56,7 +56,7 @@ export default class Router {
 		// If no match, reset the "current_route" and load the "404" page
 		Router.#reset_current_route();
 		Router.current_route.name = "404";
-		Router.#init_load_page();
+		await window.x.Page.handle(Router.current_route.name);
 	}
 
 	static error_handlers() {
@@ -126,46 +126,6 @@ export default class Router {
 	}
 
 	/////////// Helpers
-
-	static async #init_load_page() {
-		try{
-			if (window.x.Page.current_page !== null && !!window.x.Page.current_page.on_page_unmount === true) await window.x.Page.current_page.on_page_unmount();
-
-			// Start loading effects
-			window.Loading.start();
-			window.Main.animation_start();
-
-			// Load page file
-			await window.x.Page.load_file(Router.current_route.name);
-		}
-
-		catch(error) {
-			// Log.line();
-			// Log.error(error);
-			// Log.error(error.name);
-			// Log.error(error.message);
-			// Log.error(error.stack);
-			// Log.line();
-
-			window.Header.handle();
-
-			if ("CONF" in window && window.CONF.tools.debug === true) {
-				window.Main.render(Main.situational_content("error", error.name, error.stack));
-				console.trace(error);
-			}
-
-			else window.Main.render(Main.situational_content("warning", Lang.use("warning"), Lang.use("something_went_wrong")));
-
-			window.Footer.handle();
-		}
-
-		finally{
-			// End loading effects
-			window.Loading.end();
-			window.Main.animation_end();
-			window.x.URL.handle_scroll_to_hash();
-		}
-	}
 
 	static #reset_current_route() {
 		Router.current_route = {
