@@ -85,6 +85,9 @@ export default class Editable {
 	};
 
 	#editing_view = ()=>{
+		//  Check if it is already focused
+		if (this.#element == document.activeElement) return;
+
 		this.#element.setAttribute("contenteditable", "plaintext-only");
 		this.#set_state_indicator("editing");
 		this.#element.focus();
