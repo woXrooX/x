@@ -85,8 +85,7 @@ export default class Editable {
 	};
 
 	#editing_view = ()=>{
-		//  Each time when when we click on that this.#element, even though it is focused/active, editing_view() is being called, so multiple event listeners are stacking up.
-		//  Check if it is already focused, return
+		//  Check if it is already focused
 		if (this.#element == document.activeElement) return;
 
 		this.#element.setAttribute("contenteditable", "plaintext-only");
