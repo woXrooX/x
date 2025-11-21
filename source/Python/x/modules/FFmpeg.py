@@ -9,12 +9,12 @@ if __name__ != "__main__":
 
 	class FFmpeg:
 		@staticmethod
-		def fix_media_duration(input_path_and_file):
+		def remux(input_path_and_file):
 			input_path_and_file = pathlib.Path(input_path_and_file)
 
 			# Check if input exists
 			if not input_path_and_file.is_file():
-				Log.error(f"FFmpeg.fix_media_duration(): input does not exist: {input_path_and_file}")
+				Log.error(f"FFmpeg.remux(): input does not exist: {input_path_and_file}")
 
 				return False
 
@@ -41,12 +41,12 @@ if __name__ != "__main__":
 			try: result = subprocess.run(cmd, capture_output=True, text=True)
 
 			except Exception as err:
-				Log.error(f"FFmpeg.fix_media_duration(): {err}")
+				Log.error(f"FFmpeg.remux(): {err}")
 
 				return False
 
 			if result.returncode != 0:
-				Log.error(f"FFmpeg.fix_media_duration(): {input_path_and_file} -> {output_path_and_file}")
+				Log.error(f"FFmpeg.remux(): {input_path_and_file} -> {output_path_and_file}")
 				Log.error(f"{result.stderr}")
 
 				return False
