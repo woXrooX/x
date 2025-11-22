@@ -186,14 +186,14 @@ export function seconds_to_time(input_seconds) {
 	const total_seconds = Math.floor(input_seconds);
 
 	const hours = Math.floor(total_seconds / 3600);
-	const mins = Math.floor((total_seconds % 3600) / 60);
+	const minutes = Math.floor((total_seconds % 3600) / 60);
 	const seconds = total_seconds % 60;
 
-	const hours_string = hours.toString().padStart(2, '0');
-	const minutes_string = mins.toString().padStart(2, '0');
-	const seconds_string = input_seconds.toString().padStart(2, '0');
+	const HH = String(hours).padStart(2, '0');
+	const MM = String(minutes).padStart(2, '0');
+	const SS = String(seconds).padStart(2, '0');
 
-	return `${hours_string}:${minutes_string}:${seconds_string}`;
+	return `${HH}:${MM}:${SS}`;
 }
 
 
