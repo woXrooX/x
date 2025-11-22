@@ -1,10 +1,8 @@
-// Useful Links
-
-// Native Form Behaviour
+// Native form behaviour
 // https://web.dev/more-capable-form-controls/
 
 export default class WC extends HTMLElement{
-	//// Native Form Behaviour
+	//// Native form behaviour
 	// Identify the element as a form-associated custom element
 	static formAssociated = true;
 
@@ -19,7 +17,7 @@ export default class WC extends HTMLElement{
 	#DOM = null;
 	#JSON = {};
 
-	constructor(){
+	constructor() {
 		super();
 
 		//// Content as a JSON
@@ -30,7 +28,7 @@ export default class WC extends HTMLElement{
 		// B
 		this.#JSON = JSON.parse(this.innerHTML).constructor === Object ? JSON.parse(this.innerHTML) : {};
 
-		//// Native Form Behaviour
+		//// Native form behaviour
 		// Get access to the internal form control APIs
 		this.internals_ = this.attachInternals();
 		// internal value for this control
@@ -78,48 +76,48 @@ export default class WC extends HTMLElement{
 		// 	this.shadow.appendChild(style);
 		// }
 
-		// Clone And Append Template
+		// Clone and append template
 		this.shadow.appendChild(WC.#template.content.cloneNode(true));
 
 
-		//// Native Form Behaviour
+		//// Native form behaviour
 		// Create FormData
 		const entries = new FormData();
-		// Add To Form Entry
+		// Add to form entry
 		entries.append("name", "value");
-		// Add To Form Data
+		// Add to form data
 		this.internals_.setFormValue(entries);
 
 	}
 
 	// The connectedCallback method is called each time the custom element is appended to a document-connected element.
-	connectedCallback(){
+	connectedCallback() {
 		console.log("connectedCallback");
 	}
 
 	// The disconnectedCallback method is called each time the custom element is removed from the document.
-	disconnectedCallback(){
+	disconnectedCallback() {
 		console.log("disconnectedCallback");
 	}
 
 	// This callback is invoked when a custom element is moved to a new document.
-	adoptedCallback(){
+	adoptedCallback() {
 		console.log("adoptedCallback");
 	}
 
 	// List Attributes To Be Observed
-	static get observedAttributes(){
+	static get observedAttributes() {
 		return ["attr1", "attr2"];
 	}
 
 	// The attributeChangedCallback method is invoked whenever one of the element's observed attributes is added, removed, or changed.
 	// name = attribute name
 	// old and new attribute values
-	attributeChangedCallback(attributeName, oldValue, newValue){
+	attributeChangedCallback(attribute_name, old_value, new_value) {
 		console.log("attributeChangedCallback");
 	}
 
-	////// Form Methods/APIs
+	////// Form methods/APIs
 	// Form controls usually expose a "value" property
 	// get value() { return this.value_; }
 	// set value(v) { this.value_ = v; }
@@ -140,14 +138,14 @@ export default class WC extends HTMLElement{
 
 window.customElements.define('x-wc', WC);
 
-// Make WC Usable W/O Importing It
+// Make WC usable W/O importing it
 window.x["WC"] = WC;
 
 
 
 
 // Standard class style
-class Name{
+class Name {
 	/////////////////////////// Static
 
 	/////////// Variables
