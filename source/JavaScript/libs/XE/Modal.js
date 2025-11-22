@@ -30,7 +30,7 @@ export default class Modal extends HTMLElement{
 
 	static hide(){
 		if(Modal.#shown === false) return;
-		if(Modal.#locked === true) return x.VFX.border_flash(Modal.#element, "error")
+		if(Modal.#locked === true) return x.VFX.border_flash(Modal.#element, "error");
 
 		Modal.#shown = false;
 
