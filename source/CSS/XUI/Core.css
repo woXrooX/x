@@ -1602,6 +1602,7 @@
 			.width-max-content{width: max-content;}
 
 			/* % */
+			.width-0{width: 0%;}
 			.width-5{width: 5%;}
 			.width-10{width: 10%;}
 			.width-15{width: 15%;}
