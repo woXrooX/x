@@ -66,7 +66,7 @@ export default class x_Audio extends HTMLElement {
 		// Pause and clean up audio
 		if (this.#audio_object) {
 			this.#pause();
-			this.#audio_object.src = '';
+			this.#audio_object = null;
 		}
 
 		// Clean up blob URL to free memory
@@ -96,38 +96,15 @@ export default class x_Audio extends HTMLElement {
 	async #init_life_cycle() {
 		if (!this.hasAttribute("source")) return;
 
+		if (await this.#fetch_audio_file() === false) return;
+
 		this.#audio_object = new Audio();
 
 		this.#init_audio_object_listeners();
 
-		if (await this.#fetch_audio_file() === false) return;
-
 		this.#set_up_audio_object();
 
 		this.#update_UI_state("ready");
-	}
-
-	#init_audio_object_listeners() {
-		if (this.#audio_object === null) return;
-
-		// "loadedmetadata" fires when duration and basic info are available
-		this.#audio_object.addEventListener("loadedmetadata", () => {
-			this.#update_total_time();
-		});
-
-		// "timeupdate" fires periodically as audio plays (roughly 4 times/second)
-		this.#audio_object.addEventListener("timeupdate", () => {
-			this.#update_current_time();
-		});
-
-		// "ended" fires when audio finishes playing
-		this.#audio_object.addEventListener("ended", () => {
-			this.#update_UI_state("stopped");
-		});
-
-		this.#audio_object.addEventListener("error", (e) => {
-			Log.error(`Audio->#init_audio_object_listeners(): ${this.#audio_object.error}`);
-		});
 	}
 
 	async #fetch_audio_file() {
@@ -179,7 +156,33 @@ export default class x_Audio extends HTMLElement {
 		}
 	}
 
+	#init_audio_object_listeners() {
+		if (this.#audio_object === null) return;
+
+		// "loadedmetadata" fires when duration and basic info are available
+		this.#audio_object.addEventListener("loadedmetadata", () => {
+			this.#update_total_time();
+		});
+
+		// "timeupdate" fires periodically as audio plays (roughly 4 times/second)
+		this.#audio_object.addEventListener("timeupdate", () => {
+			this.#update_current_time();
+		});
+
+		// "ended" fires when audio finishes playing
+		this.#audio_object.addEventListener("ended", () => {
+			this.#update_UI_state("stopped");
+		});
+
+		this.#audio_object.addEventListener("error", (e) => {
+			Log.error(`Audio->#init_audio_object_listeners(): ${this.#audio_object.error}`);
+			console.log(this.#audio_object.error);
+		});
+	}
+
 	#set_up_audio_object() {
+		if (this.#audio_object === null) return;
+
 		// Clean up previous blob URL if it exists
 		if (this.#blob_URL_object) URL.revokeObjectURL(this.#blob_URL_object);
 
