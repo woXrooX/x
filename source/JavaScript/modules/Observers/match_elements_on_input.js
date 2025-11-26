@@ -22,16 +22,16 @@
 // }
 
 export function match_elements_on_input(
-	input_element_selector,
-	matchable_elements_selector,
+	input_element_or_selector,
+	matchable_elements_or_selector,
 	match_handler_callback,
 	no_match_callback = null,
 ) {
-	const input_element = document.querySelector(input_element_selector);
-	if (!input_element) return;
+	const input_element = validate_input_element();
+	if (input_element === false) return;
 	input_element.focus();
 
-	const matchable_elements = document.querySelectorAll(matchable_elements_selector);
+	const matchable_elements = normalize_matchable_elements();
 	if (matchable_elements.length === 0) return;
 
 	let debounce_timeout;
@@ -41,6 +41,7 @@ export function match_elements_on_input(
 
 		debounce_timeout = setTimeout(()=>{
 			let has_matches = false;
+
 			for (const matchable_element of matchable_elements) {
 				const matched = match_handler_callback(input_element.value, matchable_element);
 				if (has_matches === false) has_matches = matched;
@@ -49,5 +50,40 @@ export function match_elements_on_input(
 			if (typeof(no_match_callback) === "function") no_match_callback(has_matches);
 		}, 300);
 	});
+
+
+	/////////// Helpers
+
+	function validate_input_element() {
+		if (!input_element_or_selector) return false;
+		if (typeof(input_element_or_selector) === "string") return document.querySelector(input_element_or_selector);
+		if (input_element_or_selector instanceof Element) return input_element_or_selector;
+
+		return false;
+	}
+
+	function normalize_matchable_elements() {
+		if (!matchable_elements_or_selector) return [];
+
+		// Single element
+		if (matchable_elements_or_selector instanceof Element) return [matchable_elements_or_selector];
+
+		// Selector
+		if (typeof(matchable_elements_or_selector) === "string") {
+			try { return Array.from(document.querySelectorAll(matchable_elements_or_selector)); }
+
+			// Invalid selector
+			catch { return []; }
+		}
+
+		// Iterables (NodeList, HTMLCollection (modern), Array, Set, etc.)
+		if (typeof(matchable_elements_or_selector?.[Symbol.iterator]) === "function") {
+			const elements = [];
+			for (const element of matchable_elements_or_selector) if (element instanceof Element) elements.push(element);
+			return elements;
+		}
+
+		return [];
+	}
 }
 
