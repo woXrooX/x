@@ -130,6 +130,7 @@ CREATE TABLE IF NOT EXISTS `user_plans` (
 \! echo "-------------------------- users";
 CREATE TABLE IF NOT EXISTS `users` (
 	`id` INT NOT NULL AUTO_INCREMENT,
+
 	`username` VARCHAR(100) NULL UNIQUE,
 	`password` VARCHAR(100) NOT NULL,
 	`password_salt` VARCHAR(100),
@@ -230,9 +231,43 @@ CREATE TABLE IF NOT EXISTS `users_occupations` (
 
 
 
+
+-- ------------------------------------
+-- ------------------------------------ Cron jobs
+-- ------------------------------------
+
+\! echo "-------------------------- Cron_Job_events";
+CREATE TABLE IF NOT EXISTS `Cron_Job_events` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(500) NOT NULL UNIQUE,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- INSERT INTO Cron_Job_events (id, name) VALUES
+-- (1, "job_A"),
+-- (2, "job_B");
+
+\! echo "-------------------------- Cron_Job_logs";
+CREATE TABLE IF NOT EXISTS `Cron_Job_logs` (
+	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`job` INT NOT NULL,
+
+	`data_JSON` JSON NULL,
+
+	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+	FOREIGN KEY (`job`) REFERENCES Cron_Job_events(`id`),
+
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
+
 -- ------------------------------------
 -- ------------------------------------ Notifications
 -- ------------------------------------
+
 \! echo "-------------------------- notification_events";
 CREATE TABLE IF NOT EXISTS `notification_events` (
 	`id` INT NOT NULL AUTO_INCREMENT,
