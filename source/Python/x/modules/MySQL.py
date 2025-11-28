@@ -310,7 +310,7 @@ if __name__ != "__main__":
 		def get_cron_job_events():
 			data = MySQL.execute("SELECT * FROM cron_job_events")
 			if data is False: return Log.fieldset("Could Not Fetch 'cron_job_events'", "MySQL.cron_job_events()", "error")
-			for cron_job_event in data: Globals.cron_job_events[cron_job_event["name"]] = cron_job_event
+			for cron_job_event in data: Globals.CRON_JOB_EVENTS[cron_job_event["name"]] = cron_job_event
 
 
 		@staticmethod
