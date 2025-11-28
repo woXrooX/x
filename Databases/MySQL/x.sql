@@ -236,26 +236,26 @@ CREATE TABLE IF NOT EXISTS `users_occupations` (
 -- ------------------------------------ Cron jobs
 -- ------------------------------------
 
-\! echo "-------------------------- Cron_Job_events";
-CREATE TABLE IF NOT EXISTS `Cron_Job_events` (
+\! echo "-------------------------- cron_job_events";
+CREATE TABLE IF NOT EXISTS `cron_job_events` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(500) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
--- INSERT INTO Cron_Job_events (id, name) VALUES
+-- INSERT INTO cron_job_events (id, name) VALUES
 -- (1, "job_A"),
 -- (2, "job_B");
 
-\! echo "-------------------------- Cron_Job_logs";
-CREATE TABLE IF NOT EXISTS `Cron_Job_logs` (
+\! echo "-------------------------- cron_job_logs";
+CREATE TABLE IF NOT EXISTS `cron_job_logs` (
 	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`job` INT NOT NULL,
+	`event` INT NOT NULL,
 
 	`data_JSON` JSON NULL,
 
 	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-	FOREIGN KEY (`job`) REFERENCES Cron_Job_events(`id`),
+	FOREIGN KEY (`event`) REFERENCES cron_job_events(`id`),
 
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

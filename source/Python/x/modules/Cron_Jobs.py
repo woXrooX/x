@@ -28,7 +28,7 @@ if __name__ != "__main__":
 		@staticmethod
 		def create_log(event_id, data_JSON = None):
 			data = MySQL.execute(
-				sql="INSERT INTO Cron_Job_logs (job, data_JSON) VALUES (%s, %s);",
+				sql="INSERT INTO cron_job_logs (event, data_JSON) VALUES (%s, %s);",
 				params=[
 					event_id,
 					json.dumps(data_JSON, default=str) if isinstance(data_JSON, dict) else None
@@ -49,4 +49,6 @@ if __name__ != "__main__":
 		@staticmethod
 		def init():
 			Log.info("Cron_Jobs.init(): Initializing the jobs")
+
+			Cron_Jobs.job_A()
 

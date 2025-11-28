@@ -16,19 +16,30 @@ if __name__ != "__main__":
 		# Go back two times from "X_RUNNING_FROM"
 		PROJECT_PATH = os.path.abspath(os.path.join(X_PATH, '../..'))
 
+
+
 		#### x
 		CONF = {}
+
 		LANGUAGE_DICTIONARY = {}
 
 		CURRENCIES = {}
+
 		LANGUAGES = {}
+
 		USER_AUTHENTICITY_STATUSES = {}
 		USER_ROLES = {}
 		USER_OCCUPATIONS = {}
+
+		CRON_JOB_EVENTS = {}
+
 		NOTIFICATION_EVENTS = {}
 		NOTIFICATION_TYPES = {}
+
 		STRIPE_EVENT_TYPES = {}
 		STRIPE_OBJECT_TYPES = {}
+
+
 
 		#### Project
 		PROJECT = {}

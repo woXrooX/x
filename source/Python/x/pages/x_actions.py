@@ -43,6 +43,14 @@ def x_actions(request):
 
 				return Response.make(type="success", message="success")
 
+			if request.get_json()["for"] == "project_Cron_Jobs_init":
+				try:
+					from Python.project.modules.Cron_Jobs import Cron_Jobs
+					Cron_Jobs.init()
+					return Response.make(type="success", message="success")
+
+				except Exception as err: return Response.make(type="error", message=err)
+
 		if "multipart/form-data" in request.content_type.split(';'):
 			if request.form["for"] == "eMail_send":
 				# I/ data validations
