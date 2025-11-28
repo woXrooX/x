@@ -26,6 +26,8 @@ export default async function main() {
 
 						x-toast="on:any:message"
 
+						x-modal="on:success:hide"
+
 						class="btn btn-warning"
 					>project_Cron_Jobs_init</button>
 				</column>
@@ -48,6 +50,8 @@ export default async function main() {
 
 						x-toast="on:any:message"
 
+						x-modal="on:success:hide"
+
 						class="btn btn-warning"
 					>sanitize_users_folders</button>
 				</column>
@@ -60,7 +64,12 @@ export default async function main() {
 			<x-svg name="eMail" class="btn btn-info"></x-svg>
 			<x-tooltip trigger_selector="x-svg[name=eMail]" class="padding-2 text-size-0-8">eMail_send</x-tooltip>
 			<x-modal trigger_selector="x-svg[name=eMail]">
-				<form for="eMail_send" class="padding-1" x-modal="on:success:hide" x-toast="on:any:message">
+				<form
+					for="eMail_send"
+					class="padding-2"
+					x-modal="on:success:hide"
+					x-toast="on:any:message"
+				>
 					<label>
 						<p for="local_part">Local-part</p>
 						<input type="text" name="local_part">
