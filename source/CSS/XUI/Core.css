@@ -8,7 +8,7 @@
 				--screen-size-phone: 600px;  		/* s */
 				--screen-size-tablet: 768px; 		/* m */
 				--screen-size-desktop: 992px;		/* l */
-				--screen-size-tv: 1200px;			/* xl */
+				--screen-size-TV: 1200px;			/* xl */
 
 				/* Default color schema starts with dark mode */
 				--color-main-hue: 230deg;
@@ -998,282 +998,121 @@
 		.resize-none { resize: none; }
 	}
 
-	@layer table{
-		table{
-			--table-padding: calc(var(--padding) * 2);
-			--table-border-color: hsla(var(--color-main-hue), 5%, 50%, 1);
-			--table-font-size: 0.7rem;
-			--table-radius: var(--radius);
+	@layer table {
+		caption{
+			font-size: calc(0.7rem * 2.5);
+			padding: calc(var(--padding) * 2);
+		}
 
-			width: 100%;
-			table-layout: auto;
-			font-size: var(--table-font-size);
+		.table-layout-fixed{ table-layout: fixed; }
+		.table-layout-fixed-important{ table-layout: fixed !important; }
 
-			/* Default styling for caption */
-			& > caption{
-				font-size: calc(var(--table-font-size) * 2.5);
-				padding: var(--table-padding);
+		.table-thead-sticky{
+			& > thead{
+				position: sticky;
+				top: 0;
+				left: 0;
 			}
+		}
 
-			/* Default padding for all cells */
-			& th, td{ padding: var(--table-padding); }
+		.table-container {
+			font-size: 0.7rem;
+			line-height: 1.4;
+			color: var(--color-text-primary);
+			accent-color: var(--color-main-accent);
 
-			&.table-layout-fixed{ table-layout: fixed !important; }
+			/* Surface */
+			overflow: hidden;
+			margin-inline: auto;
+			background: var(--color-main-tint-1);
+			border: 1px solid var(--color-main-tint-4);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
 
-			&.table-thead-sticky{
-				& > thead{
-					position: sticky;
-					top: 0;
-					left: 0;
+			table {
+				width: 100%;
+				border-collapse: separate;
+				border-spacing: 0;
+				min-width: 500px;
+
+				caption {
+					font-size: 0.7rem;
+					text-align: left;
+					color: var(--color-text-secondary);
+
+					background: var(--color-main-tint-1);
+					border-bottom: 1px solid var(--color-main-tint-4);
+					padding: calc(var(--padding) * 2);
 				}
-			}
 
-			/* Table versions */
-			&.table-v1{
-				border-collapse: collapse;
+				thead {
+					th {
+						font-size: 0.6rem;
+						font-weight: bold;
+						color: var(--color-text-secondary);
+						white-space: nowrap;
+						letter-spacing: 0.08em;
+						text-align: left;
 
-				border-block: solid 1px var(--table-border-color);
-
-				& > thead{
-					background-color: var(--color-main-tint-2);
-
-					& > tr{
-						border-block-end: solid 2px var(--table-border-color);
+						background: var(--color-main-tint-1);
+						border-bottom: 1px solid var(--color-main-tint-5);
+						padding: calc(var(--padding) * 3);
 					}
 				}
 
-				& > tbody{
-					& > tr{
-						border-block-end: solid 1px var(--table-border-color);
-					}
-				}
-
-				& > tfoot{
-					background-color: var(--color-main-tint-2);
-				}
-
-				&.table-zebra{
-					& > tbody{
-						& > tr{
-							&:nth-child(odd){
-								background-color: var(--color-main-tint-4);
-							}
-
-							&:nth-child(even){
-								background-color: var(--color-main-tint-3);
-							}
+				tbody {
+					tr {
+						&:nth-child(even) td {
+							background: var(--color-main-tint-3);
 						}
-					}
-				}
 
-				&.table-hover{
-					& > tbody{
-						& > tr{
-							&:hover{
-								background-color: var(--color-main-tint-5);
-							}
+						&:hover td {
+							background: var(--color-main-tint-4);
 						}
-					}
-				}
 
-				&.table-bordered{
-					border: solid 1px var(--table-border-color);
-				}
-			}
-
-			&.table-v2{
-				& > thead{
-					& > tr{
-						& > th{
-							background-color: var(--color-main-tint-10);
-							color: var(--color-text-accent);
-							border-radius: var(--table-radius);
+						&:last-child td {
+							border-bottom: 0;
 						}
-					}
-				}
 
-				& > tbody{
-					& > tr{
-						& > td{
-							border-radius: var(--table-radius);
+						&:has(input[type="checkbox"]:checked) td {
+							background: var(--color-main-tint-5);
+							border-bottom-color: var(--color-main-tint-6);
 						}
-					}
-				}
 
-				& > tfoot{
+						& td {
+							font-size: 0.7rem;
+							vertical-align: middle;
 
-					& > tr{
-						background-color: var(--color-main-tint-9);
-						& > td{
-							color: var(--color-text-accent);
-							border-radius: var(--table-radius);
-						}
-					}
-				}
+							background: var(--color-main-tint-2);
+							border-bottom: 1px solid var(--color-main-tint-4);
+							padding: calc(var(--padding) * 3);
 
-				&.table-zebra{
-					& > tbody{
-						& > tr{
-							&:nth-child(odd){
-								background-color: var(--color-main-tint-4);
-							}
-
-							&:nth-child(even){
-								background-color: var(--color-main-tint-5);
+							& input[type="checkbox"] {
+								width: 0.9rem;
+								height: 0.9rem;
 							}
 						}
 					}
 				}
 
-				&.table-hover{
-					& > tbody{
-						& > tr{
-							&:hover{
-								background-color: var(--color-main-tint-7);
-							}
-						}
+				tfoot {
+					background: var(--color-main-tint-1);
+
+					td {
+						font-size: 0.6rem;
+						font-weight: 500;
+						vertical-align: middle;
+						color: var(--color-text-secondary);
+
+						background: var(--color-main-tint-1);
+						border-top: 1px solid var(--color-main-tint-5);
+						border-bottom: 0;
+						padding: calc(var(--padding) * 3);
 					}
-				}
-
-				&.table-bordered{
-					padding: var(--table-padding);
-					border: solid 1px var(--table-border-color);
-					border-radius: var(--table-radius);
-				}
-			}
-
-			&.table-v4{
-				border-collapse: collapse;
-
-				& > thead{
-					& > tr{
-						& > th{
-							color: var(--color-text-primary);
-						}
-					}
-				}
-
-				& > tbody{
-					& > tr{
-						& > td{
-							border: 1px solid var(--table-border-color);
-						}
-					}
-				}
-
-				& > tfoot{
-					& > tr{
-						& > td{
-							color: var(--color-text-secondary);
-						}
-					}
-				}
-
-				&.table-hover{
-					& > tbody{
-						& > tr{
-							&:hover{
-								background-color: var(--color-main-tint-4);
-							}
-						}
-					}
-				}
-			}
-
-			&.table-v5{
-				border-collapse: collapse;
-
-				& > thead{
-					& > tr{
-						& > th{
-							background-color: var(--color-main-tint-4);
-							color: var(--color-text-primary);
-						}
-					}
-				}
-
-				& > tbody{
-					& > tr{
-					}
-				}
-
-				& > tfoot{
-					& > tr{
-						& > td{
-							background-color: var(--color-main-tint-4);
-							color: var(--color-text-secondary);
-						}
-					}
-				}
-
-				& th, td{
-					&:first-child{
-						border-top-left-radius: var(--table-radius);
-						border-bottom-left-radius: var(--table-radius);
-					}
-
-					&:last-child{
-						border-top-right-radius: var(--table-radius);
-						border-bottom-right-radius: var(--table-radius);
-					}
-				}
-
-				&.table-hover{
-					& > tbody{
-						& > tr{
-							&:hover{
-								background-color: hsla(var(--color-main-hue), 5%, 50%, 0.1);
-							}
-						}
-					}
-				}
-			}
-
-			/* Blueprint for new versions */
-			&.table-vX{
-				& > thead{
-					& > tr{
-					}
-				}
-
-				& > tbody{
-					& > tr{
-					}
-				}
-
-				& > tfoot{
-					background-color: gray;
-				}
-
-				&.table-zebra{
-					& > tbody{
-						& > tr{
-							&:nth-child(odd){
-								background-color: red;
-							}
-
-							&:nth-child(even){
-								background-color: blue;
-							}
-						}
-					}
-				}
-
-				&.table-hover{
-					& > tbody{
-						& > tr{
-							&:hover{
-								background-color: yellow;
-							}
-						}
-					}
-				}
-
-				&.table-bordered{
-					border: solid 1px pink;
 				}
 			}
 		}
+
 	}
 
 	@layer lists{

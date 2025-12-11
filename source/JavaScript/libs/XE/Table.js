@@ -151,11 +151,13 @@ export default class Table extends HTMLElement{
 
 	#build_table = ()=>{
 		this.querySelector("container > main").innerHTML = `
-			<table class="${this.getAttribute("class") || ""}">
-				<thead><tr></tr></thead>
-				<tbody></tbody>
-				<tfoot><tr></tr></tfoot>
-			</table>
+			<section class="table-container">
+				<table>
+					<thead><tr></tr></thead>
+					<tbody></tbody>
+					<tfoot><tr></tr></tfoot>
+				</table>
+			</section>
 		`;
 
 		this.#build_head();
@@ -210,8 +212,6 @@ export default class Table extends HTMLElement{
 		this.querySelector("table > tbody").replaceChildren();
 		this.#lazy_draw_batch(rows);
 		this.#init_observer_lazy_draw(rows);
-
-
 	}
 
 	#build_foot = ()=>{
@@ -282,6 +282,7 @@ export default class Table extends HTMLElement{
 	}
 
 	////////// Sort
+
 	#listen_to_the_sort_clicks = ()=>{
 		for(const id of this.sortable_column_ids){
 			const th_element = this.querySelector(`table > thead > tr > th:nth-child(${id+1})`);
@@ -326,7 +327,7 @@ export default class Table extends HTMLElement{
 		});
 	}
 
-  	// Sort algo DESC
+	// Sort algo DESC
 	#sort_DESC = ()=>{
 		this.body_values.sort((a, b)=>{
 			// Numerical comparison
@@ -427,6 +428,7 @@ export default class Table extends HTMLElement{
 
 
 	//////////////////////////// Footer
+
 	#build_page_numbers_HTML = ()=>{
 		this.querySelector("container > footer > section:nth-child(1) > span.page_numbers").innerHTML = `
 			<span class="text-color-secondary text-size-0-7">Page</span>
@@ -445,6 +447,7 @@ export default class Table extends HTMLElement{
 
 
 	////////////// container > footer > section:nth-child(2)
+
 	#build_page_buttons_HTML = ()=>{
 		let buttons_HTML = "";
 
