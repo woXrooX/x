@@ -1,4 +1,3 @@
-//// JSON to DOM = JTD
 // const form = {
 // 	"form": {
 // 		"attributes": [{"method": "POST"}, {"class": "myForm"}],
