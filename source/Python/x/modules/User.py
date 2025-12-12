@@ -250,9 +250,15 @@ if __name__ != "__main__":
 						username = NULL,
 						eMail = NULL,
 						phone_number = NULL
-					WHERE id=%s AND flag_deleted IS NULL LIMIT 1;
+					WHERE
+						id = %s AND
+						flag_deleted IS NULL
+					LIMIT 1;
 				""",
-				params=[session["user"]["id"], user_id],
+				params=[
+					session["user"]["id"],
+					user_id
+				],
 				commit=True
 			)
 			if data is False: return False
