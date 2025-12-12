@@ -163,7 +163,7 @@ export default class Code extends HTMLElement{
 
 			default:
 				this.code_element.innerText = RAW.handle(this.RAW);
-				console.warn(`Code-Snippet: Not supported language: ${this.attribute_language_value}`);
+				console.warn(`Code: Not supported language: ${this.attribute_language_value}`);
 		}
 	};
 };
