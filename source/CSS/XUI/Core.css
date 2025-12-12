@@ -1024,12 +1024,12 @@
 			overflow-x: auto;
 			margin-inline: auto;
 
-			table {
+			& table {
 				width: 100%;
 				border-collapse: separate;
 				border-spacing: 0;
 
-				caption {
+				& caption {
 					font-size: 0.7rem;
 					text-align: left;
 					color: var(--color-text-secondary);
@@ -1039,8 +1039,8 @@
 					padding: calc(var(--padding) * 2);
 				}
 
-				thead {
-					th {
+				& thead {
+					& th {
 						font-size: 0.6rem;
 						font-weight: bold;
 						color: var(--color-text-secondary);
@@ -1054,8 +1054,8 @@
 					}
 				}
 
-				tbody {
-					tr {
+				& tbody {
+					& tr {
 						/*
 						Zebra
 						&:nth-child(even) td {
@@ -1092,8 +1092,8 @@
 					}
 				}
 
-				tfoot {
-					td {
+				& tfoot {
+					& td {
 						font-size: 0.6rem;
 						font-weight: 500;
 						vertical-align: middle;
@@ -1111,9 +1111,9 @@
 				max-height: calc(90vh - var(--header-height) * 4);
 				overflow-y: auto;
 
-				table {
-					thead {
-						th {
+				& table {
+					& thead {
+						& th {
 							position: sticky;
 							top: 0;
 							left: 0;
