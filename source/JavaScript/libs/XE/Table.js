@@ -65,7 +65,7 @@ export default class Table extends HTMLElement{
 					}</column>
 				</header>
 
-				<main class="scrollbar-x scrollbar-y width-100" style="max-height: calc(90vh - var(--header-height) * 4)"></main>
+				<main class="width-100"></main>
 
 				<footer class="display-flex flex-row s-flex-column flex-x-between gap-1 width-100">
 					<section class="display-flex flex-row flex-x-start flex-y-center gap-0-5 text-size-0-8">
@@ -151,7 +151,7 @@ export default class Table extends HTMLElement{
 
 	#build_table = ()=>{
 		this.querySelector("container > main").innerHTML = `
-			<section class="table-container">
+			<section class="table-container table-thead-sticky scrollbar-x">
 				<table>
 					<thead><tr></tr></thead>
 					<tbody></tbody>

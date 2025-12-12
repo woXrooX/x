@@ -1002,14 +1002,6 @@
 		.table-layout-fixed{ table-layout: fixed; }
 		.table-layout-fixed-important{ table-layout: fixed !important; }
 
-		.table-thead-sticky{
-			& > thead{
-				position: sticky;
-				top: 0;
-				left: 0;
-			}
-		}
-
 		.table-container {
 			/*
 				NOTE for scrollbars:
@@ -1023,7 +1015,7 @@
 			color: var(--color-text-primary);
 			accent-color: var(--color-main-accent);
 
-			background: var(--color-main-tint-1);
+			background: var(--color-main-tint-2);
 			border: 1px solid var(--color-main-tint-4);
 			border-radius: var(--radius);
 			box-shadow: var(--shadow);
@@ -1042,7 +1034,7 @@
 					text-align: left;
 					color: var(--color-text-secondary);
 
-					background: var(--color-main-tint-1);
+					background: var(--color-main-tint-2);
 					border-bottom: 1px solid var(--color-main-tint-4);
 					padding: calc(var(--padding) * 2);
 				}
@@ -1056,7 +1048,7 @@
 						letter-spacing: 0.08em;
 						text-align: left;
 
-						background: var(--color-main-tint-1);
+						background: var(--color-main-tint-2);
 						border-bottom: 1px solid var(--color-main-tint-5);
 						padding: calc(var(--padding) * 3);
 					}
@@ -1064,12 +1056,15 @@
 
 				tbody {
 					tr {
+						/*
+						Zebra
 						&:nth-child(even) td {
 							background: var(--color-main-tint-3);
 						}
+						*/
 
 						&:hover td {
-							background: var(--color-main-tint-4);
+							background: var(--color-main-tint-3);
 						}
 
 						&:last-child td {
@@ -1085,7 +1080,7 @@
 							font-size: 0.7rem;
 							vertical-align: middle;
 
-							background: var(--color-main-tint-2);
+							background: var(--color-main-tint-1);
 							border-bottom: 1px solid var(--color-main-tint-4);
 							padding: calc(var(--padding) * 3);
 
@@ -1098,23 +1093,35 @@
 				}
 
 				tfoot {
-					background: var(--color-main-tint-1);
-
 					td {
 						font-size: 0.6rem;
 						font-weight: 500;
 						vertical-align: middle;
 						color: var(--color-text-secondary);
 
-						background: var(--color-main-tint-1);
+						background: var(--color-main-tint-2);
 						border-top: 1px solid var(--color-main-tint-5);
 						border-bottom: 0;
 						padding: calc(var(--padding) * 3);
 					}
 				}
 			}
-		}
 
+			&.table-thead-sticky {
+				max-height: calc(90vh - var(--header-height) * 4);
+				overflow-y: auto;
+
+				table {
+					thead {
+						th {
+							position: sticky;
+							top: 0;
+							left: 0;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@layer lists{
