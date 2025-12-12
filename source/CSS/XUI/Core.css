@@ -999,11 +999,6 @@
 	}
 
 	@layer table {
-		caption{
-			font-size: calc(0.7rem * 2.5);
-			padding: calc(var(--padding) * 2);
-		}
-
 		.table-layout-fixed{ table-layout: fixed; }
 		.table-layout-fixed-important{ table-layout: fixed !important; }
 
@@ -1016,24 +1011,29 @@
 		}
 
 		.table-container {
+			/*
+				NOTE for scrollbars:
+				To show a scrollbar, add the .scrollbar-x class to this container.
+				If you want the scrollbar to appear outside this container, wrap it in another element
+				and add the .scrollbar-x class to that wrapper instead.
+			*/
+
 			font-size: 0.7rem;
 			line-height: 1.4;
 			color: var(--color-text-primary);
 			accent-color: var(--color-main-accent);
 
-			/* Surface */
-			overflow: hidden;
-			margin-inline: auto;
 			background: var(--color-main-tint-1);
 			border: 1px solid var(--color-main-tint-4);
 			border-radius: var(--radius);
 			box-shadow: var(--shadow);
+			max-width: 100%;
+			margin-inline: auto;
 
 			table {
 				width: 100%;
 				border-collapse: separate;
 				border-spacing: 0;
-				min-width: 500px;
 
 				caption {
 					font-size: 0.7rem;
