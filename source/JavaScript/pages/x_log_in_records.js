@@ -31,7 +31,7 @@ export async function after(){
 
 					<p class="text-size-1-5">db.log_in_records.*</p>
 
-					<x-table class="scrollbar-x table-v1 table-zebra table-hover table-bordered max-width-90vw">
+					<x-table>
 						{
 							"searchable": true,
 							"head": ${JSON.stringify(HEAD)},

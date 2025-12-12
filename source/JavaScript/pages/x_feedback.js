@@ -64,22 +64,24 @@ export async function after(){
 
 		return `
 			<div class="scrollbar-x width-100 surface-v1 padding-1">
-				<table class="table-v1 table-zebra table-hover table-bordered">
-					<caption>${Lang.use("feedback")}</caption>
-					<thead>
-						<tr>
-							<th>Feedback ID</th>
-							<th>User ID</th>
-							<th>${window.Lang.use("fullname")}</th>
-							<th>${window.Lang.use("eMail")}</th>
-							<th>Feedback text</th>
-							<th>Page</th>
-							<th>${window.Lang.use("timestamp")}</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>${HTML}</tbody>
-				</table>
+				<section class="table-container">
+					<table>
+						<caption>${Lang.use("feedback")}</caption>
+						<thead>
+							<tr>
+								<th>Feedback ID</th>
+								<th>User ID</th>
+								<th>${window.Lang.use("fullname")}</th>
+								<th>${window.Lang.use("eMail")}</th>
+								<th>Feedback text</th>
+								<th>Page</th>
+								<th>${window.Lang.use("timestamp")}</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>${HTML}</tbody>
+					</table>
+				</section>
 			</div>
 		`;
 	}

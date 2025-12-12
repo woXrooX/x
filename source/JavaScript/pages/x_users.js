@@ -51,7 +51,7 @@ export async function after(){
 		}
 
 		return `
-			<x-table class="surface-v1 padding-2 table-v1 table-zebra table-hover table-bordered table-thead-sticky width-100">
+			<x-table>
 				{
 					"searchable": true,
 					"head": ${JSON.stringify(HEAD)},

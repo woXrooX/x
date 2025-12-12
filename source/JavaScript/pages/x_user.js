@@ -101,7 +101,7 @@ export async function after(){
 
 		return `
 			<column class="surface-v1 padding-2 gap-1 width-100 flex-y-start">
-				<x-table class="scrollbar-x table-v1 table-zebra table-hover table-bordered width-100">
+				<x-table>
 					{
 						"searchable": true,
 						"head": ${JSON.stringify(HEAD)},
