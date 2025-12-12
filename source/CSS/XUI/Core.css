@@ -1027,7 +1027,9 @@
 			border: 1px solid var(--color-main-tint-4);
 			border-radius: var(--radius);
 			box-shadow: var(--shadow);
+
 			max-width: 100%;
+			overflow-x: auto;
 			margin-inline: auto;
 
 			table {
