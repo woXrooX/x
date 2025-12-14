@@ -18,7 +18,7 @@ export async function after(){
 
 		let HTML = '';
 
-		for(let cell of feedback){
+		for(let cell of feedback) {
 			let feedback_text = cell["feedback_text"];
 			if(feedback_text.length > 10) feedback_text = `
 				<span id="modal_feedback_${cell["id"]}">${cell["feedback_text"].slice(0, 10)}...</span>
@@ -63,26 +63,24 @@ export async function after(){
 		}
 
 		return `
-			<div class="scrollbar-x width-100 surface-v1 padding-1">
-				<section class="table-container">
-					<table>
-						<caption>${Lang.use("feedback")}</caption>
-						<thead>
-							<tr>
-								<th>Feedback ID</th>
-								<th>User ID</th>
-								<th>${window.Lang.use("fullname")}</th>
-								<th>${window.Lang.use("eMail")}</th>
-								<th>Feedback text</th>
-								<th>Page</th>
-								<th>${window.Lang.use("timestamp")}</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-						<tbody>${HTML}</tbody>
-					</table>
-				</section>
-			</div>
+			<section class="table-container width-100">
+				<table>
+					<caption>${Lang.use("feedback")}</caption>
+					<thead>
+						<tr>
+							<th>Feedback ID</th>
+							<th>User ID</th>
+							<th>${window.Lang.use("fullname")}</th>
+							<th>${window.Lang.use("eMail")}</th>
+							<th>Feedback text</th>
+							<th>Page</th>
+							<th>${window.Lang.use("timestamp")}</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>${HTML}</tbody>
+				</table>
+			</section>
 		`;
 	}
 }
