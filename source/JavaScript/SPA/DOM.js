@@ -53,12 +53,19 @@ export default class DOM{
 		Loading.on_element_start(parent_element);
 
 		try {
+			// Yield until the next paint, so the browser can render the "loading" state
+			// Before we start the heavy DOM work (double RAF is more reliable than single).
+			await new Promise(RAF => requestAnimationFrame(RAF));
+			await new Promise(RAF => requestAnimationFrame(RAF));
+
+			const HTML = await callback(parent_element, ...args);
+
 			if (options["method"] == "innerHTML") {
-				if (options["position"] == '=') parent_element.innerHTML = await callback(parent_element, ...args);
-				if (options["position"] == "+=") parent_element.innerHTML += await callback(parent_element, ...args);
+				if (options["position"] == '=') parent_element.innerHTML = HTML;
+				if (options["position"] == "+=") parent_element.innerHTML += HTML;
 			}
 
-			else if (options["method"] == "insertAdjacentHTML") parent_element.insertAdjacentHTML(options["position"], await callback(parent_element, ...args));
+			else if (options["method"] == "insertAdjacentHTML") parent_element.insertAdjacentHTML(options["position"], HTML);
 		}
 
 		catch (error) {
