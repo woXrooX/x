@@ -23,7 +23,7 @@ export async function after(){
 
 	async function build_actions_HTML(){
 		return `
-			<row class="padding-1 surface-v1 gap-0-5 flex-row flex-x-start">
+			<row class="padding-2 surface-v1 gap-0-5 flex-row flex-x-start">
 				<x-svg
 					name="mark_eMail_read"
 
