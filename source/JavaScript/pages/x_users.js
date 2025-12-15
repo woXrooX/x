@@ -2,7 +2,7 @@ export function before(){
 	window.x.Head.set_title("users");
 }
 
-export default async function main(){ return `<container id="page_x_users" class="padding-5 gap-1"></container>`; }
+export default async function main(){ return `<container id="page_x_users" class="padding-5 gap-0-5 max-width-1500px"></container>`; }
 
 export async function after(){
 	const container = document.querySelector("container#page_x_users");
@@ -51,7 +51,7 @@ export async function after(){
 		}
 
 		return `
-			<x-table>
+			<x-table class="surface-v1 padding-2 width-100">
 				{
 					"searchable": true,
 					"head": ${JSON.stringify(HEAD)},

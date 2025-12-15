@@ -3,7 +3,7 @@ export function before(){
 }
 
 export default function main(){
-	return `<container class="padding-5 gap-1"></container>`;
+	return `<container class="padding-5 gap-0-5 max-width-1500px"></container>`;
 }
 
 export async function after(){
@@ -100,8 +100,8 @@ export async function after(){
 		for(const i in resp) BODY.push(Object.values(resp[i]));
 
 		return `
-			<column class="surface-v1 padding-2 gap-1 width-100 flex-y-start">
-				<x-table>
+			<column class="surface-v1 padding-2 width-100">
+				<x-table class="width-100">
 					{
 						"searchable": true,
 						"head": ${JSON.stringify(HEAD)},
