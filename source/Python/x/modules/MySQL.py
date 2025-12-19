@@ -55,7 +55,7 @@ if __name__ != "__main__":
 			MySQL.get_user_authenticity_statuses()
 			MySQL.get_user_roles()
 			MySQL.get_user_occupations()
-			MySQL.get_cron_job_events()
+			MySQL.get_Cron_Job_events()
 			MySQL.get_notification_events()
 			MySQL.get_notification_types()
 
@@ -307,10 +307,10 @@ if __name__ != "__main__":
 			for user_occupation in data: Globals.USER_OCCUPATIONS[user_occupation["name"]] = user_occupation
 
 		@staticmethod
-		def get_cron_job_events():
-			data = MySQL.execute("SELECT * FROM cron_job_events")
-			if data is False: return Log.fieldset("Could Not Fetch 'cron_job_events'", "MySQL.cron_job_events()", "error")
-			for cron_job_event in data: Globals.CRON_JOB_EVENTS[cron_job_event["name"]] = cron_job_event
+		def get_Cron_Job_events():
+			data = MySQL.execute("SELECT * FROM Cron_Job_events")
+			if data is False: return Log.fieldset("Could Not Fetch 'Cron_Job_events'", "MySQL.Cron_Job_events()", "error")
+			for Cron_Job_event in data: Globals.CRON_JOB_EVENTS[Cron_Job_event["name"]] = Cron_Job_event
 
 
 		@staticmethod
