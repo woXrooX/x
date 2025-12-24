@@ -84,9 +84,10 @@ export default class Form{
 		form_data.append("for", event.target.getAttribute("for"));
 
 		// DEV: Log FormData
-		// for(const [key, value] of form_data.entries()) console.log(`${key}: ${value}`);
+		// for (const [key, value] of form_data.entries()) console.log(`${key}: ${value}`);
 
-		let response = await window.x.Request.make(form_data, event.target.action, event.target.enctype);
+		// event.target.enctype = application/x-www-form-urlencoded
+		let response = await window.x.Request.make(form_data, event.target.action, "multipart/form-data");
 
 		// DEV: Data from Back-End
 		// Log.info(response);
