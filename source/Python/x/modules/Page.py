@@ -16,6 +16,7 @@ if __name__ != "__main__":
 	from Python.x.modules.Globals import Globals
 	from Python.x.modules.Logger import Log
 	from Python.x.modules.Response import Response
+	from Python.x.modules.CSRF import validate_CSRF_token
 
 	class Page():
 		@staticmethod
@@ -33,6 +34,11 @@ if __name__ != "__main__":
 
 					# If it is a "GET" request, it will always just returns the "index.html"
 					if request.method == "GET": return render_template("index.html", **globals())
+
+					CSRF_token = request.headers.get("x-CSRF-token")
+					if not CSRF_token: return Response.make(type="error", message="Missing x-CSRF-token header", HTTP_response_status_code=400)
+					if validate_CSRF_token(CSRF_token) is False: return Response.make(type="error", message="Forbidden", HTTP_response_status_code=403)
+
 
 					ret_val = func(*args, **kwargs, request=request)
 					if ret_val is None: return Response.make(RAW=("No Response", 444, {'Content-Type': 'text/plain; charset=utf-8'}))

@@ -47,9 +47,13 @@ from Python.x.modules.SEO.Sitemap import Sitemap
 Sitemap.generate()
 
 
+
+
 #################################################### Generating robots
 from Python.x.modules.SEO.Robots import Robots
 Robots.generate()
+
+
 
 
 #################################################### Initializing MySQL
@@ -57,14 +61,20 @@ from Python.x.modules.MySQL import MySQL
 MySQL.init()
 
 
+
+
 #################################################### Initializing Twilio
 from Python.x.modules.Twilio import Twilio
 Twilio.init()
 
 
+
+
 #################################################### Initializing Stripe
 from Python.x.modules.Stripe.Stripe import Stripe
 Stripe.init()
+
+
 
 
 #################################################### Flask APP
@@ -73,22 +83,47 @@ app = Flask(
 	root_path = Globals.CONF["flask"]["root_path"],
 	template_folder = Globals.CONF["flask"]["template_folder"],
 	static_folder = Globals.CONF["flask"]["static_folder"],
-	static_url_path = Globals.CONF["flask"]["static_url_path"]
+	static_url_path = Globals.CONF["flask"]["static_URL_path"]
+)
+
+app.config.update(
+	# JavaScript cannot read the cookie
+	SESSION_COOKIE_HTTPONLY = True,
+
+	# Cookie only sent over HTTPS
+	SESSION_COOKIE_SECURE = True,
+
+	# Blocks cookies on cross-site POSTs
+	SESSION_COOKIE_SAMESITE = "Lax"
 )
 
 
-#################################################### Secret Key
+
+
+#################################################### CSRF token
+from Python.x.modules.CSRF import get_CSRF_token
+app.jinja_env.globals["get_CSRF_token"] = get_CSRF_token
+
+
+
+
+#################################################### Secret key
 import os
-# Disable random secret_key assignment on each server restart when debug is True
+
+# Debugging mode static secret_key
 if Globals.CONF.get("tools", {}).get("debug") is True: app.secret_key = b'12345'
 
 # Generates new "secret_key" every time when server is started
 else: app.secret_key = os.urandom(24)
 
 
+
+
 #################################################### Permanent session
 from datetime import timedelta
 app.permanent_session_lifetime = timedelta(days=31)
+
+
 
 
 #################################################### On app start
@@ -97,6 +132,8 @@ try:
 	init()
 
 except Exception as e: Log.error(e)
+
+
 
 
 #################################################### Default Flask Decorations
@@ -124,8 +161,12 @@ def before_request():
 	# return None
 
 
+
+
 #################################################### Dynamically Imprting All Pages
 from Python.live_pages import *
+
+
 
 
 #################################################### RUN using Flask (For Development)
