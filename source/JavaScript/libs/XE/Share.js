@@ -11,7 +11,7 @@ export default class Share extends HTMLElement{
 		};
 
 		this.innerHTML = `
-			<x-svg name="share" id="modal_x_share"></x-svg>
+			<x-svg name="upload" id="modal_x_share"></x-svg>
 			<x-modal trigger_selector="x-svg#modal_x_share">
 				<row class="flex-row flex-x-between padding-2 gap-1 text-size-2">
 					<a href="https://x.com/intent/tweet?url=${data.URL}&text=${data.content}" target="_blank">
