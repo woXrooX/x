@@ -5,10 +5,19 @@
 				font-size: 22px;
 
 				/* Screen sizes */
-				--screen-size-phone: 600px;  		/* s */
-				--screen-size-tablet: 768px; 		/* m */
-				--screen-size-desktop: 992px;		/* l */
-				--screen-size-TV: 1200px;			/* xl */
+
+				/* s */
+				--screen-width-phone: 600px;
+
+				/* m */
+				--screen-width-tablet: 768px;
+
+				/* l */
+				--screen-width-desktop: 992px;
+
+				/* xl */
+				--screen-width-TV: 1200px;
+
 
 				/* Default color schema starts with dark mode */
 				--color-main-hue: 230deg;
@@ -1357,8 +1366,8 @@
 		}
 	}
 
-	@layer sizing{
-		@layer width{
+	@layer sizing {
+		@layer width {
 			.width-auto{width: auto;}
 			.width-fit-content{width: fit-content;}
 			.width-min-content{width: min-content;}
@@ -2684,7 +2693,13 @@
 
 		@layer color{
 			.border-color-none { border-color: none; }
+
 			.border-color-transparent { border-color: transparent; }
+			.border-left-color-transparent-important{ border-left-color: transparent !important; }
+			.border-top-color-transparent-important{ border-top-color: transparent !important; }
+			.border-right-color-transparent-important{ border-right-color: transparent !important; }
+			.border-bottom-color-transparent-important{ border-bottom-color: transparent !important; }
+
 
 			.border-color-main{border-color: var(--color-main);}
 
@@ -2737,6 +2752,7 @@
 		}
 
 		@layer width{
+			.border-width-0-5px{border-width: 0.5px !important;}
 			.border-width-1px{border-width: 1px !important;}
 			.border-width-2px{border-width: 2px !important;}
 			.border-width-3px{border-width: 3px !important;}
