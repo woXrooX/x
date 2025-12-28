@@ -2761,6 +2761,7 @@
 		}
 
 		@layer radius{
+			.radius-none{border-radius: none;}
 			.radius-unset{border-radius: unset;}
 
 			.radius-default{border-radius: var(--radius);}
