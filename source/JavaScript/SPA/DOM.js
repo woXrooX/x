@@ -33,6 +33,13 @@ export default class DOM{
 			}
 	}
 
+
+	/*
+		"beforebegin" → before the element itself (as a sibling)
+		"afterbegin" → inside, at the top
+		"beforeend" → inside, at the bottom
+		"afterend" → after the element itself (as a sibling)
+	*/
 	static async build(
 		parent_selector,
 		callback,
