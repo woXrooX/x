@@ -2065,6 +2065,8 @@
 	}
 
 	@layer display{
+		.visibility-hidden { visibility: hidden; }
+
 		/* none */
 		.display-none{display: none;}
 		.display-none-important{display: none !important;}
