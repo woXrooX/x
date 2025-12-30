@@ -1,63 +1,97 @@
 export default class Share extends HTMLElement{
-	constructor(){
+	#native_data = {};
+	#encoded_data = {};
+
+	constructor() {
 		super();
 
-		const data = {
-			title: encodeURIComponent(document.title),
-			content: encodeURIComponent(document.querySelector('meta[name="description"]')?.getAttribute('content') || ''),
+		this.innerHTML = `<x-svg name="upload" id="modal_x_share"></x-svg>`;
 
-			// If Share URL is not HTTPS it won't work on: Facebook, Linkedin
-			URL: encodeURIComponent(window.location.href)
+		this.querySelector("x-svg#modal_x_share").addEventListener("click", async (event)=>{
+			event.preventDefault();
+
+			this.#construct_data();
+			await this.#native_UI();
+			this.#custom_UI();
+		});
+	}
+
+	#construct_data() {
+		this.#native_data = {
+			title: document.querySelector('meta[property="og:title"]')?.getAttribute("content") || document.title,
+			text:
+				document.querySelector('meta[property="og:description"]')?.getAttribute("content") ||
+				document.querySelector('meta[name="description"]')?.getAttribute("content") ||
+				'',
+
+			url: document.querySelector('meta[property="og:url"]')?.getAttribute("content") || window.location.href
 		};
 
-		this.innerHTML = `
-			<x-svg name="upload" id="modal_x_share"></x-svg>
-			<x-modal trigger_selector="x-svg#modal_x_share">
-				<row class="flex-row flex-x-between padding-2 gap-1 text-size-2">
-					<a href="https://x.com/intent/tweet?url=${data.URL}&text=${data.content}" target="_blank">
-						<x-svg name="x_original"></x-svg>
-					</a>
+		this.#encoded_data = {
+			title: encodeURIComponent(this.#native_data.title),
+			text: encodeURIComponent(this.#native_data.text),
+			url: encodeURIComponent(this.#native_data.url)
+		};
+	}
 
-					<a href="https://www.linkedin.com/sharing/share-offsite/?url=${data.URL}&title=${data.title}&summary=${data.content}&source=${data.URL}" target="_blank">
-						<x-svg name="linkedin_original"></x-svg>
-					</a>
+	async #native_UI() {
+		if (!navigator.share) return;
 
-					<a href="https://www.facebook.com/sharer.php?u=${data.URL}&quote=${data.content}" target="_blank">
-						<x-svg name="facebook_original"></x-svg>
-					</a>
+		try { await navigator.share(this.#native_data); }
+		catch(err) { window.Log.error(`x-share error: ${err}`); }
+	}
 
-					<a href="https://www.reddit.com/submit?selftext=${data.content}&title=${data.title}&url=${data.URL}" target="_blank">
-						<x-svg name="reddit_original"></x-svg>
-					</a>
+	#custom_UI() {
+		if (navigator.share) return;
 
-					<a href="https://t.me/share/url?url=${data.URL}&text=${data.content}" target="_blank">
-						<x-svg name="telegram_original"></x-svg>
-					</a>
+		// Capture the component instance
+		const self = this;
 
-					<a>
-						<x-svg
-							name="link"
-							onclick="
-								try {
-									navigator.clipboard.writeText(window.location.href);
-									x.Toast.new('success', 'Link copied!');
-								}
+		Modal.push_func(async function x_share_copy_to_clipboard() {
+			const copy_button = Modal.element_main.querySelector("#x_share_copy_link");
+			if (!copy_button) return;
 
-								catch(err) { x.Toast.new('error', 'Copy failed: ' + err); }
-							"
-						></x-svg>
-					</a>
-				</row>
-			</x-modal>
+			copy_button.addEventListener("click", async (e)=>{
+				e.preventDefault();
+
+				try {
+					await navigator.clipboard.writeText(self.#native_data.url);
+					x.Toast.new('success', 'Link copied!');
+				}
+
+				catch(err) { x.Toast.new('error', 'Copy failed: ' + err); }
+			}, { once: true });
+		});
+
+		const modal_DOM = `
+			<row class="flex-row flex-x-between padding-2 gap-1 text-size-2">
+				<a href="https://x.com/intent/tweet?text=${this.#encoded_data.text}&url=${this.#encoded_data.url}" target="_blank" rel="noopener noreferrer">
+					<x-svg name="x_original"></x-svg>
+				</a>
+
+				<a href="https://www.linkedin.com/sharing/share-offsite/?url=${this.#encoded_data.url}" target="_blank" rel="noopener noreferrer">
+					<x-svg name="linkedin_original"></x-svg>
+				</a>
+
+				<a href="https://www.facebook.com/sharer/sharer.php?u=${this.#encoded_data.url}" target="_blank" rel="noopener noreferrer">
+					<x-svg name="facebook_original"></x-svg>
+				</a>
+
+				<a href="https://www.reddit.com/submit?url=${this.#encoded_data.url}&title=${this.#encoded_data.title}" target="_blank" rel="noopener noreferrer">
+					<x-svg name="reddit_original"></x-svg>
+				</a>
+
+				<a href="https://t.me/share/url?url=${this.#encoded_data.url}&text=${this.#encoded_data.text}" target="_blank" rel="noopener noreferrer">
+					<x-svg name="telegram_original"></x-svg>
+				</a>
+
+				<a href="#" id="x_share_copy_link">
+					<x-svg name="link"></x-svg>
+				</a>
+			</row>
 		`;
 
-		this.querySelector("x-modal").onclick = async ()=>{
-			if(!!navigator.share === true)
-				try{ await navigator.share(data); }
-				catch(err){ window.Log.error(`x-share error: ${err}`); }
-
-			else window.Log.warning("No native support for 'navigator.share' on this device!");
-		};
+		Modal.show(modal_DOM, "x_share_copy_to_clipboard");
 	}
 };
 
