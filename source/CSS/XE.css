@@ -1,3 +1,11 @@
+x-link{
+	cursor: pointer;
+	&:not([class]){
+		color: var(--color-text-secondary);
+		&:hover{ color: var(--color-text-error); }
+	}
+}
+
 @layer x_marquee {
 	x-marquee {
 		--x-marquee-gap: var(--gap);
@@ -119,6 +127,43 @@ x-select{
 	}
 }
 
+x-share {
+	display: inline-flex;
+	align-items: center;
+	line-height: 0;
+}
+
+x-tooltip {
+	position: absolute;
+	top: anchor(bottom);
+	left: anchor(center);
+	z-index: var(--z-tooltip);
+	transform: translate(-50%, var(--padding)) scale(0.5);
+
+	overflow: hidden;
+	pointer-events: none;
+	opacity: 0;
+	transition: var(--transition-velocity);
+	transition-property: opacity, transform;
+	will-change: opacity, transform;
+
+	background-color: var(--color-hsla-0-0-100-0-1);
+	color: var(--color-text-primary);
+	border-radius: var(--radius);
+	border: 1px solid var(--color-main-tint-2);
+	box-shadow: var(--shadow);
+	backdrop-filter: blur(var(--blur));
+
+	display: grid;
+	place-items: center;
+
+	&.show {
+		pointer-events: all;
+		opacity: 1;
+		transform: translate(-50%, var(--padding)) scale(1);
+	}
+}
+
 x-urgent{
 	& > dialog{
 		pointer-events: none;
@@ -201,76 +246,6 @@ x-urgent{
 		&:empty{
 			pointer-events: none;
 		}
-	}
-}
-
-x-tooltip{
-	& > content{
-		pointer-events: none;
-
-		display: block;
-		opacity: 0;
-		background-color: hsla(var(--color-main-hue), 10%, 10%, 1);
-		color: white;
-		font-size: 0.7rem;
-
-		max-width: 40vw;
-		width: max-content;
-		height: max-content;
-
-		padding: var(--padding);
-		border-radius: var(--radius);
-		box-shadow: var(--shadow);
-
-		position: absolute;
-		z-index: var(--z-tooltip);
-
-		transition: var(--transition-velocity) ease-in-out;
-		transition-property: opacity;
-
-		&.show{
-			pointer-events: all;
-			opacity: 1;
-		}
-	}
-}
-
-x-link{
-	cursor: pointer;
-	&:not([class]){
-		color: var(--color-text-secondary);
-		&:hover{ color: var(--color-text-error); }
-	}
-}
-
-x-tooltip {
-	position: absolute;
-	top: anchor(bottom);
-	left: anchor(center);
-	z-index: var(--z-tooltip);
-	transform: translate(-50%, var(--padding)) scale(0.5);
-
-	overflow: hidden;
-	pointer-events: none;
-	opacity: 0;
-	transition: var(--transition-velocity);
-	transition-property: opacity, transform;
-	will-change: opacity, transform;
-
-	background-color: var(--color-hsla-0-0-100-0-1);
-	color: var(--color-text-primary);
-	border-radius: var(--radius);
-	border: 1px solid var(--color-main-tint-2);
-	box-shadow: var(--shadow);
-	backdrop-filter: blur(var(--blur));
-
-	display: grid;
-	place-items: center;
-
-	&.show {
-		pointer-events: all;
-		opacity: 1;
-		transform: translate(-50%, var(--padding)) scale(1);
 	}
 }
 
