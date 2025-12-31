@@ -1457,6 +1457,8 @@
 			.width-1000px{width: 1000px;}
 
 			@layer min_width{
+				.min-width-fit-content{ min-width: fit-content; }
+
 				/* min-width % */
 				.min-width-10{min-width: 10%;}
 				.min-width-15{min-width: 15%;}
@@ -1738,6 +1740,8 @@
 			.height-3rem{height: 3rem;}
 
 			@layer min_height{
+				.min-height-fit-content{ min-height: fit-content; }
+
 				.min-height-0{min-height: 0;}
 
 				/* min-height % */
