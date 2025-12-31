@@ -139,22 +139,35 @@ except Exception as e: Log.error(e)
 #################################################### Default Flask Decorations
 from Python.x.modules.route_guard import route_logs
 
-def before_first_request():
+def app_before_first_request():
 	try:
 		from Python.project.modules.before_first_request import before_first_request
 		before_first_request()
 
 	except Exception as e: Log.error(e)
 
-with app.app_context(): before_first_request()
+with app.app_context(): app_before_first_request()
+
 
 @app.before_request
-def before_request():
+def app_before_request():
 	route_logs()
 
-# @app.after_request
-# def after_request(response):
-	# return response
+	try:
+		from Python.project.modules.before_request import before_request
+		before_request()
+
+	except Exception as e: Log.error(e)
+
+@app.after_request
+def app_after_request(response):
+	try:
+		from Python.project.modules.after_request import after_request
+		after_request()
+
+	except Exception as e: Log.error(e)
+
+	return response
 
 # @app.teardown_request
 # def teardown_request_func(error=None):

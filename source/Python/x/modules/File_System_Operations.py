@@ -59,11 +59,16 @@ if __name__ != "__main__":
 			################################ Creating files
 			Log.center("Creating files", '=')
 			File_System.create_file(f"{Globals.PROJECT_PATH}/CSS/styles.css", strict=True)
+
 			File_System.create_file(f"{Globals.PROJECT_PATH}/HTML/head.html", strict=True)
 			File_System.create_file(f"{Globals.PROJECT_PATH}/HTML/body.html", strict=True)
+
 			File_System.create_file(f"{Globals.PROJECT_PATH}/JavaScript/modules/header.js", 'export default function header(){\n\treturn "Header";\n}', strict=True)
 			File_System.create_file(f"{Globals.PROJECT_PATH}/JavaScript/modules/footer.js", 'export default function footer(){\n\treturn Lang.use("powered_by_woXrooX");\n}', strict=True)
+
+			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/after_request.py", 'if __name__ != "__main__":\n\tdef after_request(): pass')
 			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/before_first_request.py", 'if __name__ != "__main__":\n\tdef before_first_request(): pass')
+			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/before_request.py", 'if __name__ != "__main__":\n\tdef before_request(): pass')
 			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/on_app_start.py", 'if __name__ != "__main__":\n\tdef init(): pass')
 			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/on_sign_up.py", 'if __name__ != "__main__":\n\tdef on_sign_up(): pass')
 			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/on_log_in.py", 'if __name__ != "__main__":\n\tdef on_log_in(): pass')
