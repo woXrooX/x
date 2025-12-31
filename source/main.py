@@ -163,7 +163,7 @@ def app_before_request():
 def app_after_request(response):
 	try:
 		from Python.project.modules.after_request import after_request
-		after_request()
+		return after_request(response)
 
 	except Exception as e: Log.error(e)
 
