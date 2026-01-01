@@ -457,6 +457,23 @@ body{
 	}
 }
 
+@layer z_indexes {
+	.z_minus { z-index: var(--z-minus); }
+	.z_body { z-index: var(--z-body); }
+	.z_footer { z-index: var(--z-footer); }
+	.z_main { z-index: var(--z-main); }
+	.z_header { z-index: var(--z-header); }
+	.z_menu_show_button { z-index: var(--z-menu_show_button); }
+	.z_cover { z-index: var(--z-cover); }
+	.z_menu { z-index: var(--z-menu); }
+	.z_modal { z-index: var(--z-modal); }
+	.z_layers { z-index: var(--z-layers); }
+	.z_toasts { z-index: var(--z-toasts); }
+	.z_tooltip { z-index: var(--z-tooltip); }
+	.z_loading { z-index: var(--z-loading); }
+	.z_urgent { z-index: var(--z-urgent); }
+}
+
 @layer observer_animations{
 	.observe{
 		--observe-duration: 500ms;
