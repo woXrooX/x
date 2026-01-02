@@ -24,33 +24,31 @@ export async function after(){
 	async function build_actions_HTML(){
 		return `
 			<row class="padding-2 surface-v1 gap-0-5 flex-row flex-x-start">
-				<x-svg
-					name="mark_eMail_read"
-
-					XR-post
-					XR-for="resend_eMail_confirmation"
-
-					x-toast="on:any:message"
-
-					class="btn btn-info"
-				></x-svg>
-
-
+				${build_modal_XR_resend_eMail_confirmation_HTML()}
 				${await build_modal_form_update_roles_HTML()}
-
-
-				<x-svg
-					name="delete"
-
-					XR-post
-					XR-for="delete_user"
-
-					x-toast="on:any:message"
-
-					class="btn btn-error"
-				></x-svg>
+				${build_modal_XR_delete_user_HTML()}
 			</row>
 		`;
+
+		function build_modal_XR_resend_eMail_confirmation_HTML(){
+			return `
+				<x-svg id="modal_XR_resend_eMail_confirmation" name="mark_eMail_read" color="white" class="btn btn-info"></x-svg>
+				<x-modal trigger_selector="x-svg#modal_XR_resend_eMail_confirmation">
+					<column class="gap-1 padding-2">
+						<p class="text-size-1-1">Are you sure you want to resend email confirmation?</p>
+						<button
+							XR-post
+							XR-for="resend_eMail_confirmation"
+
+							x-toast="on:any:message"
+							x-modal="on:success:hide"
+
+							class="btn btn-success"
+						>Yes, resend!</button>
+					</column>
+				</x-modal>
+			`;
+		}
 
 		async function build_modal_form_update_roles_HTML(){
 			let user_roles = await window.x.Request.make({for:"get_user_roles"});
@@ -74,6 +72,26 @@ export async function after(){
 						${HTML}
 						<button type="submit" class="btn btn-primary"><x-svg name="save" color="white"></x-svg></button>
 					</form>
+				</x-modal>
+			`;
+		}
+
+		function build_modal_XR_delete_user_HTML(){
+			return `
+				<x-svg id="modal_XR_delete_user" name="delete" color="white" class="btn btn-error"></x-svg>
+				<x-modal trigger_selector="x-svg#modal_XR_delete_user">
+					<column class="gap-1 padding-2">
+						<p class="text-size-1-1">Are you sure you want to delete this user?</p>
+						<button
+							XR-post
+							XR-for="delete_user"
+
+							x-toast="on:any:message"
+							x-modal="on:success:hide"
+
+							class="btn btn-error"
+						>Yes, delete!</button>
+					</column>
 				</x-modal>
 			`;
 		}
