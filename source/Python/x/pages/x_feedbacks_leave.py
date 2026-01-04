@@ -11,10 +11,10 @@ from Python.x.modules.IP_address_tools import extract_IP_address_from_request
 # @Page.build({
 # 	"enabled": False,
 # 	"methods": ["POST"],
-# 	"endpoints": ["/x/feedback/leave"]
+# 	"endpoints": ["/x/feedbacks/leave"]
 # })
 @Page.build()
-def x_feedback_leave(request):
+def x_feedbacks_leave(request):
 	if request.method == "POST":
 		if "multipart/form-data" in request.content_type.split(';'):
 			if request.form["for"] == "leave_feedback":
@@ -40,7 +40,7 @@ def x_feedback_leave(request):
 
 				data = MySQL.execute(
 					sql="""
-						INSERT INTO feedback
+						INSERT INTO feedbacks
 							(ip_address, user_agent, feedback_left_page, created_by_user, fullname, eMail, feedback_text)
 						VALUES (%s, %s, %s, %s, %s, %s, %s);
 					""",

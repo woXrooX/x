@@ -401,10 +401,10 @@ CREATE TABLE IF NOT EXISTS `password_reset_requests` (
 
 
 -- ------------------------------------
--- ------------------------------------ Feedback
+-- ------------------------------------ Feedbacks
 -- ------------------------------------
-\! echo "-------------------------- feedback";
-CREATE TABLE IF NOT EXISTS `feedback` (
+\! echo "-------------------------- feedbacks";
+CREATE TABLE IF NOT EXISTS `feedbacks` (
 	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
 
 	`ip_address` VARCHAR(45),

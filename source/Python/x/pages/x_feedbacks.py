@@ -7,21 +7,21 @@ from Python.x.modules.Response import Response
 # @Page.build({
 # 	"enabled": False,
 # 	"methods": ["GET", "POST"],
-# 	"endpoints": ["/x/feedback"]
+# 	"endpoints": ["/x/feedbacks"]
 # })
 @Page.build()
-def x_feedback(request):
+def x_feedbacks(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":
-			if request.get_json()["for"] == "get_all_feedback":
+			if request.get_json()["for"] == "get_all_feedbacks":
 				data = MySQL.execute("""
 					SELECT
-						feedback.*,
+						feedbacks.*,
 						CONCAT(users.first_name, ' ', users.last_name) AS users_fullname,
 						users.eMail AS users_eMail
-					FROM feedback
-					LEFT JOIN users ON users.id = feedback.created_by_user
-					WHERE feedback.flag_deleted IS NULL;
+					FROM feedbacks
+					LEFT JOIN users ON users.id = feedbacks.created_by_user
+					WHERE feedbacks.flag_deleted IS NULL;
 				""")
 				if data == False: return Response.make(type="error", message="database_error")
 
@@ -32,13 +32,13 @@ def x_feedback(request):
 
 				data = MySQL.execute(
 					sql="""
-						UPDATE feedback
+						UPDATE feedbacks
 						SET
-							feedback.flag_deleted = NOW(),
-							feedback.flag_deleted_by_user = %s
+							feedbacks.flag_deleted = NOW(),
+							feedbacks.flag_deleted_by_user = %s
 						WHERE
-							feedback.id = %s AND
-							feedback.flag_deleted IS NULL
+							feedbacks.id = %s AND
+							feedbacks.flag_deleted IS NULL
 						LIMIT 1;
 					""",
 					params=[
