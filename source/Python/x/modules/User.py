@@ -1,5 +1,5 @@
 if __name__ != "__main__":
-	import os
+	import os, re
 	import shutil
 
 	from main import session
@@ -84,6 +84,39 @@ if __name__ != "__main__":
 
 			return True
 
+
+		@staticmethod
+		@check_if_user_in_session
+		def update_username(new_username):
+			if not new_username: return False
+			if not re.match(Globals.CONF["username"]["regEx"], new_username): return False
+
+			old_username = MySQL.execute(
+				sql="SELECT username FROM users WHERE id = %s;",
+				params=[session["user"]["id"]],
+				fetch_one=True
+			)
+			if old_username is False: return False
+
+			update_username = MySQL.execute(
+				sql="UPDATE users SET username = %s WHERE id = %s;",
+				params=[new_username, session["user"]["id"]],
+				commit=True,
+				include_MySQL_data=True
+			)
+			if update_username is False: return False
+			if 'error' in update_username and update_username['error_no'] == 1062: return False
+			if 'error' in update_username: return False
+
+			if old_username["username"] is not None:
+				username_history = MySQL.execute(
+					sql="INSERT INTO username_history (user, old_username, new_username) VALUES (%s, %s, %s);",
+					params=[session["user"]["id"], old_username["username"], new_username],
+					commit=True
+				)
+				if username_history is False: return False
+
+			return True
 
 		# Sanitized Session Data For Front
 		@staticmethod

@@ -228,6 +228,20 @@ CREATE TABLE IF NOT EXISTS `users_occupations` (
 	CONSTRAINT `unique_users_occupations` UNIQUE (`user`, `occupation`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+\! echo "-------------------------- username_history";
+CREATE TABLE IF NOT EXISTS `username_history`(
+	`id` BIGINT NOT NULL UNIQUE auto_increment,
+	`user` INT NOT NULL,
+
+	`old_username` VARCHAR(100) NOT NULL,
+	`new_username` VARCHAR(100) NOT NULL,
+
+	`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+	FOREIGN KEY (`user`) REFERENCES users(id),
+
+	PRIMARY KEY (`id`)
+);
 
 
 
