@@ -1,3 +1,133 @@
+@layer x_layer {
+	body > x-layers {
+		--x-layers-stack-gap: 45px;
+		--x-layers-bottom-gap: 10px;
+		--x-layers-animation-velocity: 300ms;
+		--x-layers-animation-timing-function: ease-in-out;
+		--x-layers-scale-gap: 0.05;
+
+		& > container {
+			width: 100vw;
+			height: 100vh;
+
+			position: fixed;
+			inset: 0;
+			z-index: var(--z-layers);
+
+			&.removing {
+				& > cover {
+					animation: x_layer_cover_fade_out var(--x-layers-animation-velocity) var(--x-layers-animation-timing-function) forwards;
+				}
+
+				& > layer {
+					animation: x_layer_fade_out var(--x-layers-animation-velocity) var(--x-layers-animation-timing-function) forwards;
+				}
+			}
+
+			& > cover {
+				pointer-events: none;
+
+				background-color: rgba(0, 0, 0, 0.4);
+				opacity: 0;
+				backdrop-filter: blur(1px);
+
+				position: fixed;
+				inset: 0;
+
+				animation: x_layer_cover_fade_in var(--x-layers-animation-velocity) var(--x-layers-animation-timing-function) forwards;
+			}
+
+			& > layer {
+				opacity: 0;
+
+				width: 95%;
+				height: 90%;
+
+				position: fixed;
+				left: 50%;
+				top: 100%;
+				transform: translate(-50%, 0%) scale(1);
+
+				transition:
+					transform var(--x-layers-animation-velocity) var(--x-layers-animation-timing-function),
+					opacity var(--x-layers-animation-velocity) var(--x-layers-animation-timing-function);
+
+				will-change: transform, opacity;
+			}
+
+			&:nth-last-child(1) {
+				&.adding {
+					& > layer {
+						animation: x_layer_fade_in var(--x-layers-animation-velocity) var(--x-layers-animation-timing-function) forwards;
+					}
+				}
+
+				& > layer {
+					opacity: 1;
+					transform: translate(-50%, calc(-100% - var(--x-layers-bottom-gap))) scale(1);
+				}
+			}
+
+			&:nth-last-child(2) {
+				& > layer {
+					opacity: 1;
+					transform: translate(-50%, calc(-100% - var(--x-layers-bottom-gap) - var(--x-layers-stack-gap))) scale(calc(1 - var(--x-layers-scale-gap)));
+				}
+			}
+
+			&:nth-last-child(3) {
+				& > layer {
+					opacity: 1;
+					transform: translate(-50%, calc(-100% - var(--x-layers-bottom-gap) - var(--x-layers-stack-gap) * 2 )) scale(calc(1 - var(--x-layers-scale-gap) * 2));
+				}
+			}
+
+			&:nth-last-child(n+4) {
+				& > layer {
+					opacity: 0;
+					transform: translate(-50%, calc(-100% - var(--x-layers-bottom-gap) - var(--x-layers-stack-gap) * 3 )) scale(calc(1 - var(--x-layers-scale-gap) * 3));
+				}
+			}
+		}
+	}
+
+	@layer x_layers_keyframes {
+		@keyframes x_layer_cover_fade_in {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
+
+		@keyframes x_layer_cover_fade_out {
+			from { opacity: 1; }
+			to { opacity: 0; }
+		}
+
+		@keyframes x_layer_fade_in {
+			from {
+				opacity: 0;
+				transform: translate(-50%, 0%) scale(1);
+			}
+
+			to {
+				opacity: 1;
+				transform: translate(-50%, calc(-100% - 10px)) scale(1);
+			}
+		}
+
+		@keyframes x_layer_fade_out {
+			from {
+				opacity: 1;
+				transform: translate(-50%, calc(-100% - 10px)) scale(1);
+			}
+
+			to {
+				opacity: 0;
+				transform: translate(-50%, 0%) scale(1);
+			}
+		}
+	}
+}
+
 x-link{
 	cursor: pointer;
 	&:not([class]){
@@ -39,6 +169,60 @@ x-link{
 	}
 
 	@keyframes x_marquee_animation { to { transform: translateX(-50%); } }
+}
+
+@layer x_modal {
+	body > modal{
+		pointer-events: none;
+
+		opacity: 0;
+
+		background-color: var(--color-main-tint-2);
+
+		min-width: 40px;
+		border: 2px solid transparent;
+		border-radius: var(--radius);
+		box-shadow: var(--shadow);
+
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) scale(0.8);
+		z-index: var(--z-modal);
+
+		transition: var(--transition-velocity) ease-in-out;
+		transition-property: transform, opacity, border;
+
+		&.show{
+			pointer-events: all;
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1);
+		}
+
+		& > x-svg{
+			position: fixed;
+			top: 5px;
+			right: 5px;
+		}
+
+		& > main{
+			width: auto;
+			max-width: 90dvw;
+
+			height: auto;
+			max-height: 90dvh;
+
+			overflow: hidden;
+			overflow-y: scroll;
+
+			padding: var(--padding);
+			padding-top: 2rem;
+
+			@media (width <= 600px){
+				width: 90dvw;
+			}
+		}
+	}
 }
 
 x-select{
@@ -131,6 +315,39 @@ x-share {
 	display: inline-flex;
 	align-items: center;
 	line-height: 0;
+}
+
+@layer x_toast {
+	body > toasts{
+		height: auto;
+		max-height: 100vh;
+		width: 400px;
+		padding: var(--padding);
+		padding-bottom: calc(var(--padding) * 4);
+
+		overflow-x: hidden;
+		overflow-y: scroll;
+
+		display: flex;
+		flex-direction: column-reverse;
+		gap: var(--gap);
+
+		position: fixed;
+		top: 0px;
+		right: 0px;
+		z-index: var(--z-toasts);
+
+		&:empty{
+			padding: 0px;
+		}
+	}
+
+	@media (width <= 600px) {
+		body > toasts{
+			width: 100vw;
+			gap: 5px;
+		}
+	}
 }
 
 x-tooltip {
