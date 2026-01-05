@@ -4,7 +4,7 @@ export function before(){
 
 export default function main(){
 	return `
-		<container class="padding-5 max-width-1500px">
+		<container class="padding-5 max-width-1200px">
 			<column class="width-50 surface-v1 padding-5 gap-1">
 				<p class="text-align-center">${window.Lang.use("eMail_confirmation_code_has_been_sent")}</p>
 

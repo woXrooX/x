@@ -4,7 +4,7 @@ export function before(){
 
 export default function main(){
 	return `
-		<container class="padding-5 gap-1">
+		<container class="padding-5 gap-1 max-width-1200px">
 			<p class="text-size-0-8 text-align-center">${window.Lang.use("if_log_out_wont_be_able_to")}</p>
 
 			<form for="log_out" class="width-50 surface-v1 padding-5">

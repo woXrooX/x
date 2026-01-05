@@ -2,7 +2,7 @@ export function before(){
 	window.x.Head.set_title("log_in_records");
 }
 
-export default async function main(){ return `<container class="padding-5 gap-1"></container>`; }
+export default async function main(){ return `<container class="padding-5 gap-1 max-width-1200px"></container>`; }
 
 export async function after(){
 	const container = document.querySelector("container");

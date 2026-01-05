@@ -2,7 +2,7 @@ import { timestamp_to_human_readable_v1 } from "/JavaScript/modules/datetime/dat
 
 export function before() { window.x.Head.set_title("notification"); }
 
-export default function main() { return '<container class="padding-5 max-width-1000px"></container>'; }
+export default function main() { return '<container class="padding-5 max-width-1200px"></container>'; }
 
 export async function after() {
 	const container = document.querySelector("container");

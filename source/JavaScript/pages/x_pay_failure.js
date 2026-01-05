@@ -4,7 +4,7 @@ export function before(){
 
 export default function main(){
 	return `
-		<container>
+		<container class="gap-5 max-width-1200px">
 			<section class="width-100 height-100 display-grid place-items-center bg-error font-family-Poppins">
 				<p class="grid-area-1-slash-1 text-size-10 text-color-hsla-0-0-100-0-3">${window.Lang.use("failure")}</p>
 				<p class="grid-area-1-slash-1 text-size-2 text-color-white">${window.Lang.use("payment_failed")}</p>

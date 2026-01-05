@@ -6,7 +6,7 @@ export async function before(){
 
 export default function main(){
 	return `
-		<container class="max-width-1500px padding-5">
+		<container class="padding-5 max-width-1200px">
 			<form id="x_payment_form" class="max-width-600px surface-v1 bg-white padding-2">
 				<div id="x_payment_element" style="color:red;"></div>
 				<button class="btn btn-primary">Pay now</button>

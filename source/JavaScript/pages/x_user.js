@@ -3,7 +3,7 @@ export function before(){
 }
 
 export default function main(){
-	return `<container class="padding-5 gap-0-5 max-width-1500px"></container>`;
+	return `<container class="padding-5 gap-0-5 max-width-1200px"></container>`;
 }
 
 export async function after(){

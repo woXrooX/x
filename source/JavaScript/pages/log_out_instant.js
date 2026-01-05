@@ -11,7 +11,7 @@ export async function before(){
 
 export default function main(){
 	return `
-		<container class="padding-5">
+		<container class="padding-5 max-width-1200px">
 			<column class="surface-v1 padding-5">${Lang.use('could_not_log_out_instant')}</column>
 		</container>
 	`;
