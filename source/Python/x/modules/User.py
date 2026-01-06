@@ -1,11 +1,14 @@
 if __name__ != "__main__":
-	import os, re
+	import re
+	import os
 	import shutil
 
 	from main import session
+
 	from Python.x.modules.MySQL import MySQL
 	from Python.x.modules.Globals import Globals
 	from Python.x.modules.Logger import Log
+	from Python.x.modules.Response import Response
 
 	class User:
 		# NOTE: Designed for use as a decorator
@@ -16,6 +19,10 @@ if __name__ != "__main__":
 				if "user" not in session: return False
 				return func(*args, **kwargs)
 			return wrapper
+
+
+
+		########################### Getters
 
 		@staticmethod
 		@check_if_user_in_session
@@ -65,7 +72,6 @@ if __name__ != "__main__":
 
 			return True
 
-
 		@staticmethod
 		@check_if_user_in_session
 		def get_plan():
@@ -85,38 +91,162 @@ if __name__ != "__main__":
 			return True
 
 
+
+		########################### Setters
+
+		@staticmethod
+		@check_if_user_in_session
+		def set_last_heartbeat_at():
+			data = MySQL.execute("UPDATE users SET last_heartbeat_at = NOW() WHERE id = %s LIMIT 1;", [session["user"]["id"]], commit=True)
+			if data is False: return False
+
+			Log.success("User.set_last_heartbeat_at()")
+
+			return True
+
+		@staticmethod
+		@check_if_user_in_session
+		def set_app_color_mode(color_mode):
+			# Replace the [1, 2] with the data retrived from the database "app_color_modes"
+			if color_mode not in [1, 2]: return False
+
+			data = MySQL.execute(
+				sql="UPDATE users SET app_color_mode=%s WHERE id=%s",
+				params=(color_mode, session["user"]["id"]),
+				commit=True
+			)
+
+			if data is False: return False
+
+			# Not working if I try to update single key
+			# session["user"]["app_color_mode"] = color_mode
+			if User.update_session() is False: pass
+
+			Log.success("User.set_app_color_mode()")
+
+			return True
+
+		@staticmethod
+		@check_if_user_in_session
+		def set_app_language(code):
+			if code not in Globals.CONF["default"]["language"]["supported"]: return False
+
+			if code not in Globals.LANGUAGES: return False
+
+			data = MySQL.execute(
+				sql="UPDATE users SET app_language=%s WHERE id=%s",
+				params=(Globals.LANGUAGES[code]["id"], session["user"]["id"]),
+				commit=True
+			)
+
+			if data is False: return False
+
+			if User.update_session() is False: pass
+
+			Log.success("User.set_app_language()")
+
+			return True
+
+
+
+		########################### Updates
+
 		@staticmethod
 		@check_if_user_in_session
 		def update_username(new_username):
-			if not new_username: return False
-			if not re.match(Globals.CONF["username"]["regEx"], new_username): return False
+			if not new_username: return Response.make(type="error", message="invalid_username", field="username")
+			if session["user"]["username"] == new_username: return Response.make(type="error", message="old_and_new_usernames_same", field="username")
+			if not re.match(Globals.CONF["username"]["regEx"], new_username): return Response.make(type="error", message="invalid_username", field="username")
 
-			old_username = MySQL.execute(
-				sql="SELECT username FROM users WHERE id = %s;",
-				params=[session["user"]["id"]],
-				fetch_one=True
-			)
-			if old_username is False: return False
-
-			update_username = MySQL.execute(
-				sql="UPDATE users SET username = %s WHERE id = %s;",
+			update_data = MySQL.execute(
+				sql="""
+					UPDATE users
+					SET users.username = %s
+					WHERE
+						users.id = %s AND
+						users.flag_deleted IS NULL
+					LIMIT 1;
+				""",
 				params=[new_username, session["user"]["id"]],
 				commit=True,
 				include_MySQL_data=True
 			)
-			if update_username is False: return False
-			if 'error' in update_username and update_username['error_no'] == 1062: return False
-			if 'error' in update_username: return False
+			if update_data is False: return Response.make(type="error", message="database_error")
+			if "error" in update_data and int(update_data["error_no"]) == 1062: return Response.make(type="error", message="username_exists")
+			if "error" in update_data: return Response.make(type="error", message="database_error")
 
-			if old_username["username"] is not None:
-				username_history = MySQL.execute(
-					sql="INSERT INTO username_history (user, old_username, new_username) VALUES (%s, %s, %s);",
-					params=[session["user"]["id"], old_username["username"], new_username],
-					commit=True
-				)
-				if username_history is False: return False
+			record_data = MySQL.execute(
+				sql="INSERT INTO users_username_records (user, username) VALUES (%s, %s);",
+				params=[session["user"]["id"], new_username],
+				commit=True
+			)
+			if record_data is False: return Response.make(type="error", message="database_error")
 
 			return True
+
+
+
+		########################### Files & folders
+
+		@staticmethod
+		def init_folders(id = None):
+			ID = None
+
+			if id is not None:
+				if isinstance(id, int) and id > 0: ID = id
+				else:
+					Log.warning(f"Invalid argument passed to the method @ user.init_folders(): {id}. Due to invalid ID, could not initiate user folders.")
+
+					return False
+
+			elif "user" in session: ID = session["user"]["id"]
+
+			else: return False
+
+			path = f'{Globals.PROJECT_PATH}/Files/users/{ID}/'
+
+			# Try to create user folders
+			try:
+				# ID
+				os.makedirs(f'{path}', mode=0o777, exist_ok=True)
+				os.makedirs(f'{path}private', mode=0o777, exist_ok=True)
+				os.makedirs(f'{path}public', mode=0o777, exist_ok=True)
+
+				# Files (For all kinds of files. For example: .zip or .exe ...)
+				# Documents (All kinds of files used as a document. For example it can be .png file but the image contex is some kind certificate)
+				folders = ["images", "videos", "audios", "files", "documents"]
+
+				for folder in folders:
+					os.makedirs(f'{path}private/{folder}', mode=0o777, exist_ok=True)
+					os.makedirs(f'{path}public/{folder}', mode=0o777, exist_ok=True)
+
+
+				Log.success(f"User folders created @: {path}")
+
+				return True
+
+			except:
+				Log.error(f"Could not create user folder(s) @: {path}")
+
+				return False
+
+		@staticmethod
+		def delete_files(id):
+			try:
+				shutil.rmtree(f'{Globals.PROJECT_PATH}/Files/users/{id}/')
+
+				Log.success(f"User files deleted. User ID: {id}")
+
+				return True
+
+			except:
+				Log.error(f"Could not delete user files. User ID: {id}")
+
+				return False
+
+
+
+		########################### Session
 
 		# Sanitized Session Data For Front
 		@staticmethod
@@ -172,100 +302,9 @@ if __name__ != "__main__":
 
 			return True
 
-		@staticmethod
-		@check_if_user_in_session
-		def set_last_heartbeat_at():
-			data = MySQL.execute("UPDATE users SET last_heartbeat_at = NOW() WHERE id = %s LIMIT 1;", [session["user"]["id"]], commit=True)
-			if data is False: return False
-
-			Log.success("User.set_last_heartbeat_at()")
-
-			return True
-
-		@staticmethod
-		@check_if_user_in_session
-		def set_app_color_mode(color_mode):
-			# Replace the [1, 2] with the data retrived from the database "app_color_modes"
-			if color_mode not in [1, 2]: return False
-
-			data = MySQL.execute(
-				sql="UPDATE users SET app_color_mode=%s WHERE id=%s",
-				params=(color_mode, session["user"]["id"]),
-				commit=True
-			)
-
-			if data is False: return False
-
-			# Not working if I try to update single key
-			# session["user"]["app_color_mode"] = color_mode
-			if User.update_session() is False: pass
-
-			Log.success("User.set_app_color_mode()")
-
-			return True
-
-		@staticmethod
-		@check_if_user_in_session
-		def set_app_language(code):
-			if code not in Globals.CONF["default"]["language"]["supported"]: return False
-
-			if code not in Globals.LANGUAGES: return False
-
-			data = MySQL.execute(
-				sql="UPDATE users SET app_language=%s WHERE id=%s",
-				params=(Globals.LANGUAGES[code]["id"], session["user"]["id"]),
-				commit=True
-			)
-
-			if data is False: return False
-
-			if User.update_session() is False: pass
-
-			Log.success("User.set_app_language()")
-
-			return True
-
-		@staticmethod
-		def init_folders(id = None):
-			ID = None
-
-			if id is not None:
-				if isinstance(id, int) and id > 0: ID = id
-				else:
-					Log.warning(f"Invalid argument passed to the method @ user.init_folders(): {id}. Due to invalid ID, could not initiate user folders.")
-
-					return False
-
-			elif "user" in session: ID = session["user"]["id"]
-
-			else: return False
-
-			path = f'{Globals.PROJECT_PATH}/Files/users/{ID}/'
-
-			# Try to create user folders
-			try:
-				# ID
-				os.makedirs(f'{path}', mode=0o777, exist_ok=True)
-				os.makedirs(f'{path}private', mode=0o777, exist_ok=True)
-				os.makedirs(f'{path}public', mode=0o777, exist_ok=True)
-
-				# Files (For all kinds of files. For example: .zip or .exe ...)
-				# Documents (All kinds of files used as a document. For example it can be .png file but the image contex is some kind certificate)
-				folders = ["images", "videos", "audios", "files", "documents"]
-
-				for folder in folders:
-					os.makedirs(f'{path}private/{folder}', mode=0o777, exist_ok=True)
-					os.makedirs(f'{path}public/{folder}', mode=0o777, exist_ok=True)
 
 
-				Log.success(f"User folders created @: {path}")
-
-				return True
-
-			except:
-				Log.error(f"Could not create user folder(s) @: {path}")
-
-				return False
+		########################### Other
 
 		@staticmethod
 		def soft_delete(user_id):
@@ -297,17 +336,3 @@ if __name__ != "__main__":
 			if data is False: return False
 
 			return True
-
-		@staticmethod
-		def delete_files(id):
-			try:
-				shutil.rmtree(f'{Globals.PROJECT_PATH}/Files/users/{id}/')
-
-				Log.success(f"User files deleted. User ID: {id}")
-
-				return True
-
-			except:
-				Log.error(f"Could not delete user files. User ID: {id}")
-
-				return False
