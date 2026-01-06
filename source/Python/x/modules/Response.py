@@ -1,6 +1,5 @@
 if __name__ != "__main__":
 	from Python.x.modules.Globals import Globals
-	from Python.x.modules.User import User
 	from Python.x.modules.Logger import Log
 
 	import json
@@ -83,7 +82,11 @@ if __name__ != "__main__":
 
 			if update_conf: actions_dict["update_conf"] = PUBLIC_CONF
 
-			if set_session_user is True: actions_dict["set_session_user"] = User.generate_public_session()
+			if set_session_user is True:
+				# Due to circular import, we put the import here
+				from Python.x.modules.User import User
+				actions_dict["set_session_user"] = User.generate_public_session()
+
 			if delete_session_user is True: actions_dict["delete_session_user"] = 0
 
 			if DOM_change: actions_dict["DOM_change"] = DOM_change
