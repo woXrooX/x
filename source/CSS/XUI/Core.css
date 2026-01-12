@@ -2204,6 +2204,26 @@
 				.s-order-5 { order: 5; }
 			}
 		}
+
+		/* X axis */
+		@layer justify_content {
+			.justify-content-flex-start{ justify-content: flex-start; }
+			.justify-content-flex-end{ justify-content: flex-end; }
+			.justify-content-center{ justify-content: center; }
+			.justify-content-space-between{ justify-content: space-between; }
+			.justify-content-space-around{ justify-content: space-around; }
+			.justify-content-space-evenly{ justify-content: space-evenly; }
+			.justify-content-stretch{ justify-content: stretch; }
+		}
+
+		/* Y axis */
+		@layer align_items {
+			.align-items-flex-start{align-items: flex-start;}
+			.align-items-flex-end{align-items: flex-end;}
+			.align-items-center{align-items: center;}
+			.align-items-baseline{align-items: baseline;}
+			.align-items-stretch{align-items: stretch;}
+		}
 	}
 
 	@layer position{
