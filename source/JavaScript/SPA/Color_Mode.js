@@ -47,7 +47,7 @@ export default class Color_Mode{
 	//////////////////////// APIs
 
 	static init(){
-		Log.info("CSS.init()");
+		Log.info("Color_Mode.init()");
 
 		Color_Mode.color_mode_switcher_icon = document.querySelector(`${window.x.Menu.selector} > header > x-svg[for=color_mode_switcher]`);
 
@@ -57,7 +57,7 @@ export default class Color_Mode{
 	}
 
 	static detect_color_mode(){
-		Log.info("CSS.detect_color_mode()");
+		Log.info("Color_Mode.detect_color_mode()");
 
 		// Get User Preferred Color Mode
 		if(
@@ -67,7 +67,7 @@ export default class Color_Mode{
 			// If Session User Has "app_color_mode"
 			"app_color_mode" in window.session["user"] &&
 
-			// If "app_color_mode" Is In CSS.color_modes
+			// If "app_color_mode" Is In Color_Mode.color_modes
 			Object.values(Color_Mode.color_modes).includes(window.session["user"]["app_color_mode"])
 
 		) Color_Mode.current_color_mode = window.session["user"]["app_color_mode"];
@@ -97,10 +97,10 @@ export default class Color_Mode{
 				break;
 
 			// If we add more color modes we will uncommend the code below and add more cases
-			// case CSS.color_modes.DARK:
-			//     CSS.#dark();
-			//     CSS.color_mode_switcher_icon.name = "light_mode";
-			//     CSS.color_mode_switcher_icon.toggle = "dark_mode";
+			// case Color_Mode.color_modes.DARK:
+			//     Color_Mode.#dark();
+			//     Color_Mode.color_mode_switcher_icon.name = "light_mode";
+			//     Color_Mode.color_mode_switcher_icon.toggle = "dark_mode";
 			//     break;
 
 			default:
@@ -152,7 +152,7 @@ export default class Color_Mode{
 			if("type" in data && data["type"] === "success"){
 				window.session["user"]["app_color_mode"] = Color_Mode.current_color_mode;
 				localStorage.setItem('x.color_mode', Color_Mode.current_color_mode);
-				Log.success(`CSS.#save_color_mode(): session.user.app_color_mode = ${Color_Mode.current_color_mode}`);
+				Log.success(`Color_Mode.#save_color_mode(): session.user.app_color_mode = ${Color_Mode.current_color_mode}`);
 			}
 
 		}
@@ -162,7 +162,7 @@ export default class Color_Mode{
 
 	//////////// Modes
 	static #dark(){
-		Log.info("CSS.#dark()");
+		Log.info("Color_Mode.#dark()");
 
 		Color_Mode.current_color_mode = Color_Mode.color_modes.DARK;
 
@@ -171,7 +171,7 @@ export default class Color_Mode{
 	}
 
 	static #light(){
-		Log.info("CSS.#light()");
+		Log.info("Color_Mode.#light()");
 
 		Color_Mode.current_color_mode = Color_Mode.color_modes.LIGHT;
 
