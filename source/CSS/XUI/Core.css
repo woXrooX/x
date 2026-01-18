@@ -2801,6 +2801,12 @@
 
 			.radius-200px{border-radius: 200px;}
 		}
+
+		@layer corner_shape {
+			.corner-shape-squircle { corner-shape: squircle; }
+			.corner-shape-round { corner-shape: round; }
+			.corner-shape-bevel { corner-shape: bevel; }
+		}
 	}
 
 	@layer outline {
