@@ -6,6 +6,8 @@ export default class Table extends HTMLElement{
 	////////////// Helpers
 	static match_and_highlight(string, regex) { return string.replace(regex, `<span class="bg-error text-color-white">$&</span>`); }
 
+	#JSON = {};
+	#initialized = false;
 	#lazy_draw_batch_size = 100;
 	#lazy_draw_next_batch_index = 0;
 	#lazy_draw_observer = null;
@@ -13,13 +15,20 @@ export default class Table extends HTMLElement{
 
 	constructor() {
 		super();
+	}
 
-		// Save the JSON data
-		this.JSON = JSON.parse(this.innerHTML).constructor === Object ? JSON.parse(this.innerHTML) : {};
+	connectedCallback() {
+		if (this.#initialized === true) return;
+		this.#initialized = true;
+
+		try { this.#JSON = JSON.parse(this.textContent); }
+		catch(error) { console.warn("Table: Not JSON-able content."); }
+
+		this.replaceChildren();
 
 		// Check if body values exists
-		if (!("body" in this.JSON)) return;
-		this.body_values = this.JSON["body"];
+		if (!("body" in this.#JSON)) return;
+		this.body_values = this.#JSON["body"];
 		this.body_values_in_chunks = [];
 		this.matched_rows_count = 0;
 
@@ -28,7 +37,7 @@ export default class Table extends HTMLElement{
 		this.last_sorted_column_id = null;
 		this.last_sort_mode = null;
 
-		this.page_size = "page_size" in this.JSON ? this.JSON["page_size"] : 10;
+		this.page_size = "page_size" in this.#JSON ? this.#JSON["page_size"] : 10;
 		this.current_page = 1;
 
 		// Encoded columns info holder
@@ -38,6 +47,11 @@ export default class Table extends HTMLElement{
 		this.#init();
 
 		this.#listen_to_the_sort_clicks();
+	}
+
+	disconnectedCallback() {
+		this.#lazy_draw_observer?.disconnect();
+		this.#lazy_draw_observer = null;
 	}
 
 	#init = ()=>{
@@ -59,7 +73,7 @@ export default class Table extends HTMLElement{
 					</select>
 
 					<column class="width-100">${
-						!!this.JSON?.searchable === true ?
+						!!this.#JSON?.searchable === true ?
 						'<input type="text" class="width-100" style="outline-offset: -1px;">' :
 						''
 					}</column>
@@ -96,11 +110,11 @@ export default class Table extends HTMLElement{
 	//////////////////////////// Header
 
 	#listen_to_page_size_select = ()=>{
-		this.querySelector("container > header > select").onchange = ()=>{
+		this.querySelector("container > header > select").onchange = (event)=>{
 			const selected_page_size = event.target.value;
 
 			// If not a number then show all
-			if (isNaN(selected_page_size)) this.page_size = this.JSON["body"].length;
+			if (isNaN(selected_page_size)) this.page_size = this.#JSON["body"].length;
 
 			// Else set page size to the selected
 			else this.page_size = parseInt(selected_page_size);
@@ -117,7 +131,6 @@ export default class Table extends HTMLElement{
 	}
 
 	#listen_to_search_typing = ()=>{
-
 		let debounce_timeout;
 		this.querySelector("container > header > column > input").oninput = (event)=>{
 			clearTimeout(debounce_timeout);
@@ -127,7 +140,7 @@ export default class Table extends HTMLElement{
 				this.#update_buttons((this.current_page = 1));
 
 				if (event.target.value == "") {
-					this.body_values = this.JSON["body"];
+					this.body_values = this.#JSON["body"];
 					this.#build_body();
 					this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
 					this.#build_page_buttons_HTML();
@@ -139,7 +152,7 @@ export default class Table extends HTMLElement{
 				this.#build_page_buttons_HTML();
 				this.#build_matched_rows_HTML();
 
-			}, 500)
+			}, 500);
 		}
 	}
 
@@ -166,14 +179,14 @@ export default class Table extends HTMLElement{
 	}
 
 	#build_head = ()=>{
-		if (!("head" in this.JSON)) return;
+		if (!("head" in this.#JSON)) return;
 		let HTML = "";
 
-		for (let index = 0; index < this.JSON["head"].length; index++) {
-			if (!("title" in this.JSON["head"][index])) return "Invalid head data";
+		for (let index = 0; index < this.#JSON["head"].length; index++) {
+			if (!("title" in this.#JSON["head"][index])) return "Invalid head data";
 
 			// Check if sortable
-			if ("sortable" in this.JSON["head"][index] && this.JSON["head"][index]["sortable"] === true) {
+			if ("sortable" in this.#JSON["head"][index] && this.#JSON["head"][index]["sortable"] === true) {
 				// Save sortable column ID
 				this.sortable_column_ids.push(index);
 
@@ -181,7 +194,7 @@ export default class Table extends HTMLElement{
 				HTML += `
 					<th>
 						<row class="cursor-pointer gap-0-5 flex-row flex-y-center flex-x-start">
-							${this.JSON["head"][index]["title"]}
+							${this.#JSON["head"][index]["title"]}
 							<x-svg name="sort_ASC" toggle="sort_DESC"></x-svg>
 						</row>
 					</th>
@@ -189,10 +202,10 @@ export default class Table extends HTMLElement{
 			}
 
 			// Just title
-			else HTML += `<th>${this.JSON["head"][index]["title"]}</th>`;
+			else HTML += `<th>${this.#JSON["head"][index]["title"]}</th>`;
 
 			// Check if this column is encoded
-			if ("encoded" in this.JSON["head"][index] && this.JSON["head"][index]["encoded"] === true) this.encoded_columns.push(true);
+			if ("encoded" in this.#JSON["head"][index] && this.#JSON["head"][index]["encoded"] === true) this.encoded_columns.push(true);
 			else this.encoded_columns.push(false);
 		}
 
@@ -215,9 +228,9 @@ export default class Table extends HTMLElement{
 	}
 
 	#build_foot = ()=>{
-		if (!("foot" in this.JSON)) return;
+		if (!("foot" in this.#JSON)) return;
 		let HTML = "";
-		for (const cell of this.JSON["foot"]) HTML += `<td>${cell}</td>`;
+		for (const cell of this.#JSON["foot"]) HTML += `<td>${cell}</td>`;
 
 		this.querySelector("table > tfoot > tr").innerHTML = HTML;
 	}
@@ -342,7 +355,7 @@ export default class Table extends HTMLElement{
 	#find_matches = (value)=>{
 		this.body_values = [];
 
-		const ROWS = structuredClone(this.JSON["body"]);
+		const ROWS = structuredClone(this.#JSON["body"]);
 		const VALUE_LOWER_CASE = value.toLowerCase();
 
 		this.#match_values_by_columns(VALUE_LOWER_CASE, ROWS);
@@ -361,9 +374,9 @@ export default class Table extends HTMLElement{
 
 		let matched_title_index = null;
 
-		// Getting the index of an title in this.JSON["head"] that contains the "title"
-		loop_columns: for (let i = 0; i < this.JSON["head"].length; i++)
-			if (this.JSON["head"][i]["title"].toLowerCase().includes(TITLE)) {
+		// Getting the index of an title in this.#JSON["head"] that contains the "title"
+		loop_columns: for (let i = 0; i < this.#JSON["head"].length; i++)
+			if (this.#JSON["head"][i]["title"].toLowerCase().includes(TITLE)) {
 				matched_title_index = i;
 				break loop_columns;
 			}
@@ -417,13 +430,13 @@ export default class Table extends HTMLElement{
 	}
 
 	#set_initial_page_size = ()=>{
-		if (this.page_size === "all") return this.page_size = this.JSON["body"].length;
+		if (this.page_size === "all") return this.page_size = this.#JSON["body"].length;
 
 		if (isNaN(parseInt(this.page_size))) return this.page_size = 10;
 
 		if (parseInt(this.page_size) < 0 || parseInt(this.page_size) == 0) return this.page_size = 10;
 
-		if (parseInt(this.page_size) > this.JSON["body"].length) return this.page_size = this.JSON["body"].length;
+		if (parseInt(this.page_size) > this.#JSON["body"].length) return this.page_size = this.#JSON["body"].length;
 
 		return this.page_size = parseInt(this.page_size);
 	}
@@ -442,7 +455,7 @@ export default class Table extends HTMLElement{
 		`;
 	}
 
-	#build_total_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.total_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.JSON["body"].length}`;}
+	#build_total_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.total_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.#JSON["body"].length}`;}
 
 	#build_matched_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Matched rows:</span> ${this.matched_rows_count}`;}
 
