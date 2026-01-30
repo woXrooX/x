@@ -4,21 +4,21 @@ export default class Table extends HTMLElement{
 	static #sort_modes = Object.freeze({ASC: 1, DESC: 2});
 
 	////////////// Helpers
-	static match_and_highlight(string, regex){ return string.replace(regex, `<span class="bg-error text-color-white">$&</span>`); }
+	static match_and_highlight(string, regex) { return string.replace(regex, `<span class="bg-error text-color-white">$&</span>`); }
 
 	#lazy_draw_batch_size = 100;
 	#lazy_draw_next_batch_index = 0;
 	#lazy_draw_observer = null;
 	#lazy_draw_loader_element = null;
 
-	constructor(){
+	constructor() {
 		super();
 
 		// Save the JSON data
 		this.JSON = JSON.parse(this.innerHTML).constructor === Object ? JSON.parse(this.innerHTML) : {};
 
 		// Check if body values exists
-		if(!("body" in this.JSON)) return;
+		if (!("body" in this.JSON)) return;
 		this.body_values = this.JSON["body"];
 		this.body_values_in_chunks = [];
 		this.matched_rows_count = 0;
@@ -100,7 +100,7 @@ export default class Table extends HTMLElement{
 			const selected_page_size = event.target.value;
 
 			// If not a number then show all
-			if(isNaN(selected_page_size)) this.page_size = this.JSON["body"].length;
+			if (isNaN(selected_page_size)) this.page_size = this.JSON["body"].length;
 
 			// Else set page size to the selected
 			else this.page_size = parseInt(selected_page_size);
@@ -126,7 +126,7 @@ export default class Table extends HTMLElement{
 				// Fixes issues when you are on page N and the search generated page numbers are less than N
 				this.#update_buttons((this.current_page = 1));
 
-				if(event.target.value == ""){
+				if (event.target.value == "") {
 					this.body_values = this.JSON["body"];
 					this.#build_body();
 					this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
@@ -166,14 +166,14 @@ export default class Table extends HTMLElement{
 	}
 
 	#build_head = ()=>{
-		if(!("head" in this.JSON)) return;
+		if (!("head" in this.JSON)) return;
 		let HTML = "";
 
-		for (let index = 0; index < this.JSON["head"].length; index++){
-			if(!("title" in this.JSON["head"][index])) return "Invalid head data";
+		for (let index = 0; index < this.JSON["head"].length; index++) {
+			if (!("title" in this.JSON["head"][index])) return "Invalid head data";
 
 			// Check if sortable
-			if("sortable" in this.JSON["head"][index] && this.JSON["head"][index]["sortable"] === true){
+			if ("sortable" in this.JSON["head"][index] && this.JSON["head"][index]["sortable"] === true) {
 				// Save sortable column ID
 				this.sortable_column_ids.push(index);
 
@@ -192,7 +192,7 @@ export default class Table extends HTMLElement{
 			else HTML += `<th>${this.JSON["head"][index]["title"]}</th>`;
 
 			// Check if this column is encoded
-			if("encoded" in this.JSON["head"][index] && this.JSON["head"][index]["encoded"] === true) this.encoded_columns.push(true);
+			if ("encoded" in this.JSON["head"][index] && this.JSON["head"][index]["encoded"] === true) this.encoded_columns.push(true);
 			else this.encoded_columns.push(false);
 		}
 
@@ -215,9 +215,9 @@ export default class Table extends HTMLElement{
 	}
 
 	#build_foot = ()=>{
-		if(!("foot" in this.JSON)) return;
+		if (!("foot" in this.JSON)) return;
 		let HTML = "";
-		for(const cell of this.JSON["foot"]) HTML += `<td>${cell}</td>`;
+		for (const cell of this.JSON["foot"]) HTML += `<td>${cell}</td>`;
 
 		this.querySelector("table > tfoot > tr").innerHTML = HTML;
 	}
@@ -284,7 +284,7 @@ export default class Table extends HTMLElement{
 	////////// Sort
 
 	#listen_to_the_sort_clicks = ()=>{
-		for(const id of this.sortable_column_ids){
+		for (const id of this.sortable_column_ids) {
 			const th_element = this.querySelector(`table > thead > tr > th:nth-child(${id+1})`);
 
 			th_element.onclick = ()=>{
@@ -293,7 +293,7 @@ export default class Table extends HTMLElement{
 
 				th_element.querySelector("row > x-svg").forceToggle();
 
-				switch(this.last_sort_mode){
+				switch(this.last_sort_mode) {
 				case Table.#sort_modes.ASC:
 					this.#sort_DESC();
 					this.last_sort_mode = Table.#sort_modes.DESC;
@@ -319,7 +319,7 @@ export default class Table extends HTMLElement{
 	#sort_ASC = ()=>{
 		this.body_values.sort((a, b)=>{
 			// Numerical comparison
-			if(!isNaN(a[this.last_sorted_column_id]) && !isNaN(b[this.last_sorted_column_id]))
+			if (!isNaN(a[this.last_sorted_column_id]) && !isNaN(b[this.last_sorted_column_id]))
 			return a[this.last_sorted_column_id] - b[this.last_sorted_column_id];
 
 			// String comparison
@@ -331,7 +331,7 @@ export default class Table extends HTMLElement{
 	#sort_DESC = ()=>{
 		this.body_values.sort((a, b)=>{
 			// Numerical comparison
-			if(!isNaN(a[this.last_sorted_column_id]) && !isNaN(b[this.last_sorted_column_id]))
+			if (!isNaN(a[this.last_sorted_column_id]) && !isNaN(b[this.last_sorted_column_id]))
 				return b[this.last_sorted_column_id] - a[this.last_sorted_column_id];
 
 			// String comparison
@@ -349,12 +349,12 @@ export default class Table extends HTMLElement{
 		this.#match_values_by_cells(VALUE_LOWER_CASE, ROWS);
 
 		this.matched_rows_count = this.body_values.length;
-		if(this.body_values.length === 0) this.body_values = [[window.Lang.use("no_matches")]];
+		if (this.body_values.length === 0) this.body_values = [[window.Lang.use("no_matches")]];
 	}
 
 	#match_values_by_columns = (VALUE_LOWER_CASE, ROWS)=>{
 		const TITLE_AND_VALUE = VALUE_LOWER_CASE.match(/^(.*?):(.*)$/);
-		if(TITLE_AND_VALUE === null) return;
+		if (TITLE_AND_VALUE === null) return;
 
 		const TITLE = TITLE_AND_VALUE[1];
 		const VALUE = TITLE_AND_VALUE[2];
@@ -362,21 +362,21 @@ export default class Table extends HTMLElement{
 		let matched_title_index = null;
 
 		// Getting the index of an title in this.JSON["head"] that contains the "title"
-		loop_columns: for(let i = 0; i < this.JSON["head"].length; i++)
-			if(this.JSON["head"][i]["title"].toLowerCase().includes(TITLE)){
+		loop_columns: for (let i = 0; i < this.JSON["head"].length; i++)
+			if (this.JSON["head"][i]["title"].toLowerCase().includes(TITLE)) {
 				matched_title_index = i;
 				break loop_columns;
 			}
 
-		if(matched_title_index === null) return;
-		if(this.encoded_columns[matched_title_index] === true) return;
+		if (matched_title_index === null) return;
+		if (this.encoded_columns[matched_title_index] === true) return;
 
 		const re_VALUE = new RegExp(VALUE, 'gi');
 
-		for(const ROW of ROWS){
+		for (const ROW of ROWS) {
 			const STRING_CELL = String(ROW[matched_title_index]);
 
-			if(STRING_CELL.toLowerCase().includes(VALUE)){
+			if (STRING_CELL.toLowerCase().includes(VALUE)) {
 				ROW[matched_title_index] = Table.match_and_highlight(STRING_CELL, re_VALUE);
 				this.body_values.push(ROW);
 			}
@@ -386,19 +386,23 @@ export default class Table extends HTMLElement{
 	#match_values_by_cells = (VALUE_LOWER_CASE, ROWS)=>{
 		const re_VALUE_LOWER_CASE = new RegExp(VALUE_LOWER_CASE, 'gi');
 
-		for(const ROW of ROWS){
+		for (const ROW of ROWS) {
 			let is_anything_in_row_matched = false;
-			loop_cells: for(let i = 0; i < ROW.length; i++){
-				if(this.encoded_columns[i] === true) continue loop_cells;
 
-				const STRING_CELL = String(ROW[i]);
-				if(STRING_CELL.toLowerCase().includes(VALUE_LOWER_CASE)){
-					ROW[i] = Table.match_and_highlight(STRING_CELL, re_VALUE_LOWER_CASE);
+			loop_cells: for (let i = 0; i < ROW.length; i++) {
+				let cell_string = String(ROW[i]);
+
+				if (this.encoded_columns[i] === true)
+					cell_string = new DOMParser().parseFromString(decodeURIComponent(ROW[i]), 'text/html').body.innerText;
+
+				if (cell_string.toLowerCase().includes(VALUE_LOWER_CASE)) {
+					if (this.encoded_columns[i] != true) ROW[i] = Table.match_and_highlight(cell_string, re_VALUE_LOWER_CASE);
+
 					is_anything_in_row_matched = true;
 				}
 			}
 
-			if(is_anything_in_row_matched === true) this.body_values.push(ROW);
+			if (is_anything_in_row_matched === true) this.body_values.push(ROW);
 		}
 	}
 
@@ -408,18 +412,18 @@ export default class Table extends HTMLElement{
 		// Empty the chunks
 		this.body_values_in_chunks = [];
 
-		for(let i = 0; i < this.body_values.length; i += this.page_size)
+		for (let i = 0; i < this.body_values.length; i += this.page_size)
 			this.body_values_in_chunks.push(this.body_values.slice(i, i + this.page_size));
 	}
 
 	#set_initial_page_size = ()=>{
-		if(this.page_size === "all") return this.page_size = this.JSON["body"].length;
+		if (this.page_size === "all") return this.page_size = this.JSON["body"].length;
 
-		if(isNaN(parseInt(this.page_size))) return this.page_size = 10;
+		if (isNaN(parseInt(this.page_size))) return this.page_size = 10;
 
-		if(parseInt(this.page_size) < 0 || parseInt(this.page_size) == 0) return this.page_size = 10;
+		if (parseInt(this.page_size) < 0 || parseInt(this.page_size) == 0) return this.page_size = 10;
 
-		if(parseInt(this.page_size) > this.JSON["body"].length) return this.page_size = this.JSON["body"].length;
+		if (parseInt(this.page_size) > this.JSON["body"].length) return this.page_size = this.JSON["body"].length;
 
 		return this.page_size = parseInt(this.page_size);
 	}
@@ -451,7 +455,7 @@ export default class Table extends HTMLElement{
 	#build_page_buttons_HTML = ()=>{
 		let buttons_HTML = "";
 
-		for(let i = 1; i <= this.body_values_in_chunks.length; i++) buttons_HTML += `<button class="btn btn-primary btn-s display-none" name="${i}">${i}</button>`;
+		for (let i = 1; i <= this.body_values_in_chunks.length; i++) buttons_HTML += `<button class="btn btn-primary btn-s display-none" name="${i}">${i}</button>`;
 
 		this.querySelector("container > footer > section:nth-child(2)").innerHTML = `
 			<x-svg name="arrow_left_first_page" color="white" class="btn btn-primary btn-s"></x-svg>
@@ -486,13 +490,13 @@ export default class Table extends HTMLElement{
 		// 1 to this.body_values_in_chunks.length
 		const buttons = this.querySelectorAll("container > footer > section:nth-child(2) > section > button");
 
-		for(const button of buttons) button.onclick = ()=> this.#update_buttons((this.current_page = parseInt(button.name)));
+		for (const button of buttons) button.onclick = ()=> this.#update_buttons((this.current_page = parseInt(button.name)));
 	}
 
 	#hide_buttons = ()=>{
 		const buttons = this.querySelectorAll("container > footer > section:nth-child(2) > section > button");
 
-		for(const button of buttons) button.classList.add("display-none");
+		for (const button of buttons) button.classList.add("display-none");
 	}
 
 	#update_buttons = (id)=>{
@@ -505,15 +509,15 @@ export default class Table extends HTMLElement{
 		else this.first_button.classList.remove("disabled");
 
 		// Enable/Disable "previous" button
-		if(id > 1) this.previous_button.classList.remove("disabled");
+		if (id > 1) this.previous_button.classList.remove("disabled");
 		else this.previous_button.classList.add("disabled");
 
 		// Enable/Disable "next" button
-		if(id == this.body_values_in_chunks.length) this.next_button.classList.add("disabled");
+		if (id == this.body_values_in_chunks.length) this.next_button.classList.add("disabled");
 		else this.next_button.classList.remove("disabled");
 
 		// Enable/Disable "last" button
-		if(id == this.body_values_in_chunks.length) this.last_button.classList.add("disabled");
+		if (id == this.body_values_in_chunks.length) this.last_button.classList.add("disabled");
 		else this.last_button.classList.remove("disabled");
 
 
@@ -523,7 +527,7 @@ export default class Table extends HTMLElement{
 			this.querySelector(`container > footer > section:nth-child(2) > section > button:nth-child(${id+1})`)
 		];
 
-		for(const button of buttons) button?.classList.remove("display-none", "disabled", "text-decoration-underline");
+		for (const button of buttons) button?.classList.remove("display-none", "disabled", "text-decoration-underline");
 
 		// Current
 		buttons[1]?.classList.add("disabled");
