@@ -1,30 +1,72 @@
 export default class Table extends HTMLElement{
-	//////////////////////////// Static
+	/////////////////////////// Static
 
 	static #sort_modes = Object.freeze({ASC: 1, DESC: 2});
 
-	////////////// Helpers
-	static match_and_highlight(string, regex) { return string.replace(regex, `<span class="bg-error text-color-white">$&</span>`); }
+	/////////// APIs
 
-	#JSON = {};
-	#initialized = false;
+	static build(JSON) {
+		const table = document.createElement("x-table");
+		table.JSON = JSON;
+		return table;
+	}
+
+
+	/////////// Helpers
+
+	static #match_and_highlight(string, regex) { return string.replace(regex, `<span class="bg-error text-color-white">$&</span>`); }
+
+	/////////////////////////// Object
+
+	#JSON = false;
+	#is_initialized = false;
 	#lazy_draw_batch_size = 100;
 	#lazy_draw_next_batch_index = 0;
 	#lazy_draw_observer = null;
 	#lazy_draw_loader_element = null;
+
+
+
+	/////////// APIs
 
 	constructor() {
 		super();
 	}
 
 	connectedCallback() {
-		if (this.#initialized === true) return;
-		this.#initialized = true;
+		this.#init_core();
+	}
 
-		try { this.#JSON = JSON.parse(this.textContent); }
-		catch(error) { console.warn("Table: Not JSON-able content."); }
+	disconnectedCallback() {
+		this.#lazy_draw_observer?.disconnect();
+		this.#lazy_draw_observer = null;
+	}
 
-		this.replaceChildren();
+	set JSON(value) {
+		if (this.#is_initialized === true) return;
+
+		if (
+			value === null ||
+			typeof value !== "object" ||
+			Array.isArray(value)
+		) throw new TypeError("Table: data must be a plain object (JSON object).");
+
+		this.#JSON = value;
+	}
+
+
+	/////////// Helpers
+
+	#init_core = () => {
+		if (this.#is_initialized === true) return;
+		this.#is_initialized = true;
+
+		if (this.#JSON === false) {
+			try { this.#JSON = JSON.parse(this.textContent); }
+			catch(error) { throw new TypeError("Table: Not JSON-able content."); }
+
+			this.replaceChildren();
+		}
 
 		// Check if body values exists
 		if (!("body" in this.#JSON)) return;
@@ -40,21 +82,16 @@ export default class Table extends HTMLElement{
 		this.page_size = "page_size" in this.#JSON ? this.#JSON["page_size"] : 10;
 		this.current_page = 1;
 
-		// Encoded columns info holder
-		this.encoded_columns = [];
-
 		// Init table
-		this.#init();
+		this.#set_up_table();
 
 		this.#listen_to_the_sort_clicks();
 	}
 
-	disconnectedCallback() {
-		this.#lazy_draw_observer?.disconnect();
-		this.#lazy_draw_observer = null;
-	}
 
-	#init = ()=>{
+	//////// Table
+
+	#set_up_table = ()=>{
 		this.#set_initial_page_size();
 
 		this.innerHTML = `
@@ -94,7 +131,6 @@ export default class Table extends HTMLElement{
 			</container>
 		`;
 
-
 		this.#listen_to_page_size_select();
 
 		this.#listen_to_search_typing();
@@ -106,8 +142,7 @@ export default class Table extends HTMLElement{
 		this.#build_page_buttons_HTML();
 	}
 
-
-	//////////////////////////// Header
+	//// Header
 
 	#listen_to_page_size_select = ()=>{
 		this.querySelector("container > header > select").onchange = (event)=>{
@@ -157,10 +192,7 @@ export default class Table extends HTMLElement{
 	}
 
 
-
-
-
-	//////////////////////////// Main
+	//// Main
 
 	#build_table = ()=>{
 		this.querySelector("container > main").innerHTML = `
@@ -203,10 +235,6 @@ export default class Table extends HTMLElement{
 
 			// Just title
 			else HTML += `<th>${this.#JSON["head"][index]["title"]}</th>`;
-
-			// Check if this column is encoded
-			if ("encoded" in this.#JSON["head"][index] && this.#JSON["head"][index]["encoded"] === true) this.encoded_columns.push(true);
-			else this.encoded_columns.push(false);
 		}
 
 		this.querySelector("table > thead > tr").innerHTML = HTML;
@@ -235,9 +263,8 @@ export default class Table extends HTMLElement{
 		this.querySelector("table > tfoot > tr").innerHTML = HTML;
 	}
 
-	//////////////////////////// Helpers
 
-	////////// Lazy draw
+	//// Lazy draw
 
 	#lazy_draw_batch = (rows)=>{
 		let batch_last_index = this.#lazy_draw_next_batch_index + this.#lazy_draw_batch_size;
@@ -250,7 +277,7 @@ export default class Table extends HTMLElement{
 
 			for (let cell = 0; cell < rows[row].length; cell++) {
 				const td = document.createElement("td");
-				td.innerHTML = this.encoded_columns[cell] ? decodeURIComponent(rows[row][cell]) : rows[row][cell];
+				td.innerHTML = rows[row][cell];
 				tr.appendChild(td);
 			}
 
@@ -294,7 +321,8 @@ export default class Table extends HTMLElement{
 		this.#lazy_draw_observer.observe(this.#lazy_draw_loader_element);
 	}
 
-	////////// Sort
+
+	//// Sort
 
 	#listen_to_the_sort_clicks = ()=>{
 		for (const id of this.sortable_column_ids) {
@@ -382,7 +410,6 @@ export default class Table extends HTMLElement{
 			}
 
 		if (matched_title_index === null) return;
-		if (this.encoded_columns[matched_title_index] === true) return;
 
 		const re_VALUE = new RegExp(VALUE, 'gi');
 
@@ -390,7 +417,7 @@ export default class Table extends HTMLElement{
 			const STRING_CELL = String(ROW[matched_title_index]);
 
 			if (STRING_CELL.toLowerCase().includes(VALUE)) {
-				ROW[matched_title_index] = Table.match_and_highlight(STRING_CELL, re_VALUE);
+				ROW[matched_title_index] = Table.#match_and_highlight(STRING_CELL, re_VALUE);
 				this.body_values.push(ROW);
 			}
 		}
@@ -405,12 +432,8 @@ export default class Table extends HTMLElement{
 			loop_cells: for (let i = 0; i < ROW.length; i++) {
 				let cell_string = String(ROW[i]);
 
-				if (this.encoded_columns[i] === true)
-					cell_string = new DOMParser().parseFromString(decodeURIComponent(ROW[i]), 'text/html').body.innerText;
-
 				if (cell_string.toLowerCase().includes(VALUE_LOWER_CASE)) {
-					if (this.encoded_columns[i] != true) ROW[i] = Table.match_and_highlight(cell_string, re_VALUE_LOWER_CASE);
-
+					ROW[i] = Table.#match_and_highlight(cell_string, re_VALUE_LOWER_CASE);
 					is_anything_in_row_matched = true;
 				}
 			}
@@ -444,7 +467,7 @@ export default class Table extends HTMLElement{
 
 
 
-	//////////////////////////// Footer
+	//// Footer
 
 	#build_page_numbers_HTML = ()=>{
 		this.querySelector("container > footer > section:nth-child(1) > span.page_numbers").innerHTML = `
@@ -463,7 +486,7 @@ export default class Table extends HTMLElement{
 
 
 
-	////////////// container > footer > section:nth-child(2)
+	//// container > footer > section:nth-child(2)
 
 	#build_page_buttons_HTML = ()=>{
 		let buttons_HTML = "";
@@ -553,5 +576,7 @@ export default class Table extends HTMLElement{
 		this.#build_page_numbers_HTML();
 	}
 };
+
+window.x["Table"] = Table;
 
 window.customElements.define('x-table', Table);
