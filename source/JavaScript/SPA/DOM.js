@@ -46,6 +46,7 @@ export default class DOM{
 		options = {
 			"method": "innerHTML",
 			// "method": "insertAdjacentHTML",
+			// "method": "insertAdjacentElement",
 
 			"position": '='
 			// "position": "+="
@@ -73,6 +74,7 @@ export default class DOM{
 			}
 
 			else if (options["method"] == "insertAdjacentHTML") parent_element.insertAdjacentHTML(options["position"], HTML);
+			else if (options["method"] == "insertAdjacentElement") parent_element.insertAdjacentElement(options["position"], HTML);
 		}
 
 		catch (error) {
