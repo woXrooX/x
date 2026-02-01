@@ -518,18 +518,15 @@
 	}
 
 	@layer forms{
-		/** Form Variables START **/
 		:root{
-			--form-outline: 1px solid var(--color-text-secondary);
 			--form-transition: var(--transition-velocity) ease-in-out;
 			--form-transition-property: background-color, outline;
 		}
-		/** Form Variables END **/
 
 		fieldset{
 			padding: calc(var(--padding) * 2);
 			border-radius: var(--radius);
-			border: var(--form-outline);
+			border: 1px solid var(--color-text-secondary);
 
 			display: flex;
 			flex-direction: column;
@@ -562,7 +559,6 @@
 			}
 		}
 
-		/** select, textarea, imput[types] START **/
 		/* Defaults */
 		select,
 		textarea,
@@ -588,19 +584,25 @@
 			padding: 0 calc(var(--padding) * 2);
 			border: none;
 			border-radius: var(--radius);
-			outline: var(--form-outline);
+			outline: 1px solid var(--color-main-tint-4);
 
 			transition: var(--form-transition);
 			transition-property: var(--form-transition-property);
 
-			&:hover, &:focus, &:active{
+			&:hover {
+				&:not(:disabled){
+					background-color: var(--color-main-tint-4);
+					outline: 1px solid var(--color-main-tint-6);
+				}
+			}
+
+			&:focus, &:active {
 				&:not(:disabled){
 					background-color: var(--color-main-tint-5);
-					outline: 1px solid var(--color-text-primary);
+					outline: 1px solid var(--color-main-tint-8);
 				}
 			}
 		}
-		/** select, textarea, imput[types] END **/
 
 		input{
 			border: none;
@@ -747,7 +749,6 @@
 			height: unset;
 			resize: vertical;
 			padding: calc(var(--padding) * 2);
-			border: none;
 		}
 
 		@layer buttons{
@@ -1051,7 +1052,7 @@
 						letter-spacing: 0.08em;
 						text-align: left;
 
-						background: var(--color-main-tint-2);
+						background: var(--color-main-tint-3);
 						border-bottom: 1px solid var(--color-main-tint-5);
 						padding: calc(var(--padding) * 2);
 					}
@@ -1067,7 +1068,7 @@
 						*/
 
 						&:hover td {
-							background: var(--color-main-tint-3);
+							background: var(--color-main-tint-2);
 						}
 
 						&:last-child td {
@@ -1102,7 +1103,7 @@
 						vertical-align: middle;
 						color: var(--color-text-secondary);
 
-						background: var(--color-main-tint-2);
+						background: var(--color-main-tint-3);
 						border-top: 1px solid var(--color-main-tint-5);
 						border-bottom: 0;
 						padding: calc(var(--padding) * 2);
@@ -1501,6 +1502,7 @@
 				.min-width-30px{min-width: 30px;}
 				.min-width-40px{min-width: 40px;}
 				.min-width-50px{min-width: 50px;}
+				.min-width-75px{min-width: 75px;}
 				.min-width-100px{min-width: 100px;}
 				.min-width-200px{min-width: 200px;}
 				.min-width-250px{min-width: 250px;}

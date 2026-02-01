@@ -9,6 +9,11 @@
 		"ru": "Добавлять",
 		"uz": "Qo`shish"
 	},
+	"all": {
+		"en": "All",
+		"ru": "Все",
+		"uz": "Hammasi"
+	},
 	"all_changes_will_take_effect_after_next_log_in": {
 		"en": "All changes will take effect at next log in",
 		"ru": "Все изменения вступят в силу после следующего входа в систему",
@@ -403,6 +408,11 @@
 		"en": "Token has already used",
 		"ru": "Токен уже использован",
 		"uz": "Token allaqachon ishlatilgan"
+	},
+	"type_to_search": {
+		"en": "Type to search",
+		"ru": "Введите текст для поиска",
+		"uz": "Qidiruv uchun yozing"
 	},
 	"unknown_error": {
 		"en": "Unknown error",
