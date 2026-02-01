@@ -3,8 +3,6 @@ export default class Table extends HTMLElement{
 
 	static #sort_modes = Object.freeze({ASC: 1, DESC: 2});
 
-	////////////// Helpers
-	static match_and_highlight(string, regex) { return string.replace(regex, `<span class="bg-error text-color-white">$&</span>`); }
 
 	#JSON = {};
 	#initialized = false;
@@ -12,6 +10,7 @@ export default class Table extends HTMLElement{
 	#lazy_draw_next_batch_index = 0;
 	#lazy_draw_observer = null;
 	#lazy_draw_loader_element = null;
+	#search_highlight = null;
 
 	constructor() {
 		super();
@@ -92,6 +91,10 @@ export default class Table extends HTMLElement{
 				</footer>
 
 			</container>
+
+			<style>
+				::highlight(table-search-match) { background-color: var(--color-error); }
+			</style>
 		`;
 
 
@@ -144,6 +147,7 @@ export default class Table extends HTMLElement{
 					this.#build_body();
 					this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
 					this.#build_page_buttons_HTML();
+					this.#clear_highlights();
 					return;
 				}
 
@@ -151,6 +155,7 @@ export default class Table extends HTMLElement{
 				this.#build_body();
 				this.#build_page_buttons_HTML();
 				this.#build_matched_rows_HTML();
+				this.#apply_highlights(event.target.value);
 
 			}, 500);
 		}
@@ -352,6 +357,42 @@ export default class Table extends HTMLElement{
 		});
 	}
 
+	#apply_highlights = (search_value) => {
+		this.#clear_highlights();
+
+		const tbody = this.querySelector("table > tbody");
+		const tree_walker = document.createTreeWalker(tbody, NodeFilter.SHOW_TEXT);
+		const regex = new RegExp(search_value, 'gi');
+		const highlight_ranges = [];
+
+		while (tree_walker.nextNode()) {
+			const node = tree_walker.currentNode;
+			const text = node.textContent;
+
+			let match = regex.exec(text);
+			while (match != null) {
+				const range = new Range();
+				range.setStart(node, match.index);
+				range.setEnd(node, match.index + match[0].length);
+				highlight_ranges.push(range);
+
+				match = regex.exec(text);
+			}
+		}
+
+		if (highlight_ranges.length == 0) return;
+
+		this.#search_highlight = new Highlight(...highlight_ranges);
+		CSS.highlights.set("table-search-match", this.#search_highlight);
+	}
+
+	#clear_highlights = () => {
+		if (this.#search_highlight === null) return;
+
+		CSS.highlights.delete("table-search-match");
+		this.#search_highlight = null;
+	}
+
 	#find_matches = (value)=>{
 		this.body_values = [];
 
@@ -384,21 +425,14 @@ export default class Table extends HTMLElement{
 		if (matched_title_index === null) return;
 		if (this.encoded_columns[matched_title_index] === true) return;
 
-		const re_VALUE = new RegExp(VALUE, 'gi');
-
 		for (const ROW of ROWS) {
 			const STRING_CELL = String(ROW[matched_title_index]);
 
-			if (STRING_CELL.toLowerCase().includes(VALUE)) {
-				ROW[matched_title_index] = Table.match_and_highlight(STRING_CELL, re_VALUE);
-				this.body_values.push(ROW);
-			}
+			if (STRING_CELL.toLowerCase().includes(VALUE)) this.body_values.push(ROW);
 		}
 	}
 
 	#match_values_by_cells = (VALUE_LOWER_CASE, ROWS)=>{
-		const re_VALUE_LOWER_CASE = new RegExp(VALUE_LOWER_CASE, 'gi');
-
 		for (const ROW of ROWS) {
 			let is_anything_in_row_matched = false;
 
@@ -408,11 +442,7 @@ export default class Table extends HTMLElement{
 				if (this.encoded_columns[i] === true)
 					cell_string = new DOMParser().parseFromString(decodeURIComponent(ROW[i]), 'text/html').body.innerText;
 
-				if (cell_string.toLowerCase().includes(VALUE_LOWER_CASE)) {
-					if (this.encoded_columns[i] != true) ROW[i] = Table.match_and_highlight(cell_string, re_VALUE_LOWER_CASE);
-
-					is_anything_in_row_matched = true;
-				}
+				if (cell_string.toLowerCase().includes(VALUE_LOWER_CASE)) is_anything_in_row_matched = true;
 			}
 
 			if (is_anything_in_row_matched === true) this.body_values.push(ROW);
