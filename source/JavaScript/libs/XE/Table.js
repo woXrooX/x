@@ -5,9 +5,13 @@ export default class Table extends HTMLElement{
 
 	/////////// APIs
 
-	static build(JSON) {
+	static build(JSON, classes = null) {
 		const table = document.createElement("x-table");
+
+		if (typeof(classes) === "string") table.classList.add(...classes.trim().split(/\s+/));
+
 		table.JSON = JSON;
+
 		return table;
 	}
 
@@ -47,7 +51,7 @@ export default class Table extends HTMLElement{
 
 		if (
 			value === null ||
-			typeof value !== "object" ||
+			typeof(value) !== "object" ||
 			Array.isArray(value)
 		) throw new TypeError("Table: data must be a plain object (JSON object).");
 
