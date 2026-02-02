@@ -1,4 +1,4 @@
-export default class DOM{
+export default class DOM {
 	static update(targets = []){
 		Log.info("DOM.update() - init");
 

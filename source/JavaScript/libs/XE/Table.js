@@ -1,4 +1,4 @@
-export default class Table extends HTMLElement{
+export default class Table extends HTMLElement {
 	/////////////////////////// Static
 
 	static #sort_modes = Object.freeze({ASC: 1, DESC: 2});
