@@ -47,11 +47,14 @@ export default class DOM {
 			"method": "innerHTML",
 			// "method": "insertAdjacentHTML",
 			// "method": "insertAdjacentElement",
+			// "method": "replaceChildren",
 
-			"position": '='
+			"position": '=',
 			// "position": "+="
 			// "position": "afterbegin"
 			// "position": "beforeend"
+
+			"empty_parent_element": false
 		},
 		...args
 	) {
@@ -59,6 +62,8 @@ export default class DOM {
 		if (!parent_element) return Log.error(`DOM.build(): Parent element does not exist: ${parent_selector}`);
 
 		Loading.on_element_start(parent_element);
+
+		if (options["empty_parent_element"] === true) parent_element.replaceChildren();
 
 		try {
 			// Yield until the next paint, so the browser can render the "loading" state
@@ -75,6 +80,7 @@ export default class DOM {
 
 			else if (options["method"] == "insertAdjacentHTML") parent_element.insertAdjacentHTML(options["position"], HTML);
 			else if (options["method"] == "insertAdjacentElement") parent_element.insertAdjacentElement(options["position"], HTML);
+			else if (options["method"] == "replaceChildren") parent_element.replaceChildren(HTML);
 		}
 
 		catch (error) {
