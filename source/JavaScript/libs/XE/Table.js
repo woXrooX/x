@@ -16,10 +16,6 @@ export default class Table extends HTMLElement {
 	}
 
 
-	/////////// Helpers
-
-	static #match_and_highlight(string, regex) { return string.replace(regex, `<span class="bg-error text-color-white">$&</span>`); }
-
 	/////////////////////////// Object
 
 	#JSON = false;
@@ -438,10 +434,7 @@ export default class Table extends HTMLElement {
 		for (const ROW of ROWS) {
 			const STRING_CELL = String(ROW[matched_title_index]);
 
-			if (STRING_CELL.toLowerCase().includes(VALUE)) {
-				ROW[matched_title_index] = Table.#match_and_highlight(STRING_CELL, re_VALUE);
-				this.body_values.push(ROW);
-			}
+			if (STRING_CELL.toLowerCase().includes(VALUE)) this.body_values.push(ROW);
 		}
 	}
 
@@ -454,10 +447,7 @@ export default class Table extends HTMLElement {
 			loop_cells: for (let i = 0; i < ROW.length; i++) {
 				let cell_string = String(ROW[i]);
 
-				if (cell_string.toLowerCase().includes(VALUE_LOWER_CASE)) {
-					ROW[i] = Table.#match_and_highlight(cell_string, re_VALUE_LOWER_CASE);
-					is_anything_in_row_matched = true;
-				}
+				if (cell_string.toLowerCase().includes(VALUE_LOWER_CASE)) is_anything_in_row_matched = true;
 			}
 
 			if (is_anything_in_row_matched === true) this.body_values.push(ROW);
