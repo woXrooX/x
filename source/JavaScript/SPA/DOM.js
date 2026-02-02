@@ -73,6 +73,8 @@ export default class DOM {
 
 			const HTML = await callback(parent_element, ...args);
 
+			if (HTML === undefined) return;
+
 			if (options["method"] == "innerHTML") {
 				if (options["position"] == '=') parent_element.innerHTML = HTML;
 				if (options["position"] == "+=") parent_element.innerHTML += HTML;
