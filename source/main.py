@@ -42,20 +42,6 @@ Log.center('', '-', type_name="bright_black")
 
 
 
-#################################################### Generating sitemap
-from Python.x.modules.SEO.Sitemap import Sitemap
-Sitemap.generate()
-
-
-
-
-#################################################### Generating robots
-from Python.x.modules.SEO.Robots import Robots
-Robots.generate()
-
-
-
-
 #################################################### Initializing MySQL
 from Python.x.modules.MySQL import MySQL
 MySQL.init()
@@ -176,8 +162,18 @@ def app_after_request(response):
 
 
 
-#################################################### Dynamically Imprting All Pages
+#################################################### Dynamically imprting all pages
 from Python.live_pages import *
+
+
+
+
+#################################################### SEO
+from Python.x.modules.SEO.Sitemap import Sitemap
+Sitemap.generate()
+
+from Python.x.modules.SEO.Robots import Robots
+Robots.generate()
 
 
 
