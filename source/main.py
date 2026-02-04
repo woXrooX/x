@@ -175,6 +175,9 @@ Sitemap.generate()
 from Python.x.modules.SEO.Robots import Robots
 Robots.generate()
 
+from Python.x.modules.SEO.LLMs.LLMs import LLMs
+LLMs.generate()
+
 
 
 

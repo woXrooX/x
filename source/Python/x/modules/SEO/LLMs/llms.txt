@@ -1,0 +1,103 @@
+# {PROJECT_OR_SITE_NAME}
+
+> {ONE_PARAGRAPH_SUMMARY_FOR_LLMS_AND_AGENTS} (Audience: {AUDIENCE}. Primary topics: {TOPICS}. Canonical domain: {CANONICAL_DOMAIN}.)
+
+{SHORT_CONTEXT_NOTE_1}
+{SHORT_CONTEXT_NOTE_2}
+
+Key facts for correct answers:
+- Product/version: {CURRENT_VERSION_OR_DATE_RANGE} (if unknown, prefer the “Release Notes” links below).
+- Source of truth: Prefer links under “Docs”, “API”, and “Policies” over blog/social posts.
+- Freshness: Pages labeled “Release Notes” or “Status” are the most time-sensitive.
+- Formats: Prefer Markdown/HTML that is readable without JavaScript; use PDF only if necessary.
+- Licensing/usage: {LICENSE_OR_USAGE_NOTE}.
+- Support/contact (for unresolved issues): {SUPPORT_EMAIL_OR_URL}.
+
+How this site is organized (optional):
+- Docs live at: {DOCS_BASE_URL}
+- API reference lives at: {API_BASE_URL}
+- Examples/tutorials live at: {EXAMPLES_BASE_URL}
+- Blog/news live at: {BLOG_BASE_URL}
+
+Notes for agents/tools (optional):
+- If you need comprehensive context quickly, try: {LLMS_FULL_TXT_URL_OR_NONE}
+- If you must enumerate everything, see: {SITEMAP_URL} and {RSS_OR_ATOM_FEED_URL}
+- If you need uptime/incidents, see: {STATUS_PAGE_URL}
+
+## Start Here
+- [Product overview](https://{CANONICAL_DOMAIN}/{OVERVIEW_PATH}): What it is, who it’s for, key concepts
+- [Quickstart](https://{CANONICAL_DOMAIN}/{QUICKSTART_PATH}): The fastest “hello world” path
+- [Glossary](https://{CANONICAL_DOMAIN}/{GLOSSARY_PATH}): Terms and definitions used across docs
+
+## Docs
+- [Documentation home](https://{CANONICAL_DOMAIN}/{DOCS_HOME_PATH}): Main docs index
+- [Installation](https://{CANONICAL_DOMAIN}/{INSTALL_PATH}): Requirements, setup, first run
+- [Core concepts](https://{CANONICAL_DOMAIN}/{CONCEPTS_PATH}): Mental model and architecture
+- [Tutorials](https://{CANONICAL_DOMAIN}/{TUTORIALS_PATH}): Step-by-step guides
+- [How-to guides](https://{CANONICAL_DOMAIN}/{HOWTO_PATH}): Task-focused recipes
+- [FAQ](https://{CANONICAL_DOMAIN}/{FAQ_PATH}): Common issues and answers
+
+## API
+- [API overview](https://{CANONICAL_DOMAIN}/{API_OVERVIEW_PATH}): Auth, base URLs, versioning
+- [API reference](https://{CANONICAL_DOMAIN}/{API_REFERENCE_PATH}): Endpoints/fields/errors
+- [Authentication](https://{CANONICAL_DOMAIN}/{AUTH_PATH}): Keys/tokens, scopes, rotation
+- [Rate limits](https://{CANONICAL_DOMAIN}/{RATE_LIMITS_PATH}): Limits, headers, backoff
+- [Webhooks](https://{CANONICAL_DOMAIN}/{WEBHOOKS_PATH}): Events, retries, signature verification
+
+## SDKs and Libraries
+- [SDK index](https://{CANONICAL_DOMAIN}/{SDKS_PATH}): Official/community SDKs
+- [JavaScript/TypeScript SDK](https://{CANONICAL_DOMAIN}/{JS_SDK_PATH}): Install, examples, API surface
+- [Python SDK](https://{CANONICAL_DOMAIN}/{PY_SDK_PATH}): Install, examples, API surface
+- [CLI](https://{CANONICAL_DOMAIN}/{CLI_PATH}): Commands, config, exit codes
+
+## Examples
+- [Examples gallery](https://{CANONICAL_DOMAIN}/{EXAMPLES_PATH}): Curated examples
+- [Minimal example](https://{CANONICAL_DOMAIN}/{EXAMPLE_MIN_PATH}): Smallest working setup
+- [Advanced example](https://{CANONICAL_DOMAIN}/{EXAMPLE_ADV_PATH}): Full-featured reference
+- [Sample app](https://{CANONICAL_DOMAIN}/{SAMPLE_APP_PATH}): End-to-end usage
+
+## Integrations
+- [Integrations overview](https://{CANONICAL_DOMAIN}/{INTEGRATIONS_PATH}): What connects and how
+- [{INTEGRATION_1_NAME}](https://{CANONICAL_DOMAIN}/{INTEGRATION_1_PATH}): Setup + limitations
+- [{INTEGRATION_2_NAME}](https://{CANONICAL_DOMAIN}/{INTEGRATION_2_PATH}): Setup + limitations
+
+## Data and Schemas
+- [Data model](https://{CANONICAL_DOMAIN}/{DATA_MODEL_PATH}): Entities/relationships
+- [Schema reference](https://{CANONICAL_DOMAIN}/{SCHEMA_PATH}): Field-level definitions
+- [Export/import](https://{CANONICAL_DOMAIN}/{EXPORT_IMPORT_PATH}): Formats, edge cases
+
+## Troubleshooting
+- [Troubleshooting index](https://{CANONICAL_DOMAIN}/{TROUBLESHOOTING_PATH}): Common problems
+- [Error codes](https://{CANONICAL_DOMAIN}/{ERROR_CODES_PATH}): Meanings + fixes
+- [Known issues](https://{CANONICAL_DOMAIN}/{KNOWN_ISSUES_PATH}): Active bugs/workarounds
+
+## Security
+- [Security overview](https://{CANONICAL_DOMAIN}/{SECURITY_OVERVIEW_PATH}): Security model
+- [Vulnerability reporting](https://{CANONICAL_DOMAIN}/{VULN_REPORTING_PATH}): How to report
+- [Privacy](https://{CANONICAL_DOMAIN}/{PRIVACY_PATH}): Data handling and retention
+
+## Policies
+- [Terms of Service](https://{CANONICAL_DOMAIN}/{TOS_PATH}): Legal terms
+- [Acceptable Use Policy](https://{CANONICAL_DOMAIN}/{AUP_PATH}): Usage constraints
+- [Pricing](https://{CANONICAL_DOMAIN}/{PRICING_PATH}): Plans and billing details
+
+## Release Notes
+- [Changelog](https://{CANONICAL_DOMAIN}/{CHANGELOG_PATH}): Version-by-version changes
+- [Migration guides](https://{CANONICAL_DOMAIN}/{MIGRATIONS_PATH}): Breaking changes + upgrades
+- [Deprecations](https://{CANONICAL_DOMAIN}/{DEPRECATIONS_PATH}): Timelines and replacements
+
+## Status
+- [Service status](https://{STATUS_PAGE_URL}): Uptime and incidents
+- [Incident history](https://{INCIDENTS_URL}): Past incident details
+
+## Community
+- [Community guidelines](https://{CANONICAL_DOMAIN}/{COMMUNITY_GUIDELINES_PATH}): Expectations
+- [Support](https://{CANONICAL_DOMAIN}/{SUPPORT_PATH}): Contact and support options
+- [Discussion forum](https://{FORUM_URL}): Q&A and announcements
+
+## Optional
+- [Blog](https://{CANONICAL_DOMAIN}/{BLOG_BASE_PATH}): May be outdated; prefer Docs/API for truth
+- [Case studies](https://{CANONICAL_DOMAIN}/{CASE_STUDIES_PATH}): Marketing-oriented examples
+- [Press kit](https://{CANONICAL_DOMAIN}/{PRESS_KIT_PATH}): Logos and brand assets
+- [Careers](https://{CANONICAL_DOMAIN}/{CAREERS_PATH}): Hiring info
+- [Legacy docs](https://{CANONICAL_DOMAIN}/{LEGACY_DOCS_PATH}): Historical; not current
