@@ -400,7 +400,7 @@ export default class Table extends HTMLElement {
 				return a_cells[this.last_sorted_column_id].innerText - b_cells[this.last_sorted_column_id].innerText;
 
 			// String comparison
-			return String(a_cells[this.last_sorted_column_id].innerText).localeCompare(String(b_cells[this.last_sorted_column_id].innerText));
+			else return a_cells[this.last_sorted_column_id].innerText.localeCompare(b_cells[this.last_sorted_column_id].innerText);
 		});
 	}
 
@@ -415,7 +415,7 @@ export default class Table extends HTMLElement {
 				return b_cells[this.last_sorted_column_id].innerText - a_cells[this.last_sorted_column_id].innerText;
 
 			// String comparison
-			return String(b_cells[this.last_sorted_column_id].innerText).localeCompare(String(a_cells[this.last_sorted_column_id].innerText));
+			else return b_cells[this.last_sorted_column_id].innerText.localeCompare(a_cells[this.last_sorted_column_id].innerText);
 		});
 	}
 
