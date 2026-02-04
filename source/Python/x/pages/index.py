@@ -2,7 +2,8 @@ from Python.x.modules.Page import Page
 
 # @Page.build({
 # 	"enabled": True,
-# 	"endpoints": ["/"]
+# 	"endpoints": ["/"],
+#	"has_SSR_HTML": False
 # })
 @Page.build()
 def index(): pass

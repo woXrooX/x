@@ -13,6 +13,7 @@ if __name__ != "__main__":
 
 
 	from main import app, request, render_template, redirect, url_for, session
+
 	from Python.x.modules.Globals import Globals
 	from Python.x.modules.Logger import Log
 	from Python.x.modules.Response import Response
@@ -32,8 +33,11 @@ if __name__ != "__main__":
 
 					if guard_result is not True: return guard_result
 
-					# If it is a "GET" request, it will always just returns the "index.html"
-					if request.method == "GET": return render_template("index.html", **globals())
+					if request.method == "GET":
+						if Globals.CONF["pages"][page_name].get("has_SSR_HTML", False) is True: return func(*args, **kwargs, request=request)
+
+						# If it is a "GET" request, it will always just returns the "index.html"
+						return render_template("index.html", **globals())
 
 					CSRF_token = request.headers.get("x-CSRF-token")
 					if not CSRF_token: return Response.make(type="error", message="Missing x-CSRF-token header", HTTP_response_status_code=400)
