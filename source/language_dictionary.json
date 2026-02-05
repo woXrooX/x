@@ -219,6 +219,16 @@
 		"ru": "Неверный файл",
 		"uz": "Yaroqsiz fayl"
 	},
+	"invalid_file_type": {
+		"en": "Invalid file type",
+		"ru": "Недопустимый тип файла",
+		"uz": "Yaroqsiz fayl turi"
+	},
+	"invalid_file_size": {
+		"en": "Invalid file size",
+		"ru": "Недопустимый размер файла",
+		"uz": "Fayl hajmi noto'g'ri"
+	},
 	"invalid_keyword": {
 		"en": "Invalid keyword!",
 		"ru": "Неверное ключевое слово!",
