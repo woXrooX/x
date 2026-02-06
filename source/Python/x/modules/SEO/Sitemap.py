@@ -1,5 +1,5 @@
 if __name__ != "__main__":
-	import json
+	import re
 	from datetime import datetime
 	import xml.etree.ElementTree as ET
 	from xml.dom import minidom
@@ -28,14 +28,11 @@ if __name__ != "__main__":
 				project_URL = f'{Globals.CONF["default"]["URL"]["prefix"]}://{Globals.CONF["default"]["URL"]["sub_domain"]}.{Globals.CONF["default"]["URL"]["domain_name"]}.{Globals.CONF["default"]["URL"]["domain_extension"]}'
 
 				for page in Globals.CONF["pages"]:
-					# Page must be enabled
 					if not Globals.CONF["pages"][page].get("enabled", False): continue
 
-					# Skip pages with roles, roles_not, plans or URL_args required
 					if "roles" in Globals.CONF["pages"][page]: continue
 					if "roles_not" in Globals.CONF["pages"][page]: continue
 					if "plans" in Globals.CONF["pages"][page]: continue
-					if "URL_args" in Globals.CONF["pages"][page]: continue
 
 					# Allow pages only with "GET" methods
 					if(
@@ -50,6 +47,9 @@ if __name__ != "__main__":
 					): continue
 
 					for endpoint in Globals.CONF["pages"][page].get("endpoints", []):
+						# Skip the endpoints with URL arguments
+						if re.search(r'<[^>]+>', endpoint): continue
+
 						# Create URL element
 						url = ET.SubElement(urlset, "url")
 
@@ -65,11 +65,11 @@ if __name__ != "__main__":
 
 						# Add change frequency
 						changefreq = ET.SubElement(url, "changefreq")
-						changefreq.text = "weekly"  # Default value, can be customized
+						changefreq.text = "weekly"
 
 						# Add priority
 						priority = ET.SubElement(url, "priority")
-						priority.text = "0.8"  # Default value, can be customized for different pages
+						priority.text = "0.8"
 
 				# Create the XML string with proper formatting
 				XML_string = minidom.parseString(ET.tostring(urlset)).toprettyxml(indent="    ")
