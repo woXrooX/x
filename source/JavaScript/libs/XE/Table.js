@@ -24,6 +24,7 @@ export default class Table extends HTMLElement {
 	#lazy_draw_next_batch_index = 0;
 	#lazy_draw_observer = null;
 	#lazy_draw_loader_element = null;
+	#DOM_from_data = null;
 
 
 
@@ -70,7 +71,10 @@ export default class Table extends HTMLElement {
 
 		// Check if body values exists
 		if (!("body" in this.#JSON)) return;
-		this.body_values = this.#JSON["body"];
+
+		this.#create_DOM_from_data();
+
+		this.body_values = Array.from(this.#DOM_from_data.querySelectorAll("tr"));
 		this.body_values_in_chunks = [];
 		this.matched_rows_count = 0;
 
@@ -86,6 +90,24 @@ export default class Table extends HTMLElement {
 		this.#set_up_table();
 
 		this.#listen_to_the_sort_clicks();
+	}
+
+	#create_DOM_from_data = ()=> {
+		const table = document.createElement("table");
+
+		for (const row of this.#JSON["body"]) {
+			const tr = document.createElement("tr");
+
+			for (const cell of row) {
+				const td = document.createElement("td");
+				td.innerHTML = cell;
+				tr.appendChild(td);
+			}
+
+			table.appendChild(tr);
+		}
+
+		this.#DOM_from_data = table;
 	}
 
 
@@ -193,7 +215,7 @@ export default class Table extends HTMLElement {
 				this.#update_buttons((this.current_page = 1));
 
 				if (event.target.value == "") {
-					this.body_values = this.#JSON["body"];
+					this.body_values = Array.from(this.#DOM_from_data.querySelectorAll("tr"));
 					this.#build_body();
 					this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
 					this.#build_page_buttons_HTML();
@@ -291,15 +313,8 @@ export default class Table extends HTMLElement {
 		const fragment = document.createDocumentFragment();
 
 		for (let row = this.#lazy_draw_next_batch_index; row < batch_last_index; row++) {
-			const tr = document.createElement("tr");
-
-			for (let cell = 0; cell < rows[row].length; cell++) {
-				const td = document.createElement("td");
-				td.innerHTML = rows[row][cell];
-				tr.appendChild(td);
-			}
-
-			fragment.appendChild(tr);
+			const cloned_tr = rows[row].cloneNode(true);
+			fragment.appendChild(cloned_tr);
 		}
 
 		this.querySelector("table > tbody").appendChild(fragment);
@@ -377,38 +392,53 @@ export default class Table extends HTMLElement {
 	// Sort algo ASC
 	#sort_ASC = ()=>{
 		this.body_values.sort((a, b)=>{
+			const a_cells = a.querySelectorAll("td");
+			const b_cells = b.querySelectorAll("td");
+
 			// Numerical comparison
-			if (!isNaN(a[this.last_sorted_column_id]) && !isNaN(b[this.last_sorted_column_id]))
-			return a[this.last_sorted_column_id] - b[this.last_sorted_column_id];
+			if (!isNaN(a_cells[this.last_sorted_column_id].innerText) && !isNaN(b_cells[this.last_sorted_column_id].innerText))
+				return a_cells[this.last_sorted_column_id].innerText - b_cells[this.last_sorted_column_id].innerText;
 
 			// String comparison
-			else return a[this.last_sorted_column_id].localeCompare(b[this.last_sorted_column_id]);
+			else return a_cells[this.last_sorted_column_id].innerText.localeCompare(b_cells[this.last_sorted_column_id].innerText);
 		});
 	}
 
 	// Sort algo DESC
 	#sort_DESC = ()=>{
 		this.body_values.sort((a, b)=>{
+			const a_cells = a.querySelectorAll("td");
+			const b_cells = b.querySelectorAll("td");
+
 			// Numerical comparison
-			if (!isNaN(a[this.last_sorted_column_id]) && !isNaN(b[this.last_sorted_column_id]))
-				return b[this.last_sorted_column_id] - a[this.last_sorted_column_id];
+			if (!isNaN(a_cells[this.last_sorted_column_id].innerText) && !isNaN(b_cells[this.last_sorted_column_id].innerText))
+				return b_cells[this.last_sorted_column_id].innerText - a_cells[this.last_sorted_column_id].innerText;
 
 			// String comparison
-			else return b[this.last_sorted_column_id].localeCompare(a[this.last_sorted_column_id]);
+			else return b_cells[this.last_sorted_column_id].innerText.localeCompare(a_cells[this.last_sorted_column_id].innerText);
 		});
 	}
 
 	#find_matches = (value)=>{
 		this.body_values = [];
 
-		const ROWS = structuredClone(this.#JSON["body"]);
+		const ROWS = Array.from(this.#DOM_from_data.querySelectorAll("tr"));
 		const VALUE_LOWER_CASE = value.toLowerCase();
 
 		this.#match_values_by_columns(VALUE_LOWER_CASE, ROWS);
 		this.#match_values_by_cells(VALUE_LOWER_CASE, ROWS);
 
 		this.matched_rows_count = this.body_values.length;
-		if (this.body_values.length === 0) this.body_values = [[window.Lang.use("no_matches")]];
+
+		// Create a DOM element for "no matches" to maintain consistency
+		if (this.body_values.length === 0) {
+			const tr = document.createElement("tr");
+			const td = document.createElement("td");
+			td.textContent = window.Lang.use("no_matches");
+			tr.appendChild(td);
+
+			this.body_values = [tr];
+		}
 	}
 
 	#match_values_by_columns = (VALUE_LOWER_CASE, ROWS)=>{
@@ -429,25 +459,21 @@ export default class Table extends HTMLElement {
 
 		if (matched_title_index === null) return;
 
-		const re_VALUE = new RegExp(VALUE, 'gi');
-
 		for (const ROW of ROWS) {
-			const STRING_CELL = String(ROW[matched_title_index]);
+			const cells = Array.from(ROW.querySelectorAll("td"));
+			const td = cells[matched_title_index];
 
-			if (STRING_CELL.toLowerCase().includes(VALUE)) this.body_values.push(ROW);
+			if (td.innerText.toLowerCase().includes(VALUE)) this.body_values.push(ROW);
 		}
 	}
 
 	#match_values_by_cells = (VALUE_LOWER_CASE, ROWS)=>{
-		const re_VALUE_LOWER_CASE = new RegExp(VALUE_LOWER_CASE, 'gi');
-
 		for (const ROW of ROWS) {
+			const cells = Array.from(ROW.querySelectorAll("td"));
 			let is_anything_in_row_matched = false;
 
-			loop_cells: for (let i = 0; i < ROW.length; i++) {
-				let cell_string = String(ROW[i]);
-
-				if (cell_string.toLowerCase().includes(VALUE_LOWER_CASE)) is_anything_in_row_matched = true;
+			loop_cells: for (const td of cells) {
+				if (td.innerText.toLowerCase().includes(VALUE_LOWER_CASE)) is_anything_in_row_matched = true;
 			}
 
 			if (is_anything_in_row_matched === true) this.body_values.push(ROW);
