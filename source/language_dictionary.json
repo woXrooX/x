@@ -109,6 +109,11 @@
 		"ru": "Нет учетной записи? Перейти к подписке",
 		"uz": "Ro`yxatdan o`tmaganmisiz? Ro`yxatdan o`tish bu yerda"
 	},
+	"download_as_CSV": {
+		"en": "Download as CSV",
+		"ru": "Скачать в формате CSV",
+		"uz": "CSV formatida yuklab olish"
+	},
 	"eMail": {
 		"en": "Email",
 		"ru": "Эл. почта",

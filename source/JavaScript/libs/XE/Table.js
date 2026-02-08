@@ -1,5 +1,8 @@
+import { download_CSV } from "/JavaScript/modules/parser/CSV.js";
+
 export default class Table extends HTMLElement {
 	/////////////////////////// Static
+	static ID = 0;
 
 	static #sort_modes = Object.freeze({ASC: 1, DESC: 2});
 
@@ -40,6 +43,8 @@ export default class Table extends HTMLElement {
 
 	constructor() {
 		super();
+
+		Table.ID += 1;
 	}
 
 	connectedCallback() {
@@ -49,6 +54,7 @@ export default class Table extends HTMLElement {
 	disconnectedCallback() {
 		this.#lazy_draw_observer?.disconnect();
 		this.#lazy_draw_observer = null;
+		Table.ID -= 1;
 	}
 
 	set JSON(value) {
@@ -95,6 +101,8 @@ export default class Table extends HTMLElement {
 		this.#set_up_table();
 
 		this.#listen_to_the_sort_clicks();
+
+		this.#listen_to_CSV_download_click();
 	}
 
 	#convert_row_cells_to_td_elements = ()=> {
@@ -150,6 +158,9 @@ export default class Table extends HTMLElement {
 							''
 						}
 					</column>
+
+					<x-svg id="download_CSV_${Table.ID}" name="download_v1" color="white" class="btn btn-primary"></x-svg>
+					<x-tooltip trigger_selector="x-svg#download_CSV_${Table.ID}" class="padding-2 text-size-0-8">${Lang.use("download_as_CSV")}</x-tooltip>
 				</header>
 
 				<main class="width-100"></main>
@@ -227,6 +238,21 @@ export default class Table extends HTMLElement {
 		}
 	}
 
+	#listen_to_CSV_download_click = ()=>{
+		this.querySelector(`x-svg#download_CSV_${Table.ID}`).onclick = () => {
+			const CSV_data = [[]];
+
+			for (const column of this.#JSON["columns"]) CSV_data[0].push(column["title"]);
+
+			for (const row of this.#rows) {
+				const CSV_row = [];
+				for (const cell of row) CSV_row.push(cell.innerText);
+				CSV_data.push(CSV_row);
+			}
+
+			download_CSV(CSV_data);
+		};
+	}
 
 	//// Main
 
