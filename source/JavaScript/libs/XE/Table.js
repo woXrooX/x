@@ -24,6 +24,7 @@ export default class Table extends HTMLElement {
 	#lazy_draw_next_batch_index = 0;
 	#lazy_draw_observer = null;
 	#lazy_draw_loader_element = null;
+	#body_tds = [];
 
 
 
@@ -70,7 +71,10 @@ export default class Table extends HTMLElement {
 
 		// Check if body values exists
 		if (!("body" in this.#JSON)) return;
-		this.body_values = this.#JSON["body"];
+
+		this.#convert_body_to_tds();
+
+		this.body_values = this.#body_tds;
 		this.body_values_in_chunks = [];
 		this.matched_rows_count = 0;
 
@@ -86,6 +90,23 @@ export default class Table extends HTMLElement {
 		this.#set_up_table();
 
 		this.#listen_to_the_sort_clicks();
+	}
+
+
+	#convert_body_to_tds = () => {
+		this.#body_tds = [];
+
+		for (const row of this.#JSON["body"]) {
+			const td_row = [];
+
+			for (const cell_value of row) {
+				const td = document.createElement("td");
+				td.innerHTML = cell_value;
+				td_row.push(td);
+			}
+
+			this.#body_tds.push(td_row);
+		}
 	}
 
 
@@ -166,8 +187,7 @@ export default class Table extends HTMLElement {
 		this.querySelector("container > header > select").onchange = (event)=>{
 			const selected_page_size = event.target.value;
 
-			// If not a number then show all
-			if (isNaN(selected_page_size)) this.page_size = this.#JSON["body"].length;
+			if (isNaN(selected_page_size)) this.page_size = this.#body_tds.length;
 
 			// Else set page size to the selected
 			else this.page_size = parseInt(selected_page_size);
@@ -193,7 +213,7 @@ export default class Table extends HTMLElement {
 				this.#update_buttons((this.current_page = 1));
 
 				if (event.target.value == "") {
-					this.body_values = this.#JSON["body"];
+					this.body_values = this.#body_tds;
 					this.#build_body();
 					this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
 					this.#build_page_buttons_HTML();
@@ -292,13 +312,7 @@ export default class Table extends HTMLElement {
 
 		for (let row = this.#lazy_draw_next_batch_index; row < batch_last_index; row++) {
 			const tr = document.createElement("tr");
-
-			for (let cell = 0; cell < rows[row].length; cell++) {
-				const td = document.createElement("td");
-				td.innerHTML = rows[row][cell];
-				tr.appendChild(td);
-			}
-
+			for (const td of rows[row]) tr.appendChild(td.cloneNode(true));
 			fragment.appendChild(tr);
 		}
 
@@ -377,38 +391,47 @@ export default class Table extends HTMLElement {
 	// Sort algo ASC
 	#sort_ASC = ()=>{
 		this.body_values.sort((a, b)=>{
+			const a_text = a[this.last_sorted_column_id].innerText;
+			const b_text = b[this.last_sorted_column_id].innerText;
+
 			// Numerical comparison
-			if (!isNaN(a[this.last_sorted_column_id]) && !isNaN(b[this.last_sorted_column_id]))
-			return a[this.last_sorted_column_id] - b[this.last_sorted_column_id];
+			if (!isNaN(a_text) && !isNaN(b_text)) return Number(a_text) - Number(b_text);
 
 			// String comparison
-			else return a[this.last_sorted_column_id].localeCompare(b[this.last_sorted_column_id]);
+			else return a_text.localeCompare(b_text);
 		});
 	}
 
 	// Sort algo DESC
 	#sort_DESC = ()=>{
 		this.body_values.sort((a, b)=>{
+			const a_text = a[this.last_sorted_column_id].innerText;
+			const b_text = b[this.last_sorted_column_id].innerText;
+
 			// Numerical comparison
-			if (!isNaN(a[this.last_sorted_column_id]) && !isNaN(b[this.last_sorted_column_id]))
-				return b[this.last_sorted_column_id] - a[this.last_sorted_column_id];
+			if (!isNaN(a_text) && !isNaN(b_text)) return Number(b_text) - Number(a_text);
 
 			// String comparison
-			else return b[this.last_sorted_column_id].localeCompare(a[this.last_sorted_column_id]);
+			else return b_text.localeCompare(a_text);
 		});
 	}
 
 	#find_matches = (value)=>{
 		this.body_values = [];
 
-		const ROWS = structuredClone(this.#JSON["body"]);
+		const ROWS = [...this.#body_tds];
 		const VALUE_LOWER_CASE = value.toLowerCase();
 
 		this.#match_values_by_columns(VALUE_LOWER_CASE, ROWS);
 		this.#match_values_by_cells(VALUE_LOWER_CASE, ROWS);
 
 		this.matched_rows_count = this.body_values.length;
-		if (this.body_values.length === 0) this.body_values = [[window.Lang.use("no_matches")]];
+
+		if (this.body_values.length === 0) {
+			const no_match_td = document.createElement("td");
+			no_match_td.innerText = window.Lang.use("no_matches");
+			this.body_values = [[no_match_td]];
+		}
 	}
 
 	#match_values_by_columns = (VALUE_LOWER_CASE, ROWS)=>{
@@ -429,23 +452,19 @@ export default class Table extends HTMLElement {
 
 		if (matched_title_index === null) return;
 
-		const re_VALUE = new RegExp(VALUE, 'gi');
-
 		for (const ROW of ROWS) {
-			const STRING_CELL = String(ROW[matched_title_index]);
+			const STRING_CELL = ROW[matched_title_index].innerText;
 
 			if (STRING_CELL.toLowerCase().includes(VALUE)) this.body_values.push(ROW);
 		}
 	}
 
 	#match_values_by_cells = (VALUE_LOWER_CASE, ROWS)=>{
-		const re_VALUE_LOWER_CASE = new RegExp(VALUE_LOWER_CASE, 'gi');
-
 		for (const ROW of ROWS) {
 			let is_anything_in_row_matched = false;
 
 			loop_cells: for (let i = 0; i < ROW.length; i++) {
-				let cell_string = String(ROW[i]);
+				let cell_string = ROW[i].innerText;
 
 				if (cell_string.toLowerCase().includes(VALUE_LOWER_CASE)) is_anything_in_row_matched = true;
 			}
@@ -465,13 +484,13 @@ export default class Table extends HTMLElement {
 	}
 
 	#set_initial_page_size = ()=>{
-		if (this.page_size === "all") return this.page_size = this.#JSON["body"].length;
+		if (this.page_size === "all") return this.page_size = this.#body_tds.length;
 
 		if (isNaN(parseInt(this.page_size))) return this.page_size = 10;
 
 		if (parseInt(this.page_size) < 0 || parseInt(this.page_size) == 0) return this.page_size = 10;
 
-		if (parseInt(this.page_size) > this.#JSON["body"].length) return this.page_size = this.#JSON["body"].length;
+		if (parseInt(this.page_size) > this.#body_tds.length) return this.page_size = this.#body_tds.length;
 
 		return this.page_size = parseInt(this.page_size);
 	}
@@ -490,7 +509,7 @@ export default class Table extends HTMLElement {
 		`;
 	}
 
-	#build_total_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.total_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.#JSON["body"].length}`;}
+	#build_total_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.total_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.#body_tds.length}`;}
 
 	#build_matched_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Matched rows:</span> ${this.matched_rows_count}`;}
 
