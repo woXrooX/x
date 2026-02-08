@@ -71,8 +71,8 @@ export async function after() {
 			{
 				"page_size": "10",
 				"searchable": true,
-				"head": HEAD,
-				"body": BODY
+				"columns": HEAD,
+				"rows": BODY
 			},
 			"surface-v1 width-100 padding-2"
 		);

@@ -18,12 +18,21 @@ export default class Table extends HTMLElement {
 
 	/////////////////////////// Object
 
-	#JSON = false;
 	#is_initialized = false;
+
+	#JSON = false;
+	#rows = null;
+	#rows_in_chunks = [];
+
 	#lazy_draw_batch_size = 100;
 	#lazy_draw_next_batch_index = 0;
 	#lazy_draw_observer = null;
 	#lazy_draw_loader_element = null;
+
+	#page_size = 10;
+	#current_page = 1;
+
+	#matched_rows_count = 0;
 
 
 
@@ -69,23 +78,32 @@ export default class Table extends HTMLElement {
 		}
 
 		// Check if body values exists
-		if (!("body" in this.#JSON)) return;
-		this.body_values = this.#JSON["body"];
-		this.body_values_in_chunks = [];
-		this.matched_rows_count = 0;
+		if (!("rows" in this.#JSON)) return;
+
+		this.#convert_row_cells_to_td_elements();
+
+		this.#rows = this.#JSON["rows"];
 
 		// Sortable column IDs
 		this.sortable_column_ids = [];
 		this.last_sorted_column_id = null;
 		this.last_sort_mode = null;
 
-		this.page_size = "page_size" in this.#JSON ? this.#JSON["page_size"] : 10;
-		this.current_page = 1;
+		this.#page_size = "page_size" in this.#JSON ? this.#JSON["page_size"] : 10;
 
 		// Init table
 		this.#set_up_table();
 
 		this.#listen_to_the_sort_clicks();
+	}
+
+	#convert_row_cells_to_td_elements = ()=> {
+		loop_rows: for (let row_index = 0; row_index < this.#JSON["rows"].length; row_index++)
+			loop_cells: for (let cell_index = 0; cell_index < this.#JSON["rows"][row_index].length; cell_index++) {
+				const td = document.createElement("td");
+				td.innerHTML = this.#JSON["rows"][row_index][cell_index];
+				this.#JSON["rows"][row_index][cell_index] = td;
+			}
 	}
 
 
@@ -107,7 +125,7 @@ export default class Table extends HTMLElement {
 						"
 						style="outline-offset: -1px;"
 					>
-						<option selected disabled>${this.page_size}</option>
+						<option selected disabled>${this.#page_size}</option>
 						<option value="10">10</option>
 						<option value="15">15</option>
 						<option value="20">20</option>
@@ -167,13 +185,13 @@ export default class Table extends HTMLElement {
 			const selected_page_size = event.target.value;
 
 			// If not a number then show all
-			if (isNaN(selected_page_size)) this.page_size = this.#JSON["body"].length;
+			if (isNaN(selected_page_size)) this.#page_size = this.#JSON["rows"].length;
 
 			// Else set page size to the selected
-			else this.page_size = parseInt(selected_page_size);
+			else this.#page_size = parseInt(selected_page_size);
 
 			// Reset "current_page" to 1
-			this.current_page = 1;
+			this.#current_page = 1;
 
 			// Update and build the body
 			this.#build_body();
@@ -190,10 +208,10 @@ export default class Table extends HTMLElement {
 
 			debounce_timeout = setTimeout(() => {
 				// Fixes issues when you are on page N and the search generated page numbers are less than N
-				this.#update_buttons((this.current_page = 1));
+				this.#update_buttons((this.#current_page = 1));
 
 				if (event.target.value == "") {
-					this.body_values = this.#JSON["body"];
+					this.#rows = this.#JSON["rows"];
 					this.#build_body();
 					this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
 					this.#build_page_buttons_HTML();
@@ -229,14 +247,14 @@ export default class Table extends HTMLElement {
 	}
 
 	#build_head = ()=>{
-		if (!("head" in this.#JSON)) return;
+		if (!("columns" in this.#JSON)) return;
 		let HTML = "";
 
-		for (let index = 0; index < this.#JSON["head"].length; index++) {
-			if (!("title" in this.#JSON["head"][index])) return "Invalid head data";
+		for (let index = 0; index < this.#JSON["columns"].length; index++) {
+			if (!("title" in this.#JSON["columns"][index])) return "Invalid head data";
 
 			// Check if sortable
-			if ("sortable" in this.#JSON["head"][index] && this.#JSON["head"][index]["sortable"] === true) {
+			if ("sortable" in this.#JSON["columns"][index] && this.#JSON["columns"][index]["sortable"] === true) {
 				// Save sortable column ID
 				this.sortable_column_ids.push(index);
 
@@ -244,7 +262,7 @@ export default class Table extends HTMLElement {
 				HTML += `
 					<th>
 						<row class="cursor-pointer gap-0-5 flex-row flex-y-center flex-x-start">
-							${this.#JSON["head"][index]["title"]}
+							${this.#JSON["columns"][index]["title"]}
 							<x-svg name="sort_ASC" toggle="sort_DESC"></x-svg>
 						</row>
 					</th>
@@ -252,7 +270,7 @@ export default class Table extends HTMLElement {
 			}
 
 			// Just title
-			else HTML += `<th>${this.#JSON["head"][index]["title"]}</th>`;
+			else HTML += `<th>${this.#JSON["columns"][index]["title"]}</th>`;
 		}
 
 		this.querySelector("table > thead > tr").innerHTML = HTML;
@@ -260,7 +278,7 @@ export default class Table extends HTMLElement {
 
 	#build_body = ()=>{
 		this.#divide_data_into_chunks();
-		const rows = this.body_values_in_chunks[this.current_page - 1] ?? [];
+		const rows = this.#rows_in_chunks[this.#current_page - 1] ?? [];
 
 		if (rows.length === 0) {
 			this.querySelector("table > tbody").innerHTML = `<tr><td>${window.Lang.use("no_data")}</td></tr>`;
@@ -290,14 +308,14 @@ export default class Table extends HTMLElement {
 
 		const fragment = document.createDocumentFragment();
 
-		for (let row = this.#lazy_draw_next_batch_index; row < batch_last_index; row++) {
+		for (
+			let row = this.#lazy_draw_next_batch_index;
+			row < batch_last_index;
+			row++
+		) {
 			const tr = document.createElement("tr");
 
-			for (let cell = 0; cell < rows[row].length; cell++) {
-				const td = document.createElement("td");
-				td.innerHTML = rows[row][cell];
-				tr.appendChild(td);
-			}
+			for (let cell = 0; cell < rows[row].length; cell++) tr.appendChild(rows[row][cell]).cloneNode(true);
 
 			fragment.appendChild(tr);
 		}
@@ -376,43 +394,52 @@ export default class Table extends HTMLElement {
 
 	// Sort algo ASC
 	#sort_ASC = ()=>{
-		this.body_values.sort((a, b)=>{
+		this.#rows.sort((a, b)=>{
+			const a_value = a[this.last_sorted_column_id].innerText;
+			const b_value = b[this.last_sorted_column_id].innerText;
+
 			// Numerical comparison
-			if (!isNaN(a[this.last_sorted_column_id]) && !isNaN(b[this.last_sorted_column_id]))
-			return a[this.last_sorted_column_id] - b[this.last_sorted_column_id];
+			if (!isNaN(a_value) && !isNaN(b_value)) return a_value - b_value;
 
 			// String comparison
-			else return a[this.last_sorted_column_id].localeCompare(b[this.last_sorted_column_id]);
+			else return a_value.localeCompare(b_value);
 		});
 	}
 
 	// Sort algo DESC
 	#sort_DESC = ()=>{
-		this.body_values.sort((a, b)=>{
+		this.#rows.sort((a, b)=>{
+			const a_value = a[this.last_sorted_column_id].innerText;
+			const b_value = b[this.last_sorted_column_id].innerText;
+
 			// Numerical comparison
-			if (!isNaN(a[this.last_sorted_column_id]) && !isNaN(b[this.last_sorted_column_id]))
-				return b[this.last_sorted_column_id] - a[this.last_sorted_column_id];
+			if (!isNaN(a_value) && !isNaN(b_value)) return b_value - a_value;
 
 			// String comparison
-			else return b[this.last_sorted_column_id].localeCompare(a[this.last_sorted_column_id]);
+			else return b_value.localeCompare(a_value);
 		});
 	}
 
 	#find_matches = (value)=>{
-		this.body_values = [];
+		this.#rows = [];
 
-		const ROWS = structuredClone(this.#JSON["body"]);
-		const VALUE_LOWER_CASE = value.toLowerCase();
+		const search_value = value.toLowerCase();
 
-		this.#match_values_by_columns(VALUE_LOWER_CASE, ROWS);
-		this.#match_values_by_cells(VALUE_LOWER_CASE, ROWS);
+		this.#match_values_by_columns(search_value);
+		this.#match_values_by_cells(search_value);
 
-		this.matched_rows_count = this.body_values.length;
-		if (this.body_values.length === 0) this.body_values = [[window.Lang.use("no_matches")]];
+		this.#matched_rows_count = this.#rows.length;
+
+		if (this.#rows.length === 0) {
+			const TMP_td = document.createElement("td");
+			TMP_td.innerHTML = window.Lang.use("no_matches");
+
+			this.#rows = [[TMP_td]];
+		}
 	}
 
-	#match_values_by_columns = (VALUE_LOWER_CASE, ROWS)=>{
-		const TITLE_AND_VALUE = VALUE_LOWER_CASE.match(/^(.*?):(.*)$/);
+	#match_values_by_columns = (search_value)=>{
+		const TITLE_AND_VALUE = search_value.match(/^(.*?):(.*)$/);
 		if (TITLE_AND_VALUE === null) return;
 
 		const TITLE = TITLE_AND_VALUE[1];
@@ -420,37 +447,27 @@ export default class Table extends HTMLElement {
 
 		let matched_title_index = null;
 
-		// Getting the index of an title in this.#JSON["head"] that contains the "title"
-		loop_columns: for (let i = 0; i < this.#JSON["head"].length; i++)
-			if (this.#JSON["head"][i]["title"].toLowerCase().includes(TITLE)) {
+		// Getting the index of an title in this.#JSON["columns"] that contains the "title"
+		loop_columns: for (let i = 0; i < this.#JSON["columns"].length; i++)
+			if (this.#JSON["columns"][i]["title"].toLowerCase().includes(TITLE)) {
 				matched_title_index = i;
 				break loop_columns;
 			}
 
 		if (matched_title_index === null) return;
 
-		const re_VALUE = new RegExp(VALUE, 'gi');
-
-		for (const ROW of ROWS) {
-			const STRING_CELL = String(ROW[matched_title_index]);
-
-			if (STRING_CELL.toLowerCase().includes(VALUE)) this.body_values.push(ROW);
-		}
+		for (const ROW of this.#JSON["rows"])
+			if (ROW[matched_title_index].innerText.toLowerCase().includes(VALUE)) this.#rows.push(ROW);
 	}
 
-	#match_values_by_cells = (VALUE_LOWER_CASE, ROWS)=>{
-		const re_VALUE_LOWER_CASE = new RegExp(VALUE_LOWER_CASE, 'gi');
-
-		for (const ROW of ROWS) {
+	#match_values_by_cells = (search_value)=>{
+		for (const ROW of this.#JSON["rows"]) {
 			let is_anything_in_row_matched = false;
 
-			loop_cells: for (let i = 0; i < ROW.length; i++) {
-				let cell_string = String(ROW[i]);
+			loop_cells: for (let i = 0; i < ROW.length; i++)
+				if (ROW[i].innerText.toLowerCase().includes(search_value)) is_anything_in_row_matched = true;
 
-				if (cell_string.toLowerCase().includes(VALUE_LOWER_CASE)) is_anything_in_row_matched = true;
-			}
-
-			if (is_anything_in_row_matched === true) this.body_values.push(ROW);
+			if (is_anything_in_row_matched === true) this.#rows.push(ROW);
 		}
 	}
 
@@ -458,22 +475,22 @@ export default class Table extends HTMLElement {
 	// Divide data to chunks aka pages
 	#divide_data_into_chunks = ()=>{
 		// Empty the chunks
-		this.body_values_in_chunks = [];
+		this.#rows_in_chunks = [];
 
-		for (let i = 0; i < this.body_values.length; i += this.page_size)
-			this.body_values_in_chunks.push(this.body_values.slice(i, i + this.page_size));
+		for (let i = 0; i < this.#rows.length; i += this.#page_size)
+			this.#rows_in_chunks.push(this.#rows.slice(i, i + this.#page_size));
 	}
 
 	#set_initial_page_size = ()=>{
-		if (this.page_size === "all") return this.page_size = this.#JSON["body"].length;
+		if (this.#page_size === "all") return this.#page_size = this.#JSON["rows"].length;
 
-		if (isNaN(parseInt(this.page_size))) return this.page_size = 10;
+		if (isNaN(parseInt(this.#page_size))) return this.#page_size = 10;
 
-		if (parseInt(this.page_size) < 0 || parseInt(this.page_size) == 0) return this.page_size = 10;
+		if (parseInt(this.#page_size) < 0 || parseInt(this.#page_size) == 0) return this.#page_size = 10;
 
-		if (parseInt(this.page_size) > this.#JSON["body"].length) return this.page_size = this.#JSON["body"].length;
+		if (parseInt(this.#page_size) > this.#JSON["rows"].length) return this.#page_size = this.#JSON["rows"].length;
 
-		return this.page_size = parseInt(this.page_size);
+		return this.#page_size = parseInt(this.#page_size);
 	}
 
 
@@ -484,15 +501,15 @@ export default class Table extends HTMLElement {
 	#build_page_numbers_HTML = ()=>{
 		this.querySelector("container > footer > section:nth-child(1) > span.page_numbers").innerHTML = `
 			<span class="text-color-secondary text-size-0-7">Page</span>
-			${this.current_page}
+			${this.#current_page}
 			<span class="text-color-secondary text-size-0-7">of</span>
-			${this.body_values_in_chunks.length}
+			${this.#rows_in_chunks.length}
 		`;
 	}
 
-	#build_total_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.total_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.#JSON["body"].length}`;}
+	#build_total_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.total_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.#JSON["rows"].length}`;}
 
-	#build_matched_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Matched rows:</span> ${this.matched_rows_count}`;}
+	#build_matched_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Matched rows:</span> ${this.#matched_rows_count}`;}
 
 
 
@@ -503,7 +520,7 @@ export default class Table extends HTMLElement {
 	#build_page_buttons_HTML = ()=>{
 		let buttons_HTML = "";
 
-		for (let i = 1; i <= this.body_values_in_chunks.length; i++) buttons_HTML += `<button class="btn btn-primary btn-s display-none" name="${i}">${i}</button>`;
+		for (let i = 1; i <= this.#rows_in_chunks.length; i++) buttons_HTML += `<button class="btn btn-primary btn-s display-none" name="${i}">${i}</button>`;
 
 		this.querySelector("container > footer > section:nth-child(2)").innerHTML = `
 			<x-svg name="arrow_left_first_page" color="white" class="btn btn-primary btn-s"></x-svg>
@@ -518,27 +535,27 @@ export default class Table extends HTMLElement {
 		this.next_button = this.querySelector(`container > footer > section:nth-child(2) > x-svg[name=arrow_forward_v1]`);
 		this.last_button = this.querySelector(`container > footer > section:nth-child(2) > x-svg[name=arrow_right_last_page]`);
 
-		this.#update_buttons(this.current_page);
+		this.#update_buttons(this.#current_page);
 		this.#listen_to_page_buttons_clicks();
 	}
 
 	#listen_to_page_buttons_clicks = ()=>{
 		// first
-		this.first_button.onclick = ()=> this.#update_buttons((this.current_page = 1));
+		this.first_button.onclick = ()=> this.#update_buttons((this.#current_page = 1));
 
 		// previous
-		this.previous_button.onclick = ()=> this.#update_buttons(--this.current_page);
+		this.previous_button.onclick = ()=> this.#update_buttons(--this.#current_page);
 
 		// next
-		this.next_button.onclick = ()=> this.#update_buttons(++this.current_page);
+		this.next_button.onclick = ()=> this.#update_buttons(++this.#current_page);
 
 		// last
-		this.last_button.onclick = ()=> this.#update_buttons((this.current_page = this.body_values_in_chunks.length));
+		this.last_button.onclick = ()=> this.#update_buttons((this.#current_page = this.#rows_in_chunks.length));
 
-		// 1 to this.body_values_in_chunks.length
+		// 1 to this.#body_values_in_chunks.length
 		const buttons = this.querySelectorAll("container > footer > section:nth-child(2) > section > button");
 
-		for (const button of buttons) button.onclick = ()=> this.#update_buttons((this.current_page = parseInt(button.name)));
+		for (const button of buttons) button.onclick = ()=> this.#update_buttons((this.#current_page = parseInt(button.name)));
 	}
 
 	#hide_buttons = ()=>{
@@ -561,11 +578,11 @@ export default class Table extends HTMLElement {
 		else this.previous_button.classList.add("disabled");
 
 		// Enable/Disable "next" button
-		if (id == this.body_values_in_chunks.length) this.next_button.classList.add("disabled");
+		if (id == this.#rows_in_chunks.length) this.next_button.classList.add("disabled");
 		else this.next_button.classList.remove("disabled");
 
 		// Enable/Disable "last" button
-		if (id == this.body_values_in_chunks.length) this.last_button.classList.add("disabled");
+		if (id == this.#rows_in_chunks.length) this.last_button.classList.add("disabled");
 		else this.last_button.classList.remove("disabled");
 
 
