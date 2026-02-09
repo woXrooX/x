@@ -37,6 +37,9 @@ export default class Table extends HTMLElement {
 
 	#matched_rows_count = 0;
 
+	#search_highlight = null;
+	#current_search_value = null;
+	#table_id = 0;
 
 
 	/////////// APIs
@@ -45,6 +48,7 @@ export default class Table extends HTMLElement {
 		super();
 
 		Table.ID += 1;
+		this.#table_id = Table.ID;
 	}
 
 	connectedCallback() {
@@ -55,6 +59,7 @@ export default class Table extends HTMLElement {
 		this.#lazy_draw_observer?.disconnect();
 		this.#lazy_draw_observer = null;
 		Table.ID -= 1;
+		this.#clear_highlights();
 	}
 
 	set JSON(value) {
@@ -176,6 +181,13 @@ export default class Table extends HTMLElement {
 				</footer>
 
 			</container>
+
+			<style>
+				::highlight(table-search-${this.#table_id}) {
+					background-color: var(--color-error);
+					color: white;
+				}
+			</style>
 		`;
 
 		this.#listen_to_page_size_select();
@@ -222,6 +234,9 @@ export default class Table extends HTMLElement {
 				this.#update_buttons((this.#current_page = 1));
 
 				if (event.target.value == "") {
+					this.#current_search_value = null;
+					this.#clear_highlights();
+
 					this.#rows = this.#JSON["rows"];
 					this.#build_body();
 					this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
@@ -233,6 +248,9 @@ export default class Table extends HTMLElement {
 				this.#build_body();
 				this.#build_page_buttons_HTML();
 				this.#build_matched_rows_HTML();
+
+				this.#current_search_value = event.target.value;
+				this.#apply_highlights(event.target.value);
 
 			}, 500);
 		}
@@ -349,6 +367,8 @@ export default class Table extends HTMLElement {
 		this.querySelector("table > tbody").appendChild(fragment);
 
 		this.#lazy_draw_next_batch_index = batch_last_index;
+
+		if (this.#current_search_value != null) this.#apply_highlights(this.#current_search_value);
 	}
 
 	#init_observer_lazy_draw = (rows)=>{
@@ -495,6 +515,43 @@ export default class Table extends HTMLElement {
 
 			if (is_anything_in_row_matched === true) this.#rows.push(ROW);
 		}
+	}
+
+	// TreeWalker + highlight
+	#apply_highlights = (search_value) => {
+		this.#clear_highlights();
+
+		const tbody = this.querySelector("table > tbody");
+		const tree_walker = document.createTreeWalker(tbody, NodeFilter.SHOW_TEXT);
+		const regex = new RegExp(search_value, 'gi');
+		const highlight_ranges = [];
+
+		while (tree_walker.nextNode()) {
+			const node = tree_walker.currentNode;
+			const text = node.textContent;
+
+			let match = regex.exec(text);
+			while (match != null) {
+				const range = new Range();
+				range.setStart(node, match.index);
+				range.setEnd(node, match.index + match[0].length);
+				highlight_ranges.push(range);
+
+				match = regex.exec(text);
+			}
+		}
+
+		if (highlight_ranges.length == 0) return;
+
+		this.#search_highlight = new Highlight(...highlight_ranges);
+		CSS.highlights.set(`table-search-${this.#table_id}`, this.#search_highlight);
+	}
+
+	#clear_highlights = () => {
+		if (this.#search_highlight === null) return;
+
+		CSS.highlights.delete(`table-search-${this.#table_id}`);
+		this.#search_highlight = null;
 	}
 
 
