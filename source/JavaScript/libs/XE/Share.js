@@ -5,7 +5,7 @@ export default class Share extends HTMLElement{
 	constructor() {
 		super();
 
-		this.innerHTML = `<x-svg name="upload" id="modal_x_share"></x-svg>`;
+		this.innerHTML = `<x-svg name="upload_v2" id="modal_x_share"></x-svg>`;
 
 		this.querySelector("x-svg#modal_x_share").addEventListener("click", async (event)=>{
 			event.preventDefault();

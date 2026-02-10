@@ -179,7 +179,7 @@ export default class Table extends HTMLElement {
 						}
 					</column>
 
-					<x-svg id="download_CSV_${Table.ID}" name="download_v1" color="white" class="btn btn-primary"></x-svg>
+					<x-svg id="download_CSV_${Table.ID}" name="download_v2" color="white" class="btn btn-primary"></x-svg>
 					<x-tooltip trigger_selector="x-svg#download_CSV_${Table.ID}" class="padding-2 text-size-0-8">${Lang.use("download_as_CSV")}</x-tooltip>
 				</header>
 
