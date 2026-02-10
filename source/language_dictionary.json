@@ -439,6 +439,21 @@
 		"ru": "Пользователь с таким адресом электронной почты не существует",
 		"uz": "Ushbu elektron pochtalik foydalanuvchi mavjud emas"
 	},
+	"username": {
+		"en": "Username",
+		"ru": "Имя пользователя",
+		"uz": "Foydalanuvchi nomi"
+	},
+	"phone_number": {
+		"en": "Phone number",
+		"ru": "Номер телефона",
+		"uz": "Telefon raqami"
+	},
+	"create_user": {
+		"en": "Create user",
+		"ru": "Создать пользователя",
+		"uz": "Foydalanuvchi yarating"
+	},
 	"verify_eMail": {
 		"en": "Verify Email",
 		"ru": "Подтвердить Email",

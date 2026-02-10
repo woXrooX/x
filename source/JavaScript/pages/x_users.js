@@ -13,7 +13,9 @@ export default async function main() {
 					<p>db.users.*</p>
 				</row>
 
-				<row class="flex-row gap-0-5 width-auto flex-y-center flex-x-end"></row>
+				<row class="flex-row gap-0-5 width-auto flex-y-center flex-x-end">
+					${build_modal_form_create_user_HTML()}
+				</row>
 			</row>
 
 			<row class="glances gap-0-5"></row>
@@ -21,6 +23,45 @@ export default async function main() {
 			<column class="table width-100"></column>
 		</container>
 	`;
+
+	function build_modal_form_create_user_HTML(){
+		return `
+			<x-svg id="modal_form_create_user" name="add" class="btn btn-primary" color="white"></x-svg>
+			<x-tooltip trigger_selector="x-svg#modal_form_create_user" class="padding-2 text-size-0-8">${Lang.use("create_user")}</x-tooltip>
+			<x-modal trigger_selector="x-svg#modal_form_create_user">
+				<form for="create_user" class="padding-2" x-modal="on:success:hide" x-toast="on:any:message">
+					<p class="text-align-center text-size-1-5">${Lang.use("create_user")}</p>
+
+					<row class="gap-0-5">
+						<label>
+							<p for="first_name">${window.Lang.use("first_name")}</p>
+							<input type="text" name="first_name">
+						</label>
+
+						<label>
+							<p for="last_name">${window.Lang.use("last_name")}</p>
+							<input type="text" name="last_name">
+						</label>
+					</row>
+
+					<label>
+						<p for="eMail">${window.Lang.use("eMail")}</p>
+						<input type="email" name="eMail">
+					</label>
+
+					<label>
+						<p for="password">${window.Lang.use("password")}</p>
+						<input type="password" name="password">
+					</label>
+
+					<label>
+						<button type="submit" class="btn btn-primary"><x-svg name="save" color="white"></x-svg></button>
+						<p for="create_user"></p>
+					</label>
+				</form>
+			</x-modal>
+		`;
+	}
 }
 
 export async function after() {
