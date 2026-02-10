@@ -21,6 +21,7 @@ export default class Table extends HTMLElement {
 
 	/////////////////////////// Object
 
+	#ID = undefined;
 	#is_initialized = false;
 
 	#JSON = false;
@@ -37,6 +38,10 @@ export default class Table extends HTMLElement {
 
 	#matched_rows_count = 0;
 
+	#search_highlight_object = null;
+	#search_highlight_value = null;
+
+	#tbody_element = null;
 
 
 	/////////// APIs
@@ -45,6 +50,7 @@ export default class Table extends HTMLElement {
 		super();
 
 		Table.ID += 1;
+		this.#ID = Table.ID;
 	}
 
 	connectedCallback() {
@@ -55,6 +61,7 @@ export default class Table extends HTMLElement {
 		this.#lazy_draw_observer?.disconnect();
 		this.#lazy_draw_observer = null;
 		Table.ID -= 1;
+		this.#clear_search_highlights();
 	}
 
 	set JSON(value) {
@@ -71,6 +78,7 @@ export default class Table extends HTMLElement {
 
 
 	/////////// Helpers
+
 
 	#init_core = () => {
 		if (this.#is_initialized === true) return;
@@ -97,12 +105,17 @@ export default class Table extends HTMLElement {
 
 		this.#page_size = "page_size" in this.#JSON ? this.#JSON["page_size"] : 10;
 
-		// Init table
-		this.#set_up_table();
+		this.#init_page_size();
 
-		this.#listen_to_the_sort_clicks();
+		this.#build_DOM();
+
+		this.#listen_to_page_size_select();
+
+		this.#listen_to_search_typing();
 
 		this.#listen_to_CSV_download_click();
+
+		this.#listen_to_the_sort_clicks();
 	}
 
 	#convert_row_cells_to_td_elements = ()=> {
@@ -114,12 +127,19 @@ export default class Table extends HTMLElement {
 			}
 	}
 
+	#init_page_size = ()=>{
+		if (this.#page_size === "all") return this.#page_size = this.#JSON["rows"].length;
 
-	//////// Table
+		if (isNaN(parseInt(this.#page_size))) return this.#page_size = 10;
 
-	#set_up_table = ()=>{
-		this.#set_initial_page_size();
+		if (parseInt(this.#page_size) < 0 || parseInt(this.#page_size) == 0) return this.#page_size = 10;
 
+		if (parseInt(this.#page_size) > this.#JSON["rows"].length) return this.#page_size = this.#JSON["rows"].length;
+
+		this.#page_size = parseInt(this.#page_size);
+	}
+
+	#build_DOM = ()=>{
 		this.innerHTML = `
 			<container class="gap-0-5">
 
@@ -176,11 +196,14 @@ export default class Table extends HTMLElement {
 				</footer>
 
 			</container>
+
+			<style>
+				::highlight(x-table-${this.#ID}) {
+					background-color: var(--color-error);
+					color: white;
+				}
+			</style>
 		`;
-
-		this.#listen_to_page_size_select();
-
-		this.#listen_to_search_typing();
 
 		this.#build_table();
 
@@ -188,8 +211,6 @@ export default class Table extends HTMLElement {
 
 		this.#build_page_buttons_HTML();
 	}
-
-	//// Header
 
 	#listen_to_page_size_select = ()=>{
 		this.querySelector("container > header > select").onchange = (event)=>{
@@ -222,6 +243,8 @@ export default class Table extends HTMLElement {
 				this.#update_buttons((this.#current_page = 1));
 
 				if (event.target.value == "") {
+					this.#clear_search_highlights();
+
 					this.#rows = this.#JSON["rows"];
 					this.#build_body();
 					this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = '';
@@ -234,6 +257,7 @@ export default class Table extends HTMLElement {
 				this.#build_page_buttons_HTML();
 				this.#build_matched_rows_HTML();
 
+				this.#apply_search_highlights(event.target.value);
 			}, 500);
 		}
 	}
@@ -254,7 +278,8 @@ export default class Table extends HTMLElement {
 		};
 	}
 
-	//// Main
+
+
 
 	#build_table = ()=>{
 		this.querySelector("container > main").innerHTML = `
@@ -266,6 +291,8 @@ export default class Table extends HTMLElement {
 				</table>
 			</section>
 		`;
+
+		this.#tbody_element = this.querySelector("table > tbody");
 
 		this.#build_head();
 		this.#build_body();
@@ -307,12 +334,12 @@ export default class Table extends HTMLElement {
 		const rows = this.#rows_in_chunks[this.#current_page - 1] ?? [];
 
 		if (rows.length === 0) {
-			this.querySelector("table > tbody").innerHTML = `<tr><td>${window.Lang.use("no_data")}</td></tr>`;
+			this.#tbody_element.innerHTML = `<tr><td>${window.Lang.use("no_data")}</td></tr>`;
 			return;
 		}
 
 		this.#lazy_draw_next_batch_index = 0;
-		this.querySelector("table > tbody").replaceChildren();
+		this.#tbody_element.replaceChildren();
 		this.#lazy_draw_batch(rows);
 		this.#init_observer_lazy_draw(rows);
 	}
@@ -324,6 +351,9 @@ export default class Table extends HTMLElement {
 
 		this.querySelector("table > tfoot > tr").innerHTML = HTML;
 	}
+
+
+
 
 
 	//// Lazy draw
@@ -346,9 +376,11 @@ export default class Table extends HTMLElement {
 			fragment.appendChild(tr);
 		}
 
-		this.querySelector("table > tbody").appendChild(fragment);
+		this.#tbody_element.appendChild(fragment);
 
 		this.#lazy_draw_next_batch_index = batch_last_index;
+
+		if (this.#search_highlight_value != null) this.#apply_search_highlights(this.#search_highlight_value);
 	}
 
 	#init_observer_lazy_draw = (rows)=>{
@@ -362,15 +394,14 @@ export default class Table extends HTMLElement {
 			this.#lazy_draw_loader_element.innerHTML = `<td colspan="1000" class="width-100 height-50px padding-5 loading-on-element loading-on-element-bg-unset"></td>`;
 		}
 
-		const tbody = this.querySelector("table > tbody");
-		tbody.appendChild(this.#lazy_draw_loader_element);
+		this.#tbody_element.appendChild(this.#lazy_draw_loader_element);
 
 		this.#lazy_draw_observer = new IntersectionObserver(
 			(entries) => {
 				if (!entries[0].isIntersecting) return;
 
 				this.#lazy_draw_batch(rows);
-				tbody.appendChild(this.#lazy_draw_loader_element);
+				this.#tbody_element.appendChild(this.#lazy_draw_loader_element);
 
 				if (this.#lazy_draw_next_batch_index >= rows.length) {
 					this.#lazy_draw_observer.disconnect();
@@ -498,6 +529,46 @@ export default class Table extends HTMLElement {
 	}
 
 
+	//// Highlight
+
+	#apply_search_highlights = (search_value) => {
+		this.#clear_search_highlights();
+
+		this.#search_highlight_value = search_value;
+
+		const tree_walker = document.createTreeWalker(this.#tbody_element, NodeFilter.SHOW_TEXT);
+		const regex = new RegExp(this.#search_highlight_value, 'gi');
+		const highlight_ranges = [];
+
+		while (tree_walker.nextNode()) {
+			const node = tree_walker.currentNode;
+			const text = node.textContent;
+
+			let match = regex.exec(text);
+
+			while (match != null) {
+				const range = new Range();
+				range.setStart(node, match.index);
+				range.setEnd(node, match.index + match[0].length);
+				highlight_ranges.push(range);
+
+				match = regex.exec(text);
+			}
+		}
+
+		if (highlight_ranges.length == 0) return;
+
+		this.#search_highlight_object = new Highlight(...highlight_ranges);
+		CSS.highlights.set(`x-table-${this.#ID}`, this.#search_highlight_object);
+	}
+
+	#clear_search_highlights = () => {
+		this.#search_highlight_object = null;
+		this.#search_highlight_value = null;
+		CSS.highlights.delete(`x-table-${this.#ID}`);
+	}
+
+
 	// Divide data to chunks aka pages
 	#divide_data_into_chunks = ()=>{
 		// Empty the chunks
@@ -506,19 +577,6 @@ export default class Table extends HTMLElement {
 		for (let i = 0; i < this.#rows.length; i += this.#page_size)
 			this.#rows_in_chunks.push(this.#rows.slice(i, i + this.#page_size));
 	}
-
-	#set_initial_page_size = ()=>{
-		if (this.#page_size === "all") return this.#page_size = this.#JSON["rows"].length;
-
-		if (isNaN(parseInt(this.#page_size))) return this.#page_size = 10;
-
-		if (parseInt(this.#page_size) < 0 || parseInt(this.#page_size) == 0) return this.#page_size = 10;
-
-		if (parseInt(this.#page_size) > this.#JSON["rows"].length) return this.#page_size = this.#JSON["rows"].length;
-
-		return this.#page_size = parseInt(this.#page_size);
-	}
-
 
 
 
@@ -533,9 +591,17 @@ export default class Table extends HTMLElement {
 		`;
 	}
 
-	#build_total_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.total_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.#JSON["rows"].length}`;}
+	#build_total_rows_HTML = ()=>{
+		this.querySelector("container > footer > section:nth-child(1) > span.total_rows").innerHTML = `
+			<span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.#JSON["rows"].length}
+		`;
+	}
 
-	#build_matched_rows_HTML = ()=>{this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = `<span class="text-color-secondary text-size-0-7">Matched rows:</span> ${this.#matched_rows_count}`;}
+	#build_matched_rows_HTML = ()=>{
+		this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = `
+			<span class="text-color-secondary text-size-0-7">Matched rows:</span> ${this.#matched_rows_count}
+		`;
+	}
 
 
 
