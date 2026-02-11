@@ -4,7 +4,7 @@ export default class Table extends HTMLElement {
 	/////////////////////////// Static
 	static ID = 0;
 
-	static #sort_modes = Object.freeze({ASC: 1, DESC: 2});
+	static #sort_modes = Object.freeze({ASC: true, DESC: false});
 
 	/////////// APIs
 
@@ -98,11 +98,6 @@ export default class Table extends HTMLElement {
 
 		this.#rows = this.#JSON["rows"];
 
-		// Sortable column IDs
-		this.sortable_column_ids = [];
-		this.last_sorted_column_id = null;
-		this.last_sort_mode = null;
-
 		this.#page_size = "page_size" in this.#JSON ? this.#JSON["page_size"] : 10;
 
 		this.#init_page_size();
@@ -163,24 +158,29 @@ export default class Table extends HTMLElement {
 						<option value="all">${window.Lang.use("all")}</option>
 					</select>
 
-					<column class="width-100">
-						${
-							!!this.#JSON?.searchable === true ?
-							`<input
-								type="text"
-								placeholder="${Lang.use("type_to_search")}"
-								class="
-									width-100
-									box-shadow-v0
-								"
-								style="outline-offset: -1px;"
-							>` :
-							''
-						}
-					</column>
+					${
+						("searchable" in this.#JSON && this.#JSON["searchable"] === true) ?
+						`<input
+							id="search"
+							type="text"
+							placeholder="${Lang.use("type_to_search")}"
+							class="
+								width-100
+								box-shadow-v0
+							"
+							style="outline-offset: -1px;"
+						>` :
+						''
+					}
 
-					<x-svg id="download_CSV_${Table.ID}" name="download_v2" color="white" class="btn btn-primary"></x-svg>
-					<x-tooltip trigger_selector="x-svg#download_CSV_${Table.ID}" class="padding-2 text-size-0-8">${Lang.use("download_as_CSV")}</x-tooltip>
+					${
+						("downloadable" in this.#JSON && this.#JSON["downloadable"] === true) ?
+						`
+							<x-svg id="download_CSV_${Table.ID}" name="download_v2" color="white" class="btn btn-primary"></x-svg>
+							<x-tooltip trigger_selector="x-svg#download_CSV_${Table.ID}" class="padding-2 text-size-0-8">${Lang.use("download_as_CSV")}</x-tooltip>
+						` :
+						''
+					}
 				</header>
 
 				<main class="width-100"></main>
@@ -234,8 +234,10 @@ export default class Table extends HTMLElement {
 	}
 
 	#listen_to_search_typing = ()=>{
+		if (!("searchable" in this.#JSON) || this.#JSON["searchable"] !== true) return;
+
 		let debounce_timeout;
-		this.querySelector("container > header > column > input").oninput = (event)=>{
+		this.querySelector("input#search").oninput = (event)=>{
 			clearTimeout(debounce_timeout);
 
 			debounce_timeout = setTimeout(() => {
@@ -263,6 +265,8 @@ export default class Table extends HTMLElement {
 	}
 
 	#listen_to_CSV_download_click = ()=>{
+		if (!("downloadable" in this.#JSON) || this.#JSON["downloadable"] !== true) return;
+
 		this.querySelector(`x-svg#download_CSV_${Table.ID}`).onclick = () => {
 			const CSV_data = [[]];
 
@@ -304,26 +308,16 @@ export default class Table extends HTMLElement {
 		let HTML = "";
 
 		for (let index = 0; index < this.#JSON["columns"].length; index++) {
-			if (!("title" in this.#JSON["columns"][index])) return "Invalid head data";
+			if (!("title" in this.#JSON["columns"][index])) return `Invalid "columns" data`;
 
-			// Check if sortable
-			if ("sortable" in this.#JSON["columns"][index] && this.#JSON["columns"][index]["sortable"] === true) {
-				// Save sortable column ID
-				this.sortable_column_ids.push(index);
-
-				// Create sort icon
-				HTML += `
-					<th>
-						<row class="cursor-pointer gap-0-5 flex-row flex-y-center flex-x-start">
-							${this.#JSON["columns"][index]["title"]}
-							<x-svg name="sort_ASC" toggle="sort_DESC"></x-svg>
-						</row>
-					</th>
-				`;
-			}
-
-			// Just title
-			else HTML += `<th>${this.#JSON["columns"][index]["title"]}</th>`;
+			HTML += `
+				<th>
+					<row class="cursor-pointer gap-0-5 flex-row flex-y-center flex-x-start">
+						${this.#JSON["columns"][index]["title"]}
+						<x-svg name="sort_ASC" toggle="sort_DESC"></x-svg>
+					</row>
+				</th>
+			`;
 		}
 
 		this.querySelector("table > thead > tr").innerHTML = HTML;
@@ -418,30 +412,25 @@ export default class Table extends HTMLElement {
 	//// Sort
 
 	#listen_to_the_sort_clicks = ()=>{
-		for (const id of this.sortable_column_ids) {
-			const th_element = this.querySelector(`table > thead > tr > th:nth-child(${id+1})`);
+		for (let index = 0; index < this.#JSON["columns"].length; index++) {
+			const th_element = this.querySelector(`table > thead > tr > th:nth-child(${index+1})`);
 
 			th_element.onclick = ()=>{
-				// Update last sorted column ID with the current clicked column ID
-				this.last_sorted_column_id = id;
+				const x_svg_element = th_element.querySelector("row > x-svg");
 
-				th_element.querySelector("row > x-svg").forceToggle();
+				switch(x_svg_element.toggled) {
+					case Table.#sort_modes.ASC:
+						this.#sort_DESC(index);
+						break;
 
-				switch(this.last_sort_mode) {
-				case Table.#sort_modes.ASC:
-					this.#sort_DESC();
-					this.last_sort_mode = Table.#sort_modes.DESC;
-					break;
+					case Table.#sort_modes.DESC:
+						this.#sort_ASC(index);
+						break;
 
-				case Table.#sort_modes.DESC:
-					this.#sort_ASC();
-					this.last_sort_mode = Table.#sort_modes.ASC;
-					break;
-
-				default:
-					this.#sort_ASC();
-					this.last_sort_mode = Table.#sort_modes.ASC;
+					default: this.#sort_ASC(index);
 				}
+
+				x_svg_element.force_toggle();
 
 				// Update table view
 				this.#build_body();
@@ -450,10 +439,10 @@ export default class Table extends HTMLElement {
 	}
 
 	// Sort algo ASC
-	#sort_ASC = ()=>{
+	#sort_ASC = (column_index)=>{
 		this.#rows.sort((a, b)=>{
-			const a_value = a[this.last_sorted_column_id].innerText;
-			const b_value = b[this.last_sorted_column_id].innerText;
+			const a_value = a[column_index].innerText;
+			const b_value = b[column_index].innerText;
 
 			// Numerical comparison
 			if (!isNaN(a_value) && !isNaN(b_value)) return a_value - b_value;
@@ -464,10 +453,10 @@ export default class Table extends HTMLElement {
 	}
 
 	// Sort algo DESC
-	#sort_DESC = ()=>{
+	#sort_DESC = (column_index)=>{
 		this.#rows.sort((a, b)=>{
-			const a_value = a[this.last_sorted_column_id].innerText;
-			const b_value = b[this.last_sorted_column_id].innerText;
+			const a_value = a[column_index].innerText;
+			const b_value = b[column_index].innerText;
 
 			// Numerical comparison
 			if (!isNaN(a_value) && !isNaN(b_value)) return b_value - a_value;
