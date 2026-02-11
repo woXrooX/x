@@ -35,8 +35,9 @@ export async function after() {
 
 		return window.x.Table.build(
 			{
-				"page_size": "10",
+				"page_size": 10,
 				"searchable": true,
+				"downloadable": true,
 				"columns": HEAD,
 				"rows": BODY
 			},
