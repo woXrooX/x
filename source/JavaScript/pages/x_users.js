@@ -89,7 +89,7 @@ export async function after() {
 		if (!("data" in users)) return String_to_Element(`<p class="width-100 text-size-0-8 surface-info padding-1">${Lang.use("no_data")}</p>`);
 
 		const HEAD = [];
-		for (const KEY of Object.keys(users.data[0])) HEAD.push({"title": KEY, "sortable": true});
+		for (const KEY of Object.keys(users.data[0])) HEAD.push({"title": KEY});
 		HEAD.push({"title": "Actions"});
 
 		const BODY = [];
@@ -110,8 +110,9 @@ export async function after() {
 
 		return window.x.Table.build(
 			{
-				"page_size": "10",
+				"page_size": 10,
 				"searchable": true,
+				"downloadable": true,
 				"columns": HEAD,
 				"rows": BODY
 			},

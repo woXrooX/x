@@ -120,15 +120,16 @@ export async function after() {
 		else return String_to_Element(`<p class="surface-info width-100 padding-2">${Lang.use("no_data")}</p>`);
 
 		const HEAD = [];
-		for (const KEY of Object.keys(log_in_records[0])) HEAD.push({"title": KEY, "sortable": true});
+		for (const KEY of Object.keys(log_in_records[0])) HEAD.push({"title": KEY});
 
 		const BODY = [];
 		for (const i in log_in_records) BODY.push(Object.values(log_in_records[i]));
 
 		return window.x.Table.build(
 			{
-				"page_size": "10",
+				"page_size": 10,
 				"searchable": true,
+				"downloadable": true,
 				"columns": HEAD,
 				"rows": BODY
 			},

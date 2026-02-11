@@ -76,13 +76,13 @@ export default class XSVG extends HTMLElement{
 
 	////////// Setters
 	// Set SVG name
-	set_name(value) {
+	set name(value) {
 		this.setAttribute("name", value);
 		if (this.toggled === false) this.svg_container.innerHTML = window.SVG.use(value);
 	}
 
 	// Set SVG toggle name
-	set_toggle(value) {
+	set toggle(value) {
 		this.setAttribute("toggle", value);
 		if (this.toggled === true) this.svg_container.innerHTML = window.SVG.use(value);
 	}
