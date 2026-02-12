@@ -2,21 +2,25 @@ import { timestamp_to_human_readable_v2 } from "/JavaScript/modules/datetime/dat
 
 export function before() { window.x.Head.set_title("notifications"); }
 
-export default function main() { return `<container class="padding-5 gap-0-5 max-width-1200px"></container>`; }
+export default function main() {
+	return `
+		<container class="padding-5 gap-0-5 max-width-1200px">
+			<row class="surface-v1 padding-2 flex-row flex-x-between flex-y-center">
+				<row class="flex-row gap-0-5 width-auto flex-y-center flex-x-start">
+					<x-link go="history:back" class="btn btn-primary"><x-svg name="arrow_back_v1" color="white"></x-svg></x-link>
+					<p>${Lang.use("notifications")}</p>
+				</row>
 
-export async function after() {
-	const container = document.querySelector("container");
+				${build_actions_HTML()}
+			</row>
 
-	Loading.on_element_start(container);
-	container.insertAdjacentHTML("beforeend", `
-		${build_actions_row_HTML()}
-		${await build_notifications_HTML()}
-	`);
-	Loading.on_element_end(container);
+			<column class="notifications width-100 gap-0-5"></column>
+		</container>
+	`;
 
-	function build_actions_row_HTML() {
+	function build_actions_HTML() {
 		return `
-			<row class="flex-row flex-x-end gap-0-5 padding-2">
+			<row class="flex-row gap-0-5 width-auto flex-y-center flex-x-end">
 				${build_delete_all_button_HTML()}
 				${build_anchor_notificatons_settings_HTML()}
 			</row>
@@ -50,10 +54,12 @@ export async function after() {
 			return `<a href="/x/notifications/settings" class="btn btn-primary"><x-svg name="gear" color="white"></x-svg></a>`;
 		}
 	}
+}
 
-	async function build_notifications_HTML(){
+export async function after() {
+	DOM.build("column.notifications", async function build_notifications_HTML() {
 		let notifications = await window.x.Request.make({for: "get_all_notifications"});
-		if("data" in notifications) notifications = notifications["data"];
+		if ("data" in notifications) notifications = notifications["data"];
 		else return `<p class="surface-info width-100 padding-2">${Lang.use("no_notifications")}</p>`;
 
 		let HTML = '';
@@ -87,5 +93,5 @@ export async function after() {
 				</a>
 			`;
 		}
-	}
+	});
 }
