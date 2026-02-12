@@ -324,6 +324,11 @@
 		"ru": "Уведомления",
 		"uz": "Bildirishnomalar"
 	},
+	"notification_settings": {
+		"en": "Notification settings",
+		"ru": "Настройки уведомлений",
+		"uz": "Bildirishnoma sozlamalari"
+	},
 	"password": {
 		"en": "Password",
 		"ru": "Пароль",

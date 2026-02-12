@@ -1,27 +1,36 @@
-export function before(){
-	window.x.Head.set_title("notifications_settings");
+export function before() {
+	window.x.Head.set_title("notification_settings");
 }
 
-export default function main(){ return '<container class="padding-5 gap-0-5 max-width-1200px"></container>'; }
+export default function main() {
+	return `
+		<container class="padding-5 gap-0-5 max-width-1200px">
+			<row class="surface-v1 padding-2 flex-row flex-x-between flex-y-center">
+				<row class="flex-row gap-0-5 width-auto flex-y-center flex-x-start">
+					<x-link go="history:back" class="btn btn-primary"><x-svg name="arrow_back_v1" color="white"></x-svg></x-link>
+					<p>${Lang.use("notification_settings")}</p>
+				</row>
 
-export async function after(){
-	const container = document.querySelector("container");
+				<row class="flex-row gap-0-5 width-auto flex-y-center flex-x-end"></row>
+			</row>
 
-	Loading.on_element_start(container);
-	container.insertAdjacentHTML("beforeend", await build_notification_event_togglers_HTML());
-	Loading.on_element_end(container);
+			<column class="notification_events width-100 gap-0-5 padding-2 surface-v1"></column>
+		</container>
+	`;
+}
 
-	async function build_notification_event_togglers_HTML(){
+export async function after() {
+	DOM.build("column.notification_events", async function build_notification_event_togglers_HTML() {
 		let disabled_events = await window.x.Request.make({for: "get_disabled_notification_events"});
-		if("data" in disabled_events) disabled_events = disabled_events["data"];
+		if ("data" in disabled_events) disabled_events = disabled_events["data"];
 		else disabled_events = [];
 
 		let events = await window.x.Request.make({for: "get_all_events"});
 		if("data" in events) events = events["data"];
 		else events = {};
 
-		const disabled_events_obj = {};
-		for (const event of disabled_events) disabled_events_obj[event.name] = event;
+		const disabled_events_object = {};
+		for (const event of disabled_events) disabled_events_object[event.name] = event;
 
 		let HTML = '';
 
@@ -33,7 +42,7 @@ export async function after(){
 					<input
 						type="checkbox"
 						class="checkbox-v1"
-						${event in disabled_events_obj && disabled_events_obj[event]["method_in_app"] == 1 ? '' : "checked"}
+						${event in disabled_events_object && disabled_events_object[event]["method_in_app"] == 1 ? '' : "checked"}
 
 						XR-post
 						XR-for="toggle_disabled_notification_event_method"
@@ -45,7 +54,7 @@ export async function after(){
 					<input
 						type="checkbox"
 						class="checkbox-v1"
-						${event in disabled_events_obj && disabled_events_obj[event]["method_eMail"] == 1 ? '' : "checked"}
+						${event in disabled_events_object && disabled_events_object[event]["method_eMail"] == 1 ? '' : "checked"}
 
 						XR-post
 						XR-for="toggle_disabled_notification_event_method"
@@ -57,7 +66,7 @@ export async function after(){
 					<input
 						type="checkbox"
 						class="checkbox-v1"
-						${event in disabled_events_obj && disabled_events_obj[event]["method_SMS"] == 1 ? '' : "checked"}
+						${event in disabled_events_object && disabled_events_object[event]["method_SMS"] == 1 ? '' : "checked"}
 
 						XR-post
 						XR-for="toggle_disabled_notification_event_method"
@@ -70,28 +79,17 @@ export async function after(){
 		`;
 
 		return `
-			<row class="flex-x-start">
-				<x-svg
-					name="arrow_left"
-					color="white"
-					onclick="history.back()"
-					class="btn btn-primary"
-				></x-svg>
+			<row class="flex-row flex-x-between text-weight-bold">
+				<p>Events</p>
+
+				<row class="flex-row gap-1 width-auto">
+					<p>App</p>
+					<p>Email</p>
+					<p>SMS</p>
+				</row>
 			</row>
 
-			<column class="width-100 surface-v1 padding-2 gap-1">
-				<row class="flex-row flex-x-between text-weight-bold">
-					<p>Events</p>
-
-					<row class="flex-row gap-1 width-auto">
-						<p>App</p>
-						<p>Email</p>
-						<p>SMS</p>
-					</row>
-				</row>
-
-				${HTML}
-			</column>
+			${HTML}
 		`;
-	}
+	});
 }
