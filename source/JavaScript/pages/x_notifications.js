@@ -29,6 +29,7 @@ export default function main() {
 		function build_delete_all_button_HTML() {
 			return `
 				<x-svg id="modal_delete_all_notifications" name="delete" class="btn btn-error" color="white"></x-svg>
+				<x-tooltip trigger_selector="x-svg#modal_delete_all_notifications" class="padding-1 text-size-0-6">Delete all notifications</x-tooltip>
 				<x-modal trigger_selector="x-svg#modal_delete_all_notifications">
 					<column class="gap-1 padding-2">
 						<p class="text-align-center text-size-1-2">Are you sure you want to delete all notifications?</p>
