@@ -324,6 +324,11 @@
 		"ru": "Уведомления",
 		"uz": "Bildirishnomalar"
 	},
+	"notification": {
+		"en": "Notification",
+		"ru": "Уведомление",
+		"uz": "Bildirishnoma"
+	},
 	"notification_settings": {
 		"en": "Notification settings",
 		"ru": "Настройки уведомлений",
