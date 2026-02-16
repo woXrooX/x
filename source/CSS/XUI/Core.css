@@ -104,6 +104,8 @@
 					--color-main-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1);
 
 					--color-main-tint-1: hsla(var(--color-main-hue), 10%, 10%, 1);
+					--color-main-tint-1-5: hsla(var(--color-main-hue), 10%, 12.5%, 1);
+
 					--color-main-tint-2: hsla(var(--color-main-hue), 10%, 15%, 1);
 
 					--color-main-tint-3: hsla(var(--color-main-hue), 10%, 20%, 1);
@@ -132,6 +134,8 @@
 					--color-main-accent: hsla(var(--color-main-hue), 15%, 95%, 1);
 
 					--color-main-tint-1: hsla(var(--color-main-hue), 20%, 100%, 1);
+					--color-main-tint-1-5: hsla(var(--color-main-hue), 20%, 97.5%, 1);
+
 					--color-main-tint-2: hsla(var(--color-main-hue), 20%, 95%, 1);
 
 					--color-main-tint-3: hsla(var(--color-main-hue), 20%, 90%, 1);
@@ -576,7 +580,7 @@
 			[type=datetime-local],
 			[type=time]
 		){
-			background-color: var(--color-main-tint-4);
+			background-color: var(--color-main-tint-3);
 			color: var(--color-text-primary);
 			font-size: 1rem;
 			width: 100%;
@@ -584,22 +588,22 @@
 			padding: 0 calc(var(--padding) * 2);
 			border: none;
 			border-radius: var(--radius);
-			outline: 1px solid var(--color-main-tint-5);
+			outline: 1px solid var(--color-main-tint-4);
 
 			transition: var(--form-transition);
 			transition-property: var(--form-transition-property);
 
 			&:hover {
 				&:not(:disabled){
-					background-color: var(--color-main-tint-5);
-					outline: 1px solid var(--color-main-tint-7);
+					background-color: var(--color-main-tint-4);
+					outline: 1px solid var(--color-main-tint-6);
 				}
 			}
 
 			&:focus, &:active {
 				&:not(:disabled){
-					background-color: var(--color-main-tint-6);
-					outline: 1px solid var(--color-main-tint-9);
+					background-color: var(--color-main-tint-5);
+					outline: 1px solid var(--color-main-tint-8);
 				}
 			}
 		}
@@ -1052,7 +1056,7 @@
 						letter-spacing: 0.08em;
 						text-align: left;
 
-						background: var(--color-main-tint-4);
+						background: var(--color-main-tint-3);
 						border-bottom: 1px solid var(--color-main-tint-5);
 						padding: calc(var(--padding) * 2);
 					}
@@ -1103,7 +1107,7 @@
 						vertical-align: middle;
 						color: var(--color-text-secondary);
 
-						background: var(--color-main-tint-4);
+						background: var(--color-main-tint-3);
 						border-top: 1px solid var(--color-main-tint-5);
 						border-bottom: 0;
 						padding: calc(var(--padding) * 2);
@@ -1243,6 +1247,8 @@
 
 		/* Brand Color Shades */
 		.bg-1{background-color: var(--color-main-tint-1);}
+		.bg-1-5{background-color: var(--color-main-tint-1-5);}
+
 		.bg-2{background-color: var(--color-main-tint-2);}
 		.bg-3{background-color: var(--color-main-tint-3);}
 		.bg-4{background-color: var(--color-main-tint-4);}
