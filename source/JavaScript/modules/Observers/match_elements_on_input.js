@@ -24,7 +24,10 @@
 export function match_elements_on_input(
 	input_element_or_selector,
 	matchable_elements_or_selector,
-	match_handler_callback,
+	match_handler_callback = (search_input_value, element) => {
+		if (element.innerText.toLowerCase().includes(search_input_value.toLowerCase())) element.style.display = "flex";
+		else element.style.display = "none";
+	},
 	no_match_callback = null,
 ) {
 	const input_element = validate_input_element();
