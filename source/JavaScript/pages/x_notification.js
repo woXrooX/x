@@ -48,7 +48,7 @@ export async function after() {
 	DOM.build("row.notification", async function build_notification_HTML() {
 		let notification = await window.x.Request.make({for: "get_notification"});
 		if ("data" in notification) notification = notification["data"];
-		else return `<p class="surface-info width-100 padding-2">${Lang.use("no_notification")}</p>`;
+		else return `<p class="surface-info width-100 padding-2 text-size-0-8">${Lang.use("no_notification")}</p>`;
 
 		let content_JSON = {};
 

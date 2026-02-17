@@ -26,7 +26,7 @@ export default function main() {
 export async function after() {
 	let user = await window.x.Request.make({for:"get_user"});
 	if ("data" in user) user = user["data"];
-	else return `<p class="surface-info width-100 padding-2">${Lang.use("no_data")}</p>`;
+	else return `<p class="surface-info width-100 padding-2 text-size-0-8">${Lang.use("no_data")}</p>`;
 
 	DOM.build("row.actions", async function build_actions_HTML() {
 		return `
@@ -117,7 +117,7 @@ export async function after() {
 	DOM.build("column.log_in_records", async function build_log_in_records_HTML() {
 		let log_in_records = await window.x.Request.make({for:"get_user_log_in_records"});
 		if ("data" in log_in_records) log_in_records = log_in_records["data"];
-		else return String_to_Element(`<p class="surface-info width-100 padding-2">${Lang.use("no_data")}</p>`);
+		else return String_to_Element(`<p class="surface-info width-100 padding-2 text-size-0-8">${Lang.use("no_data")}</p>`);
 
 		const HEAD = [];
 		for (const KEY of Object.keys(log_in_records[0])) HEAD.push({"title": KEY});

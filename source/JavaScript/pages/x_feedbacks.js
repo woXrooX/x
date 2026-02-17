@@ -14,7 +14,7 @@ export async function after(){
 	async function build_feedbacks_HTML(){
 		let feedbacks = await window.x.Request.make({for:"get_all_feedbacks"});
 		if("data" in feedbacks) feedbacks = feedbacks["data"];
-		else return `<p class="surface-info width-100 padding-2">No feedback</p>`;
+		else return `<p class="surface-info width-100 padding-2 text-size-0-8">No feedback</p>`;
 
 		let HTML = '';
 

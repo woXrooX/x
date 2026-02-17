@@ -18,7 +18,7 @@
 // 	const container_element = document.querySelector("container.no_match");
 
 // 	if (has_matches === true) container_element.innerHTML = '';
-// 	else container_element.innerHTML = `<p class="surface-info width-100 padding-2">No match</p>`;
+// 	else container_element.innerHTML = `<p class="surface-info width-100 padding-2 text-size-0-8">No match</p>`;
 // }
 
 export function match_elements_on_input(
