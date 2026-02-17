@@ -41,7 +41,7 @@ if __name__ != "__main__":
 
 					CSRF_token = request.headers.get("x-CSRF-token")
 					if not CSRF_token: return Response.make(type="error", message="Missing x-CSRF-token header", HTTP_response_status_code=400)
-					if validate_CSRF_token(CSRF_token) is False: return Response.make(type="error", message="Forbidden", HTTP_response_status_code=403)
+					if validate_CSRF_token(CSRF_token) is False: return Response.make(type="error", message="forbidden", HTTP_response_status_code=403)
 
 
 					ret_val = func(*args, **kwargs, request=request)
