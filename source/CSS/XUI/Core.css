@@ -1568,6 +1568,8 @@
 				.max-width-100vw{max-width: 100vw;}
 
 				/* max-width px */
+				.max-width-50px{max-width: 50px;}
+				.max-width-75px{max-width: 75px;}
 				.max-width-100px{max-width: 100px;}
 				.max-width-200px{max-width: 200px;}
 				.max-width-250px{max-width: 250px;}
