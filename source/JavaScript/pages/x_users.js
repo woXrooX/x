@@ -26,8 +26,8 @@ export default async function main() {
 
 	function build_modal_form_create_user_HTML(){
 		return `
-			<x-svg id="modal_form_create_user" name="add" class="btn btn-primary" color="white"></x-svg>
-			<x-tooltip trigger_selector="x-svg#modal_form_create_user" class="padding-2 text-size-0-8">${Lang.use("create_user")}</x-tooltip>
+			<x-svg id="modal_form_create_user" name="person_add" class="btn btn-primary" color="white"></x-svg>
+			<x-tooltip trigger_selector="x-svg#modal_form_create_user" class="padding-1 text-size-0-6">${Lang.use("create_user")}</x-tooltip>
 			<x-modal trigger_selector="x-svg#modal_form_create_user">
 				<form for="create_user" class="padding-2" x-modal="on:success:hide" x-toast="on:any:message">
 					<p class="text-align-center text-size-1-5">${Lang.use("create_user")}</p>
@@ -85,36 +85,27 @@ export async function after() {
 	});
 
 	DOM.build("column.table", async function build_users_HTML() {
-		const users = await window.x.Request.make({for:"get_all_users"});
-		if (!("data" in users)) return String_to_Element(`<p class="width-100 text-size-0-8 surface-info padding-1">${Lang.use("no_data")}</p>`);
+		let users = await window.x.Request.make({for:"get_all_users"});
+		if ("data" in users) users = users["data"];
+		else return String_to_Element(`<p class="width-100 text-size-0-8 surface-info padding-1">${Lang.use("no_data")}</p>`);
 
-		const HEAD = [];
-		for (const KEY of Object.keys(users.data[0])) HEAD.push({"title": KEY});
-		HEAD.push({"title": "Actions"});
+		const COLUMNS = [];
+		for (const KEY of Object.keys(users[0])) COLUMNS.push({"title": KEY});
 
-		const BODY = [];
-		for (const i in users.data) {
-			let arr = Object.values(users.data[i]);
-
-			arr.push(`
-				<a href="/x/user/${users.data[i]["id"]}">
-					<x-svg
-						name="open_in_new_tab" color="white"
-						class="btn btn-primary"
-					></x-svg>
-				</a>
-			`);
-
-			BODY.push(arr);
+		const ROWS = [];
+		for (const user of users) {
+			let user_array = Object.values(user);
+			user_array[0] = `<a href="/x/user/${user["id"]}" class="text-decoration-underline">${user["id"]}</a>`;
+			ROWS.push(user_array);
 		}
 
 		return window.x.Table.build(
 			{
-				"page_size": 10,
+				"page_size": "all",
 				"searchable": true,
 				"downloadable": true,
-				"columns": HEAD,
-				"rows": BODY
+				"columns": COLUMNS,
+				"rows": ROWS
 			},
 			"surface-v1 width-100 padding-2"
 		);

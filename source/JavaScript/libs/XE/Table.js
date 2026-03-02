@@ -177,7 +177,7 @@ export default class Table extends HTMLElement {
 						("downloadable" in this.#JSON && this.#JSON["downloadable"] === true) ?
 						`
 							<x-svg id="download_CSV_${Table.ID}" name="download_v2" color="white" class="btn btn-primary"></x-svg>
-							<x-tooltip trigger_selector="x-svg#download_CSV_${Table.ID}" class="padding-2 text-size-0-8">${Lang.use("download_as_CSV")}</x-tooltip>
+							<x-tooltip trigger_selector="x-svg#download_CSV_${Table.ID}" class="padding-1 text-size-0-6">${Lang.use("download_as_CSV")}</x-tooltip>
 						` :
 						''
 					}
