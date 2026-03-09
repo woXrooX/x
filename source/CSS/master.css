@@ -273,15 +273,6 @@ body{
 	}
 }
 
-@media (width <= 600px){
-	body{
-		& > main{
-			height: calc(100dvh - var(--header-height));
-			overflow: scroll;
-		}
-	}
-}
-
 @layer z_indexes {
 	.z_minus { z-index: var(--z-minus); }
 	.z_body { z-index: var(--z-body); }
