@@ -75,8 +75,8 @@ CREATE TABLE IF NOT EXISTS `middle_level_divisions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-\! echo "-------------------------- city";
-CREATE TABLE IF NOT EXISTS `city` (
+\! echo "-------------------------- cities";
+CREATE TABLE IF NOT EXISTS `cities` (
 	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
 
 	`middle_level_division` INT UNSIGNED NOT NULL,
