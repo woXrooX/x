@@ -23,20 +23,100 @@ USE [NAME];
 
 -- If you need case-sensitive comparisons (then use utf8mb4_0900_as_cs)
 
+
+
 -- ------------------------------------
--- ------------------------------------ App settings
+-- ------------------------------------ Location (Place)
 -- ------------------------------------
+
+
+\! echo "-------------------------- countries";
+CREATE TABLE IF NOT EXISTS `countries` (
+	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
+	-- ISO 3166-1 alpha-2
+	`ISO_alpha_2_code` CHAR(2) NOT NULL UNIQUE,
+
+	-- ISO 3166-1 alpha-3
+	`ISO_alpha_3_code` CHAR(3) NOT NULL UNIQUE,
+
+	`code_name` VARCHAR(255) NOT NULL UNIQUE,
+	`native_name` VARCHAR(255) NOT NULL,
+
+	CHECK (`ISO_alpha_2_code` = UPPER(`ISO_alpha_2_code`) AND `ISO_alpha_2_code` REGEXP '^[A-Z]{2}$'),
+	CHECK (`ISO_alpha_3_code` = UPPER(`ISO_alpha_3_code`) AND `ISO_alpha_3_code` REGEXP '^[A-Z]{3}$'),
+	CHECK (`code_name` = LOWER(`code_name`) AND `code_name` REGEXP '^[a-z0-9_]+$'),
+
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO countries (id, ISO_alpha_2_code, ISO_alpha_3_code, code_name, native_name) VALUES
+(1, "UZ", "UZB", "uzbekistan", "O'zbekiston"),
+(2, "CA", "CAN", "canada", "Canada");
+
+
+
+-- Not sure about the table name yet
+\! echo "-------------------------- middle_level_divisions";
+CREATE TABLE IF NOT EXISTS `middle_level_divisions` (
+	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+
+	`country` INT UNSIGNED NOT NULL,
+
+	-- Not sure what data will be stored in the middle yet
+
+	`coordinates` POINT NULL,
+
+	FOREIGN KEY (`country`) REFERENCES countries(`id`),
+
+	CHECK (`code_name` = LOWER(`code_name`) AND `code_name` REGEXP '^[a-z0-9_]+$'),
+
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+\! echo "-------------------------- city";
+CREATE TABLE IF NOT EXISTS `city` (
+	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+
+	`middle_level_division` INT UNSIGNED NOT NULL,
+
+	`code_name` VARCHAR(255) NOT NULL,
+	`native_name` VARCHAR(255) NOT NULL,
+
+	`coordinates` POINT NULL,
+
+	FOREIGN KEY (`middle_level_division`) REFERENCES middle_level_divisions(`id`),
+
+	CHECK (`code_name` = LOWER(`code_name`) AND `code_name` REGEXP '^[a-z0-9_]+$'),
+
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+\! echo "-------------------------- languages";
+CREATE TABLE IF NOT EXISTS `languages` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`code` VARCHAR(3) NOT NULL UNIQUE,
+	`native_name` VARCHAR(50) NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO languages (id, code, native_name) VALUES
+(1, "en", "English"),
+(2, "uz", "Uzbek, Ўзбек, أۇزبېك‎"),
+(3, "ru", "Русский язык"),
+(4, "ja", "日本語 (にほんご／にっぽんご)");
+
 
 \! echo "-------------------------- currencies";
--- https://en.wikipedia.org/wiki/List_of_circulating_currencies
--- decimal_digits is The number of digits after the decimal separator (By wikipedia)
--- UZS https://en.wikipedia.org/wiki/Uzbekistani_so%CA%BBm
--- RUB https://en.wikipedia.org/wiki/Russian_ruble
-
 CREATE TABLE IF NOT EXISTS `currencies` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`code` VARCHAR(3) NOT NULL UNIQUE,
+
+	-- The number of digits after the decimal separator
 	`decimal_digits` INT NULL,
+
 	`fractional_unit` VARCHAR(10) NULL,
 	`symbol` VARCHAR(10) NULL,
 	`native_name` VARCHAR(30) NULL,
@@ -75,19 +155,6 @@ INSERT INTO currencies (id, code, decimal_digits, fractional_unit, symbol, nativ
 (29, 'ZAR', 2, 'Cent', 'R', 'South African rand'),
 (30, 'BRL', 2, 'Centavo', 'R$', 'Real brasileiro');
 
-\! echo "-------------------------- languages";
-CREATE TABLE IF NOT EXISTS `languages` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`code` VARCHAR(3) NOT NULL UNIQUE,
-	`native_name` VARCHAR(50) NULL,
-	PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO languages (id, code, native_name) VALUES
-(1, "en", "English"),
-(2, "uz", "Uzbek, Ўзбек, أۇزبېك‎"),
-(3, "ru", "Русский язык"),
-(4, "ja", "日本語 (にほんご／にっぽんご)");
 
 \! echo "-------------------------- app_color_modes";
 CREATE TABLE IF NOT EXISTS `app_color_modes` (
