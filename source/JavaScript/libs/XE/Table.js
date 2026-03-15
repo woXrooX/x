@@ -314,7 +314,11 @@ export default class Table extends HTMLElement {
 				<th>
 					<row class="cursor-pointer gap-0-5 flex-row flex-y-center flex-x-start">
 						${this.#JSON["columns"][index]["title"]}
-						<x-svg name="sort_ASC" toggle="sort_DESC"></x-svg>
+						${
+							this.#JSON["columns"][index]["sortable"] == false ?
+							'' :
+							'<x-svg name="sort_ASC" toggle="sort_DESC"></x-svg>'
+						}
 					</row>
 				</th>
 			`;
