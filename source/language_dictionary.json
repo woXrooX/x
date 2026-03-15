@@ -486,6 +486,12 @@
 		"uz": "Tanlanmagan"
 	},
 
+	"not_allowed": {
+		"en": "Not allowed",
+		"ru": "Запрещено",
+		"uz": "Ruxsat berilmagan"
+	},
+
 	"not_applicable": {
 		"en": "Not Applicable",
 		"ru": "Н/П",
