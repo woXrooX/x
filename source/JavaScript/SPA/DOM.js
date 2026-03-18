@@ -45,6 +45,8 @@ export default class DOM {
 		callback,
 		options = {
 			"method": "innerHTML",
+			// "method": "outerHTML",
+
 			// "method": "insertAdjacentHTML",
 			// "method": "insertAdjacentElement",
 			// "method": "replaceChildren",
@@ -54,7 +56,8 @@ export default class DOM {
 			// "position": "afterbegin"
 			// "position": "beforeend"
 
-			"empty_parent_element": false
+			"empty_parent_element": false,
+			"remove_parent_element": false
 		},
 		...args
 	) {
@@ -64,6 +67,7 @@ export default class DOM {
 		Loading.on_element_start(parent_element);
 
 		if (options["empty_parent_element"] === true) parent_element.replaceChildren();
+		if (options["remove_parent_element"] === true) parent_element.remove();
 
 		try {
 			// Yield until the next paint, so the browser can render the "loading" state
@@ -78,6 +82,11 @@ export default class DOM {
 			if (options["method"] == "innerHTML") {
 				if (options["position"] == '=') parent_element.innerHTML = HTML;
 				if (options["position"] == "+=") parent_element.innerHTML += HTML;
+			}
+
+			if (options["method"] == "outerHTML") {
+				if (options["position"] == '=') parent_element.outerHTML = HTML;
+				if (options["position"] == "+=") parent_element.outerHTML += HTML;
 			}
 
 			else if (options["method"] == "insertAdjacentHTML") parent_element.insertAdjacentHTML(options["position"], HTML);
