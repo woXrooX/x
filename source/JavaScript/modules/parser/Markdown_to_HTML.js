@@ -1,5 +1,51 @@
 ///////// woXrooX Flavored Markdown
 
+/*
+
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+
+This is a regular paragraph. Multiple lines
+get joined into a single paragraph.
+
+This is a *italic* word. This is a **bold** word. This is ***bold and italic*** together.
+
+Here is a [link text](https://www.woXrooX.com) in a sentence.
+
+!file:image[alt_text](/path/to/file/file.png)
+
+- Unordered item 1
+- Unordered item 2
+	- Nested unordered item
+	- Another nested item
+		- Deep nested item
+
+1. Ordered item one
+2. Ordered item two
+	1. Nested ordered item
+	2. Another nested one
+
+- Mixed top level
+	1. Ordered inside unordered
+
+1. First item
+2. Second item
+	1. Nested item 1
+	2. Nested item 2
+		- AA
+		- AB
+			1. Another one
+			1. Another one
+3. Third item
+
+Line one<br>Line two forced on new line
+
+*/
+
 export default function Markdown_to_HTML(markdown) {
 	if(typeof markdown !== 'string') return '';
 
