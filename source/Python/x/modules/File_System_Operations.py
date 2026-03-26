@@ -1,7 +1,6 @@
 if __name__ != "__main__":
 	import os
 	import sys
-	import shutil
 	import json
 
 	from Python.x.modules.Logger import Log
