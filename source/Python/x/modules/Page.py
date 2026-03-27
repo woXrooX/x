@@ -66,8 +66,12 @@ if __name__ != "__main__":
 			if request.method not in ["POST", "GET"]: return Response.make(RAW=("Method Not Allowed", 405, {'Content-Type': 'text/plain; charset=utf-8'}))
 
 			if "app_is_down" in Globals.CONF["tools"]:
-				Log.warning("App Is Down")
+				Log.warning("app_is_down")
+
+				if page_name == "app_is_down": return True
+
 				if request.method == "GET": return render_template("index.html", **globals())
+
 				return Response.make(type="info", message="app_is_down")
 
 			if page_name not in Globals.CONF["pages"]: return Response.make(type="error", message="404", redirect="/404")
