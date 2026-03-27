@@ -9,6 +9,17 @@ export default class Page {
 			window.Loading.start();
 			window.Main.animation_start();
 
+			if ("app_is_down" in window.CONF["tools"]) {
+				window.Main.render(Main.situational_content(
+					"info",
+					Lang.use(window.CONF["tools"]["app_is_down"]["title"]),
+					Lang.use(window.CONF["tools"]["app_is_down"]["description"]),
+					Lang.use(window.CONF["tools"]["app_is_down"]["title"])
+				));
+
+				return;
+			}
+
 			await Page.#load_file(page_name);
 			await Page.life_cycle();
 		}

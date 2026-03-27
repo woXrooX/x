@@ -68,8 +68,6 @@ if __name__ != "__main__":
 			if "app_is_down" in Globals.CONF["tools"]:
 				Log.warning("app_is_down")
 
-				if page_name == "app_is_down": return True
-
 				if request.method == "GET": return render_template("index.html", **globals())
 
 				return Response.make(type="info", message="app_is_down")
