@@ -1,11 +1,12 @@
 # Py Cache
 __pycache__/
 
-source/www/*
-
-source/Python/live_pages/*
-!source/Python/live_pages/__init__.py
+source/live_pages/front/
+source/live_pages/back/*
+!source/live_pages/back/__init__.py
 
 source/Python/project/*
+
+source/www/*
 
 .DS_store

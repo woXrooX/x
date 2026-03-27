@@ -1,4 +1,5 @@
 import os
+
 from Python.x.modules.Globals import Globals
 
 """
@@ -15,15 +16,10 @@ the module can define a variable named __all__ that lists the names that should 
 
 __all__ = []
 
-# Loop Through All Files And Detect Python Files Exclude And __init_.py
-for file in os.listdir(f"{Globals.X_PATH}/Python/live_pages"):
+for file in os.listdir(f"{Globals.X_PATH}/live_pages/back"):
+	filename = os.fsdecode(file)
 
-    # Convert A File System Encoded Byte String Into A Unicode String
-    filename = os.fsdecode(file)
+	if filename.endswith(".py") and not filename.endswith("__init__.py"):
 
-    # Check If File Is .py File And Not __init__.py
-    if filename.endswith(".py") and not filename.endswith("__init__.py"):
-
-        # Remove ".py" Part From File
-        filename = os.path.splitext(filename)[0]
-        __all__.append(filename)
+		filename = os.path.splitext(filename)[0]
+		__all__.append(filename)

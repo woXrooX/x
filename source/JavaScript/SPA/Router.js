@@ -22,12 +22,6 @@ export default class Router {
 			return;
 		}
 
-		// Check the "window.location.pathname" for the error URLs
-		if (Router.error_handlers() === true) {
-			await window.x.Page.handle(Router.current_route.name);
-			return;
-		}
-
 		loop_pages: for (const page in window.CONF["pages"]) {
 			if (Router.guard(page) === false) continue;
 
@@ -57,24 +51,6 @@ export default class Router {
 		Router.#reset_current_route();
 		Router.current_route.name = "404";
 		await window.x.Page.handle(Router.current_route.name);
-	}
-
-	static error_handlers() {
-		switch(window.location.pathname) {
-			case "/400":
-				Router.current_route.name = "400";
-				return true;
-
-			case "/403":
-				Router.current_route.name = "403";
-				return true;
-
-			case "/404":
-				Router.current_route.name = "404";
-				return true;
-
-			default: return false;
-		}
 	}
 
 	static guard(page) {

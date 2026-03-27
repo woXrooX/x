@@ -48,7 +48,7 @@ if __name__ != "__main__":
 					if ret_val is None: return Response.make(RAW=("No Response", 444, {'Content-Type': 'text/plain; charset=utf-8'}))
 					return ret_val
 
-				# Check if page exists In CONF["pages"] the ncreate the routes
+				# Check if page exists In CONF["pages"] then create the routes
 				if page_name in Globals.CONF["pages"]:
 					# If no methods, then methods = ["GET"]
 					methods = Globals.CONF["pages"][page_name].get("methods", ["GET"])
@@ -62,7 +62,7 @@ if __name__ != "__main__":
 		# Returns True if passes
 		# Returns function if fails
 		@staticmethod
-		def guard(page):
+		def guard(page_name):
 			if request.method not in ["POST", "GET"]: return Response.make(RAW=("Method Not Allowed", 405, {'Content-Type': 'text/plain; charset=utf-8'}))
 
 			if "app_is_down" in Globals.CONF["tools"]:
@@ -70,7 +70,9 @@ if __name__ != "__main__":
 				if request.method == "GET": return render_template("index.html", **globals())
 				return Response.make(type="info", message="app_is_down")
 
-			PAGE_CONF = Globals.CONF["pages"][page]
+			if page_name not in Globals.CONF["pages"]: return Response.make(type="error", message="404", redirect="/404")
+
+			PAGE_CONF = Globals.CONF["pages"][page_name]
 
 			if PAGE_CONF["enabled"] == False:
 				if request.method == "GET": return redirect("/")

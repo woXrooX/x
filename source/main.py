@@ -163,7 +163,7 @@ def app_after_request(response):
 
 
 #################################################### Dynamically imprting all pages
-from Python.live_pages import *
+from live_pages.back import *
 
 
 

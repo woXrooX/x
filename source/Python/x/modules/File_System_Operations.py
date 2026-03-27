@@ -95,7 +95,8 @@ if __name__ != "__main__":
 			File_System.copy_folder(f"{Globals.X_PATH}/HTML", f"{Globals.X_PATH}/www/HTML", strict=True)
 			File_System.copy_folder(f"{Globals.X_PATH}/images", f"{Globals.X_PATH}/www/static/images", strict=True)
 			File_System.copy_folder(f"{Globals.X_PATH}/JavaScript", f"{Globals.X_PATH}/www/static/JavaScript", strict=True)
-			File_System.copy_folder(f"{Globals.X_PATH}/Python/x/pages", f"{Globals.X_PATH}/Python/live_pages", strict=True)
+			File_System.copy_folder(f"{Globals.X_PATH}/pages/back", f"{Globals.X_PATH}/live_pages/back", strict=True)
+			File_System.copy_folder(f"{Globals.X_PATH}/pages/front", f"{Globals.X_PATH}/live_pages/front", strict=True)
 
 
 
@@ -107,8 +108,8 @@ if __name__ != "__main__":
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/fonts", f"{Globals.X_PATH}/www/static/fonts", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/images", f"{Globals.X_PATH}/www/static/images", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/JavaScript", f"{Globals.X_PATH}/www/static/JavaScript", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_PATH}/pages/back", f"{Globals.X_PATH}/Python/live_pages", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_PATH}/pages/front", f"{Globals.X_PATH}/www/static/JavaScript/pages", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_PATH}/pages/back", f"{Globals.X_PATH}/live_pages/back", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_PATH}/pages/front", f"{Globals.X_PATH}/live_pages/front", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/Python", f"{Globals.X_PATH}/Python/project/modules", strict=True)
 
 
@@ -119,7 +120,10 @@ if __name__ != "__main__":
 		# Pages (Back-End)
 		@staticmethod
 		def clean_live_pages():
-			path = f"{Globals.X_PATH}/Python/live_pages/"
+			Log.center("Removing: x/source/live_pages/front", '-')
+			File_System.remove_folder(f'{Globals.X_PATH}/live_pages/front/')
+
+			path = f"{Globals.X_PATH}/live_pages/back/"
 
 			files = os.listdir(path)
 

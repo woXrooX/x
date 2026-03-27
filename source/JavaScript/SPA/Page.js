@@ -45,7 +45,7 @@ export default class Page {
 
 		window.Log.info(`x.Page.load_file(): ${page_name}.js`);
 
-		Page.current_page = await import(`/JavaScript/pages/${page_name}.js`)
+		Page.current_page = await import(`/files/live_pages/front/${page_name}`);
 	}
 
 	static async life_cycle() {
