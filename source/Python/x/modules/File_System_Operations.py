@@ -95,6 +95,7 @@ if __name__ != "__main__":
 			File_System.copy_folder(f"{Globals.X_PATH}/HTML", f"{Globals.X_PATH}/www/HTML", strict=True)
 			File_System.copy_folder(f"{Globals.X_PATH}/images", f"{Globals.X_PATH}/www/static/images", strict=True)
 			File_System.copy_folder(f"{Globals.X_PATH}/JavaScript", f"{Globals.X_PATH}/www/static/JavaScript", strict=True)
+			File_System.copy_folder(f"{Globals.X_PATH}/JavaScript/pages", f"{Globals.X_PATH}/JavaScript_pages", strict=True)
 			File_System.copy_folder(f"{Globals.X_PATH}/Python/x/pages", f"{Globals.X_PATH}/Python/live_pages", strict=True)
 
 
@@ -108,7 +109,7 @@ if __name__ != "__main__":
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/images", f"{Globals.X_PATH}/www/static/images", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/JavaScript", f"{Globals.X_PATH}/www/static/JavaScript", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/pages/back", f"{Globals.X_PATH}/Python/live_pages", strict=True)
-			File_System.copy_folder(f"{Globals.PROJECT_PATH}/pages/front", f"{Globals.X_PATH}/www/static/JavaScript/pages", strict=True)
+			File_System.copy_folder(f"{Globals.PROJECT_PATH}/pages/front", f"{Globals.X_PATH}/JavaScript_pages", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/Python", f"{Globals.X_PATH}/Python/project/modules", strict=True)
 
 
