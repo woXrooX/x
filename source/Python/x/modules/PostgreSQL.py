@@ -2,10 +2,10 @@
 
 if __name__ != "__main__":
 	import sys
-	from flask import g
 
 	import psycopg
 	from psycopg_pool import ConnectionPool
+	from psycopg.rows import dict_row
 
 	from Python.x.modules.Logger import Log
 	from Python.x.modules.Globals import Globals
@@ -54,28 +54,19 @@ if __name__ != "__main__":
 				sys.exit(1)
 				return False
 
-
 		@staticmethod
-		def get_connection():
+		def get_connection_from_pool():
 			if PostgreSQL.initialized is False: return False
 
-			if "DB_connection" not in g: g.DB_connection = PostgreSQL.DB_pool.getconn()
+			connection = PostgreSQL.DB_pool.getconn()
 
-			# Shortcut
-			# g.DB_connection.execute() = g.DB_connection.cursor().execute()
-			return g.DB_connection, g.DB_connection.cursor()
+			return connection, connection.cursor(row_factory=dict_row)
 
-
-		# Return connection to pool after each request.
 		@staticmethod
-		def close_connection(exception):
+		def put_connection_to_pool(connection):
 			if PostgreSQL.initialized is False: return False
 
-			conn = g.pop("DB_connection", None)
-			if conn is not None:
-				if exception: conn.rollback() # NOTE: Make this happen and check if conn.rollback() works since the autocommit is enabled
-				PostgreSQL.DB_pool.putconn(conn)
-
+			PostgreSQL.DB_pool.putconn(connection)
 
 		@staticmethod
 		def reconnect_failed_callback(pool):
@@ -86,20 +77,16 @@ if __name__ != "__main__":
 		def execute(
 			SQL,
 			cursor,
-			params = []
+			params = None
 		):
 			try:
 				cursor.execute(SQL, tuple(params))
 				return True
-
-			except (psycopg.errors.UniqueViolation, psycopg.errors.ForeignKeyViolation) as e:
-				Log.error(f"PostgreSQL.execute(): {e}")
-				return e.sqlstate
 
 			except psycopg.DatabaseError as e:
 				Log.error(f"PostgreSQL.execute(): {e}")
 				return e.sqlstate
 
 			except Exception as e:
-				Log.error(f"Error: {e}")
+				Log.error(f"PostgreSQL.execute(): {e}")
 				return False

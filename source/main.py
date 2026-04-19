@@ -166,9 +166,6 @@ def app_after_request(response):
 # def teardown_request_func(error=None):
 	# return None
 
-@app.teardown_appcontext
-def teardown_appcontext_func(exception):
-	PostgreSQL.close_connection(exception)
 
 
 
