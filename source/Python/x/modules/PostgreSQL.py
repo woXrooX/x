@@ -1,6 +1,10 @@
+# connection.commit() -> "autocommit: True" makes this not effective
+
 if __name__ != "__main__":
 	import sys
 	from flask import g
+
+	import psycopg
 	from psycopg_pool import ConnectionPool
 
 	from Python.x.modules.Logger import Log
@@ -69,7 +73,7 @@ if __name__ != "__main__":
 
 			conn = g.pop("DB_connection", None)
 			if conn is not None:
-				if exception: conn.rollback()
+				if exception: conn.rollback() # NOTE: Make this happen and check if conn.rollback() works since the autocommit is enabled
 				PostgreSQL.DB_pool.putconn(conn)
 
 
@@ -78,4 +82,24 @@ if __name__ != "__main__":
 			Log.error(f"PostgreSQL.on_reconnect_failed(): Could not connect to server")
 			sys.exit(1)
 
+		@staticmethod
+		def execute(
+			SQL,
+			cursor,
+			params = []
+		):
+			try:
+				cursor.execute(SQL, tuple(params))
+				return True
 
+			except (psycopg.errors.UniqueViolation, psycopg.errors.ForeignKeyViolation) as e:
+				Log.error(f"PostgreSQL.execute(): {e}")
+				return e.sqlstate
+
+			except psycopg.DatabaseError as e:
+				Log.error(f"PostgreSQL.execute(): {e}")
+				return e.sqlstate
+
+			except Exception as e:
+				Log.error(f"Error: {e}")
+				return False
