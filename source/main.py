@@ -49,6 +49,13 @@ MySQL.init()
 
 
 
+#################################################### Initializing PostgreSQL
+from Python.x.modules.PostgreSQL import PostgreSQL
+PostgreSQL.init()
+
+
+
+
 #################################################### Initializing Twilio
 from Python.x.modules.Twilio import Twilio
 Twilio.init()
@@ -122,7 +129,7 @@ except Exception as e: Log.error(e)
 
 
 
-#################################################### Default Flask Decorations
+#################################################### Default Flask decorations
 from Python.x.modules.route_guard import route_logs
 
 def app_before_first_request():
@@ -159,6 +166,9 @@ def app_after_request(response):
 # def teardown_request_func(error=None):
 	# return None
 
+@app.teardown_appcontext
+def teardown_appcontext_func(exception):
+	PostgreSQL.close_connection(exception)
 
 
 
