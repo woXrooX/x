@@ -101,6 +101,7 @@ if __name__ != "__main__":
 			fetch_type = "all"
 		):
 			connection = cursor = None
+			has_error = False
 
 			if incoming_connection is None: connection, cursor = PostgreSQL.get_connection_from_pool()
 			else:
@@ -116,16 +117,16 @@ if __name__ != "__main__":
 
 				if commit is not True: response["connection"] = connection
 
-				match fetch_type:
-					case "all": response["data"] = cursor.fetchall()
-					case "one": response["data"] = cursor.fetchone()
-					case _: pass
+				if cursor.description is not None:
+					match fetch_type:
+						case "all": response["data"] = cursor.fetchall()
+						case "one": response["data"] = cursor.fetchone()
+						case _: pass
 
 				return response
 
 			except psycopg.DatabaseError as e:
-				connection.rollback()
-				PostgreSQL.put_connection_to_pool(connection)
+				has_error = True
 
 				Log.error(f"PostgreSQL.execute(): {e}")
 
@@ -135,13 +136,17 @@ if __name__ != "__main__":
 				}
 
 			except Exception as e:
-				connection.rollback()
-				PostgreSQL.put_connection_to_pool(connection)
+				has_error = True
 
 				Log.error(f"PostgreSQL.execute(): {e}")
+
 				return { "error": True }
 
 			finally:
 				cursor.close()
 
-				if commit is True: PostgreSQL.put_connection_to_pool(connection)
+				if has_error is True:
+					connection.rollback()
+					PostgreSQL.put_connection_to_pool(connection)
+
+				elif commit is True: PostgreSQL.put_connection_to_pool(connection)
