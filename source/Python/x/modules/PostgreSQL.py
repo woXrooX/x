@@ -29,7 +29,7 @@ if __name__ != "__main__":
 						"dbname": Globals.CONF["database"]["PostgreSQL"]["dbname"],
 						"user": Globals.CONF["database"]["PostgreSQL"]["user"],
 						"password": Globals.CONF["database"]["PostgreSQL"]["password"],
-						"autocommit": True,
+						"autocommit": False,
 						"row_factory": dict_row
 					},
 					min_size=2,
@@ -91,3 +91,57 @@ if __name__ != "__main__":
 			except Exception as e:
 				Log.error(f"PostgreSQL.execute(): {e}")
 				return False
+
+		@staticmethod
+		def execute_v2(
+			SQL,
+			params = None,
+			incoming_connection = None,
+			commit = True,
+			fetch_type = "all"
+		):
+			connection = cursor = None
+
+			if incoming_connection is None: connection, cursor = PostgreSQL.get_connection_from_pool()
+			else:
+				connection = incoming_connection
+				cursor = connection.cursor()
+
+			try:
+				cursor.execute(SQL, tuple(params or ()))
+
+				if commit is True: connection.commit()
+
+				response = {}
+
+				if commit is not True: response["connection"] = connection
+
+				match fetch_type:
+					case "all": response["data"] = cursor.fetchall()
+					case "one": response["data"] = cursor.fetchone()
+					case _: pass
+
+				return response
+
+			except psycopg.DatabaseError as e:
+				connection.rollback()
+				PostgreSQL.put_connection_to_pool(connection)
+
+				Log.error(f"PostgreSQL.execute(): {e}")
+
+				return {
+					"error": True,
+					"SQL_state": e.sqlstate
+				}
+
+			except Exception as e:
+				connection.rollback()
+				PostgreSQL.put_connection_to_pool(connection)
+
+				Log.error(f"PostgreSQL.execute(): {e}")
+				return { "error": True }
+
+			finally:
+				cursor.close()
+
+				if commit is True: PostgreSQL.put_connection_to_pool(connection)
