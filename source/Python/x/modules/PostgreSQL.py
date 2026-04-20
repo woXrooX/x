@@ -74,54 +74,40 @@ if __name__ != "__main__":
 			Log.error(f"PostgreSQL.on_reconnect_failed(): Could not connect to server")
 			sys.exit(1)
 
+		# NOTE: After this call returns, if 'error' in response, the connection (whether owned or borrowed) has been rolled back and returned to the pool — do not reuse any connection reference you previously held.
 		@staticmethod
 		def execute(
 			SQL,
-			cursor,
-			params = None
-		):
-			try:
-				cursor.execute(SQL, tuple(params or ()))
-				return True
-
-			except psycopg.DatabaseError as e:
-				Log.error(f"PostgreSQL.execute(): {e}")
-				return e.sqlstate
-
-			except Exception as e:
-				Log.error(f"PostgreSQL.execute(): {e}")
-				return False
-
-		@staticmethod
-		def execute_v2(
-			SQL,
 			params = None,
 			incoming_connection = None,
+
+			# Accepts: True/False
 			commit = True,
+
+			# Accepts: "all", "one"
 			fetch_type = "all"
 		):
 			connection = cursor = None
 			has_error = False
 
-			if incoming_connection is None: connection, cursor = PostgreSQL.get_connection_from_pool()
-			else:
-				connection = incoming_connection
-				cursor = connection.cursor()
-
 			try:
+				if incoming_connection is None: connection, cursor = PostgreSQL.get_connection_from_pool()
+				else:
+					connection = incoming_connection
+					cursor = connection.cursor()
+
 				cursor.execute(SQL, tuple(params or ()))
 
-				if commit is True: connection.commit()
-
 				response = {}
-
-				if commit is not True: response["connection"] = connection
 
 				if cursor.description is not None:
 					match fetch_type:
 						case "all": response["data"] = cursor.fetchall()
 						case "one": response["data"] = cursor.fetchone()
-						case _: pass
+						case _: raise ValueError(f"PostgreSQL.execute(): Bad fetch_type: {fetch_type}")
+
+				if commit is True: connection.commit()
+				else: response["connection"] = connection
 
 				return response
 
@@ -143,10 +129,13 @@ if __name__ != "__main__":
 				return { "error": True }
 
 			finally:
-				cursor.close()
+				if cursor is not None: cursor.close()
 
-				if has_error is True:
-					connection.rollback()
-					PostgreSQL.put_connection_to_pool(connection)
+				if connection is not None:
+					if has_error is True:
+						try: connection.rollback()
+						except Exception as e: Log.error(f"PostgreSQL.execute(): rollback failed: {e}")
 
-				elif commit is True: PostgreSQL.put_connection_to_pool(connection)
+						PostgreSQL.put_connection_to_pool(connection)
+
+					elif commit is True: PostgreSQL.put_connection_to_pool(connection)
