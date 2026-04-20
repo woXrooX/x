@@ -29,7 +29,8 @@ if __name__ != "__main__":
 						"dbname": Globals.CONF["database"]["PostgreSQL"]["dbname"],
 						"user": Globals.CONF["database"]["PostgreSQL"]["user"],
 						"password": Globals.CONF["database"]["PostgreSQL"]["password"],
-						"autocommit": True
+						"autocommit": True,
+						"row_factory": dict_row
 					},
 					min_size=2,
 					max_size=10,
@@ -60,7 +61,7 @@ if __name__ != "__main__":
 
 			connection = PostgreSQL.DB_pool.getconn()
 
-			return connection, connection.cursor(row_factory=dict_row)
+			return connection, connection.cursor()
 
 		@staticmethod
 		def put_connection_to_pool(connection):
@@ -80,7 +81,7 @@ if __name__ != "__main__":
 			params = None
 		):
 			try:
-				cursor.execute(SQL, tuple(params))
+				cursor.execute(SQL, tuple(params or ()))
 				return True
 
 			except psycopg.DatabaseError as e:
