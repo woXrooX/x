@@ -1,11 +1,8 @@
-\! echo "============================== x =============================="
+\! echo "============================== x.sql =============================="
 
 DROP DATABASE IF EXISTS "[DB_name]";
 
 CREATE DATABASE "[DB_name]" ENCODING 'UTF8';
-
-CREATE USER "[user]" WITH PASSWORD '[my_password]';
-ALTER ROLE "[user]" WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS;
 
 \c "[DB_name]" "[user]"
 

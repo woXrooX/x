@@ -1,3 +1,5 @@
+\! echo "============================== triggers.sql ==============================";
+
 -- This file contains optional trigger helpers/templates
 
 ------------------------------------
