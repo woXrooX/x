@@ -4,7 +4,7 @@ DROP DATABASE IF EXISTS "[DB_name]";
 
 CREATE DATABASE "[DB_name]" ENCODING 'UTF8';
 
-\c "[DB_name]" "[user]"
+\c "[DB_name]"
 
 
 
