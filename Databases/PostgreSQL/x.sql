@@ -1,13 +1,5 @@
 \! echo "============================== x.sql =============================="
 
-DROP DATABASE IF EXISTS "[DB_name]";
-
-CREATE DATABASE "[DB_name]" ENCODING 'UTF8';
-
-\c "[DB_name]"
-
-
-
 -- ------------------------------------
 -- ------------------------------------ Location (Place)
 -- ------------------------------------
@@ -237,6 +229,11 @@ CREATE TABLE IF NOT EXISTS "users" (
 
 	PRIMARY KEY ("id")
 );
+
+CREATE TRIGGER "trigger_metadata_last_updated_at"
+BEFORE UPDATE ON "users"
+FOR EACH ROW
+EXECUTE FUNCTION on_update_set_current_timestamp();
 
 \! echo "-------------------------- user_roles"
 CREATE TABLE IF NOT EXISTS "user_roles" (
