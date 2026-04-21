@@ -85,7 +85,9 @@ if __name__ != "__main__":
 			commit = True,
 
 			# Accepts: "all", "one"
-			fetch_type = "all"
+			fetch_type = "all",
+
+			include_PostgreSQL_data = False
 		):
 			connection = cursor = None
 			has_error = False
@@ -96,9 +98,12 @@ if __name__ != "__main__":
 					connection = incoming_connection
 					cursor = connection.cursor()
 
+
 				cursor.execute(SQL, tuple(params or ()))
 
+
 				response = {}
+
 
 				if cursor.description is not None:
 					match fetch_type:
@@ -106,8 +111,21 @@ if __name__ != "__main__":
 						case "one": response["data"] = cursor.fetchone()
 						case _: raise ValueError(f"PostgreSQL.execute(): Bad fetch_type: {fetch_type}")
 
+
 				if commit is True: connection.commit()
 				else: response["connection"] = connection
+
+
+				if include_PostgreSQL_data is True:
+					# The SQL query that was executed
+					response["SQL"] = SQL
+
+					# Rows returned for SELECT, rows affected for INSERT/UPDATE/DELETE
+					response["row_count"] = cursor.rowcount
+
+					# Column metadata for SELECT queries (name + type per column), None for INSERT/UPDATE/DELETE
+					response["description"] = cursor.description
+
 
 				return response
 
