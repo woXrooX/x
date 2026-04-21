@@ -1,12 +1,13 @@
-\set ON_ERROR_STOP 1
-\! clear
 \! echo "============================== x =============================="
 
-DROP DATABASE IF EXISTS "[NAME]";
+DROP DATABASE IF EXISTS "[DB_name]";
 
-CREATE DATABASE "[NAME]" ENCODING 'UTF8';
+CREATE DATABASE "[DB_name]" ENCODING 'UTF8';
 
-\c "[NAME]" "[user]"
+CREATE USER "[user]" WITH PASSWORD '[my_password]';
+ALTER ROLE "[user]" WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+
+\c "[DB_name]" "[user]"
 
 
 
@@ -162,6 +163,7 @@ INSERT INTO "app_color_modes" ("id", "name") OVERRIDING SYSTEM VALUE VALUES
 CREATE TABLE IF NOT EXISTS "user_authenticity_statuses" (
 	"id" INT GENERATED ALWAYS AS IDENTITY,
 	"name" VARCHAR(20) NOT NULL UNIQUE,
+
 	PRIMARY KEY ("id")
 );
 
