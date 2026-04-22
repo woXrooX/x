@@ -398,7 +398,7 @@ CREATE TABLE IF NOT EXISTS "notifications" (
 	-- NULL = No type
 	"type" INT NULL,
 
-	"flag_deleted" TIMESTAMPTZ NULL DEFAULT NULL,
+	"flag_deleted_at" TIMESTAMPTZ NULL DEFAULT NULL,
 	"flag_deleted_by_user" INT NULL,
 
 	FOREIGN KEY ("sender") REFERENCES "users"("id"),
@@ -481,11 +481,11 @@ CREATE TABLE IF NOT EXISTS "feedbacks" (
 
 	"created_by_user" INT NULL,
 
-	"fullname" VARCHAR(200) NULL,
+	"full_name" VARCHAR(200) NULL,
 	"eMail" VARCHAR(100) NULL,
 	"feedback_text" TEXT NOT NULL,
 
-	"flag_deleted" TIMESTAMPTZ NULL DEFAULT NULL,
+	"flag_deleted_at" TIMESTAMPTZ NULL DEFAULT NULL,
 	"flag_deleted_by_user" INT NULL,
 
 	PRIMARY KEY ("id")
