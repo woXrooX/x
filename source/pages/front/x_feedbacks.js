@@ -35,7 +35,7 @@ export async function after(){
 					<td>${feedback["eMail"] || "N/S"}</td>
 					<td>${feedback_text}</td>
 					<td>${feedback["feedback_left_page"] || "N/A"}</td>
-					<td>${feedback["timestamp"]}</td>
+					<td>${feedback["metadata_created_at"]}</td>
 
 					<td>
 						<x-svg id="modal_XR_delete_${feedback["id"]}" name="delete" class="btn btn-error" color="white"></x-svg>
@@ -74,7 +74,7 @@ export async function after(){
 							<th>${window.Lang.use("eMail")}</th>
 							<th>Feedback text</th>
 							<th>Page</th>
-							<th>${window.Lang.use("timestamp")}</th>
+							<th>${window.Lang.use("metadata_created_at")}</th>
 							<th>Actions</th>
 						</tr>
 					</thead>

@@ -90,7 +90,7 @@ export async function after() {
 						"content_TEXT": notification["content_TEXT"],
 						...content_JSON
 					})}</p>
-					<p class="width-auto text-size-0-6 text-color-secondary white-space-nowrap-important">${timestamp_to_human_readable_v2(notification["timestamp"])}</p>
+					<p class="width-auto text-size-0-6 text-color-secondary white-space-nowrap-important">${timestamp_to_human_readable_v2(notification["metadata_created_at"])}</p>
 				</a>
 			`;
 		}
