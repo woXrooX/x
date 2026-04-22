@@ -3,7 +3,7 @@ if __name__ != "__main__":
 
 	from main import session
 	from Python.x.modules.Globals import Globals
-	from Python.x.modules.MySQL import MySQL
+	from Python.x.modules.PostgreSQL import PostgreSQL
 	from Python.x.modules.SendGrid import SendGrid
 	from Python.x.modules.Twilio import Twilio
 	from Python.x.modules.Logger import Log
@@ -29,43 +29,43 @@ if __name__ != "__main__":
 			# 1. Validate "recipient"
 			# 2. Get "recipient" infos
 			# 3. Check if "recipient" disabled the "event_name"
-			recipient = MySQL.execute(
-				sql="""
+			recipient = PostgreSQL.execute(
+				SQL="""
 					SELECT
-						users.id,
-						users.eMail,
-						users.phone_number,
-						disabled_notification_events.method_in_app,
-						disabled_notification_events.method_eMail,
-						disabled_notification_events.method_SMS
-					FROM users
-					LEFT JOIN disabled_notification_events ON
-						disabled_notification_events.event = %s AND
-						disabled_notification_events.user = users.id
-					WHERE users.id = %s LIMIT 1;
+						"users"."id",
+						"users"."eMail",
+						"users"."phone_number",
+						"disabled_notification_events"."method_in_app",
+						"disabled_notification_events"."method_eMail",
+						"disabled_notification_events"."method_SMS"
+					FROM "users"
+					LEFT JOIN "disabled_notification_events" ON
+						"disabled_notification_events"."event" = %s AND
+						"disabled_notification_events"."user" = "users"."id"
+					WHERE "users"."id" = %s LIMIT 1;
 				""",
-				params = [
+				params=[
 					Globals.NOTIFICATION_EVENTS[event_name]["id"],
 					recipient
 				],
-				fetch_one = True
+				fetch_type="one"
 			)
-			if recipient is False or recipient is None: return False
+			if "error" in recipient or recipient["data"] is None: return False
 
 			is_successfully = True
 
 			if method_in_app is True:
-				if Notifications.new_in_app(recipient, sender, content_TEXT, content_JSON, event_name, type_name) is False:
+				if Notifications.new_in_app(recipient["data"], sender, content_TEXT, content_JSON, event_name, type_name) is False:
 					Log.warning("Notifications.new() -> Could not create: new_in_app()")
 					is_successfully = False
 
 			if method_eMail is True:
-				if Notifications.new_eMail(recipient, sender, content_TEXT, content_JSON, event_name) is False:
+				if Notifications.new_eMail(recipient["data"], sender, content_TEXT, content_JSON, event_name) is False:
 					Log.warning("Notifications.new() -> Could not send: new_eMail()")
 					is_successfully = False
 
 			if method_SMS is True:
-				if Notifications.new_SMS(recipient, sender, content_TEXT, content_JSON, event_name) is False:
+				if Notifications.new_SMS(recipient["data"], sender, content_TEXT, content_JSON, event_name) is False:
 					Log.warning("Notifications.new() -> Could not send: new_SMS()")
 					is_successfully = False
 
@@ -86,8 +86,11 @@ if __name__ != "__main__":
 		):
 			if "method_in_app" in recipient and recipient["method_in_app"] == 1: return True
 
-			data = MySQL.execute(
-				sql="INSERT INTO notifications (sender, recipient, content_TEXT, content_JSON, event, type) VALUES (%s, %s, %s, %s, %s, %s);",
+			res = PostgreSQL.execute(
+				SQL="""
+					INSERT INTO "notifications" ("sender", "recipient", "content_TEXT", "content_JSON", "event", "type")
+					VALUES (%s, %s, %s, %s, %s, %s);
+				""",
 				params=[
 					sender,
 					recipient["id"],
@@ -95,10 +98,9 @@ if __name__ != "__main__":
 					json.dumps(content_JSON, default=str) if isinstance(content_JSON, dict) else None,
 					Globals.NOTIFICATION_EVENTS.get(event_name, {}).get("id", None),
 					Globals.NOTIFICATION_TYPES.get(type_name, {}).get("id", None)
-				],
-				commit=True
+				]
 			)
-			if data is False: return False
+			if "error" in res: return False
 			return True
 
 		@staticmethod

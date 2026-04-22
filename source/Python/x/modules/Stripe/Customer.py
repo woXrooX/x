@@ -4,7 +4,7 @@ if __name__ != "__main__":
 	from Python.x.modules.Response import Response
 	from Python.x.modules.Globals import Globals
 	from Python.x.modules.Logger import Log
-	from Python.x.modules.MySQL import MySQL
+	from Python.x.modules.PostgreSQL import PostgreSQL
 	from Python.x.modules.Stripe.Stripe import Stripe
 
 	import stripe
@@ -23,8 +23,8 @@ if __name__ != "__main__":
 
 			#### Session user data
 			if "user" not in session: return False
-			fullname = None
-			if session["user"]["first_name"] and session["user"]["last_name"]: fullname = f'{session["user"]["first_name"]} {session["user"]["last_name"]}'
+			full_name = None
+			if session["user"]["first_name"] and session["user"]["last_name"]: full_name = f'{session["user"]["first_name"]} {session["user"]["last_name"]}'
 
 			try:
 				existing_customer = Customer.get_customer_id_by_user_id(session["user"]["id"])
@@ -36,21 +36,20 @@ if __name__ != "__main__":
 				params = {
 					"email": eMail,
 					"metadata": metadata,
-					"name": fullname,
+					"name": full_name,
 					"payment_method": payment_method
 				}
 
 				customer = stripe.Customer.create(**params)
 
-				link_Stripe_customers_users = MySQL.execute(
-					sql="INSERT INTO Stripe_customers_users (user, Stripe_customer_id) VALUES (%s, %s);",
+				link_Stripe_customers_users = PostgreSQL.execute(
+					SQL="""INSERT INTO "Stripe_customers_users" ("user", "Stripe_customer_id") VALUES (%s, %s);""",
 					params=[
 						session["user"]["id"],
 						customer.id
-					],
-					commit=True
+					]
 				)
-				if link_Stripe_customers_users is False:
+				if "error" in link_Stripe_customers_users:
 					Log.error(f"Payment.create_customer(): database_error")
 					return False
 
@@ -72,15 +71,15 @@ if __name__ != "__main__":
 				Log.warning("Payment.get_customer_id_by_user_id(): Stripe_is_not_initialized")
 				return False
 
-			data = MySQL.execute(
-				sql="SELECT Stripe_customer_id FROM Stripe_customers_users WHERE user = %s LIMIT 1;",
+			res = PostgreSQL.execute(
+				SQL="""SELECT "Stripe_customer_id" FROM "Stripe_customers_users" WHERE "user" = %s LIMIT 1;""",
 				params=[user_id],
-				fetch_one=True
+				fetch_type="one"
 			)
-			if data is False: return False
-			if data is None: return None
+			if "error" in res: return False
+			if res["data"] is None: return None
 
-			return data["Stripe_customer_id"]
+			return res["data"]["Stripe_customer_id"]
 
 		@staticmethod
 		def find_customer_by_user_id(user_id, limit=100):
