@@ -5,8 +5,8 @@ export function feedback_leave_button(){
 	let unauthenticated_user_inputs_HTML = '';
 	if (!("user" in window.session)) unauthenticated_user_inputs_HTML = `
 		<label>
-			<p for="fullname">Please enter your name</p>
-			<input type="text" name="fullname">
+			<p for="full_name">Please enter your name</p>
+			<input type="text" name="full_name">
 		</label>
 
 		<label>
