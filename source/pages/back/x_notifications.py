@@ -44,7 +44,7 @@ def x_notifications(request):
 						WHERE
 							"notifications"."flag_deleted_at" IS NULL AND
 							"recipient" = %s AND
-							"seen" = 0;
+							"seen" = b'0';
 					""",
 					params=[session['user']['id']],
 					fetch_type="one"
