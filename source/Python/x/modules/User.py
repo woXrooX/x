@@ -5,7 +5,7 @@ if __name__ != "__main__":
 
 	from main import session
 
-	from Python.x.modules.MySQL import MySQL
+	from Python.x.modules.PostgreSQL import PostgreSQL
 	from Python.x.modules.Globals import Globals
 	from Python.x.modules.Logger import Log
 	from Python.x.modules.Response import Response
@@ -27,22 +27,22 @@ if __name__ != "__main__":
 		@staticmethod
 		@check_if_user_in_session
 		def get_roles():
-			data = MySQL.execute(
-					sql="""
-						SELECT user_roles.name
-						FROM user_roles
-						INNER JOIN users_roles
-						ON user_roles.id = users_roles.role AND users_roles.user = %s
-					""",
-					params=(session["user"]["id"],)
-				)
-
-			if data is False: return False
+			data = PostgreSQL.execute(
+				SQL="""
+					SELECT "user_roles"."name"
+					FROM "user_roles"
+					INNER JOIN "users_roles" ON
+						"user_roles"."id" = "users_roles"."role" AND
+						"users_roles"."user" = %s;
+				""",
+				params=[session["user"]["id"]]
+			)
+			if "error" in data: return False
 
 			session["user"]["roles"] = []
 
 			# Extracting IDs From Response
-			for role in data: session["user"]["roles"].append(role["name"])
+			for role in data["data"]: session["user"]["roles"].append(role["name"])
 
 			Log.success("User.get_roles()")
 
@@ -51,22 +51,22 @@ if __name__ != "__main__":
 		@staticmethod
 		@check_if_user_in_session
 		def get_occupations():
-			data = MySQL.execute(
-					sql="""
-						SELECT user_occupations.name
-						FROM user_occupations
-						INNER JOIN users_occupations
-						ON user_occupations.id = users_occupations.occupation AND users_occupations.user = %s
-					""",
-					params=(session["user"]["id"],)
-				)
-
-			if data is False: return False
+			data = PostgreSQL.execute(
+				SQL="""
+					SELECT "user_occupations"."name"
+					FROM "user_occupations"
+					INNER JOIN "users_occupations" ON
+						"user_occupations".id = "users_occupations"."occupation" AND
+						"users_occupations"."user" = %s;
+				""",
+				params=[session["user"]["id"]]
+			)
+			if "error" in data: return False
 
 			session["user"]["occupations"] = []
 
 			# Extracting IDs From Response
-			for occupation in data: session["user"]["occupations"].append(occupation["name"])
+			for occupation in data["data"]: session["user"]["occupations"].append(occupation["name"])
 
 			Log.success("User.get_occupations()")
 
@@ -75,16 +75,20 @@ if __name__ != "__main__":
 		@staticmethod
 		@check_if_user_in_session
 		def get_plan():
-			data = MySQL.execute(
-				"SELECT user_plans.name FROM user_plans WHERE id = %s LIMIT 1;",
-				(session["user"]["plan"],),
-				fetch_one=True
+			data = PostgreSQL.execute(
+				SQL="""
+					SELECT "user_plans"."name"
+					FROM "user_plans"
+					WHERE "id" = %s
+					LIMIT 1;
+				""",
+				params=[session["user"]["plan"]],
+				fetch_type="one"
 			)
+			if "error" in data: return False
 
-			if data is False: return False
-
-			if data is None: session["user"]["plan"] = None
-			else: session["user"]["plan"] = data["name"]
+			if data["data"] is None: session["user"]["plan"] = None
+			else: session["user"]["plan"] = data["data"]["name"]
 
 			Log.success("User.get_plan()")
 
@@ -97,8 +101,15 @@ if __name__ != "__main__":
 		@staticmethod
 		@check_if_user_in_session
 		def set_last_heartbeat_at():
-			data = MySQL.execute("UPDATE users SET last_heartbeat_at = NOW() WHERE id = %s LIMIT 1;", [session["user"]["id"]], commit=True)
-			if data is False: return False
+			data = PostgreSQL.execute(
+				SQL="""
+					UPDATE "users"
+					SET "last_heartbeat_at" = NOW()
+					WHERE "id" = %s;
+				""",
+				params=[session["user"]["id"]]
+			)
+			if "error" in data: return False
 
 			Log.success("User.set_last_heartbeat_at()")
 
@@ -110,13 +121,11 @@ if __name__ != "__main__":
 			# Replace the [1, 2] with the data retrived from the database "app_color_modes"
 			if color_mode not in [1, 2]: return False
 
-			data = MySQL.execute(
-				sql="UPDATE users SET app_color_mode=%s WHERE id=%s",
-				params=(color_mode, session["user"]["id"]),
-				commit=True
+			data = PostgreSQL.execute(
+				SQL="""UPDATE "users" SET "app_color_mode"=%s WHERE "id"=%s""",
+				params=[color_mode, session["user"]["id"]]
 			)
-
-			if data is False: return False
+			if "error" in data: return False
 
 			# Not working if I try to update single key
 			# session["user"]["app_color_mode"] = color_mode
@@ -133,13 +142,11 @@ if __name__ != "__main__":
 
 			if code not in Globals.LANGUAGES: return False
 
-			data = MySQL.execute(
-				sql="UPDATE users SET app_language=%s WHERE id=%s",
-				params=(Globals.LANGUAGES[code]["id"], session["user"]["id"]),
-				commit=True
+			data = PostgreSQL.execute(
+				SQL="""UPDATE "users" SET "app_language"=%s WHERE "id"=%s""",
+				params=[Globals.LANGUAGES[code]["id"], session["user"]["id"]]
 			)
-
-			if data is False: return False
+			if "error" in data: return False
 
 			if User.update_session() is False: pass
 
@@ -158,29 +165,28 @@ if __name__ != "__main__":
 			if session["user"]["username"] == new_username: return Response.make(type="error", message="old_and_new_usernames_same", field="username")
 			if not re.match(Globals.CONF["username"]["regEx"], new_username): return Response.make(type="error", message="invalid_username", field="username")
 
-			update_data = MySQL.execute(
-				sql="""
-					UPDATE users
-					SET users.username = %s
+			update_data = PostgreSQL.execute(
+				SQL="""
+					UPDATE "users"
+					SET "users"."username" = %s
 					WHERE
-						users.id = %s AND
-						users.flag_deleted IS NULL
-					LIMIT 1;
+						"users"."id" = %s AND
+						"users"."flag_deleted_at" IS NULL;
 				""",
 				params=[new_username, session["user"]["id"]],
-				commit=True,
-				include_MySQL_data=True
+				commit=False
 			)
-			if update_data is False: return Response.make(type="error", message="database_error")
-			if "error" in update_data and int(update_data["error_no"]) == 1062: return Response.make(type="error", message="username_exists")
+			if "error" in update_data and update_data["SQL_state"] == "23505": return Response.make(type="error", message="username_exists")
 			if "error" in update_data: return Response.make(type="error", message="database_error")
 
-			record_data = MySQL.execute(
-				sql="INSERT INTO users_username_records (user, username) VALUES (%s, %s);",
+			# TODO: We need to add row_count check here before proceeding with the next execute below
+
+			record_data = PostgreSQL.execute(
+				SQL="""INSERT INTO "users_username_records" ("user", "username") VALUES (%s, %s);""",
 				params=[session["user"]["id"], new_username],
-				commit=True
+				connection=update_data["connection"]
 			)
-			if record_data is False: return Response.make(type="error", message="database_error")
+			if "error" in record_data: return Response.make(type="error", message="database_error")
 
 			return True
 
@@ -272,25 +278,23 @@ if __name__ != "__main__":
 		@staticmethod
 		@check_if_user_in_session
 		def update_session():
-			data = MySQL.execute(
-				sql="""
+			data = PostgreSQL.execute(
+				SQL="""
 					SELECT
-						users.*,
-						user_authenticity_statuses.name AS authenticity_status,
-						languages.code AS 'app_language'
-					FROM users
-					LEFT JOIN user_authenticity_statuses ON users.authenticity_status = user_authenticity_statuses.id
-					LEFT JOIN languages ON languages.id = users.app_language
-					WHERE users.id=%s LIMIT 1;
+						"users".*,
+						"user_authenticity_statuses"."name" AS "authenticity_status",
+						"languages"."code" AS "app_language"
+					FROM "users"
+					LEFT JOIN "user_authenticity_statuses" ON "users"."authenticity_status" = "user_authenticity_statuses"."id"
+					LEFT JOIN "languages" ON "languages"."id" = "users"."app_language"
+					WHERE "users"."id"=%s LIMIT 1;
 				""",
-				params=(session["user"]["id"],),
-				fetch_one=True
+				params=[session["user"]["id"]],
+				fetch_type="one"
 			)
+			if "error" in data: return False
 
-			# Error
-			if data is False: return False
-
-			session["user"] = data
+			session["user"] = data["data"]
 
 			if not User.get_roles(): pass
 
@@ -310,29 +314,27 @@ if __name__ != "__main__":
 		def soft_delete(user_id):
 			if not user_id: return False
 
-			data = MySQL.execute(
-				sql="""
-					UPDATE users
+			data = PostgreSQL.execute(
+				SQL="""
+					UPDATE "users"
 					SET
-						flag_deleted = NOW(),
-						flag_deleted_by_user = %s,
-						flag_deleted_username = username,
-						flag_deleted_eMail = eMail,
-						flag_deleted_phone_number = phone_number,
-						username = NULL,
-						eMail = NULL,
-						phone_number = NULL
+						"flag_deleted_at" = NOW(),
+						"flag_deleted_by_user" = %s,
+						"flag_deleted_username" = "username",
+						"flag_deleted_eMail" = "eMail",
+						"flag_deleted_phone_number" = "phone_number",
+						"username" = NULL,
+						"eMail" = NULL,
+						"phone_number" = NULL
 					WHERE
-						id = %s AND
-						flag_deleted IS NULL
-					LIMIT 1;
+						"id" = %s AND
+						"flag_deleted_at" IS NULL;
 				""",
 				params=[
 					session["user"]["id"],
 					user_id
-				],
-				commit=True
+				]
 			)
-			if data is False: return False
+			if "error" in data: return False
 
 			return True
