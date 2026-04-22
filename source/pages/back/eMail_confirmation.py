@@ -6,7 +6,7 @@ from Python.x.modules.Page import Page
 from Python.x.modules.Response import Response
 from Python.x.modules.Globals import Globals
 from Python.x.modules.User import User
-from Python.x.modules.MySQL import MySQL
+from Python.x.modules.PostgreSQL import PostgreSQL
 
 # @Page.build({
 # 	"enabled": False,
@@ -27,12 +27,11 @@ def eMail_confirmation(request):
 
 		# Check if verification code does not match then increment the counter
 		if int_verification_code != session["user"]["eMail_verification_code"]:
-			data = MySQL.execute(
-				sql="UPDATE users SET eMail_verification_attempts_count=eMail_verification_attempts_count + 1 WHERE id = %s;",
-				params=[session["user"]["id"]],
-				commit=True
+			data = PostgreSQL.execute(
+				SQL="""UPDATE "users" SET "eMail_verification_attempts_count" = "eMail_verification_attempts_count" + 1 WHERE "id" = %s;""",
+				params=[session["user"]["id"]]
 			)
-			if data is False: return Response.make(type="error", message="database_error")
+			if "error" in data: return Response.make(type="error", message="database_error")
 
 			User.update_session()
 
@@ -40,18 +39,17 @@ def eMail_confirmation(request):
 
 		# Success | Match
 		if int_verification_code == session["user"]["eMail_verification_code"]:
-			data = MySQL.execute(
-				sql="""
-					UPDATE users SET
-						eMail_verified = b'1',
-						eMail_verification_attempts_count = eMail_verification_attempts_count + 1,
-						authenticity_status = %s
-					WHERE id = %s;
+			data = PostgreSQL.execute(
+				SQL="""
+					UPDATE "users" SET
+						"eMail_verified" = b'1',
+						"eMail_verification_attempts_count" = "eMail_verification_attempts_count" + 1,
+						"authenticity_status" = %s
+					WHERE "id" = %s;
 				""",
-				params=[Globals.USER_AUTHENTICITY_STATUSES["authorized"]["id"], session["user"]["id"]],
-				commit=True
+				params=[Globals.USER_AUTHENTICITY_STATUSES["authorized"]["id"], session["user"]["id"]]
 			)
-			if data is False: return Response.make(type="error", message="database_error")
+			if "error" in data: return Response.make(type="error", message="database_error")
 
 			User.update_session()
 

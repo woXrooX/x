@@ -8,7 +8,7 @@ from Python.x.modules.Response import Response
 from Python.x.modules.Globals import Globals
 from Python.x.modules.Log_In_Tools import Log_In_Tools
 from Python.x.modules.User import User
-from Python.x.modules.MySQL import MySQL
+from Python.x.modules.PostgreSQL import PostgreSQL
 from Python.x.modules.Logger import Log
 
 # @Page.build({
@@ -44,8 +44,18 @@ def sign_up(request):
 		if not re.match(Globals.CONF["password"]["regEx"], request.form["password"]): return Response.make(type="error", message="password_allowed_chars", field="password")
 
 		# eMail_in_use
-		data = MySQL.execute(sql="SELECT id FROM users WHERE eMail=%s LIMIT 1;", params=[request.form["eMail"]], fetch_one=True)
-		if data: return Response.make(type="error", message="eMail_in_use", field="eMail")
+		data = PostgreSQL.execute(
+			SQL="""
+				SELECT "id"
+				FROM "users"
+				WHERE "eMail" = %s
+				LIMIT 1;
+			""",
+			params=[request.form["eMail"]],
+			fetch_type="one"
+		)
+		if "error" in data: return Response.make(type="error", message="database_error")
+		if data["data"]: return Response.make(type="error", message="eMail_in_use", field="eMail")
 
 		######## Success
 		# Generate Randome Verification Code
@@ -54,31 +64,40 @@ def sign_up(request):
 		password = Log_In_Tools.password_hash(request.form["password"])
 
 		# Insert to database
-		data = MySQL.execute(
-			sql="INSERT INTO users (password, eMail, eMail_verification_code, authenticity_status) VALUES (%s, %s, %s, %s);",
+		data = PostgreSQL.execute(
+			SQL="""INSERT INTO "users" ("password", "eMail", "eMail_verification_code", "authenticity_status") VALUES (%s, %s, %s, %s);""",
 			params=[
 				password,
 				request.form["eMail"],
 				eMail_verification_code,
 				Globals.USER_AUTHENTICITY_STATUSES["unauthorized"]["id"]
-			],
-			commit=True
+			]
 		)
-		if data is False: return Response.make(type="error", message="database_error")
+		if "error" in data: return Response.make(type="error", message="database_error")
 
 		# Get user data
-		user_data = MySQL.execute(
-			sql="SELECT id, eMail FROM users WHERE eMail=%s AND password=%s LIMIT 1;",
+		user_data = PostgreSQL.execute(
+			SQL="""
+				SELECT
+					"id",
+					"eMail"
+				FROM "users"
+				WHERE
+					"eMail" = %s AND
+					"password" = %s
+				LIMIT 1;
+			""",
 			params=[
 				request.form["eMail"],
 				password
 			],
-			fetch_one=True
+			fetch_type="one"
 		)
-		if not user_data: return Response.make(type="error", message="database_error")
+		if "error" in user_data: return Response.make(type="error", message="database_error")
+		if not user_data["data"]: return Response.make(type="error", message="database_error")
 
 		# Set session user data
-		session["user"] = user_data
+		session["user"] = user_data["data"]
 		session.permanent = True
 
 		# Handle the session update error
@@ -90,7 +109,7 @@ def sign_up(request):
 
 		#### Check if verification code sent successfully
 		email_verification_sent_status = Notifications.new_eMail(
-			recipient=user_data,
+			recipient=user_data["data"],
 			content_JSON={"eMail_verification_code": eMail_verification_code},
 			event_name="sign_up_eMail_verification",
 		)

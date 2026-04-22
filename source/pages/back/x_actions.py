@@ -3,7 +3,7 @@ import os
 from Python.x.modules.Page import Page
 from Python.x.modules.Response import Response
 from Python.x.modules.Globals import Globals
-from Python.x.modules.MySQL import MySQL
+from Python.x.modules.PostgreSQL import PostgreSQL
 from Python.x.modules.User import User
 from Python.x.modules.SendGrid import SendGrid
 
@@ -18,10 +18,10 @@ def x_actions(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":
 			if request.get_json()["for"] == "sanitize_users_folders":
-				users = MySQL.execute("SELECT id FROM users;")
-				if users is False: return Response.make(type="error", message="database_error")
+				res = PostgreSQL.execute("""SELECT "id" FROM "users";""")
+				if "error" in res: return Response.make(type="error", message="database_error")
 
-				user_ids = [user["id"] for user in users]
+				user_ids = [user["id"] for user in res["data"]]
 
 				# Delete non-existing user folders
 				for folder in os.scandir(f'{Globals.PROJECT_PATH}/Files/users/'):

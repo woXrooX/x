@@ -2,7 +2,7 @@ import random
 
 from Python.x.modules.Page import Page
 from Python.x.modules.Response import Response
-from Python.x.modules.MySQL import MySQL
+from Python.x.modules.PostgreSQL import PostgreSQL
 from Python.x.modules.User import User
 from Python.x.modules.Notifications import Notifications
 from Python.x.modules.Globals import Globals
@@ -27,51 +27,61 @@ def x_user(request, id):
 						params.append((id, Globals.USER_ROLES[role]["id"]))
 
 				# Delete all old user roles
-				data = MySQL.execute(
-					sql="DELETE FROM users_roles WHERE user = %s;",
-					params=[id],
-					commit=True
+				res = PostgreSQL.execute(
+					SQL="""DELETE FROM "users_roles" WHERE "user" = %s;""",
+					params=[id]
 				)
-				if data is False: return Response.make(type="error", message="database_error")
+				if "error" in res: return Response.make(type="error", message="database_error")
 
+				# TODO: many params needs to be rebuild
 				if len(params) > 0:
-					data = MySQL.execute(
-						sql="INSERT INTO users_roles (user, role) VALUES (%s, %s);",
-						params=params,
-						commit=True,
-						many=True
+					res = PostgreSQL.execute(
+						SQL="""INSERT INTO "users_roles" ("user", "role") VALUES (%s, %s);""",
+						params=params
+						# many=True
 					)
-					if data is False: return Response.make(type="error", message="database_error")
+					if "error" in res: return Response.make(type="error", message="database_error")
 
 				return Response.make(type="success", message="saved", DOM_change=["main"])
 
 		if request.content_type == "application/json":
 			if request.get_json()["for"] == "get_user":
-				data = MySQL.execute(
-					"""
+				res = PostgreSQL.execute(
+					SQL="""
 						SELECT
-							users.*,
-							GROUP_CONCAT(DISTINCT user_roles.name ORDER BY user_roles.name ASC SEPARATOR ', ') AS roles_list
-						FROM users
-						LEFT JOIN users_roles ON users.id = users_roles.user
-						LEFT JOIN user_roles ON user_roles.id = users_roles.role
-						WHERE users.id=%s
-						GROUP BY users.id LIMIT 1;
+							"users".*,
+							GROUP_CONCAT(DISTINCT "user_roles"."name" ORDER BY "user_roles"."name" ASC SEPARATOR ', ') AS "roles_list"
+						FROM "users"
+						LEFT JOIN "users_roles" ON "users"."id" = "users_roles"."user"
+						LEFT JOIN "user_roles" ON "user_roles"."id" = "users_roles"."role"
+						WHERE "users"."id" = %s
+						GROUP BY "users"."id"
+						LIMIT 1;
 					""",
-					[id],
-					fetch_one=True
+					params=[id],
+					fetch_type="one"
 				)
-				if data is False: return Response.make(type="error", message="database_error")
+				if "error" in res: return Response.make(type="error", message="database_error")
 
-				return Response.make(type="success", message="success", data=data, default_serializer_func=str)
+				return Response.make(type="success", message="success", data=res["data"], default_serializer_func=str)
 
 			if request.get_json()["for"] == "get_user_roles": return Response.make(type="success", message="success", data=Globals.USER_ROLES)
 
 			if request.get_json()["for"] == "get_user_log_in_records":
-				data = MySQL.execute("SELECT ip_address, user_agent, timestamp FROM log_in_records WHERE user = %s;", [id])
-				if data is False: return Response.make(type="error", message="database_error")
+				res = PostgreSQL.execute(
+					SQL="""
+						SELECT
+							"IP_address",
+							"user_agent",
+							"metadata_created_at"
+						FROM "log_in_records"
+						WHERE "user" = %s;
+					""",
+					params=[id]
+				)
+				if "error" in res: return Response.make(type="error", message="database_error")
 
-				return Response.make(type="success", message="success", data=data, default_serializer_func=str)
+				return Response.make(type="success", message="success", data=res["data"], default_serializer_func=str)
 
 			if request.get_json()["for"] == "delete_user":
 				if User.soft_delete(id) is not True: return Response.make(type="warning", message="could_not_delete", DOM_change=["main"])
@@ -79,32 +89,41 @@ def x_user(request, id):
 				return Response.make(type="success", message="deleted", redirect="/x/users")
 
 			if request.get_json()["for"] == "resend_eMail_confirmation":
-				user = MySQL.execute("SELECT eMail, eMail_verified FROM users WHERE id=%s LIMIT 1;", [id], fetch_one=True)
-				if user is False or user is None: return Response.make(type="error", message="database_error")
-				if user["eMail"] is None: return Response.make(type="warning", message="This user has no eMail address")
-				if user["eMail_verified"] == 1: return Response.make(type="info", message="Email is already verified")
+				user = PostgreSQL.execute(
+					SQL="""
+						SELECT "eMail", "eMail_verified"
+						FROM "users"
+						WHERE "id" = %s
+						LIMIT 1;
+					""",
+					params=[id],
+					fetch_type="one"
+				)
+				if "error" in user: return Response.make(type="error", message="database_error")
+				if user["data"] is None: return Response.make(type="error", message="database_error")
+				if user["data"]["eMail"] is None: return Response.make(type="warning", message="This user has no eMail address")
+				if user["data"]["eMail_verified"] == 1: return Response.make(type="info", message="Email is already verified")
 
 				eMail_verification_code = random.randint(100000, 999999)
 
-				data = MySQL.execute(
-					sql="""
-						UPDATE users
+				res = PostgreSQL.execute(
+					SQL="""
+						UPDATE "users"
 						SET
-							eMail_verification_code = %s,
-							eMail_verification_attempts_count = 0,
-							authenticity_status = 2
+							"eMail_verification_code" = %s,
+							"eMail_verification_attempts_count" = 0,
+							"authenticity_status" = 2
 						WHERE
-							id = %s AND
-							flag_deleted IS NULL
+							"id" = %s AND
+							"flag_deleted_at" IS NULL
 						LIMIT 1;
 					""",
-					params=[eMail_verification_code, id],
-					commit=True
+					params=[eMail_verification_code, id]
 				)
-				if data is False: return Response.make(type="error", message="database_error")
+				if "error" in res: return Response.make(type="error", message="database_error")
 
 				if Notifications.new_eMail(
-					recipient=user,
+					recipient=user["data"],
 					content_JSON={"eMail_verification_code": eMail_verification_code},
 					event_name="sign_up_eMail_verification"
 				) is not True: return Response.make(type="error", message="could_not_send_eMail_verification_code")
