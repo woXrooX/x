@@ -4,6 +4,7 @@ if __name__ != "__main__":
 	import psycopg
 	from psycopg_pool import ConnectionPool
 	from psycopg.rows import dict_row
+	from psycopg.pq import TransactionStatus
 
 	from Python.x.modules.Logger import Log
 	from Python.x.modules.Globals import Globals
@@ -80,10 +81,35 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def put_connection_to_pool(connection):
+			# NOTE: psycopg_pool.putconn() auto-rolls back any open/failed transaction before returning the connection to the pool,
+			# so forgotten commits can never leak into the next caller. Uncommitted work is silently discarded.
+
 			if PostgreSQL.initialized is False: return False
 
+			if connection is None: return False
+
 			try:
-				if connection and not connection.closed: connection.close()
+				# NOTE: The connection.close() destroys the connection, so "connection" cannot be put back to the pool.
+				# if connection and not connection.closed: connection.close()
+
+				# If the connection is already broken/closed, just hand it back;
+				# The pool will discard it and open a replacement. Do NOT call close() here.
+				if connection.closed or connection.broken:
+					PostgreSQL.DB_pool.putconn(connection)
+					return
+
+
+				# NOTE: The explicit rollback below is redundant with that behavior but gives us a log line for visibility.
+				# Leaked open transaction (INTRANS) or failed transaction (INERROR):
+				# rollback so the connection goes back to the pool clean and doesn't get killed by idle_in_transaction_session_timeout.
+
+				# status = connection.info.transaction_status
+
+				# if status in (TransactionStatus.INTRANS, TransactionStatus.INERROR):
+				# 	try: connection.rollback()
+
+				# 	# Rollback failed → connection is likely unusable. Still hand it back so the pool can discard it properly.
+				# 	except Exception as e: Log.error(f"PostgreSQL.put_connection_to_pool(): rollback failed: {e}")
 
 				PostgreSQL.DB_pool.putconn(connection)
 
@@ -136,7 +162,7 @@ if __name__ != "__main__":
 
 
 				if commit is True: connection.commit()
-				else: response["connection"] = connection
+				elif commit is False: response["connection"] = connection
 
 
 				if include_PostgreSQL_data is True:
