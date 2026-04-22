@@ -42,16 +42,11 @@ Log.center('', '-', type_name="bright_black")
 
 
 
-#################################################### Initializing MySQL
-from Python.x.modules.MySQL import MySQL
-MySQL.init()
-
-
-
 
 #################################################### Initializing PostgreSQL
 from Python.x.modules.PostgreSQL import PostgreSQL
 PostgreSQL.init()
+PostgreSQL.init_getters()
 
 
 
