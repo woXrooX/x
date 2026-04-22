@@ -1,5 +1,3 @@
-# connection.commit() -> "autocommit: True" makes this not effective
-
 if __name__ != "__main__":
 	import sys
 
@@ -13,6 +11,9 @@ if __name__ != "__main__":
 	class PostgreSQL:
 		initialized = False
 		DB_pool = None
+
+
+		######### APIs / Methods
 
 		@staticmethod
 		def init():
@@ -55,6 +56,20 @@ if __name__ != "__main__":
 				sys.exit(1)
 				return False
 
+
+		@staticmethod
+		def init_getters():
+			if PostgreSQL.initialized is False: return False
+
+			PostgreSQL.get_currencies()
+			PostgreSQL.get_languages()
+			PostgreSQL.get_user_authenticity_statuses()
+			PostgreSQL.get_user_roles()
+			PostgreSQL.get_user_occupations()
+			PostgreSQL.get_Cron_Job_events()
+			PostgreSQL.get_notification_events()
+			PostgreSQL.get_notification_types()
+
 		@staticmethod
 		def get_connection_from_pool():
 			if PostgreSQL.initialized is False: return False
@@ -67,7 +82,15 @@ if __name__ != "__main__":
 		def put_connection_to_pool(connection):
 			if PostgreSQL.initialized is False: return False
 
-			PostgreSQL.DB_pool.putconn(connection)
+			try:
+				if connection and not connection.closed: connection.close()
+
+				PostgreSQL.DB_pool.putconn(connection)
+
+			except Exception as e:
+				Log.error(f"PostgreSQL.put_connection_to_pool(): {e}")
+
+
 
 		@staticmethod
 		def reconnect_failed_callback(pool):
@@ -157,3 +180,56 @@ if __name__ != "__main__":
 						PostgreSQL.put_connection_to_pool(connection)
 
 					elif commit is True: PostgreSQL.put_connection_to_pool(connection)
+
+
+
+		######### DB getters
+
+		@staticmethod
+		def get_currencies():
+			data = PostgreSQL.execute('SELECT * FROM "currencies";')
+			if "error" in data: return Log.fieldset("Could not fetch 'currencies'", "PostgreSQL.get_currencies()", "error")
+			for currency in data["data"]: Globals.CURRENCIES[currency["code"]] = currency
+
+		@staticmethod
+		def get_languages():
+			data = PostgreSQL.execute('SELECT * FROM "languages";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'languages'", "PostgreSQL.get_languages()", "error")
+			for language in data["data"]: Globals.LANGUAGES[language["code"]] = language
+
+		@staticmethod
+		def get_user_authenticity_statuses():
+			data = PostgreSQL.execute('SELECT * FROM "user_authenticity_statuses";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'user_authenticity_statuses'", "PostgreSQL.get_user_authenticity_statuses()", "error")
+			for user_authenticity_status in data["data"]: Globals.USER_AUTHENTICITY_STATUSES[user_authenticity_status["name"]] = user_authenticity_status
+
+		@staticmethod
+		def get_user_roles():
+			data = PostgreSQL.execute('SELECT * FROM "user_roles";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'user_roles'", "PostgreSQL.get_user_roles()", "error")
+			for user_role in data["data"]: Globals.USER_ROLES[user_role["name"]] = user_role
+
+		@staticmethod
+		def get_user_occupations():
+			data = PostgreSQL.execute('SELECT * FROM "user_occupations";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'user_occupations'", "PostgreSQL.get_user_occupations()", "error")
+			for user_occupation in data["data"]: Globals.USER_OCCUPATIONS[user_occupation["name"]] = user_occupation
+
+		@staticmethod
+		def get_Cron_Job_events():
+			data = PostgreSQL.execute('SELECT * FROM "Cron_Job_events";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'Cron_Job_events'", "PostgreSQL.Cron_Job_events()", "error")
+			for Cron_Job_event in data["data"]: Globals.CRON_JOB_EVENTS[Cron_Job_event["name"]] = Cron_Job_event
+
+
+		@staticmethod
+		def get_notification_events():
+			data = PostgreSQL.execute('SELECT * FROM "notification_events";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'notification_events'", "PostgreSQL.get_notification_events()", "error")
+			for notification_event in data["data"]: Globals.NOTIFICATION_EVENTS[notification_event["name"]] = notification_event
+
+		@staticmethod
+		def get_notification_types():
+			data = PostgreSQL.execute('SELECT * FROM "notification_types";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'notification_types'", "PostgreSQL.get_notification_types()", "error")
+			for notification_type in data["data"]: Globals.NOTIFICATION_TYPES[notification_type["name"]] = notification_type
