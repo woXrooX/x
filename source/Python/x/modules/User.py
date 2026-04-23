@@ -165,7 +165,7 @@ if __name__ != "__main__":
 			if session["user"]["username"] == new_username: return Response.make(type="error", message="old_and_new_usernames_same", field="username")
 			if not re.match(Globals.CONF["username"]["regEx"], new_username): return Response.make(type="error", message="invalid_username", field="username")
 
-			update_data = PostgreSQL.execute(
+			update_username = PostgreSQL.execute(
 				SQL="""
 					UPDATE "users"
 					SET "users"."username" = %s
@@ -174,19 +174,22 @@ if __name__ != "__main__":
 						"users"."flag_deleted_at" IS NULL;
 				""",
 				params=[new_username, session["user"]["id"]],
-				commit=False
+				commit=False,
+				include_PostgreSQL_data=True
 			)
-			if "error" in update_data and update_data["SQL_state"] == "23505": return Response.make(type="error", message="username_exists")
-			if "error" in update_data: return Response.make(type="error", message="database_error")
+			if "error" in update_username and update_username["SQL_state"] == "23505": return Response.make(type="error", message="username_exists")
+			if "error" in update_username: return Response.make(type="error", message="database_error")
 
-			# TODO: We need to add row_count check here before proceeding with the next execute below
+			if update_username["row_count"] != 1:
+				PostgreSQL.put_connection_to_pool(update_username["connection"])
+				return Response.make(type="error", message="database_error")
 
-			record_data = PostgreSQL.execute(
+			update_record = PostgreSQL.execute(
 				SQL="""INSERT INTO "users_username_records" ("user", "username") VALUES (%s, %s);""",
 				params=[session["user"]["id"], new_username],
-				connection=update_data["connection"]
+				connection=update_username["connection"]
 			)
-			if "error" in record_data: return Response.make(type="error", message="database_error")
+			if "error" in update_record: return Response.make(type="error", message="database_error")
 
 			return True
 
