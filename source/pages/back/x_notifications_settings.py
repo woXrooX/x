@@ -41,25 +41,30 @@ def x_notifications_settings(request):
 
 				if "method" not in request.get_json() or not request.get_json()["method"]: return Response.make(type="error", message="invalid_request")
 
-				# TODO: ON DUPLICATE rewrite for PostgreSQL
 				sql = ''
 				match request.get_json()["method"]:
 					case "in_app":
 						sql = """
-							INSERT INTO "disabled_notification_events" ("user", "event", "method_in_app") VALUES (%s, %s, b'1')
-							ON DUPLICATE KEY UPDATE "method_in_app" = "method_in_app" ^ b'1';
+							INSERT INTO "disabled_notification_events" ("user", "event", "method_in_app")
+							VALUES (%s, %s, b'1')
+							ON CONFLICT ON CONSTRAINT "unique_user_event" DO UPDATE
+							SET "method_in_app" = "disabled_notification_events"."method_in_app" # b'1';
 						"""
 
 					case "eMail":
 						sql = """
-							INSERT INTO "disabled_notification_events" ("user", "event", "method_eMail") VALUES (%s, %s, b'1')
-							ON DUPLICATE KEY UPDATE "method_eMail" = "method_eMail" ^ b'1';
+							INSERT INTO "disabled_notification_events" ("user", "event", "method_eMail")
+							VALUES (%s, %s, b'1')
+							ON CONFLICT ON CONSTRAINT "unique_user_event" DO UPDATE
+							SET "method_eMail" = "disabled_notification_events"."method_eMail" # b'1';
 						"""
 
 					case "SMS":
 						sql = """
-							INSERT INTO "disabled_notification_events" ("user", "event", "method_SMS") VALUES (%s, %s, b'1')
-							ON DUPLICATE KEY UPDATE "method_SMS" = "method_SMS" ^ b'1';
+							INSERT INTO "disabled_notification_events" ("user", "event", "method_SMS")
+							VALUES (%s, %s, b'1')
+							ON CONFLICT ON CONSTRAINT "unique_user_event" DO UPDATE
+							SET "method_SMS" = "disabled_notification_events"."method_SMS" # b'1';
 						"""
 
 					case _: return Response.make(type="error", message="invalid_request")
