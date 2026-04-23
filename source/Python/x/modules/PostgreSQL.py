@@ -85,20 +85,9 @@ if __name__ != "__main__":
 			# so forgotten commits can never leak into the next caller. Uncommitted work is silently discarded.
 
 			if PostgreSQL.initialized is False: return False
-
 			if connection is None: return False
 
 			try:
-				# NOTE: The connection.close() destroys the connection, so "connection" cannot be put back to the pool.
-				# if connection and not connection.closed: connection.close()
-
-				# If the connection is already broken/closed, just hand it back;
-				# The pool will discard it and open a replacement. Do NOT call close() here.
-				if connection.closed or connection.broken:
-					PostgreSQL.DB_pool.putconn(connection)
-					return
-
-
 				# NOTE: The explicit rollback below is redundant with that behavior but gives us a log line for visibility.
 				# Leaked open transaction (INTRANS) or failed transaction (INERROR):
 				# rollback so the connection goes back to the pool clean and doesn't get killed by idle_in_transaction_session_timeout.
@@ -112,11 +101,32 @@ if __name__ != "__main__":
 				# 	except Exception as e: Log.error(f"PostgreSQL.put_connection_to_pool(): rollback failed: {e}")
 
 				PostgreSQL.DB_pool.putconn(connection)
+				return True
 
 			except Exception as e:
 				Log.error(f"PostgreSQL.put_connection_to_pool(): {e}")
+				PostgreSQL.close_connection(connection)
+				return False
 
+		@staticmethod
+		def close_connection(connection):
+			# NOTE: The connection.close() destroys the connection, so "connection" cannot be put back to the pool.
 
+			if connection is None: return False
+
+			# If the connection is already broken/closed, just hand it back to the pool.
+			# The pool will discard it and open a replacement.
+			# Do NOT call close() when closed or broken.
+			if connection.closed or connection.broken: return True
+
+			try:
+				connection.close()
+				Log.warning(f"PostgreSQL.close_connection(): closed")
+				return True
+
+			except Exception as e:
+				Log.error(f"PostgreSQL.close_connection(): {e}")
+				return False
 
 		@staticmethod
 		def reconnect_failed_callback(pool):
