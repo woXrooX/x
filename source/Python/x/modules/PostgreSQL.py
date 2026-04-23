@@ -1,3 +1,6 @@
+# 23503 = Foreign Key Violation
+#
+
 if __name__ != "__main__":
 	import sys
 
@@ -127,6 +130,19 @@ if __name__ != "__main__":
 			except Exception as e:
 				Log.error(f"PostgreSQL.close_connection(): {e}")
 				return False
+
+		@staticmethod
+		def commit_connection(connection):
+			try:
+				connection.commit()
+				Log.success(f"PostgreSQL.commit_connection(): committed")
+				return True
+
+			except Exception as e:
+				Log.error(f"PostgreSQL.commit_connection(): {e}")
+				return False
+
+
 
 		@staticmethod
 		def reconnect_failed_callback(pool):
