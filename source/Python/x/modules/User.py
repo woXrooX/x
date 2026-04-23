@@ -187,7 +187,7 @@ if __name__ != "__main__":
 			update_record = PostgreSQL.execute(
 				SQL="""INSERT INTO "users_username_records" ("user", "username") VALUES (%s, %s);""",
 				params=[session["user"]["id"], new_username],
-				connection=update_username["connection"]
+				borrowed_connection=update_username["connection"]
 			)
 			if "error" in update_record: return Response.make(type="error", message="database_error")
 

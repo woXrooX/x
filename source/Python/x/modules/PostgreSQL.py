@@ -138,7 +138,7 @@ if __name__ != "__main__":
 		def execute(
 			SQL,
 			params = None,
-			incoming_connection = None,
+			borrowed_connection = None,
 
 			# Accepts: True/False
 			commit = True,
@@ -152,9 +152,9 @@ if __name__ != "__main__":
 			has_error = False
 
 			try:
-				if incoming_connection is None: connection, cursor = PostgreSQL.get_connection_from_pool()
+				if borrowed_connection is None: connection, cursor = PostgreSQL.get_connection_from_pool()
 				else:
-					connection = incoming_connection
+					connection = borrowed_connection
 					cursor = connection.cursor()
 
 

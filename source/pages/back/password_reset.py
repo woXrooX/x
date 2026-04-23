@@ -86,7 +86,7 @@ def password_reset(request, TOKEN):
 				password,
 				TOKEN
 			],
-			connection=res["connection"]
+			borrowed_connection=res["connection"]
 		)
 		if "error" in res: return Response.make(type="error", message="database_error")
 
