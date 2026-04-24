@@ -36,7 +36,7 @@ def x_user(request, id):
 				if len(params) > 0:
 					res = PostgreSQL.execute(
 						SQL="""INSERT INTO "users_roles" ("user", "role") VALUES (%s, %s);""",
-						params=params
+						params=params,
 						execute_many=True
 					)
 					if "error" in res: return Response.make(type="error", message="database_error")
