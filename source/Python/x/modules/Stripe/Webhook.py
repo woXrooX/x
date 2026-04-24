@@ -113,7 +113,6 @@ if __name__ != "__main__":
 				object_type_id = None
 				if object_type_name in Globals.STRIPE_OBJECT_TYPES: object_type_id = Globals.STRIPE_OBJECT_TYPES[object_type_name]["id"]
 
-				# TODO: Check if FROM_UNIXTIME supported in PosgreSQL
 				insert = PostgreSQL.execute(
 					SQL="""
 						INSERT INTO "Stripe_webhook_logs"
@@ -131,7 +130,7 @@ if __name__ != "__main__":
 							"amount",
 							"currency"
 						)
-						VALUES (%s, %s, %s, %s, FROM_UNIXTIME(%s), %s, %s, %s, %s, %s, %s)
+						VALUES (%s, %s, %s, %s, to_timestamp(%s), %s, %s, %s, %s, %s, %s)
 					""",
 					params=[
 						event_id,
