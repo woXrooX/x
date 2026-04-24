@@ -25,7 +25,7 @@ def x_users(request):
 							"users"."first_name",
 							"users"."last_name",
 							"users"."eMail",
-							GROUP_CONCAT(DISTINCT "user_roles"."name" ORDER BY "user_roles"."name" ASC SEPARATOR ', ') AS "roles_list",
+							STRING_AGG(DISTINCT "user_roles"."name", ', ' ORDER BY "user_roles"."name" ASC) AS "roles_list",
 							"users"."last_heartbeat_at",
 							"users"."metadata_last_updated_at",
 							"users"."metadata_created_at"
@@ -44,7 +44,7 @@ def x_users(request):
 					SQL="""
 						SELECT COUNT("id") AS "live_users"
 						FROM "users"
-						WHERE ("last_heartbeat_at" >= NOW() - INTERVAL 30 SECOND);
+						WHERE ("last_heartbeat_at" >= NOW() - INTERVAL '30 seconds');
 					""",
 					fetch_type="one"
 				)

@@ -49,7 +49,7 @@ def x_user(request, id):
 					SQL="""
 						SELECT
 							"users".*,
-							GROUP_CONCAT(DISTINCT "user_roles"."name" ORDER BY "user_roles"."name" ASC SEPARATOR ', ') AS "roles_list"
+							STRING_AGG(DISTINCT "user_roles"."name", ', ' ORDER BY "user_roles"."name" ASC) AS "roles_list"
 						FROM "users"
 						LEFT JOIN "users_roles" ON "users"."id" = "users_roles"."user"
 						LEFT JOIN "user_roles" ON "user_roles"."id" = "users_roles"."role"
