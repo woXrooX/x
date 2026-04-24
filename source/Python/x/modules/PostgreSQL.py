@@ -162,7 +162,10 @@ if __name__ != "__main__":
 			# Accepts: "all", "one"
 			fetch_type = "all",
 
-			include_PostgreSQL_data = False
+			include_PostgreSQL_data = False,
+
+			execute_many = False,
+			execute_many_returning = False
 		):
 			connection = cursor = None
 			has_error = False
@@ -174,7 +177,16 @@ if __name__ != "__main__":
 					cursor = connection.cursor()
 
 
-				cursor.execute(SQL, tuple(params or ()))
+				params = tuple(params or ())
+
+				if execute_many is False: cursor.execute(SQL, params)
+
+				elif execute_many is True:
+					cursor.executemany(
+						SQL,
+						params,
+						returning = execute_many_returning
+					)
 
 
 				response = {}
