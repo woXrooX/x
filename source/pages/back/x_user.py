@@ -33,12 +33,11 @@ def x_user(request, id):
 				)
 				if "error" in res: return Response.make(type="error", message="database_error")
 
-				# TODO: many params needs to be rebuild
 				if len(params) > 0:
 					res = PostgreSQL.execute(
 						SQL="""INSERT INTO "users_roles" ("user", "role") VALUES (%s, %s);""",
 						params=params
-						# many=True
+						execute_many=True
 					)
 					if "error" in res: return Response.make(type="error", message="database_error")
 
