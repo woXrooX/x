@@ -115,6 +115,7 @@ if __name__ != "__main__":
 		def close_connection(connection):
 			# NOTE: The connection.close() destroys the connection, so "connection" cannot be put back to the pool.
 
+			if PostgreSQL.initialized is False: return False
 			if connection is None: return False
 
 			# If the connection is already broken/closed, just hand it back to the pool.
@@ -133,6 +134,9 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def commit_connection(connection):
+			if PostgreSQL.initialized is False: return False
+			if connection is None: return False
+
 			try:
 				connection.commit()
 				Log.success(f"PostgreSQL.commit_connection(): committed")
@@ -140,6 +144,20 @@ if __name__ != "__main__":
 
 			except Exception as e:
 				Log.error(f"PostgreSQL.commit_connection(): {e}")
+				return False
+
+		@staticmethod
+		def rollback_connection(connection):
+			if PostgreSQL.initialized is False: return False
+			if connection is None: return False
+
+			try:
+				connection.rollback()
+				Log.success(f"PostgreSQL.rollback_connection(): rollback")
+				return True
+
+			except Exception as e:
+				Log.error(f"PostgreSQL.rollback_connection(): {e}")
 				return False
 
 
