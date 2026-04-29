@@ -72,9 +72,9 @@ export async function after(){
 							<th>User ID</th>
 							<th>${window.Lang.use("full_name")}</th>
 							<th>${window.Lang.use("eMail")}</th>
-							<th>Feedback text</th>
-							<th>Page</th>
-							<th>${window.Lang.use("metadata_created_at")}</th>
+							<th>${window.Lang.use("feedback_text")}</th>
+							<th>${window.Lang.use("page")}</th>
+							<th>${window.Lang.use("created_at")}</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
