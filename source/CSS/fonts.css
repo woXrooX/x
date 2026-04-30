@@ -24,3 +24,10 @@
 	src:url("/fonts/Rubik-Regular.ttf");
 }
 .font-family-Rubik{font-family: Rubik;}
+
+
+@font-face{
+	font-family: Ubuntu;
+	src:url("/fonts/Ubuntu-Regular.ttf");
+}
+.font-family-Ubuntu{font-family: Ubuntu;}
