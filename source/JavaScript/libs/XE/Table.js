@@ -136,7 +136,7 @@ export default class Table extends HTMLElement {
 
 	#build_DOM = ()=>{
 		this.innerHTML = `
-			<container class="gap-0-5">
+			<container class="height-100 gap-0-5">
 
 				<header class="display-flex flex-row flex-y-center flex-x-between gap-0-5 width-100">
 					<select
@@ -183,7 +183,7 @@ export default class Table extends HTMLElement {
 					}
 				</header>
 
-				<main class="width-100"></main>
+				<main class="width-100 min-height-0"></main>
 
 				<footer class="display-flex flex-row s-flex-column flex-x-between gap-1 width-100">
 					<section class="display-flex flex-row flex-x-start flex-y-center gap-0-5 text-size-0-8">
@@ -287,7 +287,7 @@ export default class Table extends HTMLElement {
 
 	#build_table = ()=>{
 		this.querySelector("container > main").innerHTML = `
-			<section class="table-container table-thead-sticky scrollbar-x">
+			<section class="table-container table-thead-sticky scrollbar-x height-100">
 				<table>
 					<thead><tr></tr></thead>
 					<tbody></tbody>
