@@ -241,7 +241,8 @@ if __name__ != "__main__":
 
 				return {
 					"error": True,
-					"SQL_state": e.sqlstate
+					"SQL_state": e.sqlstate,
+					"constraint_name": e.diag.constraint_name
 				}
 
 			except Exception as e:
