@@ -237,6 +237,7 @@
 		.cursor-pointer{ cursor: pointer; }
 		.cursor-text{ cursor: text; }
 		.cursor-not-allowed{ cursor: not-allowed; }
+		.cursor-col-resize{ cursor: col-resize; }
 	}
 
 	@layer pointer_events{
