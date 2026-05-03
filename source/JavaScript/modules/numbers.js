@@ -4,24 +4,30 @@ export function short_scale_notation(number){
 	return number.toString();
 }
 
-export function number_to_locale_string(
+export function number_to_locale_string({
 	number,
-	locale,
-	style,
-	currency,
+	locale = undefined,
+
+
+
+	//// Options: Currency related
+
+	style = "currency",
+	currency = "USD",
+	currency_display = "symbol",
 	minimum_fraction_digits = 2,
 	maximum_fraction_digits = 2,
-	currency_display = "symbol",
 	use_grouping = true
-){
+}){
 	// Convert string to number if needed
 	const numeric_value = typeof number === 'string' ? parseFloat(number) : number;
 
 	// Check if it's a valid number
 	if (isNaN(numeric_value)) return number;
 
-	const formatted = numeric_value.toLocaleString(
+	return numeric_value.toLocaleString(
 		// en-US, en-GB, de-DE...
+		// undefined = falls back to system
 		locale,
 		{
 			// currency, decimal, percent
@@ -29,16 +35,15 @@ export function number_to_locale_string(
 
 			// USD, GBP, EUR..
 			currency: currency,
-			minimumFractionDigits: minimum_fraction_digits,
-			maximumFractionDigits: maximum_fraction_digits,
 
 			// 'symbol', 'code', or 'name'
 			currencyDisplay: currency_display,
+
+			minimumFractionDigits: minimum_fraction_digits,
+			maximumFractionDigits: maximum_fraction_digits,
 
 			// true = use thousands separators
 			useGrouping: use_grouping
 		}
 	);
-
-	return formatted;
 }

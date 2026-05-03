@@ -3,7 +3,7 @@ import re
 from Python.x.modules.Page import Page
 from Python.x.modules.Response import Response
 from Python.x.modules.Log_In_Tools import Log_In_Tools
-from Python.x.modules.MySQL import MySQL
+from Python.x.modules.PostgreSQL import PostgreSQL
 from Python.x.modules.Globals import Globals
 from Python.x.modules.IP_address_tools import extract_IP_address_from_request
 
@@ -30,48 +30,64 @@ def password_reset(request, TOKEN):
 
 		######## Token validation
 		# PRD = password recovery data
-		PRD = MySQL.execute(
-			sql="""
+		PRD = PostgreSQL.execute(
+			SQL="""
 				SELECT
-					user,
-					timestamp_first,
-					new_password
-				FROM password_reset_requests
+					"user",
+					"timestamp_first",
+					"new_password"
+				FROM "password_reset_requests"
 				WHERE
-					token=%s AND
-					TIMESTAMPDIFF(MINUTE, password_reset_requests.timestamp_first, NOW()) < %s
-				LIMIT 1;
+					"token" = %s AND
+					TIMESTAMPDIFF(MINUTE, "password_reset_requests"."timestamp_first", NOW()) < %s;
 			""",
 			params=[
 				TOKEN,
 				Globals.CONF["password"]["recovery_link_validity_duration"]
 			],
-			fetch_one=True
+			fetch_type="one"
 		)
-		if PRD is False: return Response.make(type="error", message="database_error")
+		if "error" in PRD: return Response.make(type="error", message="database_error")
 
 		# No matching token
-		if not PRD: return Response.make(type="error", message="invalid_token", redirect="/400")
+		if PRD["data"] is None: return Response.make(type="error", message="invalid_token", redirect="/400")
 
 		# Already recovered
-		if PRD["new_password"] is not None: return Response.make(type="info", message="token_aready_used", redirect="/log_in")
+		if PRD["data"]["new_password"] is not None: return Response.make(type="info", message="token_aready_used", redirect="/log_in")
 
 		# Set the new users passowrd and update password_reset_requests
-		data = MySQL.execute(
-			sql="""
-				UPDATE users SET password = %s WHERE id = %s;
-				UPDATE password_reset_requests SET ip_address_last = %s, user_agent_last = %s, timestamp_last = NOW(), new_password = %s WHERE token = %s;
+		res = PostgreSQL.execute(
+			SQL="""
+				UPDATE "users"
+				SET "password" = %s
+				WHERE "id" = %s;
 			""",
 			params=[
 				password,
-				PRD['user'],
+				PRD["data"]['user']
+			],
+			commit=False
+		)
+		if "error" in res: return Response.make(type="error", message="database_error")
+
+		res = PostgreSQL.execute(
+			SQL="""
+				UPDATE "password_reset_requests"
+				SET
+					"IP_address_last" = %s,
+					"user_agent_last" = %s,
+					"timestamp_last" = NOW(),
+					"new_password" = %s
+				WHERE "token" = %s;
+			""",
+			params=[
 				extract_IP_address_from_request(request),
 				request.headers.get('User-Agent', None),
 				password,
 				TOKEN
 			],
-			commit=True
+			borrowed_connection=res["connection"]
 		)
-		if data is False: return Response.make(type="error", message="database_error")
+		if "error" in res: return Response.make(type="error", message="database_error")
 
 		return Response.make(type="success", message="password_changed_successfully", redirect="/log_in")

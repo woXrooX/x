@@ -9,7 +9,7 @@ if __name__ != "__main__":
 	import json
 
 	from Python.x.modules.Globals import Globals
-	from Python.x.modules.MySQL import MySQL
+	from Python.x.modules.PostgreSQL import PostgreSQL
 	from Python.x.modules.Logger import Log
 	from Python.x.modules.Stripe.Stripe import Stripe
 
@@ -113,24 +113,24 @@ if __name__ != "__main__":
 				object_type_id = None
 				if object_type_name in Globals.STRIPE_OBJECT_TYPES: object_type_id = Globals.STRIPE_OBJECT_TYPES[object_type_name]["id"]
 
-				insert = MySQL.execute(
-					sql="""
-						INSERT INTO Stripe_webhook_logs
+				insert = PostgreSQL.execute(
+					SQL="""
+						INSERT INTO "Stripe_webhook_logs"
 						(
-							event_id,
-							event_type,
-							event_data,
-							livemode,
-							created,
+							"event_id",
+							"event_type",
+							"event_data",
+							"livemode",
+							"created",
 
-							object_id,
-							object_type,
-							object_status,
-							customer_id,
-							amount,
-							currency
+							"object_id",
+							"object_type",
+							"object_status",
+							"customer_id",
+							"amount",
+							"currency"
 						)
-						VALUES (%s, %s, %s, %s, FROM_UNIXTIME(%s), %s, %s, %s, %s, %s, %s)
+						VALUES (%s, %s, %s, %s, to_timestamp(%s), %s, %s, %s, %s, %s, %s)
 					""",
 					params=[
 						event_id,
@@ -145,10 +145,9 @@ if __name__ != "__main__":
 						customer_id,
 						amount,
 						currency
-					],
-					commit=True
+					]
 				)
-				if insert is False:
+				if "error" in insert:
 					Log.error("Webhook.log_to_DB(): database_error")
 					return False
 

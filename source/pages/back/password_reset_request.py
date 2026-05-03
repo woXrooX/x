@@ -3,7 +3,7 @@ import secrets
 from Python.x.modules.Page import Page
 from Python.x.modules.SendGrid import SendGrid
 from Python.x.modules.Response import Response
-from Python.x.modules.MySQL import MySQL
+from Python.x.modules.PostgreSQL import PostgreSQL
 from Python.x.modules.Globals import Globals
 from Python.x.modules.IP_address_tools import extract_IP_address_from_request
 
@@ -22,44 +22,45 @@ def password_reset_request(request):
 		if "eMail" not in request.form or not request.form["eMail"]: return Response.make(type="error", message="eMail_empty", field="eMail")
 
 		# Check If eMail Exist
-		user = MySQL.execute(
-			sql="SELECT id, password FROM users WHERE eMail=%s LIMIT 1;",
+		user = PostgreSQL.execute(
+			SQL="""SELECT "id", "password" FROM "users" WHERE "eMail" = %s;""",
 			params=[request.form["eMail"]],
-			fetch_one=True
+			fetch_type="one"
 		)
-		if user is False: return Response.make(type="error", message="database_error")
-		if not user: return Response.make(type="error", message="user_with_this_eMail_does_not_exists")
+		if "error" in user: return Response.make(type="error", message="database_error")
+		if user["data"] is None: return Response.make(type="error", message="user_with_this_eMail_does_not_exists")
 
 		#### Check if the link already has been sent
-		data = MySQL.execute(
-			sql="""
+		data = PostgreSQL.execute(
+			SQL="""
 				SELECT 1
-				FROM password_reset_requests
-				WHERE password_reset_requests.user = %s AND TIMESTAMPDIFF(MINUTE, password_reset_requests.timestamp_first, NOW()) < %s LIMIT 1;
+				FROM "password_reset_requests"
+				WHERE
+					"password_reset_requests"."user" = %s AND
+					TIMESTAMPDIFF(MINUTE, "password_reset_requests"."timestamp_first", NOW()) < %s;
 			""",
 			params = [
 				user['id'],
 				Globals.CONF["password"]["recovery_link_validity_duration"]
 			],
-			fetch_one=True
+			fetch_type="one"
 		)
-		if data is False: return Response.make(type="error", message="database_error")
-		if data: return Response.make(type="info", message="password_recovery_link_already_has_been_sent", redirect="/")
+		if "error" in data: return Response.make(type="error", message="database_error")
+		if data["data"] is not None: return Response.make(type="info", message="password_recovery_link_already_has_been_sent", redirect="/")
 
 		#### The recovery link
 		token = secrets.token_urlsafe(32)
 
 		# Save the token to database
-		data = MySQL.execute(
-			sql="INSERT INTO password_reset_requests (user, token, ip_address_first, user_agent_first, old_password) VALUES (%s, %s, %s, %s, %s);",
+		data = PostgreSQL.execute(
+			SQL="""INSERT INTO "password_reset_requests" ("user", "token", "IP_address_first", "user_agent_first", "old_password") VALUES (%s, %s, %s, %s, %s);""",
 			params=[
 				user['id'],
 				token,
 				extract_IP_address_from_request(request),
 				request.headers.get('User-Agent', None),
 				user["password"]
-			],
-			commit=True
+			]
 		)
 		if data is False: return Response.make(type="error", message="database_error")
 

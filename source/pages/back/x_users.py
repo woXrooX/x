@@ -2,7 +2,7 @@ import re
 
 from Python.x.modules.Page import Page
 from Python.x.modules.Response import Response
-from Python.x.modules.MySQL import MySQL
+from Python.x.modules.PostgreSQL import PostgreSQL
 from Python.x.modules.User import User
 from Python.x.modules.Globals import Globals
 from Python.x.modules.Log_In_Tools import Log_In_Tools
@@ -18,32 +18,39 @@ def x_users(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":
 			if request.get_json()["for"] == "get_all_users":
-				users = MySQL.execute(
-					sql="""
+				users = PostgreSQL.execute(
+					SQL="""
 						SELECT
-							users.id,
-							users.first_name,
-							users.last_name,
-							users.eMail,
-							GROUP_CONCAT(DISTINCT user_roles.name ORDER BY user_roles.name ASC SEPARATOR ', ') AS roles_list,
-							users.last_heartbeat_at,
-							users.last_update,
-							users.timestamp
-						FROM users
-						LEFT JOIN users_roles ON users.id = users_roles.user
-						LEFT JOIN user_roles ON user_roles.id = users_roles.role
-						GROUP BY users.id;
+							"users"."id",
+							"users"."first_name",
+							"users"."last_name",
+							"users"."eMail",
+							STRING_AGG(DISTINCT "user_roles"."name", ', ' ORDER BY "user_roles"."name" ASC) AS "roles_list",
+							"users"."last_heartbeat_at",
+							"users"."metadata_last_updated_at",
+							"users"."metadata_created_at"
+						FROM "users"
+						LEFT JOIN "users_roles" ON "users"."id" = "users_roles"."user"
+						LEFT JOIN "user_roles" ON "user_roles"."id" = "users_roles"."role"
+						GROUP BY "users"."id";
 					"""
 				)
-				if users is False: return Response.make(type="error", message="database_error")
+				if "error" in users: return Response.make(type="error", message="database_error")
 
-				return Response.make(type="success", message="success", data=users, default_serializer_func=str)
+				return Response.make(type="success", message="success", data=users["data"], default_serializer_func=str)
 
 			if request.get_json()["for"] == "get_live_users_count":
-				live_users = MySQL.execute("SELECT COUNT(id) AS live_users FROM users WHERE (last_heartbeat_at >= NOW() - INTERVAL 30 SECOND);", fetch_one=True)
-				if live_users is False: return Response.make(type="error", message="database_error")
+				live_users = PostgreSQL.execute(
+					SQL="""
+						SELECT COUNT("id") AS "live_users"
+						FROM "users"
+						WHERE ("last_heartbeat_at" >= NOW() - INTERVAL '30 seconds');
+					""",
+					fetch_type="one"
+				)
+				if "error" in live_users: return Response.make(type="error", message="database_error")
 
-				return Response.make(type="success", message="success", data=live_users)
+				return Response.make(type="success", message="success", data=live_users["data"])
 
 		if "multipart/form-data" in request.content_type.split(';'):
 			if request.form["for"] == "create_user":
@@ -57,12 +64,13 @@ def x_users(request):
 
 				if not re.match(Globals.CONF["eMail"]["regEx"], request.form["eMail"]): return Response.make(type="error", message="eMail_invalid", field="eMail")
 
-				data = MySQL.execute(
-					sql="SELECT id FROM users WHERE eMail=%s LIMIT 1;",
+				res = PostgreSQL.execute(
+					SQL="""SELECT "id" FROM "users" WHERE "eMail" = %s LIMIT 1;""",
 					params=[request.form["eMail"]],
-					fetch_one=True
+					fetch_type="one"
 				)
-				if data: return Response.make(type="error", message="eMail_in_use", field="eMail")
+				if "error" in res: return Response.make(type="error", message="database_error")
+				if res["data"] is not None: return Response.make(type="error", message="eMail_in_use", field="eMail")
 
 
 				######## password
@@ -77,16 +85,15 @@ def x_users(request):
 
 				password = Log_In_Tools.password_hash(request.form["password"])
 
-				data = MySQL.execute(
-					sql="INSERT INTO users (first_name, last_name, eMail, password) VALUES (%s, %s, %s, %s)",
+				res = PostgreSQL.execute(
+					SQL="""INSERT INTO "users" ("first_name", "last_name", "eMail", "password") VALUES (%s, %s, %s, %s)""",
 					params=[
 						first_name,
 						last_name,
 						request.form["eMail"],
 						password
-					],
-					commit=True
+					]
 				)
-				if data is False: return Response.make(type="error", message="database_error")
+				if "error" in res: return Response.make(type="error", message="database_error")
 
 				return Response.make(type="success", message="success", DOM_change=["main"])

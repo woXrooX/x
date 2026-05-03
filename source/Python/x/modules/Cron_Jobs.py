@@ -4,7 +4,7 @@ if __name__ != "__main__":
 	from datetime import datetime, date
 
 	from Python.x.modules.Globals import Globals
-	from Python.x.modules.MySQL import MySQL
+	from Python.x.modules.PostgreSQL import PostgreSQL
 	from Python.x.modules.Logger import Log
 	from Python.x.modules.Notifications import Notifications
 
@@ -27,15 +27,14 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def create_log(event_id, data_JSON = None):
-			data = MySQL.execute(
-				sql="INSERT INTO Cron_Job_logs (event, data_JSON) VALUES (%s, %s);",
+			data = PostgreSQL.execute(
+				SQL="""INSERT INTO "Cron_Job_logs" ("event", "data_JSON") VALUES (%s, %s);""",
 				params=[
 					event_id,
 					json.dumps(data_JSON, default=str) if isinstance(data_JSON, dict) else None
-				],
-				commit=True
+				]
 			)
-			if data is False: return False
+			if "error" in data: return False
 			return True
 
 		@staticmethod

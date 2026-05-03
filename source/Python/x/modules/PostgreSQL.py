@@ -1,0 +1,318 @@
+# 23503 = Foreign Key Violation
+#
+
+if __name__ != "__main__":
+	import sys
+
+	import psycopg
+	from psycopg_pool import ConnectionPool
+	from psycopg.rows import dict_row
+	from psycopg.pq import TransactionStatus
+
+	from Python.x.modules.Logger import Log
+	from Python.x.modules.Globals import Globals
+
+	class PostgreSQL:
+		initialized = False
+		DB_pool = None
+
+
+		######### APIs / Methods
+
+		@staticmethod
+		def init():
+			if PostgreSQL.initialized is True: return True
+
+			try:
+				# Create pool at startup
+				PostgreSQL.DB_pool = ConnectionPool(
+					# conninfo="host=localhost dbname=mydb user=myuser password=mypass",
+					conninfo='',
+					kwargs={
+						"host": Globals.CONF["database"]["PostgreSQL"]["host"],
+						"port": Globals.CONF["database"]["PostgreSQL"]["port"],
+						"dbname": Globals.CONF["database"]["PostgreSQL"]["dbname"],
+						"user": Globals.CONF["database"]["PostgreSQL"]["user"],
+						"password": Globals.CONF["database"]["PostgreSQL"]["password"],
+						"autocommit": False,
+						"row_factory": dict_row
+					},
+					min_size=2,
+					max_size=10,
+
+					# Setting reconnect_timeout=0 will disable retries entirely and fail on the first error
+					reconnect_timeout=10,
+					reconnect_failed=PostgreSQL.reconnect_failed_callback
+				)
+
+				PostgreSQL.DB_pool.open(wait=True, timeout=5)
+				PostgreSQL.DB_pool.check()
+
+				PostgreSQL.initialized = True
+
+				Log.success(f"PostgreSQL.init(): Success")
+
+				return True
+
+			except Exception as e:
+				PostgreSQL.initialized = False
+				Log.error(f"PostgreSQL.init(): {e}")
+				sys.exit(1)
+				return False
+
+
+		@staticmethod
+		def init_getters():
+			if PostgreSQL.initialized is False: return False
+
+			PostgreSQL.get_currencies()
+			PostgreSQL.get_languages()
+			PostgreSQL.get_user_authenticity_statuses()
+			PostgreSQL.get_user_roles()
+			PostgreSQL.get_user_occupations()
+			PostgreSQL.get_Cron_Job_events()
+			PostgreSQL.get_notification_events()
+			PostgreSQL.get_notification_types()
+
+		@staticmethod
+		def get_connection_from_pool():
+			if PostgreSQL.initialized is False: return False
+
+			connection = PostgreSQL.DB_pool.getconn()
+
+			return connection, connection.cursor()
+
+		@staticmethod
+		def put_connection_to_pool(connection):
+			# NOTE: psycopg_pool.putconn() auto-rolls back any open/failed transaction before returning the connection to the pool,
+			# so forgotten commits can never leak into the next caller. Uncommitted work is silently discarded.
+
+			if PostgreSQL.initialized is False: return False
+			if connection is None: return False
+
+			try:
+				# NOTE: The explicit rollback below is redundant with that behavior but gives us a log line for visibility.
+				# Leaked open transaction (INTRANS) or failed transaction (INERROR):
+				# rollback so the connection goes back to the pool clean and doesn't get killed by idle_in_transaction_session_timeout.
+
+				# status = connection.info.transaction_status
+
+				# if status in (TransactionStatus.INTRANS, TransactionStatus.INERROR):
+				# 	try: connection.rollback()
+
+				# 	# Rollback failed → connection is likely unusable. Still hand it back so the pool can discard it properly.
+				# 	except Exception as e: Log.error(f"PostgreSQL.put_connection_to_pool(): rollback failed: {e}")
+
+				PostgreSQL.DB_pool.putconn(connection)
+				return True
+
+			except Exception as e:
+				Log.error(f"PostgreSQL.put_connection_to_pool(): {e}")
+				PostgreSQL.close_connection(connection)
+				return False
+
+		@staticmethod
+		def close_connection(connection):
+			# NOTE: The connection.close() destroys the connection, so "connection" cannot be put back to the pool.
+
+			if PostgreSQL.initialized is False: return False
+			if connection is None: return False
+
+			# If the connection is already broken/closed, just hand it back to the pool.
+			# The pool will discard it and open a replacement.
+			# Do NOT call close() when closed or broken.
+			if connection.closed or connection.broken: return True
+
+			try:
+				connection.close()
+				Log.warning(f"PostgreSQL.close_connection(): closed")
+				return True
+
+			except Exception as e:
+				Log.error(f"PostgreSQL.close_connection(): {e}")
+				return False
+
+		@staticmethod
+		def commit_connection(connection):
+			if PostgreSQL.initialized is False: return False
+			if connection is None: return False
+
+			try:
+				connection.commit()
+				Log.success(f"PostgreSQL.commit_connection(): committed")
+				return True
+
+			except Exception as e:
+				Log.error(f"PostgreSQL.commit_connection(): {e}")
+				return False
+
+		@staticmethod
+		def rollback_connection(connection):
+			if PostgreSQL.initialized is False: return False
+			if connection is None: return False
+
+			try:
+				connection.rollback()
+				Log.success(f"PostgreSQL.rollback_connection(): rollback")
+				return True
+
+			except Exception as e:
+				Log.error(f"PostgreSQL.rollback_connection(): {e}")
+				return False
+
+
+
+		@staticmethod
+		def reconnect_failed_callback(pool):
+			Log.error(f"PostgreSQL.on_reconnect_failed(): Could not connect to server")
+			sys.exit(1)
+
+		# NOTE: After this call returns, if 'error' in response, the connection (whether owned or borrowed) has been rolled back and returned to the pool — do not reuse any connection reference you previously held.
+		@staticmethod
+		def execute(
+			SQL,
+			params = None,
+			borrowed_connection = None,
+
+			# Accepts: True/False
+			commit = True,
+
+			# Accepts: "all", "one"
+			fetch_type = "all",
+
+			include_PostgreSQL_data = False,
+
+			execute_many = False,
+			execute_many_returning = False
+		):
+			connection = cursor = None
+			has_error = False
+
+			try:
+				if borrowed_connection is None: connection, cursor = PostgreSQL.get_connection_from_pool()
+				else:
+					connection = borrowed_connection
+					cursor = connection.cursor()
+
+
+				params = tuple(params or ())
+
+				if execute_many is False: cursor.execute(SQL, params)
+
+				elif execute_many is True:
+					cursor.executemany(
+						SQL,
+						params,
+						returning = execute_many_returning
+					)
+
+
+				response = {}
+
+
+				if cursor.description is not None:
+					match fetch_type:
+						case "all": response["data"] = cursor.fetchall()
+						case "one": response["data"] = cursor.fetchone()
+						case _: raise ValueError(f"PostgreSQL.execute(): Bad fetch_type: {fetch_type}")
+
+
+				if commit is True: connection.commit()
+				elif commit is False: response["connection"] = connection
+
+
+				if include_PostgreSQL_data is True:
+					# The SQL query that was executed
+					response["SQL"] = SQL
+
+					# Rows returned for SELECT, rows affected for INSERT/UPDATE/DELETE
+					response["row_count"] = cursor.rowcount
+
+					# Column metadata for SELECT queries (name + type per column), None for INSERT/UPDATE/DELETE
+					response["description"] = cursor.description
+
+
+				return response
+
+			except psycopg.DatabaseError as e:
+				has_error = True
+
+				Log.error(f"PostgreSQL.execute(): {e}")
+
+				return {
+					"error": True,
+					"SQL_state": e.sqlstate,
+					"constraint_name": e.diag.constraint_name
+				}
+
+			except Exception as e:
+				has_error = True
+
+				Log.error(f"PostgreSQL.execute(): {e}")
+
+				return { "error": True }
+
+			finally:
+				if cursor is not None: cursor.close()
+
+				if connection is not None:
+					if has_error is True:
+						try: connection.rollback()
+						except Exception as e: Log.error(f"PostgreSQL.execute(): rollback failed: {e}")
+
+						PostgreSQL.put_connection_to_pool(connection)
+
+					elif commit is True: PostgreSQL.put_connection_to_pool(connection)
+
+
+
+		######### DB getters
+
+		@staticmethod
+		def get_currencies():
+			data = PostgreSQL.execute('SELECT * FROM "currencies";')
+			if "error" in data: return Log.fieldset("Could not fetch 'currencies'", "PostgreSQL.get_currencies()", "error")
+			for currency in data["data"]: Globals.CURRENCIES[currency["code"]] = currency
+
+		@staticmethod
+		def get_languages():
+			data = PostgreSQL.execute('SELECT * FROM "languages";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'languages'", "PostgreSQL.get_languages()", "error")
+			for language in data["data"]: Globals.LANGUAGES[language["code"]] = language
+
+		@staticmethod
+		def get_user_authenticity_statuses():
+			data = PostgreSQL.execute('SELECT * FROM "user_authenticity_statuses";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'user_authenticity_statuses'", "PostgreSQL.get_user_authenticity_statuses()", "error")
+			for user_authenticity_status in data["data"]: Globals.USER_AUTHENTICITY_STATUSES[user_authenticity_status["name"]] = user_authenticity_status
+
+		@staticmethod
+		def get_user_roles():
+			data = PostgreSQL.execute('SELECT * FROM "user_roles";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'user_roles'", "PostgreSQL.get_user_roles()", "error")
+			for user_role in data["data"]: Globals.USER_ROLES[user_role["name"]] = user_role
+
+		@staticmethod
+		def get_user_occupations():
+			data = PostgreSQL.execute('SELECT * FROM "user_occupations";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'user_occupations'", "PostgreSQL.get_user_occupations()", "error")
+			for user_occupation in data["data"]: Globals.USER_OCCUPATIONS[user_occupation["name"]] = user_occupation
+
+		@staticmethod
+		def get_Cron_Job_events():
+			data = PostgreSQL.execute('SELECT * FROM "Cron_Job_events";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'Cron_Job_events'", "PostgreSQL.Cron_Job_events()", "error")
+			for Cron_Job_event in data["data"]: Globals.CRON_JOB_EVENTS[Cron_Job_event["name"]] = Cron_Job_event
+
+
+		@staticmethod
+		def get_notification_events():
+			data = PostgreSQL.execute('SELECT * FROM "notification_events";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'notification_events'", "PostgreSQL.get_notification_events()", "error")
+			for notification_event in data["data"]: Globals.NOTIFICATION_EVENTS[notification_event["name"]] = notification_event
+
+		@staticmethod
+		def get_notification_types():
+			data = PostgreSQL.execute('SELECT * FROM "notification_types";')
+			if "error" in data: return Log.fieldset("Could Not Fetch 'notification_types'", "PostgreSQL.get_notification_types()", "error")
+			for notification_type in data["data"]: Globals.NOTIFICATION_TYPES[notification_type["name"]] = notification_type

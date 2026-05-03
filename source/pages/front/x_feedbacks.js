@@ -31,11 +31,11 @@ export async function after(){
 				<tr>
 					<td>${feedback["id"]}</td>
 					<td>${feedback["created_by_user"] ?? "N/A"}</td>
-					<td>${feedback["created_by_user"] != null ? feedback["users_fullname"] : feedback["fullname"]}</td>
+					<td>${feedback["created_by_user"] != null ? feedback["users_full_name"] : feedback["full_name"]}</td>
 					<td>${feedback["eMail"] || "N/S"}</td>
 					<td>${feedback_text}</td>
 					<td>${feedback["feedback_left_page"] || "N/A"}</td>
-					<td>${feedback["timestamp"]}</td>
+					<td>${feedback["metadata_created_at"]}</td>
 
 					<td>
 						<x-svg id="modal_XR_delete_${feedback["id"]}" name="delete" class="btn btn-error" color="white"></x-svg>
@@ -70,11 +70,11 @@ export async function after(){
 						<tr>
 							<th>Feedback ID</th>
 							<th>User ID</th>
-							<th>${window.Lang.use("fullname")}</th>
+							<th>${window.Lang.use("full_name")}</th>
 							<th>${window.Lang.use("eMail")}</th>
-							<th>Feedback text</th>
-							<th>Page</th>
-							<th>${window.Lang.use("timestamp")}</th>
+							<th>${window.Lang.use("feedback_text")}</th>
+							<th>${window.Lang.use("page")}</th>
+							<th>${window.Lang.use("created_at")}</th>
 							<th>Actions</th>
 						</tr>
 					</thead>

@@ -1,5 +1,5 @@
 {
-	"version": "0.236.1.0001",
+	"version": "0.236.1.0010",
 	"project_name": "x",
 
 	"flask": {
@@ -11,6 +11,14 @@
 
 	"database": {
 		"enabled": false,
+		"PostgreSQL": {
+			"enabled": true,
+			"dbname": "DB_name",
+			"user": "user",
+			"password": "DB_password",
+			"host": "localhost",
+			"port": "5432"
+		},
 		"MySQL": {
 			"enabled": false,
 			"name": "user$DB_name",

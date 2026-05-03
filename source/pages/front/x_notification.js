@@ -68,7 +68,7 @@ export async function after() {
 					})
 				}
 
-				<row class="flex-row flex-x-end text-size-0-7 text-color-secondary">${timestamp_to_human_readable_v1(notification["timestamp"])}</row>
+				<row class="flex-row flex-x-end text-size-0-7 text-color-secondary">${timestamp_to_human_readable_v1(notification["metadata_created_at"])}</row>
 			</column>
 		`;
 	});

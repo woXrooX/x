@@ -237,6 +237,7 @@
 		.cursor-pointer{ cursor: pointer; }
 		.cursor-text{ cursor: text; }
 		.cursor-not-allowed{ cursor: not-allowed; }
+		.cursor-col-resize{ cursor: col-resize; }
 	}
 
 	@layer pointer_events{
@@ -1656,7 +1657,9 @@
 			}
 		}
 
-		@layer height{
+		@layer height {
+			.height-100dvh-minus-header-height { height: calc(100dvh - var(--header-height)); }
+
 			.height-auto{height: auto;}
 			.height-fit-content{height: fit-content;}
 			.height-min-content{height: min-content;}

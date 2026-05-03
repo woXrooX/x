@@ -1,7 +1,7 @@
 if __name__ != "__main__":
 	from Python.x.modules.Globals import Globals
 	from Python.x.modules.Logger import Log
-	from Python.x.modules.MySQL import MySQL
+	from Python.x.modules.PostgreSQL import PostgreSQL
 
 	class Stripe:
 		initialized = False
@@ -27,13 +27,13 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def get_Stripe_event_types():
-			data = MySQL.execute("SELECT * FROM Stripe_event_types;")
-			if data is False: return Log.fieldset("Could not fetch 'Stripe_event_types'", "MySQL.get_Stripe_event_types()", "error")
-			for Stripe_event_type in data: Globals.STRIPE_EVENT_TYPES[Stripe_event_type["name"]] = Stripe_event_type
+			res = PostgreSQL.execute("""SELECT * FROM "Stripe_event_types";""")
+			if "error" in res: return Log.fieldset("Could not fetch 'Stripe_event_types'", "PostgreSQL.get_Stripe_event_types()", "error")
+			for Stripe_event_type in res["data"]: Globals.STRIPE_EVENT_TYPES[Stripe_event_type["name"]] = Stripe_event_type
 
 		@staticmethod
 		def get_Stripe_object_types():
-			data = MySQL.execute("SELECT * FROM Stripe_object_types;")
-			if data is False: return Log.fieldset("Could not fetch 'Stripe_object_types'", "MySQL.get_Stripe_object_types()", "error")
-			for Stripe_object_type in data: Globals.STRIPE_OBJECT_TYPES[Stripe_object_type["name"]] = Stripe_object_type
+			res = PostgreSQL.execute("""SELECT * FROM "Stripe_object_types";""")
+			if "error" in res: return Log.fieldset("Could not fetch 'Stripe_object_types'", "PostgreSQL.get_Stripe_object_types()", "error")
+			for Stripe_object_type in res["data"]: Globals.STRIPE_OBJECT_TYPES[Stripe_object_type["name"]] = Stripe_object_type
 

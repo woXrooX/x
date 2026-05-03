@@ -95,9 +95,9 @@ export default class DOM {
 		}
 
 		catch (error) {
-			parent_element.innerHTML = `<p class="surface-error width-100 padding-2">${error}</p>`;
+			parent_element.innerHTML = `<p class="surface-error width-100 padding-1 text-size-0-8">${error}</p>`;
 			Log.error(`DOM.build(): ERROR`);
-			console.log(error);
+			// console.log(error);
 		}
 
 		finally {

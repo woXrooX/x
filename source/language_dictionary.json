@@ -429,6 +429,11 @@
 		"ru": "Метка времени",
 		"uz": "Vaqt muhri"
 	},
+	"created_at": {
+		"en": "Created at",
+		"ru": "Создано в",
+		"uz": "Yaratilgan vaqti"
+	},
 	"token_aready_used": {
 		"en": "Token has already used",
 		"ru": "Токен уже использован",
