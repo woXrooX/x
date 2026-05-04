@@ -21,6 +21,11 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def init():
+			if(
+				Globals.CONF.get("database", {}).get("enabled", False) is not True or
+				Globals.CONF.get("database", {}).get("PostgreSQL", {}).get("enabled", False) is not True
+			): return
+
 			if PostgreSQL.initialized is True: return True
 
 			try:
