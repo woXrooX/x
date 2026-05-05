@@ -149,6 +149,10 @@ export default class Layers{
 							width-100
 							height-100
 							padding-top-2rem
+							display-flex
+							flex-column
+							align-items-center
+							gap-1
 						"
 					>${DOM}</main>
 				</layer>
