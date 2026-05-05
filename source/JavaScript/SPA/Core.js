@@ -79,6 +79,7 @@ export default class Core{
 				window.USER_OCCUPATIONS = response["USER_OCCUPATIONS"];
 				window.NOTIFICATION_TYPES = response["NOTIFICATION_TYPES"];
 				window.SVG.load(response["PROJECT_SVG"]);
+				window.x["CURRENCIES"] = response["CURRENCIES"];
 
 				resolve();
 			}else{

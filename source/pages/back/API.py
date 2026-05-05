@@ -25,7 +25,8 @@ def API():
 					"USER_ROLES": Globals.USER_ROLES,
 					"USER_OCCUPATIONS": Globals.USER_OCCUPATIONS,
 					"NOTIFICATION_TYPES": Globals.NOTIFICATION_TYPES,
-					"PROJECT_SVG": Globals.PROJECT_SVG
+					"PROJECT_SVG": Globals.PROJECT_SVG,
+					"CURRENCIES": Globals.CURRENCIES
 				}, 200)
 
 		if request.get_json()["for"] == "change_user_app_color_mode":
