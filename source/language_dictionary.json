@@ -498,7 +498,7 @@
 	},
 
 	"not_applicable": {
-		"en": "Not Applicable",
+		"en": "Not applicable",
 		"ru": "Н/П",
 		"uz": "Tatbiq etilmaydi"
 	},
@@ -509,7 +509,7 @@
 	},
 
 	"not_specified": {
-		"en": "Not Specified",
+		"en": "Not specified",
 		"ru": "Не указано",
 		"uz": "Ko'rsatilmagan"
 	},
@@ -520,7 +520,7 @@
 	},
 
 	"to_be_determined": {
-		"en": "To Be Determined",
+		"en": "To be determined",
 		"ru": "Подлежит определению",
 		"uz": "Keyin aniqlanadi"
 	},
