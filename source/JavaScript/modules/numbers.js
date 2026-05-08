@@ -13,7 +13,7 @@ export function number_to_locale_string({
 	//// Options: Currency related
 
 	style = "currency",
-	currency = "USD",
+	currency = undefined,
 	currency_display = "symbol",
 	minimum_fraction_digits = 2,
 	maximum_fraction_digits = 2,
