@@ -25,7 +25,7 @@ export function number_to_locale_string({
 	// Check if it's a valid number
 	if (isNaN(numeric_value)) return number;
 
-	return numeric_value.toLocaleString(
+	const formatter = Intl.NumberFormat(
 		// en-US, en-GB, de-DE...
 		// undefined = falls back to system
 		locale,
@@ -46,4 +46,6 @@ export function number_to_locale_string({
 			useGrouping: use_grouping
 		}
 	);
+
+	return formatter.format(numeric_value);
 }
