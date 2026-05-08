@@ -187,7 +187,10 @@ export default class Form {
 		let form_func_data_JSON = {};
 
 		try { form_func_data_JSON = JSON.parse(form_func_data); }
-		catch(error) { Log.error(`Form#execute_on_response(): "form_func_data" is not JSON-able data`); }
+		catch(error) {
+			form_func_data_JSON = form_func_data;
+			Log.warning(`Form#execute_on_response(): "form_func_data" is not JSON-able data`);
+		}
 
 		if (!!form_func === false || typeof form_func != "string") return;
 		await Form.#FUNC_POOL[form_func](response, form_data, form_func_data_JSON);
