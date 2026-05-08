@@ -7,14 +7,14 @@ export default class Form{
 	static collect(element = null){
 		// Log.info(`Form.collect()`);
 
-		if(!!element === false) element = document;
+		if (!!element === false) element = document;
 
 		Form.#unregister_all();
 
 		const forms = element.querySelectorAll('form');
 
 		for(const form of forms){
-			if(Form.#form_guard(form) === false) continue;
+			if (Form.#form_guard(form) === false) continue;
 
 			Form.register(form);
 		}
@@ -43,7 +43,7 @@ export default class Form{
 	/////////// Helpers
 	static #on_input(form){
 		// check if on_input mode is enabled
-		if(!form.hasAttribute("oninputcheck")) return;
+		if (!form.hasAttribute("oninputcheck")) return;
 
 		form.querySelectorAll("label > input").forEach((input) => {
 			input.oninput = async ()=>{
@@ -56,7 +56,7 @@ export default class Form{
 				data["fields"][event.target.name] = event.target.value;
 
 				let response = await window.x.Request.make(data, `${form.getAttribute("for")}`);
-				if("field" in response) Form.#response(response["field"], response["type"], response["message"]);
+				if ("field" in response) Form.#response(response["field"], response["type"], response["message"]);
 			};
 		});
 	}
@@ -93,7 +93,7 @@ export default class Form{
 		// Log.info(response);
 
 		// On invalid response
-		if(Form.#response_guard(response) === false){
+		if (Form.#response_guard(response) === false) {
 			Form.#response({
 				form: event.target,
 				type: "error",
@@ -108,7 +108,7 @@ export default class Form{
 		}
 
 		// Flash above input field
-		if("field" in response)
+		if ("field" in response)
 			Form.#response({
 				form: event.target,
 				type: response["type"],
@@ -129,7 +129,12 @@ export default class Form{
 		submitter.disabled = false;
 
 		////////// Callback
-		Form.#execute_on_response(event.target.getAttribute("form_func"), response, form_data);
+		Form.#execute_on_response({
+			form_func: event.target.getAttribute("form_func"),
+			response: response,
+			form_data: form_data,
+			form_func_data: event.target.getAttribute("form_func_data")
+		});
 
 		////////// x-toast
 		x.Toast.handle_commands(event.target.getAttribute("x-toast"), response);
@@ -153,7 +158,7 @@ export default class Form{
 		field,
 		border_flash = false,
 		shake = false,
-	}){
+	}) {
 		// Check if form element passed
 		if (!!form === false) return;
 
@@ -173,26 +178,31 @@ export default class Form{
 		if (shake === true) x.VFX.shake(field_element);
 	}
 
-	static async #execute_on_response(func_name, response, form_data){
-		if(!!func_name === false || typeof func_name != "string") return;
-		await Form.#FUNC_POOL[func_name](response, form_data);
+	static async #execute_on_response({
+		form_func,
+		response,
+		form_data = null,
+		form_func_data
+	}) {
+		if (!!form_func === false || typeof form_func != "string") return;
+		await Form.#FUNC_POOL[form_func](response, form_data, form_func_data);
 	}
 
-	static #form_guard(form){
+	static #form_guard(form) {
 		// form Value Is Falsy
-		if(!!form === false) return false;
+		if (!!form === false) return false;
 
 		// Check If "form" has "for" Attribute
-		if(form.hasAttribute("for") === false) return false;
+		if (form.hasAttribute("for") === false) return false;
 
 		// Check If "form" Attribute "for" has Falsy Value
-		if(!!form.getAttribute("for") === false) return false;
+		if (!!form.getAttribute("for") === false) return false;
 
 		return true;
 	}
 
-	static #response_guard(response){
-		if(!("type" in response)) return false;
+	static #response_guard(response) {
+		if (!("type" in response)) return false;
 
 		return true;
 	}
