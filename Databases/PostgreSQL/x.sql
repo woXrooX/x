@@ -215,10 +215,10 @@ CREATE TABLE IF NOT EXISTS "users" (
 	-- Deleted flag
 	-- Temporarily keeps the unique columns
 	"flag_deleted_at" TIMESTAMPTZ NULL DEFAULT NULL,
-	"flag_deleted_by_user" INT NULL,
-	"flag_deleted_username" VARCHAR(100) NULL,
-	"flag_deleted_eMail" VARCHAR(100) NULL,
-	"flag_deleted_phone_number" VARCHAR(100) NULL,
+	"flag_deleted_by_user" INT NULL DEFAULT NULL,
+	"flag_deleted_username" VARCHAR(100) NULL DEFAULT NULL,
+	"flag_deleted_eMail" VARCHAR(100) NULL DEFAULT NULL,
+	"flag_deleted_phone_number" VARCHAR(100) NULL DEFAULT NULL,
 
 	FOREIGN KEY ("authenticity_status") REFERENCES "user_authenticity_statuses"("id") ON DELETE SET NULL,
 	FOREIGN KEY ("plan") REFERENCES "user_plans"("id") ON DELETE SET NULL,
