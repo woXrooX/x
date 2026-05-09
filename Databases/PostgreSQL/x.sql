@@ -474,12 +474,11 @@ CREATE TABLE IF NOT EXISTS "feedbacks" (
 	"id" BIGINT GENERATED ALWAYS AS IDENTITY,
 
 	"metadata_created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	"metadata_created_by_user" INT NULL DEFAULT NULL,
 
 	"IP_address" VARCHAR(45),
 	"user_agent" TEXT NULL DEFAULT NULL,
 	"feedback_left_page" VARCHAR(500) NULL,
-
-	"created_by_user" INT NULL,
 
 	"full_name" VARCHAR(200) NULL,
 	"eMail" VARCHAR(100) NULL,
@@ -488,6 +487,7 @@ CREATE TABLE IF NOT EXISTS "feedbacks" (
 	"flag_deleted_at" TIMESTAMPTZ NULL DEFAULT NULL,
 	"flag_deleted_by_user" INT NULL DEFAULT NULL,
 
+	FOREIGN KEY ("metadata_created_by_user") REFERENCES "users"("id"),
 	FOREIGN KEY ("flag_deleted_by_user") REFERENCES "users"("id"),
 
 	PRIMARY KEY ("id")
