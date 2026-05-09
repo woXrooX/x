@@ -399,13 +399,13 @@ CREATE TABLE IF NOT EXISTS "notifications" (
 	"type" INT NULL,
 
 	"flag_deleted_at" TIMESTAMPTZ NULL DEFAULT NULL,
-	"flag_deleted_by_user" INT NULL,
+	"flag_deleted_by_user" INT NULL DEFAULT NULL,
 
 	FOREIGN KEY ("sender") REFERENCES "users"("id"),
 	FOREIGN KEY ("recipient") REFERENCES "users"("id") ON DELETE CASCADE,
-
 	FOREIGN KEY ("event") REFERENCES "notification_events"("id"),
 	FOREIGN KEY ("type") REFERENCES "notification_types"("id"),
+	FOREIGN KEY ("flag_deleted_by_user") REFERENCES "users"("id"),
 
 	PRIMARY KEY ("id")
 );
@@ -486,7 +486,9 @@ CREATE TABLE IF NOT EXISTS "feedbacks" (
 	"feedback_text" TEXT NOT NULL,
 
 	"flag_deleted_at" TIMESTAMPTZ NULL DEFAULT NULL,
-	"flag_deleted_by_user" INT NULL,
+	"flag_deleted_by_user" INT NULL DEFAULT NULL,
+
+	FOREIGN KEY ("flag_deleted_by_user") REFERENCES "users"("id"),
 
 	PRIMARY KEY ("id")
 );
