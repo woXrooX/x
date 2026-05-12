@@ -30,6 +30,10 @@ INSERT INTO "countries" ("id", "ISO_alpha_2_code", "ISO_alpha_3_code", "code_nam
 (1, 'UZ', 'UZB', 'uzbekistan', 'O''zbekiston'),
 (2, 'CA', 'CAN', 'canada', 'Canada');
 
+SELECT setval(
+	pg_get_serial_sequence('countries', 'id'),
+	(SELECT MAX("id") FROM "countries")
+);
 
 
 -- Not sure about the table name yet
@@ -82,6 +86,11 @@ INSERT INTO "languages" ("id", "code", "native_name") OVERRIDING SYSTEM VALUE VA
 (3, 'ru', 'Русский язык'),
 (4, 'ja', '日本語 (にほんご／にっぽんご)');
 
+SELECT setval(
+	pg_get_serial_sequence('languages', 'id'),
+	(SELECT MAX("id") FROM "languages")
+);
+
 \! echo "-------------------------- currencies"
 CREATE TABLE IF NOT EXISTS "currencies" (
 	"id" INT GENERATED ALWAYS AS IDENTITY,
@@ -128,6 +137,11 @@ INSERT INTO "currencies" ("id", "code", "decimal_digits", "fractional_unit", "sy
 (29, 'ZAR', 2, 'Cent', 'R', 'South African rand'),
 (30, 'BRL', 2, 'Centavo', 'R$', 'Real brasileiro');
 
+SELECT setval(
+	pg_get_serial_sequence('currencies', 'id'),
+	(SELECT MAX("id") FROM "currencies")
+);
+
 
 \! echo "-------------------------- app_color_modes"
 CREATE TABLE IF NOT EXISTS "app_color_modes" (
@@ -139,6 +153,11 @@ CREATE TABLE IF NOT EXISTS "app_color_modes" (
 INSERT INTO "app_color_modes" ("id", "name") OVERRIDING SYSTEM VALUE VALUES
 (1, 'dark'),
 (2, 'light');
+
+SELECT setval(
+	pg_get_serial_sequence('app_color_modes', 'id'),
+	(SELECT MAX("id") FROM "app_color_modes")
+);
 
 
 
@@ -160,6 +179,11 @@ INSERT INTO "user_authenticity_statuses" ("id", "name") OVERRIDING SYSTEM VALUE 
 (1, 'unauthenticated'),
 (2, 'unauthorized'),
 (3, 'authorized');
+
+SELECT setval(
+	pg_get_serial_sequence('user_authenticity_statuses', 'id'),
+	(SELECT MAX("id") FROM "user_authenticity_statuses")
+);
 
 \! echo "-------------------------- user_plans"
 CREATE TABLE IF NOT EXISTS "user_plans" (
@@ -246,6 +270,11 @@ INSERT INTO "user_roles" ("id", "name") OVERRIDING SYSTEM VALUE VALUES
 (1, 'root'),
 (2, 'dev'),
 (3, 'admin');
+
+SELECT setval(
+	pg_get_serial_sequence('user_roles', 'id'),
+	(SELECT MAX("id") FROM "user_roles")
+);
 
 \! echo "-------------------------- users_roles"
 CREATE TABLE IF NOT EXISTS "users_roles" (
@@ -378,6 +407,11 @@ INSERT INTO "notification_types" ("id", "name") OVERRIDING SYSTEM VALUE VALUES
 (4, 'error'),
 (5, 'important'),
 (6, 'urgent');
+
+SELECT setval(
+	pg_get_serial_sequence('notification_types', 'id'),
+	(SELECT MAX("id") FROM "notification_types")
+);
 
 \! echo "-------------------------- notifications"
 CREATE TABLE IF NOT EXISTS "notifications" (
@@ -546,6 +580,11 @@ INSERT INTO "Stripe_event_types" ("id", "name") OVERRIDING SYSTEM VALUE VALUES
 (18, 'checkout.session.completed'),
 (19, 'refund.created');
 
+SELECT setval(
+	pg_get_serial_sequence('Stripe_event_types', 'id'),
+	(SELECT MAX("id") FROM "Stripe_event_types")
+);
+
 
 \! echo "-------------------------- Stripe_object_types"
 CREATE TABLE IF NOT EXISTS "Stripe_object_types" (
@@ -567,6 +606,11 @@ INSERT INTO "Stripe_object_types" ("id", "name") OVERRIDING SYSTEM VALUE VALUES
 (7, 'checkout.session'),
 (8, 'price'),
 (9, 'product');
+
+SELECT setval(
+	pg_get_serial_sequence('Stripe_object_types', 'id'),
+	(SELECT MAX("id") FROM "Stripe_object_types")
+);
 
 
 \! echo "-------------------------- Stripe_webhook_logs"
