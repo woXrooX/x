@@ -204,6 +204,10 @@
 		"ru": "Информация",
 		"uz": "Ma`lumot"
 	},
+	"id": {
+		"en": "ID",
+		"uz": "ID"
+	},
 	"JavaScript_required": {
 		"en": "In order to use our service please enable JavaScript",
 		"ru": "Чтобы использовать наш сервис, включите JavaScript",
