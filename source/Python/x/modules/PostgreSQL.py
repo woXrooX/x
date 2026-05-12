@@ -40,14 +40,41 @@ if __name__ != "__main__":
 						"user": Globals.CONF["database"]["PostgreSQL"]["user"],
 						"password": Globals.CONF["database"]["PostgreSQL"]["password"],
 						"autocommit": False,
-						"row_factory": dict_row
+						"row_factory": dict_row,
+
+						# Disabled for localhost, if not localhost, enable it
+						"sslmode": "disable",
+
+						# Keepalives — detect dead connections at the TCP level
+						"keepalives": 1,
+
+						# Probe after 30s idle
+						"keepalives_idle": 30,
+
+						# Retry probe every 10s
+						"keepalives_interval": 10,
+
+						# Drop after 5 missed probes
+						"keepalives_count": 5
 					},
 					min_size=2,
 					max_size=10,
 
 					# Setting reconnect_timeout=0 will disable retries entirely and fail on the first error
 					reconnect_timeout=10,
-					reconnect_failed=PostgreSQL.reconnect_failed_callback
+					reconnect_failed=PostgreSQL.reconnect_failed_callback,
+
+					# Health-check every connection before handing it to your code
+					check=ConnectionPool.check_connection,
+
+
+					# Recycle connections proactively before they go stale
+
+					# force-replace any connection older than 10 min
+					max_lifetime=600,
+
+					# close idle connections sitting > 5 min
+					max_idle=300
 				)
 
 				PostgreSQL.DB_pool.open(wait=True, timeout=5)
