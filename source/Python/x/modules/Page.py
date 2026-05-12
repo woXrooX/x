@@ -93,7 +93,7 @@ if __name__ != "__main__":
 						return Response.make(type="warning", message="invalid_request")
 
 			if "user" in session:
-				if "root" in session["user"]["roles"]: return True
+				# if "root" in session["user"]["roles"]: return True
 
 				if "authenticity_statuses" in PAGE_CONF:
 					if "unauthenticated" in PAGE_CONF["authenticity_statuses"]:
