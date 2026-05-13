@@ -99,15 +99,15 @@ if __name__ != "__main__":
 			#### Merge
 			if "project_name" in Globals.PROJECT: Globals.CONF["project_name"] = Globals.PROJECT["project_name"]
 
-			if "Twilio" in Globals.PROJECT: Globals.CONF["Twilio"] = Globals.PROJECT["Twilio"]
-
-			if "Stripe" in Globals.PROJECT: Globals.CONF["Stripe"] = Globals.PROJECT["Stripe"]
+			if "flask" in Globals.PROJECT: Globals.CONF["flask"].update(Globals.PROJECT["flask"])
 
 			if "database" in Globals.PROJECT: Globals.CONF["database"] = Globals.PROJECT["database"]
 
 			if "eMail" in Globals.PROJECT: Globals.CONF["eMail"].update(Globals.PROJECT["eMail"])
 
-			if "password" in Globals.PROJECT: Globals.CONF["password"].update(Globals.PROJECT["password"])
+			if "Twilio" in Globals.PROJECT: Globals.CONF["Twilio"] = Globals.PROJECT["Twilio"]
+
+			if "Stripe" in Globals.PROJECT: Globals.CONF["Stripe"] = Globals.PROJECT["Stripe"]
 
 			if "default" in Globals.PROJECT: Globals.CONF["default"].update(Globals.PROJECT["default"])
 
@@ -116,6 +116,8 @@ if __name__ != "__main__":
 			if "pages" in Globals.PROJECT: Globals.CONF["pages"] = Globals.PROJECT["pages"]
 
 			if "menu" in Globals.PROJECT: Globals.CONF["menu"] = Globals.PROJECT["menu"]
+
+			if "password" in Globals.PROJECT: Globals.CONF["password"].update(Globals.PROJECT["password"])
 
 			#### Public Configurations
 			Globals.PUBLIC_CONF["project_name"] = Globals.CONF["project_name"]

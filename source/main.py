@@ -96,14 +96,9 @@ app.jinja_env.globals["get_CSRF_token"] = get_CSRF_token
 
 
 #################################################### Secret key
-import os
-
-# Debugging mode static secret_key
-if Globals.CONF.get("tools", {}).get("debug") is True: app.secret_key = b'12345'
-
-# Generates new "secret_key" every time when server is started
-else: app.secret_key = os.urandom(24)
-
+# Helper for generate a secret key:
+# python3 -c 'import os; print(os.urandom(24).hex())'
+app.secret_key = Globals.CONF["flask"]["secret_key"]
 
 
 

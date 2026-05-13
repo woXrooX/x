@@ -1,12 +1,14 @@
 {
-	"version": "0.237.1.0026",
+	"version": "0.237.1.0027",
+
 	"project_name": "x",
 
 	"flask": {
 		"root_path": null,
 		"template_folder": "www/HTML",
 		"static_folder": "www/static",
-		"static_URL_path": "/"
+		"static_URL_path": "/",
+		"secret_key": 12345
 	},
 
 	"database": {
