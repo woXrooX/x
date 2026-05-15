@@ -256,8 +256,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 
 CREATE TRIGGER "trigger_metadata_last_updated_at"
 BEFORE UPDATE ON "users"
-FOR EACH ROW
-EXECUTE FUNCTION on_update_set_current_timestamp();
+FOR EACH ROW EXECUTE FUNCTION on_update_set_current_timestamp();
 
 \! echo "-------------------------- user_roles"
 CREATE TABLE IF NOT EXISTS "user_roles" (
