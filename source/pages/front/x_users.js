@@ -112,9 +112,9 @@ export async function after() {
 						${row["id"]}
 					</a>
 				`,
-				row["eMail"],
-				row["full_name"],
-				row["roles_list"],
+				row["eMail"] || '-',
+				row["full_name"] || '-',
+				row["roles_list"] || '-',
 
 				row["last_heartbeat_at"] == null ?
 				'-':
