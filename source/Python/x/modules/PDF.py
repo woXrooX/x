@@ -1,5 +1,3 @@
-# NOTE: Update the dependencies page of the woXrooX.com
-
 # https://weasyprint.org/
 # pip install weasyprint
 

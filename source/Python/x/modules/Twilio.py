@@ -1,3 +1,6 @@
+# https://github.com/twilio/twilio-python/
+# pip install twilio
+
 if __name__ != "__main__":
 	from Python.x.modules.Globals import Globals
 	from Python.x.modules.Logger import Log
