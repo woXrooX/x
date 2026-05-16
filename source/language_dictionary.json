@@ -54,6 +54,11 @@
 		"ru": "Не удалось удалить файл!",
 		"uz": "Faylni o`chirib bo`lmadi!"
 	},
+	"could_not_delete": {
+		"en": "Could not delete!",
+		"ru": "Удалить не удалось!",
+		"uz": "O'chirib bo'lmadi!"
+	},
 	"could_not_log_out_instant": {
 		"en": "There was an error while logging out. Please refresh the page.",
 		"ru": "При выходе произошла ошибка. Пожалуйста, обновите страницу.",
