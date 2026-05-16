@@ -1,4 +1,5 @@
 import String_to_Element from "/JavaScript/modules/parser/String_to_Element.js";
+import { UTC_to_local_timestamp, timestamp_to_human_readable_v1 } from "/JavaScript/modules/datetime/datetime.js";
 
 export function before() {
 	window.x.Head.set_title("users");
@@ -92,22 +93,35 @@ export async function after() {
 		const COLUMNS = [];
 		for (const KEY of Object.keys(users[0])) COLUMNS.push({"title": KEY});
 
-		const ROWS = [];
-		for (const user of users) {
-			let user_array = Object.values(user);
-			user_array[0] = `<a href="/x/user/${user["id"]}" class="text-decoration-underline">${user["id"]}</a>`;
-			ROWS.push(user_array);
-		}
-
 		return window.x.Table.build(
 			{
 				"page_size": "all",
 				"searchable": true,
 				"downloadable": true,
 				"columns": COLUMNS,
-				"rows": ROWS
+				"rows": build_table_rows()
 			},
 			"surface-v1 width-100 padding-2"
 		);
+
+		function build_table_rows() {
+			const ROWS = [];
+			for (const row of users) ROWS.push([
+				`
+					<a href="/x/user/${row["id"]}" class="text-decoration-underline">
+						${row["id"]}
+					</a>
+				`,
+				row["eMail"],
+				row["full_name"],
+				row["roles_list"],
+
+				row["last_heartbeat_at"] == null ?
+				'-':
+				timestamp_to_human_readable_v1(UTC_to_local_timestamp(row["last_heartbeat_at"]))
+			]);
+
+			return ROWS;
+		}
 	}, {method: "replaceChildren"});
 }

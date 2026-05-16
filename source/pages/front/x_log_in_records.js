@@ -27,19 +27,19 @@ export async function after() {
 		if (log_in_records["type"] === "info") return String_to_Element(`<p class="surface-info width-100 padding-2 text-size-0-8">${Lang.use(log_in_records["message"])}</p>`);
 		if (!("data" in log_in_records)) return String_to_Element(`<p class="width-100 text-size-0-8 surface-warning padding-1">${Lang.use("invalid_response")}</p>`);
 
-		const HEAD = [];
-		for (const KEY of Object.keys(log_in_records.data[0])) HEAD.push({"title": KEY});
+		const COLUMNS = [];
+		for (const KEY of Object.keys(log_in_records.data[0])) COLUMNS.push({"title": KEY});
 
-		const BODY = [];
-		for (const i in log_in_records.data) BODY.push(Object.values(log_in_records.data[i]))
+		const ROWS = [];
+		for (const i in log_in_records.data) ROWS.push(Object.values(log_in_records.data[i]))
 
 		return window.x.Table.build(
 			{
 				"page_size": 10,
 				"searchable": true,
 				"downloadable": true,
-				"columns": HEAD,
-				"rows": BODY
+				"columns": COLUMNS,
+				"rows": ROWS
 			},
 			"surface-v1 width-100 padding-2"
 		);

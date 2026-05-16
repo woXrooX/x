@@ -22,13 +22,10 @@ def x_users(request):
 					SQL="""
 						SELECT
 							"users"."id",
-							"users"."first_name",
-							"users"."last_name",
 							"users"."eMail",
+							CONCAT_WS(' ', "users"."first_name", "users"."last_name") AS "full_name",
 							STRING_AGG(DISTINCT "user_roles"."name", ', ' ORDER BY "user_roles"."name" ASC) AS "roles_list",
-							"users"."last_heartbeat_at",
-							"users"."metadata_last_updated_at",
-							"users"."metadata_created_at"
+							"users"."last_heartbeat_at"
 						FROM "users"
 						LEFT JOIN "users_roles" ON "users"."id" = "users_roles"."user"
 						LEFT JOIN "user_roles" ON "user_roles"."id" = "users_roles"."role"
