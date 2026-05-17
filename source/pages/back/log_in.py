@@ -47,9 +47,10 @@ def log_in(request):
 		)
 		if "error" in data: return Response.make(type="error", message="database_error")
 
-		# No Match
+		# No match
 		if not data["data"]:
 			Log_In_Tools.new_record(request, "eMail_or_password_incorrect")
+			Log_In_Tools.log_failed_log_in(request)
 			return Response.make(type="error", message="eMail_or_password_incorrect")
 
 		# Set Session User ID

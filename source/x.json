@@ -1,5 +1,5 @@
 {
-	"version": "0.237.2.0006",
+	"version": "0.238.0.0000",
 
 	"project_name": "x",
 
@@ -85,7 +85,8 @@
 		"debug": true,
 
 		"log_in_tools": {
-			"enable_recording": false
+			"enable_recording": false,
+			"enable_log_failed_log_in": false
 		}
 	},
 
