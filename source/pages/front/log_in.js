@@ -1,8 +1,8 @@
-export function before(){
+export function before() {
 	window.x.Head.set_title("log_in");
 }
 
-export default function main(){
+export default function main() {
 	return `
 		<container class="page_log_in padding-5 flex-x-center bg-animated-gradient-v1">
 			<form for="log_in" autocomplete="off" class="max-width-600px surface-v1 padding-5">
