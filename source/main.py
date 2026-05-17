@@ -148,14 +148,11 @@ def app_after_request(response):
 
 	try:
 		from Python.project.modules.after_request import after_request
-		project_response = after_request(response)
+		return after_request(response)
 
 	except Exception as e: Log.error(e)
 
-	# HSTS header
-	project_response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
-
-	return project_response
+	return response
 
 # @app.teardown_request
 # def teardown_request_func(error=None):
