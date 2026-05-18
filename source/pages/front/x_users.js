@@ -1,5 +1,5 @@
 import String_to_Element from "/JavaScript/modules/parser/String_to_Element.js";
-import { UTC_to_local_timestamp, timestamp_to_human_readable_v1 } from "/JavaScript/modules/datetime/datetime.js";
+import { timestamp_to_human_readable_v1 } from "/JavaScript/modules/datetime/datetime.js";
 
 export function before() {
 	window.x.Head.set_title("users");
@@ -118,7 +118,7 @@ export async function after() {
 
 				row["last_heartbeat_at"] == null ?
 				'-':
-				timestamp_to_human_readable_v1(UTC_to_local_timestamp(row["last_heartbeat_at"]))
+				timestamp_to_human_readable_v1(row["last_heartbeat_at"])
 			]);
 
 			return ROWS;

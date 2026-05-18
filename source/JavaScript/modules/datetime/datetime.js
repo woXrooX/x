@@ -1,7 +1,4 @@
-// Timestamp to human readable
-// Exptected input: type->string, fromat "2034-11-18 01:29:44"
-export function timestamp_to_human_readable_v1(input_timestamp){
-	const UTC_timestamp = timestamp_to_UTC(input_timestamp);
+export function timestamp_to_human_readable_v1(UTC_timestamp) {
 	const local_timestamp = UTC_to_local_timestamp(UTC_timestamp);
 
 	const timestamp = new Date(local_timestamp);
@@ -93,14 +90,14 @@ export function UTC_to_local_timestamp(UTC_timestamp) {
 	return `${year}-${month}-${day.trim()} ${hours}:${minutes}:${seconds}`;
 }
 
-export function server_timestamp_to_local_timestamp(server_timestamp){
+export function server_timestamp_to_local_timestamp(server_timestamp) {
 	const UTC_timestamp = timestamp_to_UTC(timestamp_to_UTC);
 	const local_timestamp = UTC_to_local_timestamp(UTC_timestamp);
 	return local_timestamp;
 }
 
 // Exptected inputs: type->string, fromat->HH:mm:ss
-export function time_difference(time_1, time_2){
+export function time_difference(time_1, time_2) {
 	const time_1_parsed = parse_time(time_1);
 	const time_2_parsed = parse_time(time_2);
 
@@ -199,7 +196,7 @@ export function seconds_to_time(input_seconds) {
 
 
 // Exptected input: type->string, format->HH:mm:ss
-export function parse_time(time){
+export function parse_time(time) {
 	if(typeof time !== "string") return false;
 	if(/^([0-9]|[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/.test(time) === false) return false;
 
@@ -234,7 +231,7 @@ export function milliseconds_to_human_readable_v1(milliseconds) {
 }
 
 // Format DD.MM.YYYY HH:MM:MS
-function milliseconds_to_human_readable_v2(MS){
+function milliseconds_to_human_readable_v2(MS) {
 	const date = new Date(MS);
 
 	const day = date.getDate().toString().padStart(2,'0');
