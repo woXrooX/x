@@ -21,7 +21,7 @@ export default async function main() {
 
 			<row class="glances gap-0-5"></row>
 
-			<column class="table width-100"></column>
+			<column class="table width-100 surface-v1 padding-2"></column>
 		</container>
 	`;
 
@@ -101,7 +101,7 @@ export async function after() {
 				"columns": COLUMNS,
 				"rows": build_table_rows()
 			},
-			"surface-v1 width-100 padding-2"
+			"width-100"
 		);
 
 		function build_table_rows() {
