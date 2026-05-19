@@ -45,14 +45,14 @@ export default class Modal extends HTMLElement{
 		Cover.hide();
 	}
 
-	static show(DOM, func_name = null, data = null){
+	static show(DOM, func_name = null, modal_data = null){
 		if(Modal.#shown === true) return;
 
 		Modal.#shown = true;
 
 		Modal.#element.classList.add("show");
 		Modal.element_main.innerHTML = DOM;
-		Modal.#execute_on_show(func_name, data);
+		Modal.#execute_on_show(func_name, modal_data);
 
 		Cover.show();
 	}
@@ -90,12 +90,12 @@ export default class Modal extends HTMLElement{
 	}
 
 	/////////// Helpers
-	static async #execute_on_show(func_name, data = null){
+	static async #execute_on_show(func_name, modal_data = null){
 		if(!!func_name === false) return;
 
 		if (!(func_name in Modal.#FUNC_POOL)) return console.error(`Modal.#execute_on_show(): Invalid func_name: ${func_name}`);
 
-		await Modal.#FUNC_POOL[func_name](data);
+		await Modal.#FUNC_POOL[func_name](modal_data);
 	}
 
 	static #parse_commands(commands){
