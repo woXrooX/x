@@ -1,5 +1,6 @@
 if __name__ != "__main__":
 	import hashlib
+	import logging
 
 	from main import session
 
