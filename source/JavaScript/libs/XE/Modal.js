@@ -43,6 +43,8 @@ export default class Modal extends HTMLElement{
 		};
 
 		Cover.hide();
+
+		x.Layers.unlock();
 	}
 
 	static show(DOM, func_name = null, modal_data = null){
@@ -55,6 +57,8 @@ export default class Modal extends HTMLElement{
 		Modal.#execute_on_show(func_name, modal_data);
 
 		Cover.show();
+
+		x.Layers.lock();
 	}
 
 	static lock(){

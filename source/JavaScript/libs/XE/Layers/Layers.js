@@ -9,6 +9,8 @@ export default class Layers{
 	// Active layer ID
 	static #id = 0;
 
+	static #locked = false;
+
 	static #FUNC_POOL = {};
 
 	static {
@@ -64,7 +66,9 @@ export default class Layers{
 		);
 	}
 
-	static pop(){
+	static pop() {
+		if (Layers.#locked === true) return;
+
 		Popping_Layer: {
 			const container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
 			if (container === null) return;
@@ -92,6 +96,14 @@ export default class Layers{
 				Layers.#id
 			);
 		}
+	}
+
+	static lock() {
+		Layers.#locked = true;
+	}
+
+	static unlock() {
+		Layers.#locked = false;
 	}
 
 	static handle_commands(commands, type){
