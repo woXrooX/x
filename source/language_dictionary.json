@@ -443,6 +443,11 @@
 		"ru": "Создано в",
 		"uz": "Yaratilgan vaqti"
 	},
+	"updated_at": {
+		"en": "Updated at",
+		"ru": "Обновлено в",
+		"uz": "O'zgartirilgan vaqti"
+	},
 	"token_aready_used": {
 		"en": "Token has already used",
 		"ru": "Токен уже использован",
