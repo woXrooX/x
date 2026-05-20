@@ -39,8 +39,7 @@ export function timestamp_to_human_readable_v1(UTC_timestamp) {
 	return format_difference(total_seconds_diff, 'second');
 }
 
-export function timestamp_to_human_readable_v2(input_timestamp) {
-	const UTC_timestamp = timestamp_to_UTC(input_timestamp);
+export function timestamp_to_human_readable_v2(UTC_timestamp) {
 	const local_timestamp = UTC_to_local_timestamp(UTC_timestamp);
 
 	const timestamp = new Date(local_timestamp);
