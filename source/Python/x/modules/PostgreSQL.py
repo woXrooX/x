@@ -1,5 +1,5 @@
 # 23503 = Foreign Key Violation
-#
+# 23505 = Unique Violation
 
 if __name__ != "__main__":
 	import sys
