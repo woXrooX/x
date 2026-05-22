@@ -1,3 +1,5 @@
+# pip install mysql-connector-python
+
 #### executemany
 # https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-executemany.html
 # Execute the prepared statement multiple times with different values
@@ -218,7 +220,7 @@ if __name__ != "__main__":
 				)
 
 				# Create Cursor
-				MySQL.cursor = MySQL.connection.cursor(dictionary = True)
+				MySQL.cursor = MySQL.connection.cursor(dictionary = True, buffered=True)
 
 				# Set session variables for better connection handling
 				if MySQL.connection_mode == "single":
@@ -262,8 +264,13 @@ if __name__ != "__main__":
 			# Log.info("MySQL.disconnect()")
 
 			if MySQL.connection_mode == "per_query":
-				if MySQL.cursor: MySQL.cursor.close()
-				if MySQL.connection: MySQL.connection.close()
+				if MySQL.cursor:
+					try: MySQL.cursor.close()
+					except Exception as e: Log.fieldset(f"ERROR: {e}", "MySQL.disconnect()", "error")
+
+				if MySQL.connection:
+					try: MySQL.connection.close()
+					except Exception as e: Log.fieldset(f"ERROR: {e}", "MySQL.disconnect()", "error")
 
 		# Call when shutting down application
 		@staticmethod
