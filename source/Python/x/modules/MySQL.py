@@ -220,7 +220,7 @@ if __name__ != "__main__":
 				)
 
 				# Create Cursor
-				MySQL.cursor = MySQL.connection.cursor(dictionary = True, buffered=True)
+				MySQL.cursor = MySQL.connection.cursor(dictionary = True)
 
 				# Set session variables for better connection handling
 				if MySQL.connection_mode == "single":
