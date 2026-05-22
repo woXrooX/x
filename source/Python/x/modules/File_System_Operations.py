@@ -31,6 +31,7 @@ if __name__ != "__main__":
 				"HTML",
 				"images",
 				"JavaScript", "JavaScript/JSON", "JavaScript/libs", "JavaScript/modules",
+				"Logs",
 				"pages", "pages/back", "pages/front",
 				"Python",
 				"SVG"
@@ -64,6 +65,8 @@ if __name__ != "__main__":
 
 			File_System.create_file(f"{Globals.PROJECT_PATH}/JavaScript/modules/header.js", 'export default function header(){\n\treturn "Header";\n}', strict=True)
 			File_System.create_file(f"{Globals.PROJECT_PATH}/JavaScript/modules/footer.js", 'export default function footer(){\n\treturn Lang.use("powered_by_woXrooX");\n}', strict=True)
+
+			File_System.create_file(f"{Globals.PROJECT_PATH}/Logs/auth.log", strict=True)
 
 			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/after_request.py", 'if __name__ != "__main__":\n\tdef after_request(response): return response')
 			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/before_first_request.py", 'if __name__ != "__main__":\n\tdef before_first_request(): pass')
