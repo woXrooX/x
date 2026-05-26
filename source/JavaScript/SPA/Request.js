@@ -1,21 +1,36 @@
-///////////////////////////// FETCH - Bridge
-
-
 export default class Request {
-	static async make(
+	/////////////////////////// Static
+
+
+	/////////// APIs
+
+	static async make({
+		// Payload
 		data = null,
-		url = null,
+		target_URL = null,
+
 		content_type = "application/json",
 		method = "POST",
 		cache = "no-cache",
-		headers = {}
-	) {
+		headers = {},
+
+		cacheable = false
+		// cacheable = {
+		// 	key_name: "KEY_NAME",
+		// 	TTL: 24 * 60 * 60 * 1000
+		// }
+	}) {
 		if (!!data === false) return {"type": "error", "message": "invalid_value"};
+
+		if (cacheable !== false) {
+			const cached_data = Request.#get_cache(cacheable["key_name"], cacheable["TTL"]);
+			if (cached_data !== false) return cached_data;
+		}
 
 
 		// Set the default URL
-		if (!!url === false) url = window.location.href;
-		const completed_URL = new URL(url, window.location.origin);
+		if (!!target_URL === false) target_URL = window.location.href;
+		const completed_URL = new URL(target_URL, window.location.origin);
 
 
 		const CSRF_meta_element = document.querySelector('meta[name="x-CSRF-token"]');
@@ -57,7 +72,16 @@ export default class Request {
 				body: payload
 			});
 
-			if (response.ok) return await response.json();
+			if (response.ok) {
+				const response_data = await response.json();
+
+				if (
+					cacheable !== false &&
+					"data" in response_data
+				) Request.#set_cache(cacheable["key_name"], response_data);
+
+				return response_data;
+			}
 
 			else {
 				console.warn(`
@@ -76,6 +100,36 @@ Request.make(): Response Error:
 			console.warn("Request.make(): "+error);
 			return {"type": "error", "message": error.message || String(error)}
 		}
+	}
+
+	/////////// Helpers
+
+	static #set_cache(key_name, data) {
+		localStorage.setItem(
+			key_name,
+			JSON.stringify({
+				data: data,
+				timestamp: Date.now()
+			})
+		);
+	}
+
+	static #get_cache(key_name, TTL) {
+		// 1 day in ms
+		const default_TTL = 24 * 60 * 60 * 1000;
+
+		TTL = TTL || default_TTL;
+
+		const cached_data = localStorage.getItem(key_name);
+
+		if (!cached_data) return false;
+
+		const { data, timestamp } = JSON.parse(cached_data);
+
+		// Expired
+		if (Date.now() - timestamp >= TTL) return false;
+
+		return data;
 	}
 }
 

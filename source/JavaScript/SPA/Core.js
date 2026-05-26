@@ -66,9 +66,12 @@ export default class Core{
 
 	static async #get_initial_data(){
 		return new Promise( async (resolve, reject) => {
-			let response = await window.x.Request.make({for: "initial_data"}, "/API");
+			let response = await window.x.Request.make({
+				data: {for: "initial_data"},
+				target_URL: "/API"
+			});
 
-			if(typeof response === "object"){
+			if (typeof response === "object"){
 				Log.success(response);
 
 				window.session = response["session"];
