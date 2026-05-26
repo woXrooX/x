@@ -5,9 +5,8 @@ export default class Request {
 	/////////// APIs
 
 	static async make({
-		// Payload
-		data = null,
-		target_URL = null,
+		payload = null,
+		target_URL = undefined,
 
 		content_type = "application/json",
 		method = "POST",
@@ -20,7 +19,7 @@ export default class Request {
 		// 	TTL: 24 * 60 * 60 * 1000
 		// }
 	}) {
-		if (!!data === false) return {"type": "error", "message": "invalid_value"};
+		if (!!payload === false) return {"type": "error", "message": "invalid_value"};
 
 		if (cacheable !== false) {
 			const cached_data = Request.#get_cache(cacheable["key_name"], cacheable["TTL"]);
@@ -29,7 +28,7 @@ export default class Request {
 
 
 		// Set the default URL
-		if (!!target_URL === false) target_URL = window.location.href;
+		if (target_URL === undefined) target_URL = window.location.href;
 		const completed_URL = new URL(target_URL, window.location.origin);
 
 
@@ -37,28 +36,12 @@ export default class Request {
 		if (CSRF_meta_element) headers["x-CSRF-token"] = CSRF_meta_element.getAttribute("content");
 
 
-		let payload;
+		const { body, content_type_headers } = Request.#handle_content_type(payload, content_type);
 
-		if (content_type === "application/json") {
-			headers["Content-Type"] = "application/json";
-			payload = JSON.stringify(data);
-		}
-
-		else if (content_type === "multipart/form-data") {
-			// Let browser set Content-Type with boundary for FormData
-			payload = data;
-		}
-
-		else if (content_type === "application/x-www-form-urlencoded") {
-			headers["Content-Type"] = "application/x-www-form-urlencoded";
-			payload = new URLSearchParams(data).toString();
-		}
-
-		else {
-			headers["Content-Type"] = content_type;
-			payload = data;
-		}
-
+		headers = {
+			...headers,
+			...content_type_headers
+		};
 
 		try {
 			const response = await fetch(completed_URL, {
@@ -69,7 +52,7 @@ export default class Request {
 				headers: headers,
 				redirect: "follow",
 				referrerPolicy: "no-referrer",
-				body: payload
+				body: body
 			});
 
 			if (response.ok) {
@@ -130,6 +113,39 @@ Request.make(): Response Error:
 		if (Date.now() - timestamp >= TTL) return false;
 
 		return data;
+	}
+
+	static #handle_content_type(payload, content_type) {
+		let body;
+		let headers = {};
+
+		switch (content_type) {
+			case "application/json":
+				headers["Content-Type"] = "application/json";
+				body = JSON.stringify(payload);
+				break;
+
+			case "multipart/form-data":
+				// Let browser set Content-Type with boundary for FormData
+				body = payload;
+				break;
+
+			case "application/x-www-form-urlencoded":
+				headers["Content-Type"] = "application/x-www-form-urlencoded";
+				body = new URLSearchParams(payload).toString();
+				break;
+
+			default:
+				headers["Content-Type"] = content_type;
+				body = payload;
+				break;
+		}
+
+		return {
+			"body": body,
+			"content_type_headers": headers
+		}
+
 	}
 }
 
