@@ -15,11 +15,15 @@ export default class User{
 		}, User.poll_interval_duration_set_last_heartbeat_at);
 	}
 
-	static async set_last_heartbeat_at(){
-		if(!("user" in window.session)) return;
+	static async set_last_heartbeat_at() {
+		if (!("user" in window.session)) return;
 
-		let data = await window.x.Request.make({for: "set_last_heartbeat_at"}, "/API");
-		if("error" in data) return;
+		let data = await window.x.Request.make({
+			payload: {for: "set_last_heartbeat_at"},
+			target_URL: "/API"
+		});
+
+		if ("error" in data) return;
 
 		Log.success("User.set_last_heartbeat_at()");
 	}

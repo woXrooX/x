@@ -29,7 +29,10 @@ export default class Editable {
 		this.#construct_data();
 
 		try {
-			this.#response = await window.x.Request.make(this.#data, this.#element.getAttribute("XR-editable"));
+			this.#response = await window.x.Request.make({
+				payload: this.#data,
+				target_URL: this.#element.getAttribute("XR-editable")
+			});
 
 			if (!("type" in this.#response)) return this.#set_state_indicator("error");
 

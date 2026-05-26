@@ -24,7 +24,8 @@ export default function main() {
 }
 
 export async function after() {
-	let user = await window.x.Request.make({for:"get_user"});
+	let user = await window.x.Request.make({ payload: {for:"get_user"} });
+
 	if ("data" in user) user = user["data"];
 	else return `<p class="surface-info width-100 padding-1 text-size-0-8">${Lang.use("no_data")}</p>`;
 
@@ -56,7 +57,8 @@ export async function after() {
 		}
 
 		async function build_modal_form_update_roles_HTML() {
-			let user_roles = await window.x.Request.make({for:"get_user_roles"});
+			let user_roles = await window.x.Request.make({ payload: {for:"get_user_roles"} });
+
 			if ("data" in user_roles) user_roles = user_roles["data"];
 			else return '';
 
@@ -115,7 +117,8 @@ export async function after() {
 	});
 
 	DOM.build("column.log_in_records", async function build_log_in_records_HTML() {
-		let log_in_records = await window.x.Request.make({for:"get_user_log_in_records"});
+		let log_in_records = await window.x.Request.make({ payload: {for:"get_user_log_in_records"} });
+
 		if ("data" in log_in_records) log_in_records = log_in_records["data"];
 		else return String_to_Element(`<p class="surface-info width-100 padding-1 text-size-0-8">${Lang.use("no_data")}</p>`);
 

@@ -67,11 +67,11 @@ export default class Core{
 	static async #get_initial_data(){
 		return new Promise( async (resolve, reject) => {
 			let response = await window.x.Request.make({
-				data: {for: "initial_data"},
+				payload: {"for": "initial_data"},
 				target_URL: "/API"
 			});
 
-			if (typeof response === "object"){
+			if (typeof response === "object") {
 				Log.success(response);
 
 				window.session = response["session"];
@@ -85,7 +85,9 @@ export default class Core{
 				window.x["CURRENCIES"] = response["CURRENCIES"];
 
 				resolve();
-			}else{
+			}
+
+			else {
 				Log.error("Fetching the initial data failed!");
 
 				reject();

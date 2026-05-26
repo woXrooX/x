@@ -72,7 +72,7 @@ export async function after() {
 		`;
 
 		async function build_live_users_count_HTML() {
-			const live_users_count = await window.x.Request.make({for:"get_live_users_count"});
+			const live_users_count = await window.x.Request.make({ payload: {for:"get_live_users_count"} });
 
 			if (!("data" in live_users_count)) return `<p class="width-100 text-size-0-8 surface-info padding-1">${Lang.use("no_data")}</p>`;
 
@@ -86,7 +86,8 @@ export async function after() {
 	});
 
 	DOM.build("column.table", async function build_users_HTML() {
-		let users = await window.x.Request.make({for:"get_all_users"});
+		let users = await window.x.Request.make({ payload: {for:"get_all_users"} });
+
 		if ("data" in users) users = users["data"];
 		else return String_to_Element(`<p class="width-100 text-size-0-8 surface-info padding-1">${Lang.use("no_data")}</p>`);
 

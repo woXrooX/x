@@ -23,7 +23,8 @@ export default async function main() {
 
 export async function after() {
 	DOM.build("column.table", async function build_log_in_records_HTML() {
-		let log_in_records = await window.x.Request.make({for:"get_all_log_in_records"});
+		let log_in_records = await window.x.Request.make({ payload: {for:"get_all_log_in_records"} });
+
 		if (log_in_records["type"] === "info") return String_to_Element(`<p class="surface-info width-100 padding-1 text-size-0-8">${Lang.use(log_in_records["message"])}</p>`);
 		if (!("data" in log_in_records)) return String_to_Element(`<p class="width-100 text-size-0-8 surface-warning padding-1">${Lang.use("invalid_response")}</p>`);
 

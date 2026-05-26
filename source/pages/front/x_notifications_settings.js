@@ -21,12 +21,14 @@ export default function main() {
 
 export async function after() {
 	DOM.build("column.notification_events", async function build_notification_event_togglers_HTML() {
-		let disabled_events = await window.x.Request.make({for: "get_disabled_notification_events"});
+		let disabled_events = await window.x.Request.make({ payload: {for: "get_disabled_notification_events"} });
+
 		if ("data" in disabled_events) disabled_events = disabled_events["data"];
 		else disabled_events = [];
 
-		let events = await window.x.Request.make({for: "get_all_events"});
-		if("data" in events) events = events["data"];
+		let events = await window.x.Request.make({ payload: {for: "get_all_events"} });
+
+		if ("data" in events) events = events["data"];
 		else events = {};
 
 		const disabled_events_object = {};

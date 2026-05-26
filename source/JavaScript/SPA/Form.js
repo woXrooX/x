@@ -55,7 +55,11 @@ export default class Form {
 
 				data["fields"][event.target.name] = event.target.value;
 
-				let response = await window.x.Request.make(data, `${form.getAttribute("for")}`);
+				let response = await window.x.Request.make({
+					payload: data,
+					target_URL: `${form.getAttribute("for")}`
+				});
+
 				if ("field" in response) Form.#response(response["field"], response["type"], response["message"]);
 			};
 		});
@@ -88,7 +92,7 @@ export default class Form {
 
 		// event.target.enctype = application/x-www-form-urlencoded
 		let response = await window.x.Request.make({
-			data: form_data,
+			payload: form_data,
 			target_URL: event.target.action,
 			content_type: "multipart/form-data"
 		});
