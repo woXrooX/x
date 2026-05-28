@@ -28,7 +28,7 @@ export default class Request {
 
 
 		// Set the default URL
-		if (target_URL === undefined) target_URL = window.location.href;
+		if (!!target_URL === false) target_URL = window.location.href;
 		const completed_URL = new URL(target_URL, window.location.origin);
 
 
