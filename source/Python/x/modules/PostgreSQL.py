@@ -110,9 +110,14 @@ if __name__ != "__main__":
 		def get_connection_from_pool():
 			if PostgreSQL.initialized is False: return False
 
-			connection = PostgreSQL.DB_pool.getconn()
+			try: return PostgreSQL.DB_pool.getconn()
 
-			return connection, connection.cursor()
+			except Exception as e:
+				Log.error(f"PostgreSQL.get_connection_from_pool(): {e}")
+
+				return False
+
+
 
 		@staticmethod
 		def put_connection_to_pool(connection):
@@ -221,11 +226,10 @@ if __name__ != "__main__":
 			has_error = False
 
 			try:
-				if borrowed_connection is None: connection, cursor = PostgreSQL.get_connection_from_pool()
-				else:
-					connection = borrowed_connection
-					cursor = connection.cursor()
+				if borrowed_connection is None: connection = PostgreSQL.get_connection_from_pool()
+				else: connection = borrowed_connection
 
+				cursor = connection.cursor()
 
 				params = tuple(params or ())
 
