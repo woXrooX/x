@@ -1,5 +1,38 @@
-# 23503 = Foreign Key Violation
-# 23505 = Unique Violation
+"""
+# PostgreSQL constraint / index naming cheat sheet
+
+- Auto-naming convention (what Postgres generates itself):
+	primary keys:
+		{table}_pkey
+
+	unique constraints:
+		{table}_{column}_key
+
+	foreign keys:
+		{table}_{column}_fkey
+
+	checks:
+		{table}_{column}_check
+
+	plain indexes:
+		{table}_{column}_idx
+
+
+- Multiple columns: chain names in index order:
+	{table}_{col1}_{col2}_key
+
+- Partial index (has a WHERE): encode the predicate so several partial indexes on the same cols stay distinct + self-documenting
+	{table}_{col1}_{col2}_active_key -- WHERE deleted_at IS NULL
+
+- NOTE: a partial index can ONLY be CREATE [UNIQUE] INDEX, never a UNIQUE constraint (constraints can't have WHERE).
+
+
+
+# Error codes:
+
+- 23503 = Foreign Key Violation
+- 23505 = Unique Violation
+"""
 
 if __name__ != "__main__":
 	import sys
