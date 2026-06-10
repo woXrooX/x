@@ -469,22 +469,48 @@ x-urgent{
 @layer XR {
 	[XR-editable] {
 		cursor: pointer;
-		outline: 1px solid transparent;
 		transition: outline-color var(--transition-velocity) ease-in-out;
+		transition-property: background-color, outline;
 
-		&:hover { outline-color: var(--color-text-secondary); }
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
 
-		&:focus, &:focus-visible, &:active { outline-color: var(--color-text-primary); }
+		background-color: var(--color-main-tint-3);
+		color: var(--color-text-primary);
+		font-size: 1em;
+		max-width: 100%;
+		min-height: 2em;
+		padding: 0 calc(var(--padding) * 2);
+		border: none;
+		border-radius: var(--radius);
+		outline: 1px solid var(--color-main-tint-4);
+		white-space: pre-wrap;
+		overflow-x: auto;
+
+		&:hover {
+			background-color: var(--color-main-tint-4);
+			outline-color: var(--color-main-tint-6);
+		}
+
+		&:focus,
+		&:focus-visible,
+		&:active {
+			background-color: var(--color-main-tint-5);
+			outline-color: var(--color-main-tint-8);
+		}
 
 		&::before{
 			pointer-events: none;
 			content: attr(XR-placeholder);
 			color: hsla(var(--color-main-hue), 10%, var(--color-main-lightness), 0.5);
 		}
+
 		&:not(:empty)::before { display: none; }
 
 		&[XR-state] {
-			&[XR-state="editing"] { outline-color: var(--color-text-primary); }
+			&[XR-state="editing"] { outline-color: var(--color-main-tint-8); }
 
 			&[XR-state="in_progress"] {
 				animation: XR_editable_pulse 1s infinite;
