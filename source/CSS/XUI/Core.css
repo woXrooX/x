@@ -1025,8 +1025,12 @@
 			border: none;
 			border-radius: var(--radius);
 			outline: 1px solid var(--color-main-tint-4);
-			white-space: pre-wrap;
 			overflow-x: auto;
+
+			/*
+				NOTE: Line breaking not allowed. If you want textarea kind of a effect, apply CSS.
+				white-space: pre-wrap;
+			*/
 
 			&:hover {
 				background-color: var(--color-main-tint-4);
