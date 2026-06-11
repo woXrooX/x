@@ -467,6 +467,7 @@ x-urgent{
 }
 
 @layer XR {
+	/* NOTE: [XR-editable] copies/follows the styles @ XUI.Core.forms.input-v1 */
 	[XR-editable] {
 		cursor: pointer;
 		transition: outline-color var(--transition-velocity) ease-in-out;
