@@ -27,6 +27,9 @@
 - NOTE: a partial index can ONLY be CREATE [UNIQUE] INDEX, never a UNIQUE constraint (constraints can't have WHERE).
 
 
+# Alias rule:
+- prefix on the LEFT: "original_name" AS "prefix_original_name"
+
 
 # Error codes:
 
