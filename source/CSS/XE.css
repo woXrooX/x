@@ -469,43 +469,6 @@ x-urgent{
 @layer XR {
 	/* NOTE: [XR-editable] copies/follows the styles @ XUI.Core.forms.input-v1 */
 	[XR-editable] {
-		cursor: pointer;
-		transition: outline-color var(--transition-velocity) ease-in-out;
-		transition-property: background-color, outline;
-
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-start;
-		align-items: center;
-
-		background-color: var(--color-main-tint-3);
-		color: var(--color-text-primary);
-		font-size: 1em;
-		max-width: 100%;
-		min-height: 2em;
-		padding: 0 calc(var(--padding) * 2);
-		border: none;
-		border-radius: var(--radius);
-		outline: 1px solid var(--color-main-tint-4);
-		overflow-x: auto;
-
-		/*
-			NOTE: Line breaking not allowed. If you want textarea kind of a effect, apply CSS.
-			white-space: pre-wrap;
-		*/
-
-		&:hover {
-			background-color: var(--color-main-tint-4);
-			outline-color: var(--color-main-tint-6);
-		}
-
-		&:focus,
-		&:focus-visible,
-		&:active {
-			background-color: var(--color-main-tint-5);
-			outline-color: var(--color-main-tint-8);
-		}
-
 		&::before{
 			pointer-events: none;
 			content: attr(XR-placeholder);
