@@ -2,35 +2,42 @@
 # PostgreSQL constraint / index naming cheat sheet
 
 - Auto-naming convention (what Postgres generates itself):
-	primary keys:
+	Primary key constraint: pkey
 		{table}_pkey
 
-	unique constraints:
+	Unique constraints: key
 		{table}_{column}_key
 
-	foreign keys:
+	Foreign key constraint: fkey
 		{table}_{column}_fkey
 
-	checks:
+	Check constraint: check
 		{table}_{column}_check
 
-	plain indexes:
+	Exclusion constraint: excl
+
+	Plain indexes (CREATE INDEX / CREATE UNIQUE INDEX): idx
 		{table}_{column}_idx
 
 - Multiple columns: chain names in index order:
-	{table}_{col1}_{col2}_key
+	{table}_{col1}_{col2}_{suffix}
 
 - Partial index (has a WHERE): encode the predicate so several partial indexes on the same cols stay distinct + self-documenting
 	{table}_{col1}_{col2}_active_key -- WHERE deleted_at IS NULL
 
 - NOTE: a partial index can ONLY be CREATE [UNIQUE] INDEX, never a UNIQUE constraint (constraints can't have WHERE).
 
+- Manual naming
+	- Avoid manual naming whenver possible.
+	- Sample naming: "{table}_{counter}_{suffix}"
+		- Counter: per (table, suffix), starts at 1, increments by 1
+		- Counters are append-only, never renumber or reuse a number after a drop
 
 # Alias rule:
 - prefix on the LEFT: "original_name" AS "prefix_original_name"
 
 
-# Naming rules:
+# Table naming rules:
 -
 	A table name should describe what one row is, not the path you took to reach it.
 	The hierarchy is already expressed by foreign keys, so repeating it in the name is redundant.
