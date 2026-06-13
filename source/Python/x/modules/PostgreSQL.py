@@ -17,7 +17,6 @@
 	plain indexes:
 		{table}_{column}_idx
 
-
 - Multiple columns: chain names in index order:
 	{table}_{col1}_{col2}_key
 
@@ -29,6 +28,19 @@
 
 # Alias rule:
 - prefix on the LEFT: "original_name" AS "prefix_original_name"
+
+
+# Naming rules:
+-
+	A table name should describe what one row is, not the path you took to reach it.
+	The hierarchy is already expressed by foreign keys, so repeating it in the name is redundant.
+
+- Prefix:
+	- Use at most one prefix level: prefix_name
+	-
+		Drop a prefix when a foreign key already carries it.
+		Add a prefix only when the bare name genuinely collides in its namespace
+		Add only the closest distinguishing token.
 
 
 # Error codes:
