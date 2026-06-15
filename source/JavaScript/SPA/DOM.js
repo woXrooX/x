@@ -77,8 +77,8 @@ export default class DOM {
 		try {
 			// Yield until the next paint, so the browser can render the "loading" state
 			// Before we start the heavy DOM work (double RAF is more reliable than single).
-			await new Promise(RAF => requestAnimationFrame(RAF));
-			await new Promise(RAF => requestAnimationFrame(RAF));
+			await DOM.request_animation_frame();
+			await DOM.request_animation_frame();
 
 			const HTML = await callback(parent_element, ...args);
 
@@ -108,6 +108,10 @@ export default class DOM {
 		finally {
 			Loading.on_element_end(parent_element);
 		}
+	}
+
+	static async request_animation_frame() {
+		await new Promise(RAF => requestAnimationFrame(RAF));
 	}
 }
 
