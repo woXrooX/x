@@ -1,11 +1,9 @@
-export function timestamp_to_human_readable_v1(UTC_timestamp) {
-	const local_timestamp = UTC_to_local_timestamp(UTC_timestamp);
-
-	const timestamp = new Date(local_timestamp);
-	if(isNaN(timestamp)) return false;
+export function timestamp_to_human_readable_v1(timestamp) {
+	const new_timestamp = new Date(timestamp);
+	if(isNaN(new_timestamp)) return false;
 
 	const now = new Date();
-	const total_diff = now - timestamp;
+	const total_diff = now - new_timestamp;
 
 	const abs_total_diff = Math.abs(total_diff);
 	const total_days_diff = Math.floor(abs_total_diff / (1000 * 60 * 60 * 24));
@@ -14,8 +12,8 @@ export function timestamp_to_human_readable_v1(UTC_timestamp) {
 	const total_minutes_diff = Math.floor(abs_total_diff / (1000 * 60));
 	const total_seconds_diff = Math.floor(abs_total_diff / 1000);
 
-	const year_diff = now.getFullYear() - timestamp.getFullYear();
-	const month_diff = (now.getFullYear() - timestamp.getFullYear()) * 12 + now.getMonth() - timestamp.getMonth();
+	const year_diff = now.getFullYear() - new_timestamp.getFullYear();
+	const month_diff = (now.getFullYear() - new_timestamp.getFullYear()) * 12 + now.getMonth() - new_timestamp.getMonth();
 
 	const format_difference = (value, unit) => {
 		if (value === 0) return `Just now`;
@@ -39,14 +37,12 @@ export function timestamp_to_human_readable_v1(UTC_timestamp) {
 	return format_difference(total_seconds_diff, 'second');
 }
 
-export function timestamp_to_human_readable_v2(UTC_timestamp) {
-	const local_timestamp = UTC_to_local_timestamp(UTC_timestamp);
-
-	const timestamp = new Date(local_timestamp);
-	if(isNaN(timestamp)) return false;
+export function timestamp_to_human_readable_v2(timestamp) {
+	const new_timestamp = new Date(timestamp);
+	if(isNaN(new_timestamp)) return false;
 
 	const now = new Date();
-	const total_diff = now - timestamp;
+	const total_diff = now - new_timestamp;
 	const abs_total_diff = Math.abs(total_diff);
 
 	const units = [
@@ -67,26 +63,103 @@ export function timestamp_to_human_readable_v2(UTC_timestamp) {
 
 export const timestamp_to_UTC = (timestamp) => timestamp.replace(' ', 'T') + 'Z';
 
-export function UTC_to_local_timestamp(UTC_timestamp) {
-	const date = new Date(UTC_timestamp);
+export function format_timestamp({
+	timestamp,
 
-	const user_time_zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+	// "en-GB", "en-US", "ru-RU", "uz" — single tag or array of tags
+	locales = undefined,
 
-	const local_timestamp = new Intl.DateTimeFormat("en-US", {
-		year: 'numeric',
-		month: '2-digit',
-		day: '2-digit',
-		hour: '2-digit',
-		minute: '2-digit',
-		second: '2-digit',
-		hour12: false,
-		timeZone: user_time_zone
-	}).format(date);
+	// "long" "short" "narrow"
+	weekday,
 
-	const [month, day, year, time] = local_timestamp.split(/[/,]/);
-	const [hours, minutes, seconds] = time.trim().split(':');
+	// "long" "short" "narrow"
+	era,
 
-	return `${year}-${month}-${day.trim()} ${hours}:${minutes}:${seconds}`;
+	// "numeric" "2-digit"
+	year,
+
+	// "numeric" "2-digit" "long" "short" "narrow"
+	month,
+
+	// "numeric" "2-digit"
+	day,
+
+	// "numeric" "2-digit"
+	hour,
+
+	// "numeric" "2-digit"
+	minute,
+
+	// "numeric" "2-digit"
+	second,
+
+	// 1 2 3
+	fractional_second_digits,
+
+	// "long" "short" "narrow"
+	day_period,
+
+	// "short" "long" "shortOffset" "longOffset" "shortGeneric" "longGeneric"
+	time_zone_name,
+
+	// "full" "long" "medium" "short" — do NOT combine with the component fields above
+	date_style,
+
+	// "full" "long" "medium" "short" — do NOT combine with the component fields above
+	time_style,
+
+	// IANA name: "Asia/Tashkent", "UTC", ... (default: runtime zone)
+	time_zone,
+
+	// true false
+	hour_12,
+
+	// "h11" "h12" "h23" "h24"
+	hour_cycle,
+
+	// "gregory" "islamic" "persian" "buddhist" ...
+	calendar,
+
+	// "latn" "arab" ...
+	numbering_system,
+
+	// "best fit" "lookup"
+	locale_matcher,
+
+	// "best fit" "basic"
+	format_matcher
+}) {
+	const date = new Date(timestamp);
+
+	if (isNaN(date.getTime())) {
+		throw new Error("invalid timestamp: " + timestamp);
+	}
+
+	return new Intl.DateTimeFormat(
+		locales,
+		{
+			"weekday": weekday,
+			"era": era,
+			"year": year,
+			"month": month,
+			"day": day,
+			"hour": hour,
+			"minute": minute,
+			"second": second,
+			"fractionalSecondDigits": fractional_second_digits,
+			"dayPeriod": day_period,
+			"timeZoneName": time_zone_name,
+			"dateStyle": date_style,
+			"timeStyle": time_style,
+			"timeZone": time_zone,
+			"hour12": hour_12,
+			"hourCycle": hour_cycle,
+			"calendar": calendar,
+			"numberingSystem": numbering_system,
+			"localeMatcher": locale_matcher,
+			"formatMatcher": format_matcher
+		}
+	).format(date);
 }
 
 // Exptected inputs: type->string, fromat->HH:mm:ss
