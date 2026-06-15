@@ -61,7 +61,24 @@ export function timestamp_to_human_readable_v2(timestamp) {
 	return 'now';
 }
 
-export const timestamp_to_UTC = (timestamp) => timestamp.replace(' ', 'T') + 'Z';
+export function timestamptz_to_local_timestamp(timestamptz) {
+	const local_timestamp = format_timestamp({
+		"timestamp": timestamptz,
+		"year": 'numeric',
+		"month": '2-digit',
+		"day": '2-digit',
+		"hour": '2-digit',
+		"minute": '2-digit',
+		"second": '2-digit',
+		"hour_12": false,
+		"time_zone": Intl.DateTimeFormat().resolvedOptions().timeZone
+	});
+
+	const [month, day, year, time] = local_timestamp.split(/[/,]/);
+	const [hours, minutes, seconds] = time.trim().split(':');
+
+	return `${year}-${month}-${day.trim()} ${hours}:${minutes}:${seconds}`;
+}
 
 export function format_timestamp({
 	timestamp,
@@ -129,9 +146,9 @@ export function format_timestamp({
 	// "best fit" "basic"
 	format_matcher
 }) {
-	const date = new Date(timestamp);
+	const new_date = new Date(timestamp);
 
-	if (isNaN(date.getTime())) throw new Error("invalid timestamp: " + timestamp);
+	if (isNaN(new_date.getTime())) throw new Error("invalid timestamp: " + timestamp);
 
 	return new Intl.DateTimeFormat(
 		locales,
@@ -157,7 +174,7 @@ export function format_timestamp({
 			"localeMatcher": locale_matcher,
 			"formatMatcher": format_matcher
 		}
-	).format(date);
+	).format(new_date);
 }
 
 // Exptected inputs: type->string, fromat->HH:mm:ss
