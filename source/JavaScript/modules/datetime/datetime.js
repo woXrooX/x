@@ -131,9 +131,7 @@ export function format_timestamp({
 }) {
 	const date = new Date(timestamp);
 
-	if (isNaN(date.getTime())) {
-		throw new Error("invalid timestamp: " + timestamp);
-	}
+	if (isNaN(date.getTime())) throw new Error("invalid timestamp: " + timestamp);
 
 	return new Intl.DateTimeFormat(
 		locales,
