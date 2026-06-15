@@ -2920,6 +2920,8 @@
 	}
 
 	@layer animations{
+		.transition-none { transition: none; }
+
 		@supports (animation-timeline: view()){
 			@layer on_view{
 				.on_view{
