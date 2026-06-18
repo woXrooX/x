@@ -4,6 +4,7 @@ export default class Form {
 	static #to_be_observed = [];
 
 	/////////// APIs
+
 	static collect(element = null){
 		// Log.info(`Form.collect()`);
 
@@ -41,29 +42,6 @@ export default class Form {
 	static push_func(func){ Form.#FUNC_POOL[func.name] = func; }
 
 	/////////// Helpers
-	static #on_input(form){
-		// check if on_input mode is enabled
-		if (!form.hasAttribute("oninputcheck")) return;
-
-		form.querySelectorAll("label > input").forEach((input) => {
-			input.oninput = async ()=>{
-				let data = {
-					for: form.getAttribute("for"),
-					field: event.target.name,
-					fields: {}
-				}
-
-				data["fields"][event.target.name] = event.target.value;
-
-				let response = await window.x.Request.make({
-					payload: data,
-					target_URL: `${form.getAttribute("for")}`
-				});
-
-				if ("field" in response) Form.#response(response["field"], response["type"], response["message"]);
-			};
-		});
-	}
 
 	static async #on_submit(event){
 		event.preventDefault();
@@ -171,12 +149,12 @@ export default class Form {
 		// Check if form element passed
 		if (!!form === false) return;
 
-		const p_element = form.querySelector(`p[for=${field}]`);
+		const p_element = form.querySelector(`p[for=${CSS.escape(field)}]`);
 
 		// Above submit button
 		if (!!message != false && !!p_element === true) p_element.innerHTML = `<span class="text-color-${type}">${window.Lang.use(message)}</span>`;
 
-		const field_element = form.querySelector(`[name=${field}]`);
+		const field_element = form.querySelector(`[name=${CSS.escape(field)}]`);
 
 		if (!!field_element === false) return;
 		if (field_element.getAttribute("type") == "submit") return;
