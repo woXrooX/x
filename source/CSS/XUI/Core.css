@@ -461,8 +461,17 @@
 
 		.text-word-break-all{word-break: break-all;}
 
-		/* text-decoration */
-		.text-decoration-underline{text-decoration: underline;}
+		@layer decorations {
+			.text-decoration-underline{ text-decoration: underline; }
+			.text-decoration-line-through { text-decoration: line-through; }
+
+			.text-decoration-color-success { text-decoration-color: var(--color-success); }
+			.text-decoration-color-info { text-decoration-color: var(--color-info); }
+			.text-decoration-color-warning { text-decoration-color: var(--color-warning); }
+			.text-decoration-color-important { text-decoration-color: var(--color-important); }
+			.text-decoration-color-error { text-decoration-color: var(--color-error); }
+			.text-decoration-color-urgent { text-decoration-color: var(--color-urgent); }
+		}
 
 		/* Transform */
 		.text-transform-none{text-transform: none;}
