@@ -166,6 +166,7 @@ export default class Post {
 		////////// Callback
 		window.x.XR.execute_on_response(this.#element.getAttribute("XR-func"), this.#response, this.#element);
 
+		// TODO: Impr: Look for element from input_elements, if no element, look for element in global scope
 		if ("field" in this.#response && this.#response["field"] in this.#input_elements) {
 			x.Toast.new(this.#response["type"], this.#response["message"]);
 			x.VFX.border_flash(this.#input_elements[this.#response["field"]]["element"], this.#response["type"]);
@@ -173,8 +174,6 @@ export default class Post {
 
 			return;
 		}
-
-		if (this.#response["type"] == "error") return x.Toast.new("error", this.#response["message"]);
 
 		////////// x-toast
 		x.Toast.handle_commands(this.#element.getAttribute("x-toast"), this.#response);
