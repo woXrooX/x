@@ -166,13 +166,16 @@ export default class Post {
 		////////// Callback
 		window.x.XR.execute_on_response(this.#element.getAttribute("XR-func"), this.#response, this.#element);
 
-		// TODO: Impr: Look for element from input_elements, if no element, look for element in global scope
-		if ("field" in this.#response && this.#response["field"] in this.#input_elements) {
-			x.Toast.new(this.#response["type"], this.#response["message"]);
-			x.VFX.border_flash(this.#input_elements[this.#response["field"]]["element"], this.#response["type"]);
-			x.VFX.shake(this.#input_elements[this.#response["field"]]["element"]);
+		if ("field" in this.#response) {
+			let field_element = null;
 
-			return;
+			if (this.#response["field"] in this.#input_elements) field_element = this.#input_elements[this.#response["field"]]["element"];
+			else field_element = document.querySelector(this.#response["field"]);
+
+			if (!!field_element === true) {
+				x.VFX.border_flash(field_element, this.#response["type"]);
+				x.VFX.shake(field_element);
+			}
 		}
 
 		////////// x-toast
