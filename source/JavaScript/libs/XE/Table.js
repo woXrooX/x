@@ -148,7 +148,11 @@ export default class Table extends HTMLElement {
 						width-100
 						empty-display-none
 					"
-				>${this.#build_page_size()}${this.#build_searchable()}${this.#build_downloadable()}</header>
+				>${
+					this.#build_page_size() +
+					this.#build_searchable() +
+					this.#build_downloadable()
+				}</header>
 
 				<main class="width-100 min-height-0"></main>
 
