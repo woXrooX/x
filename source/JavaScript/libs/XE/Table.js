@@ -71,7 +71,7 @@ export default class Table extends HTMLElement {
 			value === null ||
 			typeof(value) !== "object" ||
 			Array.isArray(value)
-		) throw new TypeError("Table: data must be a plain object (JSON object).");
+		) throw new TypeError("Table: data must be a JSON string.");
 
 		this.#JSON = value;
 	}
@@ -98,8 +98,6 @@ export default class Table extends HTMLElement {
 
 		this.#rows = this.#JSON["rows"];
 
-		this.#page_size = "page_size" in this.#JSON ? this.#JSON["page_size"] : 10;
-
 		this.#init_page_size();
 
 		this.#build_DOM();
@@ -123,6 +121,8 @@ export default class Table extends HTMLElement {
 	}
 
 	#init_page_size = ()=>{
+		this.#page_size = "page_size" in this.#JSON ? this.#JSON["page_size"] : "all";
+
 		if (this.#page_size === "all") return this.#page_size = this.#JSON["rows"].length;
 
 		if (isNaN(parseInt(this.#page_size))) return this.#page_size = 10;
@@ -138,62 +138,21 @@ export default class Table extends HTMLElement {
 		this.innerHTML = `
 			<container class="height-100 gap-0-5">
 
-				<header class="display-flex flex-row flex-y-center flex-x-between gap-0-5 width-100">
-					<select
-						class="
-							text-align-center
-							width-auto
-							min-width-75px
-							box-shadow-v0
-						"
-						style="outline-offset: -1px;"
-					>
-						<option selected disabled>${this.#page_size}</option>
-						<option value="10">10</option>
-						<option value="15">15</option>
-						<option value="20">20</option>
-						<option value="25">25</option>
-						<option value="50">50</option>
-						<option value="100">100</option>
-						<option value="all">${window.Lang.use("all")}</option>
-					</select>
-
-					${
-						("searchable" in this.#JSON && this.#JSON["searchable"] === true) ?
-						`<input
-							id="search"
-							type="text"
-							placeholder="${Lang.use("type_to_search")}"
-							class="
-								width-100
-								box-shadow-v0
-							"
-							style="outline-offset: -1px;"
-						>` :
-						''
-					}
-
-					${
-						("downloadable" in this.#JSON && this.#JSON["downloadable"] === true) ?
-						`
-							<x-svg id="download_CSV_${Table.ID}" name="download_v2" color="white" class="btn btn-primary"></x-svg>
-							<x-tooltip trigger_selector="x-svg#download_CSV_${Table.ID}" class="padding-1 text-size-0-6">${Lang.use("download_as_CSV")}</x-tooltip>
-						` :
-						''
-					}
-				</header>
+				<header
+					class="
+						display-flex
+						flex-row
+						flex-y-center
+						flex-x-between
+						gap-0-5
+						width-100
+						empty-display-none
+					"
+				>${this.#build_page_size()}${this.#build_searchable()}${this.#build_downloadable()}</header>
 
 				<main class="width-100 min-height-0"></main>
 
-				<footer class="display-flex flex-row s-flex-column flex-x-between gap-1 width-100">
-					<section class="display-flex flex-row flex-x-start flex-y-center gap-0-5 text-size-0-8">
-						<span class="page_numbers"></span>
-						<span class="total_rows"></span>
-						<span class="matched_rows"></span>
-					</section>
-
-					<section class="display-flex flex-row flex-x-end gap-0-2"></section>
-				</footer>
+				${this.#build_footer()}
 
 			</container>
 
@@ -212,8 +171,74 @@ export default class Table extends HTMLElement {
 		this.#build_page_buttons_HTML();
 	}
 
+	#build_page_size = ()=>{
+		if (
+			!("page_size" in this.#JSON) ||
+			this.#JSON["page_size"] === false
+		) return '';
+
+		return `
+			<select
+				class="
+					text-align-center
+					width-auto
+					min-width-75px
+					box-shadow-v0
+				"
+				style="outline-offset: -1px;"
+			>
+				<option selected disabled>${this.#page_size}</option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="all">${window.Lang.use("all")}</option>
+			</select>
+		`;
+	}
+
+	#build_searchable = ()=>{
+		if (
+			!("searchable" in this.#JSON) ||
+			this.#JSON["searchable"] === false
+		) return '';
+
+		return `
+			<input
+				id="search"
+				type="text"
+				placeholder="${Lang.use("type_to_search")}"
+				class="
+					width-100
+					box-shadow-v0
+				"
+				style="outline-offset: -1px;"
+			>
+		`;
+	}
+
+	#build_downloadable = ()=>{
+		if (
+			!("downloadable" in this.#JSON) ||
+			this.#JSON["downloadable"] === false
+		) return '';
+
+		return `
+			<x-svg id="download_CSV_${Table.ID}" name="download_v2" color="white" class="btn btn-primary"></x-svg>
+			<x-tooltip trigger_selector="x-svg#download_CSV_${Table.ID}" class="padding-1 text-size-0-6">${Lang.use("download_as_CSV")}</x-tooltip>
+		`;
+	}
+
+
+
 	#listen_to_page_size_select = ()=>{
-		this.querySelector("container > header > select").onchange = (event)=>{
+		const element = this.querySelector("container > header > select");
+
+		if (element === null) return;
+
+		element.onchange = (event)=>{
 			const selected_page_size = event.target.value;
 
 			// If not a number then show all
@@ -234,10 +259,13 @@ export default class Table extends HTMLElement {
 	}
 
 	#listen_to_search_typing = ()=>{
-		if (!("searchable" in this.#JSON) || this.#JSON["searchable"] !== true) return;
+		const element = this.querySelector("input#search");
+
+		if (element === null) return;
 
 		let debounce_timeout;
-		this.querySelector("input#search").oninput = (event)=>{
+
+		element.oninput = (event)=>{
 			clearTimeout(debounce_timeout);
 
 			debounce_timeout = setTimeout(() => {
@@ -265,9 +293,11 @@ export default class Table extends HTMLElement {
 	}
 
 	#listen_to_CSV_download_click = ()=>{
-		if (!("downloadable" in this.#JSON) || this.#JSON["downloadable"] !== true) return;
+		const element = this.querySelector(`x-svg#download_CSV_${Table.ID}`);
 
-		this.querySelector(`x-svg#download_CSV_${Table.ID}`).onclick = () => {
+		if (element === null) return;
+
+		element.onclick = (event) => {
 			const CSV_data = [[]];
 
 			for (const column of this.#JSON["columns"]) CSV_data[0].push(column["title"]);
@@ -351,6 +381,24 @@ export default class Table extends HTMLElement {
 	}
 
 
+	#build_footer = ()=>{
+		if (
+			!("page_size" in this.#JSON) ||
+			this.#JSON["page_size"] === false
+		) return '';
+
+		return `
+			<footer class="display-flex flex-row s-flex-column flex-x-between gap-1 width-100">
+				<section class="display-flex flex-row flex-x-start flex-y-center gap-0-5 text-size-0-8">
+					<span class="page_numbers"></span>
+					<span class="total_rows"></span>
+					<span class="matched_rows"></span>
+				</section>
+
+				<section class="display-flex flex-row flex-x-end gap-0-2"></section>
+			</footer>
+		`;
+	}
 
 
 
@@ -576,7 +624,11 @@ export default class Table extends HTMLElement {
 	//// Footer
 
 	#build_page_numbers_HTML = ()=>{
-		this.querySelector("container > footer > section:nth-child(1) > span.page_numbers").innerHTML = `
+		const element = this.querySelector("container > footer > section:nth-child(1) > span.page_numbers");
+
+		if (element === null) return;
+
+		element.innerHTML = `
 			<span class="text-color-secondary text-size-0-7">Page</span>
 			${this.#current_page}
 			<span class="text-color-secondary text-size-0-7">of</span>
@@ -585,7 +637,11 @@ export default class Table extends HTMLElement {
 	}
 
 	#build_total_rows_HTML = ()=>{
-		this.querySelector("container > footer > section:nth-child(1) > span.total_rows").innerHTML = `
+		const element = this.querySelector("container > footer > section:nth-child(1) > span.total_rows");
+
+		if (element === null) return;
+
+		element.innerHTML = `
 			<span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.#JSON["rows"].length}
 		`;
 	}
@@ -603,11 +659,15 @@ export default class Table extends HTMLElement {
 	//// container > footer > section:nth-child(2)
 
 	#build_page_buttons_HTML = ()=>{
-		let buttons_HTML = "";
+		const container_element = this.querySelector("container > footer > section:nth-child(2)");
+
+		if (container_element === null) return;
+
+		let buttons_HTML = '';
 
 		for (let i = 1; i <= this.#rows_in_chunks.length; i++) buttons_HTML += `<button class="btn btn-primary btn-s display-none" name="${i}">${i}</button>`;
 
-		this.querySelector("container > footer > section:nth-child(2)").innerHTML = `
+		container_element.innerHTML = `
 			<x-svg name="arrow_left_first_page" color="white" class="btn btn-primary btn-s"></x-svg>
 			<x-svg name="arrow_back_v1" color="white" class="btn btn-primary btn-s"></x-svg>
 			<section class="display-flex flex-row gap-0-2">${buttons_HTML}</section>

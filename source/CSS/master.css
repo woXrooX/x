@@ -77,7 +77,7 @@ body{
 	}
 
 	/* If header is empty */
-	&:has(header:empty){
+	&:has(> header:empty) {
 		padding-top: 0px;
 
 		& > header{
