@@ -67,11 +67,11 @@ export default class Layers{
 	}
 
 	static pop() {
-		if (Layers.#locked === true) return;
+		if (Layers.#locked === true) return false;
 
 		Popping_Layer: {
 			const container = Layers.#element.querySelector(`container#layer_${Layers.#id}`);
-			if (container === null) return;
+			if (container === null) return false;
 
 			container.classList.add('removing');
 			container.addEventListener('animationend', () => container.remove(), { once: true });
@@ -112,7 +112,7 @@ export default class Layers{
 
 		const instructions = Layers.#parse_commands(commands);
 
-		for(const instruction of instructions){
+		for (const instruction of instructions){
 			if(instruction["types"].includes("any") || instruction["types"].includes(type)){
 				Layers.#handle_command_action(instruction["action"]);
 				break;
@@ -121,6 +121,10 @@ export default class Layers{
 	}
 
 	/////////// Helpers
+
+	static #pop_all() {
+		while (Layers.#id > 0) if (Layers.pop() === false) break;
+	}
 
 	static #build_from_template_HTML(
 		id,
@@ -196,6 +200,10 @@ export default class Layers{
 		switch(command){
 			case "pop":
 				Layers.pop();
+				break;
+
+			case "pop_all":
+				Layers.#pop_all();
 				break;
 
 			default:
