@@ -26,7 +26,7 @@ export default class Post {
 		// }
 	];
 
-	constructor(element){
+	constructor(element) {
 		this.#element = element;
 		this.#element.style.cursor = "pointer";
 		this.#target = this.#element.getAttribute("XR-target") ? document.querySelector(this.#element.getAttribute("XR-target")) : this.#element;
@@ -36,9 +36,9 @@ export default class Post {
 		this.#parse_commands();
 	}
 
-	#construct_data(){
+	#construct_data() {
 		try{ this.#data = JSON.parse(this.#element.getAttribute("XR-data")); }
-		catch(error){ this.#data = null; }
+		catch(error) { this.#data = null; }
 
 		this.#data = {
 			...(this.#element.hasAttribute("XR-for") ? {"for": this.#element.getAttribute("XR-for")} : {}),
@@ -48,7 +48,7 @@ export default class Post {
 
 	/////////// Handlers
 
-	#handle_input_elements(){
+	#handle_input_elements() {
 		if (this.#element.hasAttribute("XR-inputs") === false) return;
 
 		const parts = this.#element.getAttribute("XR-inputs").split(',');
@@ -89,10 +89,10 @@ export default class Post {
 		}
 	}
 
-	#handle_trigger(){
+	#handle_trigger() {
 		this.#trigger = this.#element.getAttribute("XR-trigger") ?? "click";
 
-		switch(this.#trigger){
+		switch(this.#trigger) {
 			case "click":
 				this.#on_click();
 				break;
@@ -103,19 +103,19 @@ export default class Post {
 		}
 	}
 
-	#parse_commands(){
+	#parse_commands() {
 		this.#commands = this.#element.getAttribute("XR-commands");
 
-		if(!!this.#target === false) return;
-		if(!!this.#commands === false) return;
+		if (!!this.#target === false) return;
+		if (!!this.#commands === false) return;
 
 		const commands = this.#commands.split(' ');
 
-		for(const command of commands){
+		for (const command of commands) {
 			const parts = command.split(':');
 
 			// Invalid command
-			if(parts.length !== 4) continue;
+			if (parts.length !== 4) continue;
 
 			this.#instructions.push({
 				"types": parts[1].split('|'),
@@ -125,13 +125,14 @@ export default class Post {
 		}
 	}
 
-	#handle_commands(){
-		if(!("type" in this.#response)) return;
+	#handle_commands() {
+		if (!("type" in this.#response)) return;
 
-		for(const instruction of this.#instructions){
-			if(instruction["types"].includes("any") || instruction["types"].includes(this.#response["type"])){
-				if(instruction["source"] === "data") this.#source = this.#response["data"] ?? '';
-				else if(instruction["source"] === "message") this.#source = window.Lang.use(this.#response["message"]);
+		for (const instruction of this.#instructions) {
+			if (instruction["types"].includes("any") || instruction["types"].includes(this.#response["type"])) {
+				if (instruction["source"] === "data") this.#source = this.#response["data"] || '';
+				else if (instruction["source"] === "message") this.#source = window.Lang.use(this.#response["message"]);
+				else this.#source = instruction["source"];
 
 				this.#action = instruction["action"];
 
@@ -142,16 +143,16 @@ export default class Post {
 		}
 	}
 
-	#handle_actions(){
-		if(!!this.#action === false) return;
+	#handle_actions() {
+		if (!!this.#action === false) return;
 
-		if(this.#action === "innerHTML") this.#target.innerHTML = this.#source;
-		else if(this.#action === "outerHTML") this.#target.outerHTML = this.#source;
-		else if(this.#action === "replaceWith") this.#target.replaceWith(this.#source);
-		else if(this.#action.startsWith("setAttribute")) this.#handle_set_attribute();
+		if (this.#action === "innerHTML") this.#target.innerHTML = this.#source;
+		else if (this.#action === "outerHTML") this.#target.outerHTML = this.#source;
+		else if (this.#action === "replaceWith") this.#target.replaceWith(this.#source);
+		else if (this.#action.startsWith("setAttribute")) this.#handle_set_attribute();
 	}
 
-	#handle_set_attribute(){
+	#handle_set_attribute() {
 		let arr = this.#action
 			.slice(
 				this.#action.indexOf("[")+1,
@@ -159,7 +160,7 @@ export default class Post {
 			)
 			.split(',');
 
-		if(arr.length > 0) this.#target.setAttribute(arr[0], this.#source ?? arr[1] ?? '');
+		if (arr.length > 0) this.#target.setAttribute(arr[0], this.#source ?? arr[1] ?? '');
 	}
 
 	#handle_response() {
@@ -193,7 +194,7 @@ export default class Post {
 
 	/////////// Event listeners
 
-	#on_click(){
+	#on_click() {
 		this.#element.onclick = async ()=>{
 			Loading.on_element_start(this.#element);
 
