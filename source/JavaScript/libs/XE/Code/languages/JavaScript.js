@@ -2,7 +2,7 @@ export default class JavaScript{
 	static #code = '';
 	static #tokens = null;
 
-	static handle(code){
+	static handle(code) {
 		JavaScript.#code = code;
 
 		JavaScript.#strip_blank_edges();
@@ -11,38 +11,37 @@ export default class JavaScript{
 	}
 
 	// Split into lines, drop empty ones at top & bottom, re-join
-	static #strip_blank_edges(){
+	static #strip_blank_edges() {
 		const lines = JavaScript.#code.split(/\r?\n/);
 
 		 // top
-		while(lines.length && lines[0].trim() === '')	lines.shift();
+		while (lines.length && lines[0].trim() === '') lines.shift();
 
 		// bottom
-		while(lines.length && lines.at(-1).trim() === '')	lines.pop();
+		while (lines.length && lines.at(-1).trim() === '') lines.pop();
 
 		JavaScript.#code = lines.join('\n');
 	}
 
-	static #tokenize(code){
+	static #tokenize(code) {
 		const keywords = ['if', 'else', 'while', 'for', 'function', 'var', 'let', 'const', 'return'];
 		const operators = ['+', '-', '*', '/', '=', '==', '!=', '>', '<', '>=', '<=', '(', ')', '{', '}'];
 
 		const tokens = [];
 		let current = 0;
 
-		while(current < code.length){
+		while (current < code.length) {
 			let char = code[current];
 
 			// Whitespace
-			if([' ', '\s', '\t'].includes(char)){
-				tokens.push({ type: 'whitespace', value: ' ' });
-
+			if (/[ \t]/.test(char)) {
+				tokens.push({ type: 'whitespace', value: char });
 				current++;
 				continue;
 			}
 
 			// Newline
-			if(char == '\n'){
+			if (char == '\n') {
 				tokens.push({type: 'newline', value: '\n'});
 
 				current++;
@@ -50,10 +49,10 @@ export default class JavaScript{
 			}
 
 			// Comments
-			if(char === '/' && code[current + 1] === '/'){
+			if (char === '/' && code[current + 1] === '/') {
 				let comment = '/';
 
-				while(code[++current] !== '\n' && current < code.length) comment += code[current];
+				while (code[++current] !== '\n' && current < code.length) comment += code[current];
 
 				comment += '\n'
 
@@ -64,7 +63,7 @@ export default class JavaScript{
 			}
 
 			// Dot
-			if(char === '.'){
+			if (char === '.') {
 				tokens.push({type: 'dot', value: '.'});
 
 				current++;
@@ -72,7 +71,7 @@ export default class JavaScript{
 			}
 
 			// Semicolon
-			if(char === ';'){
+			if (char === ';') {
 				tokens.push({type: 'semicolon', value: ';'});
 
 				current++;
@@ -80,10 +79,10 @@ export default class JavaScript{
 			}
 
 			// Operators
-			if(operators.includes(char)){
+			if (operators.includes(char)) {
 				let operator = char;
 
-				while(operators.includes(operator + code[current + 1])) operator += code[++current];
+				while (operators.includes(operator + code[current + 1])) operator += code[++current];
 
 				tokens.push({type: 'operator', value: operator});
 
@@ -92,12 +91,12 @@ export default class JavaScript{
 			}
 
 			// Keywords and Identifiers
-			if(/[a-zA-Z_]/.test(char)){
+			if (/[a-zA-Z_]/.test(char)) {
 				let identifier = char;
 
-				while(/[a-zA-Z0-9_]/.test(code[current + 1])) identifier += code[++current];
+				while (/[a-zA-Z0-9_]/.test(code[current + 1])) identifier += code[++current];
 
-				if(keywords.includes(identifier)) tokens.push({type: 'keyword', value: identifier});
+				if (keywords.includes(identifier)) tokens.push({type: 'keyword', value: identifier});
 				else tokens.push({type: 'identifier', value: identifier});
 
 				current++;
@@ -105,10 +104,10 @@ export default class JavaScript{
 			}
 
 			// Numbers
-			if(/[0-9]/.test(char)){
+			if (/[0-9]/.test(char)) {
 				let number = char;
 
-				while(/[0-9.]/.test(code[current + 1])) number += code[++current];
+				while (/[0-9.]/.test(code[current + 1])) number += code[++current];
 
 				tokens.push({type: 'number', value: parseFloat(number)});
 
@@ -117,11 +116,11 @@ export default class JavaScript{
 			}
 
 			// String
-			if(char === '"' || char === "'"){
+			if (char === '"' || char === "'") {
 				let string = `"`;
 				let quote = char;
 
-				while(code[++current] !== quote) string += code[current];
+				while (code[++current] !== quote) string += code[current];
 
 				string += `"`;
 
@@ -140,13 +139,13 @@ export default class JavaScript{
 		JavaScript.#tokens = tokens;
 	}
 
-	static #render_highlighted_code(){
+	static #render_highlighted_code() {
 		let HTML = '';
 
-		for(const token of JavaScript.#tokens){
+		for(const token of JavaScript.#tokens) {
 			let token_HTML = '';
 
-			switch(token.type){
+			switch(token.type) {
 				case 'comment':
 					token_HTML = `<span style="color: gray;">${token.value}</span>`;
 					break;
