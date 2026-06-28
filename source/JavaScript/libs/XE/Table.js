@@ -323,6 +323,7 @@ export default class Table extends HTMLElement {
 		this.querySelector("container > main").innerHTML = `
 			<section class="table-container table-thead-sticky scrollbar-x height-100">
 				<table>
+					<caption class="empty-display-none">${this.#JSON["caption"] || ''}</caption>
 					<thead><tr></tr></thead>
 					<tbody></tbody>
 					<tfoot><tr></tr></tfoot>
