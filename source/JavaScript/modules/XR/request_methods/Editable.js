@@ -42,7 +42,12 @@ export default class Editable {
 
 			setTimeout(()=>{ this.#set_state_indicator(null); }, 2000);
 
-			window.x.XR.execute_on_response(this.#element.getAttribute("XR-func"), this.#response, this.#element);
+			window.x.XR.execute_on_response(
+				this.#element.getAttribute("XR-func"),
+				this.#response,
+				this.#data,
+				this.#element
+			);
 
 			x.Toast.handle_commands(this.#element.getAttribute("x-toast"), this.#response);
 

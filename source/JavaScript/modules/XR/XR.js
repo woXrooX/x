@@ -27,9 +27,14 @@ export default class XR {
 
 	static push_func(func) { XR.#FUNC_POOL[func.name] = func; }
 
-	static async execute_on_response(func_name, response, element){
+	static async execute_on_response(func_name, response, data, element){
 		if(!!func_name === false) return;
-		await XR.#FUNC_POOL[func_name](response, element);
+
+		await XR.#FUNC_POOL[func_name]({
+			response: response,
+			data: data,
+			element: element
+		});
 	}
 }
 

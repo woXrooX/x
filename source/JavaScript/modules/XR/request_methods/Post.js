@@ -38,7 +38,7 @@ export default class Post {
 
 	#construct_data() {
 		try{ this.#data = JSON.parse(this.#element.getAttribute("XR-data")); }
-		catch(error) { this.#data = null; }
+		catch(error) { this.#data = {}; }
 
 		this.#data = {
 			...(this.#element.hasAttribute("XR-for") ? {"for": this.#element.getAttribute("XR-for")} : {}),
@@ -165,7 +165,12 @@ export default class Post {
 
 	#handle_response() {
 		////////// Callback
-		window.x.XR.execute_on_response(this.#element.getAttribute("XR-func"), this.#response, this.#element);
+		window.x.XR.execute_on_response(
+			this.#element.getAttribute("XR-func"),
+			this.#response,
+			this.#data,
+			this.#element
+		);
 
 		if ("field" in this.#response) {
 			let field_element = null;
