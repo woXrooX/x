@@ -388,10 +388,15 @@
 		"ru": "Ссылка для восстановления пароля отправлен",
 		"uz": "Parolni tiklash linki yuborildi"
 	},
-	"plzW8": {
+	"please_wait": {
 		"en": "Please wait",
 		"ru": "Пожалуйста, подождите",
 		"uz": "Iltimos kuting"
+	},
+	"please_select": {
+		"en": "Please select",
+		"uz": "Iltimos, tanlang",
+		"ru": "Пожалуйста, выберите"
 	},
 	"powered_by_woXrooX": {
 		"en": "<span class='white-space-nowrap-important'>Powered by <a target='_blank' href='https://www.woXrooX.com'>woXrooX</a></span>",

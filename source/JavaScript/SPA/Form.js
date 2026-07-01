@@ -53,11 +53,10 @@ export default class Form {
 
 		window.Modal.lock();
 
-		// PLZW8
 		Form.#response({
 			form: event.target,
 			type: "info",
-			message: "plzW8",
+			message: "please_wait",
 			field: event.target.getAttribute("for")
 		});
 
