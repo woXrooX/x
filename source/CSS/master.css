@@ -98,7 +98,7 @@ body{
 	& > menu{
 		--menu-padding: 5px;
 
-		font-size: 1.2rem;
+		font-size: 1rem;
 
 		background-color: hsla(var(--color-main-hue), 10%, 25%, 0.1);
 		backdrop-filter: blur(100px);
@@ -185,7 +185,7 @@ body{
 								display: flex;
 								flex-direction: row;
 								align-items: center;
-								gap: var(--gap);
+								gap: calc(var(--gap) / 2);
 
 								color: white;
 								font-size: 1em;
