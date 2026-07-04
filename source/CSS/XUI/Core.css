@@ -2,7 +2,7 @@
 	@layer root{
 		html{
 			&:root{
-				font-size: 22px;
+				font-size: 20px;
 
 				--padding: 5px;
 				--margin: 5px;
