@@ -4,9 +4,9 @@
 			&:root{
 				font-size: 20px;
 
-				--padding: 5px;
-				--margin: 5px;
-				--gap: 20px;
+				--padding: calc(1rem / 4);
+				--margin: calc(1rem / 4);
+				--gap: 1rem;
 				--radius: 5px;
 				--blur: 10px;
 				--transition-velocity: 200ms;
