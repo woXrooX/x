@@ -47,56 +47,16 @@ import VFX from "/JavaScript/modules/FX/VFX.js";
 //// Non built-in XEs will be manually imported on head section of the index.html
 // <script type="module" src="/JavaScript/libs/XE/Sample_XE.js"></script>
 
-export default class Core{
+export default class Core {
 	/////////////////////////// Static
 
-	static {
-		Core.#get_initial_data()
-			.then(async ()=>{
-				await Core.#init();
-				// Core.#on_load();
-				Core.#on_URL_change();
-				Core.#on_hash_change();
-				Core.#on_history_button_clicked();
-				Core.#on_DOM_change();
-				await Core.#on_user_session_change();
-				Core.#observe_mutations();
-			});
-	}
+	// static {}
 
-	static async #get_initial_data(){
-		return new Promise( async (resolve, reject) => {
-			let response = await window.x.Request.make({
-				payload: {"for": "initial_data"},
-				target_URL: "/API"
-			});
 
-			if (typeof response === "object") {
-				Log.success(response);
-
-				window.session = response["session"];
-				window.CONF = response["CONF"];
-				window.Language.DICTIONARY = response["LANGUAGE_DICTIONARY"];
-				window.USER_AUTHENTICITY_STATUSES = response["USER_AUTHENTICITY_STATUSES"];
-				window.USER_ROLES = response["USER_ROLES"];
-				window.USER_OCCUPATIONS = response["USER_OCCUPATIONS"];
-				window.NOTIFICATION_TYPES = response["NOTIFICATION_TYPES"];
-				window.SVG.load(response["PROJECT_SVG"]);
-				window.x["CURRENCIES"] = response["CURRENCIES"];
-
-				resolve();
-			}
-
-			else {
-				Log.error("Fetching the initial data failed!");
-
-				reject();
-			}
-		});
-	}
-
-	static async #init(){
+	static async init(){
 		Log.info("Core.#init()");
+
+		await Core.#get_initial_data();
 
 		Language.init();
 		x.Color_Mode.init();
@@ -108,6 +68,116 @@ export default class Core{
 
 		await x.User.init_set_last_heartbeat_at();
 		await x.Notification.init();
+
+		// Core.#on_load();
+		Core.#on_URL_change();
+		Core.#on_hash_change();
+		Core.#on_history_button_clicked();
+		Core.#on_DOM_change();
+		await Core.#on_user_session_change();
+		Core.#observe_mutations();
+	}
+
+	static async #get_initial_data() {
+		const CONFIGURATIONS = await window.x.Request.make({
+			payload: {"for": "get:CONFIGURATIONS"},
+			target_URL: "/API"
+		});
+
+		if ("data" in CONFIGURATIONS) window.CONF = CONFIGURATIONS["data"];
+		else return Log.error("Core.#get_initial_data(): get:CONFIGURATIONS");
+
+
+
+		const session = await window.x.Request.make({
+			payload: {"for": "get:session"},
+			target_URL: "/API"
+		});
+
+		if (session["type"] != "success") return Log.error("Core.#get_initial_data(): get:session");
+		else if ("data" in session) window.session = session["data"];
+		else window.session = {};
+
+
+
+		const LANGUAGE_DICTIONARY = await window.x.Request.make({
+			payload: {"for": "get:LANGUAGE_DICTIONARY"},
+			target_URL: "/API",
+			cacheable: { key_name: "x.cache.LANGUAGE_DICTIONARY" }
+		});
+
+		if (LANGUAGE_DICTIONARY["type"] != "success") return Log.error("Core.#get_initial_data(): get:LANGUAGE_DICTIONARY");
+		else if ("data" in LANGUAGE_DICTIONARY) window.Language.DICTIONARY = LANGUAGE_DICTIONARY["data"];
+
+
+
+		const USER_AUTHENTICITY_STATUSES = await window.x.Request.make({
+			payload: {"for": "get:USER_AUTHENTICITY_STATUSES"},
+			target_URL: "/API",
+			cacheable: { key_name: "x.cache.USER_AUTHENTICITY_STATUSES" }
+		});
+
+		if (USER_AUTHENTICITY_STATUSES["type"] != "success") return Log.error("Core.#get_initial_data(): get:USER_AUTHENTICITY_STATUSES");
+		else if ("data" in USER_AUTHENTICITY_STATUSES) window.USER_AUTHENTICITY_STATUSES = USER_AUTHENTICITY_STATUSES["data"];
+		else window.USER_AUTHENTICITY_STATUSES = {};
+
+
+
+		const USER_ROLES = await window.x.Request.make({
+			payload: {"for": "get:USER_ROLES"},
+			target_URL: "/API",
+			cacheable: { key_name: "x.cache.USER_ROLES" }
+		});
+
+		if (USER_ROLES["type"] != "success") return Log.error("Core.#get_initial_data(): get:USER_ROLES");
+		else if ("data" in USER_ROLES) window.USER_ROLES = USER_ROLES["data"];
+		else window.USER_ROLES = {};
+
+
+		const USER_OCCUPATIONS = await window.x.Request.make({
+			payload: {"for": "get:USER_OCCUPATIONS"},
+			target_URL: "/API",
+			cacheable: { key_name: "x.cache.USER_OCCUPATIONS" }
+		});
+
+		if (USER_OCCUPATIONS["type"] != "success") return Log.error("Core.#get_initial_data(): get:USER_OCCUPATIONS");
+		else if ("data" in USER_OCCUPATIONS) window.USER_OCCUPATIONS = USER_OCCUPATIONS["data"];
+		else window.USER_OCCUPATIONS = {};
+
+
+
+		const NOTIFICATION_TYPES = await window.x.Request.make({
+			payload: {"for": "get:NOTIFICATION_TYPES"},
+			target_URL: "/API",
+			cacheable: { key_name: "x.cache.NOTIFICATION_TYPES" }
+		});
+
+		if (NOTIFICATION_TYPES["type"] != "success") return Log.error("Core.#get_initial_data(): get:NOTIFICATION_TYPES");
+		else if ("data" in NOTIFICATION_TYPES) window.NOTIFICATION_TYPES = NOTIFICATION_TYPES["data"];
+		else window.NOTIFICATION_TYPES = {};
+
+
+
+		const PROJECT_SVG = await window.x.Request.make({
+			payload: {"for": "get:PROJECT_SVG"},
+			target_URL: "/API",
+			cacheable: { key_name: "x.cache.PROJECT_SVG" }
+		});
+
+		if (PROJECT_SVG["type"] != "success") return Log.error("Core.#get_initial_data(): get:PROJECT_SVG");
+		else if ("data" in PROJECT_SVG) window.SVG.load(PROJECT_SVG["data"]);
+
+
+
+		const CURRENCIES = await window.x.Request.make({
+			payload: {"for": "get:CURRENCIES"},
+			target_URL: "/API",
+			cacheable: { key_name: "x.cache.CURRENCIES" }
+		});
+
+		if (CURRENCIES["type"] != "success") return Log.error("Core.#get_initial_data(): get:CURRENCIES");
+		else if ("data" in CURRENCIES) window.x["CURRENCIES"] = CURRENCIES["data"];
+		else window.x["CURRENCIES"] = {};
 	}
 
 	/////////// Event Handlers
@@ -229,3 +299,5 @@ export default class Core{
 		// observer.disconnect();
 	}
 };
+
+window.x["Core"] = Core;
