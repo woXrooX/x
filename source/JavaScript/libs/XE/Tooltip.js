@@ -61,7 +61,13 @@ export default class Tooltip extends HTMLElement {
 	};
 
 	#handle_trigger_hover = ()=>{
-		this.#trigger_element.addEventListener('mouseenter', () => this.classList.add("show"));
+		this.#trigger_element.addEventListener('mouseenter', () => {
+			// Prevent to trigger on touchscreens
+			if (matchMedia('(hover: hover) and (pointer: fine)').matches === false) return;
+
+			this.classList.add("show");
+		});
+
 		this.#trigger_element.addEventListener('mouseleave', () => this.classList.remove('show'));
 	};
 
