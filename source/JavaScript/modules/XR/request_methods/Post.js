@@ -109,7 +109,7 @@ export default class Post {
 		if (!!this.#target === false) return;
 		if (!!this.#commands === false) return;
 
-		const commands = this.#commands.split(' ');
+		const commands = split_commands(this.#commands);
 
 		for (const command of commands) {
 			const parts = command.split(':');
@@ -122,6 +122,15 @@ export default class Post {
 				"action": parts[2],
 				"source": parts[3]
 			});
+		}
+
+		function split_commands(commands_string) {
+			const matches = commands_string.match(/on:(?:[^"\s]|"[^"]*")+/g) || [];
+			const result = [];
+
+			for (let i = 0; i < matches.length; i++) result.push(matches[i].replace(/"([^"]*)"/g, '$1'));
+
+			return result;
 		}
 	}
 
