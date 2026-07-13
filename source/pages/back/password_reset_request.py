@@ -81,6 +81,11 @@ def password_reset_request(request):
 			<p>The {Globals.PROJECT_LANGUAGE_DICTIONARY.get(Globals.CONF["project_name"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
 		"""
 
+
+		# TODO: Enqueue the email, don't send it in-request;
+		# identical fast path + neutral response ("If an account exists...") for found/not-found/resend;
+		# rate limit keyed on the submitted email string, not the user record; no time.sleep() padding.
+
 		if SendGrid.send("noreply", request.form["eMail"], eMail_content, "Reset password") is not True:
 			Log.error("password_reset_request.py: SendGrid")
 
