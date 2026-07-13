@@ -63,6 +63,7 @@ export function timestamp_to_human_readable_v2(timestamp) {
 
 export function timestamptz_to_local_timestamp(timestamptz) {
 	const local_timestamp = format_timestamp({
+		"formatter_method": "format_to_parts",
 		"timestamp": timestamptz,
 		"year": 'numeric',
 		"month": '2-digit',
@@ -74,13 +75,14 @@ export function timestamptz_to_local_timestamp(timestamptz) {
 		"time_zone": Intl.DateTimeFormat().resolvedOptions().timeZone
 	});
 
-	const [month, day, year, time] = local_timestamp.split(/[/,]/);
-	const [hours, minutes, seconds] = time.trim().split(':');
-
-	return `${year}-${month}-${day.trim()} ${hours}:${minutes}:${seconds}`;
+	return `${local_timestamp.year}-${local_timestamp.month}-${local_timestamp.day} ${local_timestamp.hour}:${local_timestamp.minute}:${local_timestamp.second}`
 }
 
 export function format_timestamp({
+	// format
+	// format_to_parts
+	formatter_method = "format",
+
 	timestamp,
 
 	// "en-GB", "en-US", "ru-RU", "uz" — single tag or array of tags
@@ -150,31 +152,46 @@ export function format_timestamp({
 
 	if (isNaN(new_date.getTime())) throw new Error("invalid timestamp: " + timestamp);
 
-	return new Intl.DateTimeFormat(
-		locales,
-		{
-			"weekday": weekday,
-			"era": era,
-			"year": year,
-			"month": month,
-			"day": day,
-			"hour": hour,
-			"minute": minute,
-			"second": second,
-			"fractionalSecondDigits": fractional_second_digits,
-			"dayPeriod": day_period,
-			"timeZoneName": time_zone_name,
-			"dateStyle": date_style,
-			"timeStyle": time_style,
-			"timeZone": time_zone,
-			"hour12": hour_12,
-			"hourCycle": hour_cycle,
-			"calendar": calendar,
-			"numberingSystem": numbering_system,
-			"localeMatcher": locale_matcher,
-			"formatMatcher": format_matcher
+	const options = {
+		"weekday": weekday,
+		"era": era,
+		"year": year,
+		"month": month,
+		"day": day,
+		"hour": hour,
+		"minute": minute,
+		"second": second,
+		"fractionalSecondDigits": fractional_second_digits,
+		"dayPeriod": day_period,
+		"timeZoneName": time_zone_name,
+		"dateStyle": date_style,
+		"timeStyle": time_style,
+		"timeZone": time_zone,
+		"hour12": hour_12,
+		"hourCycle": hour_cycle,
+		"calendar": calendar,
+		"numberingSystem": numbering_system,
+		"localeMatcher": locale_matcher,
+		"formatMatcher": format_matcher
+	};
+
+	if (formatter_method === "format") return new Intl.DateTimeFormat(locales, options).format(new_date);
+
+	else if (formatter_method === "format_to_parts") {
+		const parts = new Intl.DateTimeFormat(locales, options).formatToParts(new_date);
+
+		const results = {};
+
+		for (const part of parts) {
+			if (part.type === "literal") continue;
+
+			results[part.type] = part.value;
 		}
-	).format(new_date);
+
+		return results;
+	}
+
+	else throw new Error("invalid formatter_method: " + formatter_method);
 }
 
 // Exptected inputs: type->string, fromat->HH:mm:ss
