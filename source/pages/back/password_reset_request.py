@@ -28,7 +28,7 @@ def password_reset_request(request):
 			fetch_one=True
 		)
 		if user is False: return Response.make(type="error", message="database_error")
-		if not user: return Response.make(type="error", message="user_with_this_eMail_does_not_exists")
+		if not user: return Response.make(type="success", message="if_account_exists_for_email_you_get_password_reset_link", redirect="/")
 
 		#### Check if the link already has been sent
 		data = MySQL.execute(
@@ -44,7 +44,7 @@ def password_reset_request(request):
 			fetch_one=True
 		)
 		if data is False: return Response.make(type="error", message="database_error")
-		if data: return Response.make(type="info", message="password_recovery_link_already_has_been_sent", redirect="/")
+		if data: return Response.make(type="success", message="if_account_exists_for_email_you_get_password_reset_link", redirect="/")
 
 		#### The recovery link
 		token = secrets.token_urlsafe(32)
@@ -72,7 +72,6 @@ def password_reset_request(request):
 			<p>The {Globals.PROJECT_LANGUAGE_DICTIONARY.get(Globals.CONF["project_name"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
 		"""
 
-		if SendGrid.send("noreply", request.form["eMail"], eMail_content, "Reset password") is not True:
-			return Response.make(type="warning", message="Unable to send email. Your request has been saved. Please reach out to support for further assistance", redirect="/")
+		if SendGrid.send("noreply", request.form["eMail"], eMail_content, "Reset password") is not True: pass
 
-		return Response.make(type="success", message="password_recovery_link_has_been_sent", redirect="/")
+		return Response.make(type="success", message="if_account_exists_for_email_you_get_password_reset_link", redirect="/")
