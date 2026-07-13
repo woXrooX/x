@@ -1068,7 +1068,6 @@
 			color: var(--color-text-primary);
 			accent-color: var(--color-main-accent);
 
-			background: var(--color-main-tint-2);
 			border: 1px solid var(--color-main-tint-4);
 			border-radius: var(--radius);
 			box-shadow: var(--shadow);
