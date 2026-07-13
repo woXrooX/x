@@ -6,6 +6,7 @@ from Python.x.modules.Response import Response
 from Python.x.modules.PostgreSQL import PostgreSQL
 from Python.x.modules.Globals import Globals
 from Python.x.modules.IP_address_tools import extract_IP_address_from_request
+from Python.x.modules.Logger import Log
 
 # @Page.build({
 # 	"enabled": False,
@@ -27,8 +28,11 @@ def password_reset_request(request):
 			params=[request.form["eMail"]],
 			fetch_type="one"
 		)
+
 		if "error" in user: return Response.make(type="error", message="database_error")
-		if user["data"] is None: return Response.make(type="error", message="user_with_this_eMail_does_not_exists")
+		if user["data"] is None:
+			Log.error("password_reset_request.py: password_recovery_link_already_has_been_sent")
+			return Response.make(type="success", message="if_account_exists_for_email_you_get_password_reset_link", redirect="/")
 
 		#### Check if the link already has been sent
 		data = PostgreSQL.execute(
@@ -45,8 +49,11 @@ def password_reset_request(request):
 			],
 			fetch_type="one"
 		)
+
 		if "error" in data: return Response.make(type="error", message="database_error")
-		if data["data"] is not None: return Response.make(type="info", message="password_recovery_link_already_has_been_sent", redirect="/")
+		if data["data"] is not None:
+			Log.error("password_reset_request.py: user_with_this_eMail_does_not_exists")
+			return Response.make(type="success", message="if_account_exists_for_email_you_get_password_reset_link", redirect="/")
 
 		#### The recovery link
 		token = secrets.token_urlsafe(32)
@@ -62,6 +69,7 @@ def password_reset_request(request):
 				user["password"]
 			]
 		)
+
 		if data is False: return Response.make(type="error", message="database_error")
 
 		eMail_content = f"""
@@ -74,6 +82,6 @@ def password_reset_request(request):
 		"""
 
 		if SendGrid.send("noreply", request.form["eMail"], eMail_content, "Reset password") is not True:
-			return Response.make(type="warning", message="Unable to send email. Your request has been saved. Please reach out to support for further assistance", redirect="/")
+			Log.error("password_reset_request.py: SendGrid")
 
-		return Response.make(type="success", message="password_recovery_link_has_been_sent", redirect="/")
+		return Response.make(type="success", message="if_account_exists_for_email_you_get_password_reset_link", redirect="/")
