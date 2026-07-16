@@ -113,7 +113,7 @@ export async function after() {
 			</span>
 		`;
 
-		return `<column class="flex-y-start surface-v1 padding-2 gap-0-3 width-100">${HTML}</column>`;
+		return `<column class="align-items-flex-start surface-v1 padding-2 gap-0-3 width-100">${HTML}</column>`;
 	});
 
 	DOM.build("column.log_in_records", async function build_log_in_records_HTML() {
