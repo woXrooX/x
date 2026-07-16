@@ -4,7 +4,7 @@ export function before() {
 
 export default function main() {
 	return `
-		<container class="page_log_in padding-5 flex-x-center bg-animated-gradient-v1">
+		<container class="page_log_in padding-5 justify-content-center bg-animated-gradient-v1">
 			<form for="log_in" autocomplete="off" class="max-width-600px surface-v1 padding-5">
 				<p class="text-align-center text-size-1-5"${window.Lang.use("log_in")}</p>
 
