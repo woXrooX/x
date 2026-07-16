@@ -165,7 +165,7 @@ export default class Core {
 		});
 
 		if (PROJECT_SVG["type"] != "success") return Log.error("Core.#get_initial_data(): get:PROJECT_SVG");
-		else if ("data" in PROJECT_SVG) window.SVG.load(PROJECT_SVG["data"]);
+		else if ("data" in PROJECT_SVG) window.x.SVG.load(PROJECT_SVG["data"]);
 
 
 

@@ -88,23 +88,23 @@ export default class SVG{
 		let body = "";
 
 		// Invalid Name Value
-		if(!!name === false) body = SVG.all["block_circle"];
+		if(!!name === false) body = x.SVG.all["block_circle"];
 
 		// If Exists
-		if(name in SVG.all) body = SVG.all[name];
+		if(name in x.SVG.all) body = x.SVG.all[name];
 
 		// Fallback SVG
-		else body = SVG.all["block_circle"];
+		else body = x.SVG.all["block_circle"];
 
 		// Build And Return
-		return SVG.#open + body + SVG.#close;
+		return x.SVG.#open + body + x.SVG.#close;
 	}
 
 	static load(SVGs){
 		if(!!SVGs === false) return;
 
-		for(const svg in SVGs) SVG.all[svg] = SVGs[svg];
+		for(const svg in SVGs) x.SVG.all[svg] = SVGs[svg];
 	}
 }
 
-window.SVG = SVG;
+window.x["SVG"] = SVG;

@@ -45,7 +45,7 @@ export default class XSVG extends HTMLElement{
 				}
 			</style>
 
-			<span>${window.SVG.use(this.getAttribute("name"))}</span>
+			<span>${window.x.SVG.use(this.getAttribute("name"))}</span>
 		`;
 
 		this.svg_container = this.shadow.querySelector("span");
@@ -64,10 +64,10 @@ export default class XSVG extends HTMLElement{
 		if (this.hasAttribute("toggle") === false) return;
 
 		// Set SVG To "name" Value
-		if (this.toggled === true) this.svg_container.innerHTML = window.SVG.use(this.getAttribute("name"));
+		if (this.toggled === true) this.svg_container.innerHTML = window.x.SVG.use(this.getAttribute("name"));
 
 		// Set SVG To "toggle" Value
-		else this.svg_container.innerHTML = window.SVG.use(this.getAttribute("toggle"));
+		else this.svg_container.innerHTML = window.x.SVG.use(this.getAttribute("toggle"));
 
 		// Update The Value
 		this.toggled = !this.toggled;
@@ -77,13 +77,13 @@ export default class XSVG extends HTMLElement{
 	// Set SVG name
 	set name(value) {
 		this.setAttribute("name", value);
-		if (this.toggled === false) this.svg_container.innerHTML = window.SVG.use(value);
+		if (this.toggled === false) this.svg_container.innerHTML = window.x.SVG.use(value);
 	}
 
 	// Set SVG toggle name
 	set toggle(value) {
 		this.setAttribute("toggle", value);
-		if (this.toggled === true) this.svg_container.innerHTML = window.SVG.use(value);
+		if (this.toggled === true) this.svg_container.innerHTML = window.x.SVG.use(value);
 	}
 };
 
