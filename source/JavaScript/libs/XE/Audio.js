@@ -27,7 +27,7 @@ export default class x_Audio extends HTMLElement {
 		super();
 
 		this.innerHTML = `
-			<row class="flex-row gap-0-5 flex-center width-auto">
+			<row class="flex-row gap-0-5 justify-content-center align-items-center width-auto">
 				<row class="flex-row width-auto gap-0-2">
 					<span class="current_time">00:00</span>
 					<span>/</span>

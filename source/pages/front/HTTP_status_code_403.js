@@ -4,7 +4,7 @@ export function before(){
 
 export default function main(){
 	return `
-		<container class="flex-center padding-5 bg-error font-family-Poppins">
+		<container class="justify-content-center align-items-center padding-5 bg-error font-family-Poppins">
 			<section class="display-grid place-items-center">
 				<p class="grid-area-1-slash-1 text-size-15 text-color-hsla-0-0-100-0-3">403</p>
 				<p class="grid-area-1-slash-1 text-size-3 text-color-white">${window.Lang.use("forbidden")}</p>
