@@ -7,13 +7,13 @@ export function before() {
 export default function main() {
 	return `
 		<container class="padding-5 gap-0-5 max-width-1200px">
-			<row class="surface-v1 padding-2 flex-row justify-content-space-between flex-y-center">
-				<row class="flex-row gap-0-5 width-auto flex-y-center justify-content-flex-start">
+			<row class="surface-v1 padding-2 flex-row justify-content-space-between align-items-center">
+				<row class="flex-row gap-0-5 width-auto align-items-center justify-content-flex-start">
 					<x-link go="history:back" class="btn btn-primary"><x-svg name="arrow_back_v1" color="white"></x-svg></x-link>
 					<p>User</p>
 				</row>
 
-				<row class="actions flex-row gap-0-5 width-auto flex-y-center justify-content-flex-end"></row>
+				<row class="actions flex-row gap-0-5 width-auto align-items-center justify-content-flex-end"></row>
 			</row>
 
 			<column class="user_data width-100"></column>

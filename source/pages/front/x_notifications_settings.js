@@ -5,13 +5,13 @@ export function before() {
 export default function main() {
 	return `
 		<container class="padding-5 gap-0-5 max-width-1200px">
-			<row class="surface-v1 padding-2 flex-row justify-content-space-between flex-y-center">
-				<row class="flex-row gap-0-5 width-auto flex-y-center justify-content-flex-start">
+			<row class="surface-v1 padding-2 flex-row justify-content-space-between align-items-center">
+				<row class="flex-row gap-0-5 width-auto align-items-center justify-content-flex-start">
 					<x-link go="history:back" class="btn btn-primary"><x-svg name="arrow_back_v1" color="white"></x-svg></x-link>
 					<p>${Lang.use("notification_settings")}</p>
 				</row>
 
-				<row class="flex-row gap-0-5 width-auto flex-y-center justify-content-flex-end"></row>
+				<row class="flex-row gap-0-5 width-auto align-items-center justify-content-flex-end"></row>
 			</row>
 
 			<column class="notification_events width-100 gap-0-5 padding-2 surface-v1"></column>
@@ -37,7 +37,7 @@ export async function after() {
 		let HTML = '';
 
 		for (const event in events) HTML += `
-			<row class="flex-row justify-content-space-between flex-y-center">
+			<row class="flex-row justify-content-space-between align-items-center">
 				<p class="text-size-0-8">${Lang.use(event+"_notification_event_description")}</p>
 
 				<row class="flex-row width-auto gap-1">

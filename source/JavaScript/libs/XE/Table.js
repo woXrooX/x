@@ -142,7 +142,7 @@ export default class Table extends HTMLElement {
 					class="
 						display-flex
 						flex-row
-						flex-y-center
+						align-items-center
 						justify-content-space-between
 						gap-0-5
 						width-100
@@ -347,7 +347,7 @@ export default class Table extends HTMLElement {
 
 			HTML += `
 				<th>
-					<row class="cursor-pointer gap-0-5 flex-row flex-y-center justify-content-flex-start">
+					<row class="cursor-pointer gap-0-5 flex-row align-items-center justify-content-flex-start">
 						${this.#JSON["columns"][index]["title"]}
 						${
 							this.#JSON["columns"][index]["sortable"] == false ?
@@ -394,7 +394,7 @@ export default class Table extends HTMLElement {
 
 		return `
 			<footer class="display-flex flex-row s-flex-column justify-content-space-between gap-1 width-100">
-				<section class="display-flex flex-row justify-content-flex-start flex-y-center gap-0-5 text-size-0-8">
+				<section class="display-flex flex-row justify-content-flex-start align-items-center gap-0-5 text-size-0-8">
 					<span class="page_numbers"></span>
 					<span class="total_rows"></span>
 					<span class="matched_rows"></span>
