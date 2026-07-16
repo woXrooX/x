@@ -3,7 +3,7 @@ export function before() { window.x.Head.set_title("actions"); }
 export default async function main() {
 	return `
 		<container class="padding-5 gap-1 max-width-1200px">
-			<row class="flex-row flex-x-start surface-v1 padding-2 gap-0-5">
+			<row class="flex-row justify-content-flex-start surface-v1 padding-2 gap-0-5">
 				${build_modal_XR_project_Cron_Jobs_init_HTML()}
 				${build_modal_XR_sanitize_users_folders_HTML()}
 				${build_modal_form_eMail_send_HTML()}
