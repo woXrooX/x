@@ -5,7 +5,7 @@ export function before() { window.x.Head.set_title("notifications"); }
 export default function main() {
 	return `
 		<container class="padding-5 gap-0-5 max-width-1200px">
-			<row class="surface-v1 padding-2 flex-row flex-x-between flex-y-center">
+			<row class="surface-v1 padding-2 flex-row justify-content-space-between flex-y-center">
 				<row class="flex-row gap-0-5 width-auto flex-y-center justify-content-flex-start">
 					<x-link go="history:back" class="btn btn-primary"><x-svg name="arrow_back_v1" color="white"></x-svg></x-link>
 					<p>${Lang.use("notifications")}</p>
@@ -80,7 +80,7 @@ export async function after() {
 				<a
 					href="/x/notification/${notification["id"]}"
 					class="
-						min-height-50px width-100 padding-1 padding-x-2 display-flex flex-row flex-x-between gap-0-5
+						min-height-50px width-100 padding-1 padding-x-2 display-flex flex-row justify-content-space-between gap-0-5
 						${notification["type"] != null ? `surface-${notification["type"]}` : "bg-2 box-shadow-v0"}
 						${notification["seen"] == 1 ? "filter_grayscale_90" : ''}
 					"

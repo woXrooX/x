@@ -143,7 +143,7 @@ export default class Table extends HTMLElement {
 						display-flex
 						flex-row
 						flex-y-center
-						flex-x-between
+						justify-content-space-between
 						gap-0-5
 						width-100
 						empty-display-none
@@ -393,7 +393,7 @@ export default class Table extends HTMLElement {
 		) return '';
 
 		return `
-			<footer class="display-flex flex-row s-flex-column flex-x-between gap-1 width-100">
+			<footer class="display-flex flex-row s-flex-column justify-content-space-between gap-1 width-100">
 				<section class="display-flex flex-row justify-content-flex-start flex-y-center gap-0-5 text-size-0-8">
 					<span class="page_numbers"></span>
 					<span class="total_rows"></span>

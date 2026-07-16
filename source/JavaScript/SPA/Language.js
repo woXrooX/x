@@ -85,7 +85,7 @@ export default class Language extends HTMLElement{
 			let HTML = '';
 
 			for(const code of window.CONF.default.language.supported) HTML += `
-				<button name="${code}" class="btn btn-primary display-flex flex-row gap-1 flex-x-between ${Lang.CURRENT == code ? '' : "btn-outline"} width-100">
+				<button name="${code}" class="btn btn-primary display-flex flex-row gap-1 justify-content-space-between ${Lang.CURRENT == code ? '' : "btn-outline"} width-100">
 					<span class="text-color-white">${Lang.use(code)}</span>
 					<span>${Lang.code_to_flag(code)}</span>
 				</button>

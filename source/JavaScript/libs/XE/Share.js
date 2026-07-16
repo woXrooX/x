@@ -64,7 +64,7 @@ export default class Share extends HTMLElement{
 		});
 
 		const modal_DOM = `
-			<row class="flex-row flex-x-between padding-2 gap-1 text-size-2">
+			<row class="flex-row justify-content-space-between padding-2 gap-1 text-size-2">
 				<a href="https://x.com/intent/tweet?text=${this.#encoded_data.text}&url=${this.#encoded_data.url}" target="_blank" rel="noopener noreferrer">
 					<x-svg name="x_original"></x-svg>
 				</a>
