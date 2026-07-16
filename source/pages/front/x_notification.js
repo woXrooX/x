@@ -11,7 +11,7 @@ export default function main() {
 					<p>${window.Lang.use("notification")}</p>
 				</row>
 
-				<row class="flex-row gap-0-5 width-auto flex-y-center flex-x-end">
+				<row class="flex-row gap-0-5 width-auto flex-y-center justify-content-flex-end">
 					${build_modal_XR_delete_notification_HTML()}
 				</row>
 			</row>
@@ -69,7 +69,7 @@ export async function after() {
 					})
 				}
 
-				<row class="flex-row flex-x-end text-size-0-7 text-color-secondary">${timestamp_to_human_readable_v1(notification["metadata_created_at"])}</row>
+				<row class="flex-row justify-content-flex-end text-size-0-7 text-color-secondary">${timestamp_to_human_readable_v1(notification["metadata_created_at"])}</row>
 			</column>
 		`;
 	});

@@ -400,7 +400,7 @@ export default class Table extends HTMLElement {
 					<span class="matched_rows"></span>
 				</section>
 
-				<section class="display-flex flex-row flex-x-end gap-0-2"></section>
+				<section class="display-flex flex-row justify-content-flex-end gap-0-2"></section>
 			</footer>
 		`;
 	}

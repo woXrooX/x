@@ -2200,7 +2200,7 @@
 				.s-flex-column-reverse{flex-direction: column-reverse;}
 
 				/* X - justify-content */
-				.s-justify-content-flex-start{justify-content: flex-start;}
+				.s-flex-x-start{justify-content: flex-start;}
 				.s-flex-x-end{justify-content: flex-end;}
 				.s-flex-x-center{justify-content: center;}
 				.s-flex-x-between{justify-content: space-between;}

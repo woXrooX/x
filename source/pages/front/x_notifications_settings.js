@@ -11,7 +11,7 @@ export default function main() {
 					<p>${Lang.use("notification_settings")}</p>
 				</row>
 
-				<row class="flex-row gap-0-5 width-auto flex-y-center flex-x-end"></row>
+				<row class="flex-row gap-0-5 width-auto flex-y-center justify-content-flex-end"></row>
 			</row>
 
 			<column class="notification_events width-100 gap-0-5 padding-2 surface-v1"></column>

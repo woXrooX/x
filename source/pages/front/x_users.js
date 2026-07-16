@@ -14,7 +14,7 @@ export default async function main() {
 					<p>DB.users.*</p>
 				</row>
 
-				<row class="flex-row gap-0-5 width-auto flex-y-center flex-x-end">
+				<row class="flex-row gap-0-5 width-auto flex-y-center justify-content-flex-end">
 					${build_modal_form_create_user_HTML()}
 				</row>
 			</row>

@@ -13,7 +13,7 @@ export default function main() {
 					<p>User</p>
 				</row>
 
-				<row class="actions flex-row gap-0-5 width-auto flex-y-center flex-x-end"></row>
+				<row class="actions flex-row gap-0-5 width-auto flex-y-center justify-content-flex-end"></row>
 			</row>
 
 			<column class="user_data width-100"></column>

@@ -13,7 +13,7 @@ export default async function main() {
 					<p>DB.log_in_records.*</p>
 				</row>
 
-				<row class="flex-row gap-0-5 width-auto flex-y-center flex-x-end"></row>
+				<row class="flex-row gap-0-5 width-auto flex-y-center justify-content-flex-end"></row>
 			</row>
 
 			<column class="table width-100"></column>
