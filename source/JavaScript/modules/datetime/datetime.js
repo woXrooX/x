@@ -62,6 +62,8 @@ export function timestamp_to_human_readable_v2(timestamp) {
 }
 
 export function timestamptz_to_local_timestamp(timestamptz) {
+	if (timestamptz === null) return false;
+
 	const local_timestamp = format_timestamp({
 		"formatter_method": "format_to_parts",
 		"timestamp": timestamptz,
