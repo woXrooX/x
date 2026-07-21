@@ -355,6 +355,12 @@
 			.text-size-20{font-size: 20rem;}
 
 			.text-size-30{font-size: 30rem;}
+
+
+
+			.text-size-0-6em{font-size: 0.6em;}
+			.text-size-0-8em{font-size: 0.8em;}
+			.text-size-0-9em{font-size: 0.9em;}
 		}
 
 		@layer line_height{
