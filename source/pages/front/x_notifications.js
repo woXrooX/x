@@ -29,10 +29,10 @@ export default function main() {
 		function build_delete_all_button_HTML() {
 			return `
 				<x-svg id="modal_delete_all_notifications" name="delete" class="btn btn-error" color="white"></x-svg>
-				<x-tooltip trigger_selector="x-svg#modal_delete_all_notifications" class="padding-1 text-size-0-6">Delete all notifications</x-tooltip>
+				<x-tooltip trigger_selector="x-svg#modal_delete_all_notifications" class="padding-1 text-size-0-6rem">Delete all notifications</x-tooltip>
 				<x-modal trigger_selector="x-svg#modal_delete_all_notifications">
 					<column class="gap-1 padding-2">
-						<p class="text-align-center text-size-1-2">Are you sure you want to delete all notifications?</p>
+						<p class="text-align-center text-size-1-2rem">Are you sure you want to delete all notifications?</p>
 
 						<button
 							XR-post
@@ -62,7 +62,7 @@ export async function after() {
 		let notifications = await window.x.Request.make({ payload: {for: "get_all_notifications"} });
 
 		if ("data" in notifications) notifications = notifications["data"];
-		else return `<p class="surface-info width-100 padding-1 text-size-0-8">${Lang.use("no_notifications")}</p>`;
+		else return `<p class="surface-info width-100 padding-1 text-size-0-8rem">${Lang.use("no_notifications")}</p>`;
 
 		let HTML = '';
 
@@ -85,13 +85,13 @@ export async function after() {
 						${notification["seen"] == 1 ? "filter_grayscale_90" : ''}
 					"
 				>
-					<p class="width-100 text-size-0-8">${Lang.use(notification["event"]+"_in_app_s").x_format({
+					<p class="width-100 text-size-0-8rem">${Lang.use(notification["event"]+"_in_app_s").x_format({
 						"recipient": notification["recipient"],
 						"sender": notification["sender"],
 						"content_TEXT": notification["content_TEXT"],
 						...content_JSON
 					})}</p>
-					<p class="width-auto text-size-0-6 text-color-secondary white-space-nowrap-important">${timestamp_to_human_readable_v2(notification["metadata_created_at"])}</p>
+					<p class="width-auto text-size-0-6rem text-color-secondary white-space-nowrap-important">${timestamp_to_human_readable_v2(notification["metadata_created_at"])}</p>
 				</a>
 			`;
 		}

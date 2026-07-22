@@ -6,7 +6,7 @@ export default function main() {
 	return `
 		<container class="page_log_in padding-5 justify-content-center bg-animated-gradient-v1">
 			<form for="log_in" autocomplete="off" class="max-width-600px surface-v1 padding-5">
-				<p class="text-align-center text-size-1-5"${window.Lang.use("log_in")}</p>
+				<p class="text-align-center text-size-1-5rem"${window.Lang.use("log_in")}</p>
 
 				<label>
 					<p for="eMail">${window.Lang.use('eMail')}</p>
@@ -23,8 +23,8 @@ export default function main() {
 					<p for="log_in"></p>
 				</label>
 
-				<a href="/sign_up" class="text-align-center text-size-0-7">${window.Lang.use("dont_have_account_go_to_sign_up")}</a>
-				<a href="/password_reset_request" class="text-align-center text-size-0-7">${Lang.use("cannot_remember_password")}</a>
+				<a href="/sign_up" class="text-align-center text-size-0-7rem">${window.Lang.use("dont_have_account_go_to_sign_up")}</a>
+				<a href="/password_reset_request" class="text-align-center text-size-0-7rem">${Lang.use("cannot_remember_password")}</a>
 			</form>
 		</container>
 	`;

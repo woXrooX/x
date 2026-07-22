@@ -15,7 +15,7 @@ export async function after(){
 		let feedbacks = await window.x.Request.make({ payload: {for:"get_all_feedbacks"} });
 
 		if ("data" in feedbacks) feedbacks = feedbacks["data"];
-		else return `<p class="surface-info width-100 padding-1 text-size-0-8">No feedback</p>`;
+		else return `<p class="surface-info width-100 padding-1 text-size-0-8rem">No feedback</p>`;
 
 		let HTML = '';
 
@@ -24,7 +24,7 @@ export async function after(){
 			if(feedback_text.length > 10) feedback_text = `
 				<span id="modal_feedback_${feedback["id"]}">${feedback["feedback_text"].slice(0, 10)}...</span>
 				<x-modal trigger_selector="span#modal_feedback_${feedback["id"]}">
-					<p class="text-size-0-8 padding-2">${feedback["feedback_text"]}</p>
+					<p class="text-size-0-8rem padding-2">${feedback["feedback_text"]}</p>
 				</x-modal>
 			`;
 
@@ -42,7 +42,7 @@ export async function after(){
 						<x-svg id="modal_XR_delete_${feedback["id"]}" name="delete" class="btn btn-error" color="white"></x-svg>
 						<x-modal trigger_selector="x-svg#modal_XR_delete_${feedback["id"]}">
 							<column class="gap-1 padding-2">
-								<p class="text-align-center text-size-1-2">Are you sure you want to delete this feedback?</p>
+								<p class="text-align-center text-size-1-2rem">Are you sure you want to delete this feedback?</p>
 
 								<button
 									XR-post

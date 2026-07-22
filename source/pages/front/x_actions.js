@@ -14,10 +14,10 @@ export default async function main() {
 	function build_modal_XR_project_Cron_Jobs_init_HTML() {
 		return `
 			<x-svg name="work_history" class="btn btn-warning" color="white"></x-svg>
-			<x-tooltip trigger_selector="x-svg[name=work_history]" class="padding-2 text-size-0-8">project_Cron_Jobs_init</x-tooltip>
+			<x-tooltip trigger_selector="x-svg[name=work_history]" class="padding-2 text-size-0-8rem">project_Cron_Jobs_init</x-tooltip>
 			<x-modal trigger_selector="x-svg[name=work_history]">
 				<column class="gap-1 padding-2">
-					<p class="text-align-center text-size-1-2">project_Cron_Jobs_init</p>
+					<p class="text-align-center text-size-1-2rem">project_Cron_Jobs_init</p>
 
 					<button
 						XR-post
@@ -38,10 +38,10 @@ export default async function main() {
 	function build_modal_XR_sanitize_users_folders_HTML() {
 		return `
 			<x-svg name="folder_settings" class="btn btn-warning" color="white"></x-svg>
-			<x-tooltip trigger_selector="x-svg[name=folder_settings]" class="padding-2 text-size-0-8">sanitize_users_folders</x-tooltip>
+			<x-tooltip trigger_selector="x-svg[name=folder_settings]" class="padding-2 text-size-0-8rem">sanitize_users_folders</x-tooltip>
 			<x-modal trigger_selector="x-svg[name=folder_settings]">
 				<column class="gap-1 padding-2">
-					<p class="text-align-center text-size-1-2">sanitize_users_folders</p>
+					<p class="text-align-center text-size-1-2rem">sanitize_users_folders</p>
 
 					<button
 						XR-post
@@ -62,7 +62,7 @@ export default async function main() {
 	function build_modal_form_eMail_send_HTML() {
 		return `
 			<x-svg name="eMail" class="btn btn-info"></x-svg>
-			<x-tooltip trigger_selector="x-svg[name=eMail]" class="padding-2 text-size-0-8">eMail_send</x-tooltip>
+			<x-tooltip trigger_selector="x-svg[name=eMail]" class="padding-2 text-size-0-8rem">eMail_send</x-tooltip>
 			<x-modal trigger_selector="x-svg[name=eMail]">
 				<form
 					for="eMail_send"

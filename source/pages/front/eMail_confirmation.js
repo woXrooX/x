@@ -19,7 +19,7 @@ export default function main(){
 					</label>
 				</form>
 
-				<p class="surface-info width-100 padding-2 text-size-0-7">Check your spam folder if not received.</p>
+				<p class="surface-info width-100 padding-2 text-size-0-7rem">Check your spam folder if not received.</p>
 			</column>
 		</container>
 	`;

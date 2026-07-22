@@ -231,7 +231,7 @@ export default class Table extends HTMLElement {
 
 		return `
 			<x-svg id="download_CSV_${Table.ID}" name="download_v2" color="white" class="btn btn-primary"></x-svg>
-			<x-tooltip trigger_selector="x-svg#download_CSV_${Table.ID}" class="padding-1 text-size-0-6">${Lang.use("download_as_CSV")}</x-tooltip>
+			<x-tooltip trigger_selector="x-svg#download_CSV_${Table.ID}" class="padding-1 text-size-0-6rem">${Lang.use("download_as_CSV")}</x-tooltip>
 		`;
 	}
 
@@ -394,7 +394,7 @@ export default class Table extends HTMLElement {
 
 		return `
 			<footer class="display-flex flex-row s-flex-column justify-content-space-between gap-1 width-100">
-				<section class="display-flex flex-row justify-content-flex-start align-items-center gap-0-5 text-size-0-8">
+				<section class="display-flex flex-row justify-content-flex-start align-items-center gap-0-5 text-size-0-8rem">
 					<span class="page_numbers"></span>
 					<span class="total_rows"></span>
 					<span class="matched_rows"></span>
@@ -634,9 +634,9 @@ export default class Table extends HTMLElement {
 		if (element === null) return;
 
 		element.innerHTML = `
-			<span class="text-color-secondary text-size-0-7">Page</span>
+			<span class="text-color-secondary text-size-0-7rem">Page</span>
 			${this.#current_page}
-			<span class="text-color-secondary text-size-0-7">of</span>
+			<span class="text-color-secondary text-size-0-7rem">of</span>
 			${this.#rows_in_chunks.length}
 		`;
 	}
@@ -647,13 +647,13 @@ export default class Table extends HTMLElement {
 		if (element === null) return;
 
 		element.innerHTML = `
-			<span class="text-color-secondary text-size-0-7">Total rows:</span> ${this.#JSON["rows"].length}
+			<span class="text-color-secondary text-size-0-7rem">Total rows:</span> ${this.#JSON["rows"].length}
 		`;
 	}
 
 	#build_matched_rows_HTML = ()=>{
 		this.querySelector("container > footer > section:nth-child(1) > span.matched_rows").innerHTML = `
-			<span class="text-color-secondary text-size-0-7">Matched rows:</span> ${this.#matched_rows_count}
+			<span class="text-color-secondary text-size-0-7rem">Matched rows:</span> ${this.#matched_rows_count}
 		`;
 	}
 

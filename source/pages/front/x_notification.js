@@ -23,10 +23,10 @@ export default function main() {
 	function build_modal_XR_delete_notification_HTML() {
 		return `
 			<x-svg id="modal_delete_notifications" name="delete" class="btn btn-error" color="white"></x-svg>
-			<x-tooltip trigger_selector="x-svg#modal_delete_notifications" class="padding-1 text-size-0-6">Delete notification</x-tooltip>
+			<x-tooltip trigger_selector="x-svg#modal_delete_notifications" class="padding-1 text-size-0-6rem">Delete notification</x-tooltip>
 			<x-modal trigger_selector="x-svg#modal_delete_notifications">
 				<column class="gap-1 padding-2">
-					<p class="text-align-center text-size-1-2">Are you sure you want to delete this notification?</p>
+					<p class="text-align-center text-size-1-2rem">Are you sure you want to delete this notification?</p>
 
 					<button
 						XR-post
@@ -49,7 +49,7 @@ export async function after() {
 		let notification = await window.x.Request.make({ payload: {for: "get_notification"} });
 
 		if ("data" in notification) notification = notification["data"];
-		else return `<p class="surface-info width-100 padding-1 text-size-0-8">${Lang.use("no_notification")}</p>`;
+		else return `<p class="surface-info width-100 padding-1 text-size-0-8rem">${Lang.use("no_notification")}</p>`;
 
 		let content_JSON = {};
 
@@ -59,7 +59,7 @@ export async function after() {
 		return `
 			${notification["type"] !== null ? `<span class="height-100 radius-default bg-${notification["type"]} width-5px"></span>` : ''}
 
-			<column class="align-items-flex-start width-100 gap-0-5 text-size-0-8">
+			<column class="align-items-flex-start width-100 gap-0-5 text-size-0-8rem">
 				${
 					Lang.use(notification["event"]+"_in_app_m").x_format({
 						"recipient": notification["recipient"],
@@ -69,7 +69,7 @@ export async function after() {
 					})
 				}
 
-				<row class="flex-row justify-content-flex-end text-size-0-7 text-color-secondary">${timestamp_to_human_readable_v1(notification["metadata_created_at"])}</row>
+				<row class="flex-row justify-content-flex-end text-size-0-7rem text-color-secondary">${timestamp_to_human_readable_v1(notification["metadata_created_at"])}</row>
 			</column>
 		`;
 	});

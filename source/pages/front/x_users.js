@@ -28,10 +28,10 @@ export default async function main() {
 	function build_modal_form_create_user_HTML(){
 		return `
 			<x-svg id="modal_form_create_user" name="person_add" class="btn btn-primary" color="white"></x-svg>
-			<x-tooltip trigger_selector="x-svg#modal_form_create_user" class="padding-1 text-size-0-6">${Lang.use("create_user")}</x-tooltip>
+			<x-tooltip trigger_selector="x-svg#modal_form_create_user" class="padding-1 text-size-0-6rem">${Lang.use("create_user")}</x-tooltip>
 			<x-modal trigger_selector="x-svg#modal_form_create_user">
 				<form for="create_user" class="padding-2" x-modal="on:success:hide" x-toast="on:any:message">
-					<p class="text-align-center text-size-1-5">${Lang.use("create_user")}</p>
+					<p class="text-align-center text-size-1-5rem">${Lang.use("create_user")}</p>
 
 					<row class="gap-0-5">
 						<label>
@@ -74,12 +74,12 @@ export async function after() {
 		async function build_live_users_count_HTML() {
 			const live_users_count = await window.x.Request.make({ payload: {for:"get_live_users_count"} });
 
-			if (!("data" in live_users_count)) return `<p class="width-100 text-size-0-8 surface-info padding-1">${Lang.use("no_data")}</p>`;
+			if (!("data" in live_users_count)) return `<p class="width-100 text-size-0-8rem surface-info padding-1">${Lang.use("no_data")}</p>`;
 
 			return `
 				<column class="padding-2 surface-v1 min-width-200px width-auto">
-					<p class="text-size-0-8 text-color-secondary">live_users_count</p>
-					<p class="text-size-2 text-weight-bold">${live_users_count["data"]["live_users"] ?? 0}</p>
+					<p class="text-size-0-8rem text-color-secondary">live_users_count</p>
+					<p class="text-size-2rem text-weight-bold">${live_users_count["data"]["live_users"] ?? 0}</p>
 				</column>
 			`;
 		}
@@ -89,7 +89,7 @@ export async function after() {
 		let users = await window.x.Request.make({ payload: {for:"get_all_users"} });
 
 		if ("data" in users) users = users["data"];
-		else return String_to_Element(`<p class="width-100 text-size-0-8 surface-info padding-1">${Lang.use("no_data")}</p>`);
+		else return String_to_Element(`<p class="width-100 text-size-0-8rem surface-info padding-1">${Lang.use("no_data")}</p>`);
 
 		const COLUMNS = [];
 		for (const KEY of Object.keys(users[0])) COLUMNS.push({"title": KEY});

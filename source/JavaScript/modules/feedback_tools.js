@@ -16,12 +16,12 @@ export function feedback_leave_button(){
 	`;
 
 	return `
-		<column id="modal_feedback_button" class="text-size-1-5 bg-error radius-default padding-1 position-fixed bottom-20px right-20px width-auto">
+		<column id="modal_feedback_button" class="text-size-1-5rem bg-error radius-default padding-1 position-fixed bottom-20px right-20px width-auto">
 			<x-svg name="feedback" color="white"></x-svg>
 		</column>
 		<x-modal trigger_selector="column#modal_feedback_button">
 			<form action="/x/feedbacks/leave" for="leave_feedback" class="padding-2" x-modal="on:success:hide" x-toast="on:any:message">
-				<p class="text-align-center text-size-1-5">Report a problem</p>
+				<p class="text-align-center text-size-1-5rem">Report a problem</p>
 
 				<input type="hidden" name="feedback_left_page" value="${window.location.pathname}">
 

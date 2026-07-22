@@ -27,7 +27,7 @@ export async function after() {
 	let user = await window.x.Request.make({ payload: {for:"get_user"} });
 
 	if ("data" in user) user = user["data"];
-	else return `<p class="surface-info width-100 padding-1 text-size-0-8">${Lang.use("no_data")}</p>`;
+	else return `<p class="surface-info width-100 padding-1 text-size-0-8rem">${Lang.use("no_data")}</p>`;
 
 	DOM.build("row.actions", async function build_actions_HTML() {
 		return `
@@ -41,7 +41,7 @@ export async function after() {
 				<x-svg id="modal_XR_resend_eMail_confirmation" name="mark_eMail_read" color="white" class="btn btn-info"></x-svg>
 				<x-modal trigger_selector="x-svg#modal_XR_resend_eMail_confirmation">
 					<column class="gap-1 padding-2">
-						<p class="text-size-1-1">Are you sure you want to resend email confirmation?</p>
+						<p class="text-size-1-1rem">Are you sure you want to resend email confirmation?</p>
 						<button
 							XR-post
 							XR-for="resend_eMail_confirmation"
@@ -88,7 +88,7 @@ export async function after() {
 				<x-svg id="modal_XR_delete_user" name="delete" color="white" class="btn btn-error"></x-svg>
 				<x-modal trigger_selector="x-svg#modal_XR_delete_user">
 					<column class="gap-1 padding-2">
-						<p class="text-size-1-1">Are you sure you want to delete this user?</p>
+						<p class="text-size-1-1rem">Are you sure you want to delete this user?</p>
 						<button
 							XR-post
 							XR-for="delete_user"
@@ -107,9 +107,9 @@ export async function after() {
 	DOM.build("column.user_data", async function build_user_data_HTML() {
 		let HTML = '';
 		for (const key in user) HTML += `
-			<span class="text-color-secondary text-size-0-8">
+			<span class="text-color-secondary text-size-0-8rem">
 				${key}:
-				<span class="text-color-primary text-size-1">${user[key]}</span>
+				<span class="text-color-primary text-size-1rem">${user[key]}</span>
 			</span>
 		`;
 
@@ -120,7 +120,7 @@ export async function after() {
 		let log_in_records = await window.x.Request.make({ payload: {for:"get_user_log_in_records"} });
 
 		if ("data" in log_in_records) log_in_records = log_in_records["data"];
-		else return String_to_Element(`<p class="surface-info width-100 padding-1 text-size-0-8">${Lang.use("no_data")}</p>`);
+		else return String_to_Element(`<p class="surface-info width-100 padding-1 text-size-0-8rem">${Lang.use("no_data")}</p>`);
 
 		const HEAD = [];
 		for (const KEY of Object.keys(log_in_records[0])) HEAD.push({"title": KEY});

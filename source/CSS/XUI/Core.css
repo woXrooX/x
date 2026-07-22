@@ -308,53 +308,53 @@
 		}
 
 		@layer size{
-			.text-size-0-1{font-size: 0.1rem;}
-			.text-size-0-2{font-size: 0.2rem;}
-			.text-size-0-3{font-size: 0.3rem;}
-			.text-size-0-4{font-size: 0.4rem;}
-			.text-size-0-5{font-size: 0.5rem;}
-			.text-size-0-6{font-size: 0.6rem;}
-			.text-size-0-7{font-size: 0.7rem;}
-			.text-size-0-8{font-size: 0.8rem;}
-			.text-size-0-9{font-size: 0.9rem;}
+			.text-size-0-1rem{font-size: 0.1rem;}
+			.text-size-0-2rem{font-size: 0.2rem;}
+			.text-size-0-3rem{font-size: 0.3rem;}
+			.text-size-0-4rem{font-size: 0.4rem;}
+			.text-size-0-5rem{font-size: 0.5rem;}
+			.text-size-0-6rem{font-size: 0.6rem;}
+			.text-size-0-7rem{font-size: 0.7rem;}
+			.text-size-0-8rem{font-size: 0.8rem;}
+			.text-size-0-9rem{font-size: 0.9rem;}
 
-			.text-size-1{font-size: 1rem;}
-			.text-size-1-1{font-size: 1.1rem;}
-			.text-size-1-2{font-size: 1.2rem;}
-			.text-size-1-3{font-size: 1.3rem;}
-			.text-size-1-4{font-size: 1.4rem;}
-			.text-size-1-5{font-size: 1.5rem;}
-			.text-size-1-6{font-size: 1.6rem;}
-			.text-size-1-7{font-size: 1.7rem;}
-			.text-size-1-8{font-size: 1.8rem;}
-			.text-size-1-9{font-size: 1.9rem;}
+			.text-size-1rem{font-size: 1rem;}
+			.text-size-1-1rem{font-size: 1.1rem;}
+			.text-size-1-2rem{font-size: 1.2rem;}
+			.text-size-1-3rem{font-size: 1.3rem;}
+			.text-size-1-4rem{font-size: 1.4rem;}
+			.text-size-1-5rem{font-size: 1.5rem;}
+			.text-size-1-6rem{font-size: 1.6rem;}
+			.text-size-1-7rem{font-size: 1.7rem;}
+			.text-size-1-8rem{font-size: 1.8rem;}
+			.text-size-1-9rem{font-size: 1.9rem;}
 
-			.text-size-2{font-size: 2rem;}
-			.text-size-2-5{font-size: 2.5rem;}
+			.text-size-2rem{font-size: 2rem;}
+			.text-size-2-5rem{font-size: 2.5rem;}
 
-			.text-size-3{font-size: 3rem;}
+			.text-size-3rem{font-size: 3rem;}
 
-			.text-size-4{font-size: 4rem;}
+			.text-size-4rem{font-size: 4rem;}
 
-			.text-size-5{font-size: 5rem;}
+			.text-size-5rem{font-size: 5rem;}
 
-			.text-size-6{font-size: 6rem;}
+			.text-size-6rem{font-size: 6rem;}
 
-			.text-size-7{font-size: 7rem;}
+			.text-size-7rem{font-size: 7rem;}
 
-			.text-size-8{font-size: 8rem;}
+			.text-size-8rem{font-size: 8rem;}
 
-			.text-size-9{font-size: 9rem;}
+			.text-size-9rem{font-size: 9rem;}
 
-			.text-size-10{font-size: 10rem;}
+			.text-size-10rem{font-size: 10rem;}
 
-			.text-size-12{font-size: 12rem;}
+			.text-size-12rem{font-size: 12rem;}
 
-			.text-size-15{font-size: 15rem;}
+			.text-size-15rem{font-size: 15rem;}
 
-			.text-size-20{font-size: 20rem;}
+			.text-size-20rem{font-size: 20rem;}
 
-			.text-size-30{font-size: 30rem;}
+			.text-size-30rem{font-size: 30rem;}
 
 
 
