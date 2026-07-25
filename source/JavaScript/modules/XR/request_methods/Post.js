@@ -164,6 +164,8 @@ export default class Post {
 	}
 
 	#handle_response() {
+		if (!("type" in this.#response)) return x.Toast.new("error", "invalid_response");
+
 		////////// Callback
 		window.x.XR.execute_on_response(
 			this.#element.getAttribute("XR-func"),
@@ -214,8 +216,7 @@ export default class Post {
 
 			window.Modal.unlock();
 
-			if (!("type" in this.#response)) return x.Toast.new("error", "invalid_response");
-			else this.#handle_response();
+			this.#handle_response();
 
 			this.#handle_commands();
 
