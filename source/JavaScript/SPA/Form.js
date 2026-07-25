@@ -179,7 +179,12 @@ export default class Form {
 		}
 
 		if (!!form_func === false || typeof form_func != "string") return;
-		await Form.#FUNC_POOL[form_func](response, form_data, form_func_data_JSON);
+
+		await Form.#FUNC_POOL[form_func]({
+			response: response,
+			form_data: form_data,
+			form_func_data_JSON: form_func_data_JSON
+		});
 	}
 
 	static #form_guard(form) {
