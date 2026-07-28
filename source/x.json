@@ -1,5 +1,5 @@
 {
-	"version": "0.241.2.0019",
+	"version": "0.241.2.0020",
 
 	"project_name": "x",
 
@@ -83,6 +83,12 @@
 
 	"tools": {
 		"debug": true,
+
+		"SEO": {
+			"LLMs": false,
+			"Robots": false,
+			"Sitemap": false
+		},
 
 		"log_in_tools": {
 			"enable_recording": false,

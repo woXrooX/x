@@ -168,14 +168,14 @@ from live_pages.back import *
 
 
 #################################################### SEO
-from Python.x.modules.SEO.Sitemap import Sitemap
-Sitemap.generate()
+from Python.x.modules.SEO.LLMs.LLMs import LLMs
+LLMs.generate()
 
 from Python.x.modules.SEO.Robots import Robots
 Robots.generate()
 
-from Python.x.modules.SEO.LLMs.LLMs import LLMs
-LLMs.generate()
+from Python.x.modules.SEO.Sitemap import Sitemap
+Sitemap.generate()
 
 
 
