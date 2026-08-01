@@ -5,7 +5,14 @@ export function before() {
 export default function main() {
 	return `
 		<container class="page_log_in padding-5 justify-content-center bg-animated-gradient-v1">
-			<form for="log_in" autocomplete="off" class="max-width-600px surface-v1 padding-5">
+			<form
+				class="max-width-600px surface-v1 padding-5"
+				autocomplete="off"
+
+				for="log_in"
+				form_func="on_log_in_callback"
+
+			>
 				<p class="text-align-center text-size-1-5rem"${window.Lang.use("log_in")}</p>
 
 				<label>
@@ -28,4 +35,15 @@ export default function main() {
 			</form>
 		</container>
 	`;
+}
+
+export async function after() {
+	Form.push_func(async function on_log_in_callback(args) {
+		try {
+			const on_log_in = await import(`/JavaScript/modules/on_log_in.js`);
+			await on_log_in.default(args);
+		}
+
+		catch (error) {	console.log(error); }
+	});
 }

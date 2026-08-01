@@ -5,7 +5,13 @@ export function before(){
 export default function main(){
 	return `
 		<container class="page_sign_up padding-5 justify-content-center bg-animated-gradient-v1">
-			<form for="sign_up" autocomplete="off" class="max-width-600px surface-v1 padding-5">
+			<form
+				class="max-width-600px surface-v1 padding-5"
+				autocomplete="off"
+
+				for="sign_up"
+				form_func="on_sign_up_callback"
+			>
 				<h2 class="text-align-center">${window.Lang.use('sign_up')}</h2>
 
 				<label>
@@ -27,4 +33,15 @@ export default function main(){
 			</form>
 		</container>
 	`;
+}
+
+export async function after() {
+	Form.push_func(async function on_sign_up_callback(args) {
+		try {
+			const on_sign_up = await import(`/JavaScript/modules/on_sign_up.js`);
+			await on_sign_up.default(args);
+		}
+
+		catch (error) {	console.log(error); }
+	});
 }
