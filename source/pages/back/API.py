@@ -22,10 +22,10 @@ def API():
 			default_serializer_func=str
 		)
 
-		if request.get_json()["for"] == "get:session": return Response.make(
+		if request.get_json()["for"] == "get:session.user": return Response.make(
 			type="success",
 			message="success",
-			data={"user": User.generate_public_session()} if "user" in session else {},
+			data=User.generate_public_session() if "user" in session else {},
 			default_serializer_func=str
 		)
 
