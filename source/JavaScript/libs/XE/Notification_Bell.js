@@ -2,7 +2,7 @@ export default class Notification_Bell extends HTMLElement {
 	constructor(){
 		super();
 
-		if(!("user" in window.session)) return;
+		if (!("user" in window.x["session"])) return;
 
 		this.attachShadow({ mode: 'open' });
 

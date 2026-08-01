@@ -12,7 +12,7 @@ export default class Notification{
 	];
 
 	static async init(){
-		if(!("user" in window.session)) return;
+		if (!("user" in window.x["session"])) return;
 
 		await Notification.update_unseen_count();
 		await Notification.#poll();
@@ -25,7 +25,7 @@ export default class Notification{
 	}
 
 	static async update_unseen_count(){
-		if(!("user" in window.session)) return;
+		if (!("user" in window.x["session"])) return;
 
 		let data = await window.x.Request.make({
 			payload: {for: "get_unseen_count"},

@@ -38,7 +38,7 @@ export default class Language extends HTMLElement{
 		// Check if supported language was passed
 		if(!window.CONF.default.language.supported.includes(code)) return;
 
-		if ("user" in window.session) await window.x.Request.make({
+		if ("user" in window.x["session"]) await window.x.Request.make({
 			payload: {
 				"for":"change_user_app_language",
 				"code": code
@@ -102,7 +102,7 @@ export default class Language extends HTMLElement{
 	//////// Helpers
 
 	static #detect_current_code(){
-		if("user" in window.session) Language.#CURRENT = window.session["user"].app_language;
+		if("user" in window.x["session"]) Language.#CURRENT = window.x["session"]["user"].app_language;
 
 		else if(localStorage.getItem("x.language")) Language.#CURRENT = localStorage.getItem("x.language");
 

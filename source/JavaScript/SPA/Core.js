@@ -58,6 +58,8 @@ export default class Core {
 
 		await Core.#get_initial_data();
 
+		await Core.#init_on_app_start();
+
 		Language.init();
 		x.Color_Mode.init();
 		x.Menu.init();
@@ -76,8 +78,6 @@ export default class Core {
 		Core.#on_DOM_change();
 		await Core.#on_user_session_change();
 		Core.#observe_mutations();
-
-		await Core.#init_on_app_ready();
 	}
 
 	static async #get_initial_data() {
@@ -91,14 +91,14 @@ export default class Core {
 
 
 
-		const session = await window.x.Request.make({
-			payload: {"for": "get:session"},
+		const session_user = await window.x.Request.make({
+			payload: {"for": "get:session.user"},
 			target_URL: "/API"
 		});
 
-		if (session["type"] != "success") return Log.error("Core.#get_initial_data(): get:session");
-		else if ("data" in session) window.session = session["data"];
-		else window.session = {};
+		if (session_user["type"] != "success") return Log.error("Core.#get_initial_data(): get:session");
+		else if ("data" in session_user) window.x["session"]["user"] = session_user["data"];
+		else window.x["session"] = {};
 
 
 
@@ -182,19 +182,18 @@ export default class Core {
 		else window.x["CURRENCIES"] = {};
 	}
 
-	static async #init_on_app_ready() {
-		Log.info("Core.#init_on_app_ready()");
+	static async #init_on_app_start() {
+		// NOTE: on_app_start != on_app_ready
+
+		Log.info("Core.#init_on_app_start()");
 
 		try {
-			const on_app_ready = await import(`/JavaScript/modules/on_app_ready.js`);
+			const on_app_start = await import(`/JavaScript/modules/on_app_start.js`);
 
-			await on_app_ready.default();
+			await on_app_start.default();
 		}
 
-		catch (error) {
-			Log.error("x.Core.#init_on_app_ready()");
-			console.log(error);
-		}
+		catch (error) { console.log(error); }
 	}
 
 	/////////// Event Handlers
@@ -267,14 +266,14 @@ export default class Core {
 
 			// User session on
 			if ("detail" in event && event.detail !== null){
-				window.session["user"] = event.detail;
+				window.x["session"]["user"] = event.detail;
 				await x.User.init_set_last_heartbeat_at();
 				await x.Notification.init();
 			}
 
 			// User session off
 			else {
-				delete window.session["user"];
+				delete window.x["session"]["user"];
 				clearInterval(x.User.poll_func_set_last_heartbeat_at);
 				clearInterval(x.Notification.poll_interval_func);
 			}

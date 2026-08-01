@@ -3,7 +3,7 @@ export function feedback_leave_button(){
 	if (window.CONF["pages"]["x_feedbacks_leave"]["enabled"] === false) return '';
 
 	let unauthenticated_user_inputs_HTML = '';
-	if (!("user" in window.session)) unauthenticated_user_inputs_HTML = `
+	if (!("user" in window.x["session"])) unauthenticated_user_inputs_HTML = `
 		<label>
 			<p for="full_name">Please enter your name</p>
 			<input type="text" name="full_name">

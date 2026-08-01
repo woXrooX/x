@@ -3,7 +3,7 @@ export default class User{
 	static poll_interval_duration_set_last_heartbeat_at = 60000;
 
 	static async init_set_last_heartbeat_at(){
-		if(!("user" in window.session)) return;
+		if(!("user" in window.x["session"])) return;
 
 		await User.set_last_heartbeat_at();
 		await User.#poll_set_last_heartbeat_at();
@@ -16,7 +16,7 @@ export default class User{
 	}
 
 	static async set_last_heartbeat_at() {
-		if (!("user" in window.session)) return;
+		if (!("user" in window.x["session"])) return;
 
 		let data = await window.x.Request.make({
 			payload: {for: "set_last_heartbeat_at"},

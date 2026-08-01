@@ -46,7 +46,7 @@ export default class Color_Mode{
 
 	//////////////////////// APIs
 
-	static init(){
+	static init() {
 		Log.info("Color_Mode.init()");
 
 		Color_Mode.color_mode_switcher_icon = document.querySelector(`${window.x.Menu.selector} > header > x-svg[for=color_mode_switcher]`);
@@ -56,28 +56,28 @@ export default class Color_Mode{
 		Color_Mode.#handle_color_mode_toggle();
 	}
 
-	static detect_color_mode(){
+	static detect_color_mode() {
 		Log.info("Color_Mode.detect_color_mode()");
 
 		// Get User Preferred Color Mode
 		if(
 			// If User Is In Session
-			"user" in window.session &&
+			"user" in window.x["session"] &&
 
 			// If Session User Has "app_color_mode"
-			"app_color_mode" in window.session["user"] &&
+			"app_color_mode" in window.x["session"]["user"] &&
 
 			// If "app_color_mode" Is In Color_Mode.color_modes
-			Object.values(Color_Mode.color_modes).includes(window.session["user"]["app_color_mode"])
+			Object.values(Color_Mode.color_modes).includes(window.x["session"]["user"]["app_color_mode"])
 
-		) Color_Mode.current_color_mode = window.session["user"]["app_color_mode"];
+		) Color_Mode.current_color_mode = window.x["session"]["user"]["app_color_mode"];
 
 		// Get saved color mode to the local storage
 		// NOTE: Prevents emulation of the color scheme via devtools
 		else if(localStorage.getItem("x.color_mode")) Color_Mode.current_color_mode = parseInt(localStorage.getItem("x.color_mode"));
 
 		// Get System Color Mode
-		else if(window.matchMedia){
+		else if(window.matchMedia) {
 			// System Default: Light
 			if(window.matchMedia('(prefers-color-scheme: light)').matches) Color_Mode.current_color_mode = Color_Mode.color_modes.LIGHT;
 
@@ -87,7 +87,7 @@ export default class Color_Mode{
 
 		// Switch the color mode
 		// Set color mode switcher icon "name" and "toggle" values
-		switch(Color_Mode.current_color_mode){
+		switch(Color_Mode.current_color_mode) {
 			case Color_Mode.color_modes.LIGHT:
 				Color_Mode.#light();
 
@@ -116,16 +116,16 @@ export default class Color_Mode{
 	//////////////////////// Helpers
 
 	// On system color mode changes - listen to color mode changes
-	static #on_color_mode_change(){
+	static #on_color_mode_change() {
 		window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", Color_Mode.detect_color_mode);
 	}
 
 	// Handles color mode switching to dark and light modes using x-svg[for=color_mode_switcher] in menu
-	static #handle_color_mode_toggle(){
+	static #handle_color_mode_toggle() {
 		if (!!Color_Mode.color_mode_switcher_icon === false) return;
 
 		Color_Mode.color_mode_switcher_icon.addEventListener("click", ()=>{
-			switch(Color_Mode.current_color_mode){
+			switch(Color_Mode.current_color_mode) {
 				case Color_Mode.color_modes.DARK:
 					Color_Mode.#light();
 					break;
@@ -143,9 +143,9 @@ export default class Color_Mode{
 	}
 
 	// Save color mode to the database or to the local storage
-	static async #save_color_mode(){
+	static async #save_color_mode() {
 		// If user is logged in, update user color mode on database
-		if ("user" in window.session){
+		if ("user" in window.x["session"]) {
 			const data = await window.x.Request.make({
 				payload: {
 					"for": "change_user_app_color_mode",
@@ -155,8 +155,8 @@ export default class Color_Mode{
 			});
 
 			// Update the session
-			if("type" in data && data["type"] === "success"){
-				window.session["user"]["app_color_mode"] = Color_Mode.current_color_mode;
+			if("type" in data && data["type"] === "success") {
+				window.x["session"]["user"]["app_color_mode"] = Color_Mode.current_color_mode;
 				localStorage.setItem('x.color_mode', Color_Mode.current_color_mode);
 				Log.success(`Color_Mode.#save_color_mode(): session.user.app_color_mode = ${Color_Mode.current_color_mode}`);
 			}
@@ -167,7 +167,7 @@ export default class Color_Mode{
 	}
 
 	//////////// Modes
-	static #dark(){
+	static #dark() {
 		Log.info("Color_Mode.#dark()");
 
 		Color_Mode.current_color_mode = Color_Mode.color_modes.DARK;
@@ -176,7 +176,7 @@ export default class Color_Mode{
 		document.documentElement.classList.remove("light");
 	}
 
-	static #light(){
+	static #light() {
 		Log.info("Color_Mode.#light()");
 
 		Color_Mode.current_color_mode = Color_Mode.color_modes.LIGHT;

@@ -57,34 +57,34 @@ export default class Router {
 
 		if (PAGE_CONF["enabled"] === false) return false;
 
-		if ("user" in window.session) {
-			// if (window.session["user"]["roles"].includes("root")) return true;
+		if ("user" in window.x["session"]) {
+			// if (window.x["session"]["user"]["roles"].includes("root")) return true;
 
 			if ("authenticity_statuses" in PAGE_CONF) {
 				if (PAGE_CONF["authenticity_statuses"].includes("unauthenticated")) return false;
-				if (!PAGE_CONF["authenticity_statuses"].includes(session["user"]["authenticity_status"])) return false;
+				if (!PAGE_CONF["authenticity_statuses"].includes(window.x["session"]["user"]["authenticity_status"])) return false;
 			}
 
 			if ("roles" in PAGE_CONF) {
 				let result = false;
-				for (let i = 0; i < PAGE_CONF["roles"].length; i++) if (window.session["user"]["roles"].includes(PAGE_CONF["roles"][i])) result = true;
+				for (let i = 0; i < PAGE_CONF["roles"].length; i++) if (window.x["session"]["user"]["roles"].includes(PAGE_CONF["roles"][i])) result = true;
 				if (result === false) return false;
 			}
 
 			if ("roles_not" in PAGE_CONF) {
-				for (let role_not of PAGE_CONF["roles_not"]) if (window.session["user"]["roles"].includes(role_not)) return false;
+				for (let role_not of PAGE_CONF["roles_not"]) if (window.x["session"]["user"]["roles"].includes(role_not)) return false;
 			}
 
 			if ("plans" in PAGE_CONF) {
 				let result = false;
-				for (let i = 0; i < PAGE_CONF["plans"].length; i++) if (window.session["user"]["plans"].includes(PAGE_CONF["plans"][i])) result = true;
+				for (let i = 0; i < PAGE_CONF["plans"].length; i++) if (window.x["session"]["user"]["plans"].includes(PAGE_CONF["plans"][i])) result = true;
 				if (result === false) return false;
 			}
 
 			return true;
 		}
 
-		if (!("user" in window.session)) {
+		if (!("user" in window.x["session"])) {
 			if (
 				(
 					!("authenticity_statuses" in PAGE_CONF) ||
