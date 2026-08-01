@@ -1,3 +1,4 @@
+import "/JavaScript/Globals.js";
 import Core from "/JavaScript/SPA/Core.js";
 
 try {
