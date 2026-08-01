@@ -98,7 +98,6 @@ export default class Core {
 
 		if (session_user["type"] != "success") return Log.error("Core.#get_initial_data(): get:session");
 		else if ("data" in session_user) window.x["session"]["user"] = session_user["data"];
-		else window.x["session"] = {};
 
 
 

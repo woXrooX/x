@@ -25,7 +25,7 @@ def API():
 		if request.get_json()["for"] == "get:session.user": return Response.make(
 			type="success",
 			message="success",
-			data=User.generate_public_session() if "user" in session else {},
+			data=User.generate_public_session(),
 			default_serializer_func=str
 		)
 
