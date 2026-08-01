@@ -76,6 +76,8 @@ export default class Core {
 		Core.#on_DOM_change();
 		await Core.#on_user_session_change();
 		Core.#observe_mutations();
+
+		await Core.#init_on_app_ready();
 	}
 
 	static async #get_initial_data() {
@@ -178,6 +180,21 @@ export default class Core {
 		if (CURRENCIES["type"] != "success") return Log.error("Core.#get_initial_data(): get:CURRENCIES");
 		else if ("data" in CURRENCIES) window.x["CURRENCIES"] = CURRENCIES["data"];
 		else window.x["CURRENCIES"] = {};
+	}
+
+	static async #init_on_app_ready() {
+		Log.info("Core.#init_on_app_ready()");
+
+		try {
+			const on_app_ready = await import(`/JavaScript/modules/on_app_ready.js`);
+
+			await on_app_ready.default();
+		}
+
+		catch (error) {
+			Log.error("x.Core.#init_on_app_ready()");
+			console.log(error);
+		}
 	}
 
 	/////////// Event Handlers
