@@ -1,17 +1,25 @@
 export default class Footer{
 	static selector = "body > div#root > footer";
 	static #element = null;
+	static #mounted_source = null;
 
-	static init(){
+	static init() {
 		Footer.#element = document.querySelector(Footer.selector);
 	}
 
-	static async handle(){
-		//// Page level footer
-		if (typeof window.x.Page.current_page.footer === "function") return Footer.#build(await window.x.Page.current_page.footer());
+	static async handle() {
+		//// Page level footer — always re-renders, since each page's footer differs
+		if (typeof window.x.Page.current_page.footer === "function") {
+			Footer.#mounted_source = "page";
 
-		//// Project level footer
-		// Project level footer will be always created by x during initialization the x
+			return Footer.#build(await window.x.Page.current_page.footer());
+		}
+
+		//// Project level footer — shared, so skip if it's already mounted
+		if (Footer.#mounted_source === "project") return;
+
+		Footer.#mounted_source = "project";
+
 		try {
 			const project_footer = await import(`/JavaScript/modules/footer.js`);
 
@@ -25,21 +33,19 @@ export default class Footer{
 		}
 	}
 
-	static #hide(){
-		// Check If "body > footer" Exists
-		if(!!Footer.#element === false) return;
+	static #hide() {
+		if (!!Footer.#element === false) return;
 
 		Footer.#element.classList.add("display-none-important");
 	}
 
-	static #show(){
-		// Check If "body > footer" Exists
-		if(!!Footer.#element === false) return;
+	static #show() {
+		if (!!Footer.#element === false) return;
 
 		Footer.#element.classList.remove("display-none-important");
 	}
 
-	static #build(content){
+	static #build(content) {
 		Log.info("Footer.#build()");
 
 		if (content === false) return Footer.#hide();
