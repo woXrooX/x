@@ -59,20 +59,20 @@ export default class Page {
 		Page.current_page = await import(`/files/live_pages/front/${page_name}`);
 	}
 
-	static async life_cycle() {
+	static async life_cycle(force=false) {
 		Log.info("Page.life_cycle()");
 
 		window.x.Head.reset_all();
 
 		if (!!Page.current_page.before === true) await Page.current_page.before();
 
-		await window.Header.handle();
+		await window.Header.handle(force);
 
 		// Default/Main
 		if (typeof Page.current_page.default === "function") await window.Main.render(await Page.current_page.default());
 		else await window.Main.render(Main.situational_content("error", "ERROR", "Page.life_cycle() -> No default function defined!"));
 
-		await window.Footer.handle();
+		await window.Footer.handle(force);
 
 		// End page loading
 		window.Loading.end();

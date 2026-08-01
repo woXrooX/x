@@ -25,7 +25,7 @@ export default class DOM {
 				case "all":
 					Log.info(`DOM.update() - target: ${target}`);
 					window.x.Menu.build();
-					window.x.Page.life_cycle();
+					window.x.Page.life_cycle(true);
 					break;
 
 				default:

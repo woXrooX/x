@@ -7,7 +7,7 @@ export default class Header{
 		Header.#element = document.querySelector(Header.selector);
 	}
 
-	static async handle() {
+	static async handle(force=false) {
 		//// Page level header — always re-renders, since each page's header differs
 		if (typeof window.x.Page.current_page.header === "function") {
 			Header.#mounted_source = "page";
@@ -16,7 +16,7 @@ export default class Header{
 		}
 
 		//// Project level header — shared, so skip if it's already mounted
-		if (Header.#mounted_source === "project") return;
+		if (force === false && Header.#mounted_source === "project") return;
 
 		Header.#mounted_source = "project";
 

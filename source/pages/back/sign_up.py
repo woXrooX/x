@@ -128,5 +128,5 @@ def sign_up(request):
 			message = "eMail_confirmation_code_has_been_sent" if email_verification_sent_status is True else "Signed up but could not send email verification code. Please contact support!",
 			set_session_user = True,
 			redirect = "/eMail_confirmation" if email_verification_sent_status is True else "/",
-			DOM_change = ["menu"]
+			DOM_change = ["all"]
 		)

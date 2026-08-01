@@ -32,5 +32,5 @@ def log_out(request):
 			message="success",
 			delete_session_user=True,
 			redirect="/",
-			DOM_change=["menu"]
+			DOM_change=["all"]
 		)

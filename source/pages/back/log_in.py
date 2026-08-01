@@ -76,6 +76,6 @@ def log_in(request):
 			type="success",
 			message="success",
 			set_session_user=True,
-			DOM_change=["menu"],
-			redirect= redirect
+			redirect= redirect,
+			DOM_change=["all"]
 		)

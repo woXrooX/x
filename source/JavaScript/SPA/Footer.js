@@ -7,7 +7,7 @@ export default class Footer{
 		Footer.#element = document.querySelector(Footer.selector);
 	}
 
-	static async handle() {
+	static async handle(force=false) {
 		//// Page level footer — always re-renders, since each page's footer differs
 		if (typeof window.x.Page.current_page.footer === "function") {
 			Footer.#mounted_source = "page";
@@ -16,7 +16,7 @@ export default class Footer{
 		}
 
 		//// Project level footer — shared, so skip if it's already mounted
-		if (Footer.#mounted_source === "project") return;
+		if (force === false && Footer.#mounted_source === "project") return;
 
 		Footer.#mounted_source = "project";
 
