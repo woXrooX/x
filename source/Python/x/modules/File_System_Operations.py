@@ -65,7 +65,7 @@ if __name__ != "__main__":
 
 			File_System.create_file(f"{Globals.PROJECT_PATH}/JavaScript/modules/header.js", 'export default function header() {\n\treturn "Header";\n}', strict=True)
 			File_System.create_file(f"{Globals.PROJECT_PATH}/JavaScript/modules/footer.js", 'export default function footer() {\n\treturn Lang.use("powered_by_woXrooX");\n}', strict=True)
-			File_System.create_file(f"{Globals.PROJECT_PATH}/JavaScript/modules/on_app_ready.js", 'export default function init() {}', strict=True)
+			File_System.create_file(f"{Globals.PROJECT_PATH}/JavaScript/modules/on_app_start.js", 'export default function init() {}', strict=True)
 			File_System.create_file(f"{Globals.PROJECT_PATH}/JavaScript/modules/on_log_in.js", 'export default function init(args) {}', strict=True)
 			File_System.create_file(f"{Globals.PROJECT_PATH}/JavaScript/modules/on_log_out.js", 'export default function init(args) {}', strict=True)
 			File_System.create_file(f"{Globals.PROJECT_PATH}/JavaScript/modules/on_sign_up.js", 'export default function init(args) {}', strict=True)
