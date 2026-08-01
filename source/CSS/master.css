@@ -1,6 +1,7 @@
 :root{
 	--z-minus: -1;
 	--z-body: 1;
+	--z-tooltip: 1;
 	--z-footer: 2;
 	--z-main: 3;
 	--z-header: 4;
@@ -10,7 +11,6 @@
 	--z-menu: 8;
 	--z-modal: 9;
 	--z-toasts: 10;
-	--z-tooltip: 11;
 	--z-loading: 12;
 	--z-urgent: 13;
 
