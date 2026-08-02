@@ -13,7 +13,7 @@ export default function main() {
 				form_func="on_log_in_callback"
 
 			>
-				<p class="text-align-center text-size-1-5rem"${window.Lang.use("log_in")}</p>
+				<p class="text-align-center text-size-1-5rem">${window.Lang.use("log_in")}</p>
 
 				<label>
 					<p for="eMail">${window.Lang.use('eMail')}</p>
