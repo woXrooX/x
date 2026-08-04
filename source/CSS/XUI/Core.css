@@ -814,9 +814,23 @@
 					}
 				}
 
+				/* Styles */
+
 				&.btn-outline{
 					&:active{
 						transform: translateY(5px);
+					}
+				}
+
+				&.btn-clean{
+					color: var(--color-text-primary);
+					background-color: var(--color-main-tint-1);
+					outline-color: var(--color-main-tint-4);
+					border-radius: var(--radius);
+					box-shadow: none;
+
+					&:hover{
+						outline-color: var(--color-main-tint-8);
 					}
 				}
 
