@@ -27,6 +27,13 @@
 
 
 @font-face{
+	font-family: SpaceMono;
+	src:url("/fonts/SpaceMono-Regular.ttf");
+}
+.font-family-SpaceMono{font-family: SpaceMono;}
+
+
+@font-face{
 	font-family: Ubuntu;
 	src:url("/fonts/Ubuntu-Regular.ttf");
 }
