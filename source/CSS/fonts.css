@@ -27,6 +27,13 @@
 
 
 @font-face{
+	font-family: SpaceGrotesk;
+	src:url("/fonts/SpaceGrotesk-VariableFont_wght.ttf");
+}
+.font-family-SpaceGrotesk{font-family: SpaceGrotesk;}
+
+
+@font-face{
 	font-family: SpaceMono;
 	src:url("/fonts/SpaceMono-Regular.ttf");
 }
