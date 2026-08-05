@@ -1,4 +1,11 @@
 @font-face{
+	font-family: EBGaramond;
+	src:url("/fonts/EBGaramond-VariableFont_wght.ttf");
+}
+.font-family-EBGaramond{font-family: EBGaramond;}
+
+
+@font-face{
 	font-family: Philosopher;
 	src:url("/fonts/Philosopher-Regular.ttf");
 }
