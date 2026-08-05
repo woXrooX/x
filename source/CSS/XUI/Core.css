@@ -480,6 +480,8 @@
 		.text-transform-capitalize{text-transform: capitalize;}
 		.text-transform-uppercase{text-transform: uppercase;}
 		.text-transform-lowercase{text-transform: lowercase;}
+
+		.font-variant-numeric-tabular-nums { font-variant-numeric: tabular-nums; }
 	}
 
 	@layer custom_scrollbars{
@@ -1586,6 +1588,14 @@
 				.min-width-2000px{min-width: 2000px;}
 				.min-width-2200px{min-width: 2200px;}
 				.min-width-2500px{min-width: 2500px;}
+
+				/* min-width character */
+				.min-width-2ch{min-width: 2ch;}
+				.min-width-3ch{min-width: 3ch;}
+				.min-width-4ch{min-width: 4ch;}
+				.min-width-5ch{min-width: 5ch;}
+				.min-width-6ch{min-width: 6ch;}
+				.min-width-7ch{min-width: 7ch;}
 			}
 
 			@layer max_width{
