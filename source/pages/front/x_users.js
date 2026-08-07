@@ -1,5 +1,5 @@
 import String_to_Element from "/JavaScript/modules/parser/String_to_Element.js";
-import { timestamp_to_human_readable_v1 } from "/JavaScript/modules/datetime/datetime.js";
+import { timestamp_to_human_readable_v1, timestamptz_to_local_timestamp } from "/JavaScript/modules/datetime/datetime.js";
 
 export function before() {
 	window.x.Head.set_title("users");
@@ -117,9 +117,9 @@ export async function after() {
 				row["full_name"] || '-',
 				row["roles_list"] || '-',
 
-				row["last_heartbeat_at"] == null ?
-				'-':
-				timestamp_to_human_readable_v1(row["last_heartbeat_at"])
+				timestamp_to_human_readable_v1(row["last_heartbeat_at"]) || '-',
+
+				timestamptz_to_local_timestamp(row["flag_deleted_at"]) || '-'
 			]);
 
 			return ROWS;
