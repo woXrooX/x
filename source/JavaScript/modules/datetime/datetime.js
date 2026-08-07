@@ -1,4 +1,6 @@
 export function timestamp_to_human_readable_v1(timestamp) {
+	if (timestamp === null) return null;
+
 	const new_timestamp = new Date(timestamp);
 	if(isNaN(new_timestamp)) return false;
 
