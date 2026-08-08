@@ -54,6 +54,7 @@
 
 - 23503 = Foreign Key Violation
 - 23505 = Unique Violation
+- 23514 = check_violation
 """
 
 if __name__ != "__main__":
