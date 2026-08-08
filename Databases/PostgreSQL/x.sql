@@ -251,6 +251,9 @@ CREATE TABLE IF NOT EXISTS "users" (
 	FOREIGN KEY ("app_language") REFERENCES "languages"("id") ON DELETE SET NULL,
 	FOREIGN KEY ("app_color_mode") REFERENCES "app_color_modes"("id") ON DELETE SET NULL,
 
+    CONSTRAINT "first_name_RegEx_check" CHECK ("first_name" !~ '[<>&"()=\\\/;:]'),
+    CONSTRAINT "last_name_RegEx_check"  CHECK ("last_name"  !~ '[<>&"()=\\\/;:]'),
+
 	PRIMARY KEY ("id")
 );
 
