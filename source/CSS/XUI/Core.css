@@ -1522,6 +1522,9 @@
 			.width-950px{width: 950px;}
 			.width-1000px{width: 1000px;}
 
+			/* mm */
+			.width-60mm { width: 60mm; }
+
 			@layer min_width{
 				.min-width-fit-content{ min-width: fit-content; }
 
@@ -1813,6 +1816,9 @@
 			.height-900px{height: 900px;}
 			.height-950px{height: 950px;}
 			.height-1000px{height: 1000px;}
+
+			/* mm */
+			.height-30mm { height: 30mm; }
 
 			/* rem */
 			.height-1rem{height: 1rem;}
@@ -3159,6 +3165,13 @@
 				border-top: 1px solid var(--color-main-tint-4);
 			}
 		}
+	}
+
+	@layer Canvas {
+		image-rendering-auto { image-rendering: auto; }
+		image-rendering-smooth { image-rendering: smooth; }
+		image-rendering-crisp-edges { image-rendering: crisp-edges; }
+		image-rendering-pixelated { image-rendering: pixelated; }
 	}
 
 	@layer overrides {
