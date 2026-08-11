@@ -79,7 +79,7 @@ export function timestamptz_to_local_timestamp(timestamptz) {
 		"time_zone": Intl.DateTimeFormat().resolvedOptions().timeZone
 	});
 
-	return `${local_timestamp.year}-${local_timestamp.month}-${local_timestamp.day} ${local_timestamp.hour}:${local_timestamp.minute}:${local_timestamp.second}`
+	return `${local_timestamp.year}-${local_timestamp.month}-${local_timestamp.day} ${local_timestamp.hour}:${local_timestamp.minute}:${local_timestamp.second}`;
 }
 
 export function format_timestamp({
