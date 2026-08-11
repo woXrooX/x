@@ -159,10 +159,14 @@ class Name {
 	}
 
 	/////////// APIs
+
 	static public_method(){}
 
+
 	/////////// Helpers
+
 	static #private_method(){}
+
 
 	/////////////////////////// Object
 
@@ -170,11 +174,15 @@ class Name {
 	public_var = null;
 	#private_var = null;
 
-	constructor(){}
 
 	/////////// APIs
+
+	constructor(){}
+
 	public_method(){}
 
+
 	/////////// Helpers
+
 	#private_method(){}
 }
