@@ -57,21 +57,17 @@ export default class Hyperlink{
 		window.open(completed_URL, '_blank', 'noopener,noreferrer');
 	}
 
-	static go_to_history(target) {
+
+	static can_go_to_history(target) {
 		if (!target) return false;
 
 		//// Use modern window.navigation
-		if (window.navigation)
-			switch (target) {
-				case "back":
-					if (!window.navigation.canGoBack) return false;
-					window.navigation.back();
-					return true;
 
-				case "forth":
-					if (!window.navigation.canGoForward) return false;
-					window.navigation.forward();
-					return true;
+		if (window.navigation) {
+			switch (target) {
+				case "back": return window.navigation.canGoBack;
+
+				case "forth": return window.navigation.canGoForward;
 
 				default: {
 					const steps = parseInt(target, 10);
@@ -79,17 +75,55 @@ export default class Hyperlink{
 
 					const entries = window.navigation.entries();
 					const target_index = window.navigation.currentEntry.index + steps;
-					if (target_index < 0 || target_index >= entries.length) return false;
+					return target_index >= 0 && target_index < entries.length;
+				}
+			}
+		}
+
+		//// Fallback to classic window.history
+
+		if (window.history.length <= 1) return false;
+
+		switch (target) {
+			case "back":
+			case "forth":
+				// Cannot tell if actually at an edge
+				return true;
+
+			default: {
+				const steps = parseInt(target, 10);
+				return !isNaN(steps);
+			}
+		}
+	}
+
+	static go_to_history(target) {
+		if (!Hyperlink.can_go_to_history(target)) return false;
+
+		//// Use modern window.navigation
+
+		if (window.navigation) {
+			switch (target) {
+				case "back":
+					window.navigation.back();
+					return true;
+
+				case "forth":
+					window.navigation.forward();
+					return true;
+
+				default: {
+					const steps = parseInt(target, 10);
+					const entries = window.navigation.entries();
+					const target_index = window.navigation.currentEntry.index + steps;
 
 					window.navigation.traverseTo(entries[target_index].key);
 					return true;
 				}
 			}
-
+		}
 
 		//// Fallback to classic window.history
-
-		if (window.history.length <= 1) return false;
 
 		switch (target) {
 			case "back":
@@ -102,8 +136,6 @@ export default class Hyperlink{
 
 			default: {
 				const steps = parseInt(target, 10);
-				if (isNaN(steps)) return false;
-
 				window.history.go(steps);
 				return true;
 			}
