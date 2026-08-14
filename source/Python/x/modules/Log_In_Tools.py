@@ -60,7 +60,6 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def password_hash(password):
-			if Globals.CONF["password"]["hashing_algorithm"] == "SHA-256": return hashlib.sha256(password.encode()).hexdigest()
-
-			return password
+			salt = Globals.CONF["password"].get("salt", "").encode()
+			return hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 600000).hex()
 
