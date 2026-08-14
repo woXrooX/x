@@ -14,6 +14,15 @@ export default class Link extends HTMLElement{
 
 	disconnectedCallback() { this.removeEventListener("click", this.#event_handler_click); }
 
+	#parse_commands() {
+		this.#parts = this.getAttribute("go").split(':', 2);
+	}
+
+	#validate_can_go_to_history() {
+		if (this.#parts[0] != "history") return;
+		if (Hyperlink.can_go_to_history(this.#parts[1]) === false) this.classList.add("display-none");
+	}
+
 	#event_handler_click(event) {
 		event.stopPropagation();
 
@@ -26,15 +35,6 @@ export default class Link extends HTMLElement{
 				const res = Hyperlink.go_to_history(this.#parts[1]);
 				break;
 		}
-	}
-
-	#parse_commands() {
-		this.#parts = this.getAttribute("go").split(':', 2);
-	}
-
-	#validate_can_go_to_history() {
-		if (this.#parts[0] != "history") return;
-		if (Hyperlink.can_go_to_history(this.#parts[1]) === false) this.classList.add("display-none");
 	}
 };
 
