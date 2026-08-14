@@ -98,7 +98,7 @@ export default class Hyperlink{
 	}
 
 	static go_to_history(target) {
-		if (!Hyperlink.can_go_to_history(target)) return false;
+		if (!Hyperlink.can_go_to_history(target)) return Hyperlink.locate("/404");
 
 		//// Use modern window.navigation
 
