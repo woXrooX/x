@@ -19,35 +19,12 @@ export default class Link extends HTMLElement{
 
 		switch (parts[0]) {
 			case "URL":
-				handle_URL(parts[1]);
+				window.Hyperlink.locate(parts[1]);
 				break;
 
 			case "history":
-				handle_history(parts[1]);
+				const res = Hyperlink.go_to_history(parts[1]);
 				break;
-		}
-
-		function handle_URL(URL){
-			if(!!URL === false) return false;
-			window.Hyperlink.locate(URL);
-		}
-
-		function handle_history(history){
-			if(!!history === false) return false;
-
-			switch (history) {
-				case "back":
-					window.history.back();
-					break;
-
-				case "forth":
-					window.history.forward();
-					break;
-
-				default:
-					window.history.go(parseInt(history));
-					break;
-			}
 		}
 	}
 };
