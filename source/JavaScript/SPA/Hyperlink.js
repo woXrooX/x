@@ -56,6 +56,59 @@ export default class Hyperlink{
 		const completed_URL = new URL(url, window.location.origin);
 		window.open(completed_URL, '_blank', 'noopener,noreferrer');
 	}
+
+	static go_to_history(target) {
+		if (!target) return false;
+
+		//// Use modern window.navigation
+		if (window.navigation)
+			switch (target) {
+				case "back":
+					if (!window.navigation.canGoBack) return false;
+					window.navigation.back();
+					return true;
+
+				case "forth":
+					if (!window.navigation.canGoForward) return false;
+					window.navigation.forward();
+					return true;
+
+				default: {
+					const steps = parseInt(target, 10);
+					if (isNaN(steps)) return false;
+
+					const entries = window.navigation.entries();
+					const target_index = window.navigation.currentEntry.index + steps;
+					if (target_index < 0 || target_index >= entries.length) return false;
+
+					window.navigation.traverseTo(entries[target_index].key);
+					return true;
+				}
+			}
+
+
+		//// Fallback to classic window.history
+
+		if (window.history.length <= 1) return false;
+
+		switch (target) {
+			case "back":
+				window.history.back();
+				return true;
+
+			case "forth":
+				window.history.forward();
+				return true;
+
+			default: {
+				const steps = parseInt(target, 10);
+				if (isNaN(steps)) return false;
+
+				window.history.go(steps);
+				return true;
+			}
+		}
+	}
 }
 
 window.Hyperlink = Hyperlink;
