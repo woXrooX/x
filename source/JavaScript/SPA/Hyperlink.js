@@ -1,26 +1,26 @@
 export default class Hyperlink{
-	static collect(){
+	static collect() {
 		// Log.info("Hyperlink.collect()");
 
 		const links = document.getElementsByTagName("a");
 
 		for(const a of links) a.onclick = ()=>{
 			// Check if has href
-			if(!!a.hasAttribute("href") === false) return;
+			if (!!a.hasAttribute("href") === false) return;
 
 			// Check if href is hash.
-			if(a.getAttribute("href").charAt(0) === '#') return;
+			if (a.getAttribute("href").charAt(0) === '#') return;
 
 			// Check if href is for file or external URL
-			if(a.getAttribute("href").includes('.')) return;
+			if (a.getAttribute("href").includes('.')) return;
 
 			// Check if target blank
-			if(a.getAttribute("target") === "_blank") return;
+			if (a.getAttribute("target") === "_blank") return;
 
 			event.preventDefault();
 
 			// If blank do nothing
-			if(a.getAttribute('href') == '') return;
+			if (a.getAttribute('href') == '') return;
 
 			Hyperlink.locate(a.getAttribute("href"));
 		}
@@ -28,11 +28,11 @@ export default class Hyperlink{
 
 	// locate | load | open
 	// Force full page reload: No
-	static locate(url = ""){
+	static locate(url = '') {
 		const completed_URL = new URL(url, window.location.origin);
 
 		// Check if current page is already equal to requesting page
-		if(window.location.href == completed_URL.href) return;
+		if (window.location.href == completed_URL.href) return;
 
 		// Push new state to history
 		window.history.pushState({ page: completed_URL.href }, '', completed_URL.href);
@@ -43,16 +43,16 @@ export default class Hyperlink{
 
 	// Unlike Hyperlink.locate, users cannot navigate back to the original page using the browser's back button.
 	// Force full page reload: Yes
-	static replace(url = ""){
+	static replace(url = '') {
 		// Check if current page is already equal to requesting page
-		if(window.location.href == url) return;
+		if (window.location.href == url) return;
 
 		const completed_URL = new URL(url, window.location.origin);
 
 		window.location.replace(completed_URL);
 	}
 
-	static open_URL_in_new_tab(url){
+	static open_URL_in_new_tab(url) {
 		const completed_URL = new URL(url, window.location.origin);
 		window.open(completed_URL, '_blank', 'noopener,noreferrer');
 	}
