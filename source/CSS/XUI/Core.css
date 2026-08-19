@@ -778,6 +778,7 @@
 
 				color: white;
 				font-size: var(--btn-font-size);
+				white-space: nowrap;
 
 				display: inline-flex;
 				align-items: center;
