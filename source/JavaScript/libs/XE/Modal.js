@@ -179,7 +179,17 @@ export default class Modal extends HTMLElement{
 
 		for(const element of trigger_elements){
 			element.style.cursor = "pointer";
-			element.onclick = ()=> Modal.show(this.#DOM, this.getAttribute("modal_func"), this.getAttribute("modal_data"));
+
+			element.onclick = (event)=> {
+				// EXPERIMENTAL: Check if this works well thne remove the experimental flag
+				event.stopPropagation();
+
+				Modal.show(
+					this.#DOM,
+					this.getAttribute("modal_func"),
+					this.getAttribute("modal_data")
+				);
+			}
 		}
 	};
 
