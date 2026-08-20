@@ -1,3 +1,5 @@
+import String_to_Element from "/JavaScript/modules/parser/String_to_Element.js";
+
 export default class DOM {
 	static update(targets = []){
 		Log.info("DOM.update() - init");
@@ -95,8 +97,8 @@ export default class DOM {
 			}
 
 			else if (options["method"] == "insertAdjacentHTML") parent_element.insertAdjacentHTML(options["position"], HTML);
-			else if (options["method"] == "insertAdjacentElement") parent_element.insertAdjacentElement(options["position"], HTML);
-			else if (options["method"] == "replaceChildren") parent_element.replaceChildren(HTML);
+			else if (options["method"] == "insertAdjacentElement") parent_element.insertAdjacentElement(options["position"], to_element(HTML));
+			else if (options["method"] == "replaceChildren") parent_element.replaceChildren(to_element(HTML));
 		}
 
 		catch (error) {
@@ -107,6 +109,19 @@ export default class DOM {
 
 		finally {
 			Loading.on_element_end(parent_element);
+		}
+
+
+		/////////// Helpers
+
+		function to_element(HTML) {
+			let element = null;
+
+			if (typeof HTML === "string") element = String_to_Element(HTML);
+			else if (HTML instanceof HTMLElement) element = HTML;
+			else element = String_to_Element(`<p class="surface-error width-100 padding-1 text-size-0-8rem">DOM.build()->to_element: Invalid data type received: ${typeof HTML}</p>`);
+
+			return element;
 		}
 	}
 
