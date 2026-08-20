@@ -3119,11 +3119,14 @@
 
 	@layer disabled {
 		*{
-			&.disabled, [disabled], :disabled{
-				pointer-events: none !important;
+			&.disabled, [disabled], :disabled {
 				/* Has no effect since no pointer events is none */
 				cursor: not-allowed !important;
+
+				pointer-events: none !important;
+
 				opacity: 0.5 !important;
+				filter: grayscale(0.2) !important;
 
 				&:hover, :active, :focus, ::before, ::after{
 					pointer-events: none !important;
