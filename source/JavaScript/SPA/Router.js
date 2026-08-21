@@ -48,7 +48,7 @@ export default class Router {
 
 		// If no match, reset the "current_route" and load the "404" page
 		Router.#reset_current_route();
-		Router.current_route.name = "404";
+		Router.current_route.name = "HTTP_status_code_404";
 		await window.x.Page.handle(Router.current_route.name);
 	}
 
