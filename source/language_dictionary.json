@@ -473,6 +473,11 @@
 		"ru": "Имя пользователя",
 		"uz": "Foydalanuvchi nomi"
 	},
+	"users": {
+		"en": "Users",
+		"ru": "Пользователи",
+		"uz": "Foydalanuvchilar"
+	},
 	"phone_number": {
 		"en": "Phone number",
 		"ru": "Номер телефона",
