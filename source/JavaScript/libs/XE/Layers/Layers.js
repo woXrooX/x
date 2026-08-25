@@ -141,7 +141,7 @@ export default class Layers{
 
 				${layer_func_execute_on_push ? `layer_func_execute_on_push="${layer_func_execute_on_push}"` : ''}
 				${layer_func_execute_when_top ? `layer_func_execute_when_top="${layer_func_execute_when_top}"` : ''}
-				${layer_data ? `layer_data="${layer_data}"` : ''}
+				${layer_data ? `layer_data='${layer_data}'` : ''}
 			>
 				<cover></cover>
 				<layer class="surface-v1 overflow-hidden">
@@ -225,8 +225,16 @@ export default class Layers{
 		if (!!func_name === false) return;
 		if (!(func_name in Layers.#FUNC_POOL)) return console.error(`Layers.#execute_on_add(): Invalid func_name: ${func_name}`);
 
+		let layer_data_JSON = {};
+
+		try { layer_data_JSON = JSON.parse(layer_data); }
+		catch(error) {
+			layer_data_JSON = layer_data;
+			Log.warning(`Lyers#execute_func_on(): "layer_data" is not JSON-able data`);
+		}
+
 		await Layers.#FUNC_POOL[func_name]({
-			layer_data: layer_data,
+			layer_data: layer_data_JSON,
 			layer_main_element: layer_main_element,
 			layer_id: layer_id
 		});

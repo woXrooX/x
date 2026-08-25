@@ -183,7 +183,7 @@ export default class Form {
 		await Form.#FUNC_POOL[form_func]({
 			response: response,
 			form_data: form_data,
-			form_func_data_JSON: form_func_data_JSON
+			form_func_data: form_func_data_JSON
 		});
 	}
 
