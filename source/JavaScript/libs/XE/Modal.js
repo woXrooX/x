@@ -180,7 +180,7 @@ export default class Modal extends HTMLElement{
 		for(const element of trigger_elements){
 			element.style.cursor = "pointer";
 
-			element.onclick = (event)=> {
+			element.onclick = (event)=>{
 				// EXPERIMENTAL: Check if this works well thne remove the experimental flag
 				event.stopPropagation();
 
