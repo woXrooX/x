@@ -42,26 +42,24 @@ if __name__ != "__main__":
 
 		if request.content_type is None: pass
 
-		elif "multipart/form-data;" in request.content_type:
-			Log.center(f"Contet-Type: {request.content_type}", '-')
+		else:
+			Log.raw(f"Contet-Type: {request.content_type}")
 
-			for key, value in request.form.items():
-				Log.raw(f"{key}: {request.form.getlist(key) if len(request.form.getlist(key)) > 1 else value}")
+			if "multipart/form-data;" in request.content_type:
+				for key, value in request.form.items():
+					Log.raw(f"{key}: {request.form.getlist(key) if len(request.form.getlist(key)) > 1 else value}")
 
-			if len(request.files) > 0:
-				for key, value in request.files.items(): Log.raw(f"{key}: {value}")
+				if len(request.files) > 0:
+					for key, value in request.files.items(): Log.raw(f"{key}: {value}")
 
-			Log.center('', '-')
+				# logText += f" [{request.form}]"
+				# logText += f" [{request.files}]" if len(request.files) > 0 else ''
 
-			# logText += f" [{request.form}]"
-			# logText += f" [{request.files}]" if len(request.files) > 0 else ''
+			elif request.content_type == "application/json":
+				if isinstance(request.get_json(), dict):
+					for key, value in request.get_json().items(): Log.raw(f"{key}: {value}")
 
-		elif request.content_type == "application/json":
-			Log.center(f"Contet-Type: {request.content_type}", '-')
+				else: Log.raw(request.get_json())
 
-			if isinstance(request.get_json(), dict):
-				for key, value in request.get_json().items(): Log.raw(f"{key}: {value}")
-
-			else: Log.raw(request.get_json())
 
 			Log.center('', '-')
