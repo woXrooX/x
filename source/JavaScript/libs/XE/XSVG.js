@@ -39,7 +39,7 @@ export default class XSVG extends HTMLElement{
 						}
 
 						&:active{
-							transform: scale(0.5);
+							transform: scale(0.9);
 						}
 					}
 				}
