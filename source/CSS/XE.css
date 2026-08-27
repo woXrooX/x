@@ -132,7 +132,7 @@ x-link{
 	cursor: pointer;
 	&:not([class]){
 		color: var(--color-text-secondary);
-		&:hover{ color: var(--color-text-error); }
+		&:hover{ color: var(--color-error); }
 	}
 }
 
