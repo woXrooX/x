@@ -1525,6 +1525,7 @@
 
 			/* mm */
 			.width-60mm { width: 60mm; }
+			.width-80mm { width: 80mm; }
 
 			@layer min_width{
 				.min-width-fit-content{ min-width: fit-content; }
