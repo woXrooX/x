@@ -72,28 +72,6 @@ if __name__ != "__main__":
 
 			return True
 
-		@staticmethod
-		@check_if_user_in_session
-		def get_plan():
-			data = PostgreSQL.execute(
-				SQL="""
-					SELECT "user_plans"."name"
-					FROM "user_plans"
-					WHERE "id" = %s
-					LIMIT 1;
-				""",
-				params=[session["user"]["plan"]],
-				fetch_type="one"
-			)
-			if "error" in data: return False
-
-			if data["data"] is None: session["user"]["plan"] = None
-			else: session["user"]["plan"] = data["data"]["name"]
-
-			Log.success("User.get_plan()")
-
-			return True
-
 
 
 		########################### Setters
@@ -274,8 +252,7 @@ if __name__ != "__main__":
 				"app_language": session["user"]["app_language"],
 				"authenticity_status": session["user"]["authenticity_status"],
 				"roles": session["user"]["roles"],
-				"occupations": session["user"]["occupations"],
-				"plan": session["user"]["plan"],
+				"occupations": session["user"]["occupations"]
 			}
 
 		@staticmethod
@@ -302,8 +279,6 @@ if __name__ != "__main__":
 			if not User.get_roles(): pass
 
 			if not User.get_occupations(): pass
-
-			if not User.get_plan(): pass
 
 			Log.success("User.update_session()")
 

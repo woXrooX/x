@@ -32,7 +32,6 @@ if __name__ != "__main__":
 
 					if "roles" in Globals.CONF["pages"][page]: continue
 					if "roles_not" in Globals.CONF["pages"][page]: continue
-					if "plans" in Globals.CONF["pages"][page]: continue
 
 					# Allow pages only with "GET" methods
 					if(

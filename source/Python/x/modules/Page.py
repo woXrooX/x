@@ -118,13 +118,6 @@ if __name__ != "__main__":
 					if request.method == "GET": return redirect("/400")
 					return Response.make(type="error", message="400", redirect="/400")
 
-				if(
-					"plans" in PAGE_CONF and
-					session["user"]["plan"] not in PAGE_CONF["plans"]
-				):
-					if request.method == "GET": return redirect("/400")
-					return Response.make(type="error", message="400", redirect="/400")
-
 				return True
 
 			if "user" not in session:
@@ -134,8 +127,7 @@ if __name__ != "__main__":
 						"authenticity_statuses" in PAGE_CONF and
 						"unauthenticated" in PAGE_CONF["authenticity_statuses"]
 					) and
-					"roles" not in PAGE_CONF and
-					"plans" not in PAGE_CONF
+					"roles" not in PAGE_CONF
 				): return True
 
 				else:

@@ -185,13 +185,6 @@ SELECT setval(
 	(SELECT MAX("id") FROM "user_authenticity_statuses")
 );
 
-\! echo "-------------------------- user_plans"
-CREATE TABLE IF NOT EXISTS "user_plans" (
-	"id" INT GENERATED ALWAYS AS IDENTITY,
-	"name" VARCHAR(10) NOT NULL UNIQUE,
-	PRIMARY KEY ("id")
-);
-
 \! echo "-------------------------- users"
 CREATE TABLE IF NOT EXISTS "users" (
 	"id" INT GENERATED ALWAYS AS IDENTITY,
@@ -228,7 +221,6 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"background_picture" VARCHAR(100) NULL,
 
 	"authenticity_status" INT NULL,
-	"plan" INT NULL,
 
 	"currency" INT NULL,
 	"app_language" INT NULL,
@@ -245,7 +237,6 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"flag_deleted_phone_number" VARCHAR(100) NULL DEFAULT NULL,
 
 	FOREIGN KEY ("authenticity_status") REFERENCES "user_authenticity_statuses"("id") ON DELETE SET NULL,
-	FOREIGN KEY ("plan") REFERENCES "user_plans"("id") ON DELETE SET NULL,
 
 	FOREIGN KEY ("currency") REFERENCES "currencies"("id") ON DELETE SET NULL,
 	FOREIGN KEY ("app_language") REFERENCES "languages"("id") ON DELETE SET NULL,

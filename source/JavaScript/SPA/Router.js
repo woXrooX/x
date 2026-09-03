@@ -75,12 +75,6 @@ export default class Router {
 				for (let role_not of PAGE_CONF["roles_not"]) if (window.x["session"]["user"]["roles"].includes(role_not)) return false;
 			}
 
-			if ("plans" in PAGE_CONF) {
-				let result = false;
-				for (let i = 0; i < PAGE_CONF["plans"].length; i++) if (window.x["session"]["user"]["plans"].includes(PAGE_CONF["plans"][i])) result = true;
-				if (result === false) return false;
-			}
-
 			return true;
 		}
 
@@ -91,8 +85,7 @@ export default class Router {
 					"authenticity_statuses" in PAGE_CONF &&
 					PAGE_CONF["authenticity_statuses"].includes("unauthenticated")
 				) &&
-				!("roles" in PAGE_CONF) &&
-				!("plans" in PAGE_CONF)
+				!("roles" in PAGE_CONF)
 			) return true;
 			else return false;
 		}
