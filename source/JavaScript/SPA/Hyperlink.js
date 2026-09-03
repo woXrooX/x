@@ -1,3 +1,26 @@
+/*
+	No page load (SPA routing, same-origin only, fires nothing):
+		— Adds entry
+		history.pushState
+
+		— Replaces entry
+		history.replaceState
+
+	Full page load: (On location family: hash-only change: no reload, adds entry, fires hashchange)
+		— Adds entry
+		location.assign / location.href = ...
+
+		— Replaces entry
+		location.replace
+
+	Neither:
+		— Reloads, history untouched
+		location.reload
+
+		— Fires on back/forward only, not on any of the above
+		popstate
+*/
+
 export default class Hyperlink{
 	static collect() {
 		// Log.info("Hyperlink.collect()");
@@ -28,14 +51,15 @@ export default class Hyperlink{
 
 	// locate | load | open
 	// Force full page reload: No
-	static locate(url = '') {
+	static locate(url = '', replace = false) {
 		const completed_URL = new URL(url, window.location.origin);
 
 		// Check if current page is already equal to requesting page
 		if (window.location.href == completed_URL.href) return;
 
-		// Push new state to history
-		window.history.pushState({ page: completed_URL.href }, '', completed_URL.href);
+		if (replace !== true) window.history.pushState({ page: completed_URL.href }, '', completed_URL.href);
+
+		else window.history.replaceState({ page: completed_URL.href }, '', completed_URL.href);
 
 		// Firing event "URL_change" after changing the URL
 		window.dispatchEvent(new CustomEvent('URL_change'));
