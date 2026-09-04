@@ -56,7 +56,7 @@ if __name__ != "__main__":
 
 			######## Type
 			# Check if type is valid
-			if type not in ["success", "info", "warning", "error"]: type = "error"
+			if type not in ["success", "info", "warning", "important", "error", "urgent"]: type = "error"
 
 			######## Message
 			# Looks like no need for this check here since Front-End Lang.use covers bugs
