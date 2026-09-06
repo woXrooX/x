@@ -10,7 +10,7 @@ from Python.x.modules.Globals import Globals
 # @Page.build({
 # 	"enabled": False,
 # 	"methods": ["GET", "POST"],
-# 	"roles": ["root"],
+# 	"roles": ["x.root"],
 # 	"endpoints": ["/x/user/<id>"]
 # })
 @Page.build()

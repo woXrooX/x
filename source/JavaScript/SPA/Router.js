@@ -58,7 +58,7 @@ export default class Router {
 		if (PAGE_CONF["enabled"] === false) return false;
 
 		if ("user" in window.x["session"]) {
-			// if (window.x["session"]["user"]["roles"].includes("root")) return true;
+			// if (window.x["session"]["user"]["roles"].includes("x.root")) return true;
 
 			if ("authenticity_statuses" in PAGE_CONF) {
 				if (PAGE_CONF["authenticity_statuses"].includes("unauthenticated")) return false;

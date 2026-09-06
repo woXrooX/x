@@ -6,7 +6,7 @@ from Python.x.modules.PostgreSQL import PostgreSQL
 # @Page.build({
 # 	"enabled": False,
 # 	"methods": ["GET", "POST"],
-# 	"roles": ["root"],
+# 	"roles": ["x.root"],
 # 	"endpoints": ["/x/log_in_records"]
 # })
 @Page.build()

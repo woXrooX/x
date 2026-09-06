@@ -10,7 +10,7 @@ from Python.x.modules.Log_In_Tools import Log_In_Tools
 # @Page.build({
 # 	"enabled": False,
 # 	"methods": ["GET", "POST"],
-# 	"roles": ["root"],
+# 	"roles": ["x.root"],
 # 	"endpoints": ["/x/users"]
 # })
 @Page.build()

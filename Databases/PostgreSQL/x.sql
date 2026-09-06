@@ -190,6 +190,9 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"id" INT GENERATED ALWAYS AS IDENTITY,
 
 	"metadata_created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+	"metadata_created_by_user" INT NULL DEFAULT NULL,
+
 	-- Here using CURRENT_TIMESTAMP postgreSQL doesn't have ON UPDATE
 	"metadata_last_updated_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -236,8 +239,8 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"flag_deleted_eMail" VARCHAR(100) NULL DEFAULT NULL,
 	"flag_deleted_phone_number" VARCHAR(100) NULL DEFAULT NULL,
 
+	FOREIGN KEY ("metadata_created_by_user") REFERENCES "users"("id"),
 	FOREIGN KEY ("authenticity_status") REFERENCES "user_authenticity_statuses"("id") ON DELETE SET NULL,
-
 	FOREIGN KEY ("currency") REFERENCES "currencies"("id") ON DELETE SET NULL,
 	FOREIGN KEY ("app_language") REFERENCES "languages"("id") ON DELETE SET NULL,
 	FOREIGN KEY ("app_color_mode") REFERENCES "app_color_modes"("id") ON DELETE SET NULL,
@@ -252,17 +255,21 @@ CREATE TRIGGER "trigger_metadata_last_updated_at"
 BEFORE UPDATE ON "users"
 FOR EACH ROW EXECUTE FUNCTION on_update_set_current_timestamp();
 
+CREATE INDEX "users_1_idx" ON "users" ("metadata_created_by_user");
+
+
+
 \! echo "-------------------------- user_roles"
 CREATE TABLE IF NOT EXISTS "user_roles" (
 	"id" INT GENERATED ALWAYS AS IDENTITY,
-	"name" VARCHAR(20) NOT NULL UNIQUE,
+	"name" VARCHAR(255) NOT NULL UNIQUE,
 	PRIMARY KEY ("id")
 );
 
 INSERT INTO "user_roles" ("id", "name") OVERRIDING SYSTEM VALUE VALUES
-(1, 'root'),
-(2, 'dev'),
-(3, 'admin');
+(1, 'x.root'),
+(2, 'x.dev'),
+(3, 'x.admin');
 
 SELECT setval(
 	pg_get_serial_sequence('user_roles', 'id'),
