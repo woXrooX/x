@@ -58,13 +58,6 @@ Twilio.init()
 
 
 
-#################################################### Initializing Stripe
-from Python.x.modules.Stripe.Stripe import Stripe
-Stripe.init()
-
-
-
-
 #################################################### Flask APP
 app = Flask(
 	__name__,
