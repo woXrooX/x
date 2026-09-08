@@ -145,46 +145,6 @@ if __name__ != "__main__":
 			app_language = None,
 			app_color_mode = 1
 		):
-			if (
-				username is None and
-				eMail is None and
-				phone_number is None
-			): return Response.make(type="error", message="invalid_request")
-
-
-
-			if password is None: return Response.make(type="error", message="password_empty", field="password")
-			else:
-				if len(password) < Globals.CONF["password"]["min_length"]: return Response.make(type="error", message="password_min_length", field="password")
-
-				if len(password) > Globals.CONF["password"]["max_length"]: return Response.make(type="error", message="password_max_length", field="password")
-
-				if not re.match(Globals.CONF["password"]["regEx"], password): return Response.make(type="error", message="password_allowed_chars", field="password")
-
-				password = Log_In_Tools.password_hash(password)
-
-
-
-			if eMail is not None:
-				if not re.match(Globals.CONF["eMail"]["regEx"], eMail): return Response.make(type="error", message="eMail_invalid", field="eMail")
-
-				eMail_verification_code = random.randint(100000, 999999)
-
-
-
-			if phone_number is not None:
-				if not re.match(Globals.CONF["phone_number"]["regEx"], phone_number): return Response.make(type="error", message="phone_number_invalid", field="phone_number")
-
-
-
-			if authenticity_status is not None:
-				if authenticity_status not in Globals.USER_AUTHENTICITY_STATUSES: return Response.make(type="error", message="invalid_request")
-
-				authenticity_status = Globals.USER_AUTHENTICITY_STATUSES[authenticity_status]["id"]
-
-
-
-
 			# RULE: On error, this method guarantees that the connection is closed.
 
 			connection = None
@@ -194,6 +154,62 @@ if __name__ != "__main__":
 				if connection is False: return Response.make(type="error", message="database_error")
 
 			else: connection = borrowed_connection
+
+
+
+			if (
+				username is None and
+				eMail is None and
+				phone_number is None
+			):
+				PostgreSQL.put_connection_to_pool(connection)
+				return Response.make(type="error", message="invalid_request")
+
+
+
+			if password is None:
+				PostgreSQL.put_connection_to_pool(connection)
+				return Response.make(type="error", message="password_empty", field="password")
+
+			else:
+				if len(password) < Globals.CONF["password"]["min_length"]:
+					PostgreSQL.put_connection_to_pool(connection)
+					return Response.make(type="error", message="password_min_length", field="password")
+
+				if len(password) > Globals.CONF["password"]["max_length"]:
+					PostgreSQL.put_connection_to_pool(connection)
+					return Response.make(type="error", message="password_max_length", field="password")
+
+				if not re.match(Globals.CONF["password"]["regEx"], password):
+					PostgreSQL.put_connection_to_pool(connection)
+					return Response.make(type="error", message="password_allowed_chars", field="password")
+
+				password = Log_In_Tools.password_hash(password)
+
+
+
+			if eMail is not None:
+				if not re.match(Globals.CONF["eMail"]["regEx"], eMail):
+					PostgreSQL.put_connection_to_pool(connection)
+					return Response.make(type="error", message="eMail_invalid", field="eMail")
+
+				eMail_verification_code = random.randint(100000, 999999)
+
+
+
+			if phone_number is not None:
+				if not re.match(Globals.CONF["phone_number"]["regEx"], phone_number):
+					PostgreSQL.put_connection_to_pool(connection)
+					return Response.make(type="error", message="phone_number_invalid", field="phone_number")
+
+
+
+			if authenticity_status is not None:
+				if authenticity_status not in Globals.USER_AUTHENTICITY_STATUSES:
+					PostgreSQL.put_connection_to_pool(connection)
+					return Response.make(type="error", message="invalid_request")
+
+				authenticity_status = Globals.USER_AUTHENTICITY_STATUSES[authenticity_status]["id"]
 
 
 
@@ -301,8 +317,8 @@ if __name__ != "__main__":
 					app_language,
 					app_color_mode
 				],
-				commit=False,
 				borrowed_connection=connection,
+				commit=False,
 				fetch_type="one"
 			)
 
@@ -334,8 +350,8 @@ if __name__ != "__main__":
 						user_res["id"],
 						user_res["id"]
 					],
-					commit=False,
 					borrowed_connection=connection,
+					commit=False,
 					include_PostgreSQL_data=True
 				)
 
