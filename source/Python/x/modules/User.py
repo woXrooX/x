@@ -106,6 +106,14 @@ if __name__ != "__main__":
 
 		@staticmethod
 		def create(
+			#### Other
+
+			borrowed_connection = None,
+			commit = True,
+
+
+			#### Columns
+
 			metadata_created_by_user = None,
 
 			username = None,
@@ -171,8 +179,14 @@ if __name__ != "__main__":
 
 
 
-			connection = PostgreSQL.get_connection_from_pool()
-			if connection is False: return Response.make(type="error", message="database_error")
+
+			connection = None
+			if borrowed_connection is None:
+				connection = PostgreSQL.get_connection_from_pool()
+
+				if connection is False: return Response.make(type="error", message="database_error")
+
+			else: connection = borrowed_connection
 
 
 
@@ -325,12 +339,16 @@ if __name__ != "__main__":
 
 
 
-			PostgreSQL.commit_connection(connection)
-			PostgreSQL.put_connection_to_pool(connection)
+			if commit is True:
+				PostgreSQL.commit_connection(connection)
+				PostgreSQL.put_connection_to_pool(connection)
 
 
 
-			return user_res
+			return {
+				"user": user_res,
+				"connection": connection
+			}
 
 
 		########### Helpers
