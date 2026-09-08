@@ -172,6 +172,11 @@ if __name__ != "__main__":
 
 
 
+			if phone_number is not None:
+				if not re.match(Globals.CONF["phone_number"]["regEx"], phone_number): return Response.make(type="error", message="phone_number_invalid", field="phone_number")
+
+
+
 			if authenticity_status is not None:
 				if authenticity_status not in Globals.USER_AUTHENTICITY_STATUSES: return Response.make(type="error", message="invalid_request")
 
@@ -179,6 +184,8 @@ if __name__ != "__main__":
 
 
 
+
+			# RULE: On error, this method guarantees that the connection is closed.
 
 			connection = None
 			if borrowed_connection is None:
