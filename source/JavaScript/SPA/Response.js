@@ -2,7 +2,7 @@ export default class Response {
 	static handle_actions(response) {
 		if (!("actions" in response)) return;
 
-		if ("update_conf" in response["actions"]) window.x["CONF"] = response["actions"]["update_conf"];
+		if ("update_conf" in response["actions"]) window.x["configurations"] = response["actions"]["update_conf"];
 
 		if ("set_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change", {detail: response["actions"]["set_session_user"]}));
 		if ("delete_session_user" in response["actions"]) window.dispatchEvent(new CustomEvent("user_session_change"));
