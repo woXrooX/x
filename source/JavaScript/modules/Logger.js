@@ -1,43 +1,68 @@
-export default class Logger{
-	static line(force = false){
-		// Check If Debugging Mode Is Enabled Else Exit
-		if("configurations" in window.x && window.x["configurations"].tools.debug === false && force === false) return;
+export default class Logger {
+	/////////////////////////// Static
+
+
+
+	/////////// APIs
+
+	static line(force = false) {
+		if (
+			"configurations" in window.x &&
+			window.x["configurations"].tools.debug === false &&
+			force === false
+		) return;
 
 		console.log("==========================================");
 	}
 
-	static success(text, force = false){
+	static success(text, force = false) {
 		Logger.#log(text, "success");
 	}
-	static info(text, force = false){
+
+	static info(text, force = false) {
 		Logger.#log(text, "info");
 	}
-	static warning(text, force = false){
+
+	static warning(text, force = false) {
 		Logger.#log(text, "warning");
 	}
-	static error(text, force = false){
+
+	static important(text, force = false) {
+		Logger.#log(text, "important", force);
+	}
+
+	static error(text, force = false) {
 		Logger.#log(text, "error", force);
 	}
 
-	static #log(text, type, force = false){
-		// Check If Debugging Mode Is Enabled And Force Is False Else Exit
-		if("configurations" in window.x && window.x["configurations"].tools.debug === false && force === false) return;
+	static urgent(text, force = false) {
+		Logger.#log(text, "urgent", force);
+	}
 
-		// Setting Type Color
+
+
+	/////////// Helpers
+
+	static #log(text, type, force = false) {
+		if (
+			"configurations" in window.x &&
+			window.x["configurations"].tools.debug === false &&
+			force === false
+		) return;
+
+		// Type color
 		const color = `color: ${x.CSS.get_value(`--color-${type}`) || 'white'}`;
 
-		// Generating Timestamp
+		// Timestamp
 		const now = new Date();
 		const timestamp = `${now.getDate()}.${now.getMonth()+1}.${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
 
-		// Final Output
 		console.log(`%c[${timestamp}][${type.toUpperCase()}] `, color, text);
 	}
 }
 
-// Log Is Alias To Logger
-class Log extends Logger{}
+// Log is alias to logger
+class Log extends Logger {}
 
-// Make Logger And Log Usable W/O Importing It
 window.Logger = Logger;
 window.Log = Log;
