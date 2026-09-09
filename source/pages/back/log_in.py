@@ -18,64 +18,116 @@ from Python.x.modules.Logger import Log
 @Page.build()
 def log_in(request):
 	if request.method == "POST":
-		# unknown_error
-		if request.form["for"] != "log_in": return Response.make(type="warning", message="unknown_error")
+		if request.form["for"] == "log_in":
+			identifier_type = None
 
-		######## eMail
-		# eMail_empty
-		if "eMail" not in request.form or not request.form["eMail"]: return Response.make(type="error", message="eMail_empty", field="eMail")
+			#### eMail or phone_number
+			eMail_or_phone_number = None
 
-		######## password
-		# password_empty
-		if "password" not in request.form or not request.form["password"]: return Response.make(type="error", message="password_empty", field="password")
+			if "eMail_or_phone_number" not in request.form or not request.form["eMail_or_phone_number"]:
+				return Response.make(type="error", message="invalid_value", field="eMail_or_phone_number")
 
-		password = Log_In_Tools.password_hash(request.form["password"])
+			eMail_or_phone_number = request.form["eMail_or_phone_number"]
 
-		######## Check If eMail And Password matching User Exist
-		data = PostgreSQL.execute(
-			SQL="""
-				SELECT "id"
-				FROM "users"
-				WHERE
-					"eMail" = %s AND
-					"password" = %s AND
-					"flag_deleted_at" IS NULL
-				LIMIT 1;
-			""",
-			params=[request.form["eMail"], password],
-			fetch_type="one"
-		)
-		if "error" in data: return Response.make(type="error", message="database_error")
+			if '@' in eMail_or_phone_number: identifier_type = "eMail"
+			else: identifier_type = "phone_number"
 
-		# No match
-		if not data["data"]:
-			Log_In_Tools.new_record(request, "eMail_or_password_incorrect")
-			Log_In_Tools.log_failed_log_in(request)
-			return Response.make(type="error", message="eMail_or_password_incorrect")
 
-		# Set Session User ID
-		session["user"] = data["data"]
-		session.permanent = True
 
-		# Handle The Session Update Error
-		if not User.update_session(): pass
+			#### password
 
-		#### On Success Redirect & Update Front-End Session & Adds a new login record if enabled
+			if "password" not in request.form or not request.form["password"]: return Response.make(type="error", message="password_empty", field="password")
 
-		Log_In_Tools.new_record(request, "success")
+			password = Log_In_Tools.password_hash(request.form["password"])
 
-		try:
-			from Python.project.modules.on_log_in import on_log_in
-			on_log_in()
 
-		except Exception as err: Log.warning(f"log_in.py->on_log_in(): {err}")
 
-		redirect = unquote(request.args.get("redirect")) if "redirect" in request.args else "/"
 
-		return Response.make(
-			type="success",
-			message="success",
-			set_session_user=True,
-			redirect= redirect,
-			DOM_change=["all"]
-		)
+			match_res = None
+
+			if identifier_type == "eMail":
+				match_res = PostgreSQL.execute(
+					SQL="""
+						SELECT "id"
+
+						FROM "users"
+
+						WHERE
+							"eMail" = %s AND
+							"password" = %s AND
+							"flag_deleted_at" IS NULL
+
+						LIMIT 1;
+					""",
+					params=[
+						eMail_or_phone_number,
+						password
+					],
+					fetch_type="one"
+				)
+
+			else:
+				match_res = PostgreSQL.execute(
+					SQL="""
+						SELECT "id"
+
+						FROM "users"
+
+						WHERE
+							"phone_number" = %s AND
+							"password" = %s AND
+							"flag_deleted_at" IS NULL
+
+						LIMIT 1;
+					""",
+					params=[
+						eMail_or_phone_number,
+						password
+					],
+					fetch_type="one"
+				)
+
+
+			if "error" in match_res: return Response.make(type="error", message="database_error")
+
+			# No match
+			if not match_res["data"]:
+				Log_In_Tools.new_record(request, "eMail_or_phone_number_or_password_incorrect")
+				Log_In_Tools.log_failed_log_in(request)
+
+				return Response.make(type="error", message="eMail_or_phone_number_or_password_incorrect")
+
+
+
+			#### Session
+
+			session["user"] = match_res["data"]
+			session.permanent = True
+
+			if not User.update_session(): pass
+
+
+
+			Log_In_Tools.new_record(request, "success")
+
+
+
+			try:
+				from Python.project.modules.on_log_in import on_log_in
+				on_log_in()
+
+			except Exception as err: Log.warning(f"log_in.py->on_log_in(): {err}")
+
+
+
+			redirect = unquote(request.args.get("redirect")) if "redirect" in request.args else "/"
+
+
+
+			return Response.make(
+				type="success",
+				message="success",
+				set_session_user=True,
+				redirect=redirect,
+				DOM_change=["all"]
+			)

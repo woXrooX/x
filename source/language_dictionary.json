@@ -119,6 +119,11 @@
 		"ru": "Скачать в формате CSV",
 		"uz": "CSV formatida yuklab olish"
 	},
+	"eMail_or_phone_number": {
+		"en": "Email or phone number",
+		"uz": "Email yoki telefon raqami",
+		"ru": "Email или номер телефона"
+	},
 	"eMail": {
 		"en": "Email",
 		"ru": "Эл. почта",
@@ -159,10 +164,10 @@
 		"ru": "Неверный адрес электронной почты",
 		"uz": "Elektron pochta manzili noto`g`ri"
 	},
-	"eMail_or_password_incorrect": {
-		"en": "Email or password is incorrect",
-		"ru": "Электронная почта или пароль неверны",
-		"uz": "Elektron pochta yoki parol noto`g`ri"
+	"eMail_or_phone_number_or_password_incorrect": {
+		"en": "Incorrect email, phone number or password",
+		"uz": "Elektron pochta, telefon raqami yoki parol noto'g'ri",
+		"ru": "Электронная почта, номер телефона или пароль указаны неверно"
 	},
 	"eMail_verification_success": {
 		"en": "The email has been successfully verified!",

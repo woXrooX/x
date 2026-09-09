@@ -16,8 +16,8 @@ export default function main() {
 				<p class="text-align-center text-size-1-5rem">${window.Lang.use("log_in")}</p>
 
 				<label>
-					<p for="eMail">${window.Lang.use('eMail')}</p>
-					<input type="email" name="eMail">
+					<p for="eMail_or_phone_number">${window.Lang.use("eMail_or_phone_number")}</p>
+					<input type="text" name="eMail_or_phone_number">
 				</label>
 
 				<label>
