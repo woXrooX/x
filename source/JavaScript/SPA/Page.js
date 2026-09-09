@@ -34,7 +34,10 @@ export default class Page {
 
 			window.Header.handle();
 
-			if ("configurations" in window.x && window.x["configurations"].tools.debug === true) {
+			if (
+				"tools" in window.x["configurations"] &&
+				window.x["configurations"].tools.debug === true
+			) {
 				window.Main.render(Main.situational_content("error", error.name, error.stack));
 				console.trace(error);
 			}

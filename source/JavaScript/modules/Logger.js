@@ -5,16 +5,6 @@ export default class Logger {
 
 	/////////// APIs
 
-	static line(force = false) {
-		if (
-			"configurations" in window.x &&
-			window.x["configurations"].tools.debug === false &&
-			force === false
-		) return;
-
-		console.log("==========================================");
-	}
-
 	static success(text, force = false) {
 		Logger.#log(text, "success");
 	}
@@ -45,7 +35,7 @@ export default class Logger {
 
 	static #log(text, type, force = false) {
 		if (
-			"configurations" in window.x &&
+			"tools" in window.x["configurations"] &&
 			window.x["configurations"].tools.debug === false &&
 			force === false
 		) return;
