@@ -22,7 +22,7 @@ export default function main() {
 
 				<label>
 					<p for="password">${window.Lang.use('password')}</p>
-					<input type="password" name="password" minlength="${window.CONF['password_min_length']}" maxlength="${window.CONF['password_max_length']}"><br>
+					<input type="password" name="password" minlength="${window.x["configurations"]['password_min_length']}" maxlength="${window.x["configurations"]['password_max_length']}"><br>
 				</label>
 
 				<label>
@@ -30,8 +30,23 @@ export default function main() {
 					<p for="log_in"></p>
 				</label>
 
-				<a href="/sign_up" class="text-align-center text-size-0-7rem">${window.Lang.use("dont_have_account_go_to_sign_up")}</a>
-				<a href="/password_reset_request" class="text-align-center text-size-0-7rem">${Lang.use("cannot_remember_password")}</a>
+				${
+					(
+						"sign_up" in window.x["configurations"]["pages"] &&
+						window.x["configurations"]["pages"]["sign_up"]["enabled"] === true
+					) ?
+					`<a href="/sign_up" class="text-align-center text-size-0-7rem">${window.Lang.use("dont_have_account_go_to_sign_up")}</a>` :
+					''
+				}
+
+				${
+					(
+						"password_reset_request" in window.x["configurations"]["pages"] &&
+						window.x["configurations"]["pages"]["password_reset_request"]["enabled"] === true
+					) ?
+					`<a href="/password_reset_request" class="text-align-center text-size-0-7rem">${Lang.use("cannot_remember_password")}</a>` :
+					''
+				}
 			</form>
 		</container>
 	`;
