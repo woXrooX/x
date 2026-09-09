@@ -1,6 +1,6 @@
 export function feedback_leave_button(){
-	if (!("x_feedbacks_leave" in window.CONF["pages"])) return '';
-	if (window.CONF["pages"]["x_feedbacks_leave"]["enabled"] === false) return '';
+	if (!("x_feedbacks_leave" in window.x["configurations"]["pages"])) return '';
+	if (window.x["configurations"]["pages"]["x_feedbacks_leave"]["enabled"] === false) return '';
 
 	let unauthenticated_user_inputs_HTML = '';
 	if (!("user" in window.x["session"])) unauthenticated_user_inputs_HTML = `

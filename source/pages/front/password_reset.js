@@ -15,12 +15,12 @@ export default function main(){
 
 				<label>
 					<p for="new_password">${window.Lang.use("new_password")}</p>
-					<input type="password" name="new_password" minlength="${window.CONF['password']['min_length']}" maxlength="${window.CONF['password']['max_length']}">
+					<input type="password" name="new_password" minlength="${window.x["configurations"]['password']['min_length']}" maxlength="${window.x["configurations"]['password']['max_length']}">
 				</label>
 
 				<label>
 					<p for="confirm_new_password">${window.Lang.use("confirm_new_password")}</p>
-					<input type="password" name="confirm_new_password" minlength="${window.CONF['password']['min_length']}" maxlength="${window.CONF['password']['max_length']}"><br>
+					<input type="password" name="confirm_new_password" minlength="${window.x["configurations"]['password']['min_length']}" maxlength="${window.x["configurations"]['password']['max_length']}"><br>
 				</label>
 
 				<label>

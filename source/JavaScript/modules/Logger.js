@@ -1,7 +1,7 @@
 export default class Logger{
 	static line(force = false){
 		// Check If Debugging Mode Is Enabled Else Exit
-		if("CONF" in window && window.CONF.tools.debug === false && force === false) return;
+		if("configurations" in window.x && window.x["configurations"].tools.debug === false && force === false) return;
 
 		console.log("==========================================");
 	}
@@ -21,7 +21,7 @@ export default class Logger{
 
 	static #log(text, type, force = false){
 		// Check If Debugging Mode Is Enabled And Force Is False Else Exit
-		if("CONF" in window && window.CONF.tools.debug === false && force === false) return;
+		if("configurations" in window.x && window.x["configurations"].tools.debug === false && force === false) return;
 
 		// Setting Type Color
 		const color = `color: ${x.CSS.get_value(`--color-${type}`) || 'white'}`;

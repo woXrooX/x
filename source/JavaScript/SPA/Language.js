@@ -4,7 +4,7 @@ export default class Language extends HTMLElement{
 	static DICTIONARY = {};
 
 	static init(){
-		Language.#FALLBACK = window.CONF.default.language.fallback;
+		Language.#FALLBACK = window.x["configurations"].default.language.fallback;
 
 		Language.#detect_current_code();
 	}
@@ -19,7 +19,7 @@ export default class Language extends HTMLElement{
 		if(!(keyword in Language.DICTIONARY)) return keyword;
 
 		// Check if code is in the list of supported langauges else set code it to fallback language
-		if(!window.CONF.default.language.supported.includes(code)) code = Language.#FALLBACK;
+		if(!window.x["configurations"].default.language.supported.includes(code)) code = Language.#FALLBACK;
 
 		// In case FALLBACK language code also not in the DICTIONARY[keyword]
 		// then grab the first translation
@@ -36,7 +36,7 @@ export default class Language extends HTMLElement{
 
 	static async switch_to(code = Language.#FALLBACK){
 		// Check if supported language was passed
-		if(!window.CONF.default.language.supported.includes(code)) return;
+		if(!window.x["configurations"].default.language.supported.includes(code)) return;
 
 		if ("user" in window.x["session"]) await window.x.Request.make({
 			payload: {
@@ -84,7 +84,7 @@ export default class Language extends HTMLElement{
 		function build_buttons_HTML(){
 			let HTML = '';
 
-			for(const code of window.CONF.default.language.supported) HTML += `
+			for(const code of window.x["configurations"].default.language.supported) HTML += `
 				<button name="${code}" class="btn btn-primary display-flex flex-row gap-1 justify-content-space-between ${Lang.CURRENT == code ? '' : "btn-outline"} width-100">
 					<span class="text-color-white">${Lang.use(code)}</span>
 					<span>${Lang.code_to_flag(code)}</span>

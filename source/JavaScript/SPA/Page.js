@@ -9,12 +9,12 @@ export default class Page {
 			window.Loading.start();
 			window.Main.animation_start();
 
-			if ("app_is_down" in window.CONF["tools"]) {
+			if ("app_is_down" in window.x["configurations"]["tools"]) {
 				window.Main.render(Main.situational_content(
 					"info",
-					Lang.use(window.CONF["tools"]["app_is_down"]["title"]),
-					Lang.use(window.CONF["tools"]["app_is_down"]["description"]),
-					Lang.use(window.CONF["tools"]["app_is_down"]["title"])
+					Lang.use(window.x["configurations"]["tools"]["app_is_down"]["title"]),
+					Lang.use(window.x["configurations"]["tools"]["app_is_down"]["description"]),
+					Lang.use(window.x["configurations"]["tools"]["app_is_down"]["title"])
 				));
 
 				return;
@@ -34,7 +34,7 @@ export default class Page {
 
 			window.Header.handle();
 
-			if ("CONF" in window && window.CONF.tools.debug === true) {
+			if ("configurations" in window.x && window.x["configurations"].tools.debug === true) {
 				window.Main.render(Main.situational_content("error", error.name, error.stack));
 				console.trace(error);
 			}

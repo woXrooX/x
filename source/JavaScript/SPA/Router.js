@@ -15,18 +15,18 @@ export default class Router {
 	/////////// APIs
 
 	static async handle() {
-		if ("app_is_down" in window.CONF["tools"]) {
+		if ("app_is_down" in window.x["configurations"]["tools"]) {
 			Router.#reset_current_route();
 			await window.x.Page.handle();
 			return;
 		}
 
-		loop_pages: for (const page in window.CONF["pages"]) {
+		loop_pages: for (const page in window.x["configurations"]["pages"]) {
 			if (Router.guard(page) === false) continue;
 
 			const pathname = window.location.pathname;
 
-			loop_endpoints: for (const endpoint of window.CONF["pages"][page]["endpoints"]) {
+			loop_endpoints: for (const endpoint of window.x["configurations"]["pages"][page]["endpoints"]) {
 				const URL_args = Router.#match_endpoint(endpoint, pathname);
 
 				if (URL_args) {
@@ -53,7 +53,7 @@ export default class Router {
 	}
 
 	static guard(page) {
-		const PAGE_CONF = window.CONF["pages"][page]
+		const PAGE_CONF = window.x["configurations"]["pages"][page]
 
 		if (PAGE_CONF["enabled"] === false) return false;
 

@@ -34,8 +34,8 @@ export default class Head{
 	static set_title(title){
 		let final_title = '';
 
-		if(!!title === false) final_title = window.Lang.use(window.CONF["project_name"]);
-		else final_title = `${window.Lang.use(title)} | ${window.Lang.use(window.CONF["project_name"])}`;
+		if(!!title === false) final_title = window.Lang.use(window.x["configurations"]["project_name"]);
+		else final_title = `${window.Lang.use(title)} | ${window.Lang.use(window.x["configurations"]["project_name"])}`;
 
 		document.title = final_title;
 		document.querySelector('meta[property="og:title"]')?.setAttribute("content", final_title);

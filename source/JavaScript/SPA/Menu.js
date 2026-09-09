@@ -52,13 +52,13 @@ export default class Menu {
 		Log.info("Menu.build()");
 
 		// Check If CONF Has Menu
-		if (!("menu" in window.CONF)) return false;
+		if (!("menu" in window.x["configurations"])) return false;
 
 		// Check If Menu Is Enabled
-		if (window.CONF["menu"]["enabled"] === false) return false;
+		if (window.x["configurations"]["menu"]["enabled"] === false) return false;
 
 		// Add created menus into "menu > main"
-		Menu.#element.querySelector("main").innerHTML = Menu.#recursive_builder(window.CONF["menu"]["menus"]);
+		Menu.#element.querySelector("main").innerHTML = Menu.#recursive_builder(window.x["configurations"]["menu"]["menus"]);
 
 		// After adding hyperlinks to DOM create hide event for each of the hyperlinks
 		Menu.#on_click_hyperlinks();
@@ -68,20 +68,20 @@ export default class Menu {
 
 	static set_active() {
 		// Check If CONF Has Menu
-		if (!("menu" in window.CONF)) return false;
+		if (!("menu" in window.x["configurations"])) return false;
 
 		// Check If Menu Is Enabled
-		if (window.CONF["menu"]["enabled"] === false) return false;
+		if (window.x["configurations"]["menu"]["enabled"] === false) return false;
 
 		// Hyperlinks
 		const hyperlinks = document.querySelectorAll(Menu.#selector_menu_hyperlinks);
 
 		// Find the current window.location.pathname matching page, and take the endpoints from it
 		let matched_endpoints = [];
-		for (const menu of window.CONF["menu"]["menus"])
+		for (const menu of window.x["configurations"]["menu"]["menus"])
 			if (!("url" in menu))
-				for (const endpoint of window.CONF["pages"][menu["page"]]["endpoints"])
-					if (endpoint === window.location.pathname) matched_endpoints = window.CONF["pages"][menu["page"]]["endpoints"];
+				for (const endpoint of window.x["configurations"]["pages"][menu["page"]]["endpoints"])
+					if (endpoint === window.location.pathname) matched_endpoints = window.x["configurations"]["pages"][menu["page"]]["endpoints"];
 
 		// Loop through all the hyperlinks of parent menu
 		for (const hyperlink of hyperlinks) {
@@ -102,7 +102,7 @@ export default class Menu {
 				HTML += `
 					<section class="container">
 						<section class="parent_menu">
-							<a href="${"url" in menu ? menu["url"] : window.CONF["pages"][menu["page"]]["endpoints"][0]}">
+							<a href="${"url" in menu ? menu["url"] : window.x["configurations"]["pages"][menu["page"]]["endpoints"][0]}">
 								${"icon" in menu ? `<x-svg color="#ffffff" name="${menu["icon"]}"></x-svg>` : ""}
 								${"name" in menu ? window.Lang.use(menu["name"]) : window.Lang.use(menu["page"])}
 							</a>
@@ -242,10 +242,10 @@ export default class Menu {
 
 		///// Page linked menu
 		// Check if menu linked page exists in CONF["pages"]
-		if (!(menu["page"] in window.CONF["pages"])) return false;
+		if (!(menu["page"] in window.x["configurations"]["pages"])) return false;
 
 		// Check if menu linked page is enabled in CONF["pages"]
-		if (window.CONF["pages"][menu["page"]]["enabled"] == false) return false;
+		if (window.x["configurations"]["pages"][menu["page"]]["enabled"] == false) return false;
 
 		return window.x.Router.guard(menu["page"]);
 	}

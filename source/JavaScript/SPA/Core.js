@@ -86,7 +86,7 @@ export default class Core {
 			target_URL: "/API"
 		});
 
-		if ("data" in CONFIGURATIONS) window.CONF = CONFIGURATIONS["data"];
+		if ("data" in CONFIGURATIONS) window.x["configurations"] = CONFIGURATIONS["data"];
 		else return Log.error("Core.#get_initial_data(): get:CONFIGURATIONS");
 
 

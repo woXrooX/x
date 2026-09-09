@@ -1,3 +1,4 @@
 window.x = {
-	"session": {}
+	"session": {},
+	"configurations": {}
 };

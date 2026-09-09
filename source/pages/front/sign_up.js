@@ -21,7 +21,7 @@ export default function main(){
 
 				<label>
 					<p for="password">${window.Lang.use('password')}</p>
-					<input type="password" name="password" minlength="${window.CONF['password']['min_length']}" maxlength="${window.CONF['password']['max_length']}"><br>
+					<input type="password" name="password" minlength="${window.x["configurations"]['password']['min_length']}" maxlength="${window.x["configurations"]['password']['max_length']}"><br>
 				</label>
 
 				<label>

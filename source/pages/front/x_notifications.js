@@ -50,7 +50,7 @@ export default function main() {
 		}
 
 		function build_anchor_notificatons_settings_HTML() {
-			if (!("x_notifications_settings" in window.CONF["pages"])) return '';
+			if (!("x_notifications_settings" in window.x["configurations"]["pages"])) return '';
 
 			return `<a href="/x/notifications/settings" class="btn btn-primary"><x-svg name="gear" color="white"></x-svg></a>`;
 		}
