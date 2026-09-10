@@ -57,11 +57,6 @@
 			"purpose": "maskable"
 		},
 		{
-			"src": "/images/Favicon/logo_384.png",
-			"sizes": "384x384",
-			"type": "image/png"
-		},
-		{
 			"src": "/images/Favicon/logo_192.png",
 			"sizes": "192x192",
 			"type": "image/png"
@@ -69,11 +64,6 @@
 		{
 			"src": "/images/Favicon/logo_180.png",
 			"sizes": "180x180",
-			"type": "image/png"
-		},
-		{
-			"src": "/images/Favicon/logo_120.png",
-			"sizes": "120x120",
 			"type": "image/png"
 		}
 	],
