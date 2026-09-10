@@ -45,24 +45,24 @@
 	"background_color": "#14151A",
 	"icons": [
 		{
-			"src": "/images/Favicon/logo_512.png",
+			"src": "/images/Favicon/logo_512x512.png",
 			"sizes": "512x512",
 			"type": "image/png",
 			"purpose": "any"
 		},
 		{
-			"src": "/images/Favicon/logo_512.png",
+			"src": "/images/Favicon/logo_512x512_maskable.png",
 			"sizes": "512x512",
 			"type": "image/png",
 			"purpose": "maskable"
 		},
 		{
-			"src": "/images/Favicon/logo_192.png",
+			"src": "/images/Favicon/logo_192x192.png",
 			"sizes": "192x192",
 			"type": "image/png"
 		},
 		{
-			"src": "/images/Favicon/logo_180.png",
+			"src": "/images/Favicon/logo_180x180.png",
 			"sizes": "180x180",
 			"type": "image/png"
 		}
