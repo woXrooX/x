@@ -13,6 +13,7 @@ if __name__ != "__main__":
 	from Python.x.modules.Logger import Log
 	from Python.x.modules.Response import Response
 	from Python.x.modules.Log_In_Tools import Log_In_Tools
+	from Python.x.modules.Notifications import Notifications
 
 	class User:
 		########################### General
@@ -145,6 +146,8 @@ if __name__ != "__main__":
 			app_language = None,
 			app_color_mode = 1
 		):
+			#### connection
+
 			# RULE: On error, this method guarantees that the connection is closed.
 
 			connection = None
@@ -157,6 +160,8 @@ if __name__ != "__main__":
 
 
 
+			#### Must have
+
 			if (
 				username is None and
 				eMail is None and
@@ -166,6 +171,8 @@ if __name__ != "__main__":
 				return Response.make(type="error", message="invalid_request")
 
 
+
+			#### password
 
 			if password is None:
 				PostgreSQL.put_connection_to_pool(connection)
@@ -188,6 +195,8 @@ if __name__ != "__main__":
 
 
 
+			#### eMail
+
 			if eMail is not None:
 				if not re.match(Globals.CONF["eMail"]["regEx"], eMail):
 					PostgreSQL.put_connection_to_pool(connection)
@@ -197,12 +206,16 @@ if __name__ != "__main__":
 
 
 
+			#### phone_number
+
 			if phone_number is not None:
 				if not re.match(Globals.CONF["phone_number"]["regEx"], phone_number):
 					PostgreSQL.put_connection_to_pool(connection)
 					return Response.make(type="error", message="phone_number_invalid", field="phone_number")
 
 
+
+			#### authenticity_status
 
 			if authenticity_status is not None:
 				if authenticity_status not in Globals.USER_AUTHENTICITY_STATUSES:
@@ -358,13 +371,27 @@ if __name__ != "__main__":
 				if "error" in update_res: return Response.make(type="error", message="database_error")
 
 
-			if not User.init_folders(user_res["id"]): Log.warning("Users.create(): User.init_folders()")
-
-
 
 			if commit is True:
 				PostgreSQL.commit_connection(connection)
 				PostgreSQL.put_connection_to_pool(connection)
+
+
+
+			if not User.init_folders(user_res["id"]): Log.warning("Users.create(): User.init_folders()")
+
+
+
+			#### eMail_verification
+
+			eMail_verification_sent_status = None
+
+			if eMail is not None:
+				eMail_verification_sent_status = Notifications.new_eMail(
+					recipient=user_res,
+					content_JSON={"eMail_verification_code": eMail_verification_code},
+					event_name="sign_up_eMail_verification",
+				)
 
 
 
