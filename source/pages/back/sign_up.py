@@ -5,7 +5,6 @@ from main import session
 from Python.x.modules.Page import Page
 from Python.x.modules.Notifications import Notifications
 from Python.x.modules.Response import Response
-from Python.x.modules.Globals import Globals
 from Python.x.modules.Log_In_Tools import Log_In_Tools
 from Python.x.modules.User import User
 from Python.x.modules.PostgreSQL import PostgreSQL
@@ -20,113 +19,44 @@ from Python.x.modules.Logger import Log
 @Page.build()
 def sign_up(request):
 	if request.method == "POST":
-		# unknown_error
-		if request.form["for"] != "sign_up": return Response.make(type="warning", message="unknown_error")
+		if request.form["for"] == "sign_up":
+			if "eMail" not in request.form or not request.form["eMail"]: return Response.make(type="error", message="eMail_empty", field="eMail")
+			password = request.form["password"] if "password" in request.form and request.form["password"] else None
 
-		######## eMail
-		# eMail_empty
-		if "eMail" not in request.form or not request.form["eMail"]: return Response.make(type="error", message="eMail_empty", field="eMail")
+			user_create_res = User.create(
+				metadata_created_by_user = "self",
+				password = password,
+				eMail = request.form["eMail"],
+				authenticity_status = "unauthorized"
+			)
 
-		# eMail_invalid
-		if not re.match(Globals.CONF["eMail"]["regEx"], request.form["eMail"]): return Response.make(type="error", message="eMail_invalid", field="eMail")
+			if type(user_create_res) is Response: return user_create_res
 
-		######## password
-		# password_empty
-		if "password" not in request.form or not request.form["password"]: return Response.make(type="error", message="password_empty", field="password")
 
-		# password_min_length
-		if len(request.form["password"]) < Globals.CONF["password"]["min_length"]: return Response.make(type="error", message="password_min_length", field="password")
 
-		# password_max_length
-		if len(request.form["password"]) > Globals.CONF["password"]["max_length"]: return Response.make(type="error", message="password_max_length", field="password")
+			session["user"] = user_create_res["user"]
+			session.permanent = True
 
-		# password_allowed_chars
-		if not re.match(Globals.CONF["password"]["regEx"], request.form["password"]): return Response.make(type="error", message="password_allowed_chars", field="password")
+			if not User.update_session(): Log.warning("sign_up.py->User.update_session()")
 
-		# eMail_in_use
-		data = PostgreSQL.execute(
-			SQL="""
-				SELECT "id"
-				FROM "users"
-				WHERE "eMail" = %s
-				LIMIT 1;
-			""",
-			params=[request.form["eMail"]],
-			fetch_type="one"
-		)
-		if "error" in data: return Response.make(type="error", message="database_error")
-		if data["data"]: return Response.make(type="error", message="eMail_in_use", field="eMail")
 
-		######## Success
-		# Generate Randome Verification Code
-		eMail_verification_code = random.randint(100000, 999999)
 
-		password = Log_In_Tools.password_hash(request.form["password"])
+			try:
+				from Python.project.modules.on_sign_up import on_sign_up
+				on_sign_up()
 
-		# Insert to database
-		data = PostgreSQL.execute(
-			SQL="""INSERT INTO "users" ("password", "eMail", "eMail_verification_code", "authenticity_status") VALUES (%s, %s, %s, %s);""",
-			params=[
-				password,
-				request.form["eMail"],
-				eMail_verification_code,
-				Globals.USER_AUTHENTICITY_STATUSES["unauthorized"]["id"]
-			]
-		)
-		if "error" in data: return Response.make(type="error", message="database_error")
+			except Exception as err: Log.warning(f"sign_up.py->on_sign_up(): {err}")
 
-		# Get user data
-		user_data = PostgreSQL.execute(
-			SQL="""
-				SELECT
-					"id",
-					"eMail"
-				FROM "users"
-				WHERE
-					"eMail" = %s AND
-					"password" = %s
-				LIMIT 1;
-			""",
-			params=[
-				request.form["eMail"],
-				password
-			],
-			fetch_type="one"
-		)
-		if "error" in user_data: return Response.make(type="error", message="database_error")
-		if not user_data["data"]: return Response.make(type="error", message="database_error")
 
-		# Set session user data
-		session["user"] = user_data["data"]
-		session.permanent = True
 
-		# Handle the session update error
-		if not User.update_session(): Log.warning("sign_up.py->User.update_session()")
+			Log_In_Tools.new_record(request, "success")
 
-		#### Setup Dirs
-		# Handle Folder Creation Errors
-		if not User.init_folders(): Log.warning("sign_up.py->User.init_folders()")
 
-		#### Check if verification code sent successfully
-		email_verification_sent_status = Notifications.new_eMail(
-			recipient=user_data["data"],
-			content_JSON={"eMail_verification_code": eMail_verification_code},
-			event_name="sign_up_eMail_verification",
-		)
 
-		try:
-			from Python.project.modules.on_sign_up import on_sign_up
-			on_sign_up()
-
-		except Exception as err: Log.warning(f"sign_up.py->on_sign_up(): {err}")
-
-		# Success
-		Log_In_Tools.new_record(request, "success")
-
-		return Response.make(
-			type = "success" if email_verification_sent_status is True else "info",
-			message = "eMail_confirmation_code_has_been_sent" if email_verification_sent_status is True else "Signed up but could not send email verification code. Please contact support!",
-			set_session_user = True,
-			redirect = "/eMail_confirmation" if email_verification_sent_status is True else "/",
-			DOM_change = ["all"]
-		)
+			return Response.make(
+				type = "success",
+				message = "success",
+				set_session_user = True,
+				redirect = "/",
+				DOM_change = ["all"]
+			)
