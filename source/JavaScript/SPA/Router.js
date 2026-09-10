@@ -67,12 +67,16 @@ export default class Router {
 
 			if ("roles" in PAGE_CONF) {
 				let result = false;
-				for (let i = 0; i < PAGE_CONF["roles"].length; i++) if (window.x["session"]["user"]["roles"].includes(PAGE_CONF["roles"][i])) result = true;
+
+				for (let i = 0; i < PAGE_CONF["roles"].length; i++)
+					if (window.x["session"]["user"]["roles"].includes(PAGE_CONF["roles"][i])) result = true;
+
 				if (result === false) return false;
 			}
 
 			if ("roles_not" in PAGE_CONF) {
-				for (let role_not of PAGE_CONF["roles_not"]) if (window.x["session"]["user"]["roles"].includes(role_not)) return false;
+				for (let role_not of PAGE_CONF["roles_not"])
+					if (window.x["session"]["user"]["roles"].includes(role_not)) return false;
 			}
 
 			return true;
@@ -87,10 +91,11 @@ export default class Router {
 				) &&
 				!("roles" in PAGE_CONF)
 			) return true;
+
 			else return false;
 		}
 
-		return true
+		return true;
 	}
 
 	/////////// Helpers
