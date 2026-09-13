@@ -2,7 +2,7 @@ export default class Language extends HTMLElement{
 	static #FALLBACK = "en";
 	static #CURRENT = "en";
 
-	static init(){
+	static init() {
 		Language.#FALLBACK = window.x["configurations"].default.language.fallback;
 
 		Language.#detect_current_code();
@@ -10,20 +10,20 @@ export default class Language extends HTMLElement{
 
 	//////// APIs
 	// Can be used for translations and just for normal use cases
-	static translate(keyword, code = Language.#CURRENT){
+	static translate(keyword, code = Language.#CURRENT) {
 		// Check if valid keyword was passed
-		if(!!keyword === false) keyword = "invalid_keyword";
+		if (!!keyword === false) keyword = "invalid_keyword";
 
 		// Check if keyword is in window.x["language_dictionary"]
-		if(!(keyword in window.x["language_dictionary"])) return keyword;
+		if (!(keyword in window.x["language_dictionary"])) return keyword;
 
 		// Check if code is in the list of supported langauges else set code it to fallback language
-		if(!window.x["configurations"].default.language.supported.includes(code)) code = Language.#FALLBACK;
+		if (!window.x["configurations"].default.language.supported.includes(code)) code = Language.#FALLBACK;
 
 		// In case FALLBACK language code also not in the DICTIONARY[keyword]
 		// then grab the first translation
-		if(!(code in window.x["language_dictionary"][keyword])){
-			if(Object.entries(window.x["language_dictionary"][keyword])[0] === undefined) return "emptyLanguage";
+		if (!(code in window.x["language_dictionary"][keyword])) {
+			if (Object.entries(window.x["language_dictionary"][keyword])[0] === undefined) return "emptyLanguage";
 			else return Object.entries(window.x["language_dictionary"][keyword])[0][1];
 		}
 
@@ -31,11 +31,13 @@ export default class Language extends HTMLElement{
 		return window.x["language_dictionary"][keyword][code];
 	}
 
-	static use(keyword){return Language.translate(keyword);}
+	static use(keyword) {
+		return Language.translate(keyword);
+	}
 
-	static async switch_to(code = Language.#FALLBACK){
+	static async switch_to(code = Language.#FALLBACK) {
 		// Check if supported language was passed
-		if(!window.x["configurations"].default.language.supported.includes(code)) return;
+		if (!window.x["configurations"].default.language.supported.includes(code)) return;
 
 		if ("user" in window.x["session"]) await window.x.Request.make({
 			payload: {
@@ -55,19 +57,19 @@ export default class Language extends HTMLElement{
 		window.dispatchEvent(new CustomEvent("DOM_change", {detail: ["all"]}));
 	}
 
-	static code_to_flag(code){
-		if(!!code === false) code = Language.#FALLBACK;
+	static code_to_flag(code) {
+		if (!!code === false) code = Language.#FALLBACK;
 
-		if(code == "en") code = "gb";
+		if (code == "en") code = "gb";
 
 		return `<img src="/images/SVG/flags/4x3/${code}.svg" style="width: 1em;">`;
 	}
 
-	static build_switcher_modal_HTML(){
-		Modal.push_func(function change_language(){
+	static build_switcher_modal_HTML() {
+		Modal.push_func(function change_language() {
 			const buttons = document.body.querySelectorAll("modal > main > column > button");
 
-			for(const button of buttons) button.onclick = ()=>{
+			for (const button of buttons) button.onclick = ()=>{
 				Lang.switch_to(button.name);
 				Modal.hide();
 			}
@@ -80,10 +82,10 @@ export default class Language extends HTMLElement{
 			</x-modal>
 		`;
 
-		function build_buttons_HTML(){
+		function build_buttons_HTML() {
 			let HTML = '';
 
-			for(const code of window.x["configurations"].default.language.supported) HTML += `
+			for (const code of window.x["configurations"].default.language.supported) HTML += `
 				<button name="${code}" class="btn btn-primary display-flex flex-row gap-1 justify-content-space-between ${Lang.CURRENT == code ? '' : "btn-outline"} width-100">
 					<span class="text-color-white">${Lang.use(code)}</span>
 					<span>${Lang.code_to_flag(code)}</span>
@@ -96,14 +98,14 @@ export default class Language extends HTMLElement{
 
 	//////// Getters
 
-	static get CURRENT(){return Language.#CURRENT;}
+	static get CURRENT() {return Language.#CURRENT;}
 
 	//////// Helpers
 
-	static #detect_current_code(){
-		if("user" in window.x["session"]) Language.#CURRENT = window.x["session"]["user"].app_language;
+	static #detect_current_code() {
+		if ("user" in window.x["session"]) Language.#CURRENT = window.x["session"]["user"].app_language;
 
-		else if(localStorage.getItem("x.language")) Language.#CURRENT = localStorage.getItem("x.language");
+		else if (localStorage.getItem("x.language")) Language.#CURRENT = localStorage.getItem("x.language");
 
 		else Language.#CURRENT = Language.#FALLBACK;
 	}
