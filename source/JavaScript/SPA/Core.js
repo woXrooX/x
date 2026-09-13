@@ -119,8 +119,7 @@ export default class Core {
 		});
 
 		if (USER_AUTHENTICITY_STATUSES["type"] != "success") return Log.error("Core.#get_initial_data(): get:USER_AUTHENTICITY_STATUSES");
-		else if ("data" in USER_AUTHENTICITY_STATUSES) window.USER_AUTHENTICITY_STATUSES = USER_AUTHENTICITY_STATUSES["data"];
-		else window.USER_AUTHENTICITY_STATUSES = {};
+		else if ("data" in USER_AUTHENTICITY_STATUSES) window.x["user_authenticity_statuses"] = USER_AUTHENTICITY_STATUSES["data"];
 
 
 
@@ -131,8 +130,7 @@ export default class Core {
 		});
 
 		if (USER_ROLES["type"] != "success") return Log.error("Core.#get_initial_data(): get:USER_ROLES");
-		else if ("data" in USER_ROLES) window.USER_ROLES = USER_ROLES["data"];
-		else window.USER_ROLES = {};
+		else if ("data" in USER_ROLES) window.x["user_roles"] = USER_ROLES["data"];
 
 
 		const USER_OCCUPATIONS = await window.x.Request.make({
@@ -142,8 +140,7 @@ export default class Core {
 		});
 
 		if (USER_OCCUPATIONS["type"] != "success") return Log.error("Core.#get_initial_data(): get:USER_OCCUPATIONS");
-		else if ("data" in USER_OCCUPATIONS) window.USER_OCCUPATIONS = USER_OCCUPATIONS["data"];
-		else window.USER_OCCUPATIONS = {};
+		else if ("data" in USER_OCCUPATIONS) window.x["user_occupations"] = USER_OCCUPATIONS["data"];
 
 
 
@@ -154,8 +151,7 @@ export default class Core {
 		});
 
 		if (NOTIFICATION_TYPES["type"] != "success") return Log.error("Core.#get_initial_data(): get:NOTIFICATION_TYPES");
-		else if ("data" in NOTIFICATION_TYPES) window.NOTIFICATION_TYPES = NOTIFICATION_TYPES["data"];
-		else window.NOTIFICATION_TYPES = {};
+		else if ("data" in NOTIFICATION_TYPES) window.x["notification_types"] = NOTIFICATION_TYPES["data"];
 
 
 
@@ -177,8 +173,7 @@ export default class Core {
 		});
 
 		if (CURRENCIES["type"] != "success") return Log.error("Core.#get_initial_data(): get:CURRENCIES");
-		else if ("data" in CURRENCIES) window.x["CURRENCIES"] = CURRENCIES["data"];
-		else window.x["CURRENCIES"] = {};
+		else if ("data" in CURRENCIES) window.x["currencies"] = CURRENCIES["data"];
 	}
 
 	static async #init_on_app_start() {
