@@ -1,5 +1,6 @@
 window.x = {
 	"session": {},
 	"configurations": {},
-	"project": {}
+	"project": {},
+	"language_dictionary": {}
 };

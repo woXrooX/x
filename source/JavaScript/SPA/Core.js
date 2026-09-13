@@ -108,7 +108,7 @@ export default class Core {
 		});
 
 		if (LANGUAGE_DICTIONARY["type"] != "success") return Log.error("Core.#get_initial_data(): get:LANGUAGE_DICTIONARY");
-		else if ("data" in LANGUAGE_DICTIONARY) window.Language.DICTIONARY = LANGUAGE_DICTIONARY["data"];
+		else if ("data" in LANGUAGE_DICTIONARY) window.x["language_dictionary"] = LANGUAGE_DICTIONARY["data"];
 
 
 

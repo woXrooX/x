@@ -1,7 +1,6 @@
 export default class Language extends HTMLElement{
 	static #FALLBACK = "en";
 	static #CURRENT = "en";
-	static DICTIONARY = {};
 
 	static init(){
 		Language.#FALLBACK = window.x["configurations"].default.language.fallback;
@@ -15,21 +14,21 @@ export default class Language extends HTMLElement{
 		// Check if valid keyword was passed
 		if(!!keyword === false) keyword = "invalid_keyword";
 
-		// Check if keyword is in Lang.DICTIONARY
-		if(!(keyword in Language.DICTIONARY)) return keyword;
+		// Check if keyword is in window.x["language_dictionary"]
+		if(!(keyword in window.x["language_dictionary"])) return keyword;
 
 		// Check if code is in the list of supported langauges else set code it to fallback language
 		if(!window.x["configurations"].default.language.supported.includes(code)) code = Language.#FALLBACK;
 
 		// In case FALLBACK language code also not in the DICTIONARY[keyword]
 		// then grab the first translation
-		if(!(code in Language.DICTIONARY[keyword])){
-			if(Object.entries(Lang.DICTIONARY[keyword])[0] === undefined) return "emptyLanguage";
-			else return Object.entries(Lang.DICTIONARY[keyword])[0][1];
+		if(!(code in window.x["language_dictionary"][keyword])){
+			if(Object.entries(window.x["language_dictionary"][keyword])[0] === undefined) return "emptyLanguage";
+			else return Object.entries(window.x["language_dictionary"][keyword])[0][1];
 		}
 
 		// Finally
-		return Language.DICTIONARY[keyword][code];
+		return window.x["language_dictionary"][keyword][code];
 	}
 
 	static use(keyword){return Language.translate(keyword);}
