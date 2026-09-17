@@ -3169,6 +3169,26 @@
 				border: none;
 				border-top: 1px solid var(--color-main-tint-4);
 			}
+
+			&.v4 {
+				border: 0;
+				height: 2rem;
+				color: var(--color-text-primary);
+				opacity: 0.8;
+				background: linear-gradient(90deg, transparent, currentColor 50%, transparent) center / 100% 1px no-repeat;
+			}
+
+			&.v5 {
+				border: 0;
+				height: 1px;
+				margin: 1rem 0;
+				color: var(--color-text-primary);
+				opacity: 0.35;
+				background-image: repeating-linear-gradient(90deg, currentColor 0, currentColor 4px, transparent 4px, transparent 8px);
+				-webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+				mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+			}
+
 		}
 	}
 
