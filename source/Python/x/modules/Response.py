@@ -22,7 +22,7 @@ if __name__ != "__main__":
 			field = False,
 
 			# Custom Data
-			data = {},
+			data = None,
 
 			#### Actions
 
@@ -75,7 +75,7 @@ if __name__ != "__main__":
 			if field is not False: response_dict["field"] = field
 
 			######## Data
-			if data: response_dict["data"] = data
+			if data is not None: response_dict["data"] = data
 
 			######## Actions
 			actions_dict = {}
