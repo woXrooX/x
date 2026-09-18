@@ -64,11 +64,15 @@ export default class DOM {
 		...args
 	) {
 		let parent_element = null;
+
 		if (typeof parent_selector_or_element === "string") {
 			parent_element = document.querySelector(parent_selector_or_element);
-			if (!parent_element) return Log.error(`DOM.build(): Parent element does not exist: ${parent_selector_or_element}`);
+
+			if (!parent_element) return Log.warning(`DOM.build(): Parent element does not exist: ${parent_selector_or_element}`);
 		}
+
 		else if (parent_selector_or_element instanceof HTMLElement) parent_element = parent_selector_or_element;
+
 		else return Log.error(`DOM.build(): Invalid "parent_selector_or_element" value: ${parent_selector_or_element}`);
 
 		Loading.on_element_start(parent_element);
