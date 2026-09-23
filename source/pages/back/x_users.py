@@ -23,16 +23,23 @@ def x_users(request):
 						SELECT
 							"users"."id",
 							"users"."eMail",
-							CONCAT_WS(' ', "users"."first_name", "users"."last_name") AS "full_name",
-							STRING_AGG(DISTINCT "user_roles"."name", ', ' ORDER BY "user_roles"."name" ASC) AS "roles_list",
 							"users"."last_heartbeat_at",
-							"users"."flag_deleted_at"
-						FROM "users"
-						LEFT JOIN "users_roles" ON "users"."id" = "users_roles"."user"
-						LEFT JOIN "user_roles" ON "user_roles"."id" = "users_roles"."role"
-						GROUP BY "users"."id";
+							"users"."flag_deleted_at",
+
+							CONCAT_WS(' ', "users"."first_name", "users"."last_name") AS "full_name",
+
+							ARRAY(
+								SELECT "user_roles"."name"
+								FROM "users_roles"
+								JOIN "user_roles" ON "user_roles"."id" = "users_roles"."role"
+								WHERE "users_roles"."user" = "users"."id"
+								ORDER BY "user_roles"."name" ASC
+							) AS "roles_list"
+
+						FROM "users";
 					"""
 				)
+
 				if "error" in users: return Response.make(type="error", message="database_error")
 
 				return Response.make(type="success", message="success", data=users["data"], default_serializer_func=str)
