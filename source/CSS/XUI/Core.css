@@ -177,18 +177,9 @@
 			scroll-padding: var(--header-height);
 		}
 
-		/* Selection */
 		*::selection{
-			color: var(--color-text-primary);
+			color: contrast-color(var(--color-brand));
 			background-color: var(--color-brand);
-
-			/* color: color-contrast(
-				currentcolor vs
-				var(--color-text-primary),
-				var(--color-text-secondary),
-				var(--color-text-accent)
-			);
-			background-color: var(--color-brand);*/
 		}
 
 		/* <a> basic active & hover effects */
