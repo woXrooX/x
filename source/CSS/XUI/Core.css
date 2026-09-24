@@ -502,6 +502,8 @@
 					}
 				}
 
+
+
 				/* Styles */
 
 				&.btn-outline{
@@ -522,7 +524,10 @@
 					}
 				}
 
+
+
 				/* Colors */
+
 				&.btn-primary{
 					background-color: var(--color-main);
 
@@ -693,7 +698,10 @@
 					}
 				}
 
+
+
 				/* Sizes */
+
 				&.btn-xs{
 					font-size: calc(var(--btn-font-size) * 0.6);
 				}
