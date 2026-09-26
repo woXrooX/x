@@ -163,7 +163,9 @@ export default class Color_Mode{
 
 		}
 
-		else localStorage.setItem('x.color_mode', Color_Mode.current_color_mode);
+		else localStorage.setItem("x.color_mode", Color_Mode.current_color_mode);
+
+		window.dispatchEvent(new CustomEvent("x.event.Color_Mode"));
 	}
 
 	//////////// Modes
