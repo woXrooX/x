@@ -63,8 +63,12 @@ export function timestamp_to_human_readable_v2(timestamp) {
 	return 'now';
 }
 
-export function timestamptz_to_local_timestamp(timestamptz) {
+export function timestamptz_to_local_timestamp(
+	timestamptz,
+	return_object = false
+) {
 	if (timestamptz === null) return null;
+	if (timestamptz === undefined) return null;
 
 	const local_timestamp = format_timestamp({
 		"formatter_method": "format_to_parts",
@@ -78,6 +82,8 @@ export function timestamptz_to_local_timestamp(timestamptz) {
 		"hour_12": false,
 		"time_zone": Intl.DateTimeFormat().resolvedOptions().timeZone
 	});
+
+	if (return_object === true) return local_timestamp;
 
 	return `${local_timestamp.year}-${local_timestamp.month}-${local_timestamp.day} ${local_timestamp.hour}:${local_timestamp.minute}:${local_timestamp.second}`;
 }
