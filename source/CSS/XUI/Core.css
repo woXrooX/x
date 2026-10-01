@@ -834,7 +834,7 @@
 				z-index: 0;
 
 				border-radius: var(--radius);
-				background-color: var(--color-main-tint-1);
+				background-color: var(--color-main);
 				box-shadow: var(--shadow);
 				pointer-events: none;
 
