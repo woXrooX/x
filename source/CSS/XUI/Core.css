@@ -1267,6 +1267,33 @@
 				linear-gradient(var(--border-secondary-color) 0 0) right / var(--border-secondary-width) 100% no-repeat;
 		}
 
+		.surface-v6 {
+			--surface-v6-radius: 18px;
+
+			background-color: color-mix(in hsl, var(--color-main-tint-2) 80%, transparent);
+			backdrop-filter: blur(var(--blur)) saturate(180%);
+
+			border: 0.5px solid color-mix(in hsl, var(--color-main-tint-6) 50%, transparent);
+			border-radius: var(--surface-v6-radius);
+
+			box-shadow:
+				/* Top inner highlight (glass edge) */
+				inset 0px 1px 0px 0px var(--color-hsla-0-0-100-0-1),
+
+				/* Tight contact shadow */
+				0px 1px 2px 0px rgba(0 0 0 / 0.08),
+
+				/* Soft ambient shadow */
+				0px 8px 24px -8px rgba(0 0 0 / 0.25)
+			;
+
+			@supports (corner-shape: squircle) {
+				/* Squircle pulls the curve inward, so a larger radius keeps the same visual size */
+				--surface-v6-radius: 28px;
+				corner-shape: squircle;
+			}
+		}
+
 		/*** Situational ***/
 		.surface-success{
 			background-color: hsla(var(--color-success-hue), var(--color-success-saturation), var(--color-success-lightness), 0.1);
