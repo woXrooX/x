@@ -767,6 +767,96 @@
 		}
 	}
 
+	@layer segmented {
+		.segmented-v1 {
+			position: relative;
+			display: inline-flex;
+			flex-direction: row;
+			align-items: center;
+			gap: calc(var(--gap) / 8);
+
+			padding: var(--padding);
+			border: none;
+			border-radius: calc(var(--radius) * 2);
+			background-color: var(--color-main-tint-2);
+
+			/* Keeps the anchor name local, so multiple controls on one page don't collide */
+			anchor-scope: --segmented-v1-active;
+
+			& > label {
+				position: relative;
+				z-index: 1;
+
+				display: inline-flex;
+				align-items: center;
+				gap: calc(var(--gap) / 4);
+
+				min-height: 2em;
+				padding-inline: 0.6em;
+				border-radius: var(--radius);
+
+				color: var(--color-text-secondary);
+				white-space: nowrap;
+				cursor: pointer;
+				user-select: none;
+
+				transition: color var(--transition-velocity) ease-in-out;
+
+				&:hover { color: var(--color-text-primary); }
+
+				&:has(:checked) { color: var(--color-text-primary); }
+
+				&:has(:focus-visible) {
+					outline: 1px solid var(--color-main-tint-8);
+					outline-offset: 2px;
+				}
+
+				/* Hidden but still clickable, focusable and announced */
+				& > input[type=radio] {
+					position: absolute;
+					inset: 0;
+					width: 100%;
+					height: 100%;
+					opacity: 0;
+					cursor: pointer;
+				}
+			}
+
+			& > .segmented-v1-divider {
+				width: 1px;
+				height: 1.2em;
+				margin-inline: calc(var(--margin) * 2);
+				background-color: var(--color-main-tint-5);
+			}
+
+			& > .segmented-v1-indicator {
+				position: absolute;
+				z-index: 0;
+
+				border-radius: var(--radius);
+				background-color: var(--color-main-tint-1);
+				box-shadow: var(--shadow);
+				pointer-events: none;
+
+				transition: var(--transition-velocity) ease-in-out;
+				transition-property: top, right, bottom, left;
+			}
+
+			@supports (anchor-name: --a) {
+				& > label:has(:checked) { anchor-name: --segmented-v1-active; }
+
+				& > .segmented-v1-indicator {
+					position-anchor: --segmented-v1-active;
+					inset: anchor(top) anchor(right) anchor(bottom) anchor(left);
+				}
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				& > .segmented-v1-indicator { transition: none; }
+			}
+		}
+	}
+
 	@layer cursor{
 		.cursor-pointer{ cursor: pointer; }
 		.cursor-text{ cursor: text; }
