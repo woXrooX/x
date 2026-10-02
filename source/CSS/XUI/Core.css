@@ -832,7 +832,9 @@
 				z-index: 0;
 
 				border-radius: var(--radius);
+				box-shadow: var(--shadow);
 				background-color: var(--color-brand);
+
 				pointer-events: none;
 
 				transition: var(--transition-velocity) ease-in-out;
