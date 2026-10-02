@@ -177,7 +177,7 @@ x-link{
 
 		opacity: 0;
 
-		background-color: var(--color-main-tint-2);
+		background-color: var(--color-brand-tint-2);
 
 		min-width: 40px;
 		border: 2px solid transparent;
@@ -232,7 +232,7 @@ x-select{
 	}
 
 	& > main{
-		background-color: var(--color-main-tint-1);
+		background-color: var(--color-brand-tint-1);
 		width: 100%;
 		padding: var(--padding);
 		border-radius: var(--radius);
@@ -246,7 +246,7 @@ x-select{
 		}
 
 		& > section{
-			background-color: var(--color-main-tint-2);
+			background-color: var(--color-brand-tint-2);
 			padding: var(--padding);
 			border-radius: var(--radius);
 
@@ -263,7 +263,7 @@ x-select{
 				& > div{
 					cursor: pointer;
 					display: none;
-					background-color: var(--color-main-tint-3);
+					background-color: var(--color-brand-tint-3);
 					width: auto;
 					height: auto;
 					padding: var(--padding);
@@ -272,7 +272,7 @@ x-select{
 
 					&:hover{
 						user-select: none;
-						background-color: var(--color-main-tint-4);
+						background-color: var(--color-brand-tint-4);
 					}
 				}
 			}
@@ -294,7 +294,7 @@ x-select{
 
 				& > div{
 					cursor: pointer;
-					background-color: var(--color-main-tint-3);
+					background-color: var(--color-brand-tint-3);
 					width: auto;
 					height: auto;
 					padding: var(--padding);
@@ -303,7 +303,7 @@ x-select{
 
 					&:hover{
 						user-select: none;
-						background-color: var(--color-main-tint-4);
+						background-color: var(--color-brand-tint-4);
 					}
 				}
 			}
@@ -367,7 +367,7 @@ x-tooltip {
 	background-color: var(--color-hsla-0-0-100-0-1);
 	color: var(--color-text-primary);
 	border-radius: var(--radius);
-	border: 1px solid var(--color-main-tint-2);
+	border: 1px solid var(--color-brand-tint-2);
 	box-shadow: var(--shadow);
 	backdrop-filter: blur(var(--blur));
 
@@ -387,7 +387,7 @@ x-urgent{
 
 		opacity: 0;
 
-		background-color: var(--color-main-tint-4);
+		background-color: var(--color-brand-tint-4);
 
 		min-width: 40px;
 		border: 0px;
@@ -472,13 +472,13 @@ x-urgent{
 		&::before{
 			pointer-events: none;
 			content: attr(XR-placeholder);
-			color: hsla(var(--color-main-hue), 10%, var(--color-main-lightness), 0.5);
+			color: hsla(var(--color-brand-hue), 10%, var(--color-brand-lightness), 0.5);
 		}
 
 		&:not(:empty)::before { display: none; }
 
 		&[XR-state] {
-			&[XR-state="editing"] { outline-color: var(--color-main-tint-8); }
+			&[XR-state="editing"] { outline-color: var(--color-brand-tint-8); }
 
 			&[XR-state="in_progress"] {
 				animation: XR_editable_pulse 1s infinite;

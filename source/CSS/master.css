@@ -46,7 +46,7 @@ body{
 		}
 
 		& > footer{
-			background-color: var(--color-main-tint-2);
+			background-color: var(--color-brand-tint-2);
 
 			color: var(--color-text-primary);
 			font-size: 0.7rem;
@@ -60,7 +60,7 @@ body{
 	}
 
 	& > header{
-		background-color: var(--color-main);
+		background-color: var(--color-brand);
 		color: white;
 		/* NOTE: We need to make header text color dynamic. We use contrast-color(). This feature is coming soon. */
 
@@ -100,7 +100,7 @@ body{
 
 		font-size: 1rem;
 
-		background-color: hsla(var(--color-main-hue), 10%, 25%, 0.1);
+		background-color: hsla(var(--color-brand-hue), 10%, 25%, 0.1);
 		backdrop-filter: blur(100px);
 		height: 100dvh;
 		width: var(--menu-width);
@@ -125,7 +125,7 @@ body{
 		&.always_open_mode{
 			@media (width > 600px){
 				transform: translateX(0px);
-				background-color: hsla(var(--color-main-hue), 10%, 20%, 1);
+				background-color: hsla(var(--color-brand-hue), 10%, 20%, 1);
 			}
 		}
 
@@ -176,7 +176,7 @@ body{
 							transition: var(--transition-velocity) ease-in-out;
 							transition-property: background-color, border;
 
-							&:where([active], :hover){background-color: hsla(var(--color-main-hue), 10%, 25%, 0.3);}
+							&:where([active], :hover){background-color: hsla(var(--color-brand-hue), 10%, 25%, 0.3);}
 
 							&:where([active]){border: 1px solid white;}
 
@@ -205,7 +205,7 @@ body{
 
 							display: none;
 
-							background-color: hsla(var(--color-main-hue), 10%, 25%, 0.2);
+							background-color: hsla(var(--color-brand-hue), 10%, 25%, 0.2);
 
 							margin-top: 5px;
 							padding: calc(var(--menu-padding) * 2);
@@ -366,7 +366,7 @@ body{
 			left: 50%;
 			transform: translate(-50%, -50%);
 			border: 2px solid light-dark(#fff, #000);
-			border-top: 2px solid var(--color-main);
+			border-top: 2px solid var(--color-brand);
 			border-radius: 50%;
 			animation: HTML_loading_spin 1s linear infinite;
 		}

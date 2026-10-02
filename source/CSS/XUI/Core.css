@@ -28,20 +28,17 @@
 
 				/********* Colors *********/
 
-				--color-main-hue: 230deg;
-				--color-main-saturation: 13%;
-				--color-main-lightness: 9%;
+				--color-brand-hue: 230deg;
+				--color-brand-saturation: 13%;
+				--color-brand-lightness: 9%;
 
-				--color-main: hsla(var(--color-main-hue), var(--color-main-saturation), var(--color-main-lightness), 1);
-				--color-main-alpha-0-5: hsla(var(--color-main-hue), var(--color-main-saturation), var(--color-main-lightness), 0.5);
+				--color-brand: hsla(var(--color-brand-hue), var(--color-brand-saturation), var(--color-brand-lightness), 1);
+				--color-brand-alpha-0-5: hsla(var(--color-brand-hue), var(--color-brand-saturation), var(--color-brand-lightness), 0.5);
 
-				/* Aliases */
-				--color-brand: var(--color-main);
+				--color-brand-dark: hsla(var(--color-brand-hue), var(--color-brand-saturation), 5%, 1);
+				--color-brand-light: hsla(var(--color-brand-hue), var(--color-brand-saturation), 95%, 1);
 
-				--color-main-dark: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1);
-				--color-main-light: hsla(var(--color-main-hue), var(--color-main-saturation), 95%, 1);
-
-				--color-main-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1);
+				--color-brand-accent: hsla(var(--color-brand-hue), var(--color-brand-saturation), 5%, 1);
 
 				/*
 					- Tint, shade and tone
@@ -94,36 +91,36 @@
 				--color-grey: grey;
 
 				color-scheme: dark;
-				accent-color: var(--color-main);
+				accent-color: var(--color-brand);
 			}
 
 			&.dark{
 				&:root{
 					color-scheme: dark;
 
-					--color-main-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1);
+					--color-brand-accent: hsla(var(--color-brand-hue), var(--color-brand-saturation), 5%, 1);
 
-					--color-main-tint-1: hsla(var(--color-main-hue), 10%, 10%, 1);
-					--color-main-tint-1-5: hsla(var(--color-main-hue), 10%, 12.5%, 1);
+					--color-brand-tint-1: hsla(var(--color-brand-hue), 10%, 10%, 1);
+					--color-brand-tint-1-5: hsla(var(--color-brand-hue), 10%, 12.5%, 1);
 
-					--color-main-tint-2: hsla(var(--color-main-hue), 10%, 15%, 1);
+					--color-brand-tint-2: hsla(var(--color-brand-hue), 10%, 15%, 1);
 
-					--color-main-tint-3: hsla(var(--color-main-hue), 10%, 20%, 1);
-					--color-main-tint-3-alpha-0-5: hsla(var(--color-main-hue), 10%, 20%, 0.5);
+					--color-brand-tint-3: hsla(var(--color-brand-hue), 10%, 20%, 1);
+					--color-brand-tint-3-alpha-0-5: hsla(var(--color-brand-hue), 10%, 20%, 0.5);
 
-					--color-main-tint-4: hsla(var(--color-main-hue), 10%, 25%, 1);
-					--color-main-tint-5: hsla(var(--color-main-hue), 10%, 30%, 1);
-					--color-main-tint-6: hsla(var(--color-main-hue), 10%, 35%, 1);
-					--color-main-tint-7: hsla(var(--color-main-hue), 10%, 50%, 1);
-					--color-main-tint-8: hsla(var(--color-main-hue), 10%, 65%, 1);
-					--color-main-tint-9: hsla(var(--color-main-hue), 10%, 80%, 1);
-					--color-main-tint-10: hsla(var(--color-main-hue), 10%, 95%, 1);
+					--color-brand-tint-4: hsla(var(--color-brand-hue), 10%, 25%, 1);
+					--color-brand-tint-5: hsla(var(--color-brand-hue), 10%, 30%, 1);
+					--color-brand-tint-6: hsla(var(--color-brand-hue), 10%, 35%, 1);
+					--color-brand-tint-7: hsla(var(--color-brand-hue), 10%, 50%, 1);
+					--color-brand-tint-8: hsla(var(--color-brand-hue), 10%, 65%, 1);
+					--color-brand-tint-9: hsla(var(--color-brand-hue), 10%, 80%, 1);
+					--color-brand-tint-10: hsla(var(--color-brand-hue), 10%, 95%, 1);
 
-					--color-text-primary: hsla(var(--color-main-hue), 15%, 95%, 1);
-					--color-text-secondary: hsla(var(--color-main-hue), 5%, 75%, 1);
-					--color-text-accent: var(--color-main-accent);
+					--color-text-primary: hsla(var(--color-brand-hue), 15%, 95%, 1);
+					--color-text-secondary: hsla(var(--color-brand-hue), 5%, 75%, 1);
+					--color-text-accent: var(--color-brand-accent);
 
-					--shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 50% 3% / 0.3);
+					--shadow: 0px 10px 10px -5px hsla(var(--color-brand-hue) 50% 3% / 0.3);
 				}
 			}
 
@@ -131,29 +128,29 @@
 				&:root{
 					color-scheme: light;
 
-					--color-main-accent: hsla(var(--color-main-hue), 15%, 95%, 1);
+					--color-brand-accent: hsla(var(--color-brand-hue), 15%, 95%, 1);
 
-					--color-main-tint-1: hsla(var(--color-main-hue), 20%, 100%, 1);
-					--color-main-tint-1-5: hsla(var(--color-main-hue), 20%, 97.5%, 1);
+					--color-brand-tint-1: hsla(var(--color-brand-hue), 20%, 100%, 1);
+					--color-brand-tint-1-5: hsla(var(--color-brand-hue), 20%, 97.5%, 1);
 
-					--color-main-tint-2: hsla(var(--color-main-hue), 20%, 95%, 1);
+					--color-brand-tint-2: hsla(var(--color-brand-hue), 20%, 95%, 1);
 
-					--color-main-tint-3: hsla(var(--color-main-hue), 20%, 90%, 1);
-					--color-main-tint-3-alpha-0-5: hsla(var(--color-main-hue), 20%, 90%, 0.5);
+					--color-brand-tint-3: hsla(var(--color-brand-hue), 20%, 90%, 1);
+					--color-brand-tint-3-alpha-0-5: hsla(var(--color-brand-hue), 20%, 90%, 0.5);
 
-					--color-main-tint-4: hsla(var(--color-main-hue), 20%, 85%, 1);
-					--color-main-tint-5: hsla(var(--color-main-hue), 20%, 80%, 1);
-					--color-main-tint-6: hsla(var(--color-main-hue), 20%, 75%, 1);
-					--color-main-tint-7: hsla(var(--color-main-hue), 20%, 60%, 1);
-					--color-main-tint-8: hsla(var(--color-main-hue), 20%, 45%, 1);
-					--color-main-tint-9: hsla(var(--color-main-hue), 20%, 30%, 1);
-					--color-main-tint-10: hsla(var(--color-main-hue), 20%, 15%, 1);
+					--color-brand-tint-4: hsla(var(--color-brand-hue), 20%, 85%, 1);
+					--color-brand-tint-5: hsla(var(--color-brand-hue), 20%, 80%, 1);
+					--color-brand-tint-6: hsla(var(--color-brand-hue), 20%, 75%, 1);
+					--color-brand-tint-7: hsla(var(--color-brand-hue), 20%, 60%, 1);
+					--color-brand-tint-8: hsla(var(--color-brand-hue), 20%, 45%, 1);
+					--color-brand-tint-9: hsla(var(--color-brand-hue), 20%, 30%, 1);
+					--color-brand-tint-10: hsla(var(--color-brand-hue), 20%, 15%, 1);
 
-					--color-text-primary: hsla(var(--color-main-hue), var(--color-main-saturation), 10%, 1);
-					--color-text-secondary: hsla(var(--color-main-hue), 30%, 30%, 1);
-					--color-text-accent: var(--color-main-accent);
+					--color-text-primary: hsla(var(--color-brand-hue), var(--color-brand-saturation), 10%, 1);
+					--color-text-secondary: hsla(var(--color-brand-hue), 30%, 30%, 1);
+					--color-text-accent: var(--color-brand-accent);
 
-					--shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 10% 2% / 0.2);
+					--shadow: 0px 10px 10px -5px hsla(var(--color-brand-hue) 10% 2% / 0.2);
 				}
 			}
 		}
@@ -199,7 +196,7 @@
 
 		/*** Body START ***/
 		body{
-			background-color: var(--color-main-tint-1);
+			background-color: var(--color-brand-tint-1);
 			color: var(--color-text-primary);
 			font-size: 1rem;
 			tab-size: 4;
@@ -279,7 +276,7 @@
 			[type=datetime-local],
 			[type=time]
 		){
-			background-color: var(--color-main-tint-3);
+			background-color: var(--color-brand-tint-3);
 			color: var(--color-text-primary);
 			font-size: 1rem;
 			width: 100%;
@@ -287,22 +284,22 @@
 			padding: 0 calc(var(--padding) * 2);
 			border: none;
 			border-radius: var(--radius);
-			outline: 1px solid var(--color-main-tint-4);
+			outline: 1px solid var(--color-brand-tint-4);
 
 			transition: var(--form-transition);
 			transition-property: var(--form-transition-property);
 
 			&:hover {
 				&:not(:disabled){
-					background-color: var(--color-main-tint-4);
-					outline: 1px solid var(--color-main-tint-6);
+					background-color: var(--color-brand-tint-4);
+					outline: 1px solid var(--color-brand-tint-6);
 				}
 			}
 
 			&:focus, &:active {
 				&:not(:disabled){
-					background-color: var(--color-main-tint-5);
-					outline: 1px solid var(--color-main-tint-8);
+					background-color: var(--color-brand-tint-5);
+					outline: 1px solid var(--color-brand-tint-8);
 				}
 			}
 		}
@@ -345,7 +342,7 @@
 
 				/* Button */
 				&::file-selector-button{
-					background-color: var(--color-main);
+					background-color: var(--color-brand);
 					color: white;
 					font-size: 1rem;
 
@@ -492,7 +489,7 @@
 					}
 
 					&:focus{
-						outline-color: color-mix(in hsl, transparent, hsla(var(--color-main-hue), var(--color-main-saturation), var(--color-main-lightness), 0.5));
+						outline-color: color-mix(in hsl, transparent, hsla(var(--color-brand-hue), var(--color-brand-saturation), var(--color-brand-lightness), 0.5));
 					}
 
 					&:active{
@@ -514,13 +511,13 @@
 
 				&.btn-clean{
 					color: var(--color-text-primary);
-					background-color: var(--color-main-tint-1);
-					outline-color: var(--color-main-tint-4);
+					background-color: var(--color-brand-tint-1);
+					outline-color: var(--color-brand-tint-4);
 					border-radius: var(--radius);
 					box-shadow: none;
 
 					&:hover{
-						outline-color: var(--color-main-tint-8);
+						outline-color: var(--color-brand-tint-8);
 					}
 				}
 
@@ -529,32 +526,32 @@
 				/* Colors */
 
 				&.btn-primary{
-					background-color: var(--color-main);
+					background-color: var(--color-brand);
 
 					&.btn-outline{
-						color: var(--color-main);
+						color: var(--color-brand);
 						background-color: transparent;
-						outline-color: var(--color-main);
+						outline-color: var(--color-brand);
 
 						&:hover{
 							color: white;
-							background-color: var(--color-main);
+							background-color: var(--color-brand);
 						}
 					}
 				}
 
 				&.btn-secondary{
 					color: black;
-					background-color: hsla(var(--color-main-hue), 20%, 80%, 1);
+					background-color: hsla(var(--color-brand-hue), 20%, 80%, 1);
 
 					&.btn-outline{
-						color: hsla(var(--color-main-hue), 20%, 80%, 1);
+						color: hsla(var(--color-brand-hue), 20%, 80%, 1);
 						background-color: transparent;
-						outline-color: hsla(var(--color-main-hue), 20%, 80%, 1);
+						outline-color: hsla(var(--color-brand-hue), 20%, 80%, 1);
 
 						&:hover{
 							color: black;
-							background-color: hsla(var(--color-main-hue), 20%, 80%, 1);
+							background-color: hsla(var(--color-brand-hue), 20%, 80%, 1);
 						}
 					}
 				}
@@ -590,7 +587,7 @@
 				}
 
 				&.btn-warning{
-					color: var(--color-main-dark);
+					color: var(--color-brand-dark);
 					background-color: var(--color-warning);
 
 					&.btn-outline{
@@ -599,7 +596,7 @@
 						outline-color: var(--color-warning);
 
 						&:hover{
-							color: var(--color-main-dark);
+							color: var(--color-brand-dark);
 							background-color: var(--color-warning);
 						}
 					}
@@ -651,49 +648,49 @@
 				}
 
 				&.btn-dark{
-					color: var(--color-main-light);
-					background-color: var(--color-main-dark);
+					color: var(--color-brand-light);
+					background-color: var(--color-brand-dark);
 
 					&.btn-outline{
 						background-color: transparent;
-						outline-color: var(--color-main-dark);
-						color: var(--color-main-dark);
+						outline-color: var(--color-brand-dark);
+						color: var(--color-brand-dark);
 
 						&:hover{
-							background-color: var(--color-main-dark);
-							color: var(--color-main-light);
+							background-color: var(--color-brand-dark);
+							color: var(--color-brand-light);
 						}
 					}
 				}
 
 				&.btn-light{
-					color: var(--color-main-dark);
-					background-color: var(--color-main-light);
+					color: var(--color-brand-dark);
+					background-color: var(--color-brand-light);
 
 					&.btn-outline{
-						color: var(--color-main-light);
+						color: var(--color-brand-light);
 						background-color: transparent;
-						outline-color: var(--color-main-light);
+						outline-color: var(--color-brand-light);
 
 						&:hover{
-							color: var(--color-main-dark);
-							background-color: var(--color-main-light);
+							color: var(--color-brand-dark);
+							background-color: var(--color-brand-light);
 						}
 					}
 				}
 
 				&.btn-accent{
 					color: var(--color-text-primary);
-					background-color: var(--color-main-accent);
+					background-color: var(--color-brand-accent);
 
 					&.btn-outline{
-						color: var(--color-main-accent);
+						color: var(--color-brand-accent);
 						background-color: transparent;
-						outline-color: var(--color-main-accent);
+						outline-color: var(--color-brand-accent);
 
 						&:hover{
 							color: var(--color-text-primary);
-							background-color: var(--color-main-accent);
+							background-color: var(--color-brand-accent);
 						}
 					}
 				}
@@ -737,7 +734,7 @@
 			justify-content: flex-start;
 			align-items: center;
 
-			background-color: var(--color-main-tint-3);
+			background-color: var(--color-brand-tint-3);
 			color: var(--color-text-primary);
 			font-size: 1em;
 			max-width: 100%;
@@ -745,7 +742,7 @@
 			padding: 0 calc(var(--padding) * 2);
 			border: none;
 			border-radius: var(--radius);
-			outline: 1px solid var(--color-main-tint-4);
+			outline: 1px solid var(--color-brand-tint-4);
 			overflow-x: auto;
 
 			/*
@@ -754,15 +751,15 @@
 			*/
 
 			&:hover {
-				background-color: var(--color-main-tint-4);
-				outline-color: var(--color-main-tint-6);
+				background-color: var(--color-brand-tint-4);
+				outline-color: var(--color-brand-tint-6);
 			}
 
 			&:focus,
 			&:focus-visible,
 			&:active {
-				background-color: var(--color-main-tint-5);
-				outline-color: var(--color-main-tint-8);
+				background-color: var(--color-brand-tint-5);
+				outline-color: var(--color-brand-tint-8);
 			}
 		}
 	}
@@ -774,11 +771,12 @@
 			flex-direction: row;
 			align-items: center;
 			gap: calc(var(--gap) / 8);
+			padding: calc(var(--padding) * 2);
 
-			padding: var(--padding);
 			border: none;
-			border-radius: calc(var(--radius) * 2);
-			background-color: var(--color-main-tint-2);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+			background-color: var(--color-brand-tint-2);
 
 			/* Keeps the anchor name local, so multiple controls on one page don't collide */
 			anchor-scope: --segmented-v1-active;
@@ -804,10 +802,10 @@
 
 				&:hover { color: var(--color-text-primary); }
 
-				&:has(:checked) { color: var(--color-text-primary); }
+				&:has(:checked) { color: contrast-color(var(--color-brand)); }
 
 				&:has(:focus-visible) {
-					outline: 1px solid var(--color-main-tint-8);
+					outline: 1px solid var(--color-brand);
 					outline-offset: 2px;
 				}
 
@@ -826,7 +824,7 @@
 				width: 1px;
 				height: 1.2em;
 				margin-inline: calc(var(--margin) * 2);
-				background-color: var(--color-main-tint-5);
+				background-color: var(--color-brand-tint-5);
 			}
 
 			& > .segmented-v1-indicator {
@@ -834,8 +832,7 @@
 				z-index: 0;
 
 				border-radius: var(--radius);
-				background-color: var(--color-main);
-				box-shadow: var(--shadow);
+				background-color: var(--color-brand);
 				pointer-events: none;
 
 				transition: var(--transition-velocity) ease-in-out;
@@ -871,7 +868,7 @@
 
 	@layer text{
 		@layer color{
-			.text-color-main{color: var(--color-main);}
+			.text-color-main{color: var(--color-brand);}
 			.text-color-brand{color: var(--color-brand);}
 
 			.text-color-primary{color: var(--color-text-primary);}
@@ -1138,7 +1135,7 @@
 
 		@supports (-moz-appearance:none){
 			:where(.scrollbar-x, .scrollbar-y){
-				scrollbar-color: var(--color-main) transparent;
+				scrollbar-color: var(--color-brand) transparent;
 			}
 		}
 		/** Firefox END **/
@@ -1153,11 +1150,11 @@
 			background-color: transparent;
 		}
 		:where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-thumb{
-			background-color: hsla(var(--color-main-hue), var(--color-main-saturation), var(--color-main-lightness), 0.5);
+			background-color: hsla(var(--color-brand-hue), var(--color-brand-saturation), var(--color-brand-lightness), 0.5);
 			border-radius: 5px;
 		}
 		:where(.scrollbar-x, .scrollbar-y)::-webkit-scrollbar-thumb:hover{
-			background-color: hsla(var(--color-main-hue), var(--color-main-saturation), var(--color-main-lightness), 1);
+			background-color: hsla(var(--color-brand-hue), var(--color-brand-saturation), var(--color-brand-lightness), 1);
 		}
 		/** All Other Browsers END **/
 		/********************* v1 END *********************/
@@ -1178,9 +1175,9 @@
 			font-size: 0.7rem;
 			line-height: 1.4;
 			color: var(--color-text-primary);
-			accent-color: var(--color-main-accent);
+			accent-color: var(--color-brand-accent);
 
-			border: 1px solid var(--color-main-tint-4);
+			border: 1px solid var(--color-brand-tint-4);
 			border-radius: var(--radius);
 			box-shadow: var(--shadow);
 
@@ -1198,8 +1195,8 @@
 					text-align: left;
 					color: var(--color-text-secondary);
 
-					background: var(--color-main-tint-2);
-					border-bottom: 1px solid var(--color-main-tint-4);
+					background: var(--color-brand-tint-2);
+					border-bottom: 1px solid var(--color-brand-tint-4);
 					padding: calc(var(--padding) * 2);
 				}
 
@@ -1212,8 +1209,8 @@
 						letter-spacing: 0.08em;
 						text-align: left;
 
-						background: var(--color-main-tint-3);
-						border-bottom: 1px solid var(--color-main-tint-5);
+						background: var(--color-brand-tint-3);
+						border-bottom: 1px solid var(--color-brand-tint-5);
 						padding: calc(var(--padding) * 2);
 					}
 				}
@@ -1223,12 +1220,12 @@
 						/*
 						Zebra
 						&:nth-child(even) td {
-							background: var(--color-main-tint-3);
+							background: var(--color-brand-tint-3);
 						}
 						*/
 
 						&:hover td {
-							background: var(--color-main-tint-2);
+							background: var(--color-brand-tint-2);
 						}
 
 						&:last-child td {
@@ -1236,16 +1233,16 @@
 						}
 
 						&:has(input[type="checkbox"]:checked) td {
-							background: var(--color-main-tint-5);
-							border-bottom-color: var(--color-main-tint-6);
+							background: var(--color-brand-tint-5);
+							border-bottom-color: var(--color-brand-tint-6);
 						}
 
 						& td {
 							font-size: 0.7rem;
 							vertical-align: middle;
 
-							background: var(--color-main-tint-1);
-							border-bottom: 1px solid var(--color-main-tint-4);
+							background: var(--color-brand-tint-1);
+							border-bottom: 1px solid var(--color-brand-tint-4);
 							padding: calc(var(--padding) * 2);
 
 							& input[type="checkbox"] {
@@ -1263,8 +1260,8 @@
 						vertical-align: middle;
 						color: var(--color-text-secondary);
 
-						background: var(--color-main-tint-3);
-						border-top: 1px solid var(--color-main-tint-5);
+						background: var(--color-brand-tint-3);
+						border-top: 1px solid var(--color-brand-tint-5);
 						border-bottom: 0;
 						padding: calc(var(--padding) * 2);
 					}
@@ -1297,32 +1294,32 @@
 
 	@layer surfaces{
 		.surface-v1{
-			background-color: var(--color-main-tint-2);
+			background-color: var(--color-brand-tint-2);
 			border-radius: var(--radius);
 			box-shadow: var(--shadow);
 		}
 
 		.surface-v2{
-			background-color: var(--color-main-tint-3);
+			background-color: var(--color-brand-tint-3);
 
 			border-radius: 0px;
-			border-left: 1px solid var(--color-main-tint-2);
-			border-top: 1px solid var(--color-main-tint-4);
-			border-right: 1px solid var(--color-main-tint-4);
-			border-bottom: 1px solid var(--color-main-tint-2);
+			border-left: 1px solid var(--color-brand-tint-2);
+			border-top: 1px solid var(--color-brand-tint-4);
+			border-right: 1px solid var(--color-brand-tint-4);
+			border-bottom: 1px solid var(--color-brand-tint-2);
 		}
 
 		.surface-v3{
-			background-color: hsla(var(--color-main-hue), 10%, 50%, 0.3);
+			background-color: hsla(var(--color-brand-hue), 10%, 50%, 0.3);
 			border: none !important;
 			box-shadow: 0px 5px 10px -5px rgba(0 0 0 / 0.5);
 			border-radius: 12px;
 		}
 
 		.surface-v4 {
-			background-color: var(--color-main-tint-2);
+			background-color: var(--color-brand-tint-2);
 			border-radius: 20px;
-			border: 1px solid var(--color-main-tint-3);
+			border: 1px solid var(--color-brand-tint-3);
 			box-shadow:
 				0px 4px 4px -4px rgba(0 0 0 / 0.1),
 				0px 2px 13px -5px rgba(0 0 0 / 0.2)
@@ -1330,13 +1327,13 @@
 		}
 
 		.surface-v5 {
-			background-color: var(--color-main-tint-2);
+			background-color: var(--color-brand-tint-2);
 
-			--border-primary-color: var(--color-main-tint-8);
+			--border-primary-color: var(--color-brand-tint-8);
 			--border-primary-width: 1px;
 			--border-primary-length: 5px;
 
-			--border-secondary-color: var(--color-main-tint-6);
+			--border-secondary-color: var(--color-brand-tint-6);
 			--border-secondary-width: 0.5px;
 
 			background:
@@ -1360,10 +1357,10 @@
 		.surface-v6 {
 			--surface-v6-radius: 18px;
 
-			background-color: color-mix(in hsl, var(--color-main-tint-2) 80%, transparent);
+			background-color: color-mix(in hsl, var(--color-brand-tint-2) 80%, transparent);
 			backdrop-filter: blur(var(--blur)) saturate(180%);
 
-			border: 0.5px solid color-mix(in hsl, var(--color-main-tint-6) 50%, transparent);
+			border: 0.5px solid color-mix(in hsl, var(--color-brand-tint-6) 50%, transparent);
 			border-radius: var(--surface-v6-radius);
 
 			box-shadow:
@@ -1424,23 +1421,22 @@
 
 	@layer backgrounds{
 		/* Brand */
-		.bg-main{background-color: var(--color-main);}
-		.bg-brand{background-color: var(--color-main);}
-		.bg-accent{background-color: var(--color-main-accent);}
+		.bg-brand{background-color: var(--color-brand);}
+		.bg-accent{background-color: var(--color-brand-accent);}
 
-		/* Brand Color Shades */
-		.bg-1{background-color: var(--color-main-tint-1);}
-		.bg-1-5{background-color: var(--color-main-tint-1-5);}
+		/* Brand color tints */
+		.bg-1{background-color: var(--color-brand-tint-1);}
+		.bg-1-5{background-color: var(--color-brand-tint-1-5);}
 
-		.bg-2{background-color: var(--color-main-tint-2);}
-		.bg-3{background-color: var(--color-main-tint-3);}
-		.bg-4{background-color: var(--color-main-tint-4);}
-		.bg-5{background-color: var(--color-main-tint-5);}
-		.bg-6{background-color: var(--color-main-tint-6);}
-		.bg-7{background-color: var(--color-main-tint-7);}
-		.bg-8{background-color: var(--color-main-tint-8);}
-		.bg-9{background-color: var(--color-main-tint-9);}
-		.bg-10{background-color: var(--color-main-tint-10);}
+		.bg-2{background-color: var(--color-brand-tint-2);}
+		.bg-3{background-color: var(--color-brand-tint-3);}
+		.bg-4{background-color: var(--color-brand-tint-4);}
+		.bg-5{background-color: var(--color-brand-tint-5);}
+		.bg-6{background-color: var(--color-brand-tint-6);}
+		.bg-7{background-color: var(--color-brand-tint-7);}
+		.bg-8{background-color: var(--color-brand-tint-8);}
+		.bg-9{background-color: var(--color-brand-tint-9);}
+		.bg-10{background-color: var(--color-brand-tint-10);}
 
 		/* Basics */
 		.bg-none{background-color: none;}
@@ -1458,14 +1454,14 @@
 		.bg-urgent{background-color: var(--color-urgent);}
 
 		/* Gradient */
-		.bg-gradient-left{background-image: linear-gradient(to left, var(--color-main-tint-2), var(--color-main-tint-6));}
-		.bg-gradient-right{background-image: linear-gradient(to right, var(--color-main-tint-2), var(--color-main-tint-6));}
-		.bg-gradient-45{background-image: linear-gradient(45deg, var(--color-main-tint-2), var(--color-main-tint-6) 80%);}
+		.bg-gradient-left{background-image: linear-gradient(to left, var(--color-brand-tint-2), var(--color-brand-tint-6));}
+		.bg-gradient-right{background-image: linear-gradient(to right, var(--color-brand-tint-2), var(--color-brand-tint-6));}
+		.bg-gradient-45{background-image: linear-gradient(45deg, var(--color-brand-tint-2), var(--color-brand-tint-6) 80%);}
 
 
 
 		.bg-animated-gradient-v1 {
-			background: linear-gradient(-45deg, var(--color-main-tint-1), var(--color-main-tint-3), var(--color-main-tint-5));
+			background: linear-gradient(-45deg, var(--color-brand-tint-1), var(--color-brand-tint-3), var(--color-brand-tint-5));
 			background-size: 400% 400%;
 			animation: keyframes-bg-animated-gradient-v1 30s linear infinite;
 		}
@@ -1483,18 +1479,18 @@
 			So layer has been removed
 		*/
 		/* @layer Hover{ */
-			.on-hover-bg-brand { &:hover { background-color: var(--color-main); } }
+			.on-hover-bg-brand { &:hover { background-color: var(--color-brand); } }
 
-			.on-hover-bg-1 { &:hover { background-color: var(--color-main-tint-1); } }
-			.on-hover-bg-2 { &:hover { background-color: var(--color-main-tint-2); } }
-			.on-hover-bg-3 { &:hover { background-color: var(--color-main-tint-3); } }
-			.on-hover-bg-4 { &:hover { background-color: var(--color-main-tint-4); } }
-			.on-hover-bg-5 { &:hover { background-color: var(--color-main-tint-5); } }
-			.on-hover-bg-6 { &:hover { background-color: var(--color-main-tint-6); } }
-			.on-hover-bg-7 { &:hover { background-color: var(--color-main-tint-7); } }
-			.on-hover-bg-8 { &:hover { background-color: var(--color-main-tint-8); } }
-			.on-hover-bg-9 { &:hover { background-color: var(--color-main-tint-9); } }
-			.on-hover-bg-10 { &:hover { background-color: var(--color-main-tint-10); } }
+			.on-hover-bg-1 { &:hover { background-color: var(--color-brand-tint-1); } }
+			.on-hover-bg-2 { &:hover { background-color: var(--color-brand-tint-2); } }
+			.on-hover-bg-3 { &:hover { background-color: var(--color-brand-tint-3); } }
+			.on-hover-bg-4 { &:hover { background-color: var(--color-brand-tint-4); } }
+			.on-hover-bg-5 { &:hover { background-color: var(--color-brand-tint-5); } }
+			.on-hover-bg-6 { &:hover { background-color: var(--color-brand-tint-6); } }
+			.on-hover-bg-7 { &:hover { background-color: var(--color-brand-tint-7); } }
+			.on-hover-bg-8 { &:hover { background-color: var(--color-brand-tint-8); } }
+			.on-hover-bg-9 { &:hover { background-color: var(--color-brand-tint-9); } }
+			.on-hover-bg-10 { &:hover { background-color: var(--color-brand-tint-10); } }
 		/* } */
 	}
 
@@ -2859,25 +2855,25 @@
 		.box-shadow-v0{ box-shadow: var(--shadow); }
 
 		.box-shadow-v1{
-			box-shadow: -2px 2px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.7);
+			box-shadow: -2px 2px 0px 0px hsla(var(--color-brand-hue), var(--color-brand-saturation), 0%, 0.7);
 
 			transition: var(--transition-velocity) ease-in-out box-shadow;
 
 			&:hover{
-				box-shadow: -4px 4px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.5);
+				box-shadow: -4px 4px 0px 0px hsla(var(--color-brand-hue), var(--color-brand-saturation), 0%, 0.5);
 			}
 		}
 
 		.box-shadow-v2{
 			box-shadow:
-				5px 5px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.4),
-				10px 10px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.3),
-				15px 15px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.2),
-				20px 20px 0px 0px hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.1);
+				5px 5px 0px 0px hsla(var(--color-brand-hue), var(--color-brand-saturation), 0%, 0.4),
+				10px 10px 0px 0px hsla(var(--color-brand-hue), var(--color-brand-saturation), 0%, 0.3),
+				15px 15px 0px 0px hsla(var(--color-brand-hue), var(--color-brand-saturation), 0%, 0.2),
+				20px 20px 0px 0px hsla(var(--color-brand-hue), var(--color-brand-saturation), 0%, 0.1);
 		}
 
 		.box-shadow-v3{
-			box-shadow: 0px 2px 3px 1px  hsla(var(--color-main-hue), var(--color-main-saturation), 0%, 0.3);
+			box-shadow: 0px 2px 3px 1px  hsla(var(--color-brand-hue), var(--color-brand-saturation), 0%, 0.3);
 		}
 
 		.box-shadow-v4{
@@ -2885,13 +2881,13 @@
 				inset
 
 				/* Top */
-				0px 1px 2px var(--color-main-tint-6),
+				0px 1px 2px var(--color-brand-tint-6),
 
 				/* Bottom hard */
-				0px 1px 2px var(--color-main-tint-1),
+				0px 1px 2px var(--color-brand-tint-1),
 
 				/* Bottom soft */
-				0px 2px 4px var(--color-main-tint-2)
+				0px 2px 4px var(--color-brand-tint-2)
 			;
 		}
 	}
@@ -2916,18 +2912,18 @@
 			.border-bottom-color-transparent-important{ border-bottom-color: transparent !important; }
 
 
-			.border-color-main{border-color: var(--color-main);}
+			.border-color-main{border-color: var(--color-brand);}
 
-			.border-color-1{border-color: var(--color-main-tint-1);}
-			.border-color-2{border-color: var(--color-main-tint-2);}
-			.border-color-3{border-color: var(--color-main-tint-3);}
-			.border-color-4{border-color: var(--color-main-tint-4);}
-			.border-color-5{border-color: var(--color-main-tint-5);}
-			.border-color-6{border-color: var(--color-main-tint-6);}
-			.border-color-7{border-color: var(--color-main-tint-7);}
-			.border-color-8{border-color: var(--color-main-tint-8);}
-			.border-color-9{border-color: var(--color-main-tint-9);}
-			.border-color-10{border-color: var(--color-main-tint-10);}
+			.border-color-1{border-color: var(--color-brand-tint-1);}
+			.border-color-2{border-color: var(--color-brand-tint-2);}
+			.border-color-3{border-color: var(--color-brand-tint-3);}
+			.border-color-4{border-color: var(--color-brand-tint-4);}
+			.border-color-5{border-color: var(--color-brand-tint-5);}
+			.border-color-6{border-color: var(--color-brand-tint-6);}
+			.border-color-7{border-color: var(--color-brand-tint-7);}
+			.border-color-8{border-color: var(--color-brand-tint-8);}
+			.border-color-9{border-color: var(--color-brand-tint-9);}
+			.border-color-10{border-color: var(--color-brand-tint-10);}
 
 			.border-color-text-primary{border-color: var(--color-text-primary);}
 			.border-color-text-secondary{border-color: var(--color-text-secondary);}
@@ -2942,16 +2938,16 @@
 			.border-color-white{border-color: var(--color-white);}
 
 			/* @layer Hover { */
-				.on-hover-border-color-1 { &:hover { border-color: var(--color-main-tint-1); } }
-				.on-hover-border-color-2 { &:hover { border-color: var(--color-main-tint-2); } }
-				.on-hover-border-color-3 { &:hover { border-color: var(--color-main-tint-3); } }
-				.on-hover-border-color-4 { &:hover { border-color: var(--color-main-tint-4); } }
-				.on-hover-border-color-5 { &:hover { border-color: var(--color-main-tint-5); } }
-				.on-hover-border-color-6 { &:hover { border-color: var(--color-main-tint-6); } }
-				.on-hover-border-color-7 { &:hover { border-color: var(--color-main-tint-7); } }
-				.on-hover-border-color-8 { &:hover { border-color: var(--color-main-tint-8); } }
-				.on-hover-border-color-9 { &:hover { border-color: var(--color-main-tint-9); } }
-				.on-hover-border-color-10 { &:hover { border-color: var(--color-main-tint-10); } }
+				.on-hover-border-color-1 { &:hover { border-color: var(--color-brand-tint-1); } }
+				.on-hover-border-color-2 { &:hover { border-color: var(--color-brand-tint-2); } }
+				.on-hover-border-color-3 { &:hover { border-color: var(--color-brand-tint-3); } }
+				.on-hover-border-color-4 { &:hover { border-color: var(--color-brand-tint-4); } }
+				.on-hover-border-color-5 { &:hover { border-color: var(--color-brand-tint-5); } }
+				.on-hover-border-color-6 { &:hover { border-color: var(--color-brand-tint-6); } }
+				.on-hover-border-color-7 { &:hover { border-color: var(--color-brand-tint-7); } }
+				.on-hover-border-color-8 { &:hover { border-color: var(--color-brand-tint-8); } }
+				.on-hover-border-color-9 { &:hover { border-color: var(--color-brand-tint-9); } }
+				.on-hover-border-color-10 { &:hover { border-color: var(--color-brand-tint-10); } }
 			/* } */
 		}
 
@@ -3015,18 +3011,18 @@
 
 
 		@layer color{
-			.outline-color-main{outline-color: var(--color-main);}
+			.outline-color-main{outline-color: var(--color-brand);}
 
-			.outline-color-1{outline-color: var(--color-main-tint-1);}
-			.outline-color-2{outline-color: var(--color-main-tint-2);}
-			.outline-color-3{outline-color: var(--color-main-tint-3);}
-			.outline-color-4{outline-color: var(--color-main-tint-4);}
-			.outline-color-5{outline-color: var(--color-main-tint-5);}
-			.outline-color-6{outline-color: var(--color-main-tint-6);}
-			.outline-color-7{outline-color: var(--color-main-tint-7);}
-			.outline-color-8{outline-color: var(--color-main-tint-8);}
-			.outline-color-9{outline-color: var(--color-main-tint-9);}
-			.outline-color-10{outline-color: var(--color-main-tint-10);}
+			.outline-color-1{outline-color: var(--color-brand-tint-1);}
+			.outline-color-2{outline-color: var(--color-brand-tint-2);}
+			.outline-color-3{outline-color: var(--color-brand-tint-3);}
+			.outline-color-4{outline-color: var(--color-brand-tint-4);}
+			.outline-color-5{outline-color: var(--color-brand-tint-5);}
+			.outline-color-6{outline-color: var(--color-brand-tint-6);}
+			.outline-color-7{outline-color: var(--color-brand-tint-7);}
+			.outline-color-8{outline-color: var(--color-brand-tint-8);}
+			.outline-color-9{outline-color: var(--color-brand-tint-9);}
+			.outline-color-10{outline-color: var(--color-brand-tint-10);}
 
 			.outline-color-text-primary{outline-color: var(--color-text-primary);}
 			.outline-color-text-secondary{outline-color: var(--color-text-secondary);}
@@ -3147,8 +3143,8 @@
 				}
 
 				@keyframes background_shift{
-					from {background-color: var(--color-main-tint-1);}
-					to {background-color: var(--color-main-tint-4);}
+					from {background-color: var(--color-brand-tint-1);}
+					to {background-color: var(--color-brand-tint-4);}
 				}
 			}
 		}
@@ -3272,8 +3268,8 @@
 
 			&.v1{
 				border: none;
-				border-top:1px solid var(--color-main-tint-4);
-				border-bottom:1px solid var(--color-main-tint-2);
+				border-top:1px solid var(--color-brand-tint-4);
+				border-bottom:1px solid var(--color-brand-tint-2);
 			}
 
 			&.v2{
@@ -3283,7 +3279,7 @@
 
 			&.v3{
 				border: none;
-				border-top: 1px solid var(--color-main-tint-4);
+				border-top: 1px solid var(--color-brand-tint-4);
 			}
 
 			&.v4 {
@@ -3320,106 +3316,106 @@
 			:root:has(div#root > main > .force-root-color-mode-dark) {
 				color-scheme: dark !important;
 
-				--color-main-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1) !important;
+				--color-brand-accent: hsla(var(--color-brand-hue), var(--color-brand-saturation), 5%, 1) !important;
 
-				--color-main-tint-1: hsla(var(--color-main-hue), 10%, 10%, 1) !important;
-				--color-main-tint-2: hsla(var(--color-main-hue), 10%, 15%, 1) !important;
+				--color-brand-tint-1: hsla(var(--color-brand-hue), 10%, 10%, 1) !important;
+				--color-brand-tint-2: hsla(var(--color-brand-hue), 10%, 15%, 1) !important;
 
-				--color-main-tint-3: hsla(var(--color-main-hue), 10%, 20%, 1) !important;
-				--color-main-tint-3-alpha-0-5: hsla(var(--color-main-hue), 10%, 20%, 0.5) !important;
+				--color-brand-tint-3: hsla(var(--color-brand-hue), 10%, 20%, 1) !important;
+				--color-brand-tint-3-alpha-0-5: hsla(var(--color-brand-hue), 10%, 20%, 0.5) !important;
 
-				--color-main-tint-4: hsla(var(--color-main-hue), 10%, 25%, 1) !important;
-				--color-main-tint-5: hsla(var(--color-main-hue), 10%, 30%, 1) !important;
-				--color-main-tint-6: hsla(var(--color-main-hue), 10%, 35%, 1) !important;
-				--color-main-tint-7: hsla(var(--color-main-hue), 10%, 50%, 1) !important;
-				--color-main-tint-8: hsla(var(--color-main-hue), 10%, 65%, 1) !important;
-				--color-main-tint-9: hsla(var(--color-main-hue), 10%, 80%, 1) !important;
-				--color-main-tint-10: hsla(var(--color-main-hue), 10%, 95%, 1) !important;
+				--color-brand-tint-4: hsla(var(--color-brand-hue), 10%, 25%, 1) !important;
+				--color-brand-tint-5: hsla(var(--color-brand-hue), 10%, 30%, 1) !important;
+				--color-brand-tint-6: hsla(var(--color-brand-hue), 10%, 35%, 1) !important;
+				--color-brand-tint-7: hsla(var(--color-brand-hue), 10%, 50%, 1) !important;
+				--color-brand-tint-8: hsla(var(--color-brand-hue), 10%, 65%, 1) !important;
+				--color-brand-tint-9: hsla(var(--color-brand-hue), 10%, 80%, 1) !important;
+				--color-brand-tint-10: hsla(var(--color-brand-hue), 10%, 95%, 1) !important;
 
-				--color-text-primary: hsla(var(--color-main-hue), 15%, 95%, 1) !important;
-				--color-text-secondary: hsla(var(--color-main-hue), 5%, 75%, 1) !important;
-				--color-text-accent: var(--color-main-accent) !important;
+				--color-text-primary: hsla(var(--color-brand-hue), 15%, 95%, 1) !important;
+				--color-text-secondary: hsla(var(--color-brand-hue), 5%, 75%, 1) !important;
+				--color-text-accent: var(--color-brand-accent) !important;
 
-				--shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 50% 3% / 0.3) !important;
+				--shadow: 0px 10px 10px -5px hsla(var(--color-brand-hue) 50% 3% / 0.3) !important;
 			}
 
 			:root:has(div#root > main > .force-root-color-mode-light) {
 				color-scheme: light !important;
 
-				--color-main-accent: hsla(var(--color-main-hue), 15%, 95%, 1) !important;
+				--color-brand-accent: hsla(var(--color-brand-hue), 15%, 95%, 1) !important;
 
-				--color-main-tint-1: hsla(var(--color-main-hue), 20%, 100%, 1) !important;
-				--color-main-tint-2: hsla(var(--color-main-hue), 20%, 95%, 1) !important;
+				--color-brand-tint-1: hsla(var(--color-brand-hue), 20%, 100%, 1) !important;
+				--color-brand-tint-2: hsla(var(--color-brand-hue), 20%, 95%, 1) !important;
 
-				--color-main-tint-3: hsla(var(--color-main-hue), 20%, 90%, 1) !important;
-				--color-main-tint-3-alpha-0-5: hsla(var(--color-main-hue), 20%, 90%, 0.5) !important;
+				--color-brand-tint-3: hsla(var(--color-brand-hue), 20%, 90%, 1) !important;
+				--color-brand-tint-3-alpha-0-5: hsla(var(--color-brand-hue), 20%, 90%, 0.5) !important;
 
-				--color-main-tint-4: hsla(var(--color-main-hue), 20%, 85%, 1) !important;
-				--color-main-tint-5: hsla(var(--color-main-hue), 20%, 80%, 1) !important;
-				--color-main-tint-6: hsla(var(--color-main-hue), 20%, 75%, 1) !important;
-				--color-main-tint-7: hsla(var(--color-main-hue), 20%, 60%, 1) !important;
-				--color-main-tint-8: hsla(var(--color-main-hue), 20%, 45%, 1) !important;
-				--color-main-tint-9: hsla(var(--color-main-hue), 20%, 30%, 1) !important;
-				--color-main-tint-10: hsla(var(--color-main-hue), 20%, 15%, 1) !important;
+				--color-brand-tint-4: hsla(var(--color-brand-hue), 20%, 85%, 1) !important;
+				--color-brand-tint-5: hsla(var(--color-brand-hue), 20%, 80%, 1) !important;
+				--color-brand-tint-6: hsla(var(--color-brand-hue), 20%, 75%, 1) !important;
+				--color-brand-tint-7: hsla(var(--color-brand-hue), 20%, 60%, 1) !important;
+				--color-brand-tint-8: hsla(var(--color-brand-hue), 20%, 45%, 1) !important;
+				--color-brand-tint-9: hsla(var(--color-brand-hue), 20%, 30%, 1) !important;
+				--color-brand-tint-10: hsla(var(--color-brand-hue), 20%, 15%, 1) !important;
 
-				--color-text-primary: hsla(var(--color-main-hue), var(--color-main-saturation), 10%, 1) !important;
-				--color-text-secondary: hsla(var(--color-main-hue), 30%, 30%, 1) !important;
-				--color-text-accent: var(--color-main-accent) !important;
+				--color-text-primary: hsla(var(--color-brand-hue), var(--color-brand-saturation), 10%, 1) !important;
+				--color-text-secondary: hsla(var(--color-brand-hue), 30%, 30%, 1) !important;
+				--color-text-accent: var(--color-brand-accent) !important;
 
-				--shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 10% 2% / 0.2) !important;
+				--shadow: 0px 10px 10px -5px hsla(var(--color-brand-hue) 10% 2% / 0.2) !important;
 			}
 
 			/* A subtree is a smaller, self-contained portion of a larger tree structure. */
 			.force-root-color-mode-dark-on-subtree {
 				color-scheme: dark !important;
 
-				--color-main-accent: hsla(var(--color-main-hue), var(--color-main-saturation), 5%, 1) !important;
+				--color-brand-accent: hsla(var(--color-brand-hue), var(--color-brand-saturation), 5%, 1) !important;
 
-				--color-main-tint-1: hsla(var(--color-main-hue), 10%, 10%, 1) !important;
-				--color-main-tint-2: hsla(var(--color-main-hue), 10%, 15%, 1) !important;
+				--color-brand-tint-1: hsla(var(--color-brand-hue), 10%, 10%, 1) !important;
+				--color-brand-tint-2: hsla(var(--color-brand-hue), 10%, 15%, 1) !important;
 
-				--color-main-tint-3: hsla(var(--color-main-hue), 10%, 20%, 1) !important;
-				--color-main-tint-3-alpha-0-5: hsla(var(--color-main-hue), 10%, 20%, 0.5) !important;
+				--color-brand-tint-3: hsla(var(--color-brand-hue), 10%, 20%, 1) !important;
+				--color-brand-tint-3-alpha-0-5: hsla(var(--color-brand-hue), 10%, 20%, 0.5) !important;
 
-				--color-main-tint-4: hsla(var(--color-main-hue), 10%, 25%, 1) !important;
-				--color-main-tint-5: hsla(var(--color-main-hue), 10%, 30%, 1) !important;
-				--color-main-tint-6: hsla(var(--color-main-hue), 10%, 35%, 1) !important;
-				--color-main-tint-7: hsla(var(--color-main-hue), 10%, 50%, 1) !important;
-				--color-main-tint-8: hsla(var(--color-main-hue), 10%, 65%, 1) !important;
-				--color-main-tint-9: hsla(var(--color-main-hue), 10%, 80%, 1) !important;
-				--color-main-tint-10: hsla(var(--color-main-hue), 10%, 95%, 1) !important;
+				--color-brand-tint-4: hsla(var(--color-brand-hue), 10%, 25%, 1) !important;
+				--color-brand-tint-5: hsla(var(--color-brand-hue), 10%, 30%, 1) !important;
+				--color-brand-tint-6: hsla(var(--color-brand-hue), 10%, 35%, 1) !important;
+				--color-brand-tint-7: hsla(var(--color-brand-hue), 10%, 50%, 1) !important;
+				--color-brand-tint-8: hsla(var(--color-brand-hue), 10%, 65%, 1) !important;
+				--color-brand-tint-9: hsla(var(--color-brand-hue), 10%, 80%, 1) !important;
+				--color-brand-tint-10: hsla(var(--color-brand-hue), 10%, 95%, 1) !important;
 
-				--color-text-primary: hsla(var(--color-main-hue), 15%, 95%, 1) !important;
-				--color-text-secondary: hsla(var(--color-main-hue), 5%, 75%, 1) !important;
-				--color-text-accent: var(--color-main-accent) !important;
+				--color-text-primary: hsla(var(--color-brand-hue), 15%, 95%, 1) !important;
+				--color-text-secondary: hsla(var(--color-brand-hue), 5%, 75%, 1) !important;
+				--color-text-accent: var(--color-brand-accent) !important;
 
-				--shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 50% 3% / 0.3) !important;
+				--shadow: 0px 10px 10px -5px hsla(var(--color-brand-hue) 50% 3% / 0.3) !important;
 			}
 
 			.force-root-color-mode-light-on-subtree {
 				color-scheme: light !important;
 
-				--color-main-accent: hsla(var(--color-main-hue), 15%, 95%, 1) !important;
+				--color-brand-accent: hsla(var(--color-brand-hue), 15%, 95%, 1) !important;
 
-				--color-main-tint-1: hsla(var(--color-main-hue), 20%, 100%, 1) !important;
-				--color-main-tint-2: hsla(var(--color-main-hue), 20%, 95%, 1) !important;
+				--color-brand-tint-1: hsla(var(--color-brand-hue), 20%, 100%, 1) !important;
+				--color-brand-tint-2: hsla(var(--color-brand-hue), 20%, 95%, 1) !important;
 
-				--color-main-tint-3: hsla(var(--color-main-hue), 20%, 90%, 1) !important;
-				--color-main-tint-3-alpha-0-5: hsla(var(--color-main-hue), 20%, 90%, 0.5) !important;
+				--color-brand-tint-3: hsla(var(--color-brand-hue), 20%, 90%, 1) !important;
+				--color-brand-tint-3-alpha-0-5: hsla(var(--color-brand-hue), 20%, 90%, 0.5) !important;
 
-				--color-main-tint-4: hsla(var(--color-main-hue), 20%, 85%, 1) !important;
-				--color-main-tint-5: hsla(var(--color-main-hue), 20%, 80%, 1) !important;
-				--color-main-tint-6: hsla(var(--color-main-hue), 20%, 75%, 1) !important;
-				--color-main-tint-7: hsla(var(--color-main-hue), 20%, 60%, 1) !important;
-				--color-main-tint-8: hsla(var(--color-main-hue), 20%, 45%, 1) !important;
-				--color-main-tint-9: hsla(var(--color-main-hue), 20%, 30%, 1) !important;
-				--color-main-tint-10: hsla(var(--color-main-hue), 20%, 15%, 1) !important;
+				--color-brand-tint-4: hsla(var(--color-brand-hue), 20%, 85%, 1) !important;
+				--color-brand-tint-5: hsla(var(--color-brand-hue), 20%, 80%, 1) !important;
+				--color-brand-tint-6: hsla(var(--color-brand-hue), 20%, 75%, 1) !important;
+				--color-brand-tint-7: hsla(var(--color-brand-hue), 20%, 60%, 1) !important;
+				--color-brand-tint-8: hsla(var(--color-brand-hue), 20%, 45%, 1) !important;
+				--color-brand-tint-9: hsla(var(--color-brand-hue), 20%, 30%, 1) !important;
+				--color-brand-tint-10: hsla(var(--color-brand-hue), 20%, 15%, 1) !important;
 
-				--color-text-primary: hsla(var(--color-main-hue), var(--color-main-saturation), 10%, 1) !important;
-				--color-text-secondary: hsla(var(--color-main-hue), 30%, 30%, 1) !important;
-				--color-text-accent: var(--color-main-accent) !important;
+				--color-text-primary: hsla(var(--color-brand-hue), var(--color-brand-saturation), 10%, 1) !important;
+				--color-text-secondary: hsla(var(--color-brand-hue), 30%, 30%, 1) !important;
+				--color-text-accent: var(--color-brand-accent) !important;
 
-				--shadow: 0px 10px 10px -5px hsla(var(--color-main-hue) 10% 2% / 0.2) !important;
+				--shadow: 0px 10px 10px -5px hsla(var(--color-brand-hue) 10% 2% / 0.2) !important;
 			}
 		}
 	}

@@ -70,7 +70,7 @@ export default class Toast extends HTMLElement{
 
 					overflow: hidden;
 
-					background-color: var(--color-main-tint-1);
+					background-color: var(--color-brand-tint-1);
 					padding: var(--padding);
 					margin: 0px;
 

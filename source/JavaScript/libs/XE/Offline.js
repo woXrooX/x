@@ -13,7 +13,7 @@ export default class Offline extends HTMLElement{
 				dialog{
 					display: none;
 
-					background-color: var(--color-main-tint-4);
+					background-color: var(--color-brand-tint-4);
 					pointer-events: none;
 
 					padding: 20px;
