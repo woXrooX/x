@@ -104,7 +104,10 @@ export default class Core {
 		const LANGUAGE_DICTIONARY = await window.x.Request.make({
 			payload: {"for": "get:LANGUAGE_DICTIONARY"},
 			target_URL: "/API",
-			cacheable: { key_name: "x.cache.LANGUAGE_DICTIONARY" }
+			cacheable: {
+				key_name: "x.cache.LANGUAGE_DICTIONARY",
+				TTL: 7 * 24 * 60 * 60 * 1000
+			}
 		});
 
 		if (LANGUAGE_DICTIONARY["type"] != "success") return Log.error("Core.#get_initial_data(): get:LANGUAGE_DICTIONARY");
@@ -115,7 +118,10 @@ export default class Core {
 		const USER_AUTHENTICITY_STATUSES = await window.x.Request.make({
 			payload: {"for": "get:USER_AUTHENTICITY_STATUSES"},
 			target_URL: "/API",
-			cacheable: { key_name: "x.cache.USER_AUTHENTICITY_STATUSES" }
+			cacheable: {
+				key_name: "x.cache.USER_AUTHENTICITY_STATUSES",
+				TTL: 30 * 24 * 60 * 60 * 1000
+			}
 		});
 
 		if (USER_AUTHENTICITY_STATUSES["type"] != "success") return Log.error("Core.#get_initial_data(): get:USER_AUTHENTICITY_STATUSES");
@@ -126,7 +132,10 @@ export default class Core {
 		const USER_ROLES = await window.x.Request.make({
 			payload: {"for": "get:USER_ROLES"},
 			target_URL: "/API",
-			cacheable: { key_name: "x.cache.USER_ROLES" }
+			cacheable: {
+				key_name: "x.cache.USER_ROLES",
+				TTL: 7 * 24 * 60 * 60 * 1000
+			}
 		});
 
 		if (USER_ROLES["type"] != "success") return Log.error("Core.#get_initial_data(): get:USER_ROLES");
@@ -136,7 +145,10 @@ export default class Core {
 		const USER_OCCUPATIONS = await window.x.Request.make({
 			payload: {"for": "get:USER_OCCUPATIONS"},
 			target_URL: "/API",
-			cacheable: { key_name: "x.cache.USER_OCCUPATIONS" }
+			cacheable: {
+				key_name: "x.cache.USER_OCCUPATIONS",
+				TTL: 7 * 24 * 60 * 60 * 1000
+			}
 		});
 
 		if (USER_OCCUPATIONS["type"] != "success") return Log.error("Core.#get_initial_data(): get:USER_OCCUPATIONS");
@@ -147,7 +159,10 @@ export default class Core {
 		const NOTIFICATION_TYPES = await window.x.Request.make({
 			payload: {"for": "get:NOTIFICATION_TYPES"},
 			target_URL: "/API",
-			cacheable: { key_name: "x.cache.NOTIFICATION_TYPES" }
+			cacheable: {
+				key_name: "x.cache.NOTIFICATION_TYPES",
+				TTL: 30 * 24 * 60 * 60 * 1000
+			}
 		});
 
 		if (NOTIFICATION_TYPES["type"] != "success") return Log.error("Core.#get_initial_data(): get:NOTIFICATION_TYPES");
@@ -169,7 +184,10 @@ export default class Core {
 		const CURRENCIES = await window.x.Request.make({
 			payload: {"for": "get:CURRENCIES"},
 			target_URL: "/API",
-			cacheable: { key_name: "x.cache.CURRENCIES" }
+			cacheable: {
+				key_name: "x.cache.CURRENCIES",
+				TTL: 30 * 24 * 60 * 60 * 1000
+			}
 		});
 
 		if (CURRENCIES["type"] != "success") return Log.error("Core.#get_initial_data(): get:CURRENCIES");

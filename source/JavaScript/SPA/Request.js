@@ -16,7 +16,12 @@ export default class Request {
 		cacheable = false
 		// cacheable = {
 		// 	key_name: "KEY_NAME",
+
+		// 24 hours
 		// 	TTL: 24 * 60 * 60 * 1000
+
+		// 7 days
+		// 	TTL: 7 * 24 * 60 * 60 * 1000
 		// }
 	}) {
 		if (!!payload === false) return {"type": "error", "message": "invalid_value"};
