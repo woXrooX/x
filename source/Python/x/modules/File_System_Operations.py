@@ -58,6 +58,7 @@ if __name__ != "__main__":
 
 			################################ Creating files
 			Log.center("Creating files", '=')
+
 			File_System.create_file(f"{Globals.PROJECT_PATH}/CSS/styles.css", strict=True)
 
 			File_System.create_file(f"{Globals.PROJECT_PATH}/HTML/head.html", strict=True)
@@ -79,6 +80,8 @@ if __name__ != "__main__":
 			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/on_log_in.py", 'if __name__ != "__main__":\n\tdef on_log_in(): pass')
 			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/on_log_out.py", 'if __name__ != "__main__":\n\tdef on_log_out(): pass')
 			File_System.create_file(f"{Globals.PROJECT_PATH}/Python/on_sign_up.py", 'if __name__ != "__main__":\n\tdef on_sign_up(): pass')
+
+			File_System.create_file(f"{Globals.PROJECT_PATH}/SW.js", strict=True)
 
 
 
@@ -110,6 +113,7 @@ if __name__ != "__main__":
 
 			################################ Copying "project" folders/files
 			Log.center('Copying "project" folders', '=')
+
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/CSS", f"{Globals.X_PATH}/www/static/CSS", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/Files/static", f"{Globals.X_PATH}/www/static/static", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/fonts", f"{Globals.X_PATH}/www/static/fonts", strict=True)
@@ -118,6 +122,8 @@ if __name__ != "__main__":
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/pages/back", f"{Globals.X_PATH}/live_pages/back", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/pages/front", f"{Globals.X_PATH}/live_pages/front", strict=True)
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/Python", f"{Globals.X_PATH}/Python/project/modules", strict=True)
+
+			File_System.copy_file(f"{Globals.PROJECT_PATH}/", f"{Globals.X_PATH}/www/static", "SW.js", strict=True)
 
 
 
