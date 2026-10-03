@@ -97,7 +97,7 @@ if __name__ != "__main__":
 		@staticmethod
 		def merge_configurations():
 			#### Merge
-			if "project_name" in Globals.PROJECT: Globals.CONF["project_name"] = Globals.PROJECT["project_name"]
+			if "project" in Globals.PROJECT: Globals.CONF["project"] = Globals.PROJECT["project"]
 
 			if "flask" in Globals.PROJECT: Globals.CONF["flask"].update(Globals.PROJECT["flask"])
 
@@ -120,7 +120,7 @@ if __name__ != "__main__":
 			if "password" in Globals.PROJECT: Globals.CONF["password"].update(Globals.PROJECT["password"])
 
 			#### Public Configurations
-			Globals.PUBLIC_CONF["project_name"] = Globals.CONF["project_name"]
+			Globals.PUBLIC_CONF["project"] = Globals.CONF["project"]
 			Globals.PUBLIC_CONF["default"] = Globals.CONF["default"]
 			Globals.PUBLIC_CONF["tools"] = Globals.CONF["tools"]
 			Globals.PUBLIC_CONF["pages"] = Globals.CONF["pages"]

@@ -1,7 +1,10 @@
 {
-	"version": "0.242.0.0027",
+	"version": "0.242.0.0028",
 
-	"project_name": "x",
+	"project": {
+		"name": "x",
+		"version": "0.0.0.0000"
+	},
 
 	"flask": {
 		"root_path": null,

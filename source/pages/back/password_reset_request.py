@@ -78,7 +78,7 @@ def password_reset_request(request):
 			<p>Reset password link: {request.url_root}password_reset/{token}</p>
 			<p>If you did not request a password reset, please ignore this email. Your account will remain secure.</p>
 			<p>Warm regards,</p>
-			<p>The {Globals.PROJECT_LANGUAGE_DICTIONARY.get(Globals.CONF["project_name"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
+			<p>The {Globals.PROJECT_LANGUAGE_DICTIONARY.get(Globals.CONF["project"]["name"], {}).get(Globals.CONF["default"]["language"]["fallback"], "x")} Team</p>
 		"""
 
 
