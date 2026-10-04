@@ -771,7 +771,7 @@
 			flex-direction: row;
 			align-items: center;
 			gap: calc(var(--gap) / 8);
-			padding: calc(var(--padding) * 2);
+			padding: var(--padding);
 
 			border: none;
 			border-radius: var(--radius);
