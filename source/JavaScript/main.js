@@ -2,17 +2,29 @@ import "/JavaScript/Globals.js";
 import Core from "/JavaScript/SPA/Core.js";
 
 
+//// SW: Service worker
 
-//// SW: Service worker: registered after the page has loaded
+// Register the service worker and reload the page when a new version takes control
+(function register_service_worker() {
+	if (!("serviceWorker" in navigator)) return;
 
-if ("serviceWorker" in navigator)
-	window.addEventListener("load", register_service_worker);
+	let had_controller = navigator.serviceWorker.controller !== null;
+	let refreshing = false;
 
-function register_service_worker() {
-	navigator.serviceWorker.register("/SW.js").catch(function(error) {
-		console.error("Main: Service worker registration failed", error);
+	navigator.serviceWorker.addEventListener("controllerchange", ()=>{
+		Log.important("Main.js->register_service_worker(): controllerchange");
+
+		// On a first visit the initial claim is not an update, so only reload when an existing controller was replaced
+		if (had_controller && !refreshing) {
+			refreshing = true;
+			location.reload();
+		}
+
+		had_controller = true;
 	});
-}
+
+	navigator.serviceWorker.register("/SW.js");
+})();
 
 
 
