@@ -6,6 +6,27 @@
 
 
 @font-face{
+	font-family: Libron;
+	src:url("/fonts/Libron-Regular.ttf");
+}
+.font-family-Libron{font-family: Libron;}
+
+
+@font-face{
+	font-family: NV_Garamond;
+	src:url("/fonts/NV_Garamond-Regular.ttf");
+}
+.font-family-NV_Garamond{font-family: NV_Garamond;}
+
+
+@font-face{
+	font-family: NV_Jost;
+	src:url("/fonts/NV_Jost-Regular.ttf");
+}
+.font-family-NV_Jost{font-family: NV_Jost;}
+
+
+@font-face{
 	font-family: Philosopher;
 	src:url("/fonts/Philosopher-Regular.ttf");
 }
