@@ -781,11 +781,16 @@
 			/* Keeps the anchor name local, so multiple controls on one page don't collide */
 			anchor-scope: --segmented-v1-active;
 
+			max-width: 100%;
+			overflow-x: auto;
+			overscroll-behavior-x: contain;
+
 			& > label {
 				position: relative;
 				z-index: 1;
 
 				display: inline-flex;
+				flex-shrink: 0;
 				align-items: center;
 				gap: calc(var(--gap) / 4);
 
@@ -824,6 +829,8 @@
 				width: 1px;
 				height: 1.2em;
 				margin-inline: calc(var(--margin) * 2);
+				flex-shrink: 0;
+
 				background-color: var(--color-brand-tint-5);
 			}
 
