@@ -80,118 +80,82 @@ export default class Core {
 		Core.#observe_mutations();
 	}
 
+
 	static async #get_initial_data() {
-		const CONFIGURATIONS = await window.x.Request.make({
-			payload: {"for": "get:CONFIGURATIONS"},
-			target_URL: "/API"
-		});
+		if (!await load("configurations", {}, (data) => { window.x["configurations"] = data; })) return false;
 
-		if ("data" in CONFIGURATIONS) window.x["configurations"] = CONFIGURATIONS["data"];
-		else return Log.error("Core.#get_initial_data(): get:CONFIGURATIONS");
+		(function sync_cache_version() {
+			if (localStorage.getItem("x.cache.project.version") === window.x["configurations"]["project"]["version"]) return;
 
+			Log.important("Core.#get_initial_data(): Deleting cached data");
 
 
-		const session_user = await window.x.Request.make({
-			payload: {"for": "get:session.user"},
-			target_URL: "/API"
-		});
+			//// NOTE: collect first, delete after: removing inside the loop shifts localStorage indexes and skips keys
 
-		if (session_user["type"] != "success") return Log.error("Core.#get_initial_data(): get:session");
-		else if ("data" in session_user) window.x["session"]["user"] = session_user["data"];
+			const keys_to_delete = [];
 
+			for (let i = 0; i < localStorage.length; i++) {
+				const key = localStorage.key(i);
 
-
-		const LANGUAGE_DICTIONARY = await window.x.Request.make({
-			payload: {"for": "get:LANGUAGE_DICTIONARY"},
-			target_URL: "/API",
-			cacheable: {
-				key_name: "x.cache.LANGUAGE_DICTIONARY",
-				TTL: 7 * 24 * 60 * 60 * 1000
+				if (
+					key.startsWith("x.cache.") ||
+					key.startsWith("project.cache.")
+				) keys_to_delete.push(key);
 			}
-		});
 
-		if (LANGUAGE_DICTIONARY["type"] != "success") return Log.error("Core.#get_initial_data(): get:LANGUAGE_DICTIONARY");
-		else if ("data" in LANGUAGE_DICTIONARY) window.x["language_dictionary"] = LANGUAGE_DICTIONARY["data"];
+			for (const key of keys_to_delete) localStorage.removeItem(key);
 
 
+			localStorage.setItem("x.cache.project.version", window.x["configurations"]["project"]["version"]);
+		})();
 
-		const USER_AUTHENTICITY_STATUSES = await window.x.Request.make({
-			payload: {"for": "get:USER_AUTHENTICITY_STATUSES"},
-			target_URL: "/API",
-			cacheable: {
-				key_name: "x.cache.USER_AUTHENTICITY_STATUSES",
-				TTL: 30 * 24 * 60 * 60 * 1000
+
+
+		if (!await load("session.user", false, (data) => { window.x["session"]["user"] = data; })) return false;
+
+		if (!await load("language_dictionary", true, (data) => { window.x["language_dictionary"] = data; })) return false;
+
+		if (!await load("user_authenticity_statuses", true, (data) => { window.x["user_authenticity_statuses"] = data; })) return false;
+
+		if (!await load("user_roles", true, (data) => { window.x["user_roles"] = data; })) return false;
+
+		if (!await load("user_occupations", true, (data) => { window.x["user_occupations"] = data; })) return false;
+
+		if (!await load("notification_types", true, (data) => { window.x["notification_types"] = data; })) return false;
+
+		if (!await load("project_SVG", true, (data) => { window.x.SVG.load(data); })) return false;
+
+		if (!await load("currencies", true, (data) => { window.x["currencies"] = data; })) return false;
+
+
+
+		/////////// Helpers
+
+		async function load(name, cacheable, on_data_callback) {
+			const default_TTL = 30 * 24 * 60 * 60 * 1000;
+
+			const request = {
+				payload: {"for": `get:${name}`},
+				target_URL: "/API"
+			};
+
+			if (cacheable === true) request["cacheable"] = {
+				key_name: `x.cache.${name}`,
+				TTL: default_TTL
+			};
+
+			const response = await window.x.Request.make(request);
+
+			if (response["type"] != "success") {
+				Log.error(`Core.#get_initial_data(): get:${name}`);
+
+				return false;
 			}
-		});
 
-		if (USER_AUTHENTICITY_STATUSES["type"] != "success") return Log.error("Core.#get_initial_data(): get:USER_AUTHENTICITY_STATUSES");
-		else if ("data" in USER_AUTHENTICITY_STATUSES) window.x["user_authenticity_statuses"] = USER_AUTHENTICITY_STATUSES["data"];
+			if ("data" in response) on_data_callback(response["data"]);
 
-
-
-		const USER_ROLES = await window.x.Request.make({
-			payload: {"for": "get:USER_ROLES"},
-			target_URL: "/API",
-			cacheable: {
-				key_name: "x.cache.USER_ROLES",
-				TTL: 7 * 24 * 60 * 60 * 1000
-			}
-		});
-
-		if (USER_ROLES["type"] != "success") return Log.error("Core.#get_initial_data(): get:USER_ROLES");
-		else if ("data" in USER_ROLES) window.x["user_roles"] = USER_ROLES["data"];
-
-
-		const USER_OCCUPATIONS = await window.x.Request.make({
-			payload: {"for": "get:USER_OCCUPATIONS"},
-			target_URL: "/API",
-			cacheable: {
-				key_name: "x.cache.USER_OCCUPATIONS",
-				TTL: 7 * 24 * 60 * 60 * 1000
-			}
-		});
-
-		if (USER_OCCUPATIONS["type"] != "success") return Log.error("Core.#get_initial_data(): get:USER_OCCUPATIONS");
-		else if ("data" in USER_OCCUPATIONS) window.x["user_occupations"] = USER_OCCUPATIONS["data"];
-
-
-
-		const NOTIFICATION_TYPES = await window.x.Request.make({
-			payload: {"for": "get:NOTIFICATION_TYPES"},
-			target_URL: "/API",
-			cacheable: {
-				key_name: "x.cache.NOTIFICATION_TYPES",
-				TTL: 30 * 24 * 60 * 60 * 1000
-			}
-		});
-
-		if (NOTIFICATION_TYPES["type"] != "success") return Log.error("Core.#get_initial_data(): get:NOTIFICATION_TYPES");
-		else if ("data" in NOTIFICATION_TYPES) window.x["notification_types"] = NOTIFICATION_TYPES["data"];
-
-
-
-		const PROJECT_SVG = await window.x.Request.make({
-			payload: {"for": "get:PROJECT_SVG"},
-			target_URL: "/API",
-			cacheable: { key_name: "x.cache.PROJECT_SVG" }
-		});
-
-		if (PROJECT_SVG["type"] != "success") return Log.error("Core.#get_initial_data(): get:PROJECT_SVG");
-		else if ("data" in PROJECT_SVG) window.x.SVG.load(PROJECT_SVG["data"]);
-
-
-
-		const CURRENCIES = await window.x.Request.make({
-			payload: {"for": "get:CURRENCIES"},
-			target_URL: "/API",
-			cacheable: {
-				key_name: "x.cache.CURRENCIES",
-				TTL: 30 * 24 * 60 * 60 * 1000
-			}
-		});
-
-		if (CURRENCIES["type"] != "success") return Log.error("Core.#get_initial_data(): get:CURRENCIES");
-		else if ("data" in CURRENCIES) window.x["currencies"] = CURRENCIES["data"];
+			return true;
+		}
 	}
 
 	static async #init_on_app_start() {

@@ -15,7 +15,7 @@ def API():
 		# Check if "for" in request
 		if "for" not in request.get_json(): return Response.make(type="warning", message="invalid_request")
 
-		if request.get_json()["for"] == "get:CONFIGURATIONS": return Response.make(
+		if request.get_json()["for"] == "get:configurations": return Response.make(
 			type="success",
 			message="success",
 			data=Globals.PUBLIC_CONF,
@@ -29,43 +29,43 @@ def API():
 			default_serializer_func=str
 		)
 
-		if request.get_json()["for"] == "get:LANGUAGE_DICTIONARY": return Response.make(
+		if request.get_json()["for"] == "get:language_dictionary": return Response.make(
 			type="success",
 			message="success",
 			data=Globals.LANGUAGE_DICTIONARY
 		)
 
-		if request.get_json()["for"] == "get:USER_AUTHENTICITY_STATUSES": return Response.make(
+		if request.get_json()["for"] == "get:user_authenticity_statuses": return Response.make(
 			type="success",
 			message="success",
 			data=Globals.USER_AUTHENTICITY_STATUSES
 		)
 
-		if request.get_json()["for"] == "get:USER_ROLES": return Response.make(
+		if request.get_json()["for"] == "get:user_roles": return Response.make(
 			type="success",
 			message="success",
 			data=Globals.USER_ROLES
 		)
 
-		if request.get_json()["for"] == "get:USER_OCCUPATIONS": return Response.make(
+		if request.get_json()["for"] == "get:user_occupations": return Response.make(
 			type="success",
 			message="success",
 			data=Globals.USER_OCCUPATIONS
 		)
 
-		if request.get_json()["for"] == "get:NOTIFICATION_TYPES": return Response.make(
+		if request.get_json()["for"] == "get:notification_types": return Response.make(
 			type="success",
 			message="success",
 			data=Globals.NOTIFICATION_TYPES
 		)
 
-		if request.get_json()["for"] == "get:PROJECT_SVG": return Response.make(
+		if request.get_json()["for"] == "get:project_SVG": return Response.make(
 			type="success",
 			message="success",
 			data=Globals.PROJECT_SVG
 		)
 
-		if request.get_json()["for"] == "get:CURRENCIES": return Response.make(
+		if request.get_json()["for"] == "get:currencies": return Response.make(
 			type="success",
 			message="success",
 			data=Globals.CURRENCIES
