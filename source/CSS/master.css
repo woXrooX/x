@@ -23,7 +23,7 @@
 
 body{
 	font-family: Quicksand;
-	padding-top: var(--header-height);
+	padding-top: calc(var(--header-height) + env(safe-area-inset-top));
 
 	& > div#root{
 		& > main{
@@ -31,7 +31,7 @@ body{
 			justify-items: center;
 
 			width: 100vw;
-			min-height: calc(100dvh - var(--header-height));
+			min-height: calc(100dvh - var(--header-height) - env(safe-area-inset-top));
 
 			opacity: 0;
 			margin-top: 20px;
@@ -52,7 +52,8 @@ body{
 			font-size: 0.7rem;
 
 			width: 100%;
-			min-height: var(--footer-height);
+			min-height: calc(var(--footer-height) + env(safe-area-inset-bottom));
+			padding-bottom: env(safe-area-inset-bottom);
 
 			display: grid;
 			place-items: center;
@@ -61,11 +62,13 @@ body{
 
 	& > header{
 		background-color: var(--color-brand);
-		color: white;
-		/* NOTE: We need to make header text color dynamic. We use contrast-color(). This feature is coming soon. */
+		color: contrast-color(var(--color-brand));
 
 		width: 100%;
-		min-height: var(--header-height);
+		min-height: calc(var(--header-height) + env(safe-area-inset-top));
+		padding-top: env(safe-area-inset-top);
+		padding-left: env(safe-area-inset-left);
+		padding-right: env(safe-area-inset-right);
 
 		position: fixed;
 		top: 0px;
@@ -78,20 +81,14 @@ body{
 
 	/* If header is empty */
 	&:has(> header:empty) {
-		padding-top: 0px;
+		padding-top: env(safe-area-inset-top);
 
 		& > header{
 			display: none;
 		}
 
-		& > main{
-			min-height: 100dvh;
-		}
-	}
-
-	& > x-svg{
-		&[for=menu_show]{
-			z-index: var(--z-menu_show_button);
+		& > div#root > main{
+			min-height: calc(100dvh - env(safe-area-inset-top));
 		}
 	}
 
@@ -104,6 +101,9 @@ body{
 		backdrop-filter: blur(100px);
 		height: 100dvh;
 		width: var(--menu-width);
+		padding-top: env(safe-area-inset-top);
+		padding-bottom: env(safe-area-inset-bottom);
+		padding-left: env(safe-area-inset-left);
 
 		overflow-y: scroll;
 
@@ -246,7 +246,7 @@ body{
 	&:has(menu.always_open_mode){
 		& > div#root > main,
 		& > header,
-		& > footer{
+		& > div#root > footer{
 			@media (width > 600px){
 				width: calc(100% - var(--menu-width));
 				margin-left: var(--menu-width);
