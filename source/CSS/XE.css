@@ -351,11 +351,16 @@ x-share {
 }
 
 x-tooltip {
-	position: absolute;
+	position: fixed;
 	top: anchor(bottom);
-	left: anchor(center);
+	justify-self: anchor-center;
+	position-try-fallbacks: flip-block;
+	position-visibility: anchors-visible;
+	margin: var(--padding) 0;
+	width: max-content;
+	max-width: calc(100vw - var(--padding) * 2);
 	z-index: var(--z-tooltip);
-	transform: translate(-50%, var(--padding)) scale(0.5);
+	transform: scale(0.5);
 
 	overflow: hidden;
 	pointer-events: none;
@@ -377,7 +382,7 @@ x-tooltip {
 	&.show {
 		pointer-events: all;
 		opacity: 1;
-		transform: translate(-50%, var(--padding)) scale(1);
+		transform: scale(1);
 	}
 }
 
