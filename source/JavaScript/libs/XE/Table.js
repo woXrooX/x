@@ -61,11 +61,17 @@ export default class Table extends HTMLElement {
 	}
 
 	// A raw value as text, used by search, sort and formatter-less display. Lists become comma-separated.
+	// A record (plain object) has no text of its own; sort uses the cell's displayed text instead.
 	static #raw_text(value) {
 		if (value === null || value === undefined) return '';
 		if (Array.isArray(value)) return value.join(", ");
+		if (Table.#is_record(value)) return '';
 
 		return String(value);
+	}
+
+	static #is_record(value) {
+		return typeof(value) === "object" && value !== null && !Array.isArray(value);
 	}
 
 	static #is_empty_value(value) {
@@ -370,8 +376,8 @@ export default class Table extends HTMLElement {
 	#compare_records = (a, b) => {
 		if (this.#sort !== null) {
 			const column_index = this.#sort.column_index;
-			const a_value = a.data[column_index]["value"];
-			const b_value = b.data[column_index]["value"];
+			const a_value = this.#sort_value(a, column_index);
+			const b_value = this.#sort_value(b, column_index);
 			const a_is_empty = Table.#is_empty_value(a_value);
 			const b_is_empty = Table.#is_empty_value(b_value);
 
@@ -388,6 +394,15 @@ export default class Table extends HTMLElement {
 		}
 
 		return a.order - b.order;
+	}
+
+	// The raw value, or the displayed text when the value is a whole record
+	#sort_value = (record, column_index) => {
+		const value = record.data[column_index]["value"];
+
+		if (Table.#is_record(value)) return Table.#cell_text(record.tr.cells[column_index]);
+
+		return value;
 	}
 
 	#parse_search = (input_value) => {
