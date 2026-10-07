@@ -17,7 +17,7 @@ from Python.x.modules.Log_In_Tools import Log_In_Tools
 def x_users(request):
 	if request.method == "POST":
 		if request.content_type == "application/json":
-			if request.get_json()["for"] == "get_all_users":
+			if request.get_json()["for"] == "get:users":
 				users = PostgreSQL.execute(
 					SQL="""
 						SELECT

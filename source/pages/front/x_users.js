@@ -1,4 +1,3 @@
-import String_to_Element from "/JavaScript/modules/parser/String_to_Element.js";
 import { timestamp_to_human_readable_v1, timestamptz_to_local_timestamp } from "/JavaScript/modules/datetime/datetime.js";
 
 export function before() {
@@ -21,7 +20,7 @@ export default async function main() {
 
 			<row class="glances gap-0-5"></row>
 
-			<column class="table width-100 surface-v1 padding-2"></column>
+			<column class="table width-100"></column>
 		</container>
 	`;
 
@@ -86,20 +85,41 @@ export async function after() {
 	});
 
 	DOM.build("column.table", async function build_users_HTML() {
-		let users = await window.x.Request.make({ payload: {for:"get_all_users"} });
+		let users = await window.x.Request.make({ payload: {for: "get:users"} });
 
-		if ("data" in users) users = users["data"];
-		else return String_to_Element(`<p class="width-100 text-size-0-8rem surface-info padding-1">${Lang.use("no_data")}</p>`);
-
-		const COLUMNS = [];
-		for (const KEY of Object.keys(users[0])) COLUMNS.push({"title": KEY});
+		if (users["type"] != "success") return `<p class="surface-${users["type"]} width-100 padding-1 text-size-0-8rem">${window.Lang.use(users["message"])}</p>`;
+		else if ("data" in users) users = users["data"];
+		else return `<p class="surface-info width-100 padding-1 text-size-0-8rem">${Lang.use("no_data")}</p>`;
 
 		return window.x.Table.build(
 			{
+				"id": "users",
 				"page_size": "all",
 				"searchable": true,
 				"downloadable": true,
-				"columns": COLUMNS,
+				"columns": [
+					{
+						"title": "id",
+						"formatter": (cell) => `<a href="/x/user/${cell["value"]}" class="text-decoration-underline">${cell["value"]}</a>`
+					},
+					{
+						"title": "eMail"
+					},
+					{
+						"title": "full_name"
+					},
+					{
+						"title": "roles"
+					},
+					{
+						"title": "last_heartbeat_at",
+						"formatter": (cell) => cell["value"] === null ? '-' : timestamp_to_human_readable_v1(cell["value"])
+					},
+					{
+						"title": "flag_deleted_at",
+						"formatter": (cell) => cell["value"] === null ? '-' : timestamptz_to_local_timestamp(cell["value"])
+					}
+				],
 				"rows": build_table_rows()
 			},
 			"width-100"
@@ -107,20 +127,21 @@ export async function after() {
 
 		function build_table_rows() {
 			const ROWS = [];
-			for (const row of users) ROWS.push([
-				`
-					<a href="/x/user/${row["id"]}" class="text-decoration-underline">
-						${row["id"]}
-					</a>
-				`,
-				row["eMail"] || '-',
-				row["full_name"] || '-',
-				row["roles_list"] || '-',
 
-				timestamp_to_human_readable_v1(row["last_heartbeat_at"]) || '-',
-
-				timestamptz_to_local_timestamp(row["flag_deleted_at"]) || '-'
-			]);
+			for (const user of users) ROWS.push({
+				"id": user["id"],
+				"data": [
+					{ "value": user["id"] },
+					{ "value": user["eMail"] },
+					{ "value": user["full_name"] },
+					{ "value": user["roles_list"] },
+					{ "value": user["last_heartbeat_at"] },
+					{
+						"value": user["flag_deleted_at"],
+						"classes": user["flag_deleted_at"] != null ? "bg-error" : ''
+					}
+				]
+			});
 
 			return ROWS;
 		}

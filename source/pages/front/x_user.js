@@ -1,5 +1,3 @@
-import String_to_Element from "/JavaScript/modules/parser/String_to_Element.js";
-
 export function before() {
 	window.x.Head.set_title("user");
 }
@@ -24,7 +22,7 @@ export default function main() {
 }
 
 export async function after() {
-	let user = await window.x.Request.make({ payload: {for:"get_user"} });
+	let user = await window.x.Request.make({ payload: {for:"get:user"} });
 
 	if ("data" in user) user = user["data"];
 	else return `<p class="surface-info width-100 padding-1 text-size-0-8rem">${Lang.use("no_data")}</p>`;
@@ -57,7 +55,7 @@ export async function after() {
 		}
 
 		async function build_modal_form_update_roles_HTML() {
-			let user_roles = await window.x.Request.make({ payload: {for:"get_user_roles"} });
+			let user_roles = await window.x.Request.make({ payload: {for:"get:user_roles"} });
 
 			if ("data" in user_roles) user_roles = user_roles["data"];
 			else return '';
@@ -75,7 +73,7 @@ export async function after() {
 			return `
 				<x-svg name="gear_account_box" id="modal_user_roles" class="btn btn-info"></x-svg>
 				<x-modal trigger_selector="x-svg#modal_user_roles">
-					<form for="update_roles" class="padding-2 gap-0-5" x-modal="on:success:hide" x-toast="on:any:message">
+					<form for="update:roles" class="padding-2 gap-0-5" x-modal="on:success:hide" x-toast="on:any:message">
 						${HTML}
 						<button type="submit" class="btn btn-primary"><x-svg name="save" color="white"></x-svg></button>
 					</form>
@@ -117,26 +115,47 @@ export async function after() {
 	});
 
 	DOM.build("column.log_in_records", async function build_log_in_records_HTML() {
-		let log_in_records = await window.x.Request.make({ payload: {for:"get_user_log_in_records"} });
+		let log_in_records = await window.x.Request.make({ payload: {for: "get:user_log_in_records"} });
 
-		if ("data" in log_in_records) log_in_records = log_in_records["data"];
-		else return String_to_Element(`<p class="surface-info width-100 padding-1 text-size-0-8rem">${Lang.use("no_data")}</p>`);
+		if (log_in_records["type"] != "success") return `<p class="surface-${log_in_records["type"]} width-100 padding-1 text-size-0-8rem">${window.Lang.use(log_in_records["message"])}</p>`;
+		else if ("data" in log_in_records) log_in_records = log_in_records["data"];
+		else return `<p class="surface-info width-100 padding-1 text-size-0-8rem">${Lang.use("no_data")}</p>`;
 
-		const HEAD = [];
-		for (const KEY of Object.keys(log_in_records[0])) HEAD.push({"title": KEY});
-
-		const BODY = [];
-		for (const i in log_in_records) BODY.push(Object.values(log_in_records[i]));
 
 		return window.x.Table.build(
 			{
+				"id": "user_log_in_records",
 				"page_size": 10,
 				"searchable": true,
 				"downloadable": true,
-				"columns": HEAD,
-				"rows": BODY
+				"columns": [
+					{ "title": "id" },
+					{ "title": "metadata_created_at" },
+					{ "title": "IP_address" },
+					{ "title": "user_agent" },
+					{ "title": "message" }
+				],
+				"rows": build_table_rows()
 			},
-			"surface-v1 width-100 padding-2"
+			"width-100"
 		);
+
+		function build_table_rows() {
+			const ROWS = [];
+
+			for (const log_in_record of log_in_records) ROWS.push({
+				"id": log_in_record["id"],
+
+				"data": [
+					{ "value": log_in_record["id"] },
+					{ "value": log_in_record["metadata_created_at"] },
+					{ "value": log_in_record["IP_address"] },
+					{ "value": log_in_record["user_agent"] },
+					{ "value": log_in_record["message"] }
+				]
+			});
+
+			return ROWS;
+		}
 	}, {method: "replaceChildren"});
 }

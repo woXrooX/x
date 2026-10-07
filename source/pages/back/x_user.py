@@ -17,7 +17,7 @@ from Python.x.modules.Globals import Globals
 def x_user(request, id):
 	if request.method == "POST":
 		if "multipart/form-data" in request.content_type.split(';'):
-			if request.form["for"] == "update_roles":
+			if request.form["for"] == "update:roles":
 				roles = request.form.getlist("roles") if "roles" in request.form and request.form["roles"] else []
 
 				# Prep the params
@@ -44,7 +44,7 @@ def x_user(request, id):
 				return Response.make(type="success", message="saved", DOM_change=["main"])
 
 		if request.content_type == "application/json":
-			if request.get_json()["for"] == "get_user":
+			if request.get_json()["for"] == "get:user":
 				res = PostgreSQL.execute(
 					SQL="""
 						SELECT
@@ -64,15 +64,12 @@ def x_user(request, id):
 
 				return Response.make(type="success", message="success", data=res["data"], default_serializer_func=str)
 
-			if request.get_json()["for"] == "get_user_roles": return Response.make(type="success", message="success", data=Globals.USER_ROLES)
+			if request.get_json()["for"] == "get:user_roles": return Response.make(type="success", message="success", data=Globals.USER_ROLES)
 
-			if request.get_json()["for"] == "get_user_log_in_records":
+			if request.get_json()["for"] == "get:user_log_in_records":
 				res = PostgreSQL.execute(
 					SQL="""
-						SELECT
-							"IP_address",
-							"user_agent",
-							"metadata_created_at"
+						SELECT *
 						FROM "log_in_records"
 						WHERE "user" = %s;
 					""",
