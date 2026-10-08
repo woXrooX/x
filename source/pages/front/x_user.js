@@ -114,7 +114,7 @@ export async function after() {
 		return `<column class="align-items-flex-start surface-v1 padding-2 gap-0-3 width-100">${HTML}</column>`;
 	});
 
-	DOM.build("column.log_in_records", async function build_log_in_records_HTML() {
+	DOM.build("column.log_in_records", async () => {
 		let log_in_records = await window.x.Request.make({ payload: {for: "get:user_log_in_records"} });
 
 		if (log_in_records["type"] != "success") return `<p class="surface-${log_in_records["type"]} width-100 padding-1 text-size-0-8rem">${window.Lang.use(log_in_records["message"])}</p>`;
@@ -129,11 +129,11 @@ export async function after() {
 				"searchable": true,
 				"downloadable": true,
 				"columns": [
-					{ "title": "id" },
-					{ "title": "metadata_created_at" },
-					{ "title": "IP_address" },
-					{ "title": "user_agent" },
-					{ "title": "message" }
+					{"title": "id"},
+					{"title": "metadata_created_at"},
+					{"title": "IP_address"},
+					{"title": "user_agent"},
+					{"title": "message"}
 				],
 				"rows": build_table_rows()
 			},
@@ -147,15 +147,15 @@ export async function after() {
 				"id": log_in_record["id"],
 
 				"data": [
-					{ "value": log_in_record["id"] },
-					{ "value": log_in_record["metadata_created_at"] },
-					{ "value": log_in_record["IP_address"] },
-					{ "value": log_in_record["user_agent"] },
-					{ "value": log_in_record["message"] }
+					{"value": log_in_record["id"]},
+					{"value": log_in_record["metadata_created_at"]},
+					{"value": log_in_record["IP_address"]},
+					{"value": log_in_record["user_agent"]},
+					{"value": log_in_record["message"]}
 				]
 			});
 
 			return ROWS;
 		}
-	}, {method: "replaceChildren"});
+	}, { "method": "replaceChildren" });
 }

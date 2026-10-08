@@ -20,7 +20,7 @@ export default async function main() {
 }
 
 export async function after() {
-	DOM.build("column.table", async function build_log_in_records_HTML() {
+	DOM.build("column.table", async () => {
 		let log_in_records = await window.x.Request.make({ payload: {for: "get_all_log_in_records"} });
 
 		if (log_in_records["type"] != "success") return `<p class="surface-${log_in_records["type"]} width-100 padding-1 text-size-0-8rem">${window.Lang.use(log_in_records["message"])}</p>`;
@@ -35,15 +35,12 @@ export async function after() {
 				"searchable": true,
 				"downloadable": true,
 				"columns": [
-					{ "title": "id" },
-					{ "title": "metadata_created_at" },
-					{
-						"title": "user",
-						"formatter": (cell) => cell["value"] === null ? '-' : `<a href="/x/user/${cell["value"]}" class="text-decoration-underline">${cell["value"]}</a>`
-					},
-					{ "title": "IP_address" },
-					{ "title": "user_agent" },
-					{ "title": "message"}
+					{"title": Lang.use("id")},
+					{"title": Lang.use("metadata_created_at")},
+					{"title": Lang.use("user")},
+					{"title": Lang.use("IP_address")},
+					{"title": Lang.use("user_agent")},
+					{"title": Lang.use("message")}
 				],
 				"rows": build_table_rows()
 			},
@@ -56,20 +53,28 @@ export async function after() {
 			for (const log_in_record of log_in_records) ROWS.push({
 				"id": log_in_record["id"],
 
-				// "user" is NULL for an unsuccessful attempt
 				"classes": log_in_record["user"] === null ? "text-color-error" : '',
 
 				"data": [
-					{ "value": log_in_record["id"] },
-					{ "value": log_in_record["metadata_created_at"] },
-					{ "value": log_in_record["user"] },
-					{ "value": log_in_record["IP_address"] },
-					{ "value": log_in_record["user_agent"] },
-					{ "value": log_in_record["message"] }
+					{"value": log_in_record["id"]},
+
+					{"value": log_in_record["metadata_created_at"]},
+
+					{
+						"value": log_in_record["user"],
+						"formatted_value":
+							log_in_record["user"] === null ?
+							'-' :
+							`<a href="/x/user/${log_in_record["user"]}" class="text-decoration-underline">${log_in_record["user"]}</a>`
+					},
+
+					{"value": log_in_record["IP_address"]},
+					{"value": log_in_record["user_agent"]},
+					{"value": log_in_record["message"]}
 				]
 			});
 
 			return ROWS;
 		}
-	}, {method: "replaceChildren"});
+	}, { "method": "replaceChildren" });
 }
