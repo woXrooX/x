@@ -60,18 +60,12 @@ export default class Table extends HTMLElement {
 		return td.textContent.replace(/\s+/g, ' ').trim();
 	}
 
-	// A raw value as text, used by search, sort and formatter-less display. Lists become comma-separated.
-	// A record (plain object) has no text of its own; sort uses the cell's displayed text instead.
+	// A raw value as text, used by search, sort and plain display. Lists become comma-separated.
 	static #raw_text(value) {
 		if (value === null || value === undefined) return '';
 		if (Array.isArray(value)) return value.join(", ");
-		if (Table.#is_record(value)) return '';
 
 		return String(value);
-	}
-
-	static #is_record(value) {
-		return typeof(value) === "object" && value !== null && !Array.isArray(value);
 	}
 
 	static #is_empty_value(value) {
@@ -277,8 +271,6 @@ export default class Table extends HTMLElement {
 			if (column === null || typeof(column) !== "object" || !("title" in column))
 				throw new TypeError(`Table: every column must be an object with a "title".`);
 
-			if ("formatter" in column && typeof(column["formatter"]) !== "function")
-				throw new TypeError(`Table: a column "formatter" must be a function that receives the cell.`);
 		}
 
 		if ("rows" in value && !Array.isArray(value["rows"])) throw new TypeError(`Table: "rows" must be an array.`);
@@ -331,26 +323,32 @@ export default class Table extends HTMLElement {
 			throw new TypeError(`Table: row "data" must be an array of ${column_count} cells.`);
 
 		for (const cell of row["data"]) {
-			if (cell === null || typeof(cell) !== "object" || Array.isArray(cell) || !("value" in cell))
-				throw new TypeError(`Table: every cell must be an object like {"value": ...}.`);
+			if (cell === null || typeof(cell) !== "object" || Array.isArray(cell))
+				throw new TypeError(`Table: every cell must be an object like {"value": ..., "formatted_value": ...}.`);
+
+			if (cell["value"] === undefined && cell["formatted_value"] === undefined)
+				throw new TypeError(`Table: a cell needs a "value", a "formatted_value", or both.`);
+
+			if (cell["value"] !== null && typeof(cell["value"]) === "object" && !Array.isArray(cell["value"]))
+				throw new TypeError(`Table: a cell "value" can't be an object; display it through "formatted_value" instead.`);
+
+			if (cell["formatted_value"] !== undefined && typeof(cell["formatted_value"]) !== "string" && typeof(cell["formatted_value"]) !== "number")
+				throw new TypeError(`Table: a cell "formatted_value" must be a string or a number.`);
 
 			if ("classes" in cell && typeof(cell["classes"]) !== "string")
 				throw new TypeError(`Table: cell "classes" must be a string.`);
 		}
 	}
 
-	// A cell shows its raw value as plain text; the column's formatter, if any, overrides it with HTML
+	// "formatted_value" always wins for display (as HTML); otherwise the raw value is shown as plain text
 	#create_cells = (data) => {
-		const columns = this.#JSON["columns"];
 		const tds = [];
 
-		for (let index = 0; index < data.length; index++) {
-			const cell = data[index];
-			const formatter = columns[index]["formatter"];
+		for (const cell of data) {
 			const td = document.createElement("td");
 
-			if (formatter === undefined) td.textContent = Table.#raw_text(cell["value"]);
-			else td.innerHTML = formatter(cell) ?? '';
+			if (cell["formatted_value"] !== undefined) td.innerHTML = cell["formatted_value"];
+			else td.textContent = Table.#raw_text(cell["value"]);
 
 			if (cell["classes"] !== undefined) td.className = cell["classes"];
 
@@ -396,13 +394,16 @@ export default class Table extends HTMLElement {
 		return a.order - b.order;
 	}
 
-	// The raw value, or the displayed text when the value is a whole record
+	/*
+		The cell's "value" when it has one (null included: it means empty), otherwise its displayed text.
+		The text is read live from the DOM, so a cell edited in place sorts by what it shows now.
+	*/
 	#sort_value = (record, column_index) => {
 		const value = record.data[column_index]["value"];
 
-		if (Table.#is_record(value)) return Table.#cell_text(record.tr.cells[column_index]);
+		if (value !== undefined) return value;
 
-		return value;
+		return Table.#cell_text(record.tr.cells[column_index]);
 	}
 
 	#parse_search = (input_value) => {
@@ -451,9 +452,11 @@ export default class Table extends HTMLElement {
 		return false;
 	}
 
-	// A cell matches when the term is in its raw value or in what it displays
+	// A cell matches when the term is in its raw value (if any) or in what it displays, read live from the DOM
 	#cell_matches = (record, column_index, term) => {
-		if (Table.#raw_text(record.data[column_index]["value"]).toLowerCase().includes(term)) return true;
+		const value = record.data[column_index]["value"];
+
+		if (value !== undefined && Table.#raw_text(value).toLowerCase().includes(term)) return true;
 
 		return Table.#cell_text(record.tr.cells[column_index]).toLowerCase().includes(term);
 	}
