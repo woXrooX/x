@@ -6,71 +6,82 @@ from Python.x.modules.Response import Response
 
 @app.route("/API", methods=["POST"])
 def API():
-	##### Manually guarding since this route is not part of the automated pages.
-	### "application/json"
 	if request.content_type == "application/json":
-		# Invalid JSON
-		if request.get_json() is None: return Response.make(type="warning", message="invalid_request")
+		# NOTE: Manually guarding since this route is not part of the automated pages.
+		if request.get_json() is None or "for" not in request.get_json():
+			Log.warning("Invalid JSON request")
+			return Response.make(type="warning", message="invalid_request")
 
-		# Check if "for" in request
-		if "for" not in request.get_json(): return Response.make(type="warning", message="invalid_request")
 
-		if request.get_json()["for"] == "get:configurations": return Response.make(
-			type="success",
-			message="success",
-			data=Globals.PUBLIC_CONF,
-			default_serializer_func=str
-		)
 
-		if request.get_json()["for"] == "get:session.user": return Response.make(
-			type="success",
-			message="success",
-			data=User.generate_public_session(),
-			default_serializer_func=str
-		)
+		if request.get_json()["for"] == "get:configurations":
+			return Response.make(
+				type="success",
+				message="success",
+				data=Globals.PUBLIC_CONF,
+				default_serializer_func=str
+			)
 
-		if request.get_json()["for"] == "get:language_dictionary": return Response.make(
-			type="success",
-			message="success",
-			data=Globals.LANGUAGE_DICTIONARY
-		)
+		if request.get_json()["for"] == "get:session.user":
+			return Response.make(
+				type="success",
+				message="success",
+				data=User.generate_public_session(),
+				default_serializer_func=str
+			)
 
-		if request.get_json()["for"] == "get:user_authenticity_statuses": return Response.make(
-			type="success",
-			message="success",
-			data=Globals.USER_AUTHENTICITY_STATUSES
-		)
+		if request.get_json()["for"] == "get:language_dictionary":
+			return Response.make(
+				type="success",
+				message="success",
+				data=Globals.LANGUAGE_DICTIONARY
+			)
 
-		if request.get_json()["for"] == "get:user_roles": return Response.make(
-			type="success",
-			message="success",
-			data=Globals.USER_ROLES
-		)
+		if request.get_json()["for"] == "get:user_authenticity_statuses":
+			return Response.make(
+				type="success",
+				message="success",
+				data=Globals.USER_AUTHENTICITY_STATUSES
+			)
 
-		if request.get_json()["for"] == "get:user_occupations": return Response.make(
-			type="success",
-			message="success",
-			data=Globals.USER_OCCUPATIONS
-		)
+		if request.get_json()["for"] == "get:user_roles":
+			return Response.make(
+				type="success",
+				message="success",
+				data=Globals.USER_ROLES
+			)
 
-		if request.get_json()["for"] == "get:notification_types": return Response.make(
-			type="success",
-			message="success",
-			data=Globals.NOTIFICATION_TYPES
-		)
+		if request.get_json()["for"] == "get:user_occupations":
+			return Response.make(
+				type="success",
+				message="success",
+				data=Globals.USER_OCCUPATIONS
+			)
 
-		if request.get_json()["for"] == "get:project_SVG": return Response.make(
-			type="success",
-			message="success",
-			data=Globals.PROJECT_SVG
-		)
+		if request.get_json()["for"] == "get:notification_types":
+			return Response.make(
+				type="success",
+				message="success",
+				data=Globals.NOTIFICATION_TYPES
+			)
 
-		if request.get_json()["for"] == "get:currencies": return Response.make(
-			type="success",
-			message="success",
-			data=Globals.CURRENCIES
-		)
+		if request.get_json()["for"] == "get:project_SVG":
+			return Response.make(
+				type="success",
+				message="success",
+				data=Globals.PROJECT_SVG
+			)
 
+		if request.get_json()["for"] == "get:currencies":
+			return Response.make(
+				type="success",
+				message="success",
+				data=Globals.CURRENCIES
+			)
+
+
+
+		###########  APIs
 
 		if request.get_json()["for"] == "change_user_app_color_mode":
 			if "color_mode" not in request.get_json(): return Response.make(type="error", message="invalid_value")
