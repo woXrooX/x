@@ -82,7 +82,7 @@ export default class Core {
 
 
 	static async #get_initial_data() {
-		if (!await load("configurations", {}, (data) => { window.x["configurations"] = data; })) return false;
+		if (!await load("configurations", false, (data) => { window.x["configurations"] = data; })) return false;
 
 		(function sync_cache_version() {
 			if (localStorage.getItem("x.cache.project.version") === window.x["configurations"]["project"]["version"]) return;
