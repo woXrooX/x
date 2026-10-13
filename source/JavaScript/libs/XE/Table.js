@@ -711,12 +711,15 @@ export default class Table extends HTMLElement {
 
 		return `
 			<input
-				type="text"
-				placeholder="${window.Lang.use("type_to_search")}"
 				class="
 					width-100
 					box-shadow-v0
 				"
+
+				type="text"
+				placeholder="${window.Lang.use("type_to_search")}"
+				name="search"
+
 				style="outline-offset: -1px;"
 			>
 		`;
@@ -846,7 +849,7 @@ export default class Table extends HTMLElement {
 	}
 
 	#listen_to_search_typing = () => {
-		const element = this.#header_element.querySelector(":scope > input");
+		const element = this.#header_element.querySelector(":scope > input[name=search]");
 
 		if (element === null) return;
 
