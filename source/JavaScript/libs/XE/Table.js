@@ -97,6 +97,22 @@ export default class Table extends HTMLElement {
 		return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 	}
 
+	// Adds a range for every match of "regex" in the text nodes under "root"
+	static #add_highlight_ranges(highlight, root, regex) {
+		const tree_walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+
+		while (tree_walker.nextNode()) {
+			const node = tree_walker.currentNode;
+
+			for (const match of node.textContent.matchAll(regex)) {
+				const range = new Range();
+				range.setStart(node, match.index);
+				range.setEnd(node, match.index + match[0].length);
+				highlight.add(range);
+			}
+		}
+	}
+
 
 	/////////////////////////// Object
 
@@ -576,32 +592,31 @@ export default class Table extends HTMLElement {
 
 	//// Highlight
 
+	/*
+		Mirrors #matches_search: the full term in every cell, the column term only in its column.
+		Walks only the drawn rows, so the empty state and the loader are never highlighted.
+	*/
 	#apply_search_highlights = () => {
 		CSS.highlights.delete(this.#highlight_name);
 
 		if (this.#search === null) return;
 
-		const terms = [this.#search.value];
+		const column_index = this.#search.column_index;
+		const full_regex = new RegExp(Table.#escape_regex(this.#search.value), "gi");
+		let column_regex = null;
 
-		if (this.#search.column_index !== null && this.#search.column_value !== '') terms.push(this.#search.column_value);
+		if (column_index !== null && this.#search.column_value !== '')
+			column_regex = new RegExp(Table.#escape_regex(this.#search.column_value), "gi");
 
-		const escaped_terms = [];
-
-		for (const term of terms) escaped_terms.push(Table.#escape_regex(term));
-
-		const regex = new RegExp(escaped_terms.join('|'), "gi");
 		const highlight = new Highlight();
-		const tree_walker = document.createTreeWalker(this.#tbody_element, NodeFilter.SHOW_TEXT);
+		const start = this.#page_start_index();
 
-		while (tree_walker.nextNode()) {
-			const node = tree_walker.currentNode;
+		for (let index = start; index < start + this.#drawn_count; index++) {
+			const cells = this.#view[index].tr.cells;
 
-			for (const match of node.textContent.matchAll(regex)) {
-				const range = new Range();
-				range.setStart(node, match.index);
-				range.setEnd(node, match.index + match[0].length);
-				highlight.add(range);
-			}
+			for (const cell of cells) Table.#add_highlight_ranges(highlight, cell, full_regex);
+
+			if (column_regex !== null) Table.#add_highlight_ranges(highlight, cells[column_index], column_regex);
 		}
 
 		if (highlight.size > 0) CSS.highlights.set(this.#highlight_name, highlight);
