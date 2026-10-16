@@ -160,12 +160,12 @@ class Name {
 
 	/////////// APIs
 
-	static public_method(){}
+	static public_method() {}
 
 
 	/////////// Helpers
 
-	static #private_method(){}
+	static #private_method() {}
 
 
 	/////////////////////////// Object
@@ -177,12 +177,12 @@ class Name {
 
 	/////////// APIs
 
-	constructor(){}
+	constructor() {}
 
-	public_method(){}
+	public_method() {}
 
 
 	/////////// Helpers
 
-	#private_method(){}
+	#private_method() {}
 }
