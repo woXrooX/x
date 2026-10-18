@@ -1,16 +1,17 @@
 export default class Menu {
 	/////////////////////////// Static
 
+	/////////// Variables
+
 	static selector = "body > menu";
-	static #selector_menu_hyperlinks = `${Menu.selector} > main a`;
 
 	static #element = null;
+	static #main = null;
 	static #menu_show_button = null;
 	static #always_open_mode_toggler = null;
 
 	static #shown = false;
 
-	// Modes
 	static #modes = Object.freeze({
 		DEFAULT: 0,
 		ALWAYS_OPEN: 1,
@@ -19,235 +20,258 @@ export default class Menu {
 
 	static #current_mode = Menu.#modes.DEFAULT;
 
+
 	/////////// APIs
-	static init() {
+
+	static async init() {
 		Log.info("Menu.init()");
 
-		Menu.#element = document.querySelector(Menu.selector);
 
-		// Check If "body > menu" Exists
+		Menu.#element = document.querySelector(Menu.selector);
 		if (!!Menu.#element === false) return;
 
+
+		Menu.#main = Menu.#element.querySelector(":scope > main");
 		Menu.#menu_show_button = document.querySelector("body > x-svg[for=menu_show]");
-		Menu.#always_open_mode_toggler = document.querySelector(`${Menu.selector} > header > x-svg[for=toggle_always_open_mode]`);
+		Menu.#always_open_mode_toggler = Menu.#element.querySelector(":scope > header > x-svg[for=toggle_always_open_mode]");
 
-		Menu.#detect_current_mode();
 
-		// Try To Build The Menu
-		if (Menu.build() === false) return;
+		Menu.#load_mode();
 
-		// Init active
-		Menu.set_active();
 
-		//// Listen To The Events
-		// Show menu event
-		Menu.#menu_show_button.onclick = Menu.#show;
-		// On Mobile menu close event
-		document.querySelector(`${Menu.selector} > header > x-svg[for=menu_close_button_on_mobile]`).onclick = Menu.#hide;
-		Menu.#toggle_always_open_mode();
-		Cover.on_click_execute(Menu.#hide);
+		//// Events
+
+		Menu.#menu_show_button.addEventListener("click", Menu.#show);
+		Menu.#element.querySelector(":scope > header > x-svg[for=menu_close_button_on_mobile]").addEventListener("click", Menu.hide);
+		Menu.#always_open_mode_toggler.addEventListener("click", Menu.#toggle_always_open_mode);
+		Menu.#main.addEventListener("click", Menu.#toggle_sub_menu);
+		window.Cover.on_click_execute(Menu.hide);
+
+
+		await Menu.build();
 	}
 
-	static build() {
+	static async build() {
 		Log.info("Menu.build()");
 
-		// Check If CONF Has Menu
-		if (!("menu" in window.x["configurations"])) return false;
+		if (!!Menu.#element === false) return;
 
-		// Check If Menu Is Enabled
-		if (window.x["configurations"]["menu"]["enabled"] === false) return false;
+		const menus = await Menu.#load();
+		if (menus === false) return Menu.#disable();
 
-		// Add created menus into "menu > main"
-		Menu.#element.querySelector("main").innerHTML = Menu.#recursive_builder(window.x["configurations"]["menu"]["menus"]);
+		const nodes = Menu.#normalize_menus(menus);
+		if (nodes.length === 0) return Menu.#disable();
 
-		// After adding hyperlinks to DOM create hide event for each of the hyperlinks
-		Menu.#on_click_hyperlinks();
-
-		Menu.#toggle_sub_menus();
+		Menu.#main.innerHTML = Menu.#render(nodes);
+		Menu.#enable();
+		Menu.set_active();
 	}
 
 	static set_active() {
-		// Check If CONF Has Menu
-		if (!("menu" in window.x["configurations"])) return false;
+		if (!!Menu.#element === false) return;
 
-		// Check If Menu Is Enabled
-		if (window.x["configurations"]["menu"]["enabled"] === false) return false;
+		const current_page = window.x.Router.current_route["name"];
 
-		// Hyperlinks
-		const hyperlinks = document.querySelectorAll(Menu.#selector_menu_hyperlinks);
+		for (const parent_menu of Menu.#main.querySelectorAll("section.parent_menu")) {
+			if (parent_menu.getAttribute("page") !== current_page) {
+				parent_menu.removeAttribute("active");
 
-		// Find the current window.location.pathname matching page, and take the endpoints from it
-		let matched_endpoints = [];
-		for (const menu of window.x["configurations"]["menu"]["menus"])
-			if (!("url" in menu))
-				for (const endpoint of window.x["configurations"]["pages"][menu["page"]]["endpoints"])
-					if (endpoint === window.location.pathname) matched_endpoints = window.x["configurations"]["pages"][menu["page"]]["endpoints"];
+				continue;
+			}
 
-		// Loop through all the hyperlinks of parent menu
-		for (const hyperlink of hyperlinks) {
-			// De-Activate All
-			hyperlink.parentElement.removeAttribute("active");
-
-			// Activate section.parent_menu if href matches
-			if (matched_endpoints.includes(hyperlink.getAttribute("href"))) hyperlink.parentElement.setAttribute("active", "");
+			parent_menu.setAttribute("active", '');
+			Menu.#open_ancestors(parent_menu);
 		}
 	}
 
+	static hide() {
+		if (Menu.#shown === false) return;
+
+		Menu.#element.classList.remove("show");
+		window.Cover.hide();
+		Menu.#shown = false;
+	}
+
+
 	/////////// Helpers
-	static #recursive_builder(menus) {
-		let HTML = "";
 
-		for (const menu of menus)
-			if (Menu.#guard(menu) === true) {
-				HTML += `
-					<section class="container">
-						<section class="parent_menu">
-							<a href="${"url" in menu ? menu["url"] : window.x["configurations"]["pages"][menu["page"]]["endpoints"][0]}">
-								${"icon" in menu ? `<x-svg color="#ffffff" name="${menu["icon"]}"></x-svg>` : ""}
-								${"name" in menu ? window.Lang.use(menu["name"]) : window.Lang.use(menu["page"])}
-							</a>
-				`;
+	static async #load() {
+		try {
+			const menu_module = await import("/JavaScript/modules/menu.js");
 
-				// Add the sub menu toggle icon and close the section.parent_menu
-				if ("sub_menu" in menu)
-					HTML += `
-							<x-svg for="toggle_sub_menu" color="#ffffff" name="arrow_bottom_small"></x-svg>
-						</section>
-						<section class="sub_menu">${Menu.#recursive_builder(menu["sub_menu"])}</section>
-					`;
+			if (typeof menu_module.default !== "function") return false;
 
-				// Close the section.parent_menu if no "sub_menu" in menu
-				else HTML += `</section>`;
+			const menus = await menu_module.default();
 
-				// Close the section.container
-				HTML += `</section>`;
+			return Array.isArray(menus) ? menus : false;
+		}
+
+		catch (error) {
+			Log.error(`Print failed: ${error}`);
+
+			return false;
+		}
+	}
+
+	// Resolves raw menus into render-ready nodes, dropping anything the current user can't access
+	static #normalize_menus(menus) {
+		const nodes = [];
+
+		for (const menu of menus) {
+			const node = Menu.#normalize_menu(menu);
+
+			if (node !== null) nodes.push(node);
+		}
+
+		return nodes;
+	}
+
+	static #normalize_menu(menu) {
+		const icon = "icon" in menu ? menu["icon"] : null;
+		const sub_menu = "sub_menu" in menu ? Menu.#normalize_menus(menu["sub_menu"]) : [];
+
+
+		//// Page menu
+
+		if ("page" in menu) {
+			if (window.x.Router.guard(menu["page"]) === false) return null;
+
+			return {
+				"page": menu["page"],
+				"href": window.x["configurations"]["pages"][menu["page"]]["endpoints"][0],
+				"label": window.Lang.use("name" in menu ? menu["name"] : menu["page"]),
+				"icon": icon,
+				"sub_menu": sub_menu
+			};
+		}
+
+
+		//// URL menu or group, both need a name
+
+		if (!("name" in menu)) return null;
+
+		// A group with nothing accessible inside has nothing to show
+		if (
+			!("URL" in menu) &&
+			sub_menu.length === 0
+		) return null;
+
+
+		return {
+			"page": null,
+			"href": "URL" in menu ? menu["URL"] : null,
+			"label": window.Lang.use(menu["name"]),
+			"icon": icon,
+			"sub_menu": sub_menu
+		};
+	}
+
+	// Turns normalized nodes into HTML
+	static #render(nodes) {
+		let HTML = '';
+
+		for (const node of nodes) {
+			const icon = node["icon"] === null ? '' : `<x-svg color="#ffffff" name="${node["icon"]}"></x-svg>`;
+			const page_attribute = node["page"] === null ? '' : ` page="${node["page"]}"`;
+
+			// Links get an anchor, pure groups get a span
+			const entry = node["href"] === null ?
+				`<span>${icon}${node["label"]}</span>` :
+				`<a href="${node["href"]}">${icon}${node["label"]}</a>`;
+
+			let toggler = '';
+			let sub_menu_HTML = '';
+
+			if (node["sub_menu"].length > 0) {
+				toggler = `<x-svg for="toggle_sub_menu" color="#ffffff" name="arrow_bottom_small"></x-svg>`;
+				sub_menu_HTML = `<section class="sub_menu">${Menu.#render(node["sub_menu"])}</section>`;
 			}
+
+			HTML += `
+				<section class="container">
+					<section class="parent_menu"${page_attribute}>
+						${entry}
+						${toggler}
+					</section>
+
+					${sub_menu_HTML}
+				</section>
+			`;
+		}
 
 		return HTML;
 	}
 
-	static #on_click_hyperlinks() {
-		const hyperlinks = document.querySelectorAll(Menu.#selector_menu_hyperlinks);
+	// Opens every group that contains the given item, so the active item is visible
+	static #open_ancestors(parent_menu) {
+		let sub_menu = parent_menu.closest("section.sub_menu");
 
-		// Assign Hide Method To On Click Event
-		for (const hyperlink of hyperlinks)
-			// Blank menu items
-			if (hyperlink.getAttribute('href') == '') {
-				const sub_menu_toggler = hyperlink.parentElement.querySelector("x-svg[for=toggle_sub_menu]");
-				if (!!sub_menu_toggler === true) hyperlink.addEventListener("click", ()=>{sub_menu_toggler.click();});
-			}
-
-			// Normal menu items
-			else hyperlink.addEventListener("click", Menu.#hide);
-	}
-
-	// On click x-svg[for=toggle_sub_menu] show the section.sub_menu
-	static #toggle_sub_menus() {
-		const sub_menu_togglers = document.querySelectorAll(`${Menu.selector} > main x-svg[for=toggle_sub_menu]`);
-
-		for (const toggler of sub_menu_togglers)
-			toggler.onclick = ()=> {
-				toggler.classList.toggle("open");
-				toggler.parentElement.parentElement.querySelector("section.sub_menu").classList.toggle("show");
-			}
-	}
-
-	static #detect_current_mode() {
-		if (localStorage.getItem("x.menu_mode")) Menu.#current_mode = parseInt(localStorage.getItem("x.menu_mode"));
-		else Menu.#current_mode = Menu.#modes.DEFAULT;
-
-		Menu.#switch_mode(Menu.#current_mode);
-	}
-
-	static #switch_mode(mode) {
-		switch(mode) {
-			case Menu.#modes.DEFAULT:
-				Menu.#default_mode();
-				break;
-
-			case Menu.#modes.ALWAYS_OPEN:
-				Menu.#always_open_mode();
-				Menu.#always_open_mode_toggler.forceToggle();
-				break;
-
-			default:
-				Menu.#default_mode();
-				break;
+		while (!!sub_menu === true) {
+			sub_menu.parentElement.classList.add("open");
+			sub_menu = sub_menu.parentElement.closest("section.sub_menu");
 		}
 	}
 
-	static #save_mode() {localStorage.setItem('x.menu_mode', Menu.#current_mode);}
+	// Click handler on main: arrow icons and group headers toggle their sub menu, links are left to the Router
+	static #toggle_sub_menu(event) {
+		const toggler = event.target.closest("x-svg[for=toggle_sub_menu], section.parent_menu > span");
 
-	static #default_mode() {
-		Log.info("Menu.#default_mode()");
+		if (!!toggler === false) return;
 
-		Menu.#current_mode = Menu.#modes.DEFAULT;
-		Menu.#save_mode();
-
-		if (Menu.#shown) window.Cover.show();
-		Menu.#element.classList.remove("always_open_mode");
+		toggler.closest("section.container").classList.toggle("open");
 	}
 
-	static #always_open_mode() {
-		Log.info("Menu.#always_open_mode()");
-
-		Menu.#current_mode = Menu.#modes.ALWAYS_OPEN;
-		Menu.#save_mode();
-
-		window.Cover.hide();
-		Menu.#element.classList.add("always_open_mode");
+	static #enable() {
+		Menu.#element.classList.remove("display-none");
+		Menu.#menu_show_button.classList.remove("display-none");
 	}
 
-	static #toggle_always_open_mode() {
-		Menu.#always_open_mode_toggler.addEventListener("click", ()=>{
-			if (Menu.#current_mode === Menu.#modes.ALWAYS_OPEN) Menu.#default_mode();
-			else Menu.#always_open_mode();
-		});
+	static #disable() {
+		Menu.hide();
+		Menu.#main.innerHTML = '';
+		Menu.#element.classList.add("display-none");
+		Menu.#menu_show_button.classList.add("display-none");
 	}
 
 	static #show() {
-		// Check If Already Shown
 		if (Menu.#shown) return;
 
-		// Check if body > menu exists
-		if (!!Menu.#element === false) return;
-
 		Menu.#element.classList.add("show");
-
 		window.Cover.show();
-
 		Menu.#shown = true;
 	}
 
-	static #hide() {
-		// Check If Already Hidden
-		if (Menu.#shown === false) return;
+	static #load_mode() {
+		Menu.#set_mode(parseInt(localStorage.getItem("x.menu_mode")));
 
-		// Check if body > menu exists
-		if (!!Menu.#element === false) return;
-
-		Menu.#element.classList.remove("show");
-
-		window.Cover.hide();
-
-		Menu.#shown = false;
+		// The toggler flips its own icon on click, so it only needs syncing on load
+		if (Menu.#current_mode === Menu.#modes.ALWAYS_OPEN) Menu.#always_open_mode_toggler.force_toggle();
 	}
 
-	static #guard(menu) {
-		///// Menu to a custom URL
-		if ("url" in menu) {
-			if ("name" in menu) return true;
-			return false;
+	static #set_mode(mode) {
+		Log.info("Menu.#set_mode()");
+
+		// Unknown or not yet supported modes fall back to default
+		if (mode !== Menu.#modes.ALWAYS_OPEN) mode = Menu.#modes.DEFAULT;
+
+		Menu.#current_mode = mode;
+		localStorage.setItem("x.menu_mode", mode);
+
+		if (mode === Menu.#modes.ALWAYS_OPEN) {
+			Menu.#element.classList.add("always_open_mode");
+			window.Cover.hide();
 		}
 
-		///// Page linked menu
-		// Check if menu linked page exists in CONF["pages"]
-		if (!(menu["page"] in window.x["configurations"]["pages"])) return false;
+		else {
+			Menu.#element.classList.remove("always_open_mode");
 
-		// Check if menu linked page is enabled in CONF["pages"]
-		if (window.x["configurations"]["pages"][menu["page"]]["enabled"] == false) return false;
+			if (Menu.#shown) window.Cover.show();
+		}
+	}
 
-		return window.x.Router.guard(menu["page"]);
+	static #toggle_always_open_mode() {
+		if (Menu.#current_mode === Menu.#modes.ALWAYS_OPEN) Menu.#set_mode(Menu.#modes.DEFAULT);
+		else Menu.#set_mode(Menu.#modes.ALWAYS_OPEN);
 	}
 }
 

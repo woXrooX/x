@@ -105,35 +105,33 @@
 
 		<cover></cover>
 
-		{% if Globals.CONF["menu"]["enabled"] == True %}
-			<x-svg
-				for="menu_show"
-				name="menu"
-				color="#ffffff"
+		<x-svg
+			for="menu_show"
+			name="menu"
+			color="#ffffff"
 
-				class="
-					text-size-2rem
-					position-fixed
-					top-0
-					left-0
-					z_menu_show_button
+			class="
+				text-size-2rem
+				position-fixed
+				top-0
+				left-0
+				z_menu_show_button
 
-					s-margin-left-2
-				"
-			></x-svg>
+				s-margin-left-2
+			"
+		></x-svg>
 
-			<menu>
-				<header>
-					<x-svg for="color_mode_switcher" color="#ffffff"></x-svg>
-					<x-svg for="toggle_always_open_mode" color="#ffffff" name="lock_open" toggle="lock_locked"></x-svg>
-					<x-svg for="menu_close_button_on_mobile" color="#ffffff" name="x"></x-svg>
-				</header>
+		<menu>
+			<header>
+				<x-svg for="color_mode_switcher" color="#ffffff"></x-svg>
+				<x-svg for="toggle_always_open_mode" color="#ffffff" name="lock_open" toggle="lock_locked"></x-svg>
+				<x-svg for="menu_close_button_on_mobile" color="#ffffff" name="x"></x-svg>
+			</header>
 
-				<main></main>
+			<main></main>
 
-				<footer></footer>
-			</menu>
-		{% endif %}
+			<footer></footer>
+		</menu>
 
 		<modal>
 			<x-svg class="btn btn-primary btn-s" for="modal_close" name="x" color="ffffff"></x-svg>

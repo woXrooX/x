@@ -1,5 +1,5 @@
 {
-	"version": "0.242.0.0045",
+	"version": "0.243.0.0000",
 
 	"project": {
 		"name": "x",
@@ -100,13 +100,6 @@
 	},
 
 	"pages": {},
-
-	"menu": {
-		"enabled": true,
-		"menus": [
-			{"page": "home", "icon": "home"}
-		]
-	},
 
 	"username": {
 		"min_length": 6,

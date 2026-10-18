@@ -115,8 +115,6 @@ if __name__ != "__main__":
 
 			if "pages" in Globals.PROJECT: Globals.CONF["pages"] = Globals.PROJECT["pages"]
 
-			if "menu" in Globals.PROJECT: Globals.CONF["menu"] = Globals.PROJECT["menu"]
-
 			if "password" in Globals.PROJECT: Globals.CONF["password"].update(Globals.PROJECT["password"])
 
 			#### Public Configurations
@@ -124,7 +122,6 @@ if __name__ != "__main__":
 			Globals.PUBLIC_CONF["default"] = Globals.CONF["default"]
 			Globals.PUBLIC_CONF["tools"] = Globals.CONF["tools"]
 			Globals.PUBLIC_CONF["pages"] = Globals.CONF["pages"]
-			Globals.PUBLIC_CONF["menu"] = Globals.CONF["menu"]
 			Globals.PUBLIC_CONF["username"] = Globals.CONF["username"]
 			Globals.PUBLIC_CONF["password"] = Globals.CONF["password"]
 			Globals.PUBLIC_CONF["phone_number"] = Globals.CONF["phone_number"]

@@ -97,6 +97,9 @@ body{
 
 		font-size: 1rem;
 
+		-webkit-user-select: none;
+		user-select: none;
+
 		background-color: hsla(var(--color-brand-hue), 10%, 25%, 0.1);
 		backdrop-filter: blur(100px);
 		height: 100dvh;
@@ -180,7 +183,7 @@ body{
 
 							&:where([active]){border: 1px solid white;}
 
-							& > a{
+							& > :is(a, span){
 								width: 100%;
 								display: flex;
 								flex-direction: row;
@@ -191,11 +194,12 @@ body{
 								font-size: 1em;
 							}
 
+							& > span{cursor: pointer;}
+
 							& > x-svg{
 								&[for=toggle_sub_menu]{
 									transition: var(--transition-velocity) ease-in-out transform;
 									transform: rotate(90deg);
-									&.open{transform: rotate(0deg);}
 								}
 							}
 						}
@@ -210,22 +214,13 @@ body{
 							margin-top: 5px;
 							padding: calc(var(--menu-padding) * 2);
 							border-radius: var(--radius);
-
-							&:empty{display: none;}
-
-							&.show{display: block;}
 						}
+					}
 
-						/* If sub_menu is empty */
-						&:has(+ .sub_menu:empty){
-							/* Do not show arrow icon */
-							& > x-svg[for=toggle_sub_menu]{display: none;}
+					&.open{
+						& > section.parent_menu > x-svg[for=toggle_sub_menu]{transform: rotate(0deg);}
 
-							/* If .parent_menu is a blank button for .sub_menu then do not display */
-							&.parent_menu:has(a[href=""]){
-								&.parent_menu{display: none;}
-							}
-						}
+						& > section.sub_menu{display: block;}
 					}
 				}
 			}
