@@ -66,12 +66,12 @@ export default class Language extends HTMLElement{
 	}
 
 	static build_switcher_modal_HTML() {
-		Modal.push_func(function change_language() {
+		x.Modal.push_func(function change_language() {
 			const buttons = document.body.querySelectorAll("modal > main > column > button");
 
 			for (const button of buttons) button.onclick = ()=>{
 				Lang.switch_to(button.name);
-				Modal.hide();
+				x.Modal.hide();
 			}
 		});
 

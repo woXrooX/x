@@ -938,6 +938,7 @@ export default class Table extends HTMLElement {
 	}
 };
 
-window.x["Table"] = Table;
 
 window.customElements.define("x-table", Table);
+
+window.x["Table"] = Table;

@@ -51,7 +51,7 @@ export default class Form {
 		// Disable submitter button
 		submitter.disabled = true;
 
-		window.Modal.lock();
+		x.Modal.lock();
 
 		Form.#response({
 			form: event.target,
@@ -126,8 +126,8 @@ export default class Form {
 		x.Toast.handle_commands(event.target.getAttribute("x-toast"), response);
 
 		////////// x-modal
-		window.Modal.unlock();
-		Modal.handle_commands(event.target.getAttribute("x-modal"), response["type"]);
+		x.Modal.unlock();
+		x.Modal.handle_commands(event.target.getAttribute("x-modal"), response["type"]);
 
 		////////// x-layers
 		x.Layers.handle_commands(event.target.getAttribute("x-layer"), response["type"]);

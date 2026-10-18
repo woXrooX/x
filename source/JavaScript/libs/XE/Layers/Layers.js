@@ -207,7 +207,7 @@ export default class Layers{
 				break;
 
 			default:
-				Log.warning("Modal.handle_commands(): Invalid action");
+				Log.warning("x.Layers.#handle_command_action(): Invalid action");
 				break;
 		}
 	}

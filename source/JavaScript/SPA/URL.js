@@ -26,7 +26,7 @@ export default class URL{
 			x.Router.handle();
 			x.Menu.hide();
 			x.Menu.set_active();
-			Modal.hide();
+			x.Modal.hide();
 		}
 
 		if(window.location.href !== URL.previous_location.href) URL.previous_location = structuredClone(URL.current_location);

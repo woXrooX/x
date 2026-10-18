@@ -200,7 +200,7 @@ export default class Modal extends HTMLElement{
 	};
 };
 
+
 window.customElements.define('x-modal', Modal);
 
-// Make Modal Usable W/O Importing It
-window.Modal = Modal;
+window.x["Modal"] = Modal;

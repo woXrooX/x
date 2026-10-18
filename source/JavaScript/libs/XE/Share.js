@@ -47,8 +47,8 @@ export default class Share extends HTMLElement{
 		// Capture the component instance
 		const self = this;
 
-		Modal.push_func(async function x_share_copy_to_clipboard() {
-			const copy_button = Modal.element_main.querySelector("#x_share_copy_link");
+		x.Modal.push_func(async function x_share_copy_to_clipboard() {
+			const copy_button = x.Modal.element_main.querySelector("#x_share_copy_link");
 			if (!copy_button) return;
 
 			copy_button.addEventListener("click", async (e)=>{
@@ -91,8 +91,9 @@ export default class Share extends HTMLElement{
 			</row>
 		`;
 
-		Modal.show(modal_DOM, "x_share_copy_to_clipboard");
+		x.Modal.show(modal_DOM, "x_share_copy_to_clipboard");
 	}
 };
+
 
 window.customElements.define('x-share', Share);

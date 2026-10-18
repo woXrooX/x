@@ -190,7 +190,7 @@ export default class Post {
 		x.Toast.handle_commands(this.#element.getAttribute("x-toast"), this.#response);
 
 		////////// x-modal
-		Modal.handle_commands(this.#element.getAttribute("x-modal"), this.#response["type"]);
+		x.Modal.handle_commands(this.#element.getAttribute("x-modal"), this.#response["type"]);
 
 		////////// x-layers
 		x.Layers.handle_commands(this.#element.getAttribute("x-layer"), this.#response["type"]);
@@ -207,14 +207,14 @@ export default class Post {
 
 			this.#handle_input_elements();
 
-			window.Modal.lock();
+			x.Modal.lock();
 
 			this.#response = await window.x.Request.make({
 				payload: this.#data,
 				target_URL: this.#element.getAttribute("XR-post")
 			});
 
-			window.Modal.unlock();
+			x.Modal.unlock();
 
 			this.#handle_response();
 
