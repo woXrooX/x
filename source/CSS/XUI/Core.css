@@ -3216,6 +3216,7 @@
 			& > summary{
 				cursor: pointer;
 				user-select: none;
+				-webkit-user-select: none;
 			}
 
 			&.details-v1{

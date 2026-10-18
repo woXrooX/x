@@ -1,4 +1,9 @@
-.user-select-none{ user-select: none; }
+.user-select-none{
+	user-select: none;
+
+	/* for Safari */
+	-webkit-user-select: none;
+}
 
 .empty-display-none { &:empty { display: none; } }
 
