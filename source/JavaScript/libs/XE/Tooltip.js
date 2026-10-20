@@ -30,8 +30,15 @@ export default class Tooltip extends HTMLElement {
 	/////////// Helpers
 
 	#set_up_trigger_element(){
-		this.#trigger_element = document.querySelector(this.getAttribute('trigger_selector'));
-		this.#trigger_element.style = `anchor-name: ${this.#anchor_name};`;
+		if (this.hasAttribute("trigger_selector")) {
+			this.#trigger_element = document.querySelector(this.getAttribute('trigger_selector'));
+			this.#trigger_element.style = `anchor-name: ${this.#anchor_name};`;
+		}
+
+		else {
+			this.#trigger_element = this.previousElementSibling;
+			this.#trigger_element.style = `anchor-name: ${this.#anchor_name};`;
+		}
 	}
 
 	#set_up_this_element(){
