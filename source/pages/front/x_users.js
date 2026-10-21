@@ -98,27 +98,12 @@ export async function after() {
 				"searchable": true,
 				"downloadable": true,
 				"columns": [
-					{
-						"title": "id",
-						"formatter": (cell) => `<a href="/x/user/${cell["value"]}" class="text-decoration-underline">${cell["value"]}</a>`
-					},
-					{
-						"title": "eMail"
-					},
-					{
-						"title": "full_name"
-					},
-					{
-						"title": "roles"
-					},
-					{
-						"title": "last_heartbeat_at",
-						"formatter": (cell) => cell["value"] === null ? '-' : timestamp_to_human_readable_v1(cell["value"])
-					},
-					{
-						"title": "flag_deleted_at",
-						"formatter": (cell) => cell["value"] === null ? '-' : timestamptz_to_local_timestamp(cell["value"])
-					}
+					{"title": "id"},
+					{"title": "eMail"},
+					{"title": "full_name"},
+					{"title": "roles"},
+					{"title": "last_heartbeat_at"},
+					{"title": "flag_deleted_at"}
 				],
 				"rows": build_table_rows()
 			},
@@ -131,13 +116,25 @@ export async function after() {
 			for (const user of users) ROWS.push({
 				"id": user["id"],
 				"data": [
-					{ "value": user["id"] },
+					{
+						"value": user["id"] ,
+						"formatted_value": `
+							<a href="/x/user/${user["id"]}" class="text-decoration-underline">${user["id"]}</a>
+						`
+					},
+
 					{ "value": user["eMail"] },
 					{ "value": user["full_name"] },
 					{ "value": user["roles_list"] },
-					{ "value": user["last_heartbeat_at"] },
+
+					{
+						"value": user["last_heartbeat_at"],
+						"formatted_value": timestamp_to_human_readable_v1(user["last_heartbeat_at"]) || ''
+					},
+
 					{
 						"value": user["flag_deleted_at"],
+						"formatted_value": `${timestamptz_to_local_timestamp(user["flag_deleted_at"]) || ''}`,
 						"classes": user["flag_deleted_at"] != null ? "bg-error" : ''
 					}
 				]
