@@ -1,9 +1,13 @@
 if __name__ != "__main__":
-	from Python.x.modules.Globals import Globals
-	from Python.x.modules.Logger import Log
-
 	import json
 	from typing import NamedTuple
+	from datetime import date
+	from decimal import Decimal
+
+	from Python.x.modules.Globals import Globals
+	from Python.x.modules.Logger import Log
+	from Python.x.modules.numbers.numbers import decimal_to_string
+
 
 	class Response(NamedTuple):
 		body: str
@@ -104,6 +108,18 @@ if __name__ != "__main__":
 
 			if headers is None: headers = {'Content-Type': 'application/json'}
 
+
+			if default_serializer_func is None: default_serializer_func = Response.default_serializer
+
+
 			# Final Response -> body, status, headers
 			body = json.dumps(response_dict, default=default_serializer_func)
 			return Response(body, HTTP_response_status_code, headers)
+
+		@staticmethod
+		def default_serializer(value):
+			if isinstance(value, Decimal): return decimal_to_string(value)
+
+			if isinstance(value, date): return str(value)
+
+			raise TypeError(f"Object of type {type(value).__name__} is not JSON serializable")
