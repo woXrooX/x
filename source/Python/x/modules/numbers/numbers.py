@@ -20,3 +20,12 @@ if __name__ != "__main__":
 
 
 		return Decimal(value)
+
+
+	def decimal_to_string(value):
+		if not isinstance(value, Decimal): raise TypeError(f"Expected Decimal, got {type(value).__name__}")
+		if not value.is_finite(): raise ValueError(f"Cannot convert non-finite Decimal to string: {value}")
+
+		if value.is_zero(): value = value.copy_abs()
+
+		return format(value, 'f')
