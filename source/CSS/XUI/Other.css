@@ -5,7 +5,12 @@
 	-webkit-user-select: none;
 }
 
-.empty-display-none { &:empty { display: none; } }
+.empty-display-none {
+	&:not(:has(*)),
+	&:empty {
+		display: none;
+	}
+}
 
 .on-target-display-flex {
 	& > * {
