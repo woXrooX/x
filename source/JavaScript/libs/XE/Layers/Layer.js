@@ -23,7 +23,6 @@ export default class Layer extends HTMLElement {
 		if (!!trigger_element === false) return;
 
 		trigger_element.onclick = (event)=>{
-			// EXPERIMENTAL: Check if this works well thne remove the experimental flag
 			event.stopPropagation();
 
 			window.x.Layers.push(

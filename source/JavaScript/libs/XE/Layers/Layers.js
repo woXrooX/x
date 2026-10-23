@@ -1,3 +1,5 @@
+import escape_HTML from "/JavaScript/modules/parser/escape_HTML.js";
+
 import Layer from "./Layer.js";
 
 export default class Layers{
@@ -141,7 +143,7 @@ export default class Layers{
 
 				${layer_func_execute_on_push ? `layer_func_execute_on_push="${layer_func_execute_on_push}"` : ''}
 				${layer_func_execute_when_top ? `layer_func_execute_when_top="${layer_func_execute_when_top}"` : ''}
-				${layer_data ? `layer_data='${layer_data}'` : ''}
+				${layer_data ? `layer_data='${escape_HTML(layer_data)}'` : ''}
 			>
 				<cover></cover>
 				<layer class="surface-v1 overflow-hidden">
