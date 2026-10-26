@@ -6,8 +6,13 @@
 }
 
 .empty-display-none {
-	&:not(:has(*)),
 	&:empty {
+		display: none;
+	}
+}
+
+.no-elements-display-none {
+	&:not(:has(*)) {
 		display: none;
 	}
 }
