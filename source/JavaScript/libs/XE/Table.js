@@ -1,3 +1,78 @@
+/*
+	window.x.Table.build(JSON, classes);
+
+	Returns an <x-table>, which initializes when appended to the DOM. The methods throw until then.
+	Inline form: <x-table>{JSON}</x-table>
+
+	classes: space-separated string (optional)
+
+	JSON: {
+		"id": string/number (optional, becomes the element's id: x-table#users tr#row_123),
+
+		"caption": HTML string (optional),
+
+		"page_size": number/"all" (optional, adds the page size picker and the footer, invalid numbers become 10),
+
+		"searchable": boolean (optional, "title:value" searches inside one column),
+
+		"downloadable": boolean (optional, CSV of the matched rows, all pages),
+
+		"checkable": {
+			"enabled": boolean,
+			"checked": "all"/[id, ...] (optional, which rows start checked, default none; unknown ids are ignored)
+		} (optional, adds a checkbox column; validated even when disabled, unknown keys throw),
+
+		"columns": [
+			{
+				"title": HTML string,
+				"sortable": boolean (optional, default true)
+			}
+		],
+
+		"rows": [
+			{
+				"id": string/number (unique, compared as strings: 1 and "1" are the same row),
+
+				"classes": string (optional, on the <tr>),
+
+				"checked": boolean (optional, initial state, wins over the "checkable" default),
+
+				"data": [
+					{
+						"value": string/number/boolean/array/null (used to sort and search, null is empty and sorts last),
+						"formatted_value": HTML string/number (optional, wins for display),
+						"classes": string (optional, on the <td>)
+					}
+				] (one cell per column, each needs "value", "formatted_value" or both)
+			}
+		],
+
+		"foot": [HTML string, ...] (optional, one per column)
+	}
+
+	The "checkable" default only applies to the rows the table starts with; rows added later use their own "checked".
+
+	Methods:
+		add_row(row)
+		update_row(row) -> boolean (false when there's no such row; replaces classes and cells, keeps the checked state)
+		remove_row(id) -> boolean (false when there's no such row)
+		get_row(id) -> {"id", "classes", "data"} copy, or null
+
+	Methods when "checkable" is enabled:
+		get_checked_rows() -> [{"id", "classes", "data"}, ...] (insertion order, includes rows the search hides)
+		set_checked(id, boolean) -> boolean (false when there's no such row)
+		uncheck_all()
+
+	Events:
+		"check_change" on the <x-table>: event.detail.count is the number of checked rows (fires on every change, not at init)
+
+	Lang keys:
+		all, type_to_search, download_as_CSV, no_data, no_matches,
+		page_of_total, total_rows, matched_rows,
+		select_row, select_all, checked_rows
+*/
+
+
 import { download_CSV } from "/JavaScript/modules/parser/CSV.js";
 
 export default class Table extends HTMLElement {
@@ -336,11 +411,20 @@ export default class Table extends HTMLElement {
 		}
 
 		this.#page_size = Table.#parse_page_size(this.#JSON["page_size"]);
-		this.#is_checkable = "checkable" in this.#JSON && this.#JSON["checkable"] !== false;
+		this.#is_checkable = this.#JSON["checkable"]?.["enabled"] === true;
+
+		// Which rows start checked: "all", the listed ids, or none. Validated in #accept_JSON.
+		const default_checked = this.#is_checkable ? this.#JSON["checkable"]["checked"] : undefined;
+		const default_checked_keys = Array.isArray(default_checked) ? new Set(default_checked.map((id) => Table.#normalize_id(id))) : null;
 
 		for (const row of this.#JSON["rows"] ?? []) {
 			const record = this.#create_record(row);
 			this.#records.set(record.key, record);
+
+			const is_default_checked = default_checked === "all" || default_checked_keys?.has(record.key) === true;
+
+			// A row's own "checked" wins over the table default
+			if (this.#is_checkable && !("checked" in row) && is_default_checked) this.#set_record_checked(record, true);
 		}
 
 		this.#build_DOM();
@@ -373,10 +457,31 @@ export default class Table extends HTMLElement {
 
 		if ("rows" in value && !Array.isArray(value["rows"])) throw new TypeError(`Table: "rows" must be an array.`);
 
+		if ("checkable" in value) this.#validate_checkable(value["checkable"]);
+
 		// Our own id, known to outside code: x-table#users tr#row_123
 		if ("id" in value) this.id = Table.#normalize_id(value["id"]);
 
 		this.#JSON = value;
+	};
+
+	// Strict, even when disabled, so a mistake shows up whichever way the switch is set
+	#validate_checkable = (checkable) => {
+		if (checkable === null || typeof(checkable) !== "object" || Array.isArray(checkable))
+			throw new TypeError("Table: \"checkable\" must be an object like {\"enabled\": true, \"checked\": \"all\"}.");
+
+		for (const key of Object.keys(checkable))
+			if (key !== "enabled" && key !== "checked") throw new TypeError(`Table: unknown key "${key}" in "checkable".`);
+
+		if (typeof(checkable["enabled"]) !== "boolean") throw new TypeError("Table: \"checkable\" needs \"enabled\": true or false.");
+
+		if (!("checked" in checkable) || checkable["checked"] === "all") return;
+
+		if (!Array.isArray(checkable["checked"]))
+			throw new TypeError("Table: \"checkable\" \"checked\" must be \"all\" or an array of row ids.");
+
+		// Throws for an id that isn't a non-empty string or a finite number
+		for (const id of checkable["checked"]) Table.#normalize_id(id);
 	};
 
 	#assert_initialized = () => {
@@ -388,7 +493,7 @@ export default class Table extends HTMLElement {
 		this.#assert_initialized();
 
 		if (this.#is_checkable === false)
-			throw new Error("Table: not checkable, enable it with \"checkable\": true.");
+			throw new Error("Table: not checkable, enable it with \"checkable\": {\"enabled\": true}.");
 	};
 
 
