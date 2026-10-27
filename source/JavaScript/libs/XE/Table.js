@@ -909,8 +909,8 @@ export default class Table extends HTMLElement {
 				<section class="display-flex flex-row justify-content-flex-start align-items-center gap-0-5 text-size-0-8rem">
 					<span class="page_numbers"></span>
 					<span class="total_rows"></span>
-					<span class="matched_rows"></span>
-					<span class="checked_rows"></span>
+					<span class="matched_rows empty-display-none"></span>
+					<span class="checked_rows empty-display-none"></span>
 				</section>
 
 				<section class="display-flex flex-row justify-content-flex-end gap-0-2">
@@ -934,18 +934,20 @@ export default class Table extends HTMLElement {
 		const current_page = this.#current_page;
 
 		this.#footer_element.querySelector(".page_numbers").innerHTML = `
-			<span class="text-color-secondary text-size-0-7rem">Page</span>
-			${current_page}
-			<span class="text-color-secondary text-size-0-7rem">of</span>
-			${page_count}
+			<span class="text-color-secondary text-size-0-7rem">${
+				window.Lang.use("page_of_total").x_format({
+					"page": `<span class="text-color-primary text-size-0-8rem">${current_page}</span>`,
+					"total": `<span class="text-color-primary text-size-0-8rem">${page_count}</span>`
+				})
+			}</span>
 		`;
 
 		this.#footer_element.querySelector(".total_rows").innerHTML = `
-			<span class="text-color-secondary text-size-0-7rem">Total rows:</span> ${this.#records.size}
+			<span class="text-color-secondary text-size-0-7rem">${window.Lang.use("total_rows")}:</span> ${this.#records.size}
 		`;
 
 		this.#footer_element.querySelector(".matched_rows").innerHTML = this.#search === null ? '' : `
-			<span class="text-color-secondary text-size-0-7rem">Matched rows:</span> ${this.#view.length}
+			<span class="text-color-secondary text-size-0-7rem">${window.Lang.use("matched_rows")}:</span> ${this.#view.length}
 		`;
 
 		this.#set_page_target(this.#pagination_elements.first, 1);

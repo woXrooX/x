@@ -589,5 +589,15 @@
 		"en": "Page {page} of {total}",
 		"uz": "{total} sahifadan {page}-sahifa",
 		"ru": "Страница {page} из {total}"
+	},
+	"total_rows": {
+		"en": "Total rows",
+		"uz": "Jami qatorlar",
+		"ru": "Всего строк"
+	},
+	"matched_rows": {
+		"en": "Matched rows",
+		"uz": "Mos kelgan qatorlar",
+		"ru": "Найдено строк"
 	}
 }
