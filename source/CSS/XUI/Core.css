@@ -262,6 +262,12 @@
 		/* Defaults */
 		select,
 		textarea,
+		input {
+			cursor: pointer;
+		}
+
+		select,
+		textarea,
 		input:where(
 			[type=text],
 			[type=eMail],
@@ -1242,7 +1248,7 @@
 						}
 
 						&:has(input[type="checkbox"]:checked) td {
-							background: var(--color-brand-tint-5);
+							background: var(--color-brand-tint-3);
 							border-bottom-color: var(--color-brand-tint-6);
 						}
 
@@ -1253,11 +1259,6 @@
 							background: var(--color-brand-tint-1);
 							border-bottom: 1px solid var(--color-brand-tint-4);
 							padding: calc(var(--padding) * 2);
-
-							& input[type="checkbox"] {
-								width: 0.9rem;
-								height: 0.9rem;
-							}
 						}
 					}
 				}
@@ -1273,6 +1274,30 @@
 						border-top: 1px solid var(--color-brand-tint-5);
 						border-bottom: 0;
 						padding: calc(var(--padding) * 2);
+					}
+				}
+
+				/* Checkboxes in the header and the body */
+				& input[type="checkbox"] {
+					width: 0.9rem;
+					height: 0.9rem;
+
+					&:indeterminate {
+						appearance: none;
+						position: relative;
+						border-radius: 15%;
+						background-color: var(--color-brand-accent);
+
+						&:hover { background-color: hsl(from var(--color-brand-accent) h s clamp(0, (l - 50) * 1000, 100)); }
+
+						/* The dash */
+						&::before {
+							content: '';
+							position: absolute;
+							inset: 42.5% 20%;
+							border-radius: 1px;
+							background-color: hsl(from var(--color-brand-accent) 0 0 clamp(23, (50 - l) * 1000, 100));
+						}
 					}
 				}
 			}

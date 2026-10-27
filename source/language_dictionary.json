@@ -567,5 +567,27 @@
 
 	"en": { "en": "English"},
 	"ru": { "ru": "Русский" },
-	"uz": { "uz": "Uzbekcha" }
+	"uz": { "uz": "Uzbekcha" },
+
+
+	"select_row": {
+		"en": "Select row",
+		"uz": "Qatorni tanlash",
+		"ru": "Выбрать строку"
+	},
+	"select_all": {
+		"en": "Select all",
+		"uz": "Hammasini tanlash",
+		"ru": "Выбрать все"
+	},
+	"checked_rows": {
+		"en": "Checked rows",
+		"uz": "Belgilangan qatorlar",
+		"ru": "Отмеченные строки"
+	},
+	"page_of_total": {
+		"en": "Page {page} of {total}",
+		"uz": "{total} sahifadan {page}-sahifa",
+		"ru": "Страница {page} из {total}"
+	}
 }

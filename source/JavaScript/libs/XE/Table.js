@@ -55,6 +55,11 @@ export default class Table extends HTMLElement {
 		return cells;
 	}
 
+	// The public shape of a row, as get_row() and get_checked_rows() return it
+	static #export_row(record) {
+		return {id: record.id, classes: record.classes, data: Table.#copy_cells(record.data)};
+	}
+
 	// Displayed text of a <td>, used by search and CSV
 	static #cell_text(td) {
 		return td.textContent.replace(/\s+/g, ' ').trim();
@@ -124,7 +129,10 @@ export default class Table extends HTMLElement {
 
 	#JSON = false;
 
-	// Master data: key (stringified id) -> {key, id, classes, data, tr, order}. Map keeps insertion order.
+	/*
+		Master data: key (stringified id) -> {key, id, classes, data, tr, cells, checkbox, order}. Map keeps insertion order.
+		"cells" are the data <td>s, aligned with "data" and "columns". The <tr> can hold more, like the checkbox cell.
+	*/
 	#records = new Map();
 	#next_order = 0;
 
@@ -136,6 +144,14 @@ export default class Table extends HTMLElement {
 
 	// {column_index, direction} or null
 	#sort = null;
+
+	#is_checkable = false;
+
+	// Keys of the checked rows. This is the truth; each row's checkbox only reflects it.
+	#checked_keys = new Set();
+
+	// Row checkbox -> record, for the delegated change listener
+	#record_by_checkbox = new WeakMap();
 
 	#page_size = "all";
 	#current_page = 1;
@@ -151,6 +167,10 @@ export default class Table extends HTMLElement {
 	#tbody_element = null;
 	#footer_element = null;
 	#pagination_elements = null;
+
+	// Data <th>s, aligned with "columns". The select-all <th> is kept apart.
+	#head_cells = null;
+	#check_all_element = null;
 
 
 	/////////// APIs
@@ -192,6 +212,8 @@ export default class Table extends HTMLElement {
 		this.#records.set(record.key, record);
 
 		this.#refresh();
+
+		if (this.#checked_keys.has(record.key)) this.#dispatch_check_change();
 	}
 
 	update_row(row) {
@@ -203,13 +225,23 @@ export default class Table extends HTMLElement {
 
 		if (record === undefined) return false;
 
-		// The given row is the new truth: classes and cells are replaced, not merged
+		/*
+			The given row is the new truth: classes and cells are replaced, not merged.
+			The checked state is kept; a "checked" in the row only applies when the row is created.
+		*/
 		record.classes = row["classes"] ?? '';
 		record.data = Table.#copy_cells(row["data"]);
 
-		// Same <tr>, new cells: references held by outside code stay valid
+		/*
+			Same <tr>, new cells: references held by outside code stay valid.
+			Only the data cells are swapped; the checkbox cell stays in place, so it doesn't lose focus.
+		*/
 		record.tr.className = record.classes;
-		record.tr.replaceChildren(...this.#create_cells(record.data));
+
+		for (const td of record.cells) td.remove();
+
+		record.cells = this.#create_cells(record.data);
+		record.tr.append(...record.cells);
 
 		this.#refresh();
 
@@ -225,7 +257,11 @@ export default class Table extends HTMLElement {
 
 		this.#records.delete(record.key);
 
+		const was_checked = this.#checked_keys.delete(record.key);
+
 		this.#refresh();
+
+		if (was_checked) this.#dispatch_check_change();
 
 		return true;
 	}
@@ -237,7 +273,51 @@ export default class Table extends HTMLElement {
 
 		if (record === undefined) return null;
 
-		return {id: record.id, classes: record.classes, data: Table.#copy_cells(record.data)};
+		return Table.#export_row(record);
+	}
+
+	// In insertion order, including checked rows the current search hides
+	get_checked_rows() {
+		this.#assert_checkable();
+
+		const rows = [];
+
+		for (const record of this.#records.values())
+			if (this.#checked_keys.has(record.key)) rows.push(Table.#export_row(record));
+
+		return rows;
+	}
+
+	// Returns false when there's no such row
+	set_checked(id, checked) {
+		this.#assert_checkable();
+
+		if (typeof(checked) !== "boolean") throw new TypeError("Table: \"checked\" must be a boolean.");
+
+		const record = this.#records.get(Table.#normalize_id(id));
+
+		if (record === undefined) return false;
+
+		if (this.#set_record_checked(record, checked)) {
+			this.#render_check_state();
+			this.#dispatch_check_change();
+		}
+
+		return true;
+	}
+
+	uncheck_all() {
+		this.#assert_checkable();
+
+		if (this.#checked_keys.size === 0) return;
+
+		// Walks only the checked rows, not every record
+		for (const key of this.#checked_keys) this.#records.get(key).checkbox.checked = false;
+
+		this.#checked_keys.clear();
+
+		this.#render_check_state();
+		this.#dispatch_check_change();
 	}
 
 
@@ -256,6 +336,7 @@ export default class Table extends HTMLElement {
 		}
 
 		this.#page_size = Table.#parse_page_size(this.#JSON["page_size"]);
+		this.#is_checkable = "checkable" in this.#JSON && this.#JSON["checkable"] !== false;
 
 		for (const row of this.#JSON["rows"] ?? []) {
 			const record = this.#create_record(row);
@@ -270,11 +351,12 @@ export default class Table extends HTMLElement {
 		this.#listen_to_CSV_download_click();
 		this.#listen_to_sort_clicks();
 		this.#listen_to_pagination_clicks();
+		this.#listen_to_check_changes();
 
 		this.#is_initialized = true;
 
 		this.#refresh(1);
-	}
+	};
 
 	#accept_JSON = (value) => {
 		if (value === null || typeof(value) !== "object" || Array.isArray(value))
@@ -295,12 +377,19 @@ export default class Table extends HTMLElement {
 		if ("id" in value) this.id = Table.#normalize_id(value["id"]);
 
 		this.#JSON = value;
-	}
+	};
 
 	#assert_initialized = () => {
 		if (this.#is_initialized === false)
 			throw new Error("Table: not initialized yet, append the element to the DOM first.");
-	}
+	};
+
+	#assert_checkable = () => {
+		this.#assert_initialized();
+
+		if (this.#is_checkable === false)
+			throw new Error("Table: not checkable, enable it with \"checkable\": true.");
+	};
 
 
 	//// Records
@@ -314,15 +403,25 @@ export default class Table extends HTMLElement {
 
 		const classes = row["classes"] ?? '';
 		const data = Table.#copy_cells(row["data"]);
+		const cells = this.#create_cells(data);
 
 		// Built once and reused for the row's whole life
 		const tr = document.createElement("tr");
 		tr.id = `row_${key}`;
 		tr.className = classes;
-		tr.append(...this.#create_cells(data));
 
-		return {key, id: row["id"], classes, data, tr, order: this.#next_order++};
-	}
+		const record = {key, id: row["id"], classes, data, tr, cells, checkbox: null, order: this.#next_order++};
+
+		// The checkbox cell goes first, outside "cells"
+		if (this.#is_checkable) tr.append(this.#create_checkbox_cell(record));
+
+		tr.append(...cells);
+
+		// "checked" is only the initial state, like the HTML checked attribute
+		if (this.#is_checkable && row["checked"] === true) this.#set_record_checked(record, true);
+
+		return record;
+	};
 
 	#validate_row = (row) => {
 		if (row === null || typeof(row) !== "object" || Array.isArray(row))
@@ -332,6 +431,8 @@ export default class Table extends HTMLElement {
 		Table.#normalize_id(row["id"]);
 
 		if ("classes" in row && typeof(row["classes"]) !== "string") throw new TypeError(`Table: row "classes" must be a string.`);
+
+		if ("checked" in row && typeof(row["checked"]) !== "boolean") throw new TypeError("Table: row \"checked\" must be a boolean.");
 
 		const column_count = this.#JSON["columns"].length;
 
@@ -354,7 +455,7 @@ export default class Table extends HTMLElement {
 			if ("classes" in cell && typeof(cell["classes"]) !== "string")
 				throw new TypeError(`Table: cell "classes" must be a string.`);
 		}
-	}
+	};
 
 	// "formatted_value" always wins for display (as HTML); otherwise the raw value is shown as plain text
 	#create_cells = (data) => {
@@ -372,7 +473,7 @@ export default class Table extends HTMLElement {
 		}
 
 		return tds;
-	}
+	};
 
 
 	//// View (search + sort)
@@ -384,7 +485,7 @@ export default class Table extends HTMLElement {
 			if (this.#matches_search(record)) this.#view.push(record);
 
 		this.#view.sort(this.#compare_records);
-	}
+	};
 
 	// Sorts by raw values; insertion order is the tie-breaker, so the order is always deterministic
 	#compare_records = (a, b) => {
@@ -408,7 +509,7 @@ export default class Table extends HTMLElement {
 		}
 
 		return a.order - b.order;
-	}
+	};
 
 	/*
 		The cell's "value" when it has one (null included: it means empty), otherwise its displayed text.
@@ -419,8 +520,8 @@ export default class Table extends HTMLElement {
 
 		if (value !== undefined) return value;
 
-		return Table.#cell_text(record.tr.cells[column_index]);
-	}
+		return Table.#cell_text(record.cells[column_index]);
+	};
 
 	#parse_search = (input_value) => {
 		const value = input_value.replace(/\s+/g, ' ').trim().toLowerCase();
@@ -453,7 +554,7 @@ export default class Table extends HTMLElement {
 		search.column_value = title_and_value[2].trim();
 
 		return search;
-	}
+	};
 
 	#matches_search = (record) => {
 		if (this.#search === null) return true;
@@ -466,7 +567,7 @@ export default class Table extends HTMLElement {
 			if (this.#cell_matches(record, index, this.#search.value)) return true;
 
 		return false;
-	}
+	};
 
 	// A cell matches when the term is in its raw value (if any) or in what it displays, read live from the DOM
 	#cell_matches = (record, column_index, term) => {
@@ -474,8 +575,8 @@ export default class Table extends HTMLElement {
 
 		if (value !== undefined && Table.#raw_text(value).toLowerCase().includes(term)) return true;
 
-		return Table.#cell_text(record.tr.cells[column_index]).toLowerCase().includes(term);
-	}
+		return Table.#cell_text(record.cells[column_index]).toLowerCase().includes(term);
+	};
 
 
 	//// Pages
@@ -493,6 +594,7 @@ export default class Table extends HTMLElement {
 		Derives the view from the master data and the current state, then renders it.
 		"page" moves to that page; otherwise the current page is kept (clamped if it no longer exists).
 		A page change draws from the first batch; any other change keeps the rows already drawn.
+		Checking rows doesn't change the view, so it skips this path and only calls #render_check_state.
 	*/
 	#refresh = (page = this.#current_page) => {
 		const is_page_change = page !== this.#current_page;
@@ -503,7 +605,8 @@ export default class Table extends HTMLElement {
 
 		this.#render_body(is_page_change ? this.#batch_size : Math.max(this.#drawn_count, this.#batch_size));
 		this.#render_footer();
-	}
+		this.#render_check_state();
+	};
 
 
 	//// Body
@@ -549,15 +652,16 @@ export default class Table extends HTMLElement {
 
 		this.#sync_lazy_draw_loader();
 		this.#apply_search_highlights();
-	}
+	};
 
 	#show_empty_state = () => {
 		this.#empty_state_element.firstElementChild.innerHTML = window.Lang.use(this.#search === null ? "no_data" : "no_matches");
 		this.#tbody_element.appendChild(this.#empty_state_element);
-	}
+	};
 
 	#init_body_helpers = () => {
-		const column_count = this.#JSON["columns"].length;
+		// The checkbox cell is layout, not data, so it only counts here
+		const column_count = this.#JSON["columns"].length + (this.#is_checkable ? 1 : 0);
 
 		this.#empty_state_element = document.createElement("tr");
 		this.#empty_state_element.innerHTML = `<td colspan="${column_count}"></td>`;
@@ -573,7 +677,7 @@ export default class Table extends HTMLElement {
 			},
 			{root: this.#main_element, threshold: 0.5}
 		);
-	}
+	};
 
 	#sync_lazy_draw_loader = () => {
 		this.#lazy_draw_observer.unobserve(this.#lazy_draw_loader_element);
@@ -587,7 +691,7 @@ export default class Table extends HTMLElement {
 
 		// Re-observing reports the loader's current state, so drawing continues while it is still visible
 		this.#lazy_draw_observer.observe(this.#lazy_draw_loader_element);
-	}
+	};
 
 
 	//// Highlight
@@ -612,7 +716,7 @@ export default class Table extends HTMLElement {
 		const start = this.#page_start_index();
 
 		for (let index = start; index < start + this.#drawn_count; index++) {
-			const cells = this.#view[index].tr.cells;
+			const cells = this.#view[index].cells;
 
 			for (const cell of cells) Table.#add_highlight_ranges(highlight, cell, full_regex);
 
@@ -620,7 +724,7 @@ export default class Table extends HTMLElement {
 		}
 
 		if (highlight.size > 0) CSS.highlights.set(this.#highlight_name, highlight);
-	}
+	};
 
 
 	//// DOM
@@ -673,6 +777,9 @@ export default class Table extends HTMLElement {
 		this.#main_element = this.querySelector(":scope > container > main");
 		this.#tbody_element = this.#main_element.querySelector("table > tbody");
 		this.#footer_element = this.querySelector(":scope > container > footer");
+		this.#head_cells = Array.from(this.#main_element.querySelector("table > thead > tr").children);
+
+		if (this.#is_checkable) this.#check_all_element = this.#head_cells.shift().querySelector("input");
 
 		if (this.#footer_element === null) return;
 
@@ -686,7 +793,7 @@ export default class Table extends HTMLElement {
 			next: navigation.querySelector(":scope > x-svg[name=arrow_forward_v1]"),
 			last: navigation.querySelector(":scope > x-svg[name=arrow_right_last_page]")
 		};
-	}
+	};
 
 	#build_page_size_HTML = () => {
 		if (
@@ -716,7 +823,7 @@ export default class Table extends HTMLElement {
 				<option value="all">${window.Lang.use("all")}</option>
 			</select>
 		`;
-	}
+	};
 
 	#build_search_HTML = () => {
 		if (
@@ -738,7 +845,7 @@ export default class Table extends HTMLElement {
 				style="outline-offset: -1px;"
 			>
 		`;
-	}
+	};
 
 	#build_download_HTML = () => {
 		if (
@@ -750,10 +857,19 @@ export default class Table extends HTMLElement {
 			<x-svg id="download_CSV_${this.#ID}" name="download_v2" color="white" class="btn btn-primary"></x-svg>
 			<x-tooltip trigger_selector="x-svg#download_CSV_${this.#ID}" class="padding-1 text-size-0-6rem">${window.Lang.use("download_as_CSV")}</x-tooltip>
 		`;
-	}
+	};
 
 	#build_head_HTML = () => {
 		let HTML = '';
+
+		if (this.#is_checkable)
+			HTML += `
+				<th class="width-1px padding-0">
+					<label class="display-flex justify-content-center align-items-center padding-2 cursor-pointer">
+						<input type="checkbox" aria-label="${window.Lang.use("select_all")}">
+					</label>
+				</th>
+			`;
 
 		for (const column of this.#JSON["columns"]) {
 			const is_sortable = column["sortable"] !== false;
@@ -769,15 +885,18 @@ export default class Table extends HTMLElement {
 		}
 
 		return HTML;
-	}
+	};
 
 	#build_foot_HTML = () => {
 		let HTML = '';
 
 		for (const cell of this.#JSON["foot"] ?? []) HTML += `<td>${cell}</td>`;
 
+		// Keeps the foot cells under their columns
+		if (HTML !== '' && this.#is_checkable) HTML = "<td></td>" + HTML;
+
 		return HTML;
-	}
+	};
 
 	#build_footer_HTML = () => {
 		if (
@@ -791,6 +910,7 @@ export default class Table extends HTMLElement {
 					<span class="page_numbers"></span>
 					<span class="total_rows"></span>
 					<span class="matched_rows"></span>
+					<span class="checked_rows"></span>
 				</section>
 
 				<section class="display-flex flex-row justify-content-flex-end gap-0-2">
@@ -802,7 +922,7 @@ export default class Table extends HTMLElement {
 				</section>
 			</footer>
 		`;
-	}
+	};
 
 
 	//// Footer
@@ -842,12 +962,79 @@ export default class Table extends HTMLElement {
 		}
 
 		this.#pagination_elements.numbers.innerHTML = buttons_HTML;
-	}
+	};
 
 	#set_page_target = (element, page) => {
 		element.setAttribute("data-page", page);
 		element.classList.toggle("disabled", page < 1 || page > this.#page_count() || page === this.#current_page);
-	}
+	};
+
+
+	//// Check
+
+	// Its own cell, outside "cells", so data columns keep their indexes. Fills record.checkbox.
+	#create_checkbox_cell = (record) => {
+		const checkbox = document.createElement("input");
+		checkbox.type = "checkbox";
+		checkbox.setAttribute("aria-label", window.Lang.use("select_row"));
+
+		// The label takes the cell's padding, so the click area is larger than the checkbox
+		const label = document.createElement("label");
+		label.className = "display-flex justify-content-center align-items-center padding-2 cursor-pointer";
+		label.append(checkbox);
+
+		const td = document.createElement("td");
+		td.className = "width-1px padding-0";
+		td.append(label);
+
+		record.checkbox = checkbox;
+		this.#record_by_checkbox.set(checkbox, record);
+
+		return td;
+	};
+
+	// Keeps the Set and the row's checkbox in step. Returns whether anything changed.
+	#set_record_checked = (record, checked) => {
+		if (this.#checked_keys.has(record.key) === checked) return false;
+
+		if (checked) this.#checked_keys.add(record.key);
+		else this.#checked_keys.delete(record.key);
+
+		record.checkbox.checked = checked;
+
+		return true;
+	};
+
+	/*
+		Header checkbox: checked when every row in the view is checked, indeterminate when only some are.
+		It stays unchecked while indeterminate, so clicking it checks all.
+		The footer shows the total, including checked rows the view hides.
+	*/
+	#render_check_state = () => {
+		if (this.#is_checkable === false) return;
+
+		const view_length = this.#view.length;
+		let checked_in_view = 0;
+
+		for (const record of this.#view)
+			if (this.#checked_keys.has(record.key)) checked_in_view++;
+
+		this.#check_all_element.checked = view_length > 0 && checked_in_view === view_length;
+		this.#check_all_element.indeterminate = checked_in_view > 0 && checked_in_view < view_length;
+		this.#check_all_element.disabled = view_length === 0;
+
+		if (this.#footer_element === null) return;
+
+		const checked_count = this.#checked_keys.size;
+
+		this.#footer_element.querySelector(".checked_rows").innerHTML = checked_count === 0 ? '' : `
+			<span class="text-color-secondary text-size-0-7rem">${window.Lang.use("checked_rows")}:</span> ${checked_count}
+		`;
+	};
+
+	#dispatch_check_change = () => {
+		this.dispatchEvent(new CustomEvent("check_change", {detail: {count: this.#checked_keys.size}}));
+	};
 
 
 	//// Listeners
@@ -861,7 +1048,7 @@ export default class Table extends HTMLElement {
 			this.#page_size = Table.#parse_page_size(element.value);
 			this.#refresh(1);
 		};
-	}
+	};
 
 	#listen_to_search_typing = () => {
 		const element = this.#header_element.querySelector(":scope > input[name=search]");
@@ -878,7 +1065,7 @@ export default class Table extends HTMLElement {
 				this.#refresh(1);
 			}, 500);
 		};
-	}
+	};
 
 	#listen_to_CSV_download_click = () => {
 		const element = this.#header_element.querySelector(`:scope > x-svg#download_CSV_${this.#ID}`);
@@ -895,25 +1082,23 @@ export default class Table extends HTMLElement {
 			for (const record of this.#view) {
 				const CSV_row = [];
 
-				for (const cell of record.tr.cells) CSV_row.push(Table.#cell_text(cell));
+				for (const cell of record.cells) CSV_row.push(Table.#cell_text(cell));
 
 				CSV_data.push(CSV_row);
 			}
 
 			download_CSV(CSV_data);
 		};
-	}
+	};
 
 	#listen_to_sort_clicks = () => {
-		const th_elements = this.#main_element.querySelector("table > thead > tr").children;
-
-		for (let column_index = 0; column_index < th_elements.length; column_index++) {
-			const x_svg_element = th_elements[column_index].querySelector("x-svg");
+		for (let column_index = 0; column_index < this.#head_cells.length; column_index++) {
+			const x_svg_element = this.#head_cells[column_index].querySelector("x-svg");
 
 			// Non-sortable column
 			if (x_svg_element === null) continue;
 
-			th_elements[column_index].onclick = () => {
+			this.#head_cells[column_index].onclick = () => {
 				// toggled === true means this column is currently sorted ASC
 				const direction = x_svg_element.toggled === true ? Table.#sort_directions.DESC : Table.#sort_directions.ASC;
 
@@ -923,7 +1108,7 @@ export default class Table extends HTMLElement {
 				this.#refresh();
 			};
 		}
-	}
+	};
 
 	#listen_to_pagination_clicks = () => {
 		if (this.#pagination_elements === null) return;
@@ -935,7 +1120,38 @@ export default class Table extends HTMLElement {
 
 			this.#refresh(parseInt(element.getAttribute("data-page")));
 		};
-	}
+	};
+
+	#listen_to_check_changes = () => {
+		if (this.#is_checkable === false) return;
+
+		// Delegated: one listener covers every row's checkbox, drawn now or later
+		this.#tbody_element.onchange = (event) => {
+			const record = this.#record_by_checkbox.get(event.target);
+
+			// Not a row checkbox, e.g. an input inside a data cell
+			if (record === undefined) return;
+
+			// The checkbox already shows the new state; this brings the Set in step with it
+			if (this.#set_record_checked(record, event.target.checked) === false) return;
+
+			this.#render_check_state();
+			this.#dispatch_check_change();
+		};
+
+		// Acts on the whole view: every page, drawn or not
+		this.#check_all_element.onchange = () => {
+			const checked = this.#check_all_element.checked;
+			let is_changed = false;
+
+			for (const record of this.#view)
+				if (this.#set_record_checked(record, checked)) is_changed = true;
+
+			this.#render_check_state();
+
+			if (is_changed) this.#dispatch_check_change();
+		};
+	};
 };
 
 
