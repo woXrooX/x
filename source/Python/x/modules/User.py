@@ -376,6 +376,8 @@ if __name__ != "__main__":
 				PostgreSQL.commit_connection(connection)
 				PostgreSQL.put_connection_to_pool(connection)
 
+				connection = None
+
 
 
 			if not User.init_folders(user_res["id"]): Log.warning("Users.create(): User.init_folders()")
