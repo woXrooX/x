@@ -14,7 +14,9 @@ export default class Layer extends HTMLElement {
 			style.textContent = `:host {display: none;}`;
 			this.shadow.appendChild(style);
 		}
+	}
 
+	connectedCallback() {
 		this.#handle_trigger_click();
 	}
 

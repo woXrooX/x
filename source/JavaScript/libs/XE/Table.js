@@ -95,7 +95,7 @@ export default class Table extends HTMLElement {
 
 		if (typeof(classes) === "string" && classes.trim() !== '') table.classList.add(...classes.trim().split(/\s+/));
 
-		table.JSON = JSON;
+		table.set_JSON(JSON);
 
 		return table;
 	}
@@ -274,7 +274,7 @@ export default class Table extends HTMLElement {
 		CSS.highlights.delete(this.#highlight_name);
 	}
 
-	set JSON(value) {
+	set_JSON(value) {
 		if (this.#is_initialized === true) return;
 
 		this.#accept_JSON(value);
