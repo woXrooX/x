@@ -936,6 +936,9 @@
 			.text-align-justify-all{text-align: justify-all;}
 			.text-align-match-parent{text-align: match-parent;}
 
+			.vertical-align-middle { vertical-align: middle; }
+			.vertical-align-baseline { vertical-align: baseline; }
+
 			/* s */
 			@media (width <= 600px){
 				.s-text-align-start{text-align: start;}
@@ -1018,8 +1021,15 @@
 
 
 			.text-size-0-6em{font-size: 0.6em;}
+			.text-size-0-7em{font-size: 0.7em;}
 			.text-size-0-8em{font-size: 0.8em;}
 			.text-size-0-9em{font-size: 0.9em;}
+			.text-size-1em{font-size: 1em;}
+			.text-size-1-1em{font-size: 1.1em;}
+			.text-size-1-2em{font-size: 1.2em;}
+			.text-size-1-3em{font-size: 1.3em;}
+			.text-size-1-4em{font-size: 1.4em;}
+			.text-size-1-5em{font-size: 1.5em;}
 		}
 
 		@layer line_height{
