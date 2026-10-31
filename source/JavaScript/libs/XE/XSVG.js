@@ -1,35 +1,50 @@
 // SVG shadow
 // filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
 
-export default class XSVG extends HTMLElement{
+export default class XSVG extends HTMLElement {
+	/////////////////////////// Static
+
+	/////////// Variables
+
+	static observedAttributes = ["name", "toggle", "color"];
+
+
+	/////////////////////////// Object
+
+	/////////// Variables
+
+	#toggled = false;
+	#shadow = null;
+	#svg_container = null;
+
+
+	/////////// APIs
+
 	constructor() {
 		super();
 
-		this.shadow = this.attachShadow({mode: 'closed'});
+		this.#shadow = this.attachShadow({mode: "closed"});
 
-		this.shadow.innerHTML = `
+		this.#shadow.innerHTML = `
 			<style>
 				:host{
 					display: inline-block;
-					vertical-align: middle;
-
-					width: auto;
-
-					height: 1em;
+					vertical-align: -0.125em;
+					vertical-align: calc((1cap - 1em) / 2);
 
 					cursor: pointer;
 					user-select: none;
 				}
 
 				span{
-					width: 1em;
-					height: 1em;
+					display: block;
 
 					& > svg{
+						display: block;
 						width: 1em;
 						height: 1em;
 
-						fill: ${this.getAttribute("color") || "var(--color-text-primary)"};
+						fill: currentColor;
 
 						transition: 100ms ease-in-out;
 						transition-property: transform;
@@ -45,49 +60,58 @@ export default class XSVG extends HTMLElement{
 				}
 			</style>
 
-			<span>${window.x.SVG.use(this.getAttribute("name"))}</span>
+			<span></span>
 		`;
 
-		this.svg_container = this.shadow.querySelector("span");
+		this.#svg_container = this.#shadow.querySelector("span");
 
-		// Is Toggled?
-		this.toggled = false;
-
-		// On click toggle
-		this.addEventListener("click", this.force_toggle);
+		this.addEventListener("click", () => this.force_toggle());
 	}
 
-	////////// APIs
+	attributeChangedCallback(attribute_name, old_value, new_value) {
+		if (attribute_name === "color") this.#svg_container.style.color = new_value ?? '';
 
-	force_toggle = ()=>{
-		// If No "toggle" Attribute Then Exit The Method
+		else this.#render();
+	}
+
+	get_name() {
+		return this.getAttribute("name");
+	}
+
+	set_name(value) {
+		this.setAttribute("name", value);
+	}
+
+	get_toggle() {
+		return this.getAttribute("toggle");
+	}
+
+	set_toggle(value) {
+		this.setAttribute("toggle", value);
+	}
+
+	force_toggle() {
 		if (this.hasAttribute("toggle") === false) return;
 
-		// Set SVG To "name" Value
-		if (this.toggled === true) this.svg_container.innerHTML = window.x.SVG.use(this.getAttribute("name"));
-
-		// Set SVG To "toggle" Value
-		else this.svg_container.innerHTML = window.x.SVG.use(this.getAttribute("toggle"));
-
-		// Update The Value
-		this.toggled = !this.toggled;
+		this.#toggled = !this.#toggled;
+		this.#render();
 	}
 
-	////////// Setters
-	// Set SVG name
-	set name(value) {
-		this.setAttribute("name", value);
-		if (this.toggled === false) this.svg_container.innerHTML = window.x.SVG.use(value);
+	is_toggled() {
+		return this.#toggled;
 	}
 
-	// Set SVG toggle name
-	set toggle(value) {
-		this.setAttribute("toggle", value);
-		if (this.toggled === true) this.svg_container.innerHTML = window.x.SVG.use(value);
-	}
-};
 
-window.customElements.define('x-svg', XSVG);
+	/////////// Helpers
+
+	// Show the "toggle" icon when toggled, otherwise the "name" icon
+	#render() {
+		const attribute_name = this.#toggled === true ? "toggle" : "name";
+		this.#svg_container.innerHTML = window.x.SVG.use(this.getAttribute(attribute_name));
+	}
+}
+
+window.customElements.define("x-svg", XSVG);
 
 // Make XSVG Usable W/O Importing It
 window.XSVG = XSVG;

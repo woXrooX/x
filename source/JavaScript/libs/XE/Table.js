@@ -1207,7 +1207,7 @@ export default class Table extends HTMLElement {
 
 			this.#head_cells[column_index].onclick = () => {
 				// toggled === true means this column is currently sorted ASC
-				const direction = x_svg_element.toggled === true ? Table.#sort_directions.DESC : Table.#sort_directions.ASC;
+				const direction = x_svg_element.is_toggled() === true ? Table.#sort_directions.DESC : Table.#sort_directions.ASC;
 
 				this.#sort = {column_index, direction};
 				x_svg_element.force_toggle();

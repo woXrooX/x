@@ -92,23 +92,23 @@ export default class Color_Mode{
 				Color_Mode.#light();
 
 				if(!!Color_Mode.color_mode_switcher_icon === false) break;
-				Color_Mode.color_mode_switcher_icon.name = "dark_mode";
-				Color_Mode.color_mode_switcher_icon.toggle = "light_mode";
+				Color_Mode.color_mode_switcher_icon.set_name("dark_mode");
+				Color_Mode.color_mode_switcher_icon.set_toggle("light_mode");
 				break;
 
 			// If we add more color modes we will uncommend the code below and add more cases
 			// case Color_Mode.color_modes.DARK:
 			//     Color_Mode.#dark();
-			//     Color_Mode.color_mode_switcher_icon.name = "light_mode";
-			//     Color_Mode.color_mode_switcher_icon.toggle = "dark_mode";
+			//     Color_Mode.color_mode_switcher_icon.set_name("light_mode");
+			//     Color_Mode.color_mode_switcher_icon.set_toggle("dark_mode");
 			//     break;
 
 			default:
 				Color_Mode.#dark();
 
 				if(!!Color_Mode.color_mode_switcher_icon === false) break;
-				Color_Mode.color_mode_switcher_icon.name = "light_mode";
-				Color_Mode.color_mode_switcher_icon.toggle = "dark_mode";
+				Color_Mode.color_mode_switcher_icon.set_name("light_mode");
+				Color_Mode.color_mode_switcher_icon.set_toggle("dark_mode");
 		}
 	}
 
