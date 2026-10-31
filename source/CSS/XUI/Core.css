@@ -261,10 +261,12 @@
 		}
 
 		/* Defaults */
+		button,
 		select,
 		textarea,
 		input {
 			cursor: pointer;
+			font-family: inherit;
 		}
 
 		select,
