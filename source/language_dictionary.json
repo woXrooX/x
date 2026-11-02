@@ -558,6 +558,11 @@
 		"uz": "Rollar",
 		"ru": "Роли"
 	},
+	"change_language": {
+		"en": "Change language",
+		"uz": "Tilni o'zgartirish",
+		"ru": "Сменить язык"
+	},
 
 
 

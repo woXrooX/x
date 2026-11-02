@@ -77,8 +77,15 @@ export default class Language extends HTMLElement{
 
 		return `
 			<span id="header_language_modal">${Lang.code_to_flag(Lang.CURRENT)}</span>
+
+			<x-tooltip class="padding-1 text-size-0-6rem">${window.Lang.use("change_language")}</x-tooltip>
+
 			<x-modal trigger_selector="span#header_language_modal" modal_func="change_language">
-				<column class="padding-2 gap-1">${build_buttons_HTML()}</column>
+				<column class="padding-2 gap-1">
+					<p class="text-align-center text-size-1-5rem text-color-main">${window.Lang.use("change_language")}</p>
+
+					${build_buttons_HTML()}
+				</column>
 			</x-modal>
 		`;
 
@@ -86,9 +93,23 @@ export default class Language extends HTMLElement{
 			let HTML = '';
 
 			for (const code of window.x["configurations"].default.language.supported) HTML += `
-				<button name="${code}" class="btn btn-primary display-flex flex-row gap-1 justify-content-space-between ${Lang.CURRENT == code ? '' : "btn-outline"} width-100">
-					<span class="text-color-white">${Lang.use(code)}</span>
+				<button
+					class="
+						btn
+						btn-clean
+						${Lang.CURRENT == code ? "disabled" : ''}
+
+						display-flex
+						flex-row
+						gap-0-5
+						justify-content-flex-start
+						width-100
+					"
+
+					name="${code}"
+				>
 					<span>${Lang.code_to_flag(code)}</span>
+					<span>${Lang.use(code)}</span>
 				</button>
 			`;
 
