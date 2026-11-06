@@ -1486,6 +1486,7 @@
 		.bg-10{background-color: var(--color-brand-tint-10);}
 
 		/* Basics */
+		.bg-unset { background: unset; }
 		.bg-none{background-color: none;}
 		.bg-black{background-color: black;}
 		.bg-white{background-color: white;}
@@ -2673,6 +2674,7 @@
 
 		@layer padding{
 			/* All sides */
+			.padding-0-important { padding: 0px !important; }
 			.padding-0{padding: 0px;}
 			.padding-1{padding: var(--padding);}
 			.padding-2{padding: calc(var(--padding) * 2);}
