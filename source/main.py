@@ -154,12 +154,6 @@ def app_after_request(response):
 
 
 
-#################################################### Dynamically imprting all pages
-from live_pages.back import *
-
-
-
-
 #################################################### SEO
 from Python.x.modules.SEO.LLMs.LLMs import LLMs
 LLMs.generate()
@@ -169,6 +163,12 @@ Robots.generate()
 
 from Python.x.modules.SEO.Sitemap import Sitemap
 Sitemap.generate()
+
+
+
+
+#################################################### Dynamically imprting all pages
+from live_pages.back import *
 
 
 
