@@ -2677,6 +2677,7 @@
 			.padding-0-important { padding: 0px !important; }
 			.padding-0{padding: 0px;}
 			.padding-1{padding: var(--padding);}
+			.padding-1-5 { padding: calc(var(--padding) * 1.5); }
 			.padding-2{padding: calc(var(--padding) * 2);}
 			.padding-3{padding: calc(var(--padding) * 3);}
 			.padding-4{padding: calc(var(--padding) * 4);}
