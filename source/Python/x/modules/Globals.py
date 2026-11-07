@@ -4,14 +4,13 @@ if __name__ != "__main__":
 	import json
 	import sys
 
-	import main
-
 	from Python.x.modules.Logger import Log
 	from Python.x.modules.File_System import File_System
 
 	class Globals():
 		#### Paths
-		X_PATH = pathlib.Path(main.__file__).parent.absolute()
+		# x/source/, found from this file's own place: x/source/Python/x/modules/Globals.py
+		X_PATH = pathlib.Path(os.path.abspath(__file__)).parents[3]
 
 		# Go back two times from "X_RUNNING_FROM"
 		PROJECT_PATH = os.path.abspath(os.path.join(X_PATH, '../..'))
@@ -74,8 +73,8 @@ if __name__ != "__main__":
 				Log.success("Loaded: x.json")
 
 			except Exception as err:
-				Log.error(f"File_System.load_internal_configurations(): {err}")
-				sys.exit()
+				Log.error(f"File_System.load_internal_configurations(): {err}", force=True)
+				sys.exit(1)
 
 		# Project configurations - project.json
 		@staticmethod
@@ -89,8 +88,8 @@ if __name__ != "__main__":
 				Log.success("Loaded: project.json")
 
 			except:
-				Log.error("Could Not Load The project.json")
-				sys.exit()
+				Log.error("Could Not Load The project.json", force=True)
+				sys.exit(1)
 
 		# Merge x.json and project.json
 		# Merge project dependent configurations to default configurations. Override defaults
@@ -164,4 +163,3 @@ if __name__ != "__main__":
 		@staticmethod
 		def merge_language_dictionaries():
 			Globals.LANGUAGE_DICTIONARY.update(Globals.PROJECT_LANGUAGE_DICTIONARY)
-

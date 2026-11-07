@@ -4,11 +4,17 @@ if __name__ != "__main__":
 	import xml.etree.ElementTree as ET
 	from xml.dom import minidom
 
+	from main import app
+
 	from Python.x.modules.Logger import Log
 	from Python.x.modules.Globals import Globals
-	from Python.x.modules.File_System import File_System
+	from Python.x.modules.Response import Response
 
 	class Sitemap():
+		# Built in memory by generate() and served by the /sitemap.xml route.
+		# Every worker builds its own copy, so no worker writes it to disk.
+		XML = None
+
 		@staticmethod
 		def generate():
 			if Globals.CONF.get("tools", {}).get("SEO", {}).get("Sitemap", False) is not True: return
@@ -71,8 +77,11 @@ if __name__ != "__main__":
 						priority.text = "0.8"
 
 				# Create the XML string with proper formatting
-				XML_string = minidom.parseString(ET.tostring(urlset)).toprettyxml(indent="    ")
+				Sitemap.XML = minidom.parseString(ET.tostring(urlset)).toprettyxml(indent="    ")
 
-				File_System.create_file(f'{Globals.X_PATH}/www/static/sitemap.xml', XML_string, strict=True, overwrite=True)
+				app.add_url_rule("/sitemap.xml", endpoint="sitemap_xml", view_func=Sitemap.serve, methods=["GET"])
 
 			except Exception as e: Log.error(f"Sitemap.generate(): Could not generate sitemap.xml file: {e}")
+
+		@staticmethod
+		def serve(): return Response.make(RAW=(Sitemap.XML, 200, {"Content-Type": "application/xml; charset=utf-8"}))

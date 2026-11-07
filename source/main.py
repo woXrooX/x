@@ -18,8 +18,7 @@ Globals.init_LANGUAGE_DICTIONARY()
 
 
 
-#################################################### Clean up the terminal
-Log.clear()
+#################################################### Banner
 Log.center('', '|')
 Log.center("x is running", '|')
 Log.center('', '|')
@@ -27,9 +26,13 @@ Log.center('', '|')
 
 
 
-#################################################### Initializing File_System_Operations
+#################################################### Loading files
+# prep.py has already built live_pages/, www/ and Python/project/modules/ (exec-asap in uWSGI_*.ini).
+# From here on main.py only reads files: with lazy-apps every uWSGI worker runs main.py,
+# so a write here would happen in every worker at once.
+
 from Python.x.modules.File_System_Operations import File_System_Operations
-File_System_Operations.init()
+File_System_Operations.load()
 
 
 
@@ -154,21 +157,18 @@ def app_after_request(response):
 
 
 
-#################################################### SEO
-from Python.x.modules.SEO.LLMs.LLMs import LLMs
-LLMs.generate()
-
-from Python.x.modules.SEO.Robots import Robots
-Robots.generate()
-
-from Python.x.modules.SEO.Sitemap import Sitemap
-Sitemap.generate()
-
-
-
-
 #################################################### Dynamically imprting all pages
 from live_pages.back import *
+
+
+
+
+#################################################### SEO
+# prep.py writes robots.txt, llms.txt and llms-full.txt.
+# The sitemap comes after the pages import: it lists each page's endpoints, and a page's
+# config exists only once its file is imported. It's built in memory and served by a route.
+from Python.x.modules.SEO.Sitemap import Sitemap
+Sitemap.generate()
 
 
 

@@ -10,7 +10,7 @@ if __name__ != "__main__":
 	class File_System_Operations:
 		################################ APIs
 
-		# Initiate system files and folders
+		# Writes to disk, so only prep.py runs it
 		@staticmethod
 		def init():
 			################################ Creating folders
@@ -87,18 +87,6 @@ if __name__ != "__main__":
 
 
 
-			################################ Loading/Reading files
-			Log.center("Loading files", '=')
-
-			# HTML
-			File_System_Operations.load_external_HTML()
-
-			# SVG
-			File_System_Operations.load_external_SVG()
-
-
-
-
 			################################ Copying "x" folders
 			Log.center('Copying "x" folders', '=')
 			File_System.copy_folder(f"{Globals.X_PATH}/CSS", f"{Globals.X_PATH}/www/static/CSS", strict=True)
@@ -125,6 +113,17 @@ if __name__ != "__main__":
 			File_System.copy_folder(f"{Globals.PROJECT_PATH}/Python", f"{Globals.X_PATH}/Python/project/modules", strict=True)
 
 			File_System.copy_file(f"{Globals.PROJECT_PATH}/", f"{Globals.X_PATH}/www/static", "SW.js", strict=True)
+
+		# Only reads files, so main.py runs it in every worker
+		@staticmethod
+		def load():
+			Log.center("Loading files", '=')
+
+			# HTML
+			File_System_Operations.load_external_HTML()
+
+			# SVG
+			File_System_Operations.load_external_SVG()
 
 
 

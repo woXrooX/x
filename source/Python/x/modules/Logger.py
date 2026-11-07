@@ -51,20 +51,21 @@ if __name__ != "__main__":
 
 
 		######### APIs / Log Types
-		@staticmethod
-		def success(text, force = False): Logger.log("success", text, force)
 
 		@staticmethod
-		def info(text, force = False): Logger.log("info", text, force)
+		def success(text, force = False): Logger.log("success", text, force=force)
 
 		@staticmethod
-		def warning(text, force = False): Logger.log("warning", text, force)
+		def info(text, force = False): Logger.log("info", text, force=force)
 
 		@staticmethod
-		def error(text, force = False): Logger.log("error", text, force)
+		def warning(text, force = False): Logger.log("warning", text, force=force)
 
 		@staticmethod
-		def custom(type_name, text, force = False): Logger.log(type_name, text, force)
+		def error(text, force = False): Logger.log("error", text, force=force)
+
+		@staticmethod
+		def custom(type_name, text, force = False): Logger.log(type_name, text, force=force)
 
 		@staticmethod
 		@guard

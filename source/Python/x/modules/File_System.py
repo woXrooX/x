@@ -8,6 +8,7 @@ if __name__ != "__main__":
 	class File_System:
 		################################ Helpers
 		# Helpers with strict mode True will exit the script (Stop the server) on fail
+		# They exit with code 1 and log the error even when debug is off, so a failed start says why
 
 		@staticmethod
 		def create_folder(path, strict = False):
@@ -19,9 +20,9 @@ if __name__ != "__main__":
 				return True
 
 			except:
-				Log.error(f"Could Not Create The Folder: {path}")
+				Log.error(f"Could Not Create The Folder: {path}", force=strict)
 
-				if strict is True: sys.exit()
+				if strict is True: sys.exit(1)
 
 				return False
 
@@ -40,9 +41,9 @@ if __name__ != "__main__":
 				return True
 
 			except Exception as e:
-				Log.error(f"File_System.create_file(): Error: {e}")
+				Log.error(f"File_System.create_file(): Error: {e}", force=strict)
 
-				if strict is True: sys.exit()
+				if strict is True: sys.exit(1)
 
 				return False
 
@@ -56,9 +57,9 @@ if __name__ != "__main__":
 				return True
 
 			except:
-				Log.error(f"File_System.copy_folder(): Could not copy the folder: {source}")
+				Log.error(f"File_System.copy_folder(): Could not copy the folder: {source}", force=strict)
 
-				if strict is True: sys.exit()
+				if strict is True: sys.exit(1)
 
 				return False
 
@@ -76,9 +77,9 @@ if __name__ != "__main__":
 				return True
 
 			except:
-				Log.error(f"Could Not Copy The File: {file}")
+				Log.error(f"Could Not Copy The File: {file}", force=strict)
 
-				if strict is True: sys.exit()
+				if strict is True: sys.exit(1)
 
 				return False
 
@@ -104,9 +105,9 @@ if __name__ != "__main__":
 				return True
 
 			except:
-				Log.error(f"Could Not Copy The Files @: {from_path}")
+				Log.error(f"Could Not Copy The Files @: {from_path}", force=strict)
 
-				if strict is True: sys.exit()
+				if strict is True: sys.exit(1)
 
 				return False
 
@@ -120,9 +121,9 @@ if __name__ != "__main__":
 				return True
 
 			except:
-				Log.error(f"Could Not Delete The Files @: {pathAndFile}")
+				Log.error(f"Could Not Delete The Files @: {pathAndFile}", force=strict)
 
-				if strict is True: sys.exit()
+				if strict is True: sys.exit(1)
 
 				return False
 
@@ -136,8 +137,8 @@ if __name__ != "__main__":
 				return True
 
 			except:
-				Log.error(f"Could not remove the folder @: {path}")
+				Log.error(f"Could not remove the folder @: {path}", force=strict)
 
-				if strict is True: sys.exit()
+				if strict is True: sys.exit(1)
 
 				return False
