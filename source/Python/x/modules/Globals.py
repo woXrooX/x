@@ -63,9 +63,7 @@ if __name__ != "__main__":
 			Globals.load_project_configurations()
 			Globals.merge_configurations()
 
-			if not Globals.CONF["flask"].get("secret_key"):
-				Log.error("project.json: flask.secret_key is not set", force=True)
-				sys.exit(1)
+			Globals.validate_secret_key()
 
 		# x configurations - x.json
 		@staticmethod
@@ -130,6 +128,13 @@ if __name__ != "__main__":
 			Globals.PUBLIC_CONF["phone_number"] = Globals.CONF["phone_number"]
 
 			# print(json.dumps(Globals.PUBLIC_CONF, indent=4))
+
+		# Refuses to start without a secret key in project.json
+		@staticmethod
+		def validate_secret_key():
+			if not Globals.CONF["flask"].get("secret_key"):
+				Log.error("project.json: flask.secret_key is not set", force=True)
+				sys.exit(1)
 
 
 		################# LANGUAGE_DICTIONARY
