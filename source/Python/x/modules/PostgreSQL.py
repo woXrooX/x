@@ -255,10 +255,11 @@ if __name__ != "__main__":
 
 
 
+		# psycopg_pool calls this from one of its background threads after reconnect_timeout seconds of failed attempts, then keeps trying.
+		# No sys.exit() here: it would only end that thread, and once all of them are gone the pool never reconnects
 		@staticmethod
 		def reconnect_failed_callback(pool):
-			Log.error(f"PostgreSQL.on_reconnect_failed(): Could not connect to server")
-			sys.exit(1)
+			Log.error(f"PostgreSQL.on_reconnect_failed(): Could not connect to server", force=True)
 
 		# NOTE: After this call returns, if 'error' in response, the connection (whether owned or borrowed) has been rolled back and returned to the pool — do not reuse any connection reference you previously held.
 		@staticmethod
