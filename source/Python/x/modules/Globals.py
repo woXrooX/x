@@ -63,6 +63,10 @@ if __name__ != "__main__":
 			Globals.load_project_configurations()
 			Globals.merge_configurations()
 
+			if not Globals.CONF["flask"].get("secret_key"):
+				Log.error("project.json: flask.secret_key is not set", force=True)
+				sys.exit(1)
+
 		# x configurations - x.json
 		@staticmethod
 		def load_internal_configurations():
