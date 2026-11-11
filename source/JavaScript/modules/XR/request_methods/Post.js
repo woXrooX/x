@@ -3,7 +3,8 @@ export default class Post {
 
 	#element;
 	#for;
-	#data;
+	#XR_data;
+	#XR_func_data;
 	#trigger;
 	#commands;
 	#action = null;
@@ -37,13 +38,18 @@ export default class Post {
 	}
 
 	#construct_data() {
-		try{ this.#data = JSON.parse(this.#element.getAttribute("XR-data")); }
-		catch(error) { this.#data = {}; }
+		try{ this.#XR_data = JSON.parse(this.#element.getAttribute("XR-data")); }
+		catch(error) { this.#XR_data = {}; }
 
-		this.#data = {
+		this.#XR_data = {
 			...(this.#element.hasAttribute("XR-for") ? {"for": this.#element.getAttribute("XR-for")} : {}),
-			...this.#data
+			...this.#XR_data
 		}
+
+
+
+		try{ this.#XR_func_data = JSON.parse(this.#element.getAttribute("XR-func-data")); }
+		catch(error) { this.#XR_func_data = {}; }
 	}
 
 	/////////// Handlers
@@ -71,8 +77,8 @@ export default class Post {
 			}
 		}
 
-		// Overriding this.#data with XR-inputs values
-		for (const name in this.#input_elements) this.#data[name] = this.#input_elements[name].value;
+		// Overriding this.#XR_data with XR-inputs values
+		for (const name in this.#input_elements) this.#XR_data[name] = this.#input_elements[name].value;
 
 		function get_name(element) {
 			if ("name" in element) return element.name;
@@ -167,12 +173,13 @@ export default class Post {
 		if (!("type" in this.#response)) return x.Toast.new("error", "invalid_response");
 
 		////////// Callback
-		window.x.XR.execute_on_response(
-			this.#element.getAttribute("XR-func"),
-			this.#response,
-			this.#data,
-			this.#element
-		);
+		window.x.XR.execute_on_response({
+			"func_name": this.#element.getAttribute("XR-func"),
+			"response": this.#response,
+			"XR_data": this.#XR_data,
+			"XR_func_data": this.#XR_func_data,
+			"element": this.#element
+		});
 
 		if ("field" in this.#response) {
 			let field_element = null;
@@ -210,7 +217,7 @@ export default class Post {
 			x.Modal.lock();
 
 			this.#response = await window.x.Request.make({
-				payload: this.#data,
+				payload: this.#XR_data,
 				target_URL: this.#element.getAttribute("XR-post")
 			});
 
