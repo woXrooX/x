@@ -113,29 +113,29 @@ export async function after() {
 		function build_table_rows() {
 			const ROWS = [];
 
-			for (const user of users) ROWS.push({
-				"id": user["id"],
+			for (const row of users) ROWS.push({
+				"id": row["id"],
 				"data": [
 					{
-						"value": user["id"] ,
+						"value": row["id"] ,
 						"formatted_value": `
-							<a href="/x/user/${user["id"]}" class="text-decoration-underline">${user["id"]}</a>
+							<a href="/x/user/${row["id"]}" class="text-decoration-underline">${row["id"]}</a>
 						`
 					},
 
-					{ "value": user["eMail"] },
-					{ "value": user["full_name"] },
-					{ "value": user["roles_list"] },
+					{ "value": row["eMail"] },
+					{ "value": row["full_name"] },
+					{ "value": row["roles_list"] },
 
 					{
-						"value": user["last_heartbeat_at"],
-						"formatted_value": timestamp_to_human_readable_v1(user["last_heartbeat_at"]) || ''
+						"value": row["last_heartbeat_at"],
+						"formatted_value": timestamp_to_human_readable_v1(row["last_heartbeat_at"]) || ''
 					},
 
 					{
-						"value": user["flag_deleted_at"],
-						"formatted_value": `${timestamptz_to_local_timestamp(user["flag_deleted_at"]) || ''}`,
-						"classes": user["flag_deleted_at"] != null ? "bg-error" : ''
+						"value": row["flag_deleted_at"],
+						"formatted_value": `${timestamptz_to_local_timestamp(row["flag_deleted_at"]) || ''}`,
+						"classes": row["flag_deleted_at"] != null ? "bg-error" : ''
 					}
 				]
 			});
