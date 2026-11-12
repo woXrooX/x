@@ -1001,6 +1001,19 @@
 			.text-ls-3{letter-spacing: 3rem;}
 		}
 
+		@layer word_spacing {
+			.text_word_spacing_-0_5em { word-spacing: -0.5em; }
+			.text_word_spacing_-0_3em { word-spacing: -0.3em; }
+			.text_word_spacing_-0_2em { word-spacing: -0.2em; }
+			.text_word_spacing_-0_1em { word-spacing: -0.1em; }
+			.text_word_spacing_0em { word-spacing: 0em; }
+			.text_word_spacing_0_1em { word-spacing: 0.1em; }
+			.text_word_spacing_0_2em { word-spacing: 0.2em; }
+			.text_word_spacing_0_3em { word-spacing: 0.3em; }
+			.text_word_spacing_0_4em { word-spacing: 0.4em; }
+			.text_word_spacing_0_5em { word-spacing: 0.5em; }
+		}
+
 		@layer white-space{
 			.white-space-nowrap{white-space: nowrap;}
 			.white-space-nowrap-important{white-space: nowrap !important;}
