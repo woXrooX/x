@@ -148,9 +148,6 @@
 				border-radius: 50%;
 				background-color: var(--indicator-color);
 
-				/* Static glow: the same color at lower alpha */
-				box-shadow: 0 0 0.6em 0.05em color-mix(in hsl, var(--indicator-color) 60%, transparent);
-
 
 
 				/* Colors */
@@ -170,6 +167,12 @@
 
 
 				/* Effects */
+
+				&.indicator-glow {
+					/* Static glow: the same color at lower alpha */
+					box-shadow: 0 0 0.6em 0.05em color-mix(in hsl, var(--indicator-color) 60%, transparent);
+				}
+
 
 				&.indicator-pulse {
 					/* Positioning context for the ring */
