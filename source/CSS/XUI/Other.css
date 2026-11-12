@@ -1,28 +1,223 @@
-.user-select-none{
-	user-select: none;
+@layer Other {
+	@layer other {
+		.user-select-none{
+			user-select: none;
 
-	/* for Safari */
-	-webkit-user-select: none;
-}
+			/* for Safari */
+			-webkit-user-select: none;
+		}
 
-.empty-display-none {
-	&:empty {
-		display: none;
+		.empty-display-none {
+			&:empty {
+				display: none;
+			}
+		}
+
+		.no-elements-display-none {
+			&:not(:has(*)) {
+				display: none;
+			}
+		}
+
+		.on-target-display-flex {
+			& > * {
+				display:none;
+
+				&:first-child:not(:target):not(:has(~ :target)) { display: flex; }
+
+				&:target{ display: flex; }
+			}
+		}
+	}
+
+	@layer segmented {
+		.segmented-v1 {
+			position: relative;
+			display: inline-flex;
+			flex-direction: row;
+			align-items: center;
+			gap: calc(var(--gap) / 8);
+			padding: var(--padding);
+
+			border: none;
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+			background-color: var(--color-brand-tint-2);
+
+			/* Keeps the anchor name local, so multiple controls on one page don't collide */
+			anchor-scope: --segmented-v1-active;
+
+			max-width: 100%;
+			overflow-x: auto;
+			overscroll-behavior-x: contain;
+
+			& > label {
+				position: relative;
+				z-index: 1;
+
+				display: inline-flex;
+				flex-shrink: 0;
+				align-items: center;
+				gap: calc(var(--gap) / 4);
+
+				min-height: 2em;
+				padding-inline: 0.6em;
+				border-radius: var(--radius);
+
+				color: var(--color-text-secondary);
+				white-space: nowrap;
+				cursor: pointer;
+				user-select: none;
+
+				transition: color var(--transition-velocity) ease-in-out;
+
+				&:hover { color: var(--color-text-primary); }
+
+				&:has(:checked) { color: contrast-color(var(--color-brand)); }
+
+				&:has(:focus-visible) {
+					outline: 1px solid var(--color-brand);
+					outline-offset: 2px;
+				}
+
+				/* Hidden but still clickable, focusable and announced */
+				& > input[type=radio] {
+					position: absolute;
+					inset: 0;
+					width: 100%;
+					height: 100%;
+					opacity: 0;
+					cursor: pointer;
+				}
+			}
+
+			& > .segmented-v1-divider {
+				width: 1px;
+				height: 1.2em;
+				margin-inline: calc(var(--margin) * 2);
+				flex-shrink: 0;
+
+				background-color: var(--color-brand-tint-5);
+			}
+
+			& > .segmented-v1-indicator {
+				position: absolute;
+				z-index: 0;
+
+				border-radius: var(--radius);
+				box-shadow: var(--shadow);
+				background-color: var(--color-brand);
+
+				pointer-events: none;
+
+				transition: var(--transition-velocity) ease-in-out;
+				transition-property: top, right, bottom, left;
+			}
+
+			@supports (anchor-name: --a) {
+				& > label:has(:checked) { anchor-name: --segmented-v1-active; }
+
+				& > .segmented-v1-indicator {
+					position-anchor: --segmented-v1-active;
+					inset: anchor(top) anchor(right) anchor(bottom) anchor(left);
+				}
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				& > .segmented-v1-indicator { transition: none; }
+			}
+		}
+	}
+
+	@layer indicators {
+		@layer base {
+			.indicator-v1 {
+				--indicator-size: 0.6em;
+
+				display: inline-block;
+
+				/* Centers on capitals and digits; "middle" centers on lowercase letters and looks low */
+				vertical-align: calc(0.5cap - var(--indicator-size) / 2);
+
+				/* Keeps it round in flex rows; an empty element gets squeezed otherwise */
+				flex-shrink: 0;
+
+				width: var(--indicator-size);
+				height: var(--indicator-size);
+
+				border-radius: 50%;
+				background-color: var(--indicator-color);
+
+				/* Static glow: the same color at lower alpha */
+				box-shadow: 0 0 0.6em 0.05em color-mix(in hsl, var(--indicator-color) 60%, transparent);
+
+
+
+				/* Colors */
+
+				&.indicator-success { --indicator-color: hsla(var(--color-success-hue), var(--color-success-saturation), 40%, 1); }
+				&.indicator-info { --indicator-color: var(--color-info); }
+				&.indicator-warning { --indicator-color: var(--color-warning); }
+				&.indicator-important { --indicator-color: var(--color-important); }
+				&.indicator-error { --indicator-color: var(--color-error); }
+
+				&.indicator-neutral {
+					--indicator-color: var(--color-brand-tint-5);
+
+					/* Replaces the glow: unlit and recessed, like an empty socket */
+					box-shadow: inset 0 0.05em 0.1em rgba(0 0 0 / 0.5);
+				}
+
+
+				/* Effects */
+
+				&.indicator-pulse {
+					/* Positioning context for the ring */
+					position: relative;
+
+					/* The ring: a copy of the dot that grows and fades */
+					&::after {
+						content: '';
+						position: absolute;
+						inset: 0;
+
+						border-radius: inherit;
+						background-color: var(--indicator-color);
+						opacity: 0;
+
+						pointer-events: none;
+
+						animation: indicator_v1_pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+					}
+				}
+
+				&.indicator-blink {
+					/* step-end jumps between the keyframes instead of fading */
+					animation: indicator_v1_blink 1s step-end infinite;
+				}
+			}
+		}
+
+
+
+		/* Keyframes */
+
+		@keyframes indicator_v1_pulse {
+			0% {
+				transform: scale(1);
+				opacity: 0.6;
+			}
+
+			70%, 100% {
+				transform: scale(2.4);
+				opacity: 0;
+			}
+		}
+
+		@keyframes indicator_v1_blink {
+			0%, 100% { opacity: 1; }
+			50% { opacity: 0.2; }
+		}
 	}
 }
 
-.no-elements-display-none {
-	&:not(:has(*)) {
-		display: none;
-	}
-}
-
-.on-target-display-flex {
-	& > * {
-		display:none;
-
-		&:first-child:not(:target):not(:has(~ :target)) { display: flex; }
-
-		&:target{ display: flex; }
-	}
-}
