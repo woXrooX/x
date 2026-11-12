@@ -29,6 +29,11 @@
 		"ru": "Приложение не работает!",
 		"uz": "Ilova ishlamayapti!"
 	},
+	"not_logged_in_system_yet": {
+		"en": "Not logged in to the system yet",
+		"uz": "Tizimga hali kirmagan",
+		"ru": "Ещё не входил в систему"
+	},
 	"are_you_sure": {
 		"en": "Are you sure?",
 		"ru": "Вы уверены?",
