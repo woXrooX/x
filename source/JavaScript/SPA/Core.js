@@ -40,6 +40,7 @@ import Table from "/JavaScript/libs/XE/Table.js";
 import Toast from "/JavaScript/libs/XE/Toast.js";
 import Tooltip from "/JavaScript/libs/XE/Tooltip.js";
 import XSVG from "/JavaScript/libs/XE/XSVG.js";
+import Select from "/JavaScript/libs/XE/Select.js";
 
 ///////////////////////////// Modules (Least important)
 import VFX from "/JavaScript/modules/FX/VFX.js";
