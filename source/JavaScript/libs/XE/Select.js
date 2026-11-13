@@ -175,10 +175,13 @@ export default class Select extends HTMLElement {
 
 	/////////// APIs
 
-	static build(options, attributes = null) {
+	static build({
+		options,
+		attributes = {}
+	}) {
 		const select = document.createElement("x-select");
 
-		for (const [name, value] of Object.entries(attributes ?? {})) {
+		for (const [name, value] of Object.entries(attributes)) {
 			if (value === true) select.setAttribute(name, '');
 			else if (value !== false && value !== null && value !== undefined) select.setAttribute(name, value);
 		}
@@ -656,7 +659,7 @@ export default class Select extends HTMLElement {
 
 		// The third argument is where the browser shows its validation message
 		if (this.hasAttribute("required") && selected_records.length === 0)
-			this.#internals.setValidity({valueMissing: true}, window.Lang.use("select_an_option"), this.#trigger_element ?? undefined);
+			this.#internals.setValidity({valueMissing: true}, window.Lang.use("please_select"), this.#trigger_element ?? undefined);
 		else this.#internals.setValidity({});
 	}
 
