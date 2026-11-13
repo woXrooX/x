@@ -3203,8 +3203,14 @@
 
 				pointer-events: none !important;
 
-				opacity: 0.5 !important;
-				filter: grayscale(0.2) !important;
+				/*
+					Only the outermost disabled element fades.
+					Anything inside it is already faded along with it, so fading it again would multiply (0.5 × 0.5).
+				*/
+				&:not(:is(.disabled, [disabled], :disabled) *) {
+					opacity: 0.5 !important;
+					filter: grayscale(0.2) !important;
+				}
 
 				&:hover, :active, :focus, ::before, ::after{
 					pointer-events: none !important;
