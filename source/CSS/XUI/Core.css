@@ -290,7 +290,7 @@
 			font-size: 1rem;
 			width: 100%;
 			min-height: 2rem;
-			padding: 0 calc(var(--padding) * 2);
+			padding: 0 var(--padding);
 			border: none;
 			border-radius: var(--radius);
 			outline: 1px solid var(--color-brand-tint-4);
@@ -766,7 +766,7 @@
 			font-size: 1em;
 			max-width: 100%;
 			min-height: 2em;
-			padding: 0 calc(var(--padding) * 2);
+			padding: 0 var(--padding);
 			border: none;
 			border-radius: var(--radius);
 			outline: 1px solid var(--color-brand-tint-4);

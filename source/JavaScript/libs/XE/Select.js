@@ -117,11 +117,9 @@ export default class Select extends HTMLElement {
 		`;
 
 		Select.#chip_template.innerHTML = `
-			<span class="chip display-flex flex-row align-items-center gap-0-1 max-width-100 padding-left-2 radius-default bg-6 text-size-0-8em">
-				<span class="chip_label white-space-nowrap overflow-hidden text-overflow-ellipsis"></span>
-				<span class="chip_remove display-grid place-items-center flex-shrink-0 padding-1 radius-circle on-hover-bg-7">
-					<svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>
-				</span>
+			<span class="chip display-flex flex-row align-items-center gap-0-3 max-width-100 padding-1 radius-default bg-6">
+				<span class="chip_content white-space-nowrap overflow-hidden text-overflow-ellipsis"></span>
+				<x-svg class="chip_remove radius-default padding-1 on-hover-bg-7" name="x"></x-svg>
 			</span>
 		`;
 
@@ -632,10 +630,10 @@ export default class Select extends HTMLElement {
 		const element = Select.#chip_template.content.firstElementChild.cloneNode(true);
 
 		// Both found before the label gets its HTML, which could hold anything
-		const label_element = element.querySelector(".chip_label");
+		const content_element = element.querySelector(".chip_content");
 		const remove_element = element.querySelector(".chip_remove");
 
-		Select.#render_display(label_element, record);
+		Select.#render_display(content_element, record);
 
 		// A disabled option's chip can't be removed: its × stays, faded like anything disabled, and isn't wired up
 		if (record.is_disabled) remove_element.classList.add("disabled");
