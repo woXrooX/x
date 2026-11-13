@@ -616,7 +616,7 @@ export default class Select extends HTMLElement {
 	#render_control(selected_records) {
 		const has_chips = selected_records.length > 0;
 
-		this.#placeholder_element.textContent = this.getAttribute("placeholder") ?? window.Lang.use("select");
+		this.#placeholder_element.textContent = this.getAttribute("placeholder") ?? window.Lang.use("please_select");
 		this.#placeholder_element.hidden = has_chips;
 
 		this.#chips_element.replaceChildren(...selected_records.map((record) => this.#create_chip_element(record)));
