@@ -1,7 +1,8 @@
 export default class Editable {
 	/////////////////////////// Object
 
-	#data;
+	#XR_data;
+	#XR_func_data;
 	#response;
 	#element = null;
 	#old_text_content;
@@ -30,7 +31,7 @@ export default class Editable {
 
 		try {
 			this.#response = await window.x.Request.make({
-				payload: this.#data,
+				payload: this.#XR_data,
 				target_URL: this.#element.getAttribute("XR-editable")
 			});
 
@@ -42,12 +43,13 @@ export default class Editable {
 
 			setTimeout(()=>{ this.#set_state_indicator(null); }, 2000);
 
-			window.x.XR.execute_on_response(
-				this.#element.getAttribute("XR-func"),
-				this.#response,
-				this.#data,
-				this.#element
-			);
+			window.x.XR.execute_on_response({
+				"func_name": this.#element.getAttribute("XR-func"),
+				"response": this.#response,
+				"XR_data": this.#XR_data,
+				"XR_func_data": this.#XR_func_data,
+				"element": this.#element
+			});
 
 			x.Toast.handle_commands(this.#element.getAttribute("x-toast"), this.#response);
 
@@ -66,15 +68,20 @@ export default class Editable {
 
 	#construct_data() {
 		try {
-			this.#data = JSON.parse(this.#element.getAttribute("XR-data")) || {};
-			this.#data["value"] = this.#updated_text_content;
+			this.#XR_data = JSON.parse(this.#element.getAttribute("XR-data")) || {};
+			this.#XR_data["value"] = this.#updated_text_content;
+
+			this.#XR_func_data = JSON.parse(this.#element.getAttribute("XR-func-data")) || {};
 		}
 
-		catch(error) { this.#data = {}; }
+		catch(error) {
+			this.#XR_data = {};
+			this.#XR_func_data = {};
+		}
 
-		this.#data = {
+		this.#XR_data = {
 			...(this.#element.hasAttribute("XR-for") ? {"for": this.#element.getAttribute("XR-for")} : {}),
-			...this.#data
+			...this.#XR_data
 		}
 	}
 

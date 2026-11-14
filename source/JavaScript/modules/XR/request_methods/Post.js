@@ -38,18 +38,20 @@ export default class Post {
 	}
 
 	#construct_data() {
-		try{ this.#XR_data = JSON.parse(this.#element.getAttribute("XR-data")); }
-		catch(error) { this.#XR_data = {}; }
+		try {
+			this.#XR_data = JSON.parse(this.#element.getAttribute("XR-data"));
+			this.#XR_func_data = JSON.parse(this.#element.getAttribute("XR-func-data"));
+		}
+
+		catch (error) {
+			this.#XR_data = {};
+			this.#XR_func_data = {};
+		}
 
 		this.#XR_data = {
 			...(this.#element.hasAttribute("XR-for") ? {"for": this.#element.getAttribute("XR-for")} : {}),
 			...this.#XR_data
 		}
-
-
-
-		try{ this.#XR_func_data = JSON.parse(this.#element.getAttribute("XR-func-data")); }
-		catch(error) { this.#XR_func_data = {}; }
 	}
 
 	/////////// Handlers
