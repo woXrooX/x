@@ -24,6 +24,7 @@
 
 		"columns": [
 			{
+				"key": string (unique, names the column's cell in each row's "data"),
 				"title": HTML string,
 				"sortable": boolean (optional, default true)
 			}
@@ -37,13 +38,13 @@
 
 				"checked": boolean (optional, initial state, wins over the "checkable" default),
 
-				"data": [
-					{
+				"data": {
+					"<column key>": {
 						"value": string/number/boolean/array/null (used to sort and search, null is empty and sorts last),
 						"formatted_value": HTML string/number (optional, wins for display),
 						"classes": string (optional, on the <td>)
 					}
-				] (one cell per column, each needs "value", "formatted_value" or both)
+				} (one cell per column, in any order; each needs "value", "formatted_value" or both)
 			}
 		],
 
@@ -54,7 +55,9 @@
 
 	Methods:
 		add_row(row)
-		update_row(row) -> boolean (false when there's no such row; replaces classes and cells, keeps the checked state)
+		update_row(row) -> boolean (false when there's no such row)
+			Merges: "classes" and each cell in "data" replace the current ones, anything left out stays as it was.
+			"data" can hold any of the columns, or be left out. The checked state is kept.
 		remove_row(id) -> boolean (false when there's no such row)
 		get_row(id) -> {"id", "classes", "data"} copy, or null
 
@@ -121,18 +124,34 @@ export default class Table extends HTMLElement {
 		return page_size;
 	}
 
-	// Shallow copies, so outside code can't change stored cells by mutating what it passed or got
-	static #copy_cells(data) {
-		const cells = [];
+	// "key" is the cell's column key, named in the errors
+	static #validate_cell(key, cell) {
+		if (cell === null || typeof(cell) !== "object" || Array.isArray(cell))
+			throw new TypeError(`Table: cell "${key}" must be an object like {"value": ..., "formatted_value": ...}.`);
 
-		for (const cell of data) cells.push({...cell});
+		if (cell["value"] === undefined && cell["formatted_value"] === undefined)
+			throw new TypeError(`Table: cell "${key}" needs a "value", a "formatted_value", or both.`);
 
-		return cells;
+		if (cell["value"] !== null && typeof(cell["value"]) === "object" && !Array.isArray(cell["value"]))
+			throw new TypeError(`Table: the "value" of cell "${key}" can't be an object; display it through "formatted_value" instead.`);
+
+		if (cell["formatted_value"] !== undefined && typeof(cell["formatted_value"]) !== "string" && typeof(cell["formatted_value"]) !== "number")
+			throw new TypeError(`Table: the "formatted_value" of cell "${key}" must be a string or a number.`);
+
+		if ("classes" in cell && typeof(cell["classes"]) !== "string")
+			throw new TypeError(`Table: the "classes" of cell "${key}" must be a string.`);
 	}
 
-	// The public shape of a row, as get_row() and get_checked_rows() return it
-	static #export_row(record) {
-		return {id: record.id, classes: record.classes, data: Table.#copy_cells(record.data)};
+	// "formatted_value" always wins for display (as HTML); otherwise the raw value is shown as plain text
+	static #create_cell(cell) {
+		const td = document.createElement("td");
+
+		if (cell["formatted_value"] !== undefined) td.innerHTML = cell["formatted_value"];
+		else td.textContent = Table.#raw_text(cell["value"]);
+
+		if (cell["classes"] !== undefined) td.className = cell["classes"];
+
+		return td;
 	}
 
 	// Displayed text of a <td>, used by search and CSV
@@ -204,9 +223,13 @@ export default class Table extends HTMLElement {
 
 	#JSON = false;
 
+	// Column "key" -> index in "columns", set together with the JSON
+	#column_index_by_key = null;
+
 	/*
-		Master data: key (stringified id) -> {key, id, classes, data, tr, cells, checkbox, order}. Map keeps insertion order.
-		"cells" are the data <td>s, aligned with "data" and "columns". The <tr> can hold more, like the checkbox cell.
+		Master data: normalized id -> {normalized_id, id, classes, data, tr, cells, checkbox, order}. Map keeps insertion order.
+		Rows come and go keyed by column "key"; inside, "data" holds the cells by position, in "columns" order.
+		"cells" are the data <td>s, in the same order. The <tr> can hold more, like the checkbox cell.
 	*/
 	#records = new Map();
 	#next_order = 0;
@@ -222,8 +245,8 @@ export default class Table extends HTMLElement {
 
 	#is_checkable = false;
 
-	// Keys of the checked rows. This is the truth; each row's checkbox only reflects it.
-	#checked_keys = new Set();
+	// Normalized ids of the checked rows. This is the truth; each row's checkbox only reflects it.
+	#checked_row_ids = new Set();
 
 	// Row checkbox -> record, for the delegated change listener
 	#record_by_checkbox = new WeakMap();
@@ -284,39 +307,45 @@ export default class Table extends HTMLElement {
 		this.#assert_initialized();
 
 		const record = this.#create_record(row);
-		this.#records.set(record.key, record);
+		this.#records.set(record.normalized_id, record);
 
 		this.#refresh();
 
-		if (this.#checked_keys.has(record.key)) this.#dispatch_check_change();
+		if (this.#checked_row_ids.has(record.normalized_id)) this.#dispatch_check_change();
 	}
 
 	update_row(row) {
 		this.#assert_initialized();
 
-		this.#validate_row(row);
+		this.#validate_row(row, true);
 
 		const record = this.#records.get(Table.#normalize_id(row["id"]));
 
 		if (record === undefined) return false;
 
 		/*
-			The given row is the new truth: classes and cells are replaced, not merged.
+			Merges: "classes" and each given cell replace the current ones, anything left out stays as it was.
 			The checked state is kept; a "checked" in the row only applies when the row is created.
 		*/
-		record.classes = row["classes"] ?? '';
-		record.data = Table.#copy_cells(row["data"]);
+		if ("classes" in row) {
+			record.classes = row["classes"];
+			record.tr.className = record.classes;
+		}
 
 		/*
-			Same <tr>, new cells: references held by outside code stay valid.
-			Only the data cells are swapped; the checkbox cell stays in place, so it doesn't lose focus.
+			Each given cell gets a new <td> in place of its old one.
+			The <tr>, the checkbox cell and the other cells stay, so they keep outside references and focus.
 		*/
-		record.tr.className = record.classes;
+		for (const key of Object.keys(row["data"] ?? {})) {
+			const index = this.#column_index_by_key.get(key);
+			const cell = {...row["data"][key]};
+			const td = Table.#create_cell(cell);
 
-		for (const td of record.cells) td.remove();
+			record.cells[index].replaceWith(td);
 
-		record.cells = this.#create_cells(record.data);
-		record.tr.append(...record.cells);
+			record.data[index] = cell;
+			record.cells[index] = td;
+		}
 
 		this.#refresh();
 
@@ -330,9 +359,9 @@ export default class Table extends HTMLElement {
 
 		if (record === undefined) return false;
 
-		this.#records.delete(record.key);
+		this.#records.delete(record.normalized_id);
 
-		const was_checked = this.#checked_keys.delete(record.key);
+		const was_checked = this.#checked_row_ids.delete(record.normalized_id);
 
 		this.#refresh();
 
@@ -348,7 +377,7 @@ export default class Table extends HTMLElement {
 
 		if (record === undefined) return null;
 
-		return Table.#export_row(record);
+		return this.#export_row(record);
 	}
 
 	// In insertion order, including checked rows the current search hides
@@ -358,7 +387,7 @@ export default class Table extends HTMLElement {
 		const rows = [];
 
 		for (const record of this.#records.values())
-			if (this.#checked_keys.has(record.key)) rows.push(Table.#export_row(record));
+			if (this.#checked_row_ids.has(record.normalized_id)) rows.push(this.#export_row(record));
 
 		return rows;
 	}
@@ -384,12 +413,12 @@ export default class Table extends HTMLElement {
 	uncheck_all() {
 		this.#assert_checkable();
 
-		if (this.#checked_keys.size === 0) return;
+		if (this.#checked_row_ids.size === 0) return;
 
 		// Walks only the checked rows, not every record
-		for (const key of this.#checked_keys) this.#records.get(key).checkbox.checked = false;
+		for (const normalized_id of this.#checked_row_ids) this.#records.get(normalized_id).checkbox.checked = false;
 
-		this.#checked_keys.clear();
+		this.#checked_row_ids.clear();
 
 		this.#render_check_state();
 		this.#dispatch_check_change();
@@ -415,13 +444,13 @@ export default class Table extends HTMLElement {
 
 		// Which rows start checked: "all", the listed ids, or none. Validated in #accept_JSON.
 		const default_checked = this.#is_checkable ? this.#JSON["checkable"]["checked"] : undefined;
-		const default_checked_keys = Array.isArray(default_checked) ? new Set(default_checked.map((id) => Table.#normalize_id(id))) : null;
+		const default_checked_row_ids = Array.isArray(default_checked) ? new Set(default_checked.map((id) => Table.#normalize_id(id))) : null;
 
 		for (const row of this.#JSON["rows"] ?? []) {
 			const record = this.#create_record(row);
-			this.#records.set(record.key, record);
+			this.#records.set(record.normalized_id, record);
 
-			const is_default_checked = default_checked === "all" || default_checked_keys?.has(record.key) === true;
+			const is_default_checked = default_checked === "all" || default_checked_row_ids?.has(record.normalized_id) === true;
 
 			// A row's own "checked" wins over the table default
 			if (this.#is_checkable && !("checked" in row) && is_default_checked) this.#set_record_checked(record, true);
@@ -449,10 +478,20 @@ export default class Table extends HTMLElement {
 		if (!Array.isArray(value["columns"]) || value["columns"].length === 0)
 			throw new TypeError(`Table: "columns" must be a non-empty array.`);
 
-		for (const column of value["columns"]) {
+		const column_index_by_key = new Map();
+
+		for (let index = 0; index < value["columns"].length; index++) {
+			const column = value["columns"][index];
+
 			if (column === null || typeof(column) !== "object" || !("title" in column))
 				throw new TypeError(`Table: every column must be an object with a "title".`);
 
+			if (typeof(column["key"]) !== "string" || column["key"] === '')
+				throw new TypeError("Table: every column needs a \"key\", a non-empty string.");
+
+			if (column_index_by_key.has(column["key"])) throw new TypeError(`Table: duplicate column key "${column["key"]}".`);
+
+			column_index_by_key.set(column["key"], index);
 		}
 
 		if ("rows" in value && !Array.isArray(value["rows"])) throw new TypeError(`Table: "rows" must be an array.`);
@@ -463,6 +502,7 @@ export default class Table extends HTMLElement {
 		if ("id" in value) this.id = Table.#normalize_id(value["id"]);
 
 		this.#JSON = value;
+		this.#column_index_by_key = column_index_by_key;
 	};
 
 	// Strict, even when disabled, so a mistake shows up whichever way the switch is set
@@ -500,22 +540,27 @@ export default class Table extends HTMLElement {
 	//// Records
 
 	#create_record = (row) => {
-		this.#validate_row(row);
+		this.#validate_row(row, false);
 
-		const key = Table.#normalize_id(row["id"]);
+		const normalized_id = Table.#normalize_id(row["id"]);
 
-		if (this.#records.has(key)) throw new Error(`Table: duplicate row id "${key}".`);
+		if (this.#records.has(normalized_id)) throw new Error(`Table: duplicate row id "${normalized_id}".`);
 
 		const classes = row["classes"] ?? '';
-		const data = Table.#copy_cells(row["data"]);
-		const cells = this.#create_cells(data);
+
+		/*
+			In "columns" order from here on.
+			Shallow copies, so outside code can't change stored cells by mutating what it passed.
+		*/
+		const data = this.#JSON["columns"].map((column) => ({...row["data"][column["key"]]}));
+		const cells = data.map((cell) => Table.#create_cell(cell));
 
 		// Built once and reused for the row's whole life
 		const tr = document.createElement("tr");
-		tr.id = `row_${key}`;
+		tr.id = `row_${normalized_id}`;
 		tr.className = classes;
 
-		const record = {key, id: row["id"], classes, data, tr, cells, checkbox: null, order: this.#next_order++};
+		const record = {normalized_id, id: row["id"], classes, data, tr, cells, checkbox: null, order: this.#next_order++};
 
 		// The checkbox cell goes first, outside "cells"
 		if (this.#is_checkable) tr.append(this.#create_checkbox_cell(record));
@@ -528,9 +573,13 @@ export default class Table extends HTMLElement {
 		return record;
 	};
 
-	#validate_row = (row) => {
+	/*
+		"is_update" allows a partial row: "data" can hold any of the columns, or be left out.
+		Otherwise "data" needs every column.
+	*/
+	#validate_row = (row, is_update) => {
 		if (row === null || typeof(row) !== "object" || Array.isArray(row))
-			throw new TypeError(`Table: a row must be an object like {"id": ..., "data": [{"value": ...}]}.`);
+			throw new TypeError("Table: a row must be an object like {\"id\": ..., \"data\": {\"column key\": {\"value\": ...}}}.");
 
 		// Validates the id's type; existence is checked by the caller
 		Table.#normalize_id(row["id"]);
@@ -539,45 +588,38 @@ export default class Table extends HTMLElement {
 
 		if ("checked" in row && typeof(row["checked"]) !== "boolean") throw new TypeError("Table: row \"checked\" must be a boolean.");
 
-		const column_count = this.#JSON["columns"].length;
+		if (is_update && !("data" in row)) return;
 
-		if (!Array.isArray(row["data"]) || row["data"].length !== column_count)
-			throw new TypeError(`Table: row "data" must be an array of ${column_count} cells.`);
+		const data = row["data"];
 
-		for (const cell of row["data"]) {
-			if (cell === null || typeof(cell) !== "object" || Array.isArray(cell))
-				throw new TypeError(`Table: every cell must be an object like {"value": ..., "formatted_value": ...}.`);
+		if (data === null || typeof(data) !== "object" || Array.isArray(data))
+			throw new TypeError("Table: row \"data\" must be an object of cells keyed by column \"key\".");
 
-			if (cell["value"] === undefined && cell["formatted_value"] === undefined)
-				throw new TypeError(`Table: a cell needs a "value", a "formatted_value", or both.`);
+		for (const key of Object.keys(data)) {
+			if (!this.#column_index_by_key.has(key))
+				throw new TypeError(`Table: unknown column key "${key}" in row "data".`);
 
-			if (cell["value"] !== null && typeof(cell["value"]) === "object" && !Array.isArray(cell["value"]))
-				throw new TypeError(`Table: a cell "value" can't be an object; display it through "formatted_value" instead.`);
-
-			if (cell["formatted_value"] !== undefined && typeof(cell["formatted_value"]) !== "string" && typeof(cell["formatted_value"]) !== "number")
-				throw new TypeError(`Table: a cell "formatted_value" must be a string or a number.`);
-
-			if ("classes" in cell && typeof(cell["classes"]) !== "string")
-				throw new TypeError(`Table: cell "classes" must be a string.`);
+			Table.#validate_cell(key, data[key]);
 		}
+
+		if (is_update) return;
+
+		for (const column of this.#JSON["columns"])
+			if (!Object.hasOwn(data, column["key"]))
+				throw new TypeError(`Table: row "data" is missing the cell for column "${column["key"]}".`);
 	};
 
-	// "formatted_value" always wins for display (as HTML); otherwise the raw value is shown as plain text
-	#create_cells = (data) => {
-		const tds = [];
+	/*
+		The public shape of a row, as get_row() and get_checked_rows() return it: cells keyed by column "key".
+		Shallow copies, so outside code can't change stored cells by mutating what it got.
+	*/
+	#export_row = (record) => {
+		const data = {};
+		const columns = this.#JSON["columns"];
 
-		for (const cell of data) {
-			const td = document.createElement("td");
+		for (let index = 0; index < columns.length; index++) data[columns[index]["key"]] = {...record.data[index]};
 
-			if (cell["formatted_value"] !== undefined) td.innerHTML = cell["formatted_value"];
-			else td.textContent = Table.#raw_text(cell["value"]);
-
-			if (cell["classes"] !== undefined) td.className = cell["classes"];
-
-			tds.push(td);
-		}
-
-		return tds;
+		return {id: record.id, classes: record.classes, data};
 	};
 
 
@@ -1102,10 +1144,10 @@ export default class Table extends HTMLElement {
 
 	// Keeps the Set and the row's checkbox in step. Returns whether anything changed.
 	#set_record_checked = (record, checked) => {
-		if (this.#checked_keys.has(record.key) === checked) return false;
+		if (this.#checked_row_ids.has(record.normalized_id) === checked) return false;
 
-		if (checked) this.#checked_keys.add(record.key);
-		else this.#checked_keys.delete(record.key);
+		if (checked) this.#checked_row_ids.add(record.normalized_id);
+		else this.#checked_row_ids.delete(record.normalized_id);
 
 		record.checkbox.checked = checked;
 
@@ -1124,7 +1166,7 @@ export default class Table extends HTMLElement {
 		let checked_in_view = 0;
 
 		for (const record of this.#view)
-			if (this.#checked_keys.has(record.key)) checked_in_view++;
+			if (this.#checked_row_ids.has(record.normalized_id)) checked_in_view++;
 
 		this.#check_all_element.checked = view_length > 0 && checked_in_view === view_length;
 		this.#check_all_element.indeterminate = checked_in_view > 0 && checked_in_view < view_length;
@@ -1132,7 +1174,7 @@ export default class Table extends HTMLElement {
 
 		if (this.#footer_element === null) return;
 
-		const checked_count = this.#checked_keys.size;
+		const checked_count = this.#checked_row_ids.size;
 
 		this.#footer_element.querySelector(".checked_rows").innerHTML = checked_count === 0 ? '' : `
 			<span class="text-color-secondary text-size-0-7rem">${window.Lang.use("checked_rows")}:</span> ${checked_count}
@@ -1140,7 +1182,7 @@ export default class Table extends HTMLElement {
 	};
 
 	#dispatch_check_change = () => {
-		this.dispatchEvent(new CustomEvent("check_change", {detail: {count: this.#checked_keys.size}}));
+		this.dispatchEvent(new CustomEvent("check_change", {detail: {count: this.#checked_row_ids.size}}));
 	};
 
 
