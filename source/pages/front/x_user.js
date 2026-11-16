@@ -129,11 +129,26 @@ export async function after() {
 				"searchable": true,
 				"downloadable": true,
 				"columns": [
-					{"title": "id"},
-					{"title": "metadata_created_at"},
-					{"title": "IP_address"},
-					{"title": "user_agent"},
-					{"title": "message"}
+					{
+						"key": "id",
+						"title": "id"
+					},
+					{
+						"key": "metadata_created_at",
+						"title": "metadata_created_at"
+					},
+					{
+						"key": "IP_address",
+						"title": "IP_address"
+					},
+					{
+						"key": "user_agent",
+						"title": "user_agent"
+					},
+					{
+						"key": "message",
+						"title": "message"
+					}
 				],
 				"rows": build_table_rows()
 			},
@@ -146,13 +161,13 @@ export async function after() {
 			for (const log_in_record of log_in_records) ROWS.push({
 				"id": log_in_record["id"],
 
-				"data": [
-					{"value": log_in_record["id"]},
-					{"value": log_in_record["metadata_created_at"]},
-					{"value": log_in_record["IP_address"]},
-					{"value": log_in_record["user_agent"]},
-					{"value": log_in_record["message"]}
-				]
+				"data": {
+					"id": {"value": log_in_record["id"]},
+					"metadata_created_at": {"value": log_in_record["metadata_created_at"]},
+					"IP_address": {"value": log_in_record["IP_address"]},
+					"user_agent": {"value": log_in_record["user_agent"]},
+					"message": {"value": log_in_record["message"]}
+				}
 			});
 
 			return ROWS;

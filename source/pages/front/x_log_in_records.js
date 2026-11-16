@@ -28,19 +28,37 @@ export async function after() {
 		else return `<p class="surface-info width-100 padding-1 text-size-0-8rem">${Lang.use("no_data")}</p>`;
 
 
-		return window.x.Table.build(
+	return window.x.Table.build(
 			{
 				"id": "log_in_records",
 				"page_size": 10,
 				"searchable": true,
 				"downloadable": true,
 				"columns": [
-					{"title": Lang.use("id")},
-					{"title": Lang.use("metadata_created_at")},
-					{"title": Lang.use("user")},
-					{"title": Lang.use("IP_address")},
-					{"title": Lang.use("user_agent")},
-					{"title": Lang.use("message")}
+					{
+						"key": "id",
+						"title": "id"
+					},
+					{
+						"key": "metadata_created_at",
+						"title": "metadata_created_at"
+					},
+					{
+						"key": "user",
+						"title": "user"
+					},
+					{
+						"key": "IP_address",
+						"title": "IP_address"
+					},
+					{
+						"key": "user_agent",
+						"title": "user_agent"
+					},
+					{
+						"key": "message",
+						"title": "message"
+					}
 				],
 				"rows": build_table_rows()
 			},
@@ -55,12 +73,12 @@ export async function after() {
 
 				"classes": log_in_record["user"] === null ? "text-color-error" : '',
 
-				"data": [
-					{"value": log_in_record["id"]},
+				"data": {
+					"id": {"value": log_in_record["id"]},
 
-					{"value": log_in_record["metadata_created_at"]},
+					"metadata_created_at": {"value": log_in_record["metadata_created_at"]},
 
-					{
+					"user": {
 						"value": log_in_record["user"],
 						"formatted_value":
 							log_in_record["user"] === null ?
@@ -68,10 +86,10 @@ export async function after() {
 							`<a href="/x/user/${log_in_record["user"]}" class="text-decoration-underline">${log_in_record["user"]}</a>`
 					},
 
-					{"value": log_in_record["IP_address"]},
-					{"value": log_in_record["user_agent"]},
-					{"value": log_in_record["message"]}
-				]
+					"IP_address": {"value": log_in_record["IP_address"]},
+					"user_agent": {"value": log_in_record["user_agent"]},
+					"message": {"value": log_in_record["message"]}
+				}
 			});
 
 			return ROWS;

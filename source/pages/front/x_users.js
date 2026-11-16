@@ -98,12 +98,30 @@ export async function after() {
 				"searchable": true,
 				"downloadable": true,
 				"columns": [
-					{"title": "id"},
-					{"title": "eMail"},
-					{"title": "full_name"},
-					{"title": "roles"},
-					{"title": "last_heartbeat_at"},
-					{"title": "flag_deleted_at"}
+					{
+						"key": "id",
+						"title": "id"
+					},
+					{
+						"key": "eMail",
+						"title": "eMail"
+					},
+					{
+						"key": "full_name",
+						"title": "full_name"
+					},
+					{
+						"key": "roles",
+						"title": "roles"
+					},
+					{
+						"key": "last_heartbeat_at",
+						"title": "last_heartbeat_at"
+					},
+					{
+						"key": "flag_deleted_at",
+						"title": "flag_deleted_at"
+					}
 				],
 				"rows": build_table_rows()
 			},
@@ -115,29 +133,29 @@ export async function after() {
 
 			for (const row of users) ROWS.push({
 				"id": row["id"],
-				"data": [
-					{
+				"data": {
+					"id": {
 						"value": row["id"] ,
 						"formatted_value": `
 							<a href="/x/user/${row["id"]}" class="text-decoration-underline">${row["id"]}</a>
 						`
 					},
 
-					{ "value": row["eMail"] },
-					{ "value": row["full_name"] },
-					{ "value": row["roles_list"] },
+					"eMail": { "value": row["eMail"] },
+					"full_name": { "value": row["full_name"] },
+					"roles": { "value": row["roles_list"] },
 
-					{
+					"last_heartbeat_at": {
 						"value": row["last_heartbeat_at"],
 						"formatted_value": timestamp_to_human_readable_v1(row["last_heartbeat_at"]) || ''
 					},
 
-					{
+					"flag_deleted_at": {
 						"value": row["flag_deleted_at"],
 						"formatted_value": `${timestamptz_to_local_timestamp(row["flag_deleted_at"]) || ''}`,
 						"classes": row["flag_deleted_at"] != null ? "bg-error" : ''
 					}
-				]
+				}
 			});
 
 			return ROWS;
