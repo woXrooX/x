@@ -1,8 +1,9 @@
 /*
 	window.x.Table.build(JSON, classes);
 
-	Returns an <x-table>, which initializes when appended to the DOM. The methods throw until then.
-	Inline form: <x-table>{JSON}</x-table>
+	Returns an <x-table> that is ready right away: the JSON is validated, rows included, and the methods work before it's in the DOM.
+	It draws itself when appended to the DOM, with every change made until then.
+	Inline form: <x-table>{JSON}</x-table>. Its JSON is its content, so its methods throw until it's appended to the DOM.
 
 	classes: space-separated string (optional)
 
@@ -219,7 +220,12 @@ export default class Table extends HTMLElement {
 
 	#ID = 0;
 	#highlight_name = '';
+
+	// Data ready: the JSON is accepted and the records exist, so the methods work before the table is in the DOM
 	#is_initialized = false;
+
+	// DOM ready: built on the first connect; until then changes only touch the records
+	#is_rendered = false;
 
 	#JSON = false;
 
@@ -282,14 +288,17 @@ export default class Table extends HTMLElement {
 	}
 
 	connectedCallback() {
-		if (this.#is_initialized === true) {
+		if (this.#is_rendered === true) {
 			// Re-attached after being moved in the DOM: resume lazy draw and highlights
 			this.#sync_lazy_draw_loader();
 			this.#apply_search_highlights();
 			return;
 		}
 
-		this.#init_core();
+		// The inline form's JSON is its content, so its data is set up only now; Table.build() already did it
+		if (this.#is_initialized === false) this.#init_data(this.#parse_inline_JSON());
+
+		this.#init_DOM();
 	}
 
 	disconnectedCallback() {
@@ -297,10 +306,11 @@ export default class Table extends HTMLElement {
 		CSS.highlights.delete(this.#highlight_name);
 	}
 
+	// The records are built from the first JSON; later calls are ignored
 	set_JSON(value) {
 		if (this.#is_initialized === true) return;
 
-		this.#accept_JSON(value);
+		this.#init_data(value);
 	}
 
 	add_row(row) {
@@ -429,15 +439,9 @@ export default class Table extends HTMLElement {
 
 	//// Init
 
-	#init_core = () => {
-		if (this.#JSON === false) {
-			let parsed;
-
-			try { parsed = JSON.parse(this.textContent); }
-			catch (error) { throw new TypeError("Table: content is not valid JSON."); }
-
-			this.#accept_JSON(parsed);
-		}
+	// Everything that doesn't need the DOM. Runs as soon as the JSON is known: in set_JSON(), or on connect for the inline form.
+	#init_data = (value) => {
+		this.#accept_JSON(value);
 
 		this.#page_size = Table.#parse_page_size(this.#JSON["page_size"]);
 		this.#is_checkable = this.#JSON["checkable"]?.["enabled"] === true;
@@ -456,6 +460,11 @@ export default class Table extends HTMLElement {
 			if (this.#is_checkable && !("checked" in row) && is_default_checked) this.#set_record_checked(record, true);
 		}
 
+		this.#is_initialized = true;
+	};
+
+	// Everything that needs the DOM. Runs on the first connect and draws the records as they are by then.
+	#init_DOM = () => {
 		this.#build_DOM();
 		this.#init_body_helpers();
 
@@ -466,9 +475,14 @@ export default class Table extends HTMLElement {
 		this.#listen_to_pagination_clicks();
 		this.#listen_to_check_changes();
 
-		this.#is_initialized = true;
+		this.#is_rendered = true;
 
 		this.#refresh(1);
+	};
+
+	#parse_inline_JSON = () => {
+		try { return JSON.parse(this.textContent); }
+		catch (error) { throw new TypeError("Table: content is not valid JSON."); }
 	};
 
 	#accept_JSON = (value) => {
@@ -526,7 +540,7 @@ export default class Table extends HTMLElement {
 
 	#assert_initialized = () => {
 		if (this.#is_initialized === false)
-			throw new Error("Table: not initialized yet, append the element to the DOM first.");
+			throw new Error("Table: not initialized yet, create it with Table.build(), or append the inline form to the DOM first.");
 	};
 
 	#assert_checkable = () => {
@@ -742,8 +756,11 @@ export default class Table extends HTMLElement {
 		"page" moves to that page; otherwise the current page is kept (clamped if it no longer exists).
 		A page change draws from the first batch; any other change keeps the rows already drawn.
 		Checking rows doesn't change the view, so it skips this path and only calls #render_check_state.
+		Does nothing until the DOM is built: the first draw, on connect, starts from the master data as it is by then.
 	*/
 	#refresh = (page = this.#current_page) => {
+		if (this.#is_rendered === false) return;
+
 		const is_page_change = page !== this.#current_page;
 
 		this.#rebuild_view();
@@ -1158,9 +1175,10 @@ export default class Table extends HTMLElement {
 		Header checkbox: checked when every row in the view is checked, indeterminate when only some are.
 		It stays unchecked while indeterminate, so clicking it checks all.
 		The footer shows the total, including checked rows the view hides.
+		Does nothing until the DOM is built, like #refresh. The row checkboxes already show their state.
 	*/
 	#render_check_state = () => {
-		if (this.#is_checkable === false) return;
+		if (this.#is_checkable === false || this.#is_rendered === false) return;
 
 		const view_length = this.#view.length;
 		let checked_in_view = 0;
