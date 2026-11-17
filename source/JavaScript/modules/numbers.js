@@ -16,7 +16,13 @@ export function format_number({
 
 	// Currency Defaults (only used if style is "currency")
 	currency = "USD",
-	currency_display = "symbol"
+	currency_display = "symbol",
+
+	// scientific, engineering, compact
+	notation = "standard",
+
+	// long, short
+	compact_display = "short"
 }){
 	// Convert string to number if needed
 	const numeric_value = typeof number === 'string' ? parseFloat(number) : number;
@@ -24,14 +30,28 @@ export function format_number({
 	// Check if it's a valid number
 	if (isNaN(numeric_value)) return number;
 
-	const formatter = new Intl.NumberFormat(locale, {
-		style: style,
-		currency: currency,
-		currencyDisplay: currency_display,
-		useGrouping: use_grouping,
-		minimumFractionDigits: minimum_fraction_digits,
-		maximumFractionDigits: maximum_fraction_digits
-	});
+	const options = {
+		"style": style,
+
+
+		"currency": currency,
+		"currencyDisplay": currency_display,
+
+
+		"useGrouping": use_grouping,
+
+
+		"minimumFractionDigits": minimum_fraction_digits,
+		"maximumFractionDigits": maximum_fraction_digits,
+
+
+		"notation": notation,
+
+		// "compactDisplay" only has an effect when notation is "compact"
+		"compactDisplay": compact_display,
+	};
+
+	const formatter = new Intl.NumberFormat(locale, options);
 
 	return formatter.format(numeric_value);
 }
