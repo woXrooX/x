@@ -197,7 +197,13 @@ export default class Table extends HTMLElement {
 		return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 	}
 
-	// Adds a range for every match of "regex" in the text nodes under "root"
+	/*
+		Adds a range for every match of "regex" in the text nodes under "root".
+		StaticRange, not Range: the document tracks every live Range and checks each one whenever a node is removed,
+		so thousands of matches slowed down every row move.
+		Static ranges don't follow DOM changes; #apply_search_highlights rebuilds them on every draw instead.
+		A cell edited in place, outside the API, keeps its old highlight until the next draw.
+	*/
 	static #add_highlight_ranges(highlight, root, regex) {
 		const tree_walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
 
@@ -205,9 +211,13 @@ export default class Table extends HTMLElement {
 			const node = tree_walker.currentNode;
 
 			for (const match of node.textContent.matchAll(regex)) {
-				const range = new Range();
-				range.setStart(node, match.index);
-				range.setEnd(node, match.index + match[0].length);
+				const range = new StaticRange({
+					startContainer: node,
+					startOffset: match.index,
+					endContainer: node,
+					endOffset: match.index + match[0].length
+				});
+
 				highlight.add(range);
 			}
 		}
