@@ -4,6 +4,13 @@ export function short_scale_notation(number){
 	return number.toString();
 }
 
+
+
+/////////////////////////// format_number
+
+// Formatters by locale + options
+const cached_format_number_formatters = new Map();
+
 export function format_number({
 	number,
 	locale = undefined,
@@ -25,7 +32,7 @@ export function format_number({
 	compact_display = "short"
 }){
 	// Convert string to number if needed
-	const numeric_value = typeof number === 'string' ? parseFloat(number) : number;
+	const numeric_value = typeof number === "string" ? parseFloat(number) : number;
 
 	// Check if it's a valid number
 	if (isNaN(numeric_value)) return number;
@@ -51,7 +58,14 @@ export function format_number({
 		"compactDisplay": compact_display,
 	};
 
-	const formatter = new Intl.NumberFormat(locale, options);
+	const KEY = `${locale}|${JSON.stringify(options)}`;
+
+	let formatter = cached_format_number_formatters.get(KEY);
+
+	if (formatter === undefined) {
+		formatter = new Intl.NumberFormat(locale, options);
+		cached_format_number_formatters.set(KEY, formatter);
+	}
 
 	return formatter.format(numeric_value);
 }

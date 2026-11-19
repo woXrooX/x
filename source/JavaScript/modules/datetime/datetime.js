@@ -88,6 +88,14 @@ export function timestamptz_to_local_timestamp(
 	return `${local_timestamp.year}-${local_timestamp.month}-${local_timestamp.day} ${local_timestamp.hour}:${local_timestamp.minute}:${local_timestamp.second}`;
 }
 
+
+
+
+/////////////////////////// format_timestamp
+
+// Formatters by locales + options
+const cached_format_timestamp_formatters = new Map();
+
 export function format_timestamp({
 	// format
 	// format_to_parts
@@ -185,10 +193,19 @@ export function format_timestamp({
 		"formatMatcher": format_matcher
 	};
 
-	if (formatter_method === "format") return new Intl.DateTimeFormat(locales, options).format(new_date);
+	const KEY = `${locales}|${JSON.stringify(options)}`;
+
+	let formatter = cached_format_timestamp_formatters.get(KEY);
+
+	if (formatter === undefined) {
+		formatter = new Intl.DateTimeFormat(locales, options);
+		cached_format_timestamp_formatters.set(KEY, formatter);
+	}
+
+	if (formatter_method === "format") return formatter.format(new_date);
 
 	else if (formatter_method === "format_to_parts") {
-		const parts = new Intl.DateTimeFormat(locales, options).formatToParts(new_date);
+		const parts = formatter.formatToParts(new_date);
 
 		const results = {};
 
@@ -203,6 +220,10 @@ export function format_timestamp({
 
 	else throw new Error("invalid formatter_method: " + formatter_method);
 }
+
+
+
+
 
 // Exptected inputs: type->string, fromat->HH:mm:ss
 export function time_difference(time_1, time_2) {
