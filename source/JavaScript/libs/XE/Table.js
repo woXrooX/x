@@ -905,7 +905,7 @@ export default class Table extends HTMLElement {
 
 	#build_DOM = () => {
 		this.innerHTML = `
-			<container class="height-100 gap-0-5">
+			<container class="height-100 gap-0-3">
 
 				<header
 					class="
@@ -913,7 +913,7 @@ export default class Table extends HTMLElement {
 						flex-row
 						align-items-center
 						justify-content-space-between
-						gap-0-5
+						gap-0-3
 						width-100
 						empty-display-none
 					"
@@ -923,15 +923,13 @@ export default class Table extends HTMLElement {
 					this.#build_download_HTML()
 				}</header>
 
-				<main class="width-100 min-height-0">
-					<section class="table-container table-thead-sticky scrollbar-x height-100">
-						<table>
-							<caption class="empty-display-none">${this.#JSON["caption"] ?? ''}</caption>
-							<thead><tr>${this.#build_head_HTML()}</tr></thead>
-							<tbody></tbody>
-							<tfoot><tr>${this.#build_foot_HTML()}</tr></tfoot>
-						</table>
-					</section>
+				<main class="table-container table-thead-sticky scrollbar-x width-100 min-height-0">
+					<table>
+						<caption class="empty-display-none">${this.#JSON["caption"] ?? ''}</caption>
+						<thead><tr>${this.#build_head_HTML()}</tr></thead>
+						<tbody></tbody>
+						<tfoot><tr>${this.#build_foot_HTML()}</tr></tfoot>
+					</table>
 				</main>
 
 				${this.#build_footer_HTML()}
@@ -949,9 +947,9 @@ export default class Table extends HTMLElement {
 		// Cached once, so later queries can't hit a nested table inside a cell
 		this.#header_element = this.querySelector(":scope > container > header");
 		this.#main_element = this.querySelector(":scope > container > main");
-		this.#tbody_element = this.#main_element.querySelector("table > tbody");
+		this.#tbody_element = this.#main_element.querySelector(":scope > table > tbody");
 		this.#footer_element = this.querySelector(":scope > container > footer");
-		this.#head_cells = Array.from(this.#main_element.querySelector("table > thead > tr").children);
+		this.#head_cells = Array.from(this.#main_element.querySelector(":scope > table > thead > tr").children);
 
 		if (this.#is_checkable) this.#check_all_element = this.#head_cells.shift().querySelector("input");
 
@@ -984,6 +982,8 @@ export default class Table extends HTMLElement {
 					width-auto
 					min-width-75px
 					box-shadow-v0
+					input-v1
+					text-size-0-8rem
 				"
 				style="outline-offset: -1px;"
 			>
@@ -1010,6 +1010,8 @@ export default class Table extends HTMLElement {
 				class="
 					width-100
 					box-shadow-v0
+					input-v1
+					text-size-0-8rem
 				"
 
 				type="text"
@@ -1028,8 +1030,14 @@ export default class Table extends HTMLElement {
 		) return '';
 
 		return `
-			<x-svg id="download_CSV_${this.#ID}" name="download_v2" color="white" class="btn btn-primary"></x-svg>
-			<x-tooltip trigger_selector="x-svg#download_CSV_${this.#ID}" class="padding-1 text-size-0-6rem">${window.Lang.use("download_as_CSV")}</x-tooltip>
+			<x-svg
+				class="btn btn-primary btn-s"
+
+				name="download_v2"
+				color="white"
+			></x-svg>
+
+			<x-tooltip class="padding-1 text-size-0-6rem">${window.Lang.use("download_as_CSV")}</x-tooltip>
 		`;
 	};
 
