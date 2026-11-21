@@ -11,6 +11,7 @@ export default class Menu {
 	static #always_open_mode_toggler = null;
 
 	static #shown = false;
+	static #holds_cover = false;
 
 	static #modes = Object.freeze({
 		DEFAULT: 0,
@@ -88,7 +89,7 @@ export default class Menu {
 		if (Menu.#shown === false) return;
 
 		Menu.#element.classList.remove("show");
-		window.Cover.hide();
+		Menu.#hide_cover();
 		Menu.#shown = false;
 	}
 
@@ -237,8 +238,24 @@ export default class Menu {
 		if (Menu.#shown) return;
 
 		Menu.#element.classList.add("show");
-		window.Cover.show();
+		Menu.#show_cover();
 		Menu.#shown = true;
+	}
+
+	// Shows the cover on the menu's behalf, once
+	static #show_cover() {
+		if (Menu.#holds_cover === true) return;
+
+		window.Cover.show();
+		Menu.#holds_cover = true;
+	}
+
+	// Hides the cover only if the menu showed it, so a cover shown by someone else (e.g. Modal) is left alone
+	static #hide_cover() {
+		if (Menu.#holds_cover === false) return;
+
+		window.Cover.hide();
+		Menu.#holds_cover = false;
 	}
 
 	static #load_mode() {
@@ -259,13 +276,13 @@ export default class Menu {
 
 		if (mode === Menu.#modes.ALWAYS_OPEN) {
 			Menu.#element.classList.add("always_open_mode");
-			window.Cover.hide();
+			Menu.#hide_cover();
 		}
 
 		else {
 			Menu.#element.classList.remove("always_open_mode");
 
-			if (Menu.#shown) window.Cover.show();
+			if (Menu.#shown) Menu.#show_cover();
 		}
 	}
 
