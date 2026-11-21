@@ -256,15 +256,23 @@ body{
 		backdrop-filter: blur(var(--blur));
 
 		opacity: 0;
+		visibility: hidden;
 		width: 100vw;
 		height: 100vh;
 
 		position: fixed;
 		top: 0px;
 		left: 0px;
-		z-index: var(--z-minus);
+		z-index: var(--z-cover);
 
-		transition: var(--transition-velocity) opacity;
+		/* visibility counts as visible for the whole transition, so it turns on at the start of a show and off at the end of a hide */
+		transition: var(--transition-velocity);
+		transition-property: opacity, visibility;
+
+		&.show{
+			opacity: 1;
+			visibility: visible;
+		}
 	}
 }
 
