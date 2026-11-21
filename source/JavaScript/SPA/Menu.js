@@ -46,7 +46,7 @@ export default class Menu {
 		Menu.#element.querySelector(":scope > header > x-svg[for=menu_close_button_on_mobile]").addEventListener("click", Menu.hide);
 		Menu.#always_open_mode_toggler.addEventListener("click", Menu.#toggle_always_open_mode);
 		Menu.#main.addEventListener("click", Menu.#toggle_sub_menu);
-		window.Cover.on_click_execute(Menu.hide);
+		x.Cover.on_click_execute(Menu.hide);
 
 
 		await Menu.build();
@@ -246,7 +246,7 @@ export default class Menu {
 	static #show_cover() {
 		if (Menu.#holds_cover === true) return;
 
-		window.Cover.show();
+		x.Cover.show();
 		Menu.#holds_cover = true;
 	}
 
@@ -254,7 +254,7 @@ export default class Menu {
 	static #hide_cover() {
 		if (Menu.#holds_cover === false) return;
 
-		window.Cover.hide();
+		x.Cover.hide();
 		Menu.#holds_cover = false;
 	}
 

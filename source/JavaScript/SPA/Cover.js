@@ -47,4 +47,4 @@ export default class Cover {
 	}
 }
 
-window.Cover = Cover;
+window.x["Cover"] = Cover;

@@ -19,7 +19,7 @@ export default class Modal extends HTMLElement{
 		Modal.#element_close_button.onclick = Modal.hide;
 
 		// Close on click the cover
-		Cover.on_click_execute(Modal.hide);
+		x.Cover.on_click_execute(Modal.hide);
 
 		// Close on "Escape" press
 		document.addEventListener('keydown', ()=>{if(event.key === "Escape") Modal.hide();});
@@ -42,7 +42,7 @@ export default class Modal extends HTMLElement{
 			Modal.#element.ontransitionend = null;
 		};
 
-		Cover.hide();
+		x.Cover.hide();
 
 		x.Layers.unlock();
 	}
@@ -56,7 +56,7 @@ export default class Modal extends HTMLElement{
 		Modal.element_main.innerHTML = DOM;
 		Modal.#execute_on_show(func_name, modal_data);
 
-		Cover.show();
+		x.Cover.show();
 
 		x.Layers.lock();
 	}
