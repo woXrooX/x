@@ -105,15 +105,23 @@ export default class Tooltip extends HTMLElement {
 	/////////// Helpers
 
 	#set_up_trigger_element() {
-		if (this.hasAttribute("trigger_selector")) {
-			this.#trigger_element = document.querySelector(this.getAttribute("trigger_selector"));
-			this.#trigger_element.style.setProperty("anchor-name", this.#anchor_name);
+		const selector = this.getAttribute("trigger_selector");
+
+		if (selector !== null) {
+			this.#trigger_element = document.querySelector(selector);
+
+			if (this.#trigger_element === null)
+				throw new Error(`Tooltip: trigger_selector "${selector}" matches no element.`);
 		}
 
 		else {
 			this.#trigger_element = this.previousElementSibling;
-			this.#trigger_element.style.setProperty("anchor-name", this.#anchor_name);
+
+			if (this.#trigger_element === null)
+				throw new Error("Tooltip: no trigger, put it right before the <x-tooltip> or set trigger_selector.");
 		}
+
+		this.#trigger_element.style.setProperty("anchor-name", this.#anchor_name);
 	}
 
 	#set_up_this_element() {
@@ -125,8 +133,6 @@ export default class Tooltip extends HTMLElement {
 	}
 
 	#handle_trigger = () => {
-		if (!this.#trigger_element) return false;
-
 		switch (this.getAttribute("trigger_type")) {
 			case "hover":
 				this.#handle_trigger_hover();
