@@ -74,7 +74,7 @@ export default class Tooltip extends HTMLElement {
 
 	#anchor_name = '';
 	#trigger_element = null;
-	#event_handler_click_outside_close = null;
+	#abort_controller = null;
 
 
 	/////////// APIs
@@ -89,14 +89,16 @@ export default class Tooltip extends HTMLElement {
 	}
 
 	connectedCallback() {
+		this.#abort_controller = new AbortController();
+
 		this.#set_up_this_element();
 		this.#set_up_trigger_element();
 		this.#handle_trigger();
 	}
 
 	disconnectedCallback() {
-		if (this.#event_handler_click_outside_close)
-			document.removeEventListener("click", this.#event_handler_click_outside_close);
+		this.#abort_controller.abort();
+		this.#trigger_element?.style.removeProperty("anchor-name");
 	}
 
 
@@ -105,17 +107,17 @@ export default class Tooltip extends HTMLElement {
 	#set_up_trigger_element() {
 		if (this.hasAttribute("trigger_selector")) {
 			this.#trigger_element = document.querySelector(this.getAttribute("trigger_selector"));
-			this.#trigger_element.style = `anchor-name: ${this.#anchor_name};`;
+			this.#trigger_element.style.setProperty("anchor-name", this.#anchor_name);
 		}
 
 		else {
 			this.#trigger_element = this.previousElementSibling;
-			this.#trigger_element.style = `anchor-name: ${this.#anchor_name};`;
+			this.#trigger_element.style.setProperty("anchor-name", this.#anchor_name);
 		}
 	}
 
 	#set_up_this_element() {
-		this.style = `position-anchor: ${this.#anchor_name};`;
+		this.style.setProperty("position-anchor", this.#anchor_name);
 
 		// Top layer: painted above the whole page, outside every stacking context
 		// "manual" leaves opening and closing to us.
@@ -145,41 +147,45 @@ export default class Tooltip extends HTMLElement {
 	};
 
 	#handle_trigger_hover = () => {
-		this.#trigger_element.addEventListener("mouseenter", () => this.showPopover());
-		this.#trigger_element.addEventListener("mouseleave", () => this.hidePopover());
+		const signal = this.#abort_controller.signal;
+
+		this.#trigger_element.addEventListener("mouseenter", () => this.showPopover(), {signal});
+		this.#trigger_element.addEventListener("mouseleave", () => this.hidePopover(), {signal});
 	};
 
 	// Prevent to trigger on touchscreens
 	// #handle_trigger_hover = () => {
+	// 	const signal = this.#abort_controller.signal;
+
 	// 	this.#trigger_element.addEventListener("mouseenter", () => {
 	// 		// Prevent to trigger on touchscreens
 	// 		if (matchMedia("(hover: hover) and (pointer: fine)").matches === false) return;
 
 	// 		this.showPopover();
-	// 	});
+	// 	}, {signal});
 
-	// 	this.#trigger_element.addEventListener("mouseleave", () => this.hidePopover());
+	// 	this.#trigger_element.addEventListener("mouseleave", () => this.hidePopover(), {signal});
 	// };
 
 	#handle_trigger_click = () => {
+		const signal = this.#abort_controller.signal;
+
 		this.#trigger_element.addEventListener("click", (event) => {
 			// Prevent the click from immediately closing the tooltip
 			event.stopPropagation();
 
 			// Re-clicking on the trigger_element serves as close tooltip as well
 			this.togglePopover();
-		});
+		}, {signal});
 
 		// Document-level click handler to close tooltip when clicking outside
-		this.#event_handler_click_outside_close = (event) => {
+		document.addEventListener("click", (event) => {
 			if (
 				this.matches(":popover-open") &&
 				!this.contains(event.target) &&
 				!this.#trigger_element.contains(event.target)
 			) this.hidePopover();
-		};
-
-		document.addEventListener("click", this.#event_handler_click_outside_close);
+		}, {signal});
 	};
 };
 
