@@ -198,6 +198,10 @@
 					/* step-end jumps between the keyframes instead of fading */
 					animation: indicator_v1_blink 1s step-end infinite;
 				}
+
+				&.indicator-breathe {
+					animation: indicator_v1_breathe 1.2s ease-in-out infinite;
+				}
 			}
 		}
 
@@ -220,6 +224,11 @@
 		@keyframes indicator_v1_blink {
 			0%, 100% { opacity: 1; }
 			50% { opacity: 0.2; }
+		}
+
+		@keyframes indicator_v1_breathe {
+			0%, 100% { opacity: 1; }
+			50% { opacity: 0.4; }
 		}
 	}
 
