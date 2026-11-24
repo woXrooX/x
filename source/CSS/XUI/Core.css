@@ -1019,6 +1019,7 @@
 			.white-space-nowrap-important{white-space: nowrap !important;}
 			.white-space-pre{white-space: pre;}
 			.white-space-pre-wrap { white-space: pre-wrap; }
+			.white-space-pre-line { white-space: pre-line; }
 		}
 
 		@layer word_wrap {
