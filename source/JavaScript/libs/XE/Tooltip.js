@@ -155,29 +155,24 @@ export default class Tooltip extends HTMLElement {
 	#handle_trigger_hover = () => {
 		const signal = this.#abort_controller.signal;
 
-		this.#trigger_element.addEventListener("mouseenter", () => this.showPopover(), {signal});
-		this.#trigger_element.addEventListener("mouseleave", () => this.hidePopover(), {signal});
+		this.#trigger_element.addEventListener("pointerenter", (event) => {
+			// Touch has no hover, so a tap must not open it
+			if (event.pointerType === "touch") return;
+
+			this.showPopover();
+		}, {signal});
+
+		this.#trigger_element.addEventListener("pointerleave", () => this.hidePopover(), {signal});
+
+		// Pressing the trigger means the tooltip has done its job
+		this.#trigger_element.addEventListener("pointerdown", () => this.hidePopover(), {signal});
 	};
-
-	// Prevent to trigger on touchscreens
-	// #handle_trigger_hover = () => {
-	// 	const signal = this.#abort_controller.signal;
-
-	// 	this.#trigger_element.addEventListener("mouseenter", () => {
-	// 		// Prevent to trigger on touchscreens
-	// 		if (matchMedia("(hover: hover) and (pointer: fine)").matches === false) return;
-
-	// 		this.showPopover();
-	// 	}, {signal});
-
-	// 	this.#trigger_element.addEventListener("mouseleave", () => this.hidePopover(), {signal});
-	// };
 
 	#handle_trigger_click = () => {
 		const signal = this.#abort_controller.signal;
 
 		this.#trigger_element.addEventListener("click", (event) => {
-			// Prevent the click from immediately closing the tooltip
+			// Keeps the click from bubbling past the trigger
 			event.stopPropagation();
 
 			// Re-clicking on the trigger_element serves as close tooltip as well
@@ -185,13 +180,14 @@ export default class Tooltip extends HTMLElement {
 		}, {signal});
 
 		// Document-level click handler to close tooltip when clicking outside
+		// Capture phase runs before the target's own handlers, so their stopPropagation() can't block it (e.g. Modal triggers)
 		document.addEventListener("click", (event) => {
 			if (
 				this.matches(":popover-open") &&
 				!this.contains(event.target) &&
 				!this.#trigger_element.contains(event.target)
 			) this.hidePopover();
-		}, {signal});
+		}, {signal, capture: true});
 	};
 };
 
