@@ -263,6 +263,11 @@
 		"ru": "Неверная запрос",
 		"uz": "Noto`g`ri so`rov"
 	},
+    "invalid_timezone": {
+        "en": "Invalid timezone",
+        "uz": "Noto`g`ri vaqt mintaqasi",
+        "ru": "Неверный часовой пояс"
+    },
 	"invalid_response": {
 		"en": "Invalid response",
 		"ru": "Неверный ответ",
