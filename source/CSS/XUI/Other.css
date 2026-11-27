@@ -13,6 +13,12 @@
 			}
 		}
 
+		.empty-display-none-important {
+			&:empty {
+				display: none !important;
+			}
+		}
+
 		.no-elements-display-none {
 			&:not(:has(*)) {
 				display: none;
