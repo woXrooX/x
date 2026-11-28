@@ -6,6 +6,13 @@
 
 
 @font-face{
+	font-family: JosefinSlab;
+	src:url("/fonts/JosefinSlab-Regular.ttf");
+}
+.font-family-JosefinSlab{font-family: JosefinSlab;}
+
+
+@font-face{
 	font-family: Libron;
 	src:url("/fonts/Libron-Regular.ttf");
 }
