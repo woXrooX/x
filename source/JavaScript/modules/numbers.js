@@ -24,6 +24,7 @@ export function format_number({
 	// Currency Defaults (only used if style is "currency")
 	currency = "USD",
 	currency_display = "symbol",
+	currency_sign = "standard",
 
 	// scientific, engineering, compact
 	notation = "standard",
@@ -43,6 +44,7 @@ export function format_number({
 
 		"currency": currency,
 		"currencyDisplay": currency_display,
+		"currencySign": currency_sign,
 
 
 		"useGrouping": use_grouping,
